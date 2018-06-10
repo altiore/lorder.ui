@@ -1,0 +1,26 @@
+{
+  "name": "altiore_contrib.ui",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "altiore-webpack-react": "2.0.1",
+    "react": "^16.4.0",
+    "react-css-modules": "^4.7.3",
+    "react-dom": "^16.4.0"
+  },
+  "scripts": {
+    "start": "altiore start",
+    "build": "altiore build",
+    "test": "altiore test --env=jsdom",
+    "__relink-scripts": "rimraf node_modules/altiore-webpack-react && ln -s ~/www/webpack-react $PWD/node_modules/altiore-webpack-react"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.0.0",
+    "@types/node": "^10.3.2",
+    "@types/react": "^16.3.17",
+    "@types/react-css-modules": "^4.6.1",
+    "@types/react-dom": "^16.0.6",
+    "rimraf": "^2.6.2",
+    "typescript": "^2.9.1"
+  }
+}
