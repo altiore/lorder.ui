@@ -1,11 +1,14 @@
-import { map } from 'lodash';
+const map = require('lodash/map');
+
+export type IUserRole = 'guest'|'user'|'admin'|'super-admin';
 
 export class User {
-  public isAuth: boolean = false;
-  public isLoading: boolean = false;
-  public token: string;
-  public username: string;
-  public email: string;
+  public readonly email: string;
+  public readonly isAuth: boolean = false;
+  public readonly isLoading: boolean = false;
+  public readonly role: IUserRole = 'guest';
+  public readonly token: string;
+  public readonly username: string;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

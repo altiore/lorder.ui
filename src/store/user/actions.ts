@@ -1,3 +1,9 @@
 import { createAction } from 'redux-actions';
 
-export const loginUser = createAction('USER/LOGIN');
+export const logIn = createAction('USER/LOGIN', (data: { username: string, password: string }) => ({
+  request: {
+    data,
+    method: 'POST',
+    url: '/login',
+  },
+}));

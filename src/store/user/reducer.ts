@@ -1,15 +1,15 @@
 import { handleActions } from 'redux-actions';
 
-import { loginUser } from './actions';
+import { logIn } from './actions';
 import { User } from './User';
 
-const hanldeLoginUser = (state: {}) => {
+const handleLogIn = (state: {}) => {
   return state;
 };
 
-export default handleActions(
+export const user = handleActions(
   {
-    [loginUser.toString()]: hanldeLoginUser,
+    [logIn.toString()]: handleLogIn,
   },
   new User()
 )

@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import { IRoute } from 'src/@types';
+import { IUserRole } from 'src/store/user';
 
 import '../styles/app.scss';
 import { RouteWithSubRoutes } from './@common/RouteWithSubRoutes';
 
-export interface IProps {
-  role: string,
+export interface IAppProps {
+  userRole?: IUserRole,
 }
 
 export interface IState {
@@ -16,7 +16,7 @@ export interface IState {
   routes: IRoute[],
 }
 
-export class App extends React.Component<IProps, IState> {
+export class App extends React.Component<IAppProps, IState> {
   constructor(props: any){
     super(props);
     this.state = {
@@ -27,13 +27,13 @@ export class App extends React.Component<IProps, IState> {
   }
 
   public componentDidMount() {
-    const { role } = this.props;
-    this.checkAccess(role)
+    const { userRole } = this.props;
+    this.checkAccess(userRole)
   }
 
-  public componentDidUpdate(prevProps: IProps, prevState: IState) {
-    if (this.props.role !== prevProps.role) {
-      this.checkAccess(this.props.role)
+  public componentDidUpdate(prevProps: IAppProps, prevState: IState) {
+    if (this.props.userRole !== prevProps.userRole) {
+      this.checkAccess(this.props.userRole)
     }
   }
 
@@ -43,15 +43,13 @@ export class App extends React.Component<IProps, IState> {
       return <div>loading...</div>
     }
     return (
-      <Router>
-        <div>
-          {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
-        </div>
-      </Router>
+      <React.Fragment>
+        {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+      </React.Fragment>
     );
   }
 
-  private checkAccess(role: string) {
+  private checkAccess(role?: IUserRole) {
     this.setState({ isLoading: true });
     let getRoutes: Promise<any>;
     switch (role) {
