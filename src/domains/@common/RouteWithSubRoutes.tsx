@@ -9,6 +9,7 @@ const renderRoute = (route: IRoute) => (props: RouteProps) => (
 
 export const RouteWithSubRoutes = (route: IRoute) => (
   <Route
+    exact={route.exact}
     path={route.path}
     render={renderRoute(route)}
   />

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Redirect } from 'react-router-dom';
 
 import { IRoute } from 'src/@types';
 import { IUserRole } from 'src/store/user';
@@ -21,7 +22,7 @@ export class App extends React.Component<IAppProps, IState> {
     super(props);
     this.state = {
       error: null,
-      isLoading: false,
+      isLoading: true,
       routes: [],
     };
   }
@@ -32,6 +33,7 @@ export class App extends React.Component<IAppProps, IState> {
   }
 
   public componentDidUpdate(prevProps: IAppProps, prevState: IState) {
+    console.log('prevProps', prevProps, this.props);
     if (this.props.userRole !== prevProps.userRole) {
       this.checkAccess(this.props.userRole)
     }
@@ -42,15 +44,21 @@ export class App extends React.Component<IAppProps, IState> {
     if (isLoading) {
       return <div>loading...</div>
     }
+    const { userRole } = this.props;
+    console.log('render App with role', userRole, routes);
     return (
       <React.Fragment>
+        {userRole !== 'guest' ? (
+          <Redirect to='/dashboard' from='/start' />
+        ) : (
+          <Redirect to='/' from='/dashboard' exact />
+        )}
         {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
       </React.Fragment>
     );
   }
 
   private checkAccess(role?: IUserRole) {
-    this.setState({ isLoading: true });
     let getRoutes: Promise<any>;
     switch (role) {
       case 'user':

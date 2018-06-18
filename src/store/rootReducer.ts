@@ -1,14 +1,17 @@
+import { routerReducer, RouterState } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import { reducer as form } from 'redux-form';
+import { FormStateMap, reducer as form } from 'redux-form';
 
-import { user, User } from './user';
+import { IUserState, user } from './user';
 
 export interface IState {
-  form: any,
-  user: User,
+  form: FormStateMap;
+  router: RouterState;
+  user: IUserState;
 }
 
-export const rootReducer = combineReducers({
+export const rootReducer = combineReducers<IState>({
   form,
+  router: routerReducer,
   user,
 });

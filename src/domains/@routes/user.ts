@@ -1,8 +1,13 @@
 import { Dashboard } from '../dashboard';
+import { NoMatch } from '../noMatch';
 
 export const routes = [
   {
     component: Dashboard,
-    path: "/",
+    exact: true,
+    path: '/dashboard',
+  },
+  {
+    component: NoMatch,
   },
 ];

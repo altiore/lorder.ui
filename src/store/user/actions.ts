@@ -1,10 +1,10 @@
-import { createAction } from 'redux-actions';
+import { requestActions } from 'src/store/@common/requestActions';
 
 export interface IPostAuthMagicData {
   email: string;
 }
 
-export const postAuthMagic = createAction('USER/MAGIC_LINK', (data: IPostAuthMagicData) => ({
+export const postAuthMagic = requestActions<IPostAuthMagicData>('USER/SEND_MAGIC_LINK', (data: IPostAuthMagicData) => ({
   request: {
     data,
     method: 'POST',
@@ -12,7 +12,14 @@ export const postAuthMagic = createAction('USER/MAGIC_LINK', (data: IPostAuthMag
   },
 }));
 
-export const logIn = createAction('USER/LOGIN', (data: { username: string, password: string }) => ({
+export const getAuthActivate = requestActions<string>('USER/ACTIVATE_BY_MAGIC_LINK', (identifier: string) => ({
+  request: {
+    params: { identifier },
+    url: '/auth/activate',
+  },
+}));
+
+export const logIn = requestActions('USER/LOGIN', (data: { username: string, password: string }) => ({
   request: {
     data,
     method: 'POST',

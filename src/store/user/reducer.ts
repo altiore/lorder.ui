@@ -1,15 +1,40 @@
 import { handleActions } from 'redux-actions';
 
-import { logIn } from './actions';
-import { User } from './User';
+import { getAuthActivate, logIn } from './actions';
+import { IUserState, User } from './User';
 
-const handleLogIn = (state: {}) => {
+const getAuthActivateHandler = (state: IUserState) => {
+  state.isLoading = true;
   return state;
 };
 
-export const user = handleActions(
+const getAuthActivateSuccessHandler = (state: IUserState, { payload }: any): IUserState => {
+  const newUser = new User({
+    ...state,
+    ...payload,
+    isAuth: true,
+    isLoading: false,
+    role: 'user',
+  });
+  console.log('getAuthActivateHandler', payload, newUser);
+  return newUser;
+};
+
+const getAuthActivateFailHandler = (state: IUserState) => {
+  state.isLoading = false;
+  return state;
+};
+
+const handleLogIn = (state: IUserState): IUserState => {
+  return state;
+};
+
+export const user = handleActions<IUserState, any, any>(
   {
+    [getAuthActivate.toString()]: getAuthActivateHandler,
+    [getAuthActivate.success]: getAuthActivateSuccessHandler,
+    [getAuthActivate.fail]: getAuthActivateFailHandler,
     [logIn.toString()]: handleLogIn,
   },
   new User()
-)
+);
