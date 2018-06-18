@@ -99,6 +99,12 @@
     "@types/react" "*"
     redux "^3.6.0"
 
+"@types/redux-thunk@^2.1.0":
+  version "2.1.0"
+  resolved "http://registry.npmjs.org/@types/redux-thunk/-/redux-thunk-2.1.0.tgz#bc2b6e972961831afb82a9bf4f06726e351f9416"
+  dependencies:
+    redux-thunk "*"
+
 "@types/reselect@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@types/reselect/-/reselect-2.2.0.tgz#c667206cfdc38190e1d379babe08865b2288575f"
@@ -201,9 +207,9 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
 
-altiore-webpack-react@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/altiore-webpack-react/-/altiore-webpack-react-2.1.1.tgz#4f1de650102947614743925ffe70dd3b35c074af"
+altiore-webpack-react@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/altiore-webpack-react/-/altiore-webpack-react-2.2.0.tgz#a5de79c96f4b1e8f32f286c64c269ba14d17caab"
   dependencies:
     autoprefixer "7.1.6"
     babel-jest "^22.1.0"
@@ -4535,9 +4541,9 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-liw-components@^0.2.14:
-  version "0.2.14"
-  resolved "https://registry.yarnpkg.com/liw-components/-/liw-components-0.2.14.tgz#27a5e4b47035cc3a88d008bdff14f3602671ac4a"
+liw-components@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/liw-components/-/liw-components-1.0.0.tgz#fbce9a6ee95bb4d4fd012b616e56f2df7a096580"
 
 load-json-file@^1.0.0:
   version "1.1.0"
@@ -6362,6 +6368,10 @@ redux-form@7.4.2:
     lodash-es "^4.17.10"
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
+
+redux-thunk@*, redux-thunk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
 
 redux@4.0.0, redux@^4.0.0:
   version "4.0.0"

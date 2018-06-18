@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-// import { get } from 'lodash';
+// const get = require('lodash/get');
 import { multiClientMiddleware } from 'redux-axios-middleware';
 
 import { api } from './api';

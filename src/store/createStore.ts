@@ -1,9 +1,11 @@
-import { createStore as createReduxStore } from 'redux';
+import { applyMiddleware, createStore as createReduxStore } from 'redux';
+import thunk from 'redux-thunk';
 
-import { IState, rootReducer } from './rootReducer';
+import { clientsMiddleware } from './@common/middlewares';
+import { rootReducer } from './rootReducer';
 
-export const createStore = (initialState?: IState & undefined) => {
-  const store = createReduxStore(rootReducer, initialState);
+export const createStore = (initialState?: any) => {
+  const store = createReduxStore(rootReducer, initialState, applyMiddleware(thunk, clientsMiddleware));
   return store;
 }
 ​

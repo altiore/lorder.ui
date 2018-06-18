@@ -4,6 +4,7 @@ import { reducer as form } from 'redux-form';
 import { user, User } from './user';
 
 export interface IState {
+  form: any,
   user: User,
 }
 

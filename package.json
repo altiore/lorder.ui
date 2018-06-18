@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "altiore-webpack-react": "2.1.1",
+    "altiore-webpack-react": "2.2.0",
     "axios": "0.18.0",
     "classnames": "2.2.6",
-    "liw-components": "^0.2.14",
+    "liw-components": "1.0.0",
     "react": "16.4.0",
     "react-css-modules": "4.7.3",
     "react-dom": "16.4.0",
@@ -17,6 +17,7 @@
     "redux-actions": "2.4.0",
     "redux-axios-middleware": "4.0.0",
     "redux-form": "7.4.2",
+    "redux-thunk": "^2.3.0",
     "reselect": "3.0.1"
   },
   "scripts": {
@@ -39,6 +40,7 @@
     "@types/react-router-dom": "^4.2.7",
     "@types/redux-actions": "^2.3.0",
     "@types/redux-form": "^7.2.6",
+    "@types/redux-thunk": "^2.1.0",
     "@types/reselect": "^2.2.0",
     "rimraf": "^2.6.2",
     "typescript": "^2.9.1"
