@@ -1,4 +1,4 @@
-const map = require('lodash/map');
+import map from 'lodash-es/map'
 
 export type IUserRole = 'guest'|'user'|'admin'|'super-admin';
 

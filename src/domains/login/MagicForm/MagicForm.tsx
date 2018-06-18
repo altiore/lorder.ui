@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 const FaUser = require('react-icons/lib/fa/user');
 
-import { Button } from 'liw-components/dist/Button'
-import { Input } from 'liw-components/dist/Input'
+import { Button } from 'liw-components/Button'
+import { Input } from 'liw-components/Input'
 
 export interface IMagicFormProps {
   title?: string,
