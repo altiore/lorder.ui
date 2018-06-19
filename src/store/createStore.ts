@@ -1,6 +1,7 @@
-import createHistory from "history/createBrowserHistory";
+import createHistory from 'history/createBrowserHistory';
 import { routerMiddleware } from 'react-router-redux';
 import { applyMiddleware, compose, createStore as createReduxStore } from 'redux';
+import { persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 
 import { clientsMiddleware } from './@common/middlewares';
@@ -23,13 +24,15 @@ export const createStore = (initialState?: any) => {
     composeEnhancers(applyMiddleware(thunk, routerMiddleware(history), clientsMiddleware)),
   );
 
+  const persistor = persistStore(store);
+
   if (module.hot) {
     module.hot.accept('./rootReducer', () => {
-      const nextRootReducer = require('./rootReducer').rootReducer
-      store.replaceReducer(nextRootReducer())
-    })
+      const nextRootReducer = require('./rootReducer').rootReducer;
+      store.replaceReducer(nextRootReducer());
+    });
   }
 
-  return { store, history };
+  return { store, history, persistor };
 }
 ​

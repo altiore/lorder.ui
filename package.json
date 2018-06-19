@@ -4,12 +4,14 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^1.2.1",
+    "@material-ui/icons": "^1.1.0",
     "@types/react-router-redux": "^5.0.15",
     "altiore-webpack-react": "2.2.0",
     "axios": "0.18.0",
     "classnames": "2.2.6",
     "history": "^4.7.2",
     "liw-components": "2.2.0",
+    "localforage": "^1.7.2",
     "lodash-es": "^4.17.10",
     "react": "16.4.0",
     "react-css-modules": "4.7.3",
@@ -24,6 +26,7 @@
     "redux-actions": "2.4.0",
     "redux-axios-middleware": "4.0.0",
     "redux-form": "7.4.2",
+    "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "reselect": "3.0.1"
   },

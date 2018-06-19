@@ -6,27 +6,18 @@ import { LoginForm } from './LoginForm';
 import { MagicForm } from './MagicForm';
 
 export interface ILoginProps extends RouteComponentProps<{}> {
+  isMagicLoginForm: boolean;
+  toggleUiSetting: (setting: 'isMagicLoginForm') => void;
   userRole: string;
 }
 
-export interface ILoginState {
-  isMagic: boolean,
-}
-
-export class Login extends React.PureComponent<ILoginProps, ILoginState> {
-  constructor(props: ILoginProps) {
-    super(props);
-    this.state = {
-      isMagic: false,
-    };
-  }
-
+export class Login extends React.PureComponent<ILoginProps, {}> {
   public render() {
-    const { isMagic } = this.state;
+    const { isMagicLoginForm } = this.props;
     return (
       <div styleName='login'>
         <div styleName='form'>
-          {isMagic ? (
+          {isMagicLoginForm ? (
             <MagicForm
               title='Отправить магическую ссылку'
               buttonText='Отправить'
@@ -38,14 +29,12 @@ export class Login extends React.PureComponent<ILoginProps, ILoginState> {
             />
           )}
           <Button onClick={this.toggleMagic} color={'secondary'}>
-            {isMagic ? 'Войти с паролем' : 'Войти при помощи магической ссылки'}
+            {isMagicLoginForm ? 'Войти с паролем' : 'Войти при помощи магической ссылки'}
           </Button>
         </div>
       </div>
     );
   }
 
-  private toggleMagic = () => {
-    this.setState(({ isMagic }) => ({ isMagic: !isMagic }));
-  };
+  private toggleMagic = () => this.props.toggleUiSetting('isMagicLoginForm')
 }
