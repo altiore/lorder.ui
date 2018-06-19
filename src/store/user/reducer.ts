@@ -16,7 +16,6 @@ const getAuthActivateSuccessHandler = (state: IUserState, { payload }: any): IUs
     isLoading: false,
     role: 'user',
   });
-  console.log('getAuthActivateHandler', payload, newUser);
   return newUser;
 };
 

@@ -26,3 +26,5 @@ export const logIn = requestActions('USER/LOGIN', (data: { username: string, pas
     url: '/login',
   },
 }));
+
+export * from './thunk';

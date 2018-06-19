@@ -1,19 +1,20 @@
+import Button from '@material-ui/core/Button';
 import * as React from 'react';
-import { RouteProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { LoginForm } from './LoginForm';
 import { MagicForm } from './MagicForm';
 
-// export interface IProps {
-//
-// }
+export interface ILoginProps extends RouteComponentProps<{}> {
+  userRole: string;
+}
 
 export interface ILoginState {
   isMagic: boolean,
 }
 
-export class Login extends React.Component<RouteProps, ILoginState> {
-  constructor(props: RouteProps) {
+export class Login extends React.PureComponent<ILoginProps, ILoginState> {
+  constructor(props: ILoginProps) {
     super(props);
     this.state = {
       isMagic: false,
@@ -36,9 +37,9 @@ export class Login extends React.Component<RouteProps, ILoginState> {
               buttonText='Войти'
             />
           )}
-          <a href='#' onClick={this.toggleMagic}>
+          <Button onClick={this.toggleMagic} color={'secondary'}>
             {isMagic ? 'Войти с паролем' : 'Войти при помощи магической ссылки'}
-          </a>
+          </Button>
         </div>
       </div>
     );

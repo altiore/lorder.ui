@@ -1,28 +1,20 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-interface IMatchParams {
-  identifier: string;
-}
+import { LoadingPage } from 'src/domains/@common/LoadingPage';
 
 export interface IStartProps {
-  getAuthActivate: (identifier: string) => any,
-  userRole: string;
+  activateUser: () => any;
 }
 
-export class Start extends React.Component<RouteComponentProps<IMatchParams> | IStartProps, {}> {
-  constructor(props: RouteComponentProps<IMatchParams> & IStartProps) {
+export class Start extends React.Component<RouteComponentProps<{}> & IStartProps, {}> {
+  constructor(props: RouteComponentProps<{}> & IStartProps) {
     super(props);
-    const { getAuthActivate, match: { params: { identifier } } } = props;
-    getAuthActivate(identifier);
+    const { activateUser } = props;
+    activateUser();
   }
 
   public render() {
-    return (
-      <div styleName='login'>
-        <CircularProgress size={100} color='secondary'/>
-      </div>
-    );
+    return <LoadingPage />;
   }
 }

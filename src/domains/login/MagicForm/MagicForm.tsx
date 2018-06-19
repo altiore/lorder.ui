@@ -1,8 +1,8 @@
+import Button from '@material-ui/core/Button';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 const FaUser = require('react-icons/lib/fa/user');
 
-import { Button } from 'liw-components/Button'
 import { Input } from 'liw-components/Input'
 
 export interface IMagicFormProps {
@@ -12,7 +12,7 @@ export interface IMagicFormProps {
 
 export class MagicForm extends React.Component<IMagicFormProps & InjectedFormProps<{}, IMagicFormProps>, object> {
   public render() {
-    const { title, buttonText, handleSubmit, pristine, submitting } = this.props;
+    const { title, buttonText, handleSubmit, pristine, submitting, invalid } = this.props;
     return (
       <div styleName="wrapper">
         <form styleName="form" onSubmit={handleSubmit}>
@@ -23,7 +23,7 @@ export class MagicForm extends React.Component<IMagicFormProps & InjectedFormPro
             type="email"
             icon={<FaUser />}
           />
-          <Button type="submit" stretch primary disabled={pristine || submitting} isLoading={submitting}>
+          <Button type="submit" disabled={pristine || submitting || invalid} color='primary' variant='contained' fullWidth>
             <span>{buttonText}</span>
           </Button>
         </form>

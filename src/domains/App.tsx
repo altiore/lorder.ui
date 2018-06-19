@@ -1,24 +1,25 @@
 import * as React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, RouteComponentProps, Switch } from 'react-router-dom';
 
 import { IRoute } from 'src/@types';
+import { LoadingPage } from 'src/domains/@common/LoadingPage';
 import { IUserRole } from 'src/store/user';
 
 import '../styles/app.scss';
 import { RouteWithSubRoutes } from './@common/RouteWithSubRoutes';
 
-export interface IAppProps {
-  userRole?: IUserRole,
+export interface IAppProps extends RouteComponentProps<{}> {
+  userRole?: IUserRole;
 }
 
 export interface IState {
-  error: any,
-  isLoading: boolean,
-  routes: IRoute[],
+  error: any;
+  isLoading: boolean;
+  routes: IRoute[];
 }
 
-export class App extends React.Component<IAppProps, IState> {
-  constructor(props: any){
+export class App extends React.PureComponent<IAppProps, IState> {
+  constructor(props: IAppProps){
     super(props);
     this.state = {
       error: null,
@@ -33,7 +34,6 @@ export class App extends React.Component<IAppProps, IState> {
   }
 
   public componentDidUpdate(prevProps: IAppProps, prevState: IState) {
-    console.log('prevProps', prevProps, this.props);
     if (this.props.userRole !== prevProps.userRole) {
       this.checkAccess(this.props.userRole)
     }
@@ -42,19 +42,14 @@ export class App extends React.Component<IAppProps, IState> {
   public render() {
     const { isLoading, routes } = this.state;
     if (isLoading) {
-      return <div>loading...</div>
+      return <LoadingPage />
     }
     const { userRole } = this.props;
-    console.log('render App with role', userRole, routes);
     return (
-      <React.Fragment>
-        {userRole !== 'guest' ? (
-          <Redirect to='/dashboard' from='/start' />
-        ) : (
-          <Redirect to='/' from='/dashboard' exact />
-        )}
-        {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
-      </React.Fragment>
+      <Switch>
+        {userRole !== 'guest' && <Redirect from='/start' to='/' />}
+        {routes.map(route => <RouteWithSubRoutes key={route.path + userRole} {...route} />)}
+      </Switch>
     );
   }
 

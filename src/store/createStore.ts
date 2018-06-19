@@ -20,7 +20,7 @@ export const createStore = (initialState?: any) => {
   const store = createReduxStore(
     rootReducer,
     initialState,
-    composeEnhancers(applyMiddleware(routerMiddleware(history), thunk, clientsMiddleware)),
+    composeEnhancers(applyMiddleware(thunk, routerMiddleware(history), clientsMiddleware)),
   );
 
   if (module.hot) {

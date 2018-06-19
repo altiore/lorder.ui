@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { RouteProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
-export const NoMatch = (props: RouteProps) => (
+export const NoMatch = (props: RouteComponentProps<{}>) => (
   <div>NoMatch</div>
 );
