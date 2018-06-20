@@ -6,3 +6,5 @@ import { IUiState } from './Ui'
 const baseState = (state: IState) => state.ui;
 
 export const isMagicLoginForm = createSelector(baseState, (state: IUiState): boolean => state.isMagicLoginForm);
+
+export const isLeftBarOpen = createSelector(baseState, (state: IUiState): boolean => state.isLeftBarOpen);

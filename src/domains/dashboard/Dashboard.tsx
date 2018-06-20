@@ -1,5 +1,4 @@
 import { Theme } from '@material-ui/core'
-import AppBar from '@material-ui/core/AppBar';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,229 +6,78 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { withStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import InboxIcon from '@material-ui/icons/Inbox';
-import MenuIcon from '@material-ui/icons/Menu';
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 
-const drawerWidth = 260;
-
-/* tslint:disable */
-const styles = (theme: Theme) => ({
-  root: {
-    display: 'flex',
-    flexGrow: 1,
-    height: '100%',
-    overflow: 'hidden',
-    position: 'relative',
-    zIndex: 1,
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing.unit * 7,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-  },
-});
-/* tslint:enable */
+import { New } from './new';
+import { NoMatch } from './noMatch';
+import { Projects } from './projects';
 
 export interface IDashboardProps {
   classes: any;
+  isLeftBarOpen: boolean;
+  push: (route: string) => void;
+  toggleUiSetting: (setting: 'isLeftBarOpen') => void;
   theme: Theme;
 }
 
-export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashboardProps, {open: boolean}> {
-  public state = {
-    open: false,
+export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashboardProps, {}> {
+  public handleDrawerToggle = () => {
+    this.props.toggleUiSetting('isLeftBarOpen');
   };
 
-  public handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
-
-  public handleDrawerClose = () => {
-    this.setState({ open: false });
+  public goTo = (route: string) => () => {
+    this.props.push(route)
   };
 
   public render() {
-    const { classes, theme } = this.props;
+    const { classes, isLeftBarOpen } = this.props;
 
     return (
       <div className={classes.root}>
-        <AppBar
-          position='absolute'
-          className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
-        >
-          <Toolbar disableGutters={!this.state.open}>
-            <IconButton
-              color='inherit'
-              aria-label='open drawer'
-              onClick={this.handleDrawerOpen}
-              className={classNames(classes.menuButton, this.state.open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant='title' color='inherit' noWrap>
-              Altiore
-            </Typography>
-          </Toolbar>
-        </AppBar>
         <Drawer
           variant='permanent'
           classes={{
-            paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+            paper: classNames(classes.drawerPaper, !isLeftBarOpen && classes.drawerPaperClose),
           }}
-          open={this.state.open}
+          open={isLeftBarOpen}
         >
           <div className={classes.toolbar}>
-            <IconButton onClick={this.handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {isLeftBarOpen ? <Typography variant='caption' noWrap>{'Altiore'}</Typography> : null}
+            <IconButton onClick={this.handleDrawerToggle}>
+              {isLeftBarOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
           </div>
           <Divider />
           <List component="nav">
-            <ListItem button>
+            <ListItem button onClick={this.goTo('/projects')}>
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
-              <ListItemText primary="Inbox" />
+              <ListItemText primary="Проекты" />
             </ListItem>
-            <ListItem button>
+            <ListItem button onClick={this.goTo('/profile')}>
               <ListItemIcon>
                 <DraftsIcon />
               </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
+              <ListItemText primary="Профайл" />
             </ListItem>
           </List>
         </Drawer>
         <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Typography noWrap>{'Привет! Здесь будет какой-то контент.'}</Typography>
+          <Switch>
+            <Route path={`/projects/new`} component={New} />
+            <Route path={`/projects`} component={Projects} />
+            <Route component={NoMatch} />
+          </Switch>
         </main>
       </div>
     );
   }
 }
-
-export default withStyles(styles as any, { withTheme: true })(Dashboard);

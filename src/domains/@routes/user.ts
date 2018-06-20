@@ -5,7 +5,6 @@ import { Profile } from '../profile';
 export const routes = [
   {
     component: Dashboard,
-    exact: true,
     path: '/',
   },
   {
