@@ -1,0 +1,21 @@
+$loginFormBackGroundColor: #1E1E2A;
+
+.wrapper {
+  align-items: center;
+  background-color: $loginFormBackGroundColor;
+  display: flex;
+  justify-content: center;
+  width: 330px;
+}
+
+.form {
+  padding-bottom: 18px;
+  width: 300px;
+}
+
+.title {
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+}

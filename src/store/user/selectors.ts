@@ -6,3 +6,5 @@ import { IUserRole, User } from './User';
 const baseState = (state: IState) => state.user;
 
 export const userRole = createSelector(baseState, (state: User): IUserRole => state.role);
+
+export const userToken = createSelector(baseState, (state: User): string => state.token);

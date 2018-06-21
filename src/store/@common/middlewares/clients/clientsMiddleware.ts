@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-// const get = require('lodash/get');
 import { multiClientMiddleware } from 'redux-axios-middleware';
 
+import { userToken } from 'src/store/user';
 import { api } from './api';
 
 export interface IStoreInfo {
@@ -20,9 +20,9 @@ export default multiClientMiddleware(
     interceptors: {
       request: [
         ({ getState, dispatch, getSourceAction }: IStoreInfo, req: AxiosRequestConfig) => {
-          const token = getState().user.token;
+          const token = userToken(getState());
           if (token) {
-            req.headers.Authorization = token;
+            req.headers.Authorization = 'Bearer ' + token;
           }
 
           return req;

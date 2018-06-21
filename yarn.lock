@@ -6704,6 +6704,10 @@ redux-axios-middleware@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/redux-axios-middleware/-/redux-axios-middleware-4.0.0.tgz#81951c3d9adce6f83ef892fd1568571cebe4a336"
 
+redux-form-validators@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/redux-form-validators/-/redux-form-validators-2.7.1.tgz#b443b16d144fa5c20d72d52415b091da09b2cb29"
+
 redux-form@7.4.2:
   version "7.4.2"
   resolved "https://registry.yarnpkg.com/redux-form/-/redux-form-7.4.2.tgz#d6061088fb682eb9fc5fb9749bd8b102f03154b0"

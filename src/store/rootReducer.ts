@@ -5,12 +5,14 @@ import { combineReducers } from 'redux';
 import { FormStateMap, reducer as form } from 'redux-form';
 import { persistReducer } from 'redux-persist';
 
+import { IProjectState, projects } from './projects'
 import { IUiState, uiReducer } from './ui';
 import { IUserState, user } from './user';
 
 export interface IState {
   form: FormStateMap;
   notifications: NotificationsState,
+  projects: IProjectState,
   router: RouterState;
   ui: IUiState;
   user: IUserState;
@@ -32,6 +34,7 @@ const persistConfig = {
 export const rootReducer = persistReducer(persistConfig, combineReducers<IState>({
   form,
   notifications,
+  projects,
   router: routerReducer,
   ui: uiReducer,
   user,

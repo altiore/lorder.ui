@@ -11,7 +11,7 @@ const getAuthActivateHandler = (state: IUserState) => {
 const getAuthActivateSuccessHandler = (state: IUserState, { payload }: any): IUserState => {
   const newUser = new User({
     ...state,
-    ...payload,
+    ...payload.data,
     isAuth: true,
     isLoading: false,
     role: 'user',
