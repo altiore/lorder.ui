@@ -1,3 +1,5 @@
+import { createAction } from 'redux-actions';
+
 import { requestActions } from 'src/store/@common/requestActions';
 
 export interface IPostAuthMagicData {
@@ -9,6 +11,10 @@ export const postAuthMagic = requestActions<IPostAuthMagicData>('USER/SEND_MAGIC
     data,
     method: 'POST',
     url: '/auth/magic',
+  },
+  success: {
+    message: 'Проверьте email, чтоб продолжить работу',
+    title: 'Ссылка отправлена!',
   },
 }));
 
@@ -26,5 +32,7 @@ export const logIn = requestActions('USER/LOGIN', (data: { username: string, pas
     url: '/login',
   },
 }));
+
+export const logOut = createAction('USER/LOGOUT');
 
 export * from './thunk';

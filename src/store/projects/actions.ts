@@ -6,6 +6,11 @@ export interface IPostProjectData {
 }
 
 export const postProject = requestActions<IPostProjectData>('PROJECTS/POST', ({ monthlyBudget, title }: IPostProjectData) => ({
+  error: {
+    message: 'Не удалось сохранить проект',
+    title: 'Неудача',
+  },
+  form: 'ProjectForm',
   request: {
     data: {
       monthlyBudget: monthlyBudget && parseInt(monthlyBudget as string, 0),
@@ -14,6 +19,8 @@ export const postProject = requestActions<IPostProjectData>('PROJECTS/POST', ({ 
     method: 'POST',
     url: '/projects',
   },
+  success: {
+    message: 'Добавьте варианты задач для проекта, чтобы продолжить',
+    title: 'Новый проект успешно создан!',
+  },
 }));
-
-export * from './thunk'

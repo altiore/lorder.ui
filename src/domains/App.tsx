@@ -49,6 +49,7 @@ export class App extends React.PureComponent<IAppProps, IState> {
       <Switch>
         {userRole !== 'guest' && <Redirect from='/start' to='/' />}
         {routes.map(route => <RouteWithSubRoutes key={route.path + userRole} {...route} />)}
+        {userRole === 'guest' && <Redirect to='/' />}
       </Switch>
     );
   }

@@ -1,0 +1,1 @@
+export const onSubmitForm = <T = any>(action: (v: T) => any) => (values: T, dispatch: any) => dispatch(action(values));

@@ -1,5 +1,4 @@
 import { Login } from '../login';
-import { NoMatch } from '../noMatch';
 import { Start } from '../start';
 
 export const routes = [
@@ -11,8 +10,5 @@ export const routes = [
   {
     component: Start,
     path: '/start/:identifier',
-  },
-  {
-    component: NoMatch,
   },
 ];
