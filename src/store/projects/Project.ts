@@ -1,13 +1,11 @@
-import map from 'lodash-es/map'
+import map from 'lodash-es/map';
 
-export interface IProjectState {
-  title: string;
-  monthlyBudget?: number;
-}
-
-export class Project implements IProjectState {
+export class Project {
+  public readonly id?: number;
   public readonly title: string;
   public readonly monthlyBudget?: number;
+  public readonly owner?: any;
+  public readonly phases?: any[];
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

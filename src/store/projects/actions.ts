@@ -24,3 +24,9 @@ export const postProject = requestActions<IPostProjectData>('PROJECTS/POST', ({ 
     title: 'Новый проект успешно создан!',
   },
 }));
+
+export const getAllProjects = requestActions('PROJECTS/GET_ALL', () => ({
+  request: {
+    url: '/projects',
+  },
+}));

@@ -9,7 +9,7 @@ import * as s from './style.m.scss';
 const ProjectForm = reduxForm<{}, IProjectFormProps>({
   form: 'ProjectForm',
   onSubmit: onSubmitForm<IPostProjectData>(postProject),
-  onSubmitSuccess: (res) => alert('Здесь должен быть переход на следующий шаг'),
-})(CSSModules(ProjectFormJsx, s));
+  onSubmitSuccess: (res, dispatch, { goToNext }) => goToNext(),
+})(CSSModules(ProjectFormJsx, s) as any);
 
 export { ProjectForm, IProjectFormProps };

@@ -12,13 +12,17 @@ import { RouteComponentProps } from 'react-router-dom';
 import { ProjectForm } from './projectForm';
 
 function getSteps() {
-  return ['Создать Проект', 'Выбрать типы задач', 'Пригласить участников'];
+  return [
+    'Создать Проект',
+    'Выбрать Типы Задач',
+    'Пригласить участников',
+  ];
 }
 
-function getStepContent(step: number) {
+function getStepContent(step: number, handleGoToStep: any) {
   switch (step) {
     case 0:
-      return <ProjectForm />;
+      return <ProjectForm goToNext={handleGoToStep(1)} />;
     case 1:
       return 'An ad group contains one or more ads which target a shared set of keywords.';
     case 2:
@@ -33,13 +37,15 @@ function getStepContent(step: number) {
 
 export interface INewProps {
   classes: any;
-  submitProjectForm: () => void,
+  submitProjectForm: any,
 }
 
 export class New extends React.Component<RouteComponentProps<{}> & INewProps, { activeStep: number }> {
   public state = {
     activeStep: 0,
   };
+
+  public handleGoToStep = (activeStep: number) => () => this.setState({ activeStep });
 
   public handleNext = () => {
     if (this.state.activeStep === 0) {
@@ -78,7 +84,7 @@ export class New extends React.Component<RouteComponentProps<{}> & INewProps, { 
                   <Step key={label}>
                     <StepLabel>{label}</StepLabel>
                     <StepContent>
-                      {getStepContent(index)}
+                      {getStepContent(index, this.handleGoToStep)}
                       <div className={classes.actionsContainer}>
                         <div>
                           <Button

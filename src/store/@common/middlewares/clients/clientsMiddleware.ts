@@ -79,7 +79,7 @@ export default multiClientMiddleware(
     onComplete: ({ action, next, getState, dispatch }: any, actionOptions: any) => {
       const status = get(action, 'error.response.status', get(action, 'payload.status'));
       if (status >= 400) {
-        if (get(action, 'error.response.status') === 401) {
+        if (status === 401) {
           dispatch(error({
             message: 'Пожалуйста, авторизуйтесь снова, чтоб продолжить пользоваться сервисом',
             position: 'tr',

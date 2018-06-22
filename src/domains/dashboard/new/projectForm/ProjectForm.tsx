@@ -8,6 +8,7 @@ const FaPaper = require('react-icons/lib/fa/paper-plane-o');
 import { Input } from 'liw-components/Input';
 
 export interface IProjectFormProps {
+  goToNext: any,
   title?: string,
   buttonText?: string,
 }

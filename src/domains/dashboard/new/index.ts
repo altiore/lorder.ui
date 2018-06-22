@@ -10,4 +10,4 @@ export const New = connect(
   {
     submitProjectForm: () => submit('ProjectForm'),
   },
-)(withStyles(styles, { withTheme: true })(NewJsx) as any);
+)(withStyles(styles, { withTheme: true })(NewJsx));
