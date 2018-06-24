@@ -56,6 +56,6 @@
     "@types/reselect": "^2.2.0",
     "@types/webpack-env": "^1.13.6",
     "rimraf": "^2.6.2",
-    "typescript": "^3.0.0-dev.20180622"
+    "typescript": "^2.9.2"
   }
 }
