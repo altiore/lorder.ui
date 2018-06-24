@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   digit: {
     fontSize: 300,
-    margin: '50px 20px',
+    margin: '0 20px',
   },
   item: {
     alignItems: 'center',
@@ -28,6 +28,7 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     display: 'flex',
     flexFlow: 'row nowrap',
+    height: '50%',
     justifyContent: 'center',
   },
   points: {
