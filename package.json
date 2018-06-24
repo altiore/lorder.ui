@@ -9,6 +9,7 @@
     "altiore-webpack-react": "2.2.0",
     "axios": "0.18.0",
     "classnames": "2.2.6",
+    "express": "^4.16.3",
     "history": "^4.7.2",
     "liw-components": "2.2.0",
     "localforage": "^1.7.2",
