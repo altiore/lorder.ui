@@ -2,8 +2,10 @@
   "name": "altiore_contrib.ui",
   "version": "0.1.0",
   "private": true,
+  "main": "index.js",
+  "license": "UNLICENSED",
   "engines": {
-    "node": "^8.9.1"
+    "node": "8.9.0"
   },
   "dependencies": {
     "@material-ui/core": "^1.2.1",

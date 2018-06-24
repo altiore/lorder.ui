@@ -7,4 +7,4 @@ express()
   .get('/*', function(req, res){
     res.sendFile(__dirname + '/build/index.html');
   })
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  .listen(PORT)
