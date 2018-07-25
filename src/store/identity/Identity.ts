@@ -1,23 +1,23 @@
 import map from 'lodash-es/map'
 
-export type IUserRole = 'guest'|'user'|'admin'|'super-admin';
+export type IIdentityRole = 'guest'|'user'|'admin'|'super-admin';
 
-export interface IUserState {
+export interface IIdentityState {
   email?: string;
   isAuth: boolean;
   isLoading: boolean;
-  role?: IUserRole;
+  role?: IIdentityRole;
   token?: string;
 }
 
-export class User implements IUserState {
+export class Identity implements IIdentityState {
   public readonly email: string;
   public readonly isAuth: boolean = false;
   public readonly isLoading: boolean = false;
-  public readonly role: IUserRole = 'guest';
+  public readonly role: IIdentityRole = 'guest';
   public readonly token: string;
 
-  constructor(initial?: object) {
+  constructor(initial?: IIdentityState) {
     map(initial, (val: any, key: string) => {
       this[key] = val;
     });

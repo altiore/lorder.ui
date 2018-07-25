@@ -1,4 +1,4 @@
-import green from '@material-ui/core/colors/green'
+// import green from '@material-ui/core/colors/green'
 import * as React from 'react';
 import * as Notifications from 'react-notification-system-redux';
 
@@ -18,9 +18,9 @@ export class Notification extends React.Component<INotificationProps, {}> {
           margin: '10px 5px 2px 1px',
         },
 
-        success: { // Applied only to the success notification item
-          color: green.A400,
-        },
+        // success: { // Applied only to the success notification item
+        //   color: green.A400,
+        // },
       },
     };
 

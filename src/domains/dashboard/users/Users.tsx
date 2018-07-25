@@ -1,4 +1,3 @@
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
@@ -7,24 +6,23 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
-import { Project } from 'src/store/projects';
+import { IUser } from 'src/store/users';
 
 const src = 'https://cache.harvestapp.com/assets/onboarding/landing-projects@2x-e00081706c6ce0b93cf18c21c6e488f1fc913045992fc34dd18e5e290bc971cb.png';
 
-export interface IProjectsProps {
+export interface IUsersProps {
   classes: any;
-  getAllProjects: any;
-  projectList: Project[];
+  fetchUsers: any;
+  userList: IUser[];
 }
 
-export class Projects extends React.Component<RouteComponentProps<{}> & IProjectsProps, {}> {
+export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps, {}> {
   public componentDidMount() {
-    this.props.getAllProjects();
+    this.props.fetchUsers();
   }
 
   public handleRowClick = (id: number|undefined) => () => {
@@ -37,32 +35,34 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   }
 
   public render() {
-    const { classes, match, projectList } = this.props;
+    const { classes, userList } = this.props;
     return (
       <Grid container className={classes.root}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            {projectList && projectList.length ? (
+            {userList && userList.length ? (
               <Table className={classes.table}>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Название проекта</TableCell>
-                    <TableCell numeric>Месячный бюджет</TableCell>
-                    <TableCell numeric>Потрачено</TableCell>
-                    <TableCell numeric>Полная стоимость</TableCell>
-                    <TableCell style={{width: 50}} />
+                    <TableCell>Email</TableCell>
+                    <TableCell>Телефон</TableCell>
+                    <TableCell numeric>Статус</TableCell>
+                    <TableCell numeric>Способ получения средств</TableCell>
+                    <TableCell>Роль</TableCell>
+                    <TableCell style={{width: 42}} />
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {projectList.map(({ id, title, monthlyBudget }) => {
+                  {userList.map(({ id, email, tel, status, paymentMethod, roles }) => {
                     return (
                       <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
                         <TableCell component="th" scope="row">
-                          {title}
+                          {email}
                         </TableCell>
-                        <TableCell numeric>{monthlyBudget}</TableCell>
-                        <TableCell numeric>50</TableCell>
-                        <TableCell numeric>1200</TableCell>
+                        <TableCell>{tel}</TableCell>
+                        <TableCell numeric>{status}</TableCell>
+                        <TableCell numeric>{paymentMethod}</TableCell>
+                        <TableCell>{roles[0].name}</TableCell>
                         <TableCell>
                           <IconButton onClick={this.handleRemoveClick(id)} style={{height: 42}}>
                             <ClearIcon />
@@ -78,11 +78,6 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
                 <img src={src} />
               </Grid>
             )}
-            <Link to={`${match.path}/new`}>
-              <Button size='large' variant='contained' color='primary'>
-                <Typography variant='caption' noWrap>{'Создать проект'}</Typography>
-              </Button>
-            </Link>
           </Paper>
         </Grid>
       </Grid>

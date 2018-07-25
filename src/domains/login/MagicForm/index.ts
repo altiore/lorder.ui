@@ -2,7 +2,7 @@ import * as CSSModules from 'react-css-modules';
 import { reduxForm } from 'redux-form';
 
 import { onSubmitForm } from 'src/store/@common/helpers'
-import { postAuthMagic } from 'src/store/user'
+import { postAuthMagic } from 'src/store/identity'
 import { IMagicFormProps, MagicForm as MagicFormJsx } from './MagicForm';
 import * as s from './style.m.scss';
 

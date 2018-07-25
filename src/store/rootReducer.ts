@@ -6,17 +6,19 @@ import { FormStateMap, reducer as form } from 'redux-form';
 import { persistReducer } from 'redux-persist';
 
 import { DownloadList } from './@common/entities';
+import { identity, IIdentityState } from './identity';
 import { Project, projects } from './projects'
 import { IUiState, uiReducer } from './ui';
-import { IUserState, user } from './user';
+import { User, users } from './users';
 
 export interface IState {
   form: FormStateMap;
-  notifications: NotificationsState,
-  projects: DownloadList<Project>,
+  identity: IIdentityState;
+  notifications: NotificationsState;
+  projects: DownloadList<Project>;
   router: RouterState;
   ui: IUiState;
-  user: IUserState;
+  users: DownloadList<User>;
 }
 
 localForage.config({
@@ -34,9 +36,10 @@ const persistConfig = {
 
 export const rootReducer = persistReducer(persistConfig, combineReducers<IState>({
   form,
+  identity,
   notifications,
   projects,
   router: routerReducer,
   ui: uiReducer,
-  user,
+  users,
 }));

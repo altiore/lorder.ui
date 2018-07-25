@@ -9,6 +9,7 @@
   "rules": {
     "no-console": false,
     "jsx-boolean-value": ["never"],
-    "no-var-requires": false
+    "no-var-requires": false,
+    "max-classes-per-file": false
   }
 }

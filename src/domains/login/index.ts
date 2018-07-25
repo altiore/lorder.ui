@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
+import { userRole } from 'src/store/identity'
 import { isMagicLoginForm, toggleUiSetting } from 'src/store/ui'
-import { userRole } from 'src/store/user'
 
 import { Login as LoginJsx } from './Login';
 import * as s from './style.m.scss';

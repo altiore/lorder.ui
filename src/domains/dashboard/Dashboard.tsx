@@ -8,22 +8,21 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import * as classNames from 'classnames';
 import * as React from 'react';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 
-import { New } from './new';
+import { IRoute } from 'src/@types';
+import { RouteWithSubRoutes } from 'src/domains/@common/RouteWithSubRoutes';
 import { NoMatch } from './noMatch';
-import { Projects } from './projects';
 
 export interface IDashboardProps {
   classes: any;
   isLeftBarOpen: boolean;
   push: (route: string) => void;
+  routes: IRoute[];
   toggleUiSetting: (setting: 'isLeftBarOpen') => void;
   theme: Theme;
 }
@@ -38,7 +37,7 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
   };
 
   public render() {
-    const { classes, isLeftBarOpen } = this.props;
+    const { classes, isLeftBarOpen, routes } = this.props;
 
     return (
       <div className={classes.root}>
@@ -57,18 +56,14 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
           </div>
           <Divider />
           <List component="nav">
-            <ListItem button onClick={this.goTo('/projects')}>
-              <ListItemIcon>
-                <AssignmentIcon />
-              </ListItemIcon>
-              <ListItemText primary="Проекты" />
-            </ListItem>
-            <ListItem button onClick={this.goTo('/profile')}>
-              <ListItemIcon>
-                <AccountCircle />
-              </ListItemIcon>
-              <ListItemText primary="Профайл" />
-            </ListItem>
+            {routes.filter(el => el.icon).map(route => (
+              <ListItem button onClick={this.goTo(route.path)}>
+                <ListItemIcon>
+                  <route.icon />
+                </ListItemIcon>
+                <ListItemText primary={route.title} />
+              </ListItem>
+            ))}
           </List>
         </Drawer>
         <main className={classes.content}>
@@ -76,8 +71,9 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
             <Avatar alt="Remy Sharp" src="/favicon.ico" className={classes.avatar} />
           </div>
           <Switch>
-            <Route path={`/projects/new`} component={New} />
-            <Route path={`/projects`} component={Projects} />
+            {routes.map(route => (
+              <RouteWithSubRoutes key={route.path} {...route} />
+            ))}
             <Route component={NoMatch} />
           </Switch>
         </main>

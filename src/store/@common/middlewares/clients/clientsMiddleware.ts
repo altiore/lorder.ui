@@ -4,7 +4,7 @@ import { error, success } from 'react-notification-system-redux';
 import { multiClientMiddleware } from 'redux-axios-middleware';
 import { stopAsyncValidation } from 'redux-form';
 
-import { logOut, userToken } from 'src/store/user';
+import { logOut, userToken } from 'src/store/identity';
 import { parseFormErrorsFromResponse } from '../../helpers'
 import { api } from './api';
 

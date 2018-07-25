@@ -1,38 +1,38 @@
 import { handleActions } from 'redux-actions';
 
 import { getAuthActivate, logIn, logOut } from './actions';
-import { IUserState, User } from './User';
+import { Identity, IIdentityState } from './Identity';
 
-const getAuthActivateHandler = (state: IUserState) => {
+const getAuthActivateHandler = (state: IIdentityState) => {
   state.isLoading = true;
   return state;
 };
 
-const getAuthActivateSuccessHandler = (state: IUserState, { payload }: any): IUserState => {
-  const newUser = new User({
+const getAuthActivateSuccessHandler = (state: IIdentityState, { payload }: any): IIdentityState => {
+  const newUser = new Identity({
     ...state,
     ...payload.data,
     isAuth: true,
     isLoading: false,
-    role: 'user',
+    role: 'super-admin',
   });
   return newUser;
 };
 
-const getAuthActivateFailHandler = (state: IUserState) => {
+const getAuthActivateFailHandler = (state: IIdentityState) => {
   state.isLoading = false;
   return state;
 };
 
-const handleLogIn = (state: IUserState): IUserState => {
+const handleLogIn = (state: IIdentityState): IIdentityState => {
   return state;
 };
 
-const logOutHandler = (): IUserState => {
-  return new User();
+const logOutHandler = (): IIdentityState => {
+  return new Identity();
 };
 
-export const user = handleActions<IUserState, any, any>(
+export const identity = handleActions<IIdentityState, any, any>(
   {
     [getAuthActivate.toString()]: getAuthActivateHandler,
     [getAuthActivate.success]: getAuthActivateSuccessHandler,
@@ -40,5 +40,5 @@ export const user = handleActions<IUserState, any, any>(
     [logIn.toString()]: handleLogIn,
     [logOut.toString()]: logOutHandler,
   },
-  new User()
+  new Identity()
 );

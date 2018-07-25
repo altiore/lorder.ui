@@ -3,13 +3,13 @@ import { Redirect, RouteComponentProps, Switch } from 'react-router-dom';
 
 import { IRoute } from 'src/@types';
 import { LoadingPage } from 'src/domains/@common/LoadingPage';
-import { IUserRole } from 'src/store/user';
+import { IIdentityRole } from 'src/store/identity';
 
 import '../styles/app.scss';
 import { RouteWithSubRoutes } from './@common/RouteWithSubRoutes';
 
 export interface IAppProps extends RouteComponentProps<{}> {
-  userRole?: IUserRole;
+  userRole?: IIdentityRole;
 }
 
 export interface IState {
@@ -54,9 +54,15 @@ export class App extends React.PureComponent<IAppProps, IState> {
     );
   }
 
-  private checkAccess(role?: IUserRole) {
+  private checkAccess(role?: IIdentityRole) {
     let getRoutes: Promise<any>;
     switch (role) {
+      case 'admin':
+        getRoutes = import(/* webpackChunkName: "admin" */ './@routes/admin');
+        break;
+      case 'super-admin':
+        getRoutes = import(/* webpackChunkName: "super-admin" */ './@routes/super-admin');
+        break;
       case 'user':
         getRoutes = import(/* webpackChunkName: "user" */ './@routes/user');
         break;
