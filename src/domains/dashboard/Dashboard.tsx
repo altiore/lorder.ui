@@ -56,8 +56,8 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
           </div>
           <Divider />
           <List component="nav">
-            {routes.filter(el => el.icon).map(route => (
-              <ListItem button onClick={this.goTo(route.path)}>
+            {routes.filter((el: any) => el.icon).map((route: IRoute) => (
+              <ListItem key={route.path} button onClick={this.goTo(route.path)}>
                 <ListItemIcon>
                   <route.icon />
                 </ListItemIcon>
@@ -71,7 +71,7 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
             <Avatar alt="Remy Sharp" src="/favicon.ico" className={classes.avatar} />
           </div>
           <Switch>
-            {routes.map(route => (
+            {routes.map((route: IRoute) => (
               <RouteWithSubRoutes key={route.path} {...route} />
             ))}
             <Route component={NoMatch} />

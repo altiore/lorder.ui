@@ -13,27 +13,22 @@ export interface IProjectFormProps {
   buttonText?: string,
 }
 
-export class ProjectForm extends React.Component<InjectedFormProps<{}, IProjectFormProps>, {}> {
-  public render() {
-    const { handleSubmit } = this.props;
-    return (
-      <form onSubmit={handleSubmit}>
-        <Field
-          name='title'
-          component={Input}
-          icon={<FaPaper />}
-          label='Название проекта'
-          validate={[required({ msg: 'Обязательное поле' })]}
-        />
-        <Field
-          name='monthlyBudget'
-          component={Input}
-          icon={<FaMoney />}
-          label='Месячный бюджет'
-          validate={[required({ msg: 'Обязательное поле' })]}
-        />
-      </form>
-    );
-  }
-}
+export const ProjectForm: React.StatelessComponent<IProjectFormProps & InjectedFormProps<{}, IProjectFormProps>> = ({ handleSubmit }) => (
+  <form onSubmit={handleSubmit}>
+    <Field
+      name='title'
+      component={Input}
+      icon={<FaPaper />}
+      label='Название проекта'
+      validate={[required({ msg: 'Обязательное поле' })]}
+    />
+    <Field
+      name='monthlyBudget'
+      component={Input}
+      icon={<FaMoney />}
+      label='Месячный бюджет'
+      validate={[required({ msg: 'Обязательное поле' })]}
+    />
+  </form>
+);
 

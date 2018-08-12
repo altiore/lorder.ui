@@ -10,8 +10,9 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { ProjectForm } from './projectForm';
+import { TaskTypesForm } from './taskTypesForm';
 
-function getSteps() {
+function getSteps(): string[] {
   return [
     'Создать Проект',
     'Выбрать Типы Задач',
@@ -21,10 +22,10 @@ function getSteps() {
 
 function getStepContent(step: number, handleGoToStep: any) {
   switch (step) {
-    case 0:
-      return <ProjectForm goToNext={handleGoToStep(1)} />;
     case 1:
-      return 'An ad group contains one or more ads which target a shared set of keywords.';
+      return <ProjectForm goToNext={handleGoToStep(1)} />;
+    case 0:
+      return <TaskTypesForm goToNext={handleGoToStep(2)} />;
     case 2:
       return `Try out different ad text to see what brings in the most customers,
               and learn how to enhance your ads using features like ad extensions.
@@ -71,7 +72,7 @@ export class New extends React.Component<RouteComponentProps<{}> & INewProps, { 
 
   public render() {
     const { classes } = this.props;
-    const steps = getSteps();
+    const steps: string[] = getSteps() as string[];
     const { activeStep } = this.state;
 
     return (
@@ -79,7 +80,7 @@ export class New extends React.Component<RouteComponentProps<{}> & INewProps, { 
         <Grid item xs={12} sm={10} md={8} lg={7}>
           <Paper className={classes.paper}>
             <Stepper activeStep={activeStep} orientation='vertical'>
-              {steps.map((label, index) => {
+              {steps.map((label: string, index: number) => {
                 return (
                   <Step key={label}>
                     <StepLabel>{label}</StepLabel>

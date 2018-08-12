@@ -2,12 +2,12 @@ import { reduxForm } from 'redux-form';
 
 import { onSubmitForm } from 'src/store/@common/helpers'
 import { IPostProjectData, postProject } from 'src/store/projects';
-import { IProjectFormProps, ProjectForm as ProjectFormJsx } from './ProjectForm';
+import { ITaskTypesFormProps, TaskTypesFormJsx } from './TaskTypesForm';
 
-const ProjectForm = reduxForm<{}, IProjectFormProps>({
-  form: 'ProjectForm',
+const TaskTypesForm = reduxForm<{}, ITaskTypesFormProps>({
+  form: 'TasksForm',
   onSubmit: onSubmitForm<IPostProjectData>(postProject),
   onSubmitSuccess: (res, dispatch, { goToNext }) => goToNext(),
-})(ProjectFormJsx);
+})(TaskTypesFormJsx);
 
-export { ProjectForm, IProjectFormProps };
+export { TaskTypesForm, ITaskTypesFormProps };

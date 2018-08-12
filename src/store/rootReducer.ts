@@ -8,6 +8,7 @@ import { persistReducer } from 'redux-persist';
 import { DownloadList } from './@common/entities';
 import { identity, IIdentityState } from './identity';
 import { Project, projects } from './projects'
+import { TaskType, taskTypes } from './taskTypes';
 import { IUiState, uiReducer } from './ui';
 import { User, users } from './users';
 
@@ -17,6 +18,7 @@ export interface IState {
   notifications: NotificationsState;
   projects: DownloadList<Project>;
   router: RouterState;
+  taskTypes: DownloadList<TaskType>;
   ui: IUiState;
   users: DownloadList<User>;
 }
@@ -40,6 +42,7 @@ export const rootReducer = persistReducer(persistConfig, combineReducers<IState>
   notifications,
   projects,
   router: routerReducer,
+  taskTypes,
   ui: uiReducer,
   users,
 }));
