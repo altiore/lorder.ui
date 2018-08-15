@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import Dialog from 'src/domains/@common/Dialog'
 import Notification from 'src/domains/@common/Notification'
 import { App } from './domains';
 import registerServiceWorker from './registerServiceWorker';
@@ -20,6 +21,7 @@ ReactDOM.render(
         <MuiThemeProvider theme={theme}>
           <App />
           <Notification />
+          <Dialog />
         </MuiThemeProvider>
       </ConnectedRouter>
     </PersistGate>

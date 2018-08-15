@@ -6,6 +6,7 @@ import { FormStateMap, reducer as form } from 'redux-form';
 import { persistReducer } from 'redux-persist';
 
 import { DownloadList } from './@common/entities';
+import { dialog, IDialogState } from './dialog';
 import { identity, IIdentityState } from './identity';
 import { Project, projects } from './projects'
 import { TaskType, taskTypes } from './taskTypes';
@@ -13,6 +14,7 @@ import { IUiState, uiReducer } from './ui';
 import { User, users } from './users';
 
 export interface IState {
+  dialog: IDialogState,
   form: FormStateMap;
   identity: IIdentityState;
   notifications: NotificationsState;
@@ -31,12 +33,13 @@ localForage.config({
 });
 
 const persistConfig = {
-  blacklist: ['form'],
+  blacklist: ['dialog', 'form'],
   key: 'altiore',
   storage: localForage,
 };
 
 export const rootReducer = persistReducer(persistConfig, combineReducers<IState>({
+  dialog,
   form,
   identity,
   notifications,

@@ -3,7 +3,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import { Dashboard } from '../dashboard';
 import { New } from '../dashboard/new';
-import { Projects } from '../dashboard/projects';
+import { Projects } from '../dashboard/projects/list';
 import { Users } from '../dashboard/users';
 import { Digits } from '../digits';
 import { NoMatch } from '../noMatch';

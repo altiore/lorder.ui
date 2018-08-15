@@ -10,15 +10,18 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { Project } from 'src/store/projects';
+import { CreateProjectPopup } from './CreateProjectPopup';
 
 const src = 'https://cache.harvestapp.com/assets/onboarding/landing-projects@2x-e00081706c6ce0b93cf18c21c6e488f1fc913045992fc34dd18e5e290bc971cb.png';
 
 export interface IProjectsProps {
   classes: any;
+  closeDialog: any;
   getAllProjects: any;
+  openDialog: any;
   projectList: Project[];
 }
 
@@ -29,15 +32,16 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
 
   public handleRowClick = (id: number|undefined) => () => {
     console.log('handleRowClick', id);
-  }
+  };
 
   public handleRemoveClick = (id: number|undefined) => (e: any) => {
     e.stopPropagation();
     console.log('handleRemoveClick', id);
-  }
+  };
 
   public render() {
-    const { classes, match, projectList } = this.props;
+    const { classes, openDialog, projectList } = this.props;
+    const createProjectFunction = () => openDialog(CreateProjectPopup);
     return (
       <Grid container className={classes.root}>
         <Grid item xs={12}>
@@ -78,11 +82,9 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
                 <img src={src} />
               </Grid>
             )}
-            <Link to={`${match.path}/new`}>
-              <Button size='large' variant='contained' color='primary'>
-                <Typography variant='caption' noWrap>{'Создать проект'}</Typography>
-              </Button>
-            </Link>
+            <Button size='large' variant='contained' color='primary' onClick={createProjectFunction}>
+              <Typography variant='caption' noWrap>{'Создать проект'}</Typography>
+            </Button>
           </Paper>
         </Grid>
       </Grid>
