@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import Dialog from 'src/domains/@common/Dialog'
-import Notification from 'src/domains/@common/Notification'
+import Dialog from 'src/domains/@common/Dialog';
+import Notification from 'src/domains/@common/Notification';
 import { App } from './domains';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore } from './store/createStore';
@@ -26,6 +26,6 @@ ReactDOM.render(
       </ConnectedRouter>
     </PersistGate>
   </Provider>,
-  document.getElementById('root') as HTMLElement,
+  document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();

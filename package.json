@@ -64,7 +64,26 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/reselect": "^2.2.0",
     "@types/webpack-env": "^1.13.6",
+    "husky": "^1.0.0-rc.13",
+    "lint-staged": "^7.2.2",
+    "prettier": "1.14.2",
     "rimraf": "^2.6.2",
     "typescript": "3.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{ts,tsx}": [
+      "tslint --fix -t verbose",
+      "prettier --write --print-width 120 --single-quote --parser typescript --trailing-comma es5",
+      "git add"
+    ]
   }
 }
