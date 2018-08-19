@@ -2,8 +2,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import { Dashboard } from '../dashboard';
-import { New } from '../dashboard/new';
 import { Projects } from '../dashboard/projects/list';
+import { Project } from '../dashboard/projects/one';
 import { Users } from '../dashboard/users';
 import { Digits } from '../digits';
 import { NoMatch } from '../noMatch';
@@ -23,15 +23,15 @@ export const routes = [
     path: '/',
     routes: [
       {
-        component: New,
-        path: '/projects/new',
-      },
-      {
         component: Projects,
         exact: true,
         icon: AssignmentIcon,
         path: '/projects',
         title: 'Проекты',
+      },
+      {
+        component: Project,
+        path: '/projects/:projectId',
       },
       {
         component: Users,

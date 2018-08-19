@@ -3,17 +3,16 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from 'src/store/dialog';
-import { getAllProjects, projectList } from 'src/store/projects';
+import { selectedProject } from 'src/store/projects';
 import { ProjectJsx } from './Project';
 import { styles } from './styles';
 
-export const Projects = connect(
+export const Project = connect(
   createStructuredSelector({
-    projectList,
+    project: selectedProject,
   }),
   {
     closeDialog,
-    getAllProjects,
     openDialog,
   }
 )(withStyles(styles, { withTheme: true })(ProjectJsx));
