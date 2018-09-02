@@ -8,13 +8,13 @@ import { persistReducer } from 'redux-persist';
 import { DownloadList } from './@common/entities';
 import { dialog, IDialogState } from './dialog';
 import { identity, IIdentityState } from './identity';
-import { Project, projects } from './projects'
-import { TaskType, taskTypes } from './taskTypes';
+import { Project, projects } from './projects';
+import { TaskType, taskTypes } from './task-types';
 import { IUiState, uiReducer } from './ui';
 import { User, users } from './users';
 
 export interface IState {
-  dialog: IDialogState,
+  dialog: IDialogState;
   form: FormStateMap;
   identity: IIdentityState;
   notifications: NotificationsState;
@@ -26,10 +26,10 @@ export interface IState {
 }
 
 localForage.config({
-  description : 'Altiore contribution version 1.0',
-  name        : 'altiore',
-  storeName   : 'contribution',
-  version     : 1.0,
+  description: 'Altiore contribution version 1.0',
+  name: 'altiore',
+  storeName: 'contribution',
+  version: 1.0,
 });
 
 const persistConfig = {
@@ -38,14 +38,17 @@ const persistConfig = {
   storage: localForage,
 };
 
-export const rootReducer = persistReducer(persistConfig, combineReducers<IState>({
-  dialog,
-  form,
-  identity,
-  notifications,
-  projects,
-  router: routerReducer,
-  taskTypes,
-  ui: uiReducer,
-  users,
-}));
+export const rootReducer = persistReducer(
+  persistConfig,
+  combineReducers<IState>({
+    dialog,
+    form,
+    identity,
+    notifications,
+    projects,
+    router: routerReducer,
+    taskTypes,
+    ui: uiReducer,
+    users,
+  })
+);

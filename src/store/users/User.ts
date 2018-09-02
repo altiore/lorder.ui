@@ -2,12 +2,12 @@ import map from 'lodash-es/map';
 
 export interface IUserRole {
   id: number;
-  name: 'user'|'admin'|'super-admin';
+  name: 'user' | 'admin' | 'super-admin';
 }
 
 export class UserRole implements IUserRole {
   public readonly id: number;
-  public readonly name: 'user'|'admin'|'super-admin';
+  public readonly name: 'user' | 'admin' | 'super-admin';
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
@@ -40,10 +40,18 @@ export class User implements IUser {
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
       if (key === 'roles') {
-        this.roles = map(val, (role) => new UserRole(role))
+        this.roles = map(val, role => new UserRole(role));
       } else {
         this[key] = val;
       }
     });
+  }
+
+  public get userName() {
+    return this.email;
+  }
+
+  public get role() {
+    return 'user';
   }
 }

@@ -1,4 +1,4 @@
 export * from './actions';
 export * from './reducer';
 export * from './selectors';
-export * from './TaskType';
+export * from './task-type';

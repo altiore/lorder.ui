@@ -12,5 +12,5 @@ export const Users = connect(
   }),
   {
     fetchUsers,
-  },
-)(withStyles(styles, { withTheme: true })(UsersJsx));
+  }
+)(withStyles(styles, { withTheme: true })(UsersJsx) as any);

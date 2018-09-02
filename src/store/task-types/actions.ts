@@ -35,3 +35,16 @@ export const deleteTaskType = requestActions('TASK_TYPES/DELETE', (taskTypeId: n
     url: `/task-types/${taskTypeId}`,
   },
 }));
+
+export const addTaskTypesToProject = requestActions(
+  'TASK_TYPES/ADD_TO_PROJECT',
+  ({ projectId, taskTypes }: { projectId: number; taskTypes: number[] }) => ({
+    projectId,
+    request: {
+      data: { taskTypes },
+      method: 'PUT',
+      url: `/projects/${projectId}/task-types`,
+    },
+    taskTypes,
+  })
+);

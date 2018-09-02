@@ -16,6 +16,7 @@ export const identifier = createSelector(match('/start/:identifier'), (state: IM
   get(state, 'params.identifier')
 );
 
-export const projectId = createSelector(match('/projects/:projectId'), state =>
-  parseInt(get(state, 'params.projectId', ''), 0)
+export const projectId = createSelector(
+  match('/projects/:projectId'),
+  (state): number => parseInt(get(state, 'params.projectId', ''), 0)
 );

@@ -1,4 +1,3 @@
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
@@ -8,34 +7,31 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
+import get from 'lodash-es/get';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Page } from 'src/domains/@common/Page';
-import { Project } from 'src/store/projects';
-import { CreateProjectPopup } from './CreateProjectPopup';
+import { TaskType } from 'src/store/task-types';
+import { TaskTypesForm } from './TaskTypesForm';
 
-const src =
-  'https://cache.harvestapp.com/assets/onboarding/landing-projects@2x-e00081706c6ce0b93cf18c21c6e488f1fc913045992fc34dd18e5e290bc971cb.png';
-
-export interface IProjectsProps {
+export interface IProjectTaskTypesProps {
   classes: any;
   closeDialog: any;
-  getAllProjects: any;
+  getAllTaskTypes: any;
+  getTaskTypeById: any;
   goToProject: any;
   openDialog: any;
-  projectList: Project[];
+  projectTaskTypes: TaskType[];
 }
 
-export class Projects extends React.Component<RouteComponentProps<{}> & IProjectsProps, {}> {
+export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}> & IProjectTaskTypesProps, {}> {
   public componentDidMount() {
-    this.props.getAllProjects();
+    this.props.getAllTaskTypes();
   }
 
   public handleRowClick = (id: number | undefined) => () => {
-    this.props.goToProject(id);
+    console.log('clicked by row with id', id);
   };
 
   public handleRemoveClick = (id: number | undefined) => (e: any) => {
@@ -44,7 +40,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   };
 
   public handleChangePage = (...args: any[]) => {
-    console.log('handleChangePage', args);
+    // console.log('handleChangePage 333', args);
   };
 
   public handleChangeRowsPerPage = (...args: any[]) => {
@@ -52,31 +48,25 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   };
 
   public render() {
-    const { classes, openDialog, projectList } = this.props;
-    const createProjectFunction = () => openDialog(CreateProjectPopup);
+    const { classes, getTaskTypeById, projectTaskTypes } = this.props;
     return (
-      <Page>
-        {projectList && projectList.length ? (
+      <div className={classes.root}>
+        {projectTaskTypes ? (
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell>Название проекта</TableCell>
-                <TableCell numeric>Месячный бюджет</TableCell>
-                <TableCell numeric>Потрачено</TableCell>
-                <TableCell numeric>Полная стоимость</TableCell>
-                <TableCell style={{ width: 50 }} />
+                <TableCell>Название</TableCell>
+                <TableCell numeric>Количество задач</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {projectList.slice(0, 10).map(({ id, title, monthlyBudget }) => {
+              {projectTaskTypes.slice(0, 10).map(({ id }) => {
                 return (
                   <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
                     <TableCell component="th" scope="row">
-                      {title}
+                      {get(getTaskTypeById(id), 'title')}
                     </TableCell>
-                    <TableCell numeric>{monthlyBudget}</TableCell>
-                    <TableCell numeric>50</TableCell>
-                    <TableCell numeric>1200</TableCell>
+                    <TableCell numeric>{id}</TableCell>
                     <TableCell>
                       <IconButton onClick={this.handleRemoveClick(id)} style={{ height: 42 }}>
                         <ClearIcon />
@@ -90,7 +80,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
               <TableRow>
                 <TablePagination
                   colSpan={3}
-                  count={projectList.length}
+                  count={projectTaskTypes.length}
                   rowsPerPage={10}
                   page={1}
                   onChangePage={this.handleChangePage}
@@ -102,15 +92,11 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
           </Table>
         ) : (
           <Grid item xs={12}>
-            <img src={src} />
+            ...loading
           </Grid>
         )}
-        <Button size="large" variant="contained" color="primary" onClick={createProjectFunction}>
-          <Typography variant="caption" noWrap>
-            {'Создать проект'}
-          </Typography>
-        </Button>
-      </Page>
+        <TaskTypesForm />
+      </div>
     );
   }
 }

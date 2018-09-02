@@ -10,14 +10,9 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { ProjectForm } from './projectForm';
-import { TaskTypesForm } from './taskTypesForm';
 
 function getSteps(): string[] {
-  return [
-    'Создать Проект',
-    'Выбрать Типы Задач',
-    'Пригласить участников',
-  ];
+  return ['Создать Проект', 'Выбрать Типы Задач', 'Пригласить участников'];
 }
 
 function getStepContent(step: number, handleGoToStep: any) {
@@ -25,7 +20,7 @@ function getStepContent(step: number, handleGoToStep: any) {
     case 1:
       return <ProjectForm goToNext={handleGoToStep(1)} />;
     case 0:
-      return <TaskTypesForm goToNext={handleGoToStep(2)} />;
+      return 'Task Type Form';
     case 2:
       return `Try out different ad text to see what brings in the most customers,
               and learn how to enhance your ads using features like ad extensions.
@@ -38,7 +33,7 @@ function getStepContent(step: number, handleGoToStep: any) {
 
 export interface INewProps {
   classes: any;
-  submitProjectForm: any,
+  submitProjectForm: any;
 }
 
 export class New extends React.Component<RouteComponentProps<{}> & INewProps, { activeStep: number }> {
@@ -76,10 +71,10 @@ export class New extends React.Component<RouteComponentProps<{}> & INewProps, { 
     const { activeStep } = this.state;
 
     return (
-      <Grid container spacing={24} alignItems='center' justify='center'>
+      <Grid container spacing={24} alignItems="center" justify="center">
         <Grid item xs={12} sm={10} md={8} lg={7}>
           <Paper className={classes.paper}>
-            <Stepper activeStep={activeStep} orientation='vertical'>
+            <Stepper activeStep={activeStep} orientation="vertical">
               {steps.map((label: string, index: number) => {
                 return (
                   <Step key={label}>
@@ -88,16 +83,12 @@ export class New extends React.Component<RouteComponentProps<{}> & INewProps, { 
                       {getStepContent(index, this.handleGoToStep)}
                       <div className={classes.actionsContainer}>
                         <div>
-                          <Button
-                            disabled={activeStep === 0}
-                            onClick={this.handleBack}
-                            className={classes.button}
-                          >
+                          <Button disabled={activeStep === 0} onClick={this.handleBack} className={classes.button}>
                             Назад
                           </Button>
                           <Button
-                            variant='contained'
-                            color='primary'
+                            variant="contained"
+                            color="primary"
                             onClick={this.handleNext}
                             className={classes.button}
                           >

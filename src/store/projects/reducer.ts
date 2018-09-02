@@ -1,7 +1,9 @@
 import { AxiosResponse } from 'axios';
+import get from 'lodash-es/get';
 import { Action, handleActions } from 'redux-actions';
 
 import { DownloadList } from '../@common/entities';
+import { addTaskTypesToProject, TaskType } from '../task-types';
 import { getAllProjects, postProject } from './actions';
 import { Project } from './Project';
 
@@ -28,36 +30,38 @@ const getAllProjectsFailHandler = (state: S): S => {
   return new DownloadList();
 };
 
-// const postProjectHandler = (state: DownloadList, { payload }: any) => {
-//   return new Project({
-//     ...state,
-//     ...payload,
-//   });
-// };
-
 const postProjectSuccessHandler = (state: DownloadList, { payload }: Action<AxiosResponse>) => {
-  console.log('postProjectSuccessHandler', payload);
   return new DownloadList({
     ...state,
     list: payload ? [...state.list, new Project(payload.data)] : state.list,
   });
 };
 
-// const postProjectFailHandler = (state: DownloadList, { error }: any) => {
-//   console.log('postProjectFailHandler', error);
-//   return new Project({
-//     ...state,
-//   })
-// };
+const addTaskTypesToProjectHandler = (state: DownloadList, { payload }: any) => {
+  const index = state.list.findIndex(el => get(payload, 'projectId') === el.id);
+  return new DownloadList({
+    ...state,
+    list: [
+      ...state.list.slice(0, index),
+      {
+        ...state.list[index],
+        projectTaskTypes: [
+          ...state.list[index].projectTaskTypes,
+          ...get(payload, 'taskTypes', []).map((id: number) => new TaskType({ id })),
+        ],
+      },
+      ...state.list.slice(index + 1),
+    ],
+  });
+};
 
 export const projects = handleActions<S, P>(
   {
-    // [postProject.toString()]: postProjectHandler,
     [postProject.success]: postProjectSuccessHandler,
-    // [postProject.fail]: postProjectFailHandler,
     [getAllProjects.toString()]: getAllProjectsHandler,
     [getAllProjects.success]: getAllProjectsSuccessHandler,
     [getAllProjects.fail]: getAllProjectsFailHandler,
+    [addTaskTypesToProject.toString()]: addTaskTypesToProjectHandler,
   },
   new DownloadList()
 );

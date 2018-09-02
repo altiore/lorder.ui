@@ -7,12 +7,16 @@ import { selectedProject } from 'src/store/projects';
 import { ProjectJsx } from './Project';
 import { styles } from './styles';
 
+const mapState = createStructuredSelector({
+  project: selectedProject,
+});
+
+const mapDispatch = {
+  closeDialog,
+  openDialog,
+};
+
 export const Project = connect(
-  createStructuredSelector({
-    project: selectedProject,
-  }),
-  {
-    closeDialog,
-    openDialog,
-  }
+  mapState,
+  mapDispatch
 )(withStyles(styles, { withTheme: true })(ProjectJsx));

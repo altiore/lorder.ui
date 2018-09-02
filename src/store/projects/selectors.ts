@@ -13,10 +13,14 @@ export const projectsIsLoading = createSelector(baseState, (state: DownloadList)
 
 export const projectList = createSelector(baseState, (state: DownloadList<Project>): Project[] => state.list);
 
-export const selectedProject = createSelector([projectList, projectId], (projects, id) => {
-  console.log('selectedProject selector', {
-    id,
-    projects,
-  });
-  return id && projects.find(el => el.id === id);
-});
+export const selectedProject = createSelector(
+  [projectList, projectId],
+  (projects, id) => id && projects.find(el => el.id === id)
+);
+
+export const projectMembers = createSelector(selectedProject, (project: Project) => project && project.projectMembers);
+
+export const projectTaskTypes = createSelector(
+  selectedProject,
+  (project: Project) => project && project.projectTaskTypes
+);
