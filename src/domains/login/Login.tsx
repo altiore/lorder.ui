@@ -15,26 +15,16 @@ export class Login extends React.PureComponent<ILoginProps, {}> {
   public render() {
     const { isMagicLoginForm } = this.props;
     return (
-      <div styleName='login'>
-        <div styleName='form'>
-          {isMagicLoginForm ? (
-            <MagicForm
-              title='Отправить магическую ссылку'
-              buttonText='Отправить'
-            />
-          ) : (
-            <LoginForm
-              title='Форма входа'
-              buttonText='Войти'
-            />
-          )}
+      <div styleName="login">
+        <div styleName="form">
+          {isMagicLoginForm ? <MagicForm buttonText="Отправить магическую ссылку" /> : <LoginForm buttonText="Войти" />}
           <Button onClick={this.toggleMagic} color={'secondary'}>
-            {isMagicLoginForm ? 'Войти с паролем' : 'Войти при помощи магической ссылки'}
+            {isMagicLoginForm ? 'Войти при помощи пароля' : 'Войти при помощи магической ссылки'}
           </Button>
         </div>
       </div>
     );
   }
 
-  private toggleMagic = () => this.props.toggleUiSetting('isMagicLoginForm')
+  private toggleMagic = () => this.props.toggleUiSetting('isMagicLoginForm');
 }
