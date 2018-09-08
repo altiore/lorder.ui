@@ -40,7 +40,7 @@
     "reselect": "3.0.1"
   },
   "scripts": {
-    "postinstall": "yarn build",
+    "postinstall": "npm run build",
     "start": "altiore start",
     "build": "altiore build",
     "test": "altiore test --env=jsdom",

@@ -21,6 +21,7 @@ import { NoMatch } from './noMatch';
 export interface IDashboardProps {
   classes: any;
   isLeftBarOpen: boolean;
+  logOut: () => void;
   push: (route: string) => void;
   routes: IRoute[];
   toggleUiSetting: (setting: 'isLeftBarOpen') => void;
@@ -33,23 +34,27 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
   };
 
   public goTo = (route: string) => () => {
-    this.props.push(route)
+    this.props.push(route);
   };
 
   public render() {
-    const { classes, isLeftBarOpen, routes } = this.props;
+    const { classes, isLeftBarOpen, logOut, routes } = this.props;
 
     return (
       <div className={classes.root}>
         <Drawer
-          variant='permanent'
+          variant="permanent"
           classes={{
             paper: classNames(classes.drawerPaper, !isLeftBarOpen && classes.drawerPaperClose),
           }}
           open={isLeftBarOpen}
         >
-          <div className={classes.toolbar} style={{justifyContent: isLeftBarOpen ? 'flex-end' : 'center'}}>
-            {isLeftBarOpen ? <Typography variant='caption' noWrap>{'Altiore'}</Typography> : null}
+          <div className={classes.toolbar} style={{ justifyContent: isLeftBarOpen ? 'flex-end' : 'center' }}>
+            {isLeftBarOpen ? (
+              <Typography variant="caption" noWrap>
+                {'Altiore'}
+              </Typography>
+            ) : null}
             <IconButton onClick={this.handleDrawerToggle}>
               {isLeftBarOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
@@ -68,7 +73,7 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar}>
-            <Avatar alt="Remy Sharp" src="/favicon.ico" className={classes.avatar} />
+            <Avatar onClick={logOut} alt="Remy Sharp" src="/favicon.ico" className={classes.avatar} />
           </div>
           <Switch>
             {routes.map((route: IRoute) => (

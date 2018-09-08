@@ -5,28 +5,71 @@ export interface IPostProjectData {
   title: string;
 }
 
-export const postProject = requestActions<IPostProjectData>('PROJECTS/POST', ({ monthlyBudget, title }: IPostProjectData) => ({
-  error: {
-    message: 'Не удалось сохранить проект',
-    title: 'Неудача',
-  },
-  form: 'ProjectForm',
-  request: {
-    data: {
-      monthlyBudget: monthlyBudget && parseInt(monthlyBudget as string, 0),
-      title,
+export const postProject = requestActions<IPostProjectData>(
+  'PROJECTS/POST',
+  ({ monthlyBudget, title }: IPostProjectData) => ({
+    error: {
+      message: 'Не удалось сохранить проект',
+      title: 'Неудача',
     },
-    method: 'POST',
-    url: '/projects',
-  },
-  success: {
-    message: 'Добавьте варианты задач для проекта, чтобы продолжить',
-    title: 'Новый проект успешно создан!',
-  },
-}));
+    form: 'ProjectForm',
+    request: {
+      data: {
+        monthlyBudget: monthlyBudget && parseInt(monthlyBudget as string, 0),
+        title,
+      },
+      method: 'POST',
+      url: '/projects',
+    },
+    success: {
+      message: 'Добавьте варианты задач для проекта, чтобы продолжить',
+      title: 'Новый проект успешно создан!',
+    },
+  })
+);
 
 export const getAllProjects = requestActions('PROJECTS/GET_ALL', () => ({
   request: {
     url: '/projects',
   },
 }));
+
+export const removeProject = requestActions('PROJECTS/REMOVE', (projectId: number) => ({
+  projectId,
+  request: {
+    method: 'DELETE',
+    url: `/projects/${projectId}`,
+  },
+}));
+
+export const fetchProjectDetails = requestActions('PROJECTS/FETCH_ONE', (projectId: number) => ({
+  request: {
+    url: `/projects/${projectId}`,
+  },
+}));
+
+export const addTaskTypeToProject = requestActions(
+  'PROJECTS/TASK_TYPES/POST',
+  ({ projectId, taskTypeId }: { projectId: number; taskTypeId: number }) => ({
+    projectId,
+    request: {
+      data: { taskTypeId },
+      method: 'POST',
+      url: `/projects/${projectId}/task-types`,
+    },
+    taskTypeId,
+  })
+);
+
+export const deleteTaskTypeFromProject = requestActions(
+  'PROJECTS/TASK_TYPES/DELETE',
+  ({ projectId, taskTypeId }: { projectId: number; taskTypeId: number }) => ({
+    projectId,
+    request: {
+      data: { taskTypeId },
+      method: 'DELETE',
+      url: `/projects/${projectId}/task-types`,
+    },
+    taskTypeId,
+  })
+);

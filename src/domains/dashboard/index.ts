@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { isLeftBarOpen, toggleUiSetting } from 'src/store/ui'
+import { logOut } from 'src/store/identity';
+import { isLeftBarOpen, toggleUiSetting } from 'src/store/ui';
 import { Dashboard as DashboardJsx } from './Dashboard';
 import { styles } from './styles';
 
@@ -12,6 +13,7 @@ export const Dashboard = connect(
     isLeftBarOpen,
   }),
   {
+    logOut,
     push,
     toggleUiSetting,
   }

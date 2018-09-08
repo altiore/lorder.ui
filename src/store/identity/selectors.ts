@@ -7,4 +7,4 @@ const baseState = (state: IState) => state.identity;
 
 export const userRole = createSelector(baseState, (state: Identity): IIdentityRole => state.role);
 
-export const userToken = createSelector(baseState, (state: Identity): string => state.token);
+export const userBearerKey = createSelector(baseState, (state: Identity): string => state.bearerKey);

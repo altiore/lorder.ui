@@ -11,4 +11,5 @@ export const deleteUser = requestActions('USERS/DELETE', (userId: number) => ({
     method: 'delete',
     url: `/users/${userId}`,
   },
+  userId,
 }));

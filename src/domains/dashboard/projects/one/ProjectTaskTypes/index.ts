@@ -1,30 +1,32 @@
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { closeDialog, openDialog } from 'src/store/dialog';
-import { projectTaskTypes } from 'src/store/projects';
+import { deleteTaskTypeFromProject, projectTaskTypes } from 'src/store/projects';
+import { projectId } from 'src/store/router';
 import { getAllTaskTypes, getTaskTypeById } from 'src/store/task-types';
 import { ProjectTaskTypesJsx } from './ProjectTaskTypes';
 import { styles } from './styles';
 
 const mapState = createStructuredSelector({
   getTaskTypeById,
+  projectId,
   projectTaskTypes,
 });
 
 const mapDispatch = {
-  closeDialog,
+  deleteTaskTypeFromProject,
   getAllTaskTypes,
-  goToPage: push,
-  openDialog,
 };
 
-const mergeProps = (state: any, { goToPage, ...restDispatch }: any, { match, ...restOwn }: any) => ({
-  ...state,
+const mergeProps = (
+  { projectId, ...restState }: any,
+  { deleteTaskTypeFromProject, ...restDispatch }: any,
+  { match, ...restOwn }: any
+) => ({
+  deleteTaskType: (taskTypeId: number) => deleteTaskTypeFromProject({ projectId, taskTypeId }),
+  ...restState,
   ...restDispatch,
-  goToProject: (id: number) => goToPage(`${match.url}/${id}`),
   ...restOwn,
 });
 

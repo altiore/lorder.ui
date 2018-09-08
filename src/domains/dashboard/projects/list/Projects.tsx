@@ -27,9 +27,15 @@ export interface IProjectsProps {
   goToProject: any;
   openDialog: any;
   projectList: Project[];
+  removeProject: any;
 }
 
 export class Projects extends React.Component<RouteComponentProps<{}> & IProjectsProps, {}> {
+  public state = {
+    page: 0,
+    perPage: 10,
+  };
+
   public componentDidMount() {
     this.props.getAllProjects();
   }
@@ -40,19 +46,22 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
 
   public handleRemoveClick = (id: number | undefined) => (e: any) => {
     e.stopPropagation();
-    console.log('handleRemoveClick', id);
+    this.props.removeProject(id);
   };
 
-  public handleChangePage = (...args: any[]) => {
-    console.log('handleChangePage', args);
+  public handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
+    this.setState({ page });
   };
 
-  public handleChangeRowsPerPage = (...args: any[]) => {
-    console.log('handleChangeRowsPerPage', args);
+  public handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
+    if (event && event.target.value) {
+      this.setState({ perPage: event.target.value });
+    }
   };
 
   public render() {
     const { classes, openDialog, projectList } = this.props;
+    const { perPage, page } = this.state;
     const createProjectFunction = () => openDialog(CreateProjectPopup);
     return (
       <Page>
@@ -68,7 +77,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
               </TableRow>
             </TableHead>
             <TableBody>
-              {projectList.slice(0, 10).map(({ id, title, monthlyBudget }) => {
+              {projectList.slice(page * perPage, (page + 1) * perPage).map(({ id, title, monthlyBudget }) => {
                 return (
                   <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
                     <TableCell component="th" scope="row">
@@ -91,11 +100,12 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
                 <TablePagination
                   colSpan={3}
                   count={projectList.length}
-                  rowsPerPage={10}
-                  page={1}
+                  rowsPerPage={perPage}
+                  page={page}
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                  // ActionsComponent={TablePaginationActionsWrapped}
+                  labelRowsPerPage={'Элементов на странице'}
+                  labelDisplayedRows={this.labelDisplayedRows}
                 />
               </TableRow>
             </TableFooter>
@@ -113,4 +123,11 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
       </Page>
     );
   }
+
+  private labelDisplayedRows = ({ from, to, count }: any) => {
+    return ''
+      .concat(from, '-')
+      .concat(to, ' из ')
+      .concat(count);
+  };
 }

@@ -7,8 +7,8 @@ pipelines:
         caches:
           - node
         script:
-          - yarn install
-          - yarn build
+          - npm install
+          - npm run build
 
   branches:
     master:
@@ -17,8 +17,8 @@ pipelines:
           caches:
             - node
           script:
-            - yarn install
-            - yarn build
+            - npm install
+            - npm run build
       - step:
           name: Deploy to altiore-staging
           deployment: staging

@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { addTaskTypeToProject } from 'src/store/projects';
 import { projectId } from 'src/store/router';
-import { addTaskTypesToProject, filteredTaskTypes } from 'src/store/task-types';
+import { filteredTaskTypes } from 'src/store/task-types';
 import { ITaskTypesFormProps, TaskTypesFormJsx } from './TaskTypesForm';
 
 const mapState = createStructuredSelector({
@@ -11,15 +12,15 @@ const mapState = createStructuredSelector({
 });
 
 const mapDispatch = {
-  addTaskTypesToProject,
+  addTaskTypeToProject,
 };
 
 const mergeProps = (
   { projectId, ...restState }: any,
-  { addTaskTypesToProject, ...restDispatch }: any,
+  { addTaskTypeToProject, ...restDispatch }: any,
   ownProps: any
 ) => ({
-  addTaskType: (taskTypeId: number) => addTaskTypesToProject({ projectId, taskTypes: [taskTypeId] }),
+  addTaskType: (taskTypeId: number) => addTaskTypeToProject({ projectId, taskTypeId }),
   ...restState,
   ...restDispatch,
   ...ownProps,

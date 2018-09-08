@@ -18,18 +18,18 @@ export const postAuthMagic = requestActions<IPostAuthMagicData>('USER/SEND_MAGIC
   },
 }));
 
-export const getAuthActivate = requestActions<string>('USER/ACTIVATE_BY_MAGIC_LINK', (identifier: string) => ({
+export const getAuthActivate = requestActions<string>('USER/ACTIVATE_BY_MAGIC_LINK', (oneTimeBearerKey: string) => ({
   request: {
-    params: { identifier },
+    params: { oneTimeBearerKey },
     url: '/auth/activate',
   },
 }));
 
-export const logIn = requestActions('USER/LOGIN', (data: { username: string, password: string }) => ({
+export const logIn = requestActions('USER/LOGIN', (data: { username: string; password: string }) => ({
   request: {
     data,
-    method: 'POST',
-    url: '/login',
+    method: 'PATCH',
+    url: '/auth/login',
   },
 }));
 

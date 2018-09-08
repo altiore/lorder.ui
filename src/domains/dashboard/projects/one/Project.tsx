@@ -12,6 +12,7 @@ import { ProjectUsers } from './ProjectUsers';
 export interface IProjectProps {
   classes: any;
   closeDialog: any;
+  fetchProjectDetails: any;
   openDialog: any;
   project: Project;
   theme: any;
@@ -21,6 +22,10 @@ export class ProjectJsx extends React.Component<RouteComponentProps<{}> & IProje
   public state = {
     value: 0,
   };
+
+  public componentDidMount() {
+    this.props.fetchProjectDetails(this.props.project.id);
+  }
 
   public handleChange = (event: any, value: number) => {
     this.setState({ value });

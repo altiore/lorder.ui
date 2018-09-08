@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions';
+import { combineActions, handleActions } from 'redux-actions';
 
 import { getAuthActivate, logIn, logOut } from './actions';
 import { Identity, IIdentityState } from './Identity';
@@ -35,7 +35,7 @@ const logOutHandler = (): IIdentityState => {
 export const identity = handleActions<IIdentityState, any, any>(
   {
     [getAuthActivate.toString()]: getAuthActivateHandler,
-    [getAuthActivate.success]: getAuthActivateSuccessHandler,
+    [combineActions(getAuthActivate.success, logIn.success) as any]: getAuthActivateSuccessHandler,
     [getAuthActivate.fail]: getAuthActivateFailHandler,
     [logIn.toString()]: handleLogIn,
     [logOut.toString()]: logOutHandler,

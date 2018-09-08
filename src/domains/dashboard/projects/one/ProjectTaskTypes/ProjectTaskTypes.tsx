@@ -17,11 +17,9 @@ import { TaskTypesForm } from './TaskTypesForm';
 
 export interface IProjectTaskTypesProps {
   classes: any;
-  closeDialog: any;
+  deleteTaskType: any;
   getAllTaskTypes: any;
   getTaskTypeById: any;
-  goToProject: any;
-  openDialog: any;
   projectTaskTypes: TaskType[];
 }
 
@@ -36,7 +34,7 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
 
   public handleRemoveClick = (id: number | undefined) => (e: any) => {
     e.stopPropagation();
-    console.log('handleRemoveClick', id);
+    this.props.deleteTaskType(id);
   };
 
   public handleChangePage = (...args: any[]) => {

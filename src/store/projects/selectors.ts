@@ -20,7 +20,4 @@ export const selectedProject = createSelector(
 
 export const projectMembers = createSelector(selectedProject, (project: Project) => project && project.projectMembers);
 
-export const projectTaskTypes = createSelector(
-  selectedProject,
-  (project: Project) => project && project.projectTaskTypes
-);
+export const projectTaskTypes = createSelector(selectedProject, (project: Project) => project && project.taskTypes);

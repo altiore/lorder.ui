@@ -10,12 +10,12 @@ export class Project {
   public owner?: any;
   public phases?: any[];
   public projectMembers: User[];
-  public projectTaskTypes: TaskType[];
+  public taskTypes: TaskType[];
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
-      if (key === 'projectTaskTypes') {
-        this[key] = map(val, projectTaskType => new TaskType(projectTaskType.taskType));
+      if (key === 'taskTypes') {
+        this[key] = map(val, taskType => new TaskType(taskType));
         return;
       }
       this[key] = val;

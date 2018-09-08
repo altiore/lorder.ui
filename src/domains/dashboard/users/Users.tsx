@@ -12,10 +12,12 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { IUser } from 'src/store/users';
 
-const src = 'https://cache.harvestapp.com/assets/onboarding/landing-projects@2x-e00081706c6ce0b93cf18c21c6e488f1fc913045992fc34dd18e5e290bc971cb.png';
+const src =
+  'https://cache.harvestapp.com/assets/onboarding/landing-projects@2x-e00081706c6ce0b93cf18c21c6e488f1fc913045992fc34dd18e5e290bc971cb.png';
 
 export interface IUsersProps {
   classes: any;
+  deleteUser: any;
   fetchUsers: any;
   userList: IUser[];
 }
@@ -25,14 +27,14 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
     this.props.fetchUsers();
   }
 
-  public handleRowClick = (id: number|undefined) => () => {
+  public handleRowClick = (id: number | undefined) => () => {
     console.log('handleRowClick', id);
-  }
+  };
 
-  public handleRemoveClick = (id: number|undefined) => (e: any) => {
+  public handleRemoveClick = (id: number | undefined) => (e: any) => {
     e.stopPropagation();
-    console.log('handleRemoveClick', id);
-  }
+    this.props.deleteUser(id);
+  };
 
   public render() {
     const { classes, userList } = this.props;
@@ -49,7 +51,7 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
                     <TableCell numeric>Статус</TableCell>
                     <TableCell numeric>Способ получения средств</TableCell>
                     <TableCell>Роль</TableCell>
-                    <TableCell style={{width: 42}} />
+                    <TableCell style={{ width: 42 }} />
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -64,7 +66,7 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
                         <TableCell numeric>{paymentMethod}</TableCell>
                         <TableCell>{roles[0].name}</TableCell>
                         <TableCell>
-                          <IconButton onClick={this.handleRemoveClick(id)} style={{height: 42}}>
+                          <IconButton onClick={this.handleRemoveClick(id)} style={{ height: 42 }}>
                             <ClearIcon />
                           </IconButton>
                         </TableCell>

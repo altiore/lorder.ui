@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from 'src/store/dialog';
-import { getAllProjects, projectList } from 'src/store/projects';
+import { getAllProjects, projectList, removeProject } from 'src/store/projects';
 import { Projects as ProjectsJsx } from './Projects';
 import { styles } from './styles';
 
@@ -17,6 +17,7 @@ export const Projects = connect(
     getAllProjects,
     goToPage: push,
     openDialog,
+    removeProject,
   },
   (state: any, { goToPage, ...restDispatch }: any, { match, ...restOwn }: any) => ({
     ...state,

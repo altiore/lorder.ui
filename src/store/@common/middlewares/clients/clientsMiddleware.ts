@@ -4,8 +4,8 @@ import { error, success } from 'react-notification-system-redux';
 import { multiClientMiddleware } from 'redux-axios-middleware';
 import { stopAsyncValidation } from 'redux-form';
 
-import { logOut, userToken } from 'src/store/identity';
-import { parseFormErrorsFromResponse } from '../../helpers'
+import { logOut, userBearerKey } from 'src/store/identity';
+import { parseFormErrorsFromResponse } from '../../helpers';
 import { api } from './api';
 
 export interface IStoreInfo {
@@ -62,9 +62,9 @@ export default multiClientMiddleware(
     interceptors: {
       request: [
         ({ getState, dispatch, getSourceAction }: IStoreInfo, req: AxiosRequestConfig) => {
-          const token = userToken(getState());
-          if (token) {
-            req.headers.Authorization = 'Bearer ' + token;
+          const bearerKey = userBearerKey(getState());
+          if (bearerKey) {
+            req.headers.Authorization = 'Bearer ' + bearerKey;
           }
 
           return req;
@@ -80,12 +80,14 @@ export default multiClientMiddleware(
       const status = get(action, 'error.response.status', get(action, 'payload.status'));
       if (status >= 400) {
         if (status === 401) {
-          dispatch(error({
-            message: 'Пожалуйста, авторизуйтесь снова, чтоб продолжить пользоваться сервисом',
-            position: 'tr',
-            title: 'Срок действия ключа истек!',
-          }));
-          dispatch(logOut())
+          dispatch(
+            error({
+              message: 'Пожалуйста, авторизуйтесь снова, чтоб продолжить пользоваться сервисом',
+              position: 'tr',
+              title: 'Срок действия ключа истек!',
+            })
+          );
+          dispatch(logOut());
         } else {
           // Если форма указана, то вставляем ошибки в форму
           const formName = get(action, 'meta.previousAction.payload.form');
@@ -104,5 +106,5 @@ export default multiClientMiddleware(
         }
       }
     },
-  },
+  }
 );

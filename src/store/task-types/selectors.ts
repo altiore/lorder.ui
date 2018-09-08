@@ -17,6 +17,8 @@ export const getTaskTypeById = createSelector(taskTypeList, (list: TaskType[]) =
   list.find(e => e.id === id)
 );
 
-export const filteredTaskTypes = createSelector([taskTypeList, projectTaskTypes], (allTaskTypes, selectedTaskTypes) =>
-  allTaskTypes.filter(tt => !~selectedTaskTypes.findIndex(e => e.id === tt.id))
+export const filteredTaskTypes = createSelector(
+  [taskTypeList, projectTaskTypes],
+  (allTaskTypes, selectedTaskTypes) =>
+    selectedTaskTypes && allTaskTypes.filter(tt => !~selectedTaskTypes.findIndex(e => e.id === tt.id))
 );
