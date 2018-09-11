@@ -1,14 +1,14 @@
 import { createAction } from 'redux-actions';
 
 import { requestActions } from 'src/store/@common/requestActions';
-import { LoginFormName, MagicFormName } from './consts';
+import { LOGIN_FORM_NAME, MAGIC_FORM_NAME } from './consts';
 
 export interface IPostAuthMagicData {
   email: string;
 }
 
 export const postAuthMagic = requestActions<IPostAuthMagicData>('USER/SEND_MAGIC_LINK', (data: IPostAuthMagicData) => ({
-  form: MagicFormName,
+  form: MAGIC_FORM_NAME,
   request: {
     data,
     method: 'POST',
@@ -20,22 +20,22 @@ export const postAuthMagic = requestActions<IPostAuthMagicData>('USER/SEND_MAGIC
   },
 }));
 
-export const getAuthActivate = requestActions<string>('USER/ACTIVATE_BY_MAGIC_LINK', (oneTimeBearerKey: string) => ({
+export const getAuthActivate = requestActions<string>('USER/ACTIVATE_BY_MAGIC_LINK', (oneTimeToken: string) => ({
   request: {
-    params: { oneTimeBearerKey },
+    params: { oneTimeToken },
     url: '/auth/activate',
   },
 }));
 
 export const logIn = requestActions('USER/LOGIN', (data: { username: string; password: string }) => ({
-  form: LoginFormName,
+  form: LOGIN_FORM_NAME,
   request: {
     data,
     method: 'PATCH',
     url: '/auth/login',
   },
   success: {
-    message: 'Вы вошли в систему',
+    message: 'Вы успешно вошли на сайт',
     title: 'Успех!',
   },
 }));
