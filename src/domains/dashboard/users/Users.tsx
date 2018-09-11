@@ -22,8 +22,9 @@ const src =
 export interface IUsersProps {
   classes: any;
   deleteUser: any;
+  findUserById: (id: number) => IUser;
   fetchUsers: any;
-  patchUser: any;
+  patchUser: (data: { user: IUser; role: string }) => void;
   userList: IUser[];
 }
 
@@ -32,14 +33,19 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
     this.props.fetchUsers();
   }
 
+  // TODO: cover with tests!!!
   public handleRowClick = (id: number | undefined) => (event: React.MouseEvent) => {
     const isOpener = get(event, 'target.dataset.role') === 'opener';
     const isChangeRole = get(event, 'target.value');
     if (isOpener) {
       return;
     }
-    if (isChangeRole) {
-      this.props.patchUser({ id, role: get(event, 'target.value') });
+    if (isChangeRole && typeof id === 'number') {
+      const user = this.props.findUserById(id);
+      if (!user) {
+        throw new Error(`Пользователь с id ${id} не был найден`);
+      }
+      this.props.patchUser({ user, role: get(event, 'target.value') });
       return;
     }
     console.log('press by row', id, event.target);
@@ -114,11 +120,6 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
       </Grid>
     );
   }
-
-  // private onRoleChange = (event: React.ChangeEvent<HTMLSelectElement>, child: any) => {
-  //   event.stopPropagation();
-  //   console.log('onRoleChange', event.target.value, child);
-  // }
 
   private renderEmpty() {
     return null;

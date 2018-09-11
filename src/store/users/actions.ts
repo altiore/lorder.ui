@@ -1,4 +1,5 @@
 import { requestActions } from 'src/store/@common/requestActions';
+import { IUser } from './User';
 
 export const fetchUsers = requestActions('USERS/FETCH_ALL', () => ({
   request: {
@@ -6,14 +7,18 @@ export const fetchUsers = requestActions('USERS/FETCH_ALL', () => ({
   },
 }));
 
-export const patchUser = requestActions('USERS/PATCH', ({ id, role }: { id: number; role: string }) => ({
+export const patchUser = requestActions('USERS/PATCH', ({ user, role }: { user: IUser; role: string }) => ({
   request: {
     data: { role },
     method: 'patch',
-    url: `/users/${id}`,
+    url: `/users/${user.id}`,
   },
   role,
-  userId: id,
+  success: {
+    message: `Роль пользователя ${user.email} успешна изменена на "${role}"`,
+    title: 'Успех!',
+  },
+  user,
 }));
 
 export const deleteUser = requestActions('USERS/DELETE', (userId: number) => ({
