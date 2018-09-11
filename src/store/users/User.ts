@@ -24,7 +24,7 @@ export interface IUser {
   paymentMethod: number;
   readonly createdAt: string;
   readonly updatedAt: string;
-  roles: IUserRole[];
+  role: string;
 }
 
 export class User implements IUser {
@@ -35,12 +35,12 @@ export class User implements IUser {
   public paymentMethod: number;
   public readonly createdAt: string;
   public readonly updatedAt: string;
-  public roles: IUserRole[];
+  public role: 'admin' | 'super-admin' | 'user';
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
       if (key === 'roles') {
-        this.roles = map(val, role => new UserRole(role));
+        this.role = { 1: 'user', 2: 'admin', 3: 'super-admin' }[val.length];
       } else {
         this[key] = val;
       }
@@ -49,9 +49,5 @@ export class User implements IUser {
 
   public get userName() {
     return this.email;
-  }
-
-  public get role() {
-    return 'user';
   }
 }
