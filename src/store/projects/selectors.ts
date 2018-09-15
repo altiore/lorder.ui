@@ -18,6 +18,6 @@ export const selectedProject = createSelector(
   (projects, id) => id && projects.find(el => el.id === id)
 );
 
-export const projectMembers = createSelector(selectedProject, (project: Project) => project && project.projectMembers);
+export const projectMembers = createSelector(selectedProject, (project: Project) => project && project.members);
 
 export const projectTaskTypes = createSelector(selectedProject, (project: Project) => project && project.taskTypes);

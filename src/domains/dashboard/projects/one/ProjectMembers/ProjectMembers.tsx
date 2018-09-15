@@ -12,27 +12,30 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { User } from 'src/store/users';
+import { AddMemberForm } from './AddMemberForm';
 
-export interface IProjectsProps {
+export interface IProjectMembersProps {
   classes: any;
   closeDialog: any;
-  goToProject: any;
+  deleteProjectMember: (id: number) => void;
   openDialog: any;
   projectMembers: User[];
 }
 
-export class ProjectUsersJsx extends React.Component<RouteComponentProps<{}> & IProjectsProps, {}> {
+export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> & IProjectMembersProps, {}> {
   public handleRowClick = (id: number | undefined) => () => {
-    this.props.goToProject(id);
+    console.log('row click', id);
   };
 
   public handleRemoveClick = (id: number | undefined) => (e: any) => {
-    e.stopPropagation();
-    console.log('handleRemoveClick', id);
+    if (typeof id === 'number') {
+      e.stopPropagation();
+      this.props.deleteProjectMember(id);
+    }
   };
 
   public handleChangePage = (...args: any[]) => {
-    console.log('handleChangePage', args);
+    // console.log('handleChangePage', args);
   };
 
   public handleChangeRowsPerPage = (...args: any[]) => {
@@ -52,9 +55,9 @@ export class ProjectUsersJsx extends React.Component<RouteComponentProps<{}> & I
               </TableRow>
             </TableHead>
             <TableBody>
-              {projectMembers.slice(0, 10).map(({ id, userName, role }) => {
+              {projectMembers.slice(0, 10).map(({ id, userName, role, email }) => {
                 return (
-                  <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
+                  <TableRow className={classes.row} key={email} hover onClick={this.handleRowClick(id)}>
                     <TableCell component="th" scope="row">
                       {userName}
                     </TableCell>
@@ -87,6 +90,7 @@ export class ProjectUsersJsx extends React.Component<RouteComponentProps<{}> & I
             ...loading
           </Grid>
         )}
+        <AddMemberForm />
       </div>
     );
   }

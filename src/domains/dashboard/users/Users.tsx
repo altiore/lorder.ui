@@ -2,7 +2,6 @@ import { green, orange, red } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,6 +12,7 @@ import get from 'lodash-es/get';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
+import { Page } from 'src/domains/@common/Page';
 import { IUser } from 'src/store/users';
 import Select from './Select';
 
@@ -59,65 +59,61 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
   public render() {
     const { classes, userList } = this.props;
     return (
-      <Grid container className={classes.root}>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            {userList && userList.length ? (
-              <Table className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Телефон</TableCell>
-                    <TableCell numeric>Статус</TableCell>
-                    <TableCell className={classes.cell} numeric>
-                      Способ получения средств
+      <Page>
+        {userList && userList.length ? (
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Email</TableCell>
+                <TableCell>Телефон</TableCell>
+                <TableCell numeric>Статус</TableCell>
+                <TableCell className={classes.cell} numeric>
+                  Способ получения средств
+                </TableCell>
+                <TableCell className={classes.cell}>Роль</TableCell>
+                <TableCell style={{ width: 42 }} />
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {userList.map(({ id, email, tel, status, paymentMethod, role }) => {
+                return (
+                  <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
+                    <TableCell component="th" scope="row">
+                      {email}
                     </TableCell>
-                    <TableCell className={classes.cell}>Роль</TableCell>
-                    <TableCell style={{ width: 42 }} />
+                    <TableCell>{tel}</TableCell>
+                    <TableCell numeric>{status}</TableCell>
+                    <TableCell className={classes.cell} numeric>
+                      {paymentMethod}
+                    </TableCell>
+                    <TableCell className={classes.cell}>
+                      <Select
+                        autoWidth
+                        renderValue={this.renderSelectValue}
+                        IconComponent={this.renderEmpty}
+                        value={role}
+                      >
+                        <MenuItem value={'user'}>User</MenuItem>
+                        <MenuItem value={'admin'}>Admin</MenuItem>
+                        <MenuItem value={'super-admin'}>Super-Admin</MenuItem>
+                      </Select>
+                    </TableCell>
+                    <TableCell>
+                      <IconButton onClick={this.handleRemoveClick(id)} style={{ height: 42 }}>
+                        <ClearIcon />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {userList.map(({ id, email, tel, status, paymentMethod, role }) => {
-                    return (
-                      <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
-                        <TableCell component="th" scope="row">
-                          {email}
-                        </TableCell>
-                        <TableCell>{tel}</TableCell>
-                        <TableCell numeric>{status}</TableCell>
-                        <TableCell className={classes.cell} numeric>
-                          {paymentMethod}
-                        </TableCell>
-                        <TableCell className={classes.cell}>
-                          <Select
-                            autoWidth
-                            renderValue={this.renderSelectValue}
-                            IconComponent={this.renderEmpty}
-                            value={role}
-                          >
-                            <MenuItem value={'user'}>User</MenuItem>
-                            <MenuItem value={'admin'}>Admin</MenuItem>
-                            <MenuItem value={'super-admin'}>Super-Admin</MenuItem>
-                          </Select>
-                        </TableCell>
-                        <TableCell>
-                          <IconButton onClick={this.handleRemoveClick(id)} style={{ height: 42 }}>
-                            <ClearIcon />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            ) : (
-              <Grid item xs={12}>
-                <img src={src} />
-              </Grid>
-            )}
-          </Paper>
-        </Grid>
-      </Grid>
+                );
+              })}
+            </TableBody>
+          </Table>
+        ) : (
+          <Grid item xs={12}>
+            <img src={src} />
+          </Grid>
+        )}
+      </Page>
     );
   }
 

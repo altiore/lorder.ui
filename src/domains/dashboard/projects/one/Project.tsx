@@ -6,8 +6,8 @@ import SwipeableViews from 'react-swipeable-views';
 
 import { Page } from 'src/domains/@common/Page';
 import { Project } from 'src/store/projects';
+import { ProjectMembers } from './ProjectMembers';
 import { ProjectTaskTypes } from './ProjectTaskTypes';
-import { ProjectUsers } from './ProjectUsers';
 
 export interface IProjectProps {
   classes: any;
@@ -42,7 +42,6 @@ export class ProjectJsx extends React.Component<RouteComponentProps<{}> & IProje
     }
     return (
       <Page>
-        <h3>{project.title}</h3>
         <div className={classes.root}>
           <Tabs
             value={this.state.value}
@@ -50,6 +49,7 @@ export class ProjectJsx extends React.Component<RouteComponentProps<{}> & IProje
             indicatorColor="primary"
             textColor="primary"
             centered
+            fullWidth
           >
             <Tab label="Типы задач" />
             <Tab label="Пользователи" />
@@ -62,7 +62,7 @@ export class ProjectJsx extends React.Component<RouteComponentProps<{}> & IProje
             onChangeIndex={this.handleChangeIndex}
           >
             <ProjectTaskTypes />
-            <ProjectUsers />
+            <ProjectMembers />
             <p>Item Three</p>
           </SwipeableViews>
         </div>

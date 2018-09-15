@@ -5,19 +5,27 @@ import { Action, ActionMeta, handleActions } from 'redux-actions';
 import { IMeta } from 'src/@types';
 import { DownloadList } from '../@common/entities';
 import { TaskType } from '../task-types';
+import { User } from '../users';
 import {
   addTaskTypeToProject,
+  deleteProjectMember,
   deleteTaskTypeFromProject,
   fetchProjectDetails,
   getAllProjects,
   postProject,
+  postProjectMember,
   removeProject,
 } from './actions';
 import { Project } from './Project';
 
 type S = DownloadList<Project>;
-type P = AxiosResponse;
-type M = IMeta<{ projectId: number }>;
+interface IM {
+  memberId: number;
+  projectId: number;
+  email: string;
+}
+type P = AxiosResponse | IM;
+type M = IMeta<{ projectId: number; email: string; memberId: number }>;
 
 const getAllProjectsHandler = (state: S): S => {
   return new DownloadList({
@@ -31,7 +39,8 @@ const getAllProjectsSuccessHandler = (state: S, { payload }: Action<P>): S => {
     ...state,
     isLoaded: true,
     isLoading: false,
-    list: payload && payload.data && payload.data.map((el: any) => new Project(el)),
+    list:
+      payload && (payload as AxiosResponse).data && (payload as AxiosResponse).data.map((el: any) => new Project(el)),
   });
 };
 
@@ -42,7 +51,7 @@ const getAllProjectsFailHandler = (state: S): S => {
 const postProjectSuccessHandler = (state: DownloadList, { payload }: Action<P>) => {
   return new DownloadList({
     ...state,
-    list: payload ? [...state.list, new Project(payload.data)] : state.list,
+    list: payload ? [...state.list, new Project((payload as AxiosResponse).data)] : state.list,
   });
 };
 
@@ -104,6 +113,96 @@ const deleteTaskTypeFromProjectHandler = (state: S, { payload }: Action<P>) => {
   });
 };
 
+const postProjectMemberHandler = (state: S, { payload }: Action<P>) => {
+  const projectIndex = state.list.findIndex(el => get(payload, 'projectId') === el.id);
+  return new DownloadList({
+    ...state,
+    list: [
+      ...state.list.slice(0, projectIndex),
+      new Project({
+        ...state.list[projectIndex],
+        members: [...state.list[projectIndex].members, new User({ email: (payload as IM).email })],
+      }),
+      ...state.list.slice(projectIndex + 1),
+    ],
+  });
+};
+
+const postProjectMemberSuccessHandler = (state: S, { payload, meta }: ActionMeta<P, M>) => {
+  const projectIndex = state.list.findIndex(el => meta.previousAction.payload.projectId === el.id);
+  const memberIndex = state.list[projectIndex].members.findIndex(el => meta.previousAction.payload.email === el.email);
+  return new DownloadList({
+    ...state,
+    list: [
+      ...state.list.slice(0, projectIndex),
+      new Project({
+        ...state.list[projectIndex],
+        members: [
+          ...state.list[projectIndex].members.slice(0, memberIndex),
+          new User((payload as AxiosResponse).data),
+          ...state.list[projectIndex].members.slice(memberIndex + 1),
+        ],
+      }),
+      ...state.list.slice(projectIndex + 1),
+    ],
+  });
+};
+
+const postProjectMemberFailHandler = (state: S, { meta }: ActionMeta<P, M>) => {
+  const projectIndex = state.list.findIndex(el => meta.previousAction.payload.projectId === el.id);
+  return new DownloadList({
+    ...state,
+    list: [
+      ...state.list.slice(0, projectIndex),
+      new Project({
+        ...state.list[projectIndex],
+        members: state.list[projectIndex].members.slice(0, state.list[projectIndex].members.length - 1),
+      }),
+      ...state.list.slice(projectIndex + 1),
+    ],
+  });
+};
+
+const deleteProjectMemberHandler = (state: S, { payload }: Action<P>) => {
+  const projectIndex = state.list.findIndex(el => (payload as IM).projectId === el.id);
+  const memberIndex = state.list[projectIndex].members.findIndex(el => (payload as IM).memberId === el.id);
+  return new DownloadList({
+    ...state,
+    list: [
+      ...state.list.slice(0, projectIndex),
+      new Project({
+        ...state.list[projectIndex],
+        members: [
+          ...state.list[projectIndex].members.slice(0, memberIndex),
+          ...state.list[projectIndex].members.slice(memberIndex + 1),
+        ],
+      }),
+      ...state.list.slice(projectIndex + 1),
+    ],
+  });
+};
+
+// TODO: add member to delete request in order to have ability revert it back if request failed
+// const deleteProjectMemberFailHandler = (state: S, { payload, meta }: ActionMeta<P, M>) => {
+//   const projectIndex = state.list.findIndex(el => meta.previousAction.payload.projectId === el.id);
+//   const memberIndex = state.list[projectIndex].members.findIndex(el => meta.previousAction.payload.email === el.email);
+//   return new DownloadList({
+//     ...state,
+//     list: [
+//       ...state.list.slice(0, projectIndex),
+//       new Project({
+//         ...state.list[projectIndex],
+//         members: [
+//           ...state.list[projectIndex].members.slice(0, memberIndex),
+//           new User((payload as AxiosResponse).data),
+//           ...state.list[projectIndex].members.slice(memberIndex + 1),
+//         ],
+//       }),
+//       ...state.list.slice(projectIndex + 1),
+//     ],
+//   });
+// };
+
 export const projects = handleActions<S, P>(
   {
     [postProject.success]: postProjectSuccessHandler,
@@ -114,6 +213,11 @@ export const projects = handleActions<S, P>(
     [removeProject.success]: removeProjectSuccessHandler,
     [fetchProjectDetails.success]: fetchProjectDetailsSuccessHandler,
     [deleteTaskTypeFromProject.toString()]: deleteTaskTypeFromProjectHandler,
+    [postProjectMember.toString()]: postProjectMemberHandler,
+    [postProjectMember.success]: postProjectMemberSuccessHandler,
+    [postProjectMember.fail]: postProjectMemberFailHandler,
+    [deleteProjectMember.toString()]: deleteProjectMemberHandler,
+    // [deleteProjectMember.fail]: deleteProjectMemberFailHandler,
   },
   new DownloadList()
 );

@@ -73,3 +73,5 @@ export const deleteTaskTypeFromProject = requestActions(
     taskTypeId,
   })
 );
+
+export * from './members/actions';

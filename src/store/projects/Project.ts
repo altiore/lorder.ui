@@ -9,13 +9,17 @@ export class Project {
   public monthlyBudget?: number;
   public owner?: any;
   public phases?: any[];
-  public projectMembers: User[];
+  public members: User[];
   public taskTypes: TaskType[];
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
       if (key === 'taskTypes') {
         this[key] = map(val, taskType => new TaskType(taskType));
+        return;
+      }
+      if (key === 'members') {
+        this[key] = map(val, member => new User(member));
         return;
       }
       this[key] = val;

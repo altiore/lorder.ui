@@ -31,11 +31,11 @@ export class User implements IUser {
   public readonly id?: number;
   public readonly email: string;
   public tel: string;
-  public readonly status: number;
+  public readonly status: number = 1;
   public paymentMethod: number;
   public readonly createdAt: string;
   public readonly updatedAt: string;
-  public role: 'admin' | 'super-admin' | 'user';
+  public role: 'admin' | 'super-admin' | 'user' = 'user';
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
