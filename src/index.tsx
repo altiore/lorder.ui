@@ -12,7 +12,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { createStore } from './store/createStore';
 import theme from './styles/materialTheme';
 
-const { store, history, persistor } = createStore();
+export const { store, history, persistor } = createStore();
 
 ReactDOM.render(
   <Provider store={store}>

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-import { IState } from '../rootReducer';
-import { IDialogState } from './Dialog'
+import { IState } from 'src/@types';
+import { IDialogState } from './Dialog';
 
 const baseState = (state: IState) => state.dialog;
 

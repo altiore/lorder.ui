@@ -3,7 +3,7 @@ import { match as IMatch } from 'react-router';
 import { createMatchSelector } from 'react-router-redux';
 import { createSelector } from 'reselect';
 
-import { IState } from '../rootReducer';
+import { IState } from 'src/@types';
 
 type IMatchIdentifier = IMatch<{
   identifier?: string;

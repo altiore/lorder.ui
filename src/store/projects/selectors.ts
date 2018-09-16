@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
+import { IState } from 'src/@types';
 import { DownloadList } from '../@common/entities';
-import { IState } from '../rootReducer';
 import { projectId } from '../router';
 import { Project } from './Project';
 

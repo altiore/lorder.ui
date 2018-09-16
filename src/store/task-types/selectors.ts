@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
+import { IState } from 'src/@types';
 import { DownloadList } from '../@common/entities';
 import { projectTaskTypes } from '../projects/selectors';
-import { IState } from '../rootReducer';
 import { TaskType } from './task-type';
 
 const baseState = (state: IState) => state.taskTypes;

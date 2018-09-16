@@ -39,6 +39,9 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
 
   public render() {
     const { classes, isLeftBarOpen, routes, logOut } = this.props;
+    if (!routes) {
+      return null;
+    }
 
     return (
       <div className={classes.root}>

@@ -1,8 +1,8 @@
 import { push } from 'react-router-redux';
 import { Dispatch } from 'redux';
 
+import { IState } from 'src/@types';
 import { identifier } from 'src/store/router';
-import { IState } from '../../rootReducer';
 import { getAuthActivate } from '../actions';
 
 export const activateUser = () => async (dispatch: Dispatch, getState: () => IState) => {

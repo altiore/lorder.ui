@@ -26,6 +26,7 @@ export const styles = (theme: Theme) =>
     content: {
       backgroundColor: theme.palette.background.default,
       flexGrow: 1,
+      overflow: 'auto',
     },
     drawerPaper: {
       position: 'relative',

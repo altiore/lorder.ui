@@ -14,7 +14,6 @@ const getAuthActivateSuccessHandler = (state: IIdentityState, { payload }: any):
     ...payload.data,
     isAuth: true,
     isLoading: false,
-    role: 'super-admin',
   });
   return newUser;
 };
