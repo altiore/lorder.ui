@@ -1,6 +1,6 @@
-import map from 'lodash-es/map'
+import map from 'lodash-es/map';
 
-export type IUiProperty = 'isMagicLoginForm' | 'isLeftBarOpen'
+export type IUiProperty = 'isMagicLoginForm' | 'isLeftBarOpen';
 
 export interface IUiState {
   isMagicLoginForm: boolean;

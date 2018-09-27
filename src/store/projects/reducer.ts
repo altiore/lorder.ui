@@ -5,7 +5,6 @@ import { Action, ActionMeta, handleActions } from 'redux-actions';
 import { IMeta } from 'src/@types';
 import { DownloadList } from '../@common/entities';
 import { TaskType } from '../task-types';
-import { User } from '../users';
 import {
   addTaskTypeToProject,
   deleteProjectMember,
@@ -16,6 +15,7 @@ import {
   postProjectMember,
   removeProject,
 } from './actions';
+import { Member } from './members/Member';
 import { Project } from './Project';
 
 type S = DownloadList<Project>;
@@ -121,7 +121,14 @@ const postProjectMemberHandler = (state: S, { payload }: Action<P>) => {
       ...state.list.slice(0, projectIndex),
       new Project({
         ...state.list[projectIndex],
-        members: [...state.list[projectIndex].members, new User({ email: (payload as IM).email })],
+        members: [
+          ...state.list[projectIndex].members,
+          new Member({
+            accessLevel: 1,
+            member: { email: (payload as IM).email },
+            status: 0,
+          }),
+        ],
       }),
       ...state.list.slice(projectIndex + 1),
     ],
@@ -130,7 +137,9 @@ const postProjectMemberHandler = (state: S, { payload }: Action<P>) => {
 
 const postProjectMemberSuccessHandler = (state: S, { payload, meta }: ActionMeta<P, M>) => {
   const projectIndex = state.list.findIndex(el => meta.previousAction.payload.projectId === el.id);
-  const memberIndex = state.list[projectIndex].members.findIndex(el => meta.previousAction.payload.email === el.email);
+  const memberIndex = state.list[projectIndex].members.findIndex(
+    el => meta.previousAction.payload.email === el.member.email
+  );
   return new DownloadList({
     ...state,
     list: [
@@ -139,7 +148,7 @@ const postProjectMemberSuccessHandler = (state: S, { payload, meta }: ActionMeta
         ...state.list[projectIndex],
         members: [
           ...state.list[projectIndex].members.slice(0, memberIndex),
-          new User((payload as AxiosResponse).data),
+          new Member((payload as AxiosResponse).data),
           ...state.list[projectIndex].members.slice(memberIndex + 1),
         ],
       }),
@@ -165,7 +174,7 @@ const postProjectMemberFailHandler = (state: S, { meta }: ActionMeta<P, M>) => {
 
 const deleteProjectMemberHandler = (state: S, { payload }: Action<P>) => {
   const projectIndex = state.list.findIndex(el => (payload as IM).projectId === el.id);
-  const memberIndex = state.list[projectIndex].members.findIndex(el => (payload as IM).memberId === el.id);
+  const memberIndex = state.list[projectIndex].members.findIndex(el => (payload as IM).memberId === el.member.id);
   return new DownloadList({
     ...state,
     list: [

@@ -11,7 +11,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { User } from 'src/store/users';
+import { Member } from 'src/store/projects/members/Member';
 import { AddMemberForm } from './AddMemberForm';
 
 export interface IProjectMembersProps {
@@ -19,7 +19,7 @@ export interface IProjectMembersProps {
   closeDialog: any;
   deleteProjectMember: (id: number) => void;
   openDialog: any;
-  projectMembers: User[];
+  projectMembers: Member[];
 }
 
 export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> & IProjectMembersProps, {}> {
@@ -51,17 +51,22 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
             <TableHead>
               <TableRow>
                 <TableCell>Ползователь</TableCell>
+                <TableCell>Активен</TableCell>
                 <TableCell>Роль</TableCell>
+                <TableCell numeric>Уровень доступа</TableCell>
+                <TableCell />
               </TableRow>
             </TableHead>
             <TableBody>
-              {projectMembers.slice(0, 10).map(({ id, userName, role, email }) => {
+              {projectMembers.slice(0, 10).map(({ status, accessLevel, member: { id, role, email } }) => {
                 return (
                   <TableRow className={classes.row} key={email} hover onClick={this.handleRowClick(id)}>
                     <TableCell component="th" scope="row">
-                      {userName}
+                      {email}
                     </TableCell>
+                    <TableCell>{status ? 'Да' : 'Нет'}</TableCell>
                     <TableCell>{role}</TableCell>
+                    <TableCell numeric>{accessLevel}</TableCell>
                     <TableCell>
                       <IconButton onClick={this.handleRemoveClick(id)} style={{ height: 42 }}>
                         <ClearIcon />
