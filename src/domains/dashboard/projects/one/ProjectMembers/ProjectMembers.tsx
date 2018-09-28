@@ -22,7 +22,17 @@ export interface IProjectMembersProps {
   projectMembers: Member[];
 }
 
-export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> & IProjectMembersProps, {}> {
+export interface IState {
+  page: number | string;
+  perPage: number | string;
+}
+
+export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> & IProjectMembersProps, IState> {
+  public state = {
+    page: 0,
+    perPage: 10,
+  };
+
   public handleRowClick = (id: number | undefined) => () => {
     console.log('row click', id);
   };
@@ -34,16 +44,19 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
     }
   };
 
-  public handleChangePage = (...args: any[]) => {
-    // console.log('handleChangePage', args);
+  public handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
+    this.setState({ page });
   };
 
-  public handleChangeRowsPerPage = (...args: any[]) => {
-    console.log('handleChangeRowsPerPage', args);
+  public handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
+    if (event && event.target.value) {
+      this.setState({ perPage: event.target.value });
+    }
   };
 
   public render() {
     const { classes, projectMembers } = this.props;
+    const { page, perPage } = this.state;
     return (
       <div>
         {projectMembers && projectMembers.length ? (
@@ -58,34 +71,37 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
               </TableRow>
             </TableHead>
             <TableBody>
-              {projectMembers.slice(0, 10).map(({ status, accessLevel, member: { id, role, email } }) => {
-                return (
-                  <TableRow className={classes.row} key={email} hover onClick={this.handleRowClick(id)}>
-                    <TableCell component="th" scope="row">
-                      {email}
-                    </TableCell>
-                    <TableCell>{status ? 'Да' : 'Нет'}</TableCell>
-                    <TableCell>{role}</TableCell>
-                    <TableCell numeric>{accessLevel}</TableCell>
-                    <TableCell numeric>
-                      <IconButton onClick={this.handleRemoveClick(id)}>
-                        <ClearIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              {projectMembers
+                .slice(page * perPage, (page + 1) * perPage)
+                .map(({ status, accessLevel, member: { id, role, email } }) => {
+                  return (
+                    <TableRow className={classes.row} key={email} hover onClick={this.handleRowClick(id)}>
+                      <TableCell component="th" scope="row">
+                        {email}
+                      </TableCell>
+                      <TableCell>{status ? 'Да' : 'Нет'}</TableCell>
+                      <TableCell>{role}</TableCell>
+                      <TableCell numeric>{accessLevel}</TableCell>
+                      <TableCell numeric>
+                        <IconButton onClick={this.handleRemoveClick(id)}>
+                          <ClearIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
             <TableFooter>
               <TableRow>
                 <TablePagination
                   colSpan={3}
                   count={projectMembers.length}
-                  rowsPerPage={10}
-                  page={1}
+                  rowsPerPage={perPage}
+                  page={page}
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                  // ActionsComponent={TablePaginationActionsWrapped}
+                  labelRowsPerPage={'Элементов на странице'}
+                  labelDisplayedRows={this.labelDisplayedRows}
                 />
               </TableRow>
             </TableFooter>
@@ -99,4 +115,11 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
       </div>
     );
   }
+
+  private labelDisplayedRows = ({ from, to, count }: any) => {
+    return ''
+      .concat(from, '-')
+      .concat(to, ' из ')
+      .concat(count);
+  };
 }

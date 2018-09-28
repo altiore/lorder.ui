@@ -23,7 +23,17 @@ export interface IProjectTaskTypesProps {
   projectTaskTypes: TaskType[];
 }
 
-export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}> & IProjectTaskTypesProps, {}> {
+export interface IState {
+  page: number | string;
+  perPage: number | string;
+}
+
+export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}> & IProjectTaskTypesProps, IState> {
+  public state = {
+    page: 0,
+    perPage: 10,
+  };
+
   public componentDidMount() {
     this.props.getAllTaskTypes();
   }
@@ -37,16 +47,19 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
     this.props.deleteTaskType(id);
   };
 
-  public handleChangePage = (...args: any[]) => {
-    // console.log('handleChangePage 333', args);
+  public handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
+    this.setState({ page });
   };
 
-  public handleChangeRowsPerPage = (...args: any[]) => {
-    console.log('handleChangeRowsPerPage', args);
+  public handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
+    if (event && event.target.value) {
+      this.setState({ perPage: event.target.value });
+    }
   };
 
   public render() {
     const { classes, getTaskTypeById, projectTaskTypes } = this.props;
+    const { page, perPage } = this.state;
     return (
       <div className={classes.root}>
         {projectTaskTypes ? (
@@ -59,7 +72,7 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
               </TableRow>
             </TableHead>
             <TableBody>
-              {projectTaskTypes.slice(0, 10).map(({ id }) => {
+              {projectTaskTypes.slice(page * perPage, (page + 1) * perPage).map(({ id }) => {
                 return (
                   <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
                     <TableCell component="th" scope="row">
@@ -80,11 +93,12 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
                 <TablePagination
                   colSpan={3}
                   count={projectTaskTypes.length}
-                  rowsPerPage={10}
-                  page={1}
+                  rowsPerPage={perPage}
+                  page={page}
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                  // ActionsComponent={TablePaginationActionsWrapped}
+                  labelRowsPerPage={'Элементов на странице'}
+                  labelDisplayedRows={this.labelDisplayedRows}
                 />
               </TableRow>
             </TableFooter>
@@ -98,4 +112,11 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
       </div>
     );
   }
+
+  private labelDisplayedRows = ({ from, to, count }: any) => {
+    return ''
+      .concat(from, '-')
+      .concat(to, ' из ')
+      .concat(count);
+  };
 }

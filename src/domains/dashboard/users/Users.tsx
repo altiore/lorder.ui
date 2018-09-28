@@ -5,7 +5,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
+import TableFooter from '@material-ui/core/TableFooter/TableFooter';
 import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import ClearIcon from '@material-ui/icons/Clear';
 import get from 'lodash-es/get';
@@ -28,7 +30,17 @@ export interface IUsersProps {
   userList: IUser[];
 }
 
-export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps, {}> {
+export interface IState {
+  page: number | string;
+  perPage: number | string;
+}
+
+export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps, IState> {
+  public state = {
+    page: 0,
+    perPage: 10,
+  };
+
   public componentDidMount() {
     this.props.fetchUsers();
   }
@@ -56,8 +68,19 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
     this.props.deleteUser(id);
   };
 
+  public handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
+    this.setState({ page });
+  };
+
+  public handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
+    if (event && event.target.value) {
+      this.setState({ perPage: event.target.value });
+    }
+  };
+
   public render() {
     const { classes, userList } = this.props;
+    const { page, perPage } = this.state;
     return (
       <Page>
         {userList && userList.length ? (
@@ -75,38 +98,54 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
               </TableRow>
             </TableHead>
             <TableBody>
-              {userList.map(({ id, email, tel, status, paymentMethod, role }) => {
-                return (
-                  <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
-                    <TableCell component="th" scope="row">
-                      {email}
-                    </TableCell>
-                    <TableCell>{tel}</TableCell>
-                    <TableCell numeric>{status}</TableCell>
-                    <TableCell className={classes.cell} numeric>
-                      {paymentMethod}
-                    </TableCell>
-                    <TableCell className={classes.cell}>
-                      <Select
-                        autoWidth
-                        renderValue={this.renderSelectValue}
-                        IconComponent={this.renderEmpty}
-                        value={role}
-                      >
-                        <MenuItem value={'user'}>User</MenuItem>
-                        <MenuItem value={'admin'}>Admin</MenuItem>
-                        <MenuItem value={'super-admin'}>Super-Admin</MenuItem>
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <IconButton onClick={this.handleRemoveClick(id)}>
-                        <ClearIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              {userList
+                .slice(page * perPage, (page + 1) * perPage)
+                .map(({ id, email, tel, status, paymentMethod, role }) => {
+                  return (
+                    <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
+                      <TableCell component="th" scope="row">
+                        {email}
+                      </TableCell>
+                      <TableCell>{tel}</TableCell>
+                      <TableCell numeric>{status}</TableCell>
+                      <TableCell className={classes.cell} numeric>
+                        {paymentMethod}
+                      </TableCell>
+                      <TableCell className={classes.cell}>
+                        <Select
+                          autoWidth
+                          renderValue={this.renderSelectValue}
+                          IconComponent={this.renderEmpty}
+                          value={role}
+                        >
+                          <MenuItem value={'user'}>User</MenuItem>
+                          <MenuItem value={'admin'}>Admin</MenuItem>
+                          <MenuItem value={'super-admin'}>Super-Admin</MenuItem>
+                        </Select>
+                      </TableCell>
+                      <TableCell>
+                        <IconButton onClick={this.handleRemoveClick(id)}>
+                          <ClearIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  colSpan={3}
+                  count={userList.length}
+                  rowsPerPage={perPage}
+                  page={page}
+                  onChangePage={this.handleChangePage}
+                  onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                  labelRowsPerPage={'Элементов на странице'}
+                  labelDisplayedRows={this.labelDisplayedRows}
+                />
+              </TableRow>
+            </TableFooter>
           </Table>
         ) : (
           <Grid item xs={12}>
@@ -133,4 +172,11 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
       </div>
     );
   }
+
+  private labelDisplayedRows = ({ from, to, count }: any) => {
+    return ''
+      .concat(from, '-')
+      .concat(to, ' из ')
+      .concat(count);
+  };
 }
