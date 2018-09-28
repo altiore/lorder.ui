@@ -54,7 +54,7 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
                 <TableCell>Активен</TableCell>
                 <TableCell>Роль</TableCell>
                 <TableCell numeric>Уровень доступа</TableCell>
-                <TableCell />
+                <TableCell numeric />
               </TableRow>
             </TableHead>
             <TableBody>
@@ -67,8 +67,8 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
                     <TableCell>{status ? 'Да' : 'Нет'}</TableCell>
                     <TableCell>{role}</TableCell>
                     <TableCell numeric>{accessLevel}</TableCell>
-                    <TableCell>
-                      <IconButton onClick={this.handleRemoveClick(id)} style={{ height: 42 }}>
+                    <TableCell numeric>
+                      <IconButton onClick={this.handleRemoveClick(id)}>
                         <ClearIcon />
                       </IconButton>
                     </TableCell>

@@ -99,7 +99,7 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
                       </Select>
                     </TableCell>
                     <TableCell>
-                      <IconButton onClick={this.handleRemoveClick(id)} style={{ height: 42 }}>
+                      <IconButton onClick={this.handleRemoveClick(id)}>
                         <ClearIcon />
                       </IconButton>
                     </TableCell>

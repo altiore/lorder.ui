@@ -87,7 +87,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
                     <TableCell numeric>50</TableCell>
                     <TableCell numeric>1200</TableCell>
                     <TableCell>
-                      <IconButton onClick={this.handleRemoveClick(id)} style={{ height: 42 }}>
+                      <IconButton onClick={this.handleRemoveClick(id)}>
                         <ClearIcon />
                       </IconButton>
                     </TableCell>
