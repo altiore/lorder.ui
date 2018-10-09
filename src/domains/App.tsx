@@ -1,17 +1,16 @@
 import * as React from 'react';
 import { Redirect, RouteComponentProps, Switch } from 'react-router-dom';
 
-import { IRoute } from 'src/@types';
+import { IRoute, ROLE } from 'src/@types';
 import { LoadingPage } from 'src/domains/@common/LoadingPage';
-import { store } from 'src/index';
-import { injectAsyncReducers } from 'src/store/createStore';
-import { IIdentityRole } from 'src/store/identity';
 
 import '../styles/app.scss';
 import { RouteWithSubRoutes } from './@common/RouteWithSubRoutes';
 
 export interface IAppProps extends RouteComponentProps<{}> {
-  userRole?: IIdentityRole;
+  // TODO: split reducers to several chunks
+  // injectAsyncReducers: (role: ROLE) => Promise<void>;
+  userRole: ROLE;
 }
 
 export interface IState {
@@ -20,7 +19,7 @@ export interface IState {
   routes: IRoute[];
 }
 
-export class App extends React.PureComponent<IAppProps, IState> {
+export class AppTsx extends React.Component<IAppProps, IState> {
   constructor(props: IAppProps) {
     super(props);
     this.state = {
@@ -35,58 +34,63 @@ export class App extends React.PureComponent<IAppProps, IState> {
     this.checkAccess(userRole);
   }
 
-  public componentDidUpdate(prevProps: IAppProps, prevState: IState) {
-    if (this.props.userRole !== prevProps.userRole) {
-      this.setState({ isLoading: true }, () => this.checkAccess(this.props.userRole));
+  public componentWillUpdate(nextProps: IAppProps, nextState: IState) {
+    if (this.props.userRole !== nextProps.userRole) {
+      this.setState({ isLoading: true }, () => this.checkAccess(nextProps.userRole));
     }
   }
 
   public render() {
     const { isLoading, routes } = this.state;
+    const { userRole } = this.props;
     if (isLoading || !routes) {
       return <LoadingPage />;
     }
-    const { userRole } = this.props;
     return (
       <Switch>
         {userRole !== 'guest' && <Redirect from="/start" to="/" />}
-        {routes.map(route => (
-          <RouteWithSubRoutes key={route.path + userRole} {...route} />
-        ))}
+        {routes.length && routes.map(route => <RouteWithSubRoutes key={route.path || 'notFound'} {...route} />)}
         {userRole === 'guest' && <Redirect to="/" />}
       </Switch>
     );
   }
 
-  private checkAccess(role?: IIdentityRole) {
-    let getRoutes: Promise<any>;
+  private checkAccess(role: ROLE = ROLE.GUEST) {
+    // TODO: split reducers to several chunks
+    // this.props.injectAsyncReducers(role).then(() => {
+    //   let getRoutes: Promise<{ routes: any }>;
+    //   switch (role) {
+    //     case ROLE.ADMIN:
+    //       getRoutes = import(/* webpackChunkName: "admin" */ './@routes/admin');
+    //       break;
+    //     case ROLE.SUPER_ADMIN:
+    //       getRoutes = import(/* webpackChunkName: "super-admin" */ './@routes/super-admin');
+    //       break;
+    //     case ROLE.USER:
+    //       getRoutes = import(/* webpackChunkName: "user" */ './@routes/user');
+    //       break;
+    //     default:
+    //       getRoutes = import(/* webpackChunkName: "guest" */ './@routes/guest');
+    //       break;
+    //   }
+    //   this.loadRoutes(getRoutes);
+    // });
+    let getRoutes: Promise<{ routes: any }>;
     switch (role) {
-      case 'admin':
+      case ROLE.ADMIN:
         getRoutes = import(/* webpackChunkName: "admin" */ './@routes/admin');
-        import(/* webpackChunkName: "admin" */ 'src/store/adminReducers').then(({ adminReducers }) => {
-          injectAsyncReducers(store, adminReducers);
-          this.loadRoutes(getRoutes);
-        });
         break;
-      case 'super-admin':
+      case ROLE.SUPER_ADMIN:
         getRoutes = import(/* webpackChunkName: "super-admin" */ './@routes/super-admin');
-        import(/* webpackChunkName: "super-admin" */ 'src/store/adminReducers').then(({ adminReducers }) => {
-          injectAsyncReducers(store, adminReducers);
-          this.loadRoutes(getRoutes);
-        });
         break;
-      case 'user':
+      case ROLE.USER:
         getRoutes = import(/* webpackChunkName: "user" */ './@routes/user');
-        import(/* webpackChunkName: "user" */ 'src/store/userReducers').then(({ userReducers }) => {
-          injectAsyncReducers(store, userReducers);
-          this.loadRoutes(getRoutes);
-        });
         break;
       default:
         getRoutes = import(/* webpackChunkName: "guest" */ './@routes/guest');
-        this.loadRoutes(getRoutes);
         break;
     }
+    this.loadRoutes(getRoutes);
   }
 
   private loadRoutes(getRoutes: Promise<{ routes: any }>) {

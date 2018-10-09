@@ -12,20 +12,21 @@ import registerServiceWorker from './registerServiceWorker';
 import { createStore } from './store/createStore';
 import theme from './styles/materialTheme';
 
-export const { store, history, persistor } = createStore();
+createStore().then(({ store, persistor, history }) => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ConnectedRouter history={history}>
+          <MuiThemeProvider theme={theme}>
+            <App />
+            <Notification />
+            <Dialog />
+          </MuiThemeProvider>
+        </ConnectedRouter>
+      </PersistGate>
+    </Provider>,
+    document.getElementById('root') as HTMLElement
+  );
+});
 
-ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <ConnectedRouter history={history}>
-        <MuiThemeProvider theme={theme}>
-          <App />
-          <Notification />
-          <Dialog />
-        </MuiThemeProvider>
-      </ConnectedRouter>
-    </PersistGate>
-  </Provider>,
-  document.getElementById('root') as HTMLElement
-);
 registerServiceWorker();

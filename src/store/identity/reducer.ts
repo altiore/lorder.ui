@@ -8,14 +8,13 @@ const getAuthActivateHandler = (state: IIdentityState) => {
   return state;
 };
 
-const getAuthActivateSuccessHandler = (state: IIdentityState, { payload }: any): IIdentityState => {
-  const newUser = new Identity({
+const getAuthActivateSuccessHandler = (state: IIdentityState, { payload, meta }: any): IIdentityState => {
+  return new Identity({
     ...state,
     ...payload.data,
     isAuth: true,
     isLoading: false,
   });
-  return newUser;
 };
 
 const getAuthActivateFailHandler = (state: IIdentityState) => {
@@ -24,6 +23,7 @@ const getAuthActivateFailHandler = (state: IIdentityState) => {
 };
 
 const handleLogIn = (state: IIdentityState): IIdentityState => {
+  state.isLoading = true;
   return state;
 };
 

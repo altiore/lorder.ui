@@ -38,7 +38,7 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
   };
 
   public render() {
-    const { classes, isLeftBarOpen, routes, logOut } = this.props;
+    const { classes, isLeftBarOpen, routes } = this.props;
     if (!routes) {
       return null;
     }
@@ -76,7 +76,7 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar}>
-            <Avatar onClick={logOut} alt="Remy Sharp" src="/favicon.ico" className={classes.avatar} />
+            <Avatar onClick={this.logOut} alt="Remy Sharp" src="/favicon.ico" className={classes.avatar} />
           </div>
           <Switch>
             {routes.map((route: IRoute) => (
@@ -88,4 +88,10 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
       </div>
     );
   }
+
+  private logOut = (e: React.SyntheticEvent) => {
+    if (e) {
+      this.props.logOut();
+    }
+  };
 }
