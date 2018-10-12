@@ -15,14 +15,14 @@ type P = AxiosResponse | IU;
 type M = IMeta<{ userId: number; user: IUser; role: string }>;
 
 const fetchUsersHandler = (state: S): S => {
-  return new DownloadList({
+  return new DownloadList(User, {
     ...state,
     isLoading: true,
   });
 };
 
 const fetchUsersSuccessHandler = (state: S, { payload }: Action<AxiosResponse>): S => {
-  return new DownloadList({
+  return new DownloadList(User, {
     ...state,
     isLoaded: true,
     isLoading: false,
@@ -31,7 +31,7 @@ const fetchUsersSuccessHandler = (state: S, { payload }: Action<AxiosResponse>):
 };
 
 const fetchUsersFailHandler = (state: S): S => {
-  return new DownloadList();
+  return new DownloadList(User);
 };
 
 const deleteUserHandler = (state: S): S => {
@@ -40,7 +40,7 @@ const deleteUserHandler = (state: S): S => {
 
 const deleteUserSuccessHandler = (state: S, { meta }: ActionMeta<P, M>) => {
   const index = state.list.findIndex(el => el.id === meta.previousAction.payload.userId);
-  return new DownloadList({
+  return new DownloadList(User, {
     ...state,
     list: [...state.list.slice(0, index), ...state.list.slice(index + 1)],
   });
@@ -48,7 +48,7 @@ const deleteUserSuccessHandler = (state: S, { meta }: ActionMeta<P, M>) => {
 
 const patchUserHandler = (state: S, { payload }: Action<P>): any => {
   const index = state.list.findIndex(el => el.id === (payload as IU).user.id);
-  return new DownloadList({
+  return new DownloadList(User, {
     ...state,
     list: [
       ...state.list.slice(0, index),
@@ -63,7 +63,7 @@ const patchUserHandler = (state: S, { payload }: Action<P>): any => {
 
 const patchUserFailHandler = (state: S, { meta }: ActionMeta<P, M>) => {
   const index = state.list.findIndex(el => el.id === meta.previousAction.payload.user.id);
-  return new DownloadList({
+  return new DownloadList(User, {
     ...state,
     list: [
       ...state.list.slice(0, index),
@@ -86,5 +86,5 @@ export const users = handleActions<S, P, M>(
     [patchUser.toString()]: patchUserHandler,
     [patchUser.fail]: patchUserFailHandler,
   },
-  new DownloadList()
+  new DownloadList(User)
 );

@@ -1,7 +1,9 @@
 import map from 'lodash-es/map';
 
+import { DownloadList } from '../@common/entities';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';
+import { Task } from './tasks/Task';
 
 export class Project {
   public id?: number;
@@ -10,12 +12,17 @@ export class Project {
   public owner?: any;
   public phases?: any[];
   public members: Member[];
-  public taskTypes: TaskType[];
+  public tasks: Task[];
+  public taskTypes: DownloadList<TaskType>;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
+      if (key === 'tasks') {
+        this[key] = map(val, (task: Partial<Task>) => new Task(task));
+        return;
+      }
       if (key === 'taskTypes') {
-        this[key] = map(val, (taskType: Partial<TaskType>) => new TaskType(taskType));
+        this[key] = new DownloadList(TaskType, val);
         return;
       }
       if (key === 'members') {

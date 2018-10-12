@@ -1,17 +1,15 @@
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableFooter from '@material-ui/core/TableFooter';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import ClearIcon from '@material-ui/icons/Clear';
 import get from 'lodash-es/get';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
+import { Table } from 'src/domains/@common/Table';
+import { DownloadList } from 'src/store/@common/entities';
 import { TaskType } from 'src/store/task-types';
 import { TaskTypesForm } from './TaskTypesForm';
 
@@ -20,7 +18,7 @@ export interface IProjectTaskTypesProps {
   deleteTaskType: any;
   getAllTaskTypes: any;
   getTaskTypeById: any;
-  projectTaskTypes: TaskType[];
+  projectTaskTypes: DownloadList<TaskType>;
 }
 
 export interface IState {
@@ -38,32 +36,12 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
     this.props.getAllTaskTypes();
   }
 
-  public handleRowClick = (id: number | undefined) => () => {
-    console.log('clicked by row with id', id);
-  };
-
-  public handleRemoveClick = (id: number | undefined) => (e: any) => {
-    e.stopPropagation();
-    this.props.deleteTaskType(id);
-  };
-
-  public handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
-    this.setState({ page });
-  };
-
-  public handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
-    if (event && event.target.value) {
-      this.setState({ perPage: event.target.value });
-    }
-  };
-
   public render() {
-    const { classes, getTaskTypeById, projectTaskTypes } = this.props;
-    const { page, perPage } = this.state;
+    const { classes, projectTaskTypes } = this.props;
     return (
       <div className={classes.root}>
-        {projectTaskTypes ? (
-          <Table className={classes.table}>
+        {projectTaskTypes && projectTaskTypes.length ? (
+          <Table items={projectTaskTypes} renderItem={this.renderItem}>
             <TableHead>
               <TableRow>
                 <TableCell>Название</TableCell>
@@ -71,37 +49,6 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
                 <TableCell numeric />
               </TableRow>
             </TableHead>
-            <TableBody>
-              {projectTaskTypes.slice(page * perPage, (page + 1) * perPage).map(({ id }) => {
-                return (
-                  <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
-                    <TableCell component="th" scope="row">
-                      {get(getTaskTypeById(id), 'title')}
-                    </TableCell>
-                    <TableCell numeric>{id}</TableCell>
-                    <TableCell numeric>
-                      <IconButton onClick={this.handleRemoveClick(id)}>
-                        <ClearIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  colSpan={3}
-                  count={projectTaskTypes.length}
-                  rowsPerPage={perPage}
-                  page={page}
-                  onChangePage={this.handleChangePage}
-                  onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                  labelRowsPerPage={'Элементов на странице'}
-                  labelDisplayedRows={this.labelDisplayedRows}
-                />
-              </TableRow>
-            </TableFooter>
           </Table>
         ) : (
           <Grid item xs={12}>
@@ -113,10 +60,29 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
     );
   }
 
-  private labelDisplayedRows = ({ from, to, count }: any) => {
-    return ''
-      .concat(from, '-')
-      .concat(to, ' из ')
-      .concat(count);
+  private renderItem = ({ id }: TaskType) => {
+    const { classes, getTaskTypeById } = this.props;
+    return (
+      <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
+        <TableCell component="th" scope="row">
+          {get(getTaskTypeById(id), 'title')}
+        </TableCell>
+        <TableCell numeric>{id}</TableCell>
+        <TableCell numeric>
+          <IconButton onClick={this.handleRemoveClick(id)}>
+            <ClearIcon />
+          </IconButton>
+        </TableCell>
+      </TableRow>
+    );
+  };
+
+  private handleRowClick = (id: number | undefined) => () => {
+    console.log('clicked by row with id', id);
+  };
+
+  private handleRemoveClick = (id: number | undefined) => (e: any) => {
+    e.stopPropagation();
+    this.props.deleteTaskType(id);
   };
 }
