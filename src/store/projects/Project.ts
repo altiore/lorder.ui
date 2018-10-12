@@ -12,13 +12,13 @@ export class Project {
   public owner?: any;
   public phases?: any[];
   public members: Member[];
-  public tasks: Task[];
+  public tasks: DownloadList<Task>;
   public taskTypes: DownloadList<TaskType>;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
       if (key === 'tasks') {
-        this[key] = map(val, (task: Partial<Task>) => new Task(task));
+        this[key] = new DownloadList(Task, val);
         return;
       }
       if (key === 'taskTypes') {

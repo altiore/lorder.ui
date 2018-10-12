@@ -1,6 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import get from 'lodash-es/get';
-import { error, success } from 'react-notification-system-redux';
+import { Notification } from 'react-notification-system';
+import { error, show } from 'react-notification-system-redux';
 import { multiClientMiddleware } from 'redux-axios-middleware';
 import { stopAsyncValidation } from 'redux-form';
 
@@ -14,10 +15,11 @@ export interface IStoreInfo {
   getSourceAction: () => any;
 }
 
-function getError(action: any) {
+function getError(action: any): false | Notification {
   const errorFromAction = get(action, 'meta.previousAction.payload.error');
   if (typeof errorFromAction === 'object') {
     return {
+      level: 'error',
       position: 'tr',
       ...errorFromAction,
     };
@@ -26,6 +28,7 @@ function getError(action: any) {
       return false;
     }
     return {
+      level: 'error',
       message: errorFromAction || get(action, 'error.response.data.message', 'Неизвестная ошибка'),
       position: 'tr',
       title: errorFromAction || get(action, 'error.response.data.message', 'Неизвестная ошибка'),
@@ -33,16 +36,18 @@ function getError(action: any) {
   }
 }
 
-function getSuccess(action: any) {
+function getSuccess(action: any): false | Notification {
   const successFromAction = get(action, 'meta.previousAction.payload.success');
   if (typeof successFromAction === 'object') {
     return {
+      level: 'success',
       position: 'tr',
       ...successFromAction,
     };
   } else {
     if (successFromAction) {
       return {
+        level: 'success',
         message: successFromAction,
         position: 'tr',
         title: successFromAction,
@@ -96,13 +101,13 @@ export default multiClientMiddleware(
           }
           const showError = getError(action);
           if (showError) {
-            dispatch(error(showError));
+            dispatch(show(showError, showError.level));
           }
         }
       } else {
         const showSuccess = getSuccess(action);
         if (showSuccess) {
-          dispatch(success(showSuccess));
+          dispatch(show(showSuccess, showSuccess.level));
         }
       }
     },

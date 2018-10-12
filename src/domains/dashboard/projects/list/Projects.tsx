@@ -60,9 +60,8 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   };
 
   public render() {
-    const { classes, openDialog, projectList } = this.props;
+    const { classes, projectList } = this.props;
     const { perPage, page } = this.state;
-    const createProjectFunction = () => openDialog(CreateProjectPopup);
     return (
       <Page>
         {projectList && projectList.length ? (
@@ -115,7 +114,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
             <img src={src} />
           </Grid>
         )}
-        <Button size="large" variant="contained" color="primary" onClick={createProjectFunction}>
+        <Button size="large" variant="contained" color="primary" onClick={this.createProject}>
           <Typography variant="caption" noWrap>
             {'Создать проект'}
           </Typography>
@@ -130,4 +129,6 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
       .concat(to, ' из ')
       .concat(count);
   };
+
+  private createProject = () => this.props.openDialog(CreateProjectPopup);
 }

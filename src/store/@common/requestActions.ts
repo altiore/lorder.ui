@@ -1,3 +1,4 @@
+// import { Notification } from 'react-notification-system';
 import { Action, ActionFunction1, createAction } from 'redux-actions';
 
 export interface IRequestPayload {
@@ -16,8 +17,15 @@ interface IAdditionalActions {
   success: string;
 }
 
-export const requestActions = <Params>(actionType: string, payloadCreator: ActionFunction1<Params, IRequestAction>): ActionFunction1<Params, Action<IRequestPayload>> & IAdditionalActions => {
-  const actionCreator = createAction<IRequestAction, Params>(actionType, payloadCreator) as ActionFunction1<Params, Action<IRequestPayload>> & IAdditionalActions;
+export const requestActions = <Params>(
+  actionType: string,
+  payloadCreator: ActionFunction1<Params, IRequestAction>
+): ActionFunction1<Params, Action<IRequestPayload>> & IAdditionalActions => {
+  const actionCreator = createAction<IRequestAction, Params>(actionType, payloadCreator) as ActionFunction1<
+    Params,
+    Action<IRequestPayload>
+  > &
+    IAdditionalActions;
   actionCreator.success = actionType + '_SUCCESS';
   actionCreator.fail = actionType + '_FAIL';
   return actionCreator;

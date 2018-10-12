@@ -1,3 +1,5 @@
+import { Notification } from 'react-notification-system';
+
 import { requestActions } from 'src/store/@common/requestActions';
 
 export interface IPostProjectData {
@@ -40,6 +42,11 @@ export const removeProject = requestActions('PROJECTS/REMOVE', (projectId: numbe
     method: 'DELETE',
     url: `/projects/${projectId}`,
   },
+  success: {
+    level: 'warning',
+    message: 'Ничего не бойся - я с тобой!',
+    title: 'Проект успешно удален',
+  } as Notification,
 }));
 
 export const fetchProjectDetails = requestActions('PROJECTS/FETCH_ONE', (projectId: number) => ({
