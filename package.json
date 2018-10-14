@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.4",
+    "@types/dotenv": "^4.0.3",
     "@types/jest": "^23.0.0",
     "@types/lodash-es": "^4.17.1",
     "@types/node": "^10.3.2",

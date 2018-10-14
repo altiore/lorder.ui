@@ -22,4 +22,7 @@ yarn-error.log*
 
 # code redactor
 .idea
+
+# local files
 .env
+src/config/dev.js

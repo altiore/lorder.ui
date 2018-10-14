@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-const baseURL = 'https://staging-altiore-api.herokuapp.com/v1';
-// const baseURL = 'http://localhost:3000/v1';
+import { config } from 'src/config';
 
 export const api = axios.create({
-  baseURL,
+  baseURL: config.BASE_URL,
   responseType: 'json',
   // withCredentials: true,
 });
