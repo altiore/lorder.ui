@@ -15,6 +15,7 @@ const CreateProjectPopup = connect(
 )(reduxForm<{}, IProjectFormProps>({
   form: 'ProjectForm',
   onSubmit: onSubmitForm<IPostProjectData>(postProject),
+  onSubmitFail: () => true,
   onSubmitSuccess: (res, dispatch, { onClose, goToPage }) =>
     onClose() && goToPage(`/projects/${get(res, 'payload.data.id')}`),
 })(CreateProjectPopupJsx) as any);

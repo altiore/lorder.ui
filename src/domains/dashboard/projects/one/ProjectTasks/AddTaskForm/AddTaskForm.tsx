@@ -7,8 +7,12 @@ import { required } from 'redux-form-validators';
 
 import { Input } from 'liw-components/Input';
 
+import { parseNumber } from 'src/store/@common/helpers';
+
 export interface IAddTaskFormProps {
   buttonText?: string;
+  closeDialog: any;
+  projectTasksIsLoading: boolean;
 }
 
 export class AddTaskFormJsx extends React.Component<
@@ -16,25 +20,30 @@ export class AddTaskFormJsx extends React.Component<
   object
 > {
   public render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, projectTasksIsLoading } = this.props;
     return (
-      <React.Fragment>
+      <form onSubmit={handleSubmit}>
         <DialogContent>
-          <form onSubmit={handleSubmit}>
-            <Field
-              name="title"
-              component={Input}
-              label="Название задачи"
-              validate={[required({ msg: 'Обязательное поле' })]}
-            />
-          </form>
+          <Field
+            name="title"
+            component={Input}
+            label="Название задачи"
+            validate={[required({ msg: 'Обязательное поле' })]}
+          />
+          <Field
+            name="description"
+            component={Input}
+            label="Описание задачи"
+            validate={[required({ msg: 'Обязательное поле' })]}
+          />
+          <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
         </DialogContent>
         <DialogActions>
-          <Button color="primary" onClick={handleSubmit}>
+          <Button color="primary" disabled={projectTasksIsLoading} type="submit">
             Создать задачу
           </Button>
         </DialogActions>
-      </React.Fragment>
+      </form>
     );
   }
 }

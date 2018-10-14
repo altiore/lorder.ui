@@ -1,5 +1,4 @@
 import { AxiosResponse } from 'axios';
-import map from 'lodash-es/map';
 
 export class DownloadList<T = any> {
   public isLoaded: boolean = false;
@@ -8,14 +7,17 @@ export class DownloadList<T = any> {
 
   private readonly Entity: any;
 
-  constructor(Entity: any, initial?: Partial<DownloadList> | T[]) {
+  constructor(Entity: any, initial?: Partial<DownloadList> | T[], fromArray: boolean = false) {
     this.Entity = Entity;
-    if (initial && (initial as T[]).length !== undefined) {
+    if (!initial) {
+      return;
+    }
+    if (fromArray) {
       this.list = (initial as T[]).map(el => new this.Entity(el));
     } else {
-      map(initial, (val: any, key: string) => {
-        this[key] = val;
-      });
+      this.isLoaded = (initial as Partial<DownloadList>).isLoaded || this.isLoaded;
+      this.isLoading = (initial as Partial<DownloadList>).isLoading || this.isLoading;
+      this.list = (initial as Partial<DownloadList>).list || this.list;
     }
   }
 
@@ -32,8 +34,11 @@ export class DownloadList<T = any> {
   }
 
   public startLoading(): DownloadList<T> {
-    this.isLoading = true;
-    return this;
+    return new DownloadList<T>(this.Entity, {
+      isLoaded: this.isLoaded,
+      isLoading: true,
+      list: this.list,
+    });
   }
 
   public finishLoading(payload?: AxiosResponse<T[]>): DownloadList<T> {
@@ -42,6 +47,14 @@ export class DownloadList<T = any> {
       isLoaded: !!data,
       isLoading: false,
       list: (data || []).map((el: any) => new this.Entity(el)),
+    });
+  }
+
+  public stopLoading(): DownloadList<T> {
+    return new DownloadList<T>(this.Entity, {
+      isLoaded: this.isLoaded,
+      isLoading: false,
+      list: this.list,
     });
   }
 
@@ -54,6 +67,9 @@ export class DownloadList<T = any> {
   }
 
   public removeItem(index: number): DownloadList<T> {
+    if (index < 0) {
+      index = this.list.length + index;
+    }
     return new DownloadList<T>(this.Entity, {
       isLoaded: this.isLoaded,
       isLoading: this.isLoading,
@@ -62,6 +78,14 @@ export class DownloadList<T = any> {
   }
 
   public updateItem(index: number, partialItem: Partial<T>): DownloadList<T> {
+    if (!partialItem) {
+      const errorText = `Error: ${DownloadList.name}.updateItem<${this.Entity.name}> empty data for update`;
+      console.log(errorText, { index, partialItem });
+      throw new Error(errorText);
+    }
+    if (index < 0) {
+      index = this.list.length + index;
+    }
     if (!this.list[index]) {
       const errorText = `Error: ${DownloadList.name}.updateItem<${this.Entity.name}> could not find item in the list`;
       console.log(errorText, { index, partialItem });

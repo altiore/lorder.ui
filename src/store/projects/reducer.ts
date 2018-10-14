@@ -4,18 +4,22 @@ import { Action, ActionMeta, handleActions } from 'redux-actions';
 
 import { IMeta } from 'src/@types';
 import { DownloadList } from '../@common/entities';
+import { combineActions } from '../@common/helpers';
 import {
   addTaskTypeToProject,
   deleteProjectMember,
+  deleteProjectTask,
   deleteTaskTypeFromProject,
   fetchProjectDetails,
   getAllProjects,
   postProject,
   postProjectMember,
+  postProjectTask,
   removeProject,
 } from './actions';
 import { Member } from './members/Member';
 import { Project } from './Project';
+import { projectTasks } from './tasks/reducer';
 
 type S = DownloadList<Project>;
 interface IM {
@@ -136,6 +140,20 @@ const deleteProjectMemberHandler = (state: S, { payload }: Action<P>) => {
 //   });
 // };
 
+const projectTaskHandler = (state: S, action: ActionMeta<any, any>) => {
+  let index: number;
+  // if meta exists get projectId from meta
+  if (action.meta) {
+    index = state.list.findIndex(el => get(action.meta, 'previousAction.payload.projectId') === el.id);
+  } else {
+    index = state.list.findIndex(el => get(action.payload, 'projectId') === el.id);
+  }
+
+  return state.updateItem(index, {
+    tasks: projectTasks(state.list[index].tasks, action),
+  });
+};
+
 export const projects = handleActions<S, P>(
   {
     [postProject.success]: postProjectSuccessHandler,
@@ -150,6 +168,7 @@ export const projects = handleActions<S, P>(
     [postProjectMember.success]: postProjectMemberSuccessHandler,
     [postProjectMember.fail]: postProjectMemberFailHandler,
     [deleteProjectMember.toString()]: deleteProjectMemberHandler,
+    [combineActions(postProjectTask, deleteProjectTask)]: projectTaskHandler,
     // [deleteProjectMember.fail]: deleteProjectMemberFailHandler,
   },
   new DownloadList(Project)

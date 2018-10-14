@@ -12,7 +12,7 @@ export interface IProjectTaskData {
 
 export const postProjectTask = requestActions<IProjectTaskData>(
   'PROJECT_TASK/POST',
-  ({ projectId, ...data }: IProjectTaskData) => ({
+  ({ projectId, ...data }: IProjectTaskData): any => ({
     form: PROJECT_TASK_FORM_NAME,
     projectId,
     request: {
@@ -33,12 +33,12 @@ export const deleteProjectTask = requestActions<IProjectTaskData>(
     form: PROJECT_TASK_FORM_NAME,
     projectId,
     request: {
-      data: { id: taskId },
       method: 'DELETE',
-      url: `/projects/${projectId}/tasks`,
+      url: `/projects/${projectId}/tasks/${taskId}`,
     },
     success: {
       message: `Задача удалена из проекта`,
     },
+    taskId,
   })
 );

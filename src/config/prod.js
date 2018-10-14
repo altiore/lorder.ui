@@ -1,3 +1,1 @@
-module.export = {
-  BASE_URL: 'https://staging-altiore-api.herokuapp.com/v1',
-};
+export const BASE_URL = 'https://staging-altiore-api.herokuapp.com/v1';

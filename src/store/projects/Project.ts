@@ -18,11 +18,11 @@ export class Project {
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
       if (key === 'tasks') {
-        this[key] = new DownloadList(Task, val);
+        this[key] = new DownloadList(Task, val, Array.isArray(val));
         return;
       }
       if (key === 'taskTypes') {
-        this[key] = new DownloadList(TaskType, val);
+        this[key] = new DownloadList(TaskType, val, Array.isArray(val));
         return;
       }
       if (key === 'members') {

@@ -111,5 +111,6 @@ export default multiClientMiddleware(
         }
       }
     },
+    returnRejectedPromiseOnError: true,
   }
 );
