@@ -1,6 +1,6 @@
 import { reduxForm } from 'redux-form';
 
-import { onSubmitForm } from 'src/store/@common/helpers'
+import { onSubmitForm } from 'src/store/@common/helpers';
 import { IPostProjectData, postProject } from 'src/store/projects';
 import { IProjectFormProps, ProjectForm as ProjectFormJsx } from './ProjectForm';
 

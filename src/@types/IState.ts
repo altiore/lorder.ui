@@ -8,6 +8,7 @@ import { IIdentityState } from 'src/store/identity';
 import { Project } from 'src/store/projects';
 import { TaskType } from 'src/store/task-types';
 import { IUiState } from 'src/store/ui';
+import { IUserTask } from 'src/store/user-tasks/UserTask';
 import { IUser } from 'src/store/users';
 
 export interface IState {
@@ -19,5 +20,6 @@ export interface IState {
   taskTypes: DownloadList<TaskType>;
   router: RouterState;
   ui: IUiState;
+  userTasks: DownloadList<IUserTask>;
   users: DownloadList<IUser>;
 }

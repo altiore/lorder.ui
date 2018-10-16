@@ -1,11 +1,11 @@
-import { Dashboard } from '../dashboard';
 import { Digits } from '../digits';
+import { Main } from '../main';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
 
 export const routes = [
   {
-    component: Dashboard,
+    component: Main,
     path: '/',
   },
   {

@@ -7,28 +7,29 @@ const FaPaper = require('react-icons/lib/fa/paper-plane-o');
 
 import { Input } from 'liw-components/Input';
 
-export interface IProjectFormProps {
-  goToNext: any,
-  title?: string,
-  buttonText?: string,
+export interface IStartFormProps {
+  goToNext: any;
+  title?: string;
+  buttonText?: string;
 }
 
-export const ProjectForm: React.StatelessComponent<IProjectFormProps & InjectedFormProps<{}, IProjectFormProps>> = ({ handleSubmit }) => (
+export const StartFormJsx: React.StatelessComponent<IStartFormProps & InjectedFormProps<{}, IStartFormProps>> = ({
+  handleSubmit,
+}) => (
   <form onSubmit={handleSubmit}>
     <Field
-      name='title'
+      name="title"
       component={Input}
       icon={<FaPaper />}
-      label='Название проекта'
+      label="Название проекта"
       validate={[required({ msg: 'Обязательное поле' })]}
     />
     <Field
-      name='monthlyBudget'
+      name="monthlyBudget"
       component={Input}
       icon={<FaMoney />}
-      label='Месячный бюджет'
+      label="Месячный бюджет"
       validate={[required({ msg: 'Обязательное поле' })]}
     />
   </form>
 );
-

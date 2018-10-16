@@ -18,7 +18,7 @@ import { IRoute } from 'src/@types';
 import { RouteWithSubRoutes } from 'src/domains/@common/RouteWithSubRoutes';
 import { NoMatch } from './noMatch';
 
-export interface IDashboardProps {
+export interface IMainProps {
   classes: any;
   isLeftBarOpen: boolean;
   logOut: () => void;
@@ -28,7 +28,7 @@ export interface IDashboardProps {
   theme: Theme;
 }
 
-export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashboardProps, {}> {
+export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProps, {}> {
   public handleDrawerToggle = () => {
     this.props.toggleUiSetting('isLeftBarOpen');
   };
@@ -55,7 +55,7 @@ export class Dashboard extends React.Component<RouteComponentProps<{}> & IDashbo
           <div className={classes.toolbar} style={{ justifyContent: isLeftBarOpen ? 'flex-end' : 'center' }}>
             {isLeftBarOpen ? (
               <Typography variant="caption" noWrap>
-                {'Altiore'}
+                {''}
               </Typography>
             ) : null}
             <IconButton onClick={this.handleDrawerToggle}>

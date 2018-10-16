@@ -58,9 +58,9 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
     const { classes, projectMembers } = this.props;
     const { page, perPage } = this.state;
     return (
-      <div>
+      <div className={classes.root}>
         {projectMembers && projectMembers.length ? (
-          <Table className={classes.table}>
+          <Table>
             <TableHead>
               <TableRow>
                 <TableCell>Ползователь</TableCell>

@@ -1,15 +1,15 @@
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
-import { Dashboard } from '../dashboard';
-import { Projects } from '../dashboard/projects/list';
-import { Project } from '../dashboard/projects/one';
 import { Digits } from '../digits';
+import { Main } from '../main';
+import { Projects } from '../main/projects/list';
+import { Project } from '../main/projects/one';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
 
 export const routes = [
   {
-    component: Dashboard,
+    component: Main,
     path: '/',
     routes: [
       {

@@ -9,5 +9,5 @@ export const New = connect(
   null,
   {
     submitProjectForm: () => submit('ProjectForm'),
-  },
+  }
 )(withStyles(styles, { withTheme: true })(NewJsx));
