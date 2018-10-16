@@ -1,7 +1,9 @@
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import HomeIcon from '@material-ui/icons/Home';
 
 import { Digits } from '../digits';
 import { Main } from '../main';
+import { Dashboard } from '../main/dashboard';
 import { Projects } from '../main/projects/list';
 import { Project } from '../main/projects/one';
 import { NoMatch } from '../noMatch';
@@ -12,6 +14,13 @@ export const routes = [
     component: Main,
     path: '/',
     routes: [
+      {
+        component: Dashboard,
+        exact: true,
+        icon: HomeIcon,
+        path: '/',
+        title: 'Дом',
+      },
       {
         component: Projects,
         exact: true,
