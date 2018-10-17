@@ -16,6 +16,7 @@ export interface IState {
   form: FormStateMap;
   identity: IIdentityState;
   notifications: NotificationsState;
+  project: { selected?: number };
   projects: DownloadList<Project>;
   taskTypes: DownloadList<TaskType>;
   router: RouterState;

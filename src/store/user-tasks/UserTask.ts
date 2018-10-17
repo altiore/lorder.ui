@@ -1,13 +1,13 @@
 import map from 'lodash-es/map';
 
 export interface IUserTask {
-  id?: number;
+  id?: number | string;
   description?: string;
   value?: number;
 }
 
 export class UserTask implements IUserTask {
-  public id?: number;
+  public id?: number | string;
   public description?: string;
   public value?: number;
 

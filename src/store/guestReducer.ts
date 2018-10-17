@@ -12,6 +12,7 @@ import { identity } from './identity';
 import { Project } from './projects';
 import { TaskType } from './task-types';
 import { uiReducer } from './ui';
+import { UserTask } from './user-tasks';
 import { User } from './users';
 
 localForage.config({
@@ -37,6 +38,7 @@ const persistConfig: PersistConfig = {
         const entity = {
           projects: Project,
           taskTypes: TaskType,
+          userTasks: UserTask,
           users: User,
         }[key];
         if (!entity) {
@@ -45,7 +47,7 @@ const persistConfig: PersistConfig = {
         return new DownloadList(entity, outboundState);
       },
       // define which reducers this transform gets called for.
-      { whitelist: ['projects', 'taskTypes', 'users'] }
+      { whitelist: ['projects', 'taskTypes', 'userTasks', 'users'] }
     ),
   ],
 };

@@ -62,7 +62,7 @@ export class DownloadList<T = any> {
     return new DownloadList<T>(this.Entity, {
       isLoaded: this.isLoaded,
       isLoading: this.isLoading,
-      list: data ? [...this.list, new this.Entity(data)] : this.list,
+      list: data ? [new this.Entity(data), ...this.list] : this.list,
     });
   }
 
