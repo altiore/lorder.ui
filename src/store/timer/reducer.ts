@@ -1,6 +1,7 @@
 import { Action, handleActions } from 'redux-actions';
 import Timer = NodeJS.Timer;
 
+import { covertSecondsToDuration } from 'src/store/@common/helpers';
 import { setCurrentUserTaskId, tickUserTaskTimer } from './actions';
 
 export interface ITimer {
@@ -10,8 +11,10 @@ export interface ITimer {
 }
 type P = Partial<ITimer>;
 
-const selectProjectHandler = (state: ITimer) => {
-  return { ...state, time: state.time + 1 };
+const tickUserTaskTimerHandler = (state: ITimer) => {
+  const time = state.time + 1;
+  document.title = covertSecondsToDuration(time);
+  return { ...state, time };
 };
 
 const setCurrentUserTaskIdHandler = (state: ITimer, { payload }: Action<Partial<ITimer>>) => {
@@ -23,7 +26,7 @@ const setCurrentUserTaskIdHandler = (state: ITimer, { payload }: Action<Partial<
 
 export const timer = handleActions<ITimer, P>(
   {
-    [tickUserTaskTimer.toString()]: selectProjectHandler,
+    [tickUserTaskTimer.toString()]: tickUserTaskTimerHandler,
     [setCurrentUserTaskId.toString()]: setCurrentUserTaskIdHandler,
   },
   {

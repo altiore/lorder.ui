@@ -2,9 +2,9 @@ import TableCell from '@material-ui/core/TableCell/TableCell';
 import * as React from 'react';
 
 export interface ITimerCellProps {
-  currentTime: number;
+  currentTimeHumanize: string;
 }
 
-export const TimerCellJsx: React.StatelessComponent<ITimerCellProps> = ({ currentTime }) => (
-  <TableCell numeric>{currentTime}</TableCell>
+export const TimerCellJsx: React.StatelessComponent<ITimerCellProps> = ({ currentTimeHumanize }) => (
+  <TableCell numeric>{currentTimeHumanize}</TableCell>
 );
