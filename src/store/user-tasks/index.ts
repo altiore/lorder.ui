@@ -3,4 +3,4 @@ export * from './consts';
 export * from './reducer';
 export * from './selectors';
 export * from './UserTask';
-export * from './thunk/startUserTask';
+export * from './thunk/actionUserTask';

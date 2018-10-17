@@ -1,5 +1,3 @@
-import { createAction } from 'redux-actions';
-
 import { requestActions } from 'src/store/@common/requestActions';
 import { CREATE_USER_TASK_FORM_NAME } from './consts';
 
@@ -25,8 +23,8 @@ export const getAllUserTasks = requestActions<number>(
   })
 );
 
-export const postUserTask = requestActions<IUserTaskData>(
-  'USER_TASKS/POST',
+export const postAndStartUserTask = requestActions<IUserTaskData>(
+  'USER_TASKS/POST_AND_START',
   ({ projectId, ...data }: IUserTaskData): any => ({
     form: CREATE_USER_TASK_FORM_NAME,
     projectId,
@@ -34,6 +32,16 @@ export const postUserTask = requestActions<IUserTaskData>(
       data,
       method: 'POST',
       url: `/projects/${projectId}/user-tasks`,
+    },
+  })
+);
+
+export const patchAndStopUserTask = requestActions<IUserTaskDelete>(
+  'USER_TASKS/PATCH_AND_STOP',
+  ({ projectId, taskId }: IUserTaskDelete) => ({
+    request: {
+      method: 'PATCH',
+      url: `/projects/${projectId}/user-tasks/${taskId}`,
     },
   })
 );
@@ -50,5 +58,3 @@ export const deleteUserTask = requestActions<IUserTaskDelete>(
     taskId,
   })
 );
-
-export const tickUserTaskTimer = createAction('USER_TASKS/TIMER_TICK');

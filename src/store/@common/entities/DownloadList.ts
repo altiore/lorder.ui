@@ -58,7 +58,7 @@ export class DownloadList<T = any> {
     });
   }
 
-  public addItem(data?: T): DownloadList<T> {
+  public addItem(data?: Partial<T>): DownloadList<T> {
     return new DownloadList<T>(this.Entity, {
       isLoaded: this.isLoaded,
       isLoading: this.isLoading,
