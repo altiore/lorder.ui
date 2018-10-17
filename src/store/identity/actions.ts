@@ -7,6 +7,11 @@ export interface IPostAuthMagicData {
   email: string;
 }
 
+export interface IGetAuthActivateData {
+  oneTimeToken: string;
+  project?: string;
+}
+
 export const postAuthMagic = requestActions<IPostAuthMagicData>('USER/SEND_MAGIC_LINK', (data: IPostAuthMagicData) => ({
   form: MAGIC_FORM_NAME,
   request: {
@@ -20,12 +25,15 @@ export const postAuthMagic = requestActions<IPostAuthMagicData>('USER/SEND_MAGIC
   },
 }));
 
-export const getAuthActivate = requestActions<string>('USER/ACTIVATE_BY_MAGIC_LINK', (oneTimeToken: string) => ({
-  request: {
-    params: { oneTimeToken },
-    url: '/auth/activate',
-  },
-}));
+export const getAuthActivate = requestActions<IGetAuthActivateData>(
+  'USER/ACTIVATE_BY_MAGIC_LINK',
+  (params: IGetAuthActivateData) => ({
+    request: {
+      params,
+      url: '/auth/activate',
+    },
+  })
+);
 
 export const logIn = requestActions('USER/LOGIN', (data: { username: string; password: string }) => ({
   form: LOGIN_FORM_NAME,

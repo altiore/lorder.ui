@@ -79,9 +79,8 @@ const postProjectMemberHandler = (state: S, { payload }: Action<P>) => {
     members: [
       ...state.list[projectIndex].members,
       new Member({
-        accessLevel: 1,
+        accessLevel: 0,
         member: { email: (payload as IM).email },
-        status: 0,
       }),
     ],
   });

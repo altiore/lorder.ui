@@ -3,13 +3,11 @@ import { IUser, User } from '../../users';
 
 export interface IMember {
   accessLevel: number;
-  status: boolean;
   member: IUser;
 }
 
 export class Member implements IMember {
   public accessLevel: number;
-  public status: boolean;
   public member: IUser;
 
   constructor(initial?: object) {
