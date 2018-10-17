@@ -2,6 +2,7 @@ import Timer = NodeJS.Timer;
 import get from 'lodash-es/get';
 import { Dispatch } from 'react-redux';
 
+import { changeIco } from 'src/store/@common/helpers';
 import { setCurrentUserTaskId, tickUserTaskTimer } from 'src/store/timer';
 import { IUserTaskData, IUserTaskDelete, patchAndStopUserTask, postAndStartUserTask } from '../actions';
 
@@ -21,6 +22,7 @@ export const startUserTask = (data: IUserTaskData) => async (dispatch: Dispatch)
       timer,
     })
   );
+  changeIco('/stop.ico');
   return res;
 };
 
@@ -33,5 +35,7 @@ export const stopUserTask = (data: IUserTaskDelete) => async (dispatch: Dispatch
       timer: undefined,
     })
   );
+  changeIco();
+  document.title = 'Старт';
   return await dispatch(patchAndStopUserTask(data));
 };

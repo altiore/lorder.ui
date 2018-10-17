@@ -76,7 +76,7 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar}>
-            <Avatar onClick={this.logOut} alt="Remy Sharp" src="/favicon.ico" className={classes.avatar} />
+            <Avatar onClick={this.logOut} alt="Remy Sharp" src="/favicon-32x32.png" className={classes.avatar} />
           </div>
           <Switch>
             {routes.map((route: IRoute) => (
