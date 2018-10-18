@@ -43,6 +43,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps> {
       nextProps.allUserTasks !== this.props.allUserTasks &&
       nextProps.isTimerStarted === this.props.isTimerStarted &&
       !nextProps.isTimerStarted &&
+      nextProps.allUserTasks.list[0] &&
       !nextProps.allUserTasks.list[0].finishAt
     ) {
       const userTask = nextProps.allUserTasks.list[0];
@@ -56,7 +57,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps> {
       <Page>
         <StartForm />
         {allUserTasks &&
-          allUserTasks.length && (
+          !!allUserTasks.length && (
             <Table items={allUserTasks} renderItem={this.renderItem}>
               <TableHead>
                 <TableRow>
