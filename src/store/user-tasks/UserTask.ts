@@ -12,6 +12,7 @@ export interface IUserTask {
   source?: string;
   startAt?: moment.Moment;
   taskId?: number;
+  taskTypeId?: number;
   // task
   // user
   value?: number;
@@ -25,6 +26,7 @@ export class UserTask implements IUserTask {
   public source?: string;
   public startAt?: moment.Moment;
   public taskId?: number;
+  public taskTypeId?: number;
   // task
   // user
   public value?: number;

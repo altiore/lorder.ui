@@ -14,7 +14,7 @@ export const taskTypesIsLoading = createSelector(baseState, (state: DownloadList
 export const taskTypeList = createSelector(baseState, (state: DownloadList<TaskType>): TaskType[] => state.list);
 
 export const getTaskTypeById = createSelector(taskTypeList, (list: TaskType[]) => (id: number) =>
-  list.find(e => e.id === id)
+  list.find(e => e.id === id) || new TaskType()
 );
 
 export const filteredTaskTypes = createSelector(

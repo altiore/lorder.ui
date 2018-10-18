@@ -10,6 +10,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Page } from 'src/domains/@common/Page';
 import { Table } from 'src/domains/@common/Table';
 import { DownloadList } from 'src/store/@common/entities';
+import { TaskType } from 'src/store/task-types';
 import { UserTask } from 'src/store/user-tasks';
 import { StartForm } from './StartForm';
 import { TimerCell } from './TimerCell';
@@ -20,6 +21,7 @@ export interface IDashboardProps extends RouteComponentProps<{}> {
   currentTaskId?: number;
   deleteUserTask: any;
   getProjectNameById: (id: number) => string;
+  getTaskTypeById: (id: number | undefined) => TaskType;
   isTimerStarted: boolean;
   getAllUserTasks: any;
   selectedProjectId: number;
@@ -64,6 +66,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps> {
                 <TableRow>
                   <TableCell>Описание</TableCell>
                   <TableCell>Проект</TableCell>
+                  <TableCell>Тип задачи</TableCell>
                   <TableCell numeric>Время</TableCell>
                   <TableCell numeric />
                 </TableRow>
@@ -74,12 +77,13 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps> {
     );
   }
 
-  private renderItem = ({ id, description, duration, projectId }: UserTask) => {
-    const { classes, currentTaskId, getProjectNameById } = this.props;
+  private renderItem = ({ id, description, duration, projectId, taskTypeId }: UserTask) => {
+    const { classes, currentTaskId, getProjectNameById, getTaskTypeById } = this.props;
     return (
       <TableRow className={classes.row} key={id} hover>
         <TableCell>{description}</TableCell>
         <TableCell>{getProjectNameById(projectId)}</TableCell>
+        <TableCell>{getTaskTypeById(taskTypeId).title}</TableCell>
         {currentTaskId === id ? <TimerCell /> : <TableCell numeric>{duration}</TableCell>}
         <TableCell numeric>
           {currentTaskId === id ? (

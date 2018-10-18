@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { selectedProjectId } from 'src/store/project';
 import { getProjectNameById } from 'src/store/projects';
+import { getTaskTypeById } from 'src/store/task-types';
 import { currentTaskId, isTimerStarted } from 'src/store/timer';
 import { allUserTasks, deleteUserTask, getAllUserTasks, startTimer, stopUserTask } from 'src/store/user-tasks';
 import { DashboardJsx } from './Dashboard';
@@ -13,6 +14,7 @@ const mapStateToProps = createStructuredSelector({
   allUserTasks,
   currentTaskId,
   getProjectNameById,
+  getTaskTypeById,
   isTimerStarted,
   selectedProjectId,
 });
