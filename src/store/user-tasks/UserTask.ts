@@ -47,9 +47,6 @@ export class UserTask implements IUserTask {
   }
 
   get duration() {
-    if (this.finishAt) {
-      return covertSecondsToDuration(this.durationInSeconds);
-    }
-    return '00:00 мин';
+    return covertSecondsToDuration(this.durationInSeconds);
   }
 }
