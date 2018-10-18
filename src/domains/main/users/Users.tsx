@@ -15,8 +15,8 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Page } from 'src/domains/@common/Page';
+import Select from 'src/domains/@common/Select';
 import { IUser } from 'src/store/users';
-import Select from './Select';
 
 const src =
   'https://cache.harvestapp.com/assets/onboarding/landing-projects@2x-e00081706c6ce0b93cf18c21c6e488f1fc913045992fc34dd18e5e290bc971cb.png';
