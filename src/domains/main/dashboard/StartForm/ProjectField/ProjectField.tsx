@@ -8,6 +8,7 @@ export interface IProjectFieldProps {
   getValue?: (value: any) => any;
   getLabel?: (value: any) => any;
   name: string;
+  validate?: any[];
   items?: Array<{ value: any; label: string }>;
 }
 
@@ -16,8 +17,9 @@ export const ProjectFieldJsx: React.StatelessComponent<IProjectFieldProps> = ({
   getValue = (item: any) => item.id,
   name,
   items,
+  validate,
 }) => (
-  <Field name={name} component={SelectField}>
+  <Field name={name} component={SelectField} validate={validate}>
     <MenuItem value="">
       <em>None</em>
     </MenuItem>
