@@ -6,7 +6,7 @@ import uniqid from 'uniqid';
 // import { IMeta } from 'src/@types';
 import { DownloadList } from '../@common/entities';
 import { IRequestAction } from '../@common/requestActions';
-import { deleteUserTask, getAllUserTasks, postAndStartUserTask } from './actions';
+import { deleteUserTask, getAllUserTasks, patchAndStopUserTask, postAndStartUserTask } from './actions';
 import { UserTask } from './UserTask';
 
 type S = DownloadList<UserTask>;
@@ -45,6 +45,18 @@ const postAndStartUserTaskFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
+const patchAndStopUserTaskHandler = (state: S) => {
+  return state.startLoading();
+};
+
+const patchAndStopUserTaskSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
+  return state.stopLoading().updateItem(0, payload && payload.data);
+};
+
+const patchAndStopUserTaskFailHandler = (state: S) => {
+  return state.stopLoading();
+};
+
 const deleteUserTaskHandler = (state: S, { payload }: Action<IDeleteUserTask>) => {
   const index = state.list.findIndex(el => el.id === get(payload, 'taskId'));
   return state.removeItem(index);
@@ -59,6 +71,10 @@ export const userTasks = handleActions<S, P>(
     [postAndStartUserTask.toString()]: postAndStartUserTaskHandler,
     [postAndStartUserTask.success]: postAndStartUserTaskSuccessHandler,
     [postAndStartUserTask.fail]: postAndStartUserTaskFailHandler,
+
+    [patchAndStopUserTask.toString()]: patchAndStopUserTaskHandler,
+    [patchAndStopUserTask.success]: patchAndStopUserTaskSuccessHandler,
+    [patchAndStopUserTask.fail]: patchAndStopUserTaskFailHandler,
 
     [deleteUserTask.toString()]: deleteUserTaskHandler,
   },

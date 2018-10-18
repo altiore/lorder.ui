@@ -10,3 +10,5 @@ export const currentTime = createSelector(baseState, state => state.time);
 export const currentTimeHumanize = createSelector(currentTime, time => covertSecondsToDuration(time));
 
 export const currentTaskId = createSelector(baseState, state => state.taskId);
+
+export const isTimerStarted = createSelector(baseState, state => !!state.timer);

@@ -5,7 +5,7 @@ import { covertSecondsToDuration } from 'src/store/@common/helpers';
 import { setCurrentUserTaskId, tickUserTaskTimer } from './actions';
 
 export interface ITimer {
-  taskId?: number;
+  taskId?: number | string;
   time: number;
   timer?: Timer;
 }

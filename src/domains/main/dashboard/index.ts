@@ -3,20 +3,22 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectedProjectId } from 'src/store/project';
-import { currentTaskId } from 'src/store/timer';
-import { allUserTasks, deleteUserTask, getAllUserTasks, stopUserTask } from 'src/store/user-tasks';
+import { currentTaskId, isTimerStarted } from 'src/store/timer';
+import { allUserTasks, deleteUserTask, getAllUserTasks, startTimer, stopUserTask } from 'src/store/user-tasks';
 import { DashboardJsx } from './Dashboard';
 import { styles } from './styles';
 
 const mapStateToProps = createStructuredSelector({
   allUserTasks,
   currentTaskId,
+  isTimerStarted,
   selectedProjectId,
 });
 
 const mapDispatchToProps = {
   deleteUserTask,
   getAllUserTasks,
+  startTimer,
   stopUserTask,
 };
 
@@ -32,4 +34,4 @@ export const Dashboard = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(withStyles(styles, { withTheme: true })(DashboardJsx) as any);
+)(withStyles(styles, { withTheme: true })(DashboardJsx));

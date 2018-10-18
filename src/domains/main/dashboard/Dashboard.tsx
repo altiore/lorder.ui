@@ -14,21 +14,39 @@ import { UserTask } from 'src/store/user-tasks';
 import { StartForm } from './StartForm';
 import { TimerCell } from './TimerCell';
 
-export interface IDashboardProps {
+export interface IDashboardProps extends RouteComponentProps<{}> {
   allUserTasks: DownloadList<UserTask>;
   classes: any;
   currentTaskId?: number;
   deleteUserTask: any;
+  isTimerStarted: boolean;
   getAllUserTasks: any;
   selectedProjectId: number;
+  startTimer: any;
   stopUserTask: any;
 }
 
-export class DashboardJsx extends React.PureComponent<IDashboardProps & RouteComponentProps<{}>> {
+export class DashboardJsx extends React.PureComponent<IDashboardProps> {
   public componentDidMount() {
     const { getAllUserTasks, selectedProjectId } = this.props;
     if (selectedProjectId) {
       getAllUserTasks(selectedProjectId);
+    }
+  }
+
+  /**
+   * TODO: move to persist first rehydrate place instead of this component,
+   *       because we should start timer even if reload any other page
+   */
+  public componentWillReceiveProps(nextProps: IDashboardProps) {
+    if (
+      nextProps.allUserTasks !== this.props.allUserTasks &&
+      nextProps.isTimerStarted === this.props.isTimerStarted &&
+      !nextProps.isTimerStarted &&
+      !nextProps.allUserTasks.list[0].finishAt
+    ) {
+      const userTask = nextProps.allUserTasks.list[0];
+      this.props.startTimer(userTask);
     }
   }
 
@@ -53,12 +71,12 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps & RouteCom
     );
   }
 
-  private renderItem = ({ id, description }: UserTask) => {
+  private renderItem = ({ id, description, duration }: UserTask) => {
     const { classes, currentTaskId } = this.props;
     return (
       <TableRow className={classes.row} key={id} hover>
         <TableCell>{description}</TableCell>
-        {currentTaskId === id ? <TimerCell /> : <TableCell numeric />}
+        {currentTaskId === id ? <TimerCell /> : <TableCell numeric>{duration}</TableCell>}
         <TableCell numeric>
           {currentTaskId === id ? (
             <IconButton onClick={this.stopUserTask(id)} className={classes.stop}>
