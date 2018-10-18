@@ -8,8 +8,10 @@ export interface IUserTask {
   id?: number | string;
   description?: string;
   finishAt?: moment.Moment;
+  projectId: number;
   source?: string;
   startAt?: moment.Moment;
+  taskId?: number;
   // task
   // user
   value?: number;
@@ -19,8 +21,10 @@ export class UserTask implements IUserTask {
   public id?: number | string;
   public description?: string;
   public finishAt?: moment.Moment;
+  public projectId: number;
   public source?: string;
   public startAt?: moment.Moment;
+  public taskId?: number;
   // task
   // user
   public value?: number;

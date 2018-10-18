@@ -19,6 +19,7 @@ export interface IDashboardProps extends RouteComponentProps<{}> {
   classes: any;
   currentTaskId?: number;
   deleteUserTask: any;
+  getProjectNameById: (id: number) => string;
   isTimerStarted: boolean;
   getAllUserTasks: any;
   selectedProjectId: number;
@@ -62,6 +63,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps> {
               <TableHead>
                 <TableRow>
                   <TableCell>Описание</TableCell>
+                  <TableCell>Проект</TableCell>
                   <TableCell numeric>Время</TableCell>
                   <TableCell numeric />
                 </TableRow>
@@ -72,11 +74,12 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps> {
     );
   }
 
-  private renderItem = ({ id, description, duration }: UserTask) => {
-    const { classes, currentTaskId } = this.props;
+  private renderItem = ({ id, description, duration, projectId }: UserTask) => {
+    const { classes, currentTaskId, getProjectNameById } = this.props;
     return (
       <TableRow className={classes.row} key={id} hover>
         <TableCell>{description}</TableCell>
+        <TableCell>{getProjectNameById(projectId)}</TableCell>
         {currentTaskId === id ? <TimerCell /> : <TableCell numeric>{duration}</TableCell>}
         <TableCell numeric>
           {currentTaskId === id ? (

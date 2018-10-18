@@ -6,6 +6,5 @@ export function getQueryParam(query: string, param: string): string | null {
       return decodeURIComponent(pair[1]);
     }
   }
-  console.log('Query param %s not found', param);
   return null;
 }

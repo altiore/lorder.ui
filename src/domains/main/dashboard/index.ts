@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectedProjectId } from 'src/store/project';
+import { getProjectNameById } from 'src/store/projects';
 import { currentTaskId, isTimerStarted } from 'src/store/timer';
 import { allUserTasks, deleteUserTask, getAllUserTasks, startTimer, stopUserTask } from 'src/store/user-tasks';
 import { DashboardJsx } from './Dashboard';
@@ -11,6 +12,7 @@ import { styles } from './styles';
 const mapStateToProps = createStructuredSelector({
   allUserTasks,
   currentTaskId,
+  getProjectNameById,
   isTimerStarted,
   selectedProjectId,
 });
@@ -22,11 +24,11 @@ const mapDispatchToProps = {
   stopUserTask,
 };
 
-const mergeProps = (state: any, props: any, ownProps: any) => ({
+const mergeProps = (state: any, { deleteUserTask, stopUserTask, ...props }: any, ownProps: any) => ({
   ...state,
   ...props,
-  deleteUserTask: (taskId: number) => props.deleteUserTask({ projectId: state.selectedProjectId, taskId }),
-  stopUserTask: (taskId: number) => props.stopUserTask({ projectId: state.selectedProjectId, taskId }),
+  deleteUserTask: (taskId: number) => deleteUserTask({ projectId: state.selectedProjectId, taskId }),
+  stopUserTask: (taskId: number) => stopUserTask({ projectId: state.selectedProjectId, taskId }),
   ...ownProps,
 });
 

@@ -31,9 +31,11 @@ const getAllUserTasksFailHandler = (state: S) => {
 
 const postAndStartUserTaskHandler = (state: S, { payload }: Action<StartUserTaskReq>) => {
   const description = get(payload, 'request.data.title');
+  const projectId = get(payload, 'projectId');
   return state.startLoading().addItem({
     description,
     id: uniqid(),
+    projectId,
   });
 };
 
