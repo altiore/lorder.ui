@@ -4,7 +4,7 @@ import * as moment from 'moment';
 
 import { covertSecondsToDuration } from 'src/store/@common/helpers';
 
-export interface IUserTask {
+export interface IUserWork {
   id?: number | string;
   description?: string;
   finishAt?: moment.Moment;
@@ -18,7 +18,7 @@ export interface IUserTask {
   value?: number;
 }
 
-export class UserTask implements IUserTask {
+export class UserWork implements IUserWork {
   public id?: number | string;
   public description?: string;
   public finishAt?: moment.Moment;

@@ -2,4 +2,4 @@
 
 import { IState } from 'src/@types';
 
-export const allUserTasks = (state: IState) => state.userTasks;
+export const allUserWorks = (state: IState) => state.userWorks;

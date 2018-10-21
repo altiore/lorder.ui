@@ -22,7 +22,6 @@ export const projectMembers = createSelector(selectedProject, (project: Project)
 
 export const projectTaskTypes = createSelector(selectedProject, (project: Project) => project && project.taskTypes);
 
-export const getProjectNameById = createSelector(projectList, (list: Project[]) => (id: number): string | undefined => {
-  const project = list.find(e => e.id === id);
-  return project && project.title;
-});
+export const getProjectById = createSelector(projectList, (list: Project[]) => (id: number): Project =>
+  list.find(e => e.id === id) || new Project()
+);

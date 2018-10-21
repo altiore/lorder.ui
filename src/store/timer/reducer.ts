@@ -2,7 +2,7 @@ import { Action, handleActions } from 'redux-actions';
 import Timer = NodeJS.Timer;
 
 import { covertSecondsToDuration } from 'src/store/@common/helpers';
-import { setCurrentUserTaskId, tickUserTaskTimer } from './actions';
+import { setCurrentUserWorkId, tickUserWorkTimer } from './actions';
 
 export interface ITimer {
   taskId?: number | string;
@@ -11,23 +11,23 @@ export interface ITimer {
 }
 type P = Partial<ITimer>;
 
-const tickUserTaskTimerHandler = (state: ITimer) => {
+const tickUserWorkTimerHandler = (state: ITimer) => {
   const time = state.time + 1;
   document.title = covertSecondsToDuration(time);
   return { ...state, time };
 };
 
-const setCurrentUserTaskIdHandler = (state: ITimer, { payload }: Action<Partial<ITimer>>) => {
+const setCurrentUserWorkIdHandler = (state: ITimer, { payload }: Action<Partial<ITimer>>) => {
   if (!payload) {
-    throw new Error('Error setCurrentUserTaskIdHandler: payload must not be empty!');
+    throw new Error('Error setCurrentUserWorkIdHandler: payload must not be empty!');
   }
   return { ...state, ...payload };
 };
 
 export const timer = handleActions<ITimer, P>(
   {
-    [tickUserTaskTimer.toString()]: tickUserTaskTimerHandler,
-    [setCurrentUserTaskId.toString()]: setCurrentUserTaskIdHandler,
+    [tickUserWorkTimer.toString()]: tickUserWorkTimerHandler,
+    [setCurrentUserWorkId.toString()]: setCurrentUserWorkIdHandler,
   },
   {
     taskId: undefined,

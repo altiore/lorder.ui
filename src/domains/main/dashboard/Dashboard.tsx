@@ -10,30 +10,31 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Page } from 'src/domains/@common/Page';
 import { Table } from 'src/domains/@common/Table';
 import { DownloadList } from 'src/store/@common/entities';
+import { Project } from 'src/store/projects';
 import { TaskType } from 'src/store/task-types';
-import { UserTask } from 'src/store/user-tasks';
+import { UserWork } from 'src/store/user-works';
 import { StartForm } from './StartForm';
 import { TimerCell } from './TimerCell';
 
 export interface IDashboardProps extends RouteComponentProps<{}> {
-  allUserTasks: DownloadList<UserTask>;
+  allUserWorks: DownloadList<UserWork>;
   classes: any;
   currentTaskId?: number;
-  deleteUserTask: any;
-  getProjectNameById: (id: number) => string;
+  deleteUserWork: any;
+  getProjectById: (id: number) => Project;
   getTaskTypeById: (id: number | undefined) => TaskType;
   isTimerStarted: boolean;
-  getAllUserTasks: any;
+  getAllUserWorks: any;
   selectedProjectId: number;
   startTimer: any;
-  stopUserTask: any;
+  stopUserWork: any;
 }
 
 export class DashboardJsx extends React.PureComponent<IDashboardProps> {
   public componentDidMount() {
-    const { getAllUserTasks, selectedProjectId } = this.props;
+    const { getAllUserWorks, selectedProjectId } = this.props;
     if (selectedProjectId) {
-      getAllUserTasks(selectedProjectId);
+      getAllUserWorks(selectedProjectId);
     }
   }
 
@@ -43,31 +44,31 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps> {
    */
   public componentWillReceiveProps(nextProps: IDashboardProps) {
     if (
-      nextProps.allUserTasks !== this.props.allUserTasks &&
+      nextProps.allUserWorks !== this.props.allUserWorks &&
       nextProps.isTimerStarted === this.props.isTimerStarted &&
       !nextProps.isTimerStarted &&
-      nextProps.allUserTasks.list[0] &&
-      !nextProps.allUserTasks.list[0].finishAt
+      nextProps.allUserWorks.list[0] &&
+      !nextProps.allUserWorks.list[0].finishAt
     ) {
-      const userTask = nextProps.allUserTasks.list[0];
+      const userTask = nextProps.allUserWorks.list[0];
       this.props.startTimer(userTask);
     }
   }
 
   public render() {
-    const { allUserTasks } = this.props;
+    const { allUserWorks } = this.props;
     return (
       <Page>
         <StartForm />
-        {allUserTasks &&
-          !!allUserTasks.length && (
-            <Table items={allUserTasks} renderItem={this.renderItem}>
+        {allUserWorks &&
+          !!allUserWorks.length && (
+            <Table items={allUserWorks} renderItem={this.renderItem}>
               <TableHead>
                 <TableRow>
                   <TableCell>Описание</TableCell>
                   <TableCell>Проект</TableCell>
                   <TableCell>Тип задачи</TableCell>
-                  <TableCell numeric>Время</TableCell>
+                  <TableCell numeric>Продолжительность</TableCell>
                   <TableCell numeric />
                 </TableRow>
               </TableHead>
@@ -77,21 +78,21 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps> {
     );
   }
 
-  private renderItem = ({ id, description, duration, projectId, taskTypeId }: UserTask) => {
-    const { classes, currentTaskId, getProjectNameById, getTaskTypeById } = this.props;
+  private renderItem = ({ id, description, duration, projectId, taskTypeId }: UserWork) => {
+    const { classes, currentTaskId, getProjectById, getTaskTypeById } = this.props;
     return (
       <TableRow className={classes.row} key={id} hover>
         <TableCell>{description}</TableCell>
-        <TableCell>{getProjectNameById(projectId)}</TableCell>
+        <TableCell>{getProjectById(projectId).title}</TableCell>
         <TableCell>{getTaskTypeById(taskTypeId).title}</TableCell>
         {currentTaskId === id ? <TimerCell /> : <TableCell numeric>{duration}</TableCell>}
         <TableCell numeric>
           {currentTaskId === id ? (
-            <IconButton onClick={this.stopUserTask(id)} className={classes.stop}>
+            <IconButton onClick={this.stopUserWork(id)} className={classes.stop}>
               <StopIcon />
             </IconButton>
           ) : (
-            <IconButton onClick={this.deleteUserTask(id)}>
+            <IconButton onClick={this.deleteUserWork(id)}>
               <ClearIcon />
             </IconButton>
           )}
@@ -100,19 +101,19 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps> {
     );
   };
 
-  private deleteUserTask = (taskId: number | string | undefined) => () => {
+  private deleteUserWork = (taskId: number | string | undefined) => () => {
     if (typeof taskId === 'number') {
-      this.props.deleteUserTask(taskId);
+      this.props.deleteUserWork(taskId);
     } else {
-      console.log('deleteUserTask taskId type is %s', typeof taskId);
+      console.log('deleteUserWork taskId type is %s', typeof taskId);
     }
   };
 
-  private stopUserTask = (taskId: number | string | undefined) => () => {
+  private stopUserWork = (taskId: number | string | undefined) => () => {
     if (typeof taskId === 'number') {
-      this.props.stopUserTask(taskId);
+      this.props.stopUserWork(taskId);
     } else {
-      console.log('deleteUserTask taskId type is %s', typeof taskId);
+      console.log('deleteUserWork taskId type is %s', typeof taskId);
     }
   };
 }
