@@ -12,6 +12,7 @@ import {
   deleteTaskTypeFromProject,
   fetchProjectDetails,
   getAllProjects,
+  patchProjectTask,
   postProject,
   postProjectMember,
   postProjectTask,
@@ -167,7 +168,7 @@ export const projects = handleActions<S, P>(
     [postProjectMember.success]: postProjectMemberSuccessHandler,
     [postProjectMember.fail]: postProjectMemberFailHandler,
     [deleteProjectMember.toString()]: deleteProjectMemberHandler,
-    [combineActions(postProjectTask, deleteProjectTask)]: projectTaskHandler,
+    [combineActions(postProjectTask, patchProjectTask, deleteProjectTask)]: projectTaskHandler,
     // [deleteProjectMember.fail]: deleteProjectMemberFailHandler,
   },
   new DownloadList(Project)

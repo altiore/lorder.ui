@@ -11,12 +11,16 @@ import { UserWork } from '../UserWork';
 
 export let timer: Timer;
 
-export const startTimer = (userTask: Partial<UserWork>) => async (dispatch: Dispatch) => {
+export const startTimer = (userTask: Partial<UserWork>) => async (dispatch: Dispatch, getState: any) => {
   clearInterval(timer);
   if (!userTask.durationInSeconds) {
     userTask = new UserWork(userTask);
   }
-  timer = setInterval(() => dispatch(tickUserWorkTimer(userTask)), 1000);
+  let project: Project;
+  if (typeof userTask.projectId === 'number') {
+    project = getProjectById(getState())(userTask.projectId);
+  }
+  timer = setInterval(() => dispatch(tickUserWorkTimer({ userTask, project })), 1000);
   dispatch(
     setCurrentUserWorkId({
       taskId: userTask.id,

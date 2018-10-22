@@ -30,7 +30,7 @@ const getAllUserWorksFailHandler = (state: S) => {
 };
 
 const postAndStartUserWorkHandler = (state: S, { payload }: Action<StartUserWorkReq>) => {
-  const description = get(payload, 'request.data.title');
+  const description = get(payload, 'request.data.description');
   const projectId = get(payload, 'projectId');
   return state.startLoading().addItem({
     description,

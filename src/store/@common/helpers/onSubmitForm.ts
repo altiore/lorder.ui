@@ -1,4 +1,4 @@
-export const onSubmitForm = <T = {}, M = any>(action: (v: T) => any, propsSelector?: (p: M) => Partial<M>) => (
+export const onSubmitForm = <T = {}, M = any>(action: (v: T) => any, propsSelector?: (p: M) => Partial<T>) => (
   values: T,
   dispatch: any,
   props: M

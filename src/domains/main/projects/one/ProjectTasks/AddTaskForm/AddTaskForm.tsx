@@ -9,16 +9,13 @@ import { Input } from 'liw-components/Input';
 
 import { parseNumber } from 'src/store/@common/helpers';
 
-export interface IAddTaskFormProps {
+export interface IAddTaskFormProps extends InjectedFormProps<{}, IAddTaskFormProps> {
   buttonText?: string;
   closeDialog: any;
   projectTasksIsLoading: boolean;
 }
 
-export class AddTaskFormJsx extends React.Component<
-  IAddTaskFormProps & InjectedFormProps<{}, IAddTaskFormProps>,
-  object
-> {
+export class AddTaskFormJsx extends React.Component<IAddTaskFormProps, {}> {
   public render() {
     const { handleSubmit, projectTasksIsLoading } = this.props;
     return (

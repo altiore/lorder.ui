@@ -13,6 +13,7 @@ import { Table } from 'src/domains/@common/Table';
 import { DownloadList } from 'src/store/@common/entities';
 import { Task } from 'src/store/projects';
 import { AddTaskForm } from './AddTaskForm';
+import { PerformersCell } from './PerformersCell';
 
 export interface IProjectTasksProps {
   classes: any;
@@ -25,13 +26,17 @@ export interface IProjectTasksProps {
 export interface IState {
   page: number | string;
   perPage: number | string;
+  selectedUsers: any;
 }
 
 export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & IProjectTasksProps, IState> {
   public state = {
     page: 0,
     perPage: 10,
+    selectedUsers: [],
   };
+
+  private performersCellRef: HTMLElement[] = [];
 
   public render() {
     const { classes, projectTasks } = this.props;
@@ -43,6 +48,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
               <TableRow>
                 <TableCell>Задача</TableCell>
                 <TableCell>Описание</TableCell>
+                <TableCell>Исполнители</TableCell>
                 <TableCell numeric>Стоимость</TableCell>
                 <TableCell numeric />
               </TableRow>
@@ -62,12 +68,17 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     );
   }
 
-  private renderItem = ({ id, title, description, value }: Task) => {
+  private renderItem = ({ id, title, description, value, users }: Task) => {
     const { classes } = this.props;
     return (
       <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
         <TableCell>{title}</TableCell>
         <TableCell>{description}</TableCell>
+        <TableCell>
+          <span ref={this.setPerformersCellRef(id)}>
+            <PerformersCell value={users} taskId={id} />
+          </span>
+        </TableCell>
         <TableCell numeric>{value}</TableCell>
         <TableCell numeric>
           <IconButton onClick={this.handleRemoveClick(id)}>
@@ -78,10 +89,26 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     );
   };
 
+  private setPerformersCellRef = (id: number): any => (node: HTMLElement) => {
+    if (node) {
+      this.performersCellRef[id] = node;
+    }
+  };
+
   private createTask = () => this.props.openDialog(AddTaskForm);
 
-  private handleRowClick = (id: number | undefined) => () => {
-    console.log('row click', id);
+  private handleRowClick = (id: number | undefined) => (event: React.MouseEvent) => {
+    let isInside = false;
+    if (this.performersCellRef.length) {
+      this.performersCellRef.map((cell: HTMLElement) => {
+        if (cell.contains(event.target as Node)) {
+          isInside = true;
+        }
+      });
+    }
+    if (!isInside) {
+      console.log('row click', id);
+    }
   };
 
   private handleRemoveClick = (id: number | undefined) => (e: any) => {

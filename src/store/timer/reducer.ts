@@ -1,3 +1,4 @@
+import get from 'lodash-es/get';
 import { Action, handleActions } from 'redux-actions';
 import Timer = NodeJS.Timer;
 
@@ -11,9 +12,11 @@ export interface ITimer {
 }
 type P = Partial<ITimer>;
 
-const tickUserWorkTimerHandler = (state: ITimer) => {
+const tickUserWorkTimerHandler = (state: ITimer, { payload }: Action<Partial<ITimer>>) => {
   const time = state.time + 1;
-  document.title = covertSecondsToDuration(time);
+  document.title =
+    covertSecondsToDuration(time) +
+    ` ${get(payload, 'project.title')} - ${get(payload, 'userTask.description') || '...'}`;
   return { ...state, time };
 };
 

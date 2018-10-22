@@ -4,6 +4,7 @@
     "exclude": ["config/**/*.js", "node_modules/**/*.ts"]
   },
   "rules": {
+    "only-arrow-functions": false,
     "no-console": false,
     "no-bitwise": false,
     "no-shadowed-variable": false,
