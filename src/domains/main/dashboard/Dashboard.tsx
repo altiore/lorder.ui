@@ -59,7 +59,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps> {
         <StartForm />
         {allUserWorks &&
           !!allUserWorks.length && (
-            <Table items={allUserWorks} renderItem={this.renderItem}>
+            <Table items={allUserWorks} renderItem={this.renderItem} perPage={5}>
               <TableHead>
                 <TableRow>
                   <TableCell>Описание</TableCell>

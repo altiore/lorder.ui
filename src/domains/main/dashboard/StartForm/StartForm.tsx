@@ -20,8 +20,12 @@ export const StartFormJsx: React.StatelessComponent<
   IInternalProps & IStartFormProps & InjectedFormProps<{}, IStartFormProps>
 > = ({ classes, handleSubmit }) => (
   <form onSubmit={handleSubmit} className={classes.play}>
-    <Field name="description" component={Input} label="(нет описания)" />
-    <ProjectField name="projectId" validate={[required({ msg: 'Сначала выберете Проект!' })]} />
+    <Field name="description" component={Input} label="(нет описания)" wrapperClass={classes.input} />
+    <ProjectField
+      name="projectId"
+      validate={[required({ msg: 'Сначала выберете Проект!' })]}
+      className={classes.select}
+    />
     <IconButton aria-label="Play" className={classes.button} type="submit">
       <PlayArrowRounded fontSize={'large'} color={'inherit'} />
     </IconButton>

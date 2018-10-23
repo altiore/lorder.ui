@@ -12,12 +12,15 @@ export const styles = (theme: Theme) =>
     },
     input: {
       marginBottom: 20,
-      width: 300,
+      width: '320px !important',
     },
     play: {
       alignItems: 'center',
       display: 'flex',
       flexFlow: 'column',
       justifyContent: 'center',
+    },
+    select: {
+      width: 320,
     },
   });

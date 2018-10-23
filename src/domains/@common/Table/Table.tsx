@@ -10,6 +10,7 @@ import { DownloadList } from 'src/store/@common/entities';
 export interface IProjectTaskTypesProps<T> {
   classes: any;
   items: DownloadList<T>;
+  perPage?: number;
   renderItem: (item: T) => React.ReactNode;
 }
 
@@ -23,6 +24,14 @@ export class TableTsx<T> extends React.Component<IProjectTaskTypesProps<T>, ISta
     page: 0,
     perPage: 10,
   };
+
+  constructor(props: IProjectTaskTypesProps<T>) {
+    super(props);
+    this.state = {
+      page: 0,
+      perPage: (props.perPage || 10) as number,
+    };
+  }
 
   public handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
     this.setState({ page });
