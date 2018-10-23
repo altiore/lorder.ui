@@ -32,10 +32,7 @@ export interface IDashboardProps extends RouteComponentProps<{}> {
 
 export class DashboardJsx extends React.PureComponent<IDashboardProps> {
   public componentDidMount() {
-    const { getAllUserWorks, selectedProjectId } = this.props;
-    if (selectedProjectId) {
-      getAllUserWorks(selectedProjectId);
-    }
+    this.props.getAllUserWorks();
   }
 
   /**
