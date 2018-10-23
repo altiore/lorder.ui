@@ -9,17 +9,29 @@ import { Input } from 'liw-components/Input';
 
 import { parseNumber } from 'src/store/@common/helpers';
 
-export interface IAddTaskFormProps extends InjectedFormProps<{}, IAddTaskFormProps> {
+export interface ITaskFormData {
+  description?: string;
+  title?: string;
+  projectId: number;
+  value: number;
+}
+
+export interface ITaskFormProps {
   buttonText?: string;
+  classes?: any;
   closeDialog: any;
+  projectId: number;
   projectTasksIsLoading: boolean;
 }
 
-export class AddTaskFormJsx extends React.Component<IAddTaskFormProps, {}> {
+export class AddTaskFormJsx extends React.Component<
+  ITaskFormProps & InjectedFormProps<ITaskFormData, ITaskFormProps>,
+  {}
+> {
   public render() {
-    const { handleSubmit, projectTasksIsLoading } = this.props;
+    const { buttonText, classes, handleSubmit, projectTasksIsLoading } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={classes ? classes.form : ''}>
         <DialogContent>
           <Field
             name="title"
@@ -27,17 +39,12 @@ export class AddTaskFormJsx extends React.Component<IAddTaskFormProps, {}> {
             label="Название задачи"
             validate={[required({ msg: 'Обязательное поле' })]}
           />
-          <Field
-            name="description"
-            component={Input}
-            label="Описание задачи"
-            validate={[required({ msg: 'Обязательное поле' })]}
-          />
+          <Field name="description" component={Input} label="Описание задачи" />
           <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
         </DialogContent>
         <DialogActions>
           <Button color="primary" disabled={projectTasksIsLoading} type="submit">
-            Создать задачу
+            {buttonText}
           </Button>
         </DialogActions>
       </form>

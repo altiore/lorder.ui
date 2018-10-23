@@ -11,3 +11,7 @@ export const projectTasks = createSelector(
 );
 
 export const projectTasksIsLoading = createSelector(projectTasks, (tasks: DownloadList<Task>) => tasks.isLoading);
+
+export const getEditTaskInitialValues = createSelector(projectTasks, (tasks: DownloadList<Task>) => (taskId: number) =>
+  tasks.list.find(el => el.id === taskId)
+);

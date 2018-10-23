@@ -6,7 +6,7 @@ import { onSubmitForm } from 'src/store/@common/helpers';
 import { closeDialog } from 'src/store/dialog';
 import { postProjectTask, PROJECT_TASK_FORM_NAME, projectTasksIsLoading } from 'src/store/projects';
 import { projectId } from 'src/store/router';
-import { AddTaskFormJsx, IAddTaskFormProps } from './AddTaskForm';
+import { AddTaskFormJsx, ITaskFormData, ITaskFormProps } from './AddTaskForm';
 
 const mapStateToProps = createStructuredSelector({
   projectId,
@@ -17,12 +17,12 @@ const mapDispatchToProps = {
   closeDialog,
 };
 
-export const AddTaskForm = connect(
+export const AddTaskForm = connect<any, any, { buttonText?: string }>(
   mapStateToProps,
   mapDispatchToProps
-)(reduxForm<{}, IAddTaskFormProps>({
+)(reduxForm<ITaskFormData, ITaskFormProps>({
   form: PROJECT_TASK_FORM_NAME,
-  onSubmit: onSubmitForm<any>(postProjectTask, props => ({ projectId: props.projectId })),
+  onSubmit: onSubmitForm(postProjectTask, props => ({ projectId: props.projectId })),
   onSubmitFail: () => true,
   onSubmitSuccess: (res, dispatch, { closeDialog }) => {
     closeDialog();

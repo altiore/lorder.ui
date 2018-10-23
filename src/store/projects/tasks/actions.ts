@@ -6,7 +6,16 @@ import { User } from 'src/store/users';
 export interface IProjectTaskData {
   description?: string;
   projectId: number;
-  taskId: number;
+  taskId?: number;
+  title?: string;
+  value?: number;
+  users?: User[];
+}
+
+export interface IPatchProjectTaskData {
+  id?: number;
+  description?: string;
+  projectId: number;
   title?: string;
   value?: number;
   users?: User[];
@@ -29,9 +38,9 @@ export const postProjectTask = requestActions<IProjectTaskData>(
   })
 );
 
-export const patchProjectTask = requestActions<IProjectTaskData>(
+export const patchProjectTask = requestActions<IPatchProjectTaskData>(
   'PROJECT_TASK/PATCH',
-  ({ projectId, taskId, users, ...data }: IProjectTaskData): any => {
+  ({ projectId, id, users, ...data }: IPatchProjectTaskData): any => {
     const preparedData: any = data;
     if (users) {
       preparedData.users = users.map(el => el.id);
@@ -42,13 +51,13 @@ export const patchProjectTask = requestActions<IProjectTaskData>(
       request: {
         data: preparedData,
         method: 'PATCH',
-        url: `/projects/${projectId}/tasks/${taskId}`,
+        url: `/projects/${projectId}/tasks/${id}`,
       },
       success: {
         message: 'Задача успешно обновлена',
         title: 'Успех!',
       },
-      taskId,
+      taskId: id,
       users,
     };
   }

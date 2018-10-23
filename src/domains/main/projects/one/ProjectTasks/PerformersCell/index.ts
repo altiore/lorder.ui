@@ -25,7 +25,7 @@ const mergeProps = (
   ...restState,
   ...restDispatch,
   ...restOwn,
-  patchProjectTask: (users: number[]) => patchProjectTask({ projectId, taskId, users }),
+  patchProjectTask: (users: number[]) => patchProjectTask({ projectId, id: taskId, users }),
 });
 
 export const PerformersCell = connect(

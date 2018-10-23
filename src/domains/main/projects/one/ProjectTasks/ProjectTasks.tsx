@@ -7,12 +7,14 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
+import * as Popover from 'react-popover';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Table } from 'src/domains/@common/Table';
 import { DownloadList } from 'src/store/@common/entities';
 import { Task } from 'src/store/projects';
 import { AddTaskForm } from './AddTaskForm';
+import { PatchTaskForm } from './PatchTaskForm';
 import { PerformersCell } from './PerformersCell';
 
 export interface IProjectTasksProps {
@@ -24,16 +26,16 @@ export interface IProjectTasksProps {
 }
 
 export interface IState {
+  isPopoverOpened: any;
   page: number | string;
   perPage: number | string;
-  selectedUsers: any;
 }
 
 export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & IProjectTasksProps, IState> {
   public state = {
+    isPopoverOpened: {},
     page: 0,
     perPage: 10,
-    selectedUsers: [],
   };
 
   private performersCellRef: HTMLElement[] = [];
@@ -71,8 +73,15 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
   private renderItem = ({ id, title, description, value, users }: Task) => {
     const { classes } = this.props;
     return (
-      <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
-        <TableCell>{title}</TableCell>
+      <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id)}>
+        <Popover
+          onOuterAction={this.onOuterAction}
+          preferPlace={'right'}
+          body={<PatchTaskForm taskId={id} buttonText="Сохранить" closeDialog={this.onOuterAction} />}
+          isOpen={this.state.isPopoverOpened[id]}
+        >
+          <TableCell>{title}</TableCell>
+        </Popover>
         <TableCell>{description}</TableCell>
         <TableCell>
           <span ref={this.setPerformersCellRef(id)}>
@@ -89,13 +98,17 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     );
   };
 
+  private onOuterAction = () => {
+    this.setState({ isPopoverOpened: {} });
+  };
+
   private setPerformersCellRef = (id: number): any => (node: HTMLElement) => {
     if (node) {
       this.performersCellRef[id] = node;
     }
   };
 
-  private createTask = () => this.props.openDialog(AddTaskForm);
+  private createTask = () => this.props.openDialog(<AddTaskForm buttonText="Добавить задачу" />);
 
   private handleRowClick = (id: number | undefined) => (event: React.MouseEvent) => {
     let isInside = false;
@@ -106,8 +119,8 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
         }
       });
     }
-    if (!isInside) {
-      console.log('row click', id);
+    if (!isInside && id && !this.state.isPopoverOpened[id]) {
+      this.setState({ isPopoverOpened: { [id]: true } });
     }
   };
 

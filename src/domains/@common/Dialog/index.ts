@@ -1,5 +1,5 @@
 import Dialog from '@material-ui/core/Dialog';
-import { createElement } from 'react';
+import { cloneElement, createElement, isValidElement } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -14,7 +14,11 @@ export default connect(
     onClose: closeDialog,
   },
   ({ component, open }: any, { onClose }, ownProps) => ({
-    children: component ? createElement(component, { onClose }) : '',
+    children: component
+      ? isValidElement(component)
+        ? cloneElement<any>(component, { onClose })
+        : createElement(component, { onClose })
+      : '',
     onClose,
     open,
     ...ownProps,
