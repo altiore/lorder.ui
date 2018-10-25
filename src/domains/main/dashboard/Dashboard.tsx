@@ -45,7 +45,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
 
   /**
    * TODO: move to persist first rehydrate place instead of this component,
-   *       because we should start timer even if reload any other page
+   *       because we should start timer even if reload any other page, very important!
    */
   public componentWillReceiveProps(nextProps: IDashboardProps) {
     if (
