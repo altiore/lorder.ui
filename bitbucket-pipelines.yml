@@ -4,6 +4,7 @@ pipelines:
   default:
     - step:
         name: Test build
+        deployment: test
         caches:
           - node
         script:
@@ -11,6 +12,19 @@ pipelines:
           - npm run build
 
   branches:
+    staging:
+    - step:
+        name: Tests one more time before deploy
+        caches:
+        - node
+        script:
+        - npm install
+        - npm run build
+    - step:
+        name: Deploy to altiore-staging
+        deployment: staging
+        script:
+        - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD
     master:
       - step:
           name: Tests one more time before deploy
@@ -20,7 +34,7 @@ pipelines:
             - npm install
             - npm run build
       - step:
-          name: Deploy to altiore-staging
-          deployment: staging
+          name: Deploy to PRODUCTION
+          deployment: production
           script:
             - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD
