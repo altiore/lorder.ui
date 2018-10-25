@@ -27,7 +27,7 @@ pipelines:
         - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD
     master:
       - step:
-          name: Tests one more time before deploy
+          name: Tests one more time before publish to PRODUCTION
           caches:
             - node
           script:
