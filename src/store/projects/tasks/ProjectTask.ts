@@ -1,7 +1,7 @@
 import map from 'lodash-es/map';
 import { User } from 'src/store/users';
 
-export interface ITask {
+export interface IProjectTask {
   id: number;
   title: string;
   description: string;
@@ -9,7 +9,7 @@ export interface ITask {
   users: User[];
 }
 
-export class Task implements ITask {
+export class ProjectTask implements IProjectTask {
   public id: number;
   public title: string;
   public description: string;

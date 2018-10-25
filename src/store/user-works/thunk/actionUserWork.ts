@@ -11,20 +11,20 @@ import { UserWork } from '../UserWork';
 
 export let timer: Timer;
 
-export const startTimer = (userTask: Partial<UserWork>) => async (dispatch: Dispatch, getState: any) => {
+export const startTimer = (userWork: Partial<UserWork>) => async (dispatch: Dispatch, getState: any) => {
   clearInterval(timer);
-  if (!userTask.durationInSeconds) {
-    userTask = new UserWork(userTask);
+  if (!userWork.durationInSeconds) {
+    userWork = new UserWork(userWork);
   }
   let project: Project;
-  if (typeof userTask.projectId === 'number') {
-    project = getProjectById(getState())(userTask.projectId);
+  if (typeof userWork.projectId === 'number') {
+    project = getProjectById(getState())(userWork.projectId);
   }
-  timer = setInterval(() => dispatch(tickUserWorkTimer({ userTask, project })), 1000);
+  timer = setInterval(() => dispatch(tickUserWorkTimer({ userWork, project })), 1000);
   dispatch(
     setCurrentUserWorkId({
-      taskId: userTask.id,
-      time: userTask.durationInSeconds,
+      taskId: userWork.id,
+      time: userWork.durationInSeconds,
       timer,
     })
   );
@@ -38,11 +38,11 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: Dispatch,
     preparedData.title = `Задача для проекта ${project.title}`;
   }
   const res = await dispatch(postAndStartUserWork(preparedData));
-  const userTaskData = get(res, 'payload.data');
+  const userWorkData = get(res, 'payload.data');
 
-  const userTask = new UserWork(userTaskData);
+  const userWork = new UserWork(userWorkData);
 
-  return await dispatch(startTimer(userTask) as any);
+  return await dispatch(startTimer(userWork) as any);
 };
 
 export const stopUserWork = (data: IUserWorkDelete) => async (dispatch: Dispatch) => {

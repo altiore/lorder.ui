@@ -4,4 +4,4 @@ export * from './reducer';
 export * from './selectors';
 export * from './tasks/selectors';
 export * from './Project';
-export * from './tasks/Task';
+export * from './tasks/ProjectTask';

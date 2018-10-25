@@ -2,40 +2,28 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { selectedProjectId } from 'src/store/project';
 import { getProjectById } from 'src/store/projects';
-import { getTaskTypeById } from 'src/store/task-types';
+import { allTasks, getAllTasks } from 'src/store/tasks';
 import { currentTaskId, isTimerStarted } from 'src/store/timer';
-import { allUserWorks, deleteUserWork, getAllUserWorks, startTimer, stopUserWork } from 'src/store/user-works';
+import { startTimer, startUserWork, stopUserWork } from 'src/store/user-works';
 import { DashboardJsx } from './Dashboard';
 import { styles } from './styles';
 
 const mapStateToProps = createStructuredSelector({
-  allUserWorks,
+  allTasks,
   currentTaskId,
   getProjectById,
-  getTaskTypeById,
   isTimerStarted,
-  selectedProjectId,
 });
 
 const mapDispatchToProps = {
-  deleteUserWork,
-  getAllUserWorks,
+  getAllTasks,
   startTimer,
+  startUserWork,
   stopUserWork,
 };
 
-const mergeProps = (state: any, { deleteUserWork, stopUserWork, ...props }: any, ownProps: any) => ({
-  ...state,
-  ...props,
-  deleteUserWork: (taskId: number) => deleteUserWork({ projectId: state.selectedProjectId, taskId }),
-  stopUserWork: (taskId: number) => stopUserWork({ projectId: state.selectedProjectId, taskId }),
-  ...ownProps,
-});
-
 export const Dashboard = connect(
   mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
+  mapDispatchToProps
 )(withStyles(styles, { withTheme: true })(DashboardJsx));

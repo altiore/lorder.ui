@@ -11,6 +11,7 @@ import { dialog } from './dialog';
 import { identity } from './identity';
 import { Project } from './projects';
 import { TaskType } from './task-types';
+import { Task } from './tasks';
 import { uiReducer } from './ui';
 import { UserWork } from './user-works';
 import { User } from './users';
@@ -38,6 +39,7 @@ const persistConfig: PersistConfig = {
         const entity = {
           projects: Project,
           taskTypes: TaskType,
+          tasks: Task,
           userWorks: UserWork,
           users: User,
         }[key];
@@ -47,7 +49,7 @@ const persistConfig: PersistConfig = {
         return new DownloadList(entity, outboundState);
       },
       // define which reducers this transform gets called for.
-      { whitelist: ['projects', 'taskTypes', 'userWorks', 'users'] }
+      { whitelist: ['projects', 'taskTypes', 'tasks', 'userWorks', 'users'] }
     ),
   ],
 };

@@ -12,7 +12,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { Table } from 'src/domains/@common/Table';
 import { DownloadList } from 'src/store/@common/entities';
-import { Task } from 'src/store/projects';
+import { ProjectTask } from 'src/store/projects';
 import { AddTaskForm } from './AddTaskForm';
 import { PatchTaskForm } from './PatchTaskForm';
 import { PerformersCell } from './PerformersCell';
@@ -22,7 +22,7 @@ export interface IProjectTasksProps {
   closeDialog: any;
   deleteProjectTask: (id: number) => void;
   openDialog: any;
-  projectTasks: DownloadList<Task>;
+  projectTasks: DownloadList<ProjectTask>;
 }
 
 export interface IState {
@@ -70,7 +70,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     );
   }
 
-  private renderItem = ({ id, title, description, value, users }: Task) => {
+  private renderItem = ({ id, title, description, value, users }: ProjectTask) => {
     const { classes } = this.props;
     return (
       <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id)}>

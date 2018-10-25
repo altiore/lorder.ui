@@ -7,6 +7,7 @@ import { IDialogState } from 'src/store/dialog';
 import { IIdentityState } from 'src/store/identity';
 import { Project } from 'src/store/projects';
 import { TaskType } from 'src/store/task-types';
+import { Task } from 'src/store/tasks';
 import { ITimer } from 'src/store/timer';
 import { IUiState } from 'src/store/ui';
 import { IUserWork } from 'src/store/user-works';
@@ -20,6 +21,7 @@ export interface IState {
   project: { selected?: number };
   projects: DownloadList<Project>;
   taskTypes: DownloadList<TaskType>;
+  tasks: DownloadList<Task>;
   timer: ITimer;
   router: RouterState;
   ui: IUiState;

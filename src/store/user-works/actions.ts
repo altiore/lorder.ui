@@ -4,13 +4,13 @@ import { CREATE_USER_WORK_FORM_NAME } from './consts';
 export interface IUserWorkData {
   description: string;
   projectId: number;
-  taskId: number;
-  title: string;
+  taskId?: number;
+  title?: string;
 }
 
 export interface IUserWorkDelete {
   projectId: number;
-  taskId: number;
+  userWorkId: number;
 }
 
 export const getAllUserWorks = requestActions(
@@ -36,22 +36,22 @@ export const postAndStartUserWork = requestActions<IUserWorkData>(
 
 export const patchAndStopUserWork = requestActions<IUserWorkDelete>(
   'USER_WORK/PATCH_AND_STOP',
-  ({ projectId, taskId }: IUserWorkDelete) => ({
+  ({ projectId, userWorkId }: IUserWorkDelete) => ({
     request: {
       method: 'PATCH',
-      url: `/user-works/${taskId}`,
+      url: `/user-works/${userWorkId}`,
     },
   })
 );
 
 export const deleteUserWork = requestActions<IUserWorkDelete>(
   'USER_WORK/DELETE',
-  ({ taskId }: IUserWorkDelete): any => ({
+  ({ userWorkId }: IUserWorkDelete): any => ({
     request: {
       method: 'DELETE',
-      url: `/user-works/${taskId}`,
+      url: `/user-works/${userWorkId}`,
     },
     success: 'Задача успешно удалена',
-    taskId,
+    userWorkId,
   })
 );

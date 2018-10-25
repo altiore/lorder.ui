@@ -3,7 +3,7 @@ import map from 'lodash-es/map';
 import { DownloadList } from '../@common/entities';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';
-import { Task } from './tasks/Task';
+import { ProjectTask } from './tasks/ProjectTask';
 
 export class Project {
   public id?: number;
@@ -12,13 +12,13 @@ export class Project {
   public owner?: any;
   public phases?: any[];
   public members: Member[];
-  public tasks: DownloadList<Task>;
+  public tasks: DownloadList<ProjectTask>;
   public taskTypes: DownloadList<TaskType>;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
       if (key === 'tasks') {
-        this[key] = new DownloadList(Task, val, Array.isArray(val));
+        this[key] = new DownloadList(ProjectTask, val, Array.isArray(val));
         return;
       }
       if (key === 'taskTypes') {

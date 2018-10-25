@@ -7,10 +7,10 @@ import { DownloadList } from 'src/store/@common/entities';
 import { IRequestAction } from 'src/store/@common/requestActions';
 import { User } from 'src/store/users';
 import { deleteProjectTask, patchProjectTask, postProjectTask } from './actions';
-import { Task } from './Task';
+import { ProjectTask } from './ProjectTask';
 
-type S = DownloadList<Task>;
-interface IProjectRequest extends IRequestAction<Partial<Task>> {
+type S = DownloadList<ProjectTask>;
+interface IProjectRequest extends IRequestAction<Partial<ProjectTask>> {
   taskId: number;
   projectId: number;
   users: User[];
@@ -19,7 +19,7 @@ type P = IProjectRequest | AxiosResponse;
 
 const postProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>) => {
   const data = payload && payload.request.data;
-  return state.startLoading().addItem(new Task({ id: uniqid(), ...data }));
+  return state.startLoading().addItem(new ProjectTask({ id: uniqid(), ...data }));
 };
 
 const postProjectTaskSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
@@ -34,7 +34,7 @@ const patchProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>)
   if (!payload) {
     throw new Error('patchProjectTaskHandler Error: payload is required');
   }
-  const preparedData: Partial<Task> = { ...payload.request.data };
+  const preparedData: Partial<ProjectTask> = { ...payload.request.data };
   if (preparedData.users) {
     preparedData.users = payload.users;
   }
@@ -78,5 +78,5 @@ export const projectTasks = handleActions<S, P>(
     [deleteProjectTask.success]: deleteProjectTaskSuccessHandler,
     [deleteProjectTask.fail]: deleteProjectTaskFailHandler,
   },
-  new DownloadList(Task)
+  new DownloadList(ProjectTask)
 );
