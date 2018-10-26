@@ -3,10 +3,9 @@ import get from 'lodash-es/get';
 import { Action, handleActions } from 'redux-actions';
 import uniqid from 'uniqid';
 
-// import { IMeta } from 'src/@types';
-import { DownloadList } from '../@common/entities';
-import { IRequestAction } from '../@common/requestActions';
-import { deleteUserWork, getAllUserWorks, patchAndStopUserWork, postAndStartUserWork } from './actions';
+import { DownloadList } from 'src/store/@common/entities';
+import { IRequestAction } from 'src/store/@common/requestActions';
+import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork } from './actions';
 import { UserWork } from './UserWork';
 
 type S = DownloadList<UserWork>;
@@ -15,19 +14,6 @@ interface IDeleteUserWork {
   taskId: number;
 }
 type P<T = any> = IDeleteUserWork | StartUserWorkReq | AxiosResponse<T> | Partial<UserWork>;
-// type M = IMeta<{ projectId: number; taskId?: number }>;
-
-const getAllUserWorksHandler = (state: S) => {
-  return state.startLoading();
-};
-
-const getAllUserWorksSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
-  return state.finishLoading(payload);
-};
-
-const getAllUserWorksFailHandler = (state: S) => {
-  return state.stopLoading();
-};
 
 const postAndStartUserWorkHandler = (state: S, { payload }: Action<StartUserWorkReq>) => {
   const description = get(payload, 'request.data.description');
@@ -60,16 +46,12 @@ const patchAndStopUserWorkFailHandler = (state: S) => {
 };
 
 const deleteUserWorkHandler = (state: S, { payload }: Action<IDeleteUserWork>) => {
-  const index = state.list.findIndex(el => el.id === get(payload, 'taskId'));
+  const index = state.list.findIndex(el => el.id === get(payload, 'userWorkId'));
   return state.removeItem(index);
 };
 
 export const userWorks = handleActions<S, P>(
   {
-    [getAllUserWorks.toString()]: getAllUserWorksHandler,
-    [getAllUserWorks.success]: getAllUserWorksSuccessHandler,
-    [getAllUserWorks.fail]: getAllUserWorksFailHandler,
-
     [postAndStartUserWork.toString()]: postAndStartUserWorkHandler,
     [postAndStartUserWork.success]: postAndStartUserWorkSuccessHandler,
     [postAndStartUserWork.fail]: postAndStartUserWorkFailHandler,

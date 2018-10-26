@@ -17,7 +17,7 @@ export class DownloadList<T = any> {
     } else {
       this.isLoaded = (initial as Partial<DownloadList>).isLoaded || this.isLoaded;
       this.isLoading = (initial as Partial<DownloadList>).isLoading || this.isLoading;
-      this.list = (initial as Partial<DownloadList>).list || this.list;
+      this.list = ((initial as Partial<DownloadList>).list || this.list).map(el => new this.Entity(el));
     }
   }
 
@@ -27,6 +27,27 @@ export class DownloadList<T = any> {
 
   public slice(start?: number, end?: number) {
     return this.list.slice(start, end);
+  }
+
+  public find<S extends T>(
+    predicate: (this: void, value: T, index: number, obj: T[]) => value is S,
+    thisArg?: any
+  ): S | undefined;
+  public find(predicate: (value: T, index: number, obj: T[]) => boolean, thisArg?: any): T | undefined;
+  public find(...args: any[]) {
+    return this.list.find.call(this.list, ...args);
+  }
+
+  public reduce(
+    callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T,
+    initialValue?: T
+  ): T;
+  public reduce<U>(
+    callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U,
+    initialValue: U
+  ): U;
+  public reduce(...args: any[]) {
+    return this.list.reduce.call(this.list, ...args);
   }
 
   public map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) {

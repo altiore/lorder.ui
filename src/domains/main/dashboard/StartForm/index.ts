@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { onSubmitForm } from 'src/store/@common/helpers';
 import { createUserTaskFormInitials } from 'src/store/project';
-import { CREATE_USER_WORK_FORM_NAME, IUserWorkData, startUserWork } from 'src/store/user-works';
+import { CREATE_USER_WORK_FORM_NAME, IUserWorkData, startUserWork } from 'src/store/tasks';
 import { IStartFormProps, StartFormJsx } from './StartForm';
 import { styles } from './styles';
 

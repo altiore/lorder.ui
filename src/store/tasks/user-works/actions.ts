@@ -10,48 +10,47 @@ export interface IUserWorkData {
 
 export interface IUserWorkDelete {
   projectId: number;
+  taskId: number;
   userWorkId: number;
 }
-
-export const getAllUserWorks = requestActions(
-  'USER_WORK/GET',
-  (): any => ({
-    request: {
-      url: '/user-works',
-    },
-  })
-);
 
 export const postAndStartUserWork = requestActions<IUserWorkData>(
   'USER_WORK/POST_AND_START',
   (data: IUserWorkData): any => ({
     form: CREATE_USER_WORK_FORM_NAME,
+    projectId: data.projectId,
     request: {
       data,
       method: 'POST',
       url: '/user-works',
     },
+    taskId: data.taskId,
   })
 );
 
 export const patchAndStopUserWork = requestActions<IUserWorkDelete>(
   'USER_WORK/PATCH_AND_STOP',
-  ({ projectId, userWorkId }: IUserWorkDelete) => ({
+  ({ projectId, taskId, userWorkId }: IUserWorkDelete) => ({
+    projectId,
     request: {
       method: 'PATCH',
       url: `/user-works/${userWorkId}`,
     },
+    taskId,
+    userWorkId,
   })
 );
 
 export const deleteUserWork = requestActions<IUserWorkDelete>(
   'USER_WORK/DELETE',
-  ({ userWorkId }: IUserWorkDelete): any => ({
+  ({ projectId, taskId, userWorkId }: IUserWorkDelete): any => ({
+    projectId,
     request: {
       method: 'DELETE',
       url: `/user-works/${userWorkId}`,
     },
     success: 'Задача успешно удалена',
+    taskId,
     userWorkId,
   })
 );

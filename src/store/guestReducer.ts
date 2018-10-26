@@ -13,7 +13,6 @@ import { Project } from './projects';
 import { TaskType } from './task-types';
 import { Task } from './tasks';
 import { uiReducer } from './ui';
-import { UserWork } from './user-works';
 import { User } from './users';
 
 localForage.config({
@@ -40,7 +39,6 @@ const persistConfig: PersistConfig = {
           projects: Project,
           taskTypes: TaskType,
           tasks: Task,
-          userWorks: UserWork,
           users: User,
         }[key];
         if (!entity) {

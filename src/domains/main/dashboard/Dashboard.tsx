@@ -4,6 +4,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import TablePagination from '@material-ui/core/TablePagination';
 import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
 import StopIcon from '@material-ui/icons/StopRounded';
 import * as React from 'react';
@@ -12,14 +13,14 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Page } from 'src/domains/@common/Page';
 import { DownloadList } from 'src/store/@common/entities';
 import { Project } from 'src/store/projects';
-import { Task } from 'src/store/tasks';
-import { IUserWorkData, IUserWorkDelete, UserWork } from 'src/store/user-works';
+import { IUserWorkData, IUserWorkDelete, Task, UserWork } from 'src/store/tasks';
 import { StartForm } from './StartForm';
 import { TimerListItemText } from './TimerListItemText';
 import { UserWorkTable } from './UserWorkTable';
 
 export interface IState {
   open: any;
+  page: number;
 }
 
 export interface IDashboardProps extends RouteComponentProps<{}> {
@@ -37,6 +38,7 @@ export interface IDashboardProps extends RouteComponentProps<{}> {
 export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
   public state = {
     open: {},
+    page: 0,
   };
 
   public componentDidMount() {
@@ -55,7 +57,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     ) {
       let currentUserWork;
       const currentTask = nextProps.allTasks.list.find(task => {
-        currentUserWork = task.userWorks.find(userWork => !userWork.finishAt);
+        currentUserWork = task.userWorks.list.find(userWork => !userWork.finishAt);
         return !!currentUserWork;
       });
       if (currentTask && currentUserWork) {
@@ -67,10 +69,24 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
 
   public render() {
     const { allTasks } = this.props;
+    const { page } = this.state;
     return (
       <Page>
         <StartForm />
-        {allTasks && !!allTasks.length && <List>{allTasks.map(this.renderListItem)}</List>}
+        {allTasks &&
+          !!allTasks.length && <List>{allTasks.slice(page * 5, (page + 1) * 5).map(this.renderListItem)}</List>}
+        {allTasks &&
+          !!allTasks.length && (
+            <TablePagination
+              component="div"
+              count={allTasks.length}
+              rowsPerPage={5}
+              page={this.state.page}
+              onChangePage={this.handleChangePage}
+              labelRowsPerPage={'Элементов на странице'}
+              labelDisplayedRows={this.labelDisplayedRows}
+            />
+          )}
       </Page>
     );
   }
@@ -83,7 +99,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
       <ListItem key={id} button onClick={this.expandListItem(id)}>
         <ListItemIcon>
           {currentUserWork ? (
-            <IconButton onClick={this.stopUserWork(currentUserWork.id, projectId)} className={classes.stop}>
+            <IconButton onClick={this.stopUserWork(currentUserWork.id, task.id, projectId)} className={classes.stop}>
               <StopIcon />
             </IconButton>
           ) : (
@@ -110,7 +126,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
         unmountOnExit
         className={classes.collapse}
       >
-        <UserWorkTable userWorks={userWorks} />
+        <UserWorkTable userWorks={userWorks} taskId={task.id} />
       </Collapse>,
     ];
   };
@@ -129,17 +145,29 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     });
   };
 
-  private stopUserWork = (userWorkId: number | string | undefined, projectId: number) => (
+  private stopUserWork = (userWorkId: number | string | undefined, taskId: number, projectId: number) => (
     event: React.SyntheticEvent
   ) => {
     event.stopPropagation();
     if (typeof userWorkId === 'number') {
       this.props.stopUserWork({
         projectId,
+        taskId,
         userWorkId,
       });
     } else {
       console.log('deleteUserWork taskId type is %s', typeof projectId);
     }
+  };
+
+  private labelDisplayedRows = ({ from, to, count }: any) => {
+    return ''
+      .concat(from, '-')
+      .concat(to, ' из ')
+      .concat(count);
+  };
+
+  private handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
+    this.setState({ page });
   };
 }

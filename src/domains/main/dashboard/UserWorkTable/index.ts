@@ -2,20 +2,13 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { selectedProjectId } from 'src/store/project';
-import { getProjectById } from 'src/store/projects';
-import { getTaskTypeById } from 'src/store/task-types';
-import { currentTaskId, isTimerStarted } from 'src/store/timer';
-import { deleteUserWork, startTimer, stopUserWork } from 'src/store/user-works';
+import { deleteUserWork, startTimer, stopUserWork } from 'src/store/tasks';
+import { currentTaskId } from 'src/store/timer';
 import { styles } from './styles';
 import { UserWorkTableJsx } from './UserWorkTable';
 
 const mapStateToProps = createStructuredSelector({
   currentTaskId,
-  getProjectById,
-  getTaskTypeById,
-  isTimerStarted,
-  selectedProjectId,
 });
 
 const mapDispatchToProps = {
@@ -24,11 +17,11 @@ const mapDispatchToProps = {
   stopUserWork,
 };
 
-const mergeProps = (state: any, { deleteUserWork, stopUserWork, ...props }: any, ownProps: any) => ({
+const mergeProps = (state: any, { deleteUserWork, stopUserWork, ...props }: any, { taskId, ...ownProps }: any) => ({
   ...state,
   ...props,
-  deleteUserWork: (userWorkId: number) => deleteUserWork({ projectId: state.selectedProjectId, userWorkId }),
-  stopUserWork: (userWorkId: number) => stopUserWork({ projectId: state.selectedProjectId, userWorkId }),
+  deleteUserWork: (userWorkId: number) => deleteUserWork({ projectId: state.selectedProjectId, taskId, userWorkId }),
+  stopUserWork: (userWorkId: number) => stopUserWork({ projectId: state.selectedProjectId, taskId, userWorkId }),
   ...ownProps,
 });
 

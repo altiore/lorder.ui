@@ -1,8 +1,8 @@
 import map from 'lodash-es/map';
 
+import { DownloadList } from 'src/store/@common/entities';
 import { covertSecondsToDuration } from 'src/store/@common/helpers';
-import { UserWork } from 'src/store/user-works';
-// import { User } from 'src/store/users';
+import { UserWork } from 'src/store/tasks';
 
 export interface ITask {
   id: number;
@@ -10,8 +10,7 @@ export interface ITask {
   description: string;
   projectId: number;
   value: number;
-  // users: User[];
-  userWorks: UserWork[];
+  userWorks: DownloadList<UserWork>;
 }
 
 export class Task implements ITask {
@@ -20,25 +19,20 @@ export class Task implements ITask {
   public description: string;
   public projectId: number;
   public value: number;
-  // public users: User[] = [];
-  public userWorks: UserWork[] = [];
+  public userWorks: DownloadList<UserWork>;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
       if (key === 'userWorks') {
-        this[key] = val.map((userWork: Partial<UserWork>) => new UserWork(userWork));
+        this[key] = new DownloadList(UserWork, val, Array.isArray(val));
         return;
       }
-      // if (key === 'users') {
-      //   this[key] = val.map((user: Partial<User>) => new User(user));
-      //   return;
-      // }
       this[key] = val;
     });
   }
 
   get durationInSeconds(): number {
-    return this.userWorks.reduce((res, current) => res + current.durationInSeconds, 0);
+    return this.userWorks.list.reduce((res, current) => res + current.durationInSeconds, 0);
   }
 
   get duration(): string {

@@ -10,7 +10,6 @@ import { TaskType } from 'src/store/task-types';
 import { Task } from 'src/store/tasks';
 import { ITimer } from 'src/store/timer';
 import { IUiState } from 'src/store/ui';
-import { IUserWork } from 'src/store/user-works';
 import { IUser } from 'src/store/users';
 
 export interface IState {
@@ -25,6 +24,5 @@ export interface IState {
   timer: ITimer;
   router: RouterState;
   ui: IUiState;
-  userWorks: DownloadList<IUserWork>;
   users: DownloadList<IUser>;
 }

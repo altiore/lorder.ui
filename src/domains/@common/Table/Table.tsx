@@ -9,6 +9,7 @@ import { DownloadList } from 'src/store/@common/entities';
 
 export interface IProjectTaskTypesProps<T> {
   classes: any;
+  colSpan?: number;
   items: DownloadList<T>;
   perPage?: number;
   renderItem: (item: T) => React.ReactNode;
@@ -44,7 +45,7 @@ export class TableTsx<T> extends React.Component<IProjectTaskTypesProps<T>, ISta
   };
 
   public render() {
-    const { classes, items } = this.props;
+    const { classes, colSpan, items } = this.props;
     const { page, perPage } = this.state;
     return (
       <Table className={classes.table}>
@@ -53,7 +54,7 @@ export class TableTsx<T> extends React.Component<IProjectTaskTypesProps<T>, ISta
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={3}
+              colSpan={colSpan}
               count={items.length}
               rowsPerPage={perPage}
               page={page}
