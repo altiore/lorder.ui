@@ -131,7 +131,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     ];
   };
 
-  private expandListItem = (id: number) => () => {
+  private expandListItem = (id: number | string) => () => {
     this.setState(({ open }) => ({ open: { [id]: !open[id] } }));
   };
 
@@ -145,7 +145,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     });
   };
 
-  private stopUserWork = (userWorkId: number | string | undefined, taskId: number, projectId: number) => (
+  private stopUserWork = (userWorkId: number | string | undefined, taskId: number | string, projectId: number) => (
     event: React.SyntheticEvent
   ) => {
     event.stopPropagation();

@@ -23,6 +23,7 @@ const postProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>) 
 };
 
 const postProjectTaskSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
+  // TODO: find index before updateItem, because we can change logic for showing data
   return state.stopLoading().updateItem(0, payload && payload.data);
 };
 

@@ -7,7 +7,7 @@ export class DownloadList<T = any> {
 
   private readonly Entity: any;
 
-  constructor(Entity: any, initial?: Partial<DownloadList> | T[], fromArray: boolean = false) {
+  constructor(Entity: any, initial?: Partial<DownloadList> | Array<Partial<T>>, fromArray: boolean = false) {
     this.Entity = Entity;
     if (!initial) {
       return;

@@ -5,7 +5,7 @@ import { covertSecondsToDuration } from 'src/store/@common/helpers';
 import { UserWork } from 'src/store/tasks';
 
 export interface ITask {
-  id: number;
+  id: number | string;
   title: string;
   description: string;
   projectId: number;
@@ -14,7 +14,7 @@ export interface ITask {
 }
 
 export class Task implements ITask {
-  public id: number;
+  public id: number | string;
   public title: string;
   public description: string;
   public projectId: number;
