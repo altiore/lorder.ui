@@ -23,11 +23,11 @@ const postProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>) 
 };
 
 const postProjectTaskSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
-  return state.stopLoading().updateItem(-1, payload && payload.data);
+  return state.stopLoading().updateItem(0, payload && payload.data);
 };
 
 const postProjectTaskFailHandler = (state: S) => {
-  return state.stopLoading().removeItem(-1);
+  return state.stopLoading().removeItem(0);
 };
 
 const patchProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>) => {

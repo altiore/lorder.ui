@@ -112,14 +112,14 @@ export class DownloadList<T = any> {
       console.log(errorText, { index, partialItem });
       throw new Error(errorText);
     }
-    const newProject = new this.Entity({
+    const newItem = new this.Entity({
       ...(this.list[index] as any),
       ...(partialItem as any),
     });
     return new DownloadList(this.Entity, {
       isLoaded: this.isLoaded,
       isLoading: this.isLoading,
-      list: [...this.list.slice(0, index), newProject, ...this.list.slice(index + 1)],
+      list: [...this.list.slice(0, index), newItem, ...this.list.slice(index + 1)],
     });
   }
 }
