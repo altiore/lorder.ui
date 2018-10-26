@@ -3,6 +3,7 @@ import map from 'lodash-es/map';
 import * as moment from 'moment';
 
 import { covertSecondsToDuration } from 'src/store/@common/helpers';
+// import { Task } from 'src/store/tasks';
 
 export interface IUserWork {
   id?: number | string;
@@ -13,7 +14,7 @@ export interface IUserWork {
   startAt?: moment.Moment;
   taskId?: number;
   taskTypeId?: number;
-  // task
+  // task?: Task;
   // user
   value?: number;
 }
@@ -27,7 +28,7 @@ export class UserWork implements IUserWork {
   public startAt?: moment.Moment;
   public taskId?: number;
   public taskTypeId?: number;
-  // task
+  // public task?: Task;
   // user
   public value?: number;
 

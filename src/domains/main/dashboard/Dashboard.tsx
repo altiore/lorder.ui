@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TablePagination from '@material-ui/core/TablePagination';
 import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
 import StopIcon from '@material-ui/icons/StopRounded';
+import * as moment from 'moment';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -29,8 +30,8 @@ export interface IDashboardProps extends RouteComponentProps<{}> {
   currentTaskId?: number | string;
   isTimerStarted: boolean;
   getAllTasks: any;
-  getProjectById: (id: number) => Project;
-  startTimer: (userWork: UserWork) => any;
+  getProjectById: (id: number | string) => Project;
+  startTimer: (userWork: UserWork, project: Project) => any;
   startUserWork: (data: IUserWorkData) => any;
   stopUserWork: (data: IUserWorkDelete) => any;
 }
@@ -55,14 +56,14 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
       nextProps.isTimerStarted === this.props.isTimerStarted &&
       !nextProps.isTimerStarted
     ) {
-      let currentUserWork;
+      let currentUserWork: UserWork | undefined;
       const currentTask = nextProps.allTasks.list.find(task => {
         currentUserWork = task.userWorks.list.find(userWork => !userWork.finishAt);
         return !!currentUserWork;
       });
       if (currentTask && currentUserWork) {
         this.setState({ open: { [currentTask.id]: true } });
-        this.props.startTimer(currentUserWork);
+        this.props.startTimer(currentUserWork, this.props.getProjectById(currentTask.projectId));
       }
     }
   }
@@ -139,7 +140,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     event.stopPropagation();
     this.setState({ open: { [id]: true } });
     this.props.startUserWork({
-      description: 'test',
+      description: moment().format('YYYY-MM-DD'),
       projectId,
       taskId: id,
     });

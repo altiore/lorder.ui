@@ -16,7 +16,10 @@ const tickUserWorkTimerHandler = (state: ITimer, { payload }: Action<Partial<ITi
   const time = state.time + 1;
   document.title =
     covertSecondsToDuration(time) +
-    ` ${get(payload, 'project.title')} - ${get(payload, 'userTask.description') || '...'}`;
+    ` ${get(payload, 'project.title')} - ${get(payload, 'task.title') ||
+      get(payload, 'userWork.task.title') ||
+      get(payload, 'userWork.description') ||
+      '...'}`;
   return { ...state, time };
 };
 

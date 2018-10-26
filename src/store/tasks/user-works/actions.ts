@@ -1,4 +1,5 @@
 import { requestActions } from 'src/store/@common/requestActions';
+import { Project } from 'src/store/projects';
 import { CREATE_USER_WORK_FORM_NAME } from './consts';
 
 export interface IUserWorkData {
@@ -8,23 +9,28 @@ export interface IUserWorkData {
   title?: string;
 }
 
+export interface IPostData {
+  project: Project;
+  userWork: IUserWorkData;
+}
+
 export interface IUserWorkDelete {
   projectId: number;
   taskId: number | string;
   userWorkId: number;
 }
 
-export const postAndStartUserWork = requestActions<IUserWorkData>(
+export const postAndStartUserWork = requestActions<IPostData>(
   'USER_WORK/POST_AND_START',
-  (data: IUserWorkData): any => ({
+  ({ project, userWork }: IPostData): any => ({
     form: CREATE_USER_WORK_FORM_NAME,
-    projectId: data.projectId,
+    projectId: userWork.projectId,
     request: {
-      data,
+      data: userWork,
       method: 'POST',
       url: '/user-works',
     },
-    taskId: data.taskId,
+    taskId: userWork.taskId,
   })
 );
 

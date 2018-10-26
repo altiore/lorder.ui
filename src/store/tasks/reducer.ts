@@ -46,7 +46,6 @@ const taskUserWorkHandler = (state: S, action: ActionMeta<any, any>) => {
 
 const postAndStartUserWorkHandler = (state: S, action: ActionMeta<any, any>) => {
   let taskId: number;
-  // if meta exists get taskId from meta
   if (action.meta) {
     taskId = get(action.meta, 'previousAction.payload.taskId');
   } else {
