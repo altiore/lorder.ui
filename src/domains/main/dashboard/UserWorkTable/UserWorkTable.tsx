@@ -25,7 +25,7 @@ export class UserWorkTableJsx extends React.PureComponent<IUserWorkTableProps> {
     if (!userWorks || !userWorks.length) {
       return null;
     }
-    return <Table items={userWorks} renderItem={this.renderItem} perPage={5} />;
+    return <Table items={userWorks} renderItem={this.renderItem} perPage={3} />;
   }
 
   private renderItem = ({ id, description, duration }: UserWork) => {
