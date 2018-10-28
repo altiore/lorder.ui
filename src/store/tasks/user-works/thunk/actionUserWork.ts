@@ -1,5 +1,6 @@
 import Timer = NodeJS.Timer;
 import get from 'lodash-es/get';
+import * as moment from 'moment';
 import { Dispatch } from 'react-redux';
 
 import { IState } from 'src/@types';
@@ -11,10 +12,7 @@ import { UserWork } from '../UserWork';
 
 export let timer: Timer;
 
-export const startTimer = (userWork: Partial<UserWork>, project: Project) => async (
-  dispatch: Dispatch,
-  getState: any
-) => {
+export const startTimer = (userWork: Partial<UserWork>, project: Project) => async (dispatch: Dispatch) => {
   clearInterval(timer);
   if (!userWork.durationInSeconds) {
     userWork = new UserWork(userWork);
@@ -34,7 +32,12 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: Dispatch,
   const preparedData = { ...data };
   const project: Project = getProjectById(getState())(preparedData.projectId);
   if (!preparedData.title) {
-    preparedData.title = `Задача для проекта ${project.title}`;
+    if (preparedData.description) {
+      preparedData.title = preparedData.description;
+    } else {
+      preparedData.title = `Задача для проекта ${project.title}`;
+      preparedData.description = moment().format('YYYY-MM-DD');
+    }
   }
   const res = await dispatch(
     postAndStartUserWork({
