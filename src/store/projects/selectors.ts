@@ -11,10 +11,15 @@ export const projectsIsLoaded = createSelector(baseState, (state: DownloadList):
 
 export const projectsIsLoading = createSelector(baseState, (state: DownloadList): boolean => state.isLoading);
 
-export const projectList = createSelector(baseState, (state: DownloadList<Project>): Project[] => state.list);
+export const allProjectList = createSelector([baseState], (state: DownloadList<Project>): Project[] => state.list);
+
+export const ownProjectList = createSelector(
+  [baseState],
+  (state: DownloadList<Project>): Project[] => state.list.filter(el => typeof el.accessLevel === 'number')
+);
 
 export const selectedProject = createSelector(
-  [projectList, projectId],
+  [ownProjectList, projectId],
   (projects, id) => id && projects.find(el => el.id === id)
 );
 
@@ -22,6 +27,6 @@ export const projectMembers = createSelector(selectedProject, (project: Project)
 
 export const projectTaskTypes = createSelector(selectedProject, (project: Project) => project && project.taskTypes);
 
-export const getProjectById = createSelector(projectList, (list: Project[]) => (id: number): Project =>
+export const getProjectById = createSelector(allProjectList, (list: Project[]) => (id: number): Project =>
   list.find(e => e.id === id) || new Project()
 );

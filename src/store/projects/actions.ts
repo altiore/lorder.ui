@@ -30,9 +30,15 @@ export const postProject = requestActions<IPostProjectData>(
   })
 );
 
-export const getAllProjects = requestActions('PROJECTS/GET_ALL', () => ({
+export const getOwnProjects = requestActions('PROJECTS/GET_ALL_OWN', () => ({
   request: {
     url: '/projects',
+  },
+}));
+
+export const getAllProjects = requestActions('PROJECTS/GET_ALL(SUPER_ADMIN)', () => ({
+  request: {
+    url: '/projects/all',
   },
 }));
 

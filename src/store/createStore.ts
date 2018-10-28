@@ -4,7 +4,9 @@ import { applyMiddleware, compose, createStore as createReduxStore } from 'redux
 import { persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 
-import { ROLE } from '../@types';
+import { ROLE } from 'src/@types';
+import { userRole } from 'src/store/identity';
+import { getOwnProjects } from 'src/store/projects';
 import { clientsMiddleware } from './@common/middlewares';
 import { createRootReducer } from './guestReducer';
 
@@ -32,7 +34,12 @@ export async function createStore(initialState?: any) {
     });
   }
 
-  const persistor = persistStore(store);
+  const persistor = persistStore(store, undefined, () => {
+    const role = userRole(store.getState());
+    if (role !== ROLE.GUEST) {
+      store.dispatch((getOwnProjects as any)());
+    }
+  });
 
   // TODO: split reducers to several chunks
   // const injectAsyncReducers = async (role: ROLE): Promise<void> => {

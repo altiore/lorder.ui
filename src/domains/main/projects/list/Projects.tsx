@@ -23,7 +23,7 @@ const src =
 export interface IProjectsProps {
   classes: any;
   closeDialog: any;
-  getAllProjects: any;
+  getProjects: any;
   goToProject: any;
   openDialog: any;
   projectList: Project[];
@@ -38,7 +38,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   };
 
   public componentDidMount() {
-    this.props.getAllProjects();
+    this.props.getProjects();
   }
 
   public handleRowClick = (id: number | undefined) => () => {

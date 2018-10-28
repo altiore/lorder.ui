@@ -5,7 +5,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import { Digits } from '../digits';
 import { Main } from '../main';
 import { Dashboard } from '../main/dashboard';
-import { Projects } from '../main/projects/list';
+import { AllProjects, OwnProjects } from '../main/projects/list';
 import { Project } from '../main/projects/one';
 import { Users } from '../main/users';
 import { NoMatch } from '../noMatch';
@@ -32,11 +32,18 @@ export const routes = [
         title: 'Дом',
       },
       {
-        component: Projects,
+        component: OwnProjects,
         exact: true,
         icon: AssignmentIcon,
         path: '/projects',
-        title: 'Проекты',
+        title: 'Мои Проекты',
+      },
+      {
+        component: AllProjects,
+        exact: true,
+        icon: AssignmentIcon,
+        path: '/all-projects',
+        title: 'Все Проекты',
       },
       {
         component: Project,

@@ -5,8 +5,20 @@ import { TaskType } from '../task-types';
 import { Member } from './members/Member';
 import { ProjectTask } from './tasks/ProjectTask';
 
+export enum ACCESS_LEVEL {
+  WHITE = 0,
+  RED = 1,
+  ORANGE = 2,
+  YELLOW = 3,
+  GREEN = 4,
+  BLUE = 5,
+  INDIGO = 6,
+  VIOLET = 7,
+}
+
 export class Project {
   public id?: number;
+  public accessLevel?: ACCESS_LEVEL;
   public title: string;
   public monthlyBudget?: number;
   public owner?: any;
@@ -27,6 +39,10 @@ export class Project {
       }
       if (key === 'members') {
         this[key] = map(val, (member: Partial<Member>) => new Member(member));
+        return;
+      }
+      if (key === 'accessLevel') {
+        this[key] = typeof val === 'number' ? val : val && val.accessLevel;
         return;
       }
       this[key] = val;

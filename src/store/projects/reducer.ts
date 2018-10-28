@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import get from 'lodash-es/get';
-import { Action, ActionMeta, handleActions } from 'redux-actions';
+import { Action, ActionMeta, combineActions as combineActionsRedux, handleActions } from 'redux-actions';
 
 import { IMeta } from 'src/@types';
 import { DownloadList } from '../@common/entities';
@@ -12,6 +12,7 @@ import {
   deleteTaskTypeFromProject,
   fetchProjectDetails,
   getAllProjects,
+  getOwnProjects,
   patchProjectTask,
   postProject,
   postProjectMember,
@@ -31,15 +32,15 @@ interface IM {
 type P = AxiosResponse | IM;
 type M = IMeta<{ projectId: number; email: string; memberId: number }>;
 
-const getAllProjectsHandler = (state: S): S => {
+const getOwnProjectsHandler = (state: S): S => {
   return state.startLoading();
 };
 
-const getAllProjectsSuccessHandler = (state: S, { payload }: Action<AxiosResponse>): S => {
+const getOwnProjectsSuccessHandler = (state: S, { payload }: Action<AxiosResponse>): S => {
   return state.finishLoading(payload);
 };
 
-const getAllProjectsFailHandler = (state: S): S => {
+const getOwnProjectsFailHandler = (state: S): S => {
   return state.finishLoading();
 };
 
@@ -157,9 +158,9 @@ const projectTaskHandler = (state: S, action: ActionMeta<any, any>) => {
 export const projects = handleActions<S, P>(
   {
     [postProject.success]: postProjectSuccessHandler,
-    [getAllProjects.toString()]: getAllProjectsHandler,
-    [getAllProjects.success]: getAllProjectsSuccessHandler,
-    [getAllProjects.fail]: getAllProjectsFailHandler,
+    [combineActionsRedux(getOwnProjects, getAllProjects).toString()]: getOwnProjectsHandler,
+    [combineActionsRedux(getOwnProjects.success, getAllProjects.success).toString()]: getOwnProjectsSuccessHandler,
+    [combineActionsRedux(getOwnProjects.fail, getAllProjects.fail).toString()]: getOwnProjectsFailHandler,
     [addTaskTypeToProject.toString()]: addTaskTypeToProjectHandler,
     [removeProject.success]: removeProjectSuccessHandler,
     [fetchProjectDetails.success]: fetchProjectDetailsSuccessHandler,

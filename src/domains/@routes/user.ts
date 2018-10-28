@@ -4,7 +4,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import { Digits } from '../digits';
 import { Main } from '../main';
 import { Dashboard } from '../main/dashboard';
-import { Projects } from '../main/projects/list';
+import { OwnProjects } from '../main/projects/list';
 import { Project } from '../main/projects/one';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
@@ -22,7 +22,7 @@ export const routes = [
         title: 'Дом',
       },
       {
-        component: Projects,
+        component: OwnProjects,
         exact: true,
         icon: AssignmentIcon,
         path: '/projects',
