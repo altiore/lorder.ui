@@ -1,6 +1,6 @@
 import { requestActions } from 'src/store/@common/requestActions';
 
-import { PROJECT_TASK_FORM_NAME } from 'src/store/projects';
+import { PROJECT_EDIT_TASK_FORM_NAME, PROJECT_TASK_FORM_NAME } from 'src/store/projects';
 import { User } from 'src/store/users';
 
 export interface IProjectTaskData {
@@ -57,7 +57,7 @@ export const patchProjectTask = requestActions<IPatchProjectTaskData>(
       preparedData.users = users.map(el => el.id);
     }
     return {
-      form: PROJECT_TASK_FORM_NAME,
+      form: PROJECT_EDIT_TASK_FORM_NAME,
       projectId,
       request: {
         data: preparedData,

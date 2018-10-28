@@ -8,7 +8,7 @@ import { closeDialog } from 'src/store/dialog';
 import {
   getEditTaskInitialValues,
   patchProjectTask,
-  PROJECT_TASK_FORM_NAME,
+  PROJECT_EDIT_TASK_FORM_NAME,
   projectTasksIsLoading,
 } from 'src/store/projects';
 import { projectId } from 'src/store/router';
@@ -45,7 +45,9 @@ export const PatchTaskForm = connect<
   mapDispatchToProps,
   mergeProps
 )(reduxForm<ITaskFormData, ITaskFormProps>({
-  form: PROJECT_TASK_FORM_NAME,
+  destroyOnUnmount: false,
+  enableReinitialize: true,
+  form: PROJECT_EDIT_TASK_FORM_NAME,
   onSubmit: onSubmitForm(patchProjectTask, props => ({ projectId: props.projectId })),
   onSubmitFail: () => true,
   onSubmitSuccess: (res, dispatch, { closeDialog }) => {
