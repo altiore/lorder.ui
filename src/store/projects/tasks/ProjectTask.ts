@@ -1,28 +1,14 @@
-import map from 'lodash-es/map';
+import { ITask, Task } from 'src/store/tasks';
 import { User } from 'src/store/users';
 
-export interface IProjectTask {
-  id: number;
-  title: string;
-  description: string;
-  value: number;
+export interface IProjectTask extends ITask {
   users: User[];
 }
 
-export class ProjectTask implements IProjectTask {
-  public id: number;
-  public title: string;
-  public description: string;
-  public value: number;
+export class ProjectTask extends Task implements IProjectTask {
   public users: User[] = [];
 
   constructor(initial?: object) {
-    map(initial, (val: any, key: string) => {
-      if (key === 'users') {
-        this[key] = val.map((user: Partial<User>) => new User(user));
-        return;
-      }
-      this[key] = val;
-    });
+    super(initial);
   }
 }

@@ -21,6 +21,7 @@ export interface IProjectTasksProps {
   classes: any;
   closeDialog: any;
   deleteProjectTask: (id: number) => void;
+  getAllProjectTasks: () => void;
   openDialog: any;
   projectTasks: DownloadList<ProjectTask>;
 }
@@ -40,6 +41,10 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
 
   private performersCellRef: HTMLElement[] = [];
 
+  public componentDidMount() {
+    this.props.getAllProjectTasks();
+  }
+
   public render() {
     const { classes, projectTasks } = this.props;
     return (
@@ -52,6 +57,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
                 <TableCell>Описание</TableCell>
                 <TableCell>Исполнители</TableCell>
                 <TableCell numeric>Стоимость</TableCell>
+                <TableCell numeric>Время</TableCell>
                 <TableCell numeric />
               </TableRow>
             </TableHead>
@@ -70,7 +76,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     );
   }
 
-  private renderItem = ({ id, title, description, value, users }: ProjectTask) => {
+  private renderItem = ({ id, title, description, value, users, duration }: ProjectTask) => {
     const { classes } = this.props;
     return (
       <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id)}>
@@ -89,6 +95,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
           </span>
         </TableCell>
         <TableCell numeric>{value}</TableCell>
+        <TableCell numeric>{duration}</TableCell>
         <TableCell numeric>
           <IconButton onClick={this.handleRemoveClick(id)}>
             <ClearIcon />
@@ -102,7 +109,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     this.setState({ isPopoverOpened: {} });
   };
 
-  private setPerformersCellRef = (id: number): any => (node: HTMLElement) => {
+  private setPerformersCellRef = (id: number | string): any => (node: HTMLElement) => {
     if (node) {
       this.performersCellRef[id] = node;
     }
@@ -110,7 +117,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
 
   private createTask = () => this.props.openDialog(<AddTaskForm buttonText="Добавить задачу" />);
 
-  private handleRowClick = (id: number | undefined) => (event: React.MouseEvent) => {
+  private handleRowClick = (id: number | string) => (event: React.MouseEvent) => {
     let isInside = false;
     if (this.performersCellRef.length) {
       this.performersCellRef.map((cell: HTMLElement) => {
@@ -124,7 +131,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     }
   };
 
-  private handleRemoveClick = (id: number | undefined) => (e: any) => {
+  private handleRemoveClick = (id: number | string) => (e: any) => {
     if (typeof id === 'number') {
       e.stopPropagation();
       this.props.deleteProjectTask(id);

@@ -21,6 +21,16 @@ export interface IPatchProjectTaskData {
   users?: User[];
 }
 
+export const getAllProjectTasks = requestActions(
+  'PROJECT_TASK/GET_ALL',
+  (projectId: number): any => ({
+    projectId,
+    request: {
+      url: `/projects/${projectId}/tasks`,
+    },
+  })
+);
+
 export const postProjectTask = requestActions<IProjectTaskData>(
   'PROJECT_TASK/POST',
   ({ projectId, ...data }: IProjectTaskData): any => ({

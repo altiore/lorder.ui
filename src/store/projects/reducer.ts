@@ -12,6 +12,7 @@ import {
   deleteTaskTypeFromProject,
   fetchProjectDetails,
   getAllProjects,
+  getAllProjectTasks,
   getOwnProjects,
   patchProjectTask,
   postProject,
@@ -120,27 +121,6 @@ const deleteProjectMemberHandler = (state: S, { payload }: Action<P>) => {
   });
 };
 
-// TODO: add member to delete request in order to have ability revert it back if request failed
-// const deleteProjectMemberFailHandler = (state: S, { payload, meta }: ActionMeta<P, M>) => {
-//   const projectIndex = state.list.findIndex(el => meta.previousAction.payload.projectId === el.id);
-//   const memberIndex = state.list[projectIndex].members.findIndex(el => meta.previousAction.payload.email === el.email);
-//   return new DownloadList({
-//     ...state,
-//     list: [
-//       ...state.list.slice(0, projectIndex),
-//       new Project({
-//         ...state.list[projectIndex],
-//         members: [
-//           ...state.list[projectIndex].members.slice(0, memberIndex),
-//           new User((payload as AxiosResponse).data),
-//           ...state.list[projectIndex].members.slice(memberIndex + 1),
-//         ],
-//       }),
-//       ...state.list.slice(projectIndex + 1),
-//     ],
-//   });
-// };
-
 const projectTaskHandler = (state: S, action: ActionMeta<any, any>) => {
   let index: number;
   // if meta exists get projectId from meta
@@ -152,6 +132,15 @@ const projectTaskHandler = (state: S, action: ActionMeta<any, any>) => {
 
   return state.updateItem(index, {
     tasks: projectTasks(state.list[index].tasks, action),
+  });
+};
+
+const getAllProjectTasksHandler = (state: S, { meta, payload }: ActionMeta<AxiosResponse, any>) => {
+  const data = get(payload, 'data');
+  const projectId = get(meta, 'previousAction.payload.projectId');
+  const index = state.list.findIndex(el => el.id === projectId);
+  return state.updateItem(index, {
+    tasks: data,
   });
 };
 
@@ -170,7 +159,7 @@ export const projects = handleActions<S, P>(
     [postProjectMember.fail]: postProjectMemberFailHandler,
     [deleteProjectMember.toString()]: deleteProjectMemberHandler,
     [combineActions(postProjectTask, patchProjectTask, deleteProjectTask)]: projectTaskHandler,
-    // [deleteProjectMember.fail]: deleteProjectMemberFailHandler,
+    [getAllProjectTasks.success]: getAllProjectTasksHandler,
   },
   new DownloadList(Project)
 );

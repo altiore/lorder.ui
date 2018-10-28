@@ -36,7 +36,11 @@ const mergeProps = (
   ...restOwn,
 });
 
-export const PatchTaskForm = connect<any, any, { buttonText?: string; taskId: number; closeDialog: () => any }>(
+export const PatchTaskForm = connect<
+  any,
+  any,
+  { buttonText?: string; taskId: number | string; closeDialog: () => any }
+>(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
