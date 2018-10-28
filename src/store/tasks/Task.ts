@@ -19,9 +19,9 @@ export class Task implements ITask {
   public description: string;
   public projectId: number;
   public value: number;
-  public userWorks: DownloadList<UserWork>;
+  public userWorks: DownloadList<UserWork> = new DownloadList(UserWork);
 
-  constructor(initial?: object) {
+  constructor(initial?: any) {
     map(initial, (val: any, key: string) => {
       if (key === 'userWorks') {
         this[key] = new DownloadList(UserWork, val, Array.isArray(val));

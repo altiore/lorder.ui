@@ -19,6 +19,7 @@ export interface IPatchProjectTaskData {
   title?: string;
   value?: number;
   users?: User[];
+  userWorks?: any;
 }
 
 export const getAllProjectTasks = requestActions(
@@ -50,7 +51,7 @@ export const postProjectTask = requestActions<IProjectTaskData>(
 
 export const patchProjectTask = requestActions<IPatchProjectTaskData>(
   'PROJECT_TASK/PATCH',
-  ({ projectId, id, users, ...data }: IPatchProjectTaskData): any => {
+  ({ projectId, id, users, userWorks, ...data }: IPatchProjectTaskData): any => {
     const preparedData: any = data;
     if (users) {
       preparedData.users = users.map(el => el.id);

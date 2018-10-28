@@ -8,7 +8,11 @@ export interface IProjectTask extends ITask {
 export class ProjectTask extends Task implements IProjectTask {
   public users: User[] = [];
 
-  constructor(initial?: object) {
+  constructor(initial?: any) {
     super(initial);
+    if (initial && initial.users) {
+      this.users = initial.users.map((user: Partial<User>) => new User(user));
+      return;
+    }
   }
 }
