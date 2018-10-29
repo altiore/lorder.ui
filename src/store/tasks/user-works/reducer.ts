@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import get from 'lodash-es/get';
-import { Action, handleActions } from 'redux-actions';
+import { Action, combineActions, handleActions } from 'redux-actions';
 import uniqid from 'uniqid';
 
 import { DownloadList } from 'src/store/@common/entities';
 import { IRequestAction } from 'src/store/@common/requestActions';
-import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork } from './actions';
+import { deleteUserWork, patchAndStopUserWork, patchUserWork, postAndStartUserWork } from './actions';
 import { UserWork } from './UserWork';
 
 type S = DownloadList<UserWork>;
@@ -33,15 +33,24 @@ const postAndStartUserWorkFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
-const patchAndStopUserWorkHandler = (state: S) => {
+const patchUserWorkHandler = (state: S) => {
   return state.startLoading();
 };
 
-const patchAndStopUserWorkSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
-  return state.stopLoading().updateItem(0, payload && payload.data);
+const patchUserWorkSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
+  if (!payload) {
+    throw new Error('patchUserWorkSuccessHandler Error: payload required!');
+  }
+  const data: Partial<UserWork> = payload.data;
+  const index = state.list.findIndex(el => el.id === data.id);
+  if (!~index) {
+    console.log(`Не смог найти измененную задачу index= ${index}`, payload);
+    throw new Error(`Не смог найти измененную задачу index= ${index}`);
+  }
+  return state.stopLoading().updateItem(index, data);
 };
 
-const patchAndStopUserWorkFailHandler = (state: S) => {
+const patchUserWorkFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
@@ -56,9 +65,9 @@ export const userWorks = handleActions<S, P>(
     [postAndStartUserWork.success]: postAndStartUserWorkSuccessHandler,
     [postAndStartUserWork.fail]: postAndStartUserWorkFailHandler,
 
-    [patchAndStopUserWork.toString()]: patchAndStopUserWorkHandler,
-    [patchAndStopUserWork.success]: patchAndStopUserWorkSuccessHandler,
-    [patchAndStopUserWork.fail]: patchAndStopUserWorkFailHandler,
+    [combineActions(patchAndStopUserWork, patchUserWork).toString()]: patchUserWorkHandler,
+    [combineActions(patchAndStopUserWork.success, patchUserWork.success).toString()]: patchUserWorkSuccessHandler,
+    [combineActions(patchAndStopUserWork.fail, patchUserWork.fail).toString()]: patchUserWorkFailHandler,
 
     [deleteUserWork.toString()]: deleteUserWorkHandler,
   },

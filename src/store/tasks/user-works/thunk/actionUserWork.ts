@@ -20,9 +20,11 @@ export const startTimer = (userWork: Partial<UserWork>, project: Project) => asy
   timer = setInterval(() => dispatch(tickUserWorkTimer({ userWork, project })), 1000);
   dispatch(
     setCurrentUserWorkId({
-      taskId: userWork.id,
+      projectId: project.id,
+      taskId: userWork.taskId,
       time: userWork.durationInSeconds,
       timer,
+      userWorkId: userWork.id,
     })
   );
   changeIco('/stop.ico');
@@ -56,8 +58,10 @@ export const stopUserWork = (data: IUserWorkDelete) => async (dispatch: Dispatch
   clearInterval(timer);
   dispatch(
     setCurrentUserWorkId({
+      projectId: undefined,
       taskId: undefined,
       timer: undefined,
+      userWorkId: undefined,
     })
   );
   changeIco();

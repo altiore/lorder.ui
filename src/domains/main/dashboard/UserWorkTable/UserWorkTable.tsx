@@ -10,13 +10,16 @@ import { Table } from 'src/domains/@common/Table';
 import { DownloadList } from 'src/store/@common/entities';
 import { UserWork } from 'src/store/tasks';
 import { TimerCell } from '../TimerCell';
+import { DurationField } from './DurationField';
 
 export interface IUserWorkTableProps extends RouteComponentProps<{}> {
   userWorks: DownloadList<UserWork>;
   classes: any;
-  currentTaskId?: number;
+  currentUserWorkId?: number;
   deleteUserWork: any;
+  projectId: number;
   stopUserWork: any;
+  taskId: number;
 }
 
 export class UserWorkTableJsx extends React.PureComponent<IUserWorkTableProps> {
@@ -28,14 +31,22 @@ export class UserWorkTableJsx extends React.PureComponent<IUserWorkTableProps> {
     return <Table items={userWorks} renderItem={this.renderItem} perPage={3} />;
   }
 
-  private renderItem = ({ id, description, duration }: UserWork) => {
-    const { classes, currentTaskId } = this.props;
+  private renderItem = ({ id, description, startAt, finishAt, duration }: UserWork) => {
+    const { classes, currentUserWorkId, projectId, taskId } = this.props;
     return (
       <TableRow className={classes.row} key={id} hover>
         <TableCell>{description}</TableCell>
-        {currentTaskId === id ? <TimerCell /> : <TableCell numeric>{duration}</TableCell>}
+        <TableCell>{startAt && startAt.format('YYYY-MM-DD')}</TableCell>
+        <TableCell>{finishAt && finishAt.format('YYYY-MM-DD')}</TableCell>
+        {currentUserWorkId === id ? (
+          <TimerCell />
+        ) : (
+          <TableCell numeric>
+            <DurationField projectId={projectId} taskId={taskId} value={duration} userWorkId={id} />
+          </TableCell>
+        )}
         <TableCell numeric>
-          {currentTaskId === id ? (
+          {currentUserWorkId === id ? (
             <IconButton onClick={this.stopUserWork(id)} className={classes.stop}>
               <StopIcon />
             </IconButton>
@@ -49,19 +60,19 @@ export class UserWorkTableJsx extends React.PureComponent<IUserWorkTableProps> {
     );
   };
 
-  private deleteUserWork = (taskId: number | string | undefined) => () => {
-    if (typeof taskId === 'number') {
-      this.props.deleteUserWork(taskId);
+  private deleteUserWork = (userWorkId: number | string | undefined) => () => {
+    if (typeof userWorkId === 'number') {
+      this.props.deleteUserWork(userWorkId);
     } else {
-      console.log('deleteUserWork taskId type is %s', typeof taskId);
+      console.log('deleteUserWork userWorkId type is %s', typeof userWorkId);
     }
   };
 
-  private stopUserWork = (taskId: number | string | undefined) => () => {
-    if (typeof taskId === 'number') {
-      this.props.stopUserWork(taskId);
+  private stopUserWork = (userWorkId: number | string | undefined) => () => {
+    if (typeof userWorkId === 'number') {
+      this.props.stopUserWork(userWorkId);
     } else {
-      console.log('deleteUserWork taskId type is %s', typeof taskId);
+      console.log('deleteUserWork userWorkId type is %s', typeof userWorkId);
     }
   };
 }

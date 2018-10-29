@@ -1,4 +1,5 @@
-import TableCell from '@material-ui/core/TableCell/TableCell';
+import Button from '@material-ui/core/Button';
+import TableCell from '@material-ui/core/TableCell';
 import * as React from 'react';
 
 export interface ITimerCellProps {
@@ -6,5 +7,9 @@ export interface ITimerCellProps {
 }
 
 export const TimerCellJsx: React.StatelessComponent<ITimerCellProps> = ({ currentTimeHumanize }) => (
-  <TableCell numeric>{currentTimeHumanize}</TableCell>
+  <TableCell numeric>
+    <Button disableFocusRipple disableRipple style={{ cursor: 'not-allowed' }}>
+      {currentTimeHumanize}
+    </Button>
+  </TableCell>
 );

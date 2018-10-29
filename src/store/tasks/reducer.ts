@@ -8,7 +8,14 @@ import { DownloadList } from 'src/store/@common/entities';
 import { combineActions } from 'src/store/@common/helpers';
 import { getAllTasks } from './actions';
 import { Task } from './Task';
-import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork, UserWork, userWorks } from './user-works';
+import {
+  deleteUserWork,
+  patchAndStopUserWork,
+  patchUserWork,
+  postAndStartUserWork,
+  UserWork,
+  userWorks,
+} from './user-works';
 
 type S = DownloadList<Task>;
 type P<T = any> = AxiosResponse<T>;
@@ -130,7 +137,7 @@ export const tasks = handleActions<S, P>(
     [postAndStartUserWork.success]: postAndStartUserWorkSuccessHandler,
     [postAndStartUserWork.fail]: postAndStartUserWorkFailHandler,
 
-    [combineActions(patchAndStopUserWork, deleteUserWork)]: taskUserWorkHandler,
+    [combineActions(patchAndStopUserWork, patchUserWork, deleteUserWork)]: taskUserWorkHandler,
   },
   new DownloadList(Task)
 );

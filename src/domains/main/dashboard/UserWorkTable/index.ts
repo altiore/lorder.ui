@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { deleteUserWork, startTimer, stopUserWork } from 'src/store/tasks';
-import { currentTaskId } from 'src/store/timer';
+import { currentUserWorkId } from 'src/store/timer';
 import { styles } from './styles';
 import { UserWorkTableJsx } from './UserWorkTable';
 
 const mapStateToProps = createStructuredSelector({
-  currentTaskId,
+  currentUserWorkId,
 });
 
 const mapDispatchToProps = {
@@ -17,11 +17,17 @@ const mapDispatchToProps = {
   stopUserWork,
 };
 
-const mergeProps = (state: any, { deleteUserWork, stopUserWork, ...props }: any, { taskId, ...ownProps }: any) => ({
+const mergeProps = (
+  state: any,
+  { deleteUserWork, stopUserWork, ...props }: any,
+  { taskId, projectId, ...ownProps }: any
+) => ({
   ...state,
   ...props,
-  deleteUserWork: (userWorkId: number) => deleteUserWork({ projectId: state.selectedProjectId, taskId, userWorkId }),
-  stopUserWork: (userWorkId: number) => stopUserWork({ projectId: state.selectedProjectId, taskId, userWorkId }),
+  deleteUserWork: (userWorkId: number) => deleteUserWork({ projectId, taskId, userWorkId }),
+  projectId,
+  stopUserWork: (userWorkId: number) => stopUserWork({ projectId, taskId, userWorkId }),
+  taskId,
   ...ownProps,
 });
 

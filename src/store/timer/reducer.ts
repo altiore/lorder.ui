@@ -6,9 +6,11 @@ import { covertSecondsToDuration } from 'src/store/@common/helpers';
 import { setCurrentUserWorkId, tickUserWorkTimer } from './actions';
 
 export interface ITimer {
+  projectId?: number | string;
   taskId?: number | string;
   time: number;
   timer?: Timer;
+  userWorkId?: number | string;
 }
 type P = Partial<ITimer>;
 
@@ -36,8 +38,10 @@ export const timer = handleActions<ITimer, P>(
     [setCurrentUserWorkId.toString()]: setCurrentUserWorkIdHandler,
   },
   {
+    projectId: undefined,
     taskId: undefined,
     time: 0,
     timer: undefined,
+    userWorkId: undefined,
   }
 );

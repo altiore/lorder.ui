@@ -14,6 +14,13 @@ export interface IPostData {
   userWork: IUserWorkData;
 }
 
+export interface IUpdateUserWork {
+  projectId: number;
+  taskId: number | string;
+  userWorkId: number;
+  duration?: number;
+}
+
 export interface IUserWorkDelete {
   projectId: number;
   taskId: number | string;
@@ -34,13 +41,27 @@ export const postAndStartUserWork = requestActions<IPostData>(
   })
 );
 
+export const patchUserWork = requestActions<IUpdateUserWork>(
+  'USER_WORK/PATCH',
+  ({ projectId, taskId, userWorkId, ...data }: IUpdateUserWork) => ({
+    projectId,
+    request: {
+      data,
+      method: 'PATCH',
+      url: `/user-works/${userWorkId}`,
+    },
+    taskId,
+    userWorkId,
+  })
+);
+
 export const patchAndStopUserWork = requestActions<IUserWorkDelete>(
   'USER_WORK/PATCH_AND_STOP',
   ({ projectId, taskId, userWorkId }: IUserWorkDelete) => ({
     projectId,
     request: {
       method: 'PATCH',
-      url: `/user-works/${userWorkId}`,
+      url: `/user-works/${userWorkId}/stop`,
     },
     taskId,
     userWorkId,
