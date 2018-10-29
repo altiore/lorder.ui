@@ -7,7 +7,7 @@ import { required, url } from 'redux-form-validators';
 
 import { Input } from 'liw-components/Input';
 
-import { parseNumber } from 'src/store/@common/helpers';
+import { nullIfEmpty, parseNumber } from 'src/store/@common/helpers';
 
 export interface ITaskFormData {
   description?: string;
@@ -44,6 +44,7 @@ export class AddTaskFormJsx extends React.Component<
             name="source"
             component={Input}
             label="Ссылка на сторонний ресурс"
+            parse={nullIfEmpty}
             validate={[url({ msg: 'Должно быть ссылкой!', if: (vv, v) => !!v })]}
           />
           <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
