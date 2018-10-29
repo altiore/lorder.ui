@@ -1,6 +1,5 @@
 import Timer = NodeJS.Timer;
 import get from 'lodash-es/get';
-import * as moment from 'moment';
 import { Dispatch } from 'react-redux';
 
 import { IState } from 'src/@types';
@@ -38,7 +37,6 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: Dispatch,
       preparedData.title = preparedData.description;
     } else {
       preparedData.title = `Задача для проекта ${project.title}`;
-      preparedData.description = moment().format('YYYY-MM-DD');
     }
   }
   const res = await dispatch(

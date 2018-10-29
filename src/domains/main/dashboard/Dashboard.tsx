@@ -11,7 +11,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import LinkIcon from '@material-ui/icons/Link';
 import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
 import StopIcon from '@material-ui/icons/StopRounded';
-import * as moment from 'moment';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -176,7 +175,6 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     event.stopPropagation();
     this.setState({ open: { [id]: true } });
     this.props.startUserWork({
-      description: moment().format('YYYY-MM-DD'),
       projectId,
       taskId: id,
     });

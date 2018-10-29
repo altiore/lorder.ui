@@ -3,7 +3,7 @@ import { Project } from 'src/store/projects';
 import { CREATE_USER_WORK_FORM_NAME } from './consts';
 
 export interface IUserWorkData {
-  description: string;
+  description?: string;
   projectId: number;
   taskId?: number | string;
   title?: string;

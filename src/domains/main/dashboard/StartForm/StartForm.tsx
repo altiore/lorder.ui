@@ -22,7 +22,13 @@ export const StartFormJsx: React.StatelessComponent<
 > = ({ classes, handleSubmit }) => (
   <form onSubmit={handleSubmit} className={classes.play}>
     <div className={classes.inputBlock}>
-      <Field name="description" component={Input} label="(нет описания)" wrapperClass={classes.input} />
+      <Field
+        autoComplete={'off'}
+        name="description"
+        component={Input}
+        label="Начни новую задачу..."
+        wrapperClass={classes.input}
+      />
       <ProjectField
         name="projectId"
         validate={[required({ msg: 'Сначала выберете Проект!' })]}
