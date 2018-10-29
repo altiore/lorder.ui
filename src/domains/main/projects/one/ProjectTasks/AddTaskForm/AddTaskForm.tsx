@@ -3,7 +3,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
-import { required } from 'redux-form-validators';
+import { required, url } from 'redux-form-validators';
 
 import { Input } from 'liw-components/Input';
 
@@ -40,6 +40,12 @@ export class AddTaskFormJsx extends React.Component<
             validate={[required({ msg: 'Обязательное поле' })]}
           />
           <Field name="description" component={Input} label="Описание задачи" />
+          <Field
+            name="source"
+            component={Input}
+            label="Ссылка на сторонний ресурс"
+            validate={[url({ msg: 'Должно быть ссылкой!' })]}
+          />
           <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
         </DialogContent>
         <DialogActions>

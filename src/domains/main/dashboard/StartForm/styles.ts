@@ -12,7 +12,13 @@ export const styles = (theme: Theme) =>
     },
     input: {
       marginBottom: 20,
-      width: '320px !important',
+      marginRight: 20,
+      width: '400px !important',
+    },
+    inputBlock: {
+      alignItems: 'baseline',
+      display: 'flex',
+      flexFlow: 'row nowrap',
     },
     play: {
       alignItems: 'center',
@@ -21,6 +27,6 @@ export const styles = (theme: Theme) =>
       justifyContent: 'center',
     },
     select: {
-      width: 320,
+      width: 150,
     },
   });

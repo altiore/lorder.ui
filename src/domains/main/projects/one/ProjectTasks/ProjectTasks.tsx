@@ -60,6 +60,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
               <TableRow>
                 <TableCell>Задача</TableCell>
                 <TableCell>Описание</TableCell>
+                <TableCell>Ссылка на ресурс</TableCell>
                 <TableCell>Исполнители</TableCell>
                 <TableCell numeric>Стоимость</TableCell>
                 <TableCell numeric>Время</TableCell>
@@ -81,7 +82,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     );
   }
 
-  private renderItem = ({ id, title, description, value, users, duration }: ProjectTask) => {
+  private renderItem = ({ id, title, description, source, value, users, duration }: ProjectTask) => {
     const { classes } = this.props;
     return (
       <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id)}>
@@ -94,6 +95,11 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
           <TableCell>{title}</TableCell>
         </Popover>
         <TableCell>{description}</TableCell>
+        <TableCell>
+          <a href={source} target="_blank">
+            {source}
+          </a>
+        </TableCell>
         <TableCell>
           <span ref={this.setPerformersCellRef(id)}>
             <PerformersCell value={users} taskId={id} />

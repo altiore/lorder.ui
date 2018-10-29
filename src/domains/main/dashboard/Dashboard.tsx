@@ -3,8 +3,10 @@ import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import TablePagination from '@material-ui/core/TablePagination';
+import LinkIcon from '@material-ui/icons/Link';
 import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
 import StopIcon from '@material-ui/icons/StopRounded';
 import * as moment from 'moment';
@@ -93,7 +95,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
   }
 
   private renderListItem = (task: Task) => {
-    const { id, projectId, title, duration, durationInSeconds, userWorks } = task;
+    const { id, projectId, title, duration, durationInSeconds, source, userWorks } = task;
     const { classes, currentTaskId, getProjectById } = this.props;
     const currentUserWork = userWorks.find(el => el.id === currentTaskId);
     return [
@@ -118,6 +120,13 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
           />
         ) : (
           <ListItemText secondary={duration} className={classes.duration} />
+        )}
+        {source && (
+          <ListItemSecondaryAction>
+            <IconButton aria-label="Link to external source" href={source} target="_blank">
+              <LinkIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
         )}
       </ListItem>,
       <Collapse

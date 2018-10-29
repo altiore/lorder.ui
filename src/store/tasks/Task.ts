@@ -9,6 +9,7 @@ export interface ITask {
   title: string;
   description: string;
   projectId: number;
+  source?: string;
   value: number;
   userWorks: DownloadList<UserWork>;
 }
@@ -18,6 +19,7 @@ export class Task implements ITask {
   public title: string;
   public description: string;
   public projectId: number;
+  public source?: string;
   public value: number;
   public userWorks: DownloadList<UserWork> = new DownloadList(UserWork);
 
