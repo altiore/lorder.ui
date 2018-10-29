@@ -2,10 +2,10 @@ import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import ClearIcon from '@material-ui/icons/Clear';
-import StopIcon from '@material-ui/icons/StopRounded';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
+import { StartStopBtn } from 'src/domains/@common/StartStopBtn';
 import { Table } from 'src/domains/@common/Table';
 import { DownloadList } from 'src/store/@common/entities';
 import { UserWork } from 'src/store/tasks';
@@ -47,9 +47,7 @@ export class UserWorkTableJsx extends React.PureComponent<IUserWorkTableProps> {
         )}
         <TableCell numeric>
           {currentUserWorkId === id ? (
-            <IconButton onClick={this.stopUserWork(id)} className={classes.stop}>
-              <StopIcon />
-            </IconButton>
+            <StartStopBtn isStarted={currentUserWorkId === id} onStop={this.stopUserWork(id)} />
           ) : (
             <IconButton onClick={this.deleteUserWork(id)}>
               <ClearIcon />

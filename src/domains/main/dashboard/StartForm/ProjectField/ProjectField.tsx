@@ -21,7 +21,7 @@ export const ProjectFieldJsx: React.StatelessComponent<IProjectFieldProps> = ({
   items,
   validate,
 }) => (
-  <Field name={name} component={SelectField} validate={validate} className={className}>
+  <Field name={name} component={SelectField} validate={validate} className={className} label={'Проект'}>
     {items &&
       !!items.length &&
       items.map((item: any) => (

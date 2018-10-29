@@ -1,15 +1,15 @@
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
+import { Input } from 'liw-components/Input';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required } from 'redux-form-validators';
 
-import { Input } from 'liw-components/Input';
+import { StartStopBtn } from 'src/domains/@common/StartStopBtn';
 import { ProjectField } from './ProjectField';
 
 export interface IInternalProps {
   classes: any;
+  isTimerStarted: boolean;
+  stopUserWork: () => any;
 }
 
 export interface IStartFormProps {
@@ -19,7 +19,7 @@ export interface IStartFormProps {
 
 export const StartFormJsx: React.StatelessComponent<
   IInternalProps & IStartFormProps & InjectedFormProps<{}, IStartFormProps>
-> = ({ classes, handleSubmit }) => (
+> = ({ classes, isTimerStarted, handleSubmit, stopUserWork }) => (
   <form onSubmit={handleSubmit} className={classes.play}>
     <div className={classes.inputBlock}>
       <Field
@@ -31,14 +31,10 @@ export const StartFormJsx: React.StatelessComponent<
       />
       <ProjectField
         name="projectId"
-        validate={[required({ msg: 'Сначала выберете Проект!' })]}
+        validate={[required({ msg: 'Сначала выберите Проект!' })]}
         className={classes.select}
       />
     </div>
-    <Tooltip title="Создать и начать задачу">
-      <IconButton aria-label="Play" className={classes.button} type="submit">
-        <PlayArrowRounded fontSize={'large'} color={'inherit'} />
-      </IconButton>
-    </Tooltip>
+    <StartStopBtn isStarted={isTimerStarted} isLarge onStart={handleSubmit} onStop={stopUserWork} />
   </form>
 );

@@ -9,12 +9,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TablePagination from '@material-ui/core/TablePagination';
 import Tooltip from '@material-ui/core/Tooltip';
 import LinkIcon from '@material-ui/icons/Link';
-import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
-import StopIcon from '@material-ui/icons/StopRounded';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Page } from 'src/domains/@common/Page';
+import { StartStopBtn } from 'src/domains/@common/StartStopBtn';
 import { DownloadList } from 'src/store/@common/entities';
 import { Project } from 'src/store/projects';
 import { IUserWorkData, IUserWorkDelete, Task, UserWork } from 'src/store/tasks';
@@ -102,19 +101,11 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     return [
       <ListItem key={id}>
         <ListItemIcon>
-          {currentUserWork ? (
-            <Tooltip title="Остановить задачу" placement={'top'}>
-              <IconButton onClick={this.stopUserWork(currentUserWork.id, task.id, projectId)} className={classes.stop}>
-                <StopIcon />
-              </IconButton>
-            </Tooltip>
-          ) : (
-            <Tooltip title="Начать задачу" placement={'top'}>
-              <IconButton aria-label="Play button" className={classes.play} onClick={this.startUserTask(task)}>
-                <PlayArrowRounded />
-              </IconButton>
-            </Tooltip>
-          )}
+          <StartStopBtn
+            isStarted={!!currentUserWork}
+            onStart={this.startUserTask(task)}
+            onStop={currentUserWork && this.stopUserWork(currentUserWork.id, task.id, projectId)}
+          />
         </ListItemIcon>
         <ListItemText primary={title} className={classes.title} />
         <ListItemText primary={getProjectById(projectId).title} className={classes.project} />

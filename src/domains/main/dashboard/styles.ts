@@ -9,12 +9,6 @@ export const styles = (theme: Theme) =>
     duration: {
       width: 100,
     },
-    play: {
-      // backgroundColor: theme.palette.primary.light,
-      backgroundColor: '#4BC800',
-      // color: theme.palette.action.active,
-      color: 'white',
-    },
     project: {
       width: 100,
     },
@@ -23,10 +17,6 @@ export const styles = (theme: Theme) =>
         backgroundColor: theme.palette.background.default,
       },
       cursor: 'pointer',
-    },
-    stop: {
-      backgroundColor: theme.palette.error.dark,
-      color: theme.palette.background.paper,
     },
     title: {
       width: 320,
