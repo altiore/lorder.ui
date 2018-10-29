@@ -1,4 +1,5 @@
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
@@ -28,8 +29,10 @@ export const StartFormJsx: React.StatelessComponent<
         className={classes.select}
       />
     </div>
-    <IconButton aria-label="Play" className={classes.button} type="submit">
-      <PlayArrowRounded fontSize={'large'} color={'inherit'} />
-    </IconButton>
+    <Tooltip title="Создать и начать задачу">
+      <IconButton aria-label="Play" className={classes.button} type="submit">
+        <PlayArrowRounded fontSize={'large'} color={'inherit'} />
+      </IconButton>
+    </Tooltip>
   </form>
 );

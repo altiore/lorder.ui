@@ -6,6 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import TablePagination from '@material-ui/core/TablePagination';
+import Tooltip from '@material-ui/core/Tooltip';
 import LinkIcon from '@material-ui/icons/Link';
 import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
 import StopIcon from '@material-ui/icons/StopRounded';
@@ -99,36 +100,47 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     const { classes, currentTaskId, getProjectById } = this.props;
     const currentUserWork = userWorks.find(el => el.id === currentTaskId);
     return [
-      <ListItem key={id} button onClick={this.expandListItem(id)}>
-        <ListItemIcon>
+      <Tooltip title={this.state.open[id] ? 'Закрыть подробности' : 'Нажмите, чтоб раскрыть подробности'} key={id}>
+        <ListItem key={id} button onClick={this.expandListItem(id)}>
+          <ListItemIcon>
+            {currentUserWork ? (
+              <Tooltip title="Остановить задачу">
+                <IconButton
+                  onClick={this.stopUserWork(currentUserWork.id, task.id, projectId)}
+                  className={classes.stop}
+                >
+                  <StopIcon />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Начать задачу">
+                <IconButton aria-label="Play button" className={classes.play} onClick={this.startUserTask(task)}>
+                  <PlayArrowRounded />
+                </IconButton>
+              </Tooltip>
+            )}
+          </ListItemIcon>
+          <ListItemText primary={title} className={classes.title} />
+          <ListItemText primary={getProjectById(projectId).title} className={classes.project} />
           {currentUserWork ? (
-            <IconButton onClick={this.stopUserWork(currentUserWork.id, task.id, projectId)} className={classes.stop}>
-              <StopIcon />
-            </IconButton>
+            <ListItemText
+              secondary={<TimerListItemText duration={durationInSeconds} initial={currentUserWork.durationInSeconds} />}
+              className={classes.duration}
+            />
           ) : (
-            <IconButton aria-label="Play button" className={classes.play} onClick={this.startUserTask(task)}>
-              <PlayArrowRounded />
-            </IconButton>
+            <ListItemText secondary={duration} className={classes.duration} />
           )}
-        </ListItemIcon>
-        <ListItemText primary={title} className={classes.title} />
-        <ListItemText primary={getProjectById(projectId).title} className={classes.project} />
-        {currentUserWork ? (
-          <ListItemText
-            secondary={<TimerListItemText duration={durationInSeconds} initial={currentUserWork.durationInSeconds} />}
-            className={classes.duration}
-          />
-        ) : (
-          <ListItemText secondary={duration} className={classes.duration} />
-        )}
-        {source && (
-          <ListItemSecondaryAction>
-            <IconButton aria-label="Link to external source" href={source} target="_blank">
-              <LinkIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        )}
-      </ListItem>,
+          {source && (
+            <Tooltip title="Перейти на внешний ресурс" placement="left">
+              <ListItemSecondaryAction>
+                <IconButton aria-label="Link to external source" href={source} target="_blank">
+                  <LinkIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </Tooltip>
+          )}
+        </ListItem>
+      </Tooltip>,
       <Collapse
         key={`collapse-${id}`}
         in={this.state.open[id]}

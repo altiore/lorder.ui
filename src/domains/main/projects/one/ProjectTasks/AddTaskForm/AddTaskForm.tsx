@@ -44,7 +44,7 @@ export class AddTaskFormJsx extends React.Component<
             name="source"
             component={Input}
             label="Ссылка на сторонний ресурс"
-            validate={[url({ msg: 'Должно быть ссылкой!' })]}
+            validate={[url({ msg: 'Должно быть ссылкой!', if: (vv, v) => !!v })]}
           />
           <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
         </DialogContent>
