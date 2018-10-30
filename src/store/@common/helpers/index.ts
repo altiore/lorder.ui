@@ -1,5 +1,6 @@
 export * from './changeIco';
 export * from './covertSecondsToDuration';
+export * from './covertSecondsToDurationWithLocal';
 export * from './parseFormErrorsFromResponse';
 export * from './onSubmitForm';
 export * from './parseNumber';

@@ -6,6 +6,7 @@ import { projects } from './projects';
 import { taskTypes } from './task-types';
 import { tasks } from './tasks';
 import { timer } from './timer';
+import { userWorks } from './user-works';
 
 export const userReducers: Partial<Reducer<IState>> = {
   project,
@@ -13,4 +14,5 @@ export const userReducers: Partial<Reducer<IState>> = {
   taskTypes,
   tasks,
   timer,
+  userWorks,
 };

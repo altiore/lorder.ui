@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import { ROLE } from 'src/@types';
 import { userRole } from 'src/store/identity';
 import { getOwnProjects } from 'src/store/projects';
+import { getUserWorks } from 'src/store/user-works';
 import { clientsMiddleware } from './@common/middlewares';
 import { createRootReducer } from './guestReducer';
 
@@ -37,7 +38,8 @@ export async function createStore(initialState?: any) {
   const persistor = persistStore(store, undefined, () => {
     const role = userRole(store.getState());
     if (role !== ROLE.GUEST) {
-      store.dispatch((getOwnProjects as any)());
+      store.dispatch(getOwnProjects({}));
+      store.dispatch(getUserWorks({}));
     }
   });
 

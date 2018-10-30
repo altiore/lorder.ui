@@ -2,7 +2,7 @@ import get from 'lodash-es/get';
 import { Action, handleActions } from 'redux-actions';
 import Timer = NodeJS.Timer;
 
-import { covertSecondsToDuration } from 'src/store/@common/helpers';
+import { covertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
 import { setCurrentUserWorkId, tickUserWorkTimer } from './actions';
 
 export interface ITimer {
@@ -17,8 +17,8 @@ type P = Partial<ITimer>;
 const tickUserWorkTimerHandler = (state: ITimer, { payload }: Action<Partial<ITimer>>) => {
   const time = state.time + 1;
   document.title =
-    covertSecondsToDuration(time) +
-    ` ${get(payload, 'project.title')} - ${get(payload, 'task.title') ||
+    covertSecondsToDurationWithLocal(time) +
+    ` | ${get(payload, 'project.title')} - ${get(payload, 'task.title') ||
       get(payload, 'userWork.task.title') ||
       get(payload, 'userWork.description') ||
       '...'}`;

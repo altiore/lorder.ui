@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { IState } from 'src/@types';
+import { timePercentByProjectId, timeSpentByProjectId } from 'src/store/user-works';
 import { DownloadList } from '../@common/entities';
 import { projectId } from '../router';
 import { Project } from './Project';
@@ -29,4 +30,14 @@ export const projectTaskTypes = createSelector(selectedProject, (project: Projec
 
 export const getProjectById = createSelector(allProjectList, (list: Project[]) => (id: number): Project =>
   list.find(e => e.id === id) || new Project()
+);
+
+export const ownProjectListWithStatistic = createSelector(
+  [ownProjectList, timePercentByProjectId, timeSpentByProjectId],
+  (list: Project[], getPercent, getTime) =>
+    list.map(project => ({
+      ...project,
+      percent: getPercent(project.id as number),
+      time: getTime(project.id as number),
+    }))
 );

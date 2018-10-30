@@ -10,18 +10,23 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import * as classNames from 'classnames';
 import * as React from 'react';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 import { IRoute } from 'src/@types';
+import { LinkButton } from 'src/domains/@common/LinkButton';
 import { RouteWithSubRoutes } from 'src/domains/@common/RouteWithSubRoutes';
+import { Project } from 'src/store/projects';
 import { NoMatch } from './noMatch';
 
 export interface IMainProps {
   classes: any;
   isLeftBarOpen: boolean;
+  getUserWorks: () => any;
   logOut: () => void;
+  projects: Array<Project & { percent: string; time: string }>;
   push: (route: string) => void;
   routes: IRoute[];
   toggleUiSetting: (setting: 'isLeftBarOpen') => void;
@@ -38,7 +43,7 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
   };
 
   public render() {
-    const { classes, isLeftBarOpen, routes } = this.props;
+    const { classes, isLeftBarOpen, projects, routes } = this.props;
     if (!routes) {
       return null;
     }
@@ -76,6 +81,20 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar}>
+            {projects.map(project => (
+              <LinkButton key={project.id} to={`/projects/${project.id}`} style={{ textTransform: 'none' }}>
+                <Typography variant="body1" noWrap>
+                  {project.title} - {project.percent}%
+                </Typography>
+                <Typography variant="body2" noWrap color={'secondary'}>
+                  &nbsp;(
+                  {project.time})
+                </Typography>
+              </LinkButton>
+            ))}
+            <IconButton onClick={this.clickOnRefresh}>
+              <RefreshIcon fontSize={'small'} />
+            </IconButton>
             <Avatar onClick={this.logOut} alt="Remy Sharp" src="/favicon-32x32.png" className={classes.avatar} />
           </div>
           <Switch>
@@ -94,4 +113,6 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
       this.props.logOut();
     }
   };
+
+  private clickOnRefresh = () => this.props.getUserWorks();
 }

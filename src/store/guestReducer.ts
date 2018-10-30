@@ -11,7 +11,7 @@ import { dialog } from './dialog';
 import { identity } from './identity';
 import { Project } from './projects';
 import { TaskType } from './task-types';
-import { Task } from './tasks';
+import { Task, UserWork } from './tasks';
 import { uiReducer } from './ui';
 import { User } from './users';
 
@@ -39,6 +39,7 @@ const persistConfig: PersistConfig = {
           projects: Project,
           taskTypes: TaskType,
           tasks: Task,
+          userWorks: UserWork,
           users: User,
         }[key];
         if (!entity) {
