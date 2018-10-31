@@ -38,7 +38,13 @@ export class UserWorkTableJsx extends React.PureComponent<IUserWorkTableProps> {
     return (
       <TableRow className={classes.row} key={id} hover>
         <TableCell>
-          <DescriptionForm projectId={projectId} taskId={taskId} userWorkId={id} />
+          <DescriptionForm
+            currentUserWorkId={currentUserWorkId}
+            projectId={projectId}
+            taskId={taskId}
+            userWorkId={id}
+            initialValues={{ description }}
+          />
         </TableCell>
         <TableCell>{startAt && startAt.format('YYYY-MM-DD HH:mm:ss')}</TableCell>
         <TableCell>{finishAt && finishAt.format('YYYY-MM-DD HH:mm:ss')}</TableCell>

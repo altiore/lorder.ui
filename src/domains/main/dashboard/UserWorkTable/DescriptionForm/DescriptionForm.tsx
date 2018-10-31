@@ -10,14 +10,31 @@ export interface IDescriptionFormData {
 
 export interface IDescriptionFormProps extends InjectedFormProps<IDescriptionFormData, IDescriptionFormProps> {
   classes?: any;
+  currentUserWorkId?: number;
+  userWorkId?: number;
 }
 
 export class DescriptionFormTsx extends React.Component<IDescriptionFormProps, {}> {
+  private input: HTMLTextAreaElement;
+
+  public componentWillReceiveProps(nextProps: IDescriptionFormProps) {
+    if (
+      nextProps.currentUserWorkId &&
+      nextProps.currentUserWorkId !== this.props.currentUserWorkId &&
+      nextProps.currentUserWorkId === nextProps.userWorkId
+    ) {
+      this.input.focus();
+    }
+  }
+
   public render() {
-    const { handleSubmit } = this.props;
+    const { classes, handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit}>
         <Field
+          getTextarea={this.getTextarea}
+          classNameInput={classes.field}
+          onSubmit={handleSubmit}
           icon={null}
           name="description"
           component={TitleInput}
@@ -26,4 +43,8 @@ export class DescriptionFormTsx extends React.Component<IDescriptionFormProps, {
       </form>
     );
   }
+
+  private getTextarea = (node: HTMLTextAreaElement) => {
+    this.input = node;
+  };
 }

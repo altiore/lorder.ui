@@ -36,7 +36,7 @@ export class TaskFormJsx extends React.Component<ITaskFormProps, {}> {
             <CloseIcon fontSize={'small'} />
           </IconButton>
           <div className={classes.header}>
-            <Field name="title" component={TitleInput} validate={[required({ msg: 'Обязательное поле' })]} />
+            <Field bold name="title" component={TitleInput} validate={[required({ msg: 'Обязательное поле' })]} />
           </div>
           <Field name="description" component={Input} label="Описание задачи" />
           <Field

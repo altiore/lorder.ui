@@ -1,9 +1,11 @@
+import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import { onSubmitForm } from 'src/store/@common/helpers';
 import { EDIT_USER_WORK_DESCRIPTION_FORM, IUpdateUserWork, patchUserWork } from 'src/store/tasks';
 import { DescriptionFormTsx } from './DescriptionForm';
+import { styles } from './styles';
 
 const mapDispatchToProps = {
   patchUserWork,
@@ -22,4 +24,4 @@ export const DescriptionForm = connect(
   mergeProps
 )(reduxForm<IUpdateUserWork, IUpdateUserWork>({
   onSubmit: onSubmitForm(patchUserWork, ({ projectId, taskId, userWorkId }) => ({ projectId, taskId, userWorkId })),
-})(DescriptionFormTsx as any) as any);
+})(withStyles(styles, { withTheme: true })(DescriptionFormTsx) as any) as any);
