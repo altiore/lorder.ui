@@ -12,7 +12,7 @@ export const styles = (theme: Theme) =>
 
       minHeight: 600,
       overflow: 'hidden',
-      padding: '15px 25px',
+      padding: '15px 25px 15px 16px',
       position: 'relative',
       textAlign: 'left',
       width: 600,
@@ -24,11 +24,11 @@ export const styles = (theme: Theme) =>
       right: 4,
       top: 4,
     },
+    field: {
+      paddingLeft: 29,
+    },
     header: {
-      display: 'block',
-      minHeight: '50px',
-      position: 'relative',
-      width: '92%',
+      paddingLeft: 7,
     },
     root: {
       height: 1200,

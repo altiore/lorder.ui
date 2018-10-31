@@ -1,12 +1,14 @@
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
+import ClearAllIcon from '@material-ui/icons/ClearAll';
 import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required, url } from 'redux-form-validators';
 
 import { Input } from 'liw-components/Input';
+import { TextArea } from 'liw-components/TextArea';
 import { TitleInput } from 'liw-components/TitleInput';
 
 import { nullIfEmpty, parseNumber } from 'src/store/@common/helpers';
@@ -38,15 +40,25 @@ export class TaskFormJsx extends React.Component<ITaskFormProps, {}> {
           <div className={classes.header}>
             <Field bold name="title" component={TitleInput} validate={[required({ msg: 'Обязательное поле' })]} />
           </div>
-          <Field name="description" component={Input} label="Описание задачи" />
           <Field
-            name="source"
-            component={Input}
-            label="Ссылка на сторонний ресурс"
-            parse={nullIfEmpty}
-            validate={[url({ msg: 'Должно быть ссылкой!', if: (vv, v) => !!v })]}
+            name="description"
+            icon={<ClearAllIcon />}
+            component={TextArea}
+            title={'Описание'}
+            placeholder={'Введи ваше описание'}
           />
-          <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
+          <div className={classes.field}>
+            <Field
+              name="source"
+              component={Input}
+              label="Ссылка на сторонний ресурс"
+              parse={nullIfEmpty}
+              validate={[url({ msg: 'Должно быть ссылкой!', if: (vv, v) => !!v })]}
+            />
+          </div>
+          <div className={classes.field}>
+            <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
+          </div>
         </div>
         <DialogActions>
           <Button color="primary" type="submit">
