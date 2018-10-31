@@ -10,13 +10,12 @@ export const styles = (theme: Theme) =>
       color: theme.palette.text.primary,
       display: 'inline-block',
 
-      minHeight: 600,
+      minHeight: 400,
       overflow: 'hidden',
-      padding: '15px 25px 15px 16px',
+      padding: '10px 25px 15px 16px',
       position: 'relative',
       textAlign: 'left',
       width: 600,
-      // width: '90%',
       zIndex: 25,
     },
     close: {
@@ -29,6 +28,7 @@ export const styles = (theme: Theme) =>
     },
     header: {
       paddingLeft: 7,
+      width: '94%',
     },
     root: {
       height: 1200,

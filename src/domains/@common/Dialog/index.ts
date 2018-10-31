@@ -31,7 +31,7 @@ const mergeProps = ({ component, open }: IMappedState, { onClose }: IMappedDispa
     : '',
   onClose,
   open,
-  scroll: 'paper',
+  scroll: 'body',
   ...ownProps,
 });
 
