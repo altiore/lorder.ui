@@ -1,4 +1,3 @@
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
@@ -12,8 +11,8 @@ import {
   projectTasksIsLoading,
 } from 'src/store/projects';
 import { projectId } from 'src/store/router';
-import { AddTaskFormJsx, ITaskFormData, ITaskFormProps } from '../AddTaskForm/AddTaskForm';
-import { styles } from './styles';
+import { TaskForm } from './StyledTaskForm';
+import { ITaskFormData, ITaskFormProps } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
   getEditTaskInitialValues,
@@ -53,4 +52,4 @@ export const PatchTaskForm = connect<
   onSubmitSuccess: (res, dispatch, { closeDialog }) => {
     closeDialog();
   },
-})(withStyles(styles, { withTheme: true })(AddTaskFormJsx)) as any);
+})(TaskForm) as any);

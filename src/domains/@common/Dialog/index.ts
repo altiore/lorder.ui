@@ -5,22 +5,38 @@ import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, dialogContent, isDialogOpened } from 'src/store/dialog';
 
-export default connect(
-  createStructuredSelector({
-    component: dialogContent,
-    open: isDialogOpened,
-  }) as any,
-  {
-    onClose: closeDialog,
-  },
-  ({ component, open }: any, { onClose }, ownProps) => ({
-    children: component
-      ? isValidElement(component)
-        ? cloneElement<any>(component, { onClose })
-        : createElement(component, { onClose })
-      : '',
-    onClose,
-    open,
-    ...ownProps,
-  })
-)(Dialog as any) as any;
+interface IMappedState {
+  component: any;
+  open: boolean;
+}
+
+const mapStateToProps = createStructuredSelector<any, any>({
+  component: dialogContent,
+  open: isDialogOpened,
+});
+
+interface IMappedDispatch {
+  onClose: () => void;
+}
+
+const mapDispatchToProps = {
+  onClose: closeDialog,
+};
+
+const mergeProps = ({ component, open }: IMappedState, { onClose }: IMappedDispatch, ownProps: any) => ({
+  children: component
+    ? isValidElement(component)
+      ? cloneElement<any>(component, { onClose })
+      : createElement(component, { onClose })
+    : '',
+  onClose,
+  open,
+  scroll: 'paper',
+  ...ownProps,
+});
+
+export default connect<IMappedState, IMappedDispatch, any>(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(Dialog);

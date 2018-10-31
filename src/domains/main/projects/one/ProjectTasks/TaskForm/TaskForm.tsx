@@ -1,6 +1,5 @@
-import Button from '@material-ui/core/Button';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required, url } from 'redux-form-validators';
@@ -16,7 +15,7 @@ export interface ITaskFormData {
   value: number;
 }
 
-export interface ITaskFormProps {
+export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFormProps> {
   buttonText?: string;
   classes?: any;
   closeDialog: any;
@@ -24,21 +23,23 @@ export interface ITaskFormProps {
   projectTasksIsLoading: boolean;
 }
 
-export class AddTaskFormJsx extends React.Component<
-  ITaskFormProps & InjectedFormProps<ITaskFormData, ITaskFormProps>,
-  {}
-> {
+export class TaskFormJsx extends React.Component<ITaskFormProps, {}> {
   public render() {
-    const { buttonText, classes, handleSubmit, projectTasksIsLoading } = this.props;
+    const { classes, closeDialog, handleSubmit } = this.props;
     return (
-      <form onSubmit={handleSubmit} className={classes ? classes.form : ''}>
-        <DialogContent>
-          <Field
-            name="title"
-            component={Input}
-            label="Название задачи"
-            validate={[required({ msg: 'Обязательное поле' })]}
-          />
+      <form onSubmit={handleSubmit} className={classes.form}>
+        <div className={classes.card}>
+          <IconButton onClick={closeDialog} className={classes.close}>
+            <CloseIcon fontSize={'small'} />
+          </IconButton>
+          <div className={classes.header}>
+            <Field
+              name="title"
+              component={Input}
+              label="Название задачи"
+              validate={[required({ msg: 'Обязательное поле' })]}
+            />
+          </div>
           <Field name="description" component={Input} label="Описание задачи" />
           <Field
             name="source"
@@ -48,12 +49,7 @@ export class AddTaskFormJsx extends React.Component<
             validate={[url({ msg: 'Должно быть ссылкой!', if: (vv, v) => !!v })]}
           />
           <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
-        </DialogContent>
-        <DialogActions>
-          <Button color="primary" disabled={projectTasksIsLoading} type="submit">
-            {buttonText}
-          </Button>
-        </DialogActions>
+        </div>
       </form>
     );
   }

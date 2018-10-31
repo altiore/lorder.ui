@@ -5,6 +5,7 @@ import { Dispatch } from 'react-redux';
 import { IState } from 'src/@types';
 import { changeIco } from 'src/store/@common/helpers';
 import { getProjectById, Project } from 'src/store/projects';
+import { replaceTasks } from 'src/store/tasks';
 import { setCurrentUserWorkId, tickUserWorkTimer } from 'src/store/timer';
 import { IUserWorkData, IUserWorkDelete, patchAndStopUserWork, postAndStartUserWork } from '../actions';
 import { UserWork } from '../UserWork';
@@ -45,8 +46,12 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: Dispatch,
       userWork: preparedData,
     })
   );
-  const userWorkData = get(res, 'payload.data');
+  const finishedTasks = get(res, 'payload.data.finished');
+  if (finishedTasks && finishedTasks.length) {
+    dispatch(replaceTasks(finishedTasks));
+  }
 
+  const userWorkData = get(res, 'payload.data.started');
   const userWork = new UserWork(userWorkData);
 
   return await dispatch(startTimer(userWork, project) as any);

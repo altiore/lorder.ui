@@ -30,3 +30,9 @@ createStore().then(({ store, persistor, history }) => {
 });
 
 registerServiceWorker();
+
+const r = 'font-size: 40px; line-height: normal; font-weight: bold;';
+console.group('Слушаю и повинуюсь...');
+console.log('%c  Чего ты ждешь? Присоединяйся!', r);
+console.log('%cЗдесь будет ссылка на присоединение', 'font-size:15px; line-height: normal');
+console.groupEnd();

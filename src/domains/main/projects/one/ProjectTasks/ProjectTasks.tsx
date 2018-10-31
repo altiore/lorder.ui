@@ -7,15 +7,13 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
-import * as Popover from 'react-popover';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Table } from 'src/domains/@common/Table';
 import { DownloadList } from 'src/store/@common/entities';
 import { ProjectTask } from 'src/store/projects';
-import { AddTaskForm } from './AddTaskForm';
-import { PatchTaskForm } from './PatchTaskForm';
 import { PerformersCell } from './PerformersCell';
+import { AddTaskForm, PatchTaskForm } from './TaskForm';
 
 export interface IProjectTasksProps {
   classes: any;
@@ -28,14 +26,12 @@ export interface IProjectTasksProps {
 }
 
 export interface IState {
-  isPopoverOpened: any;
   page: number | string;
   perPage: number | string;
 }
 
 export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & IProjectTasksProps, IState> {
   public state = {
-    isPopoverOpened: {},
     page: 0,
     perPage: 10,
   };
@@ -62,7 +58,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
                 <TableCell>Описание</TableCell>
                 <TableCell>Ссылка на ресурс</TableCell>
                 <TableCell>Исполнители</TableCell>
-                <TableCell numeric>Стоимость</TableCell>
+                <TableCell numeric>Значимость</TableCell>
                 <TableCell numeric>Время</TableCell>
                 <TableCell numeric />
               </TableRow>
@@ -86,14 +82,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     const { classes } = this.props;
     return (
       <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id)}>
-        <Popover
-          onOuterAction={this.onOuterAction}
-          preferPlace={'right'}
-          body={<PatchTaskForm taskId={id} buttonText="Сохранить" closeDialog={this.onOuterAction} />}
-          isOpen={this.state.isPopoverOpened[id]}
-        >
-          <TableCell>{title}</TableCell>
-        </Popover>
+        <TableCell>{title}</TableCell>
         <TableCell>{description}</TableCell>
         <TableCell>
           <a href={source} target="_blank">
@@ -116,10 +105,6 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     );
   };
 
-  private onOuterAction = () => {
-    this.setState({ isPopoverOpened: {} });
-  };
-
   private setPerformersCellRef = (id: number | string): any => (node: HTMLElement) => {
     if (node) {
       this.performersCellRef[id] = node;
@@ -137,8 +122,8 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
         }
       });
     }
-    if (!isInside && id && !this.state.isPopoverOpened[id]) {
-      this.setState({ isPopoverOpened: { [id]: true } });
+    if (!isInside && id) {
+      this.props.openDialog(<PatchTaskForm taskId={id} buttonText="Сохранить" closeDialog={this.props.closeDialog} />);
     }
   };
 

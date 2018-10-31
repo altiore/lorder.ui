@@ -26,7 +26,10 @@ const postAndStartUserWorkHandler = (state: S, { payload }: Action<StartUserWork
 };
 
 const postAndStartUserWorkSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
-  return state.stopLoading().updateItem(0, payload && payload.data);
+  if (!payload) {
+    throw new Error('postAndStartUserWorkSuccessHandler Error: payload is required');
+  }
+  return state.stopLoading().updateItem(0, payload.data.started);
 };
 
 const postAndStartUserWorkFailHandler = (state: S) => {

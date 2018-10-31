@@ -1,12 +1,13 @@
 import { AxiosResponse } from 'axios';
 import get from 'lodash-es/get';
+import omit from 'lodash-es/omit';
 import * as moment from 'moment';
 import { Action, ActionMeta, handleActions } from 'redux-actions';
 import uniqid from 'uniqid';
 
 import { DownloadList } from 'src/store/@common/entities';
 import { combineActions } from 'src/store/@common/helpers';
-import { getAllTasks } from './actions';
+import { getAllTasks, replaceTasks } from './actions';
 import { Task } from './Task';
 import {
   deleteUserWork,
@@ -18,7 +19,7 @@ import {
 } from './user-works';
 
 type S = DownloadList<Task>;
-type P<T = any> = AxiosResponse<T>;
+type P<T = any> = AxiosResponse<T> | Array<Partial<Task>>;
 
 const getAllTasksHandler = (state: S) => {
   return state.startLoading();
@@ -99,8 +100,8 @@ const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
       userWorks: userWorks(state.list[index].userWorks, action),
     });
   }
-  const userWork: Partial<UserWork> = get(action, 'payload.data');
-  const task: Partial<Task> = get(action, 'payload.data.task');
+  const userWork: Partial<UserWork> = get(action, 'payload.data.started');
+  const task: Partial<Task> = get(action, 'payload.data.started.task');
   return state.stopLoading().updateItem(0, {
     description: task.description,
     id: task.id,
@@ -127,6 +128,22 @@ const postAndStartUserWorkFailHandler = (state: S, action: ActionMeta<any, any>)
   return state.stopLoading().removeItem(0);
 };
 
+const replaceTasksHandler = (state: S, { payload }: Action<Array<Partial<UserWork>>>) => {
+  if (!payload || !payload.length) {
+    throw new Error('replaceTasksHandler Error: payload is required');
+  }
+  let newState = new DownloadList(Task, state);
+  payload.map(userWorkData => {
+    const index = newState.list.findIndex(el => userWorkData.taskId === el.id);
+    if (~index) {
+      const task = { ...get(userWorkData, 'task') };
+      task.userWorks = [omit(userWorkData, ['task'])];
+      newState = newState.updateItem(index, task);
+    }
+  });
+  return newState;
+};
+
 export const tasks = handleActions<S, P>(
   {
     [getAllTasks.toString()]: getAllTasksHandler,
@@ -138,6 +155,8 @@ export const tasks = handleActions<S, P>(
     [postAndStartUserWork.fail]: postAndStartUserWorkFailHandler,
 
     [combineActions(patchAndStopUserWork, patchUserWork, deleteUserWork)]: taskUserWorkHandler,
+
+    [replaceTasks.toString()]: replaceTasksHandler,
   },
   new DownloadList(Task)
 );

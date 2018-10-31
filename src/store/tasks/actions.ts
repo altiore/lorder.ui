@@ -1,3 +1,5 @@
+import { createAction } from 'redux-actions';
+
 import { requestActions } from 'src/store/@common/requestActions';
 
 export const getAllTasks = requestActions(
@@ -12,3 +14,5 @@ export const getAllTasks = requestActions(
     },
   })
 );
+
+export const replaceTasks = createAction('TASKS/REPLACE_BY_IDS');
