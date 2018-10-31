@@ -19,6 +19,7 @@ export interface IUpdateUserWork {
   taskId: number | string;
   userWorkId: number;
   duration?: number;
+  description?: number;
 }
 
 export interface IUserWorkDelete {

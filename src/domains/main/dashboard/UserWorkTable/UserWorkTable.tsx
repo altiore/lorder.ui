@@ -10,6 +10,7 @@ import { Table } from 'src/domains/@common/Table';
 import { DownloadList } from 'src/store/@common/entities';
 import { UserWork } from 'src/store/tasks';
 import { TimerCell } from '../TimerCell';
+import { DescriptionForm } from './DescriptionForm';
 import { DurationField } from './DurationField';
 
 export interface IUserWorkTableProps extends RouteComponentProps<{}> {
@@ -33,12 +34,15 @@ export class UserWorkTableJsx extends React.PureComponent<IUserWorkTableProps> {
 
   private renderItem = ({ id, description, startAt, finishAt, duration }: UserWork) => {
     const { classes, currentUserWorkId, projectId, taskId } = this.props;
+    const isCurrent = currentUserWorkId === id;
     return (
       <TableRow className={classes.row} key={id} hover>
-        <TableCell>{description}</TableCell>
+        <TableCell>
+          <DescriptionForm projectId={projectId} taskId={taskId} userWorkId={id} />
+        </TableCell>
         <TableCell>{startAt && startAt.format('YYYY-MM-DD HH:mm:ss')}</TableCell>
         <TableCell>{finishAt && finishAt.format('YYYY-MM-DD HH:mm:ss')}</TableCell>
-        {currentUserWorkId === id ? (
+        {isCurrent ? (
           <TimerCell />
         ) : (
           <TableCell numeric>
@@ -46,8 +50,8 @@ export class UserWorkTableJsx extends React.PureComponent<IUserWorkTableProps> {
           </TableCell>
         )}
         <TableCell numeric>
-          {currentUserWorkId === id ? (
-            <StartStopBtn isStarted={currentUserWorkId === id} onStop={this.stopUserWork(id)} />
+          {isCurrent ? (
+            <StartStopBtn isStarted={isCurrent} onStop={this.stopUserWork(id)} />
           ) : (
             <IconButton onClick={this.deleteUserWork(id)}>
               <ClearIcon />

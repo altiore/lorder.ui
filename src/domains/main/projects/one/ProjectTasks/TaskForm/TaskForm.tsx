@@ -7,6 +7,7 @@ import { Field, InjectedFormProps } from 'redux-form';
 import { required, url } from 'redux-form-validators';
 
 import { Input } from 'liw-components/Input';
+import { TitleInput } from 'liw-components/TitleInput';
 
 import { nullIfEmpty, parseNumber } from 'src/store/@common/helpers';
 
@@ -35,12 +36,7 @@ export class TaskFormJsx extends React.Component<ITaskFormProps, {}> {
             <CloseIcon fontSize={'small'} />
           </IconButton>
           <div className={classes.header}>
-            <Field
-              name="title"
-              component={Input}
-              label="Название задачи"
-              validate={[required({ msg: 'Обязательное поле' })]}
-            />
+            <Field name="title" component={TitleInput} validate={[required({ msg: 'Обязательное поле' })]} />
           </div>
           <Field name="description" component={Input} label="Описание задачи" />
           <Field
