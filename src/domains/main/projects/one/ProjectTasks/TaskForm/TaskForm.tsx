@@ -1,3 +1,5 @@
+import Button from '@material-ui/core/Button';
+import DialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react';
@@ -25,7 +27,7 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
 
 export class TaskFormJsx extends React.Component<ITaskFormProps, {}> {
   public render() {
-    const { classes, closeDialog, handleSubmit } = this.props;
+    const { buttonText, classes, closeDialog, handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit} className={classes.form}>
         <div className={classes.card}>
@@ -50,6 +52,11 @@ export class TaskFormJsx extends React.Component<ITaskFormProps, {}> {
           />
           <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
         </div>
+        <DialogActions>
+          <Button color="primary" type="submit">
+            {buttonText}
+          </Button>
+        </DialogActions>
       </form>
     );
   }
