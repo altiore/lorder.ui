@@ -1,5 +1,6 @@
 import map from 'lodash-es/map';
 
+import { covertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
 import { DownloadList } from '../@common/entities';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';
@@ -26,6 +27,10 @@ export class Project {
   public members: Member[];
   public tasks: DownloadList<ProjectTask>;
   public taskTypes: DownloadList<TaskType>;
+  /** время в секундах, потраченное всеми пользователями на этот проект */
+  public timeSum?: number;
+  /** ценность всех задач в этом проекте */
+  public valueSum?: number;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
@@ -47,5 +52,9 @@ export class Project {
       }
       this[key] = val;
     });
+  }
+
+  get fullProjectTimeHumanize() {
+    return covertSecondsToDurationWithLocal(this.timeSum || 0);
   }
 }

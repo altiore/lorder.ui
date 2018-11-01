@@ -72,29 +72,31 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
               <TableRow>
                 <TableCell>Название проекта</TableCell>
                 <TableCell numeric>Месячный бюджет</TableCell>
-                <TableCell numeric>Потрачено</TableCell>
+                <TableCell numeric>Потречено времени</TableCell>
                 <TableCell numeric>Полная стоимость</TableCell>
                 <TableCell style={{ width: 50 }} />
               </TableRow>
             </TableHead>
             <TableBody>
-              {projectList.slice(page * perPage, (page + 1) * perPage).map(({ id, title, monthlyBudget }) => {
-                return (
-                  <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
-                    <TableCell component="th" scope="row">
-                      {title}
-                    </TableCell>
-                    <TableCell numeric>{monthlyBudget}</TableCell>
-                    <TableCell numeric>50</TableCell>
-                    <TableCell numeric>1200</TableCell>
-                    <TableCell>
-                      <IconButton onClick={this.handleRemoveClick(id)}>
-                        <ClearIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              {projectList
+                .slice(page * perPage, (page + 1) * perPage)
+                .map(({ id, title, monthlyBudget, fullProjectTimeHumanize, valueSum }) => {
+                  return (
+                    <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
+                      <TableCell component="th" scope="row">
+                        {title}
+                      </TableCell>
+                      <TableCell numeric>{monthlyBudget}</TableCell>
+                      <TableCell numeric>{fullProjectTimeHumanize}</TableCell>
+                      <TableCell numeric>{valueSum}</TableCell>
+                      <TableCell>
+                        <IconButton onClick={this.handleRemoveClick(id)}>
+                          <ClearIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
             <TableFooter>
               <TableRow>
