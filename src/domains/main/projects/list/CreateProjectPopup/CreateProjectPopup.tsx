@@ -6,8 +6,7 @@ import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required } from 'redux-form-validators';
 
-const FaMoney = require('react-icons/lib/fa/money');
-const FaPaper = require('react-icons/lib/fa/paper-plane-o');
+import { FaMoneyBill as FaMoney, FaPaperPlane as FaPaper } from 'react-icons/fa';
 
 export interface IProjectFormProps {
   goToPage: any;

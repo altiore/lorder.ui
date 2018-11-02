@@ -4,10 +4,8 @@ import Paper from '@material-ui/core/Paper';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import includes from 'lodash-es/includes';
 import * as React from 'react';
+import { FaMinus, FaPlus } from 'react-icons/fa';
 import { RouteComponentProps } from 'react-router-dom';
-
-const PlusIcon = require('react-icons/lib/fa/plus');
-const MinusIcon = require('react-icons/lib/fa/minus');
 
 export interface IDigitsProps {
   classes: {
@@ -45,13 +43,13 @@ export class Digits extends React.PureComponent<RouteComponentProps<{}> & IDigit
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <IconButton onClick={this.handleMinus}>
-              <MinusIcon />
+              <FaMinus />
             </IconButton>
 
             <div className={classes.digit}>{counter}</div>
 
             <IconButton onClick={this.handlePlus}>
-              <PlusIcon />
+              <FaPlus />
             </IconButton>
           </Paper>
           <Grid container direction="column" alignItems="center" className={classes.cube}>

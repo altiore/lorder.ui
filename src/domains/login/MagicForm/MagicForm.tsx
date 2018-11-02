@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button';
 import * as React from 'react';
+import { FaUser } from 'react-icons/fa';
 import { Field, InjectedFormProps } from 'redux-form';
-const FaUser = require('react-icons/lib/fa/user');
 
 import { Input } from 'liw-components/Input';
 
