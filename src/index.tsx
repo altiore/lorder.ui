@@ -34,5 +34,8 @@ registerServiceWorker();
 const r = 'font-size: 40px; line-height: normal; font-weight: bold;';
 console.group('Слушаю и повинуюсь...');
 console.log('%c  Чего ты ждешь? Присоединяйся!', r);
-console.log('%cЗдесь будет ссылка на присоединение', 'font-size:15px; line-height: normal');
+console.log(
+  '%cПрисоединиться здесь: https://t.me/joinchat/BmXj_kK5vnoAWdQF7tTc1g',
+  'font-size:15px; line-height: normal'
+);
 console.groupEnd();
