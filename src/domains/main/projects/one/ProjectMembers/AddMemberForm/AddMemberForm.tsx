@@ -1,10 +1,10 @@
 import Button from '@material-ui/core/Button';
+import { Input } from 'liw-components/Input';
 import * as React from 'react';
-import { FaUser } from 'react-icons/fa';
 import { Field, InjectedFormProps } from 'redux-form';
 import { email, required } from 'redux-form-validators';
 
-import { Input } from 'liw-components/Input';
+import { UserIco } from 'src/domains/@icons/User';
 
 export interface IAddMemberFormProps {
   buttonText?: string;
@@ -22,7 +22,7 @@ export class AddMemberFormJsx extends React.Component<
           name="email"
           component={Input}
           type="email"
-          icon={<FaUser />}
+          icon={<UserIco />}
           validate={[required({ msg: 'Обязательное поле' }), email({ msg: 'Неверный e-mail' })]}
         />
         <Button

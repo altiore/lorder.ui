@@ -14,7 +14,7 @@
     "classnames": "2.2.6",
     "express": "4.16.3",
     "history": "4.7.2",
-    "liw-components": "^2.3.17",
+    "liw-components": "^2.3.19",
     "localforage": "1.7.2",
     "lodash-es": "^4.17.11",
     "moment": "^2.22.2",

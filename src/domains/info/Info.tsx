@@ -6,9 +6,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import debounce from 'lodash-es/debounce';
 import * as React from 'react';
-import { FaTelegramPlane } from 'react-icons/fa';
 
 import { LinkButton } from 'src/domains/@common/LinkButton';
+import { TelegramIco } from 'src/domains/@icons/Telegram';
 import { BackGroundVideo } from './BackGroundVideo';
 import { Block } from './Block';
 import { MemberCard } from './MemberCard';
@@ -98,7 +98,7 @@ export class InfoTsx extends React.Component<IInfoProps, IState> {
             </Typography>
             <div className={classes.sectionDesktop}>
               <IconButton color="inherit" href={'https://t.me/joinchat/BmXj_kK5vnoAWdQF7tTc1g'} target={'_blank'}>
-                <FaTelegramPlane />
+                <TelegramIco />
               </IconButton>
             </div>
           </Toolbar>

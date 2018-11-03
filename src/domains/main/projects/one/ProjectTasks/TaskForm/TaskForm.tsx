@@ -1,8 +1,9 @@
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
-import ClearAllIcon from '@material-ui/icons/ClearAll';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import CloseIcon from '@material-ui/icons/Close';
+import EventIcon from '@material-ui/icons/Event';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required, url } from 'redux-form-validators';
@@ -38,11 +39,17 @@ export class TaskFormJsx extends React.Component<ITaskFormProps, {}> {
             <CloseIcon fontSize={'small'} />
           </IconButton>
           <div className={classes.header}>
-            <Field bold name="title" component={TitleInput} validate={[required({ msg: 'Обязательное поле' })]} />
+            <Field
+              bold
+              icon={<EventIcon />}
+              name="title"
+              component={TitleInput}
+              validate={[required({ msg: 'Обязательное поле' })]}
+            />
           </div>
           <Field
             name="description"
-            icon={<ClearAllIcon />}
+            icon={<AssignmentIcon />}
             component={TextArea}
             title={'Описание'}
             placeholder={'Введи ваше описание'}

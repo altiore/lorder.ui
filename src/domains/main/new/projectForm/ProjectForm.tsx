@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required } from 'redux-form-validators';
 
-import { FaMoneyBill as FaMoney, FaPaperPlane as FaPaper } from 'react-icons/fa';
+import { MoneyIco } from 'src/domains/@icons/Money';
+import { Project2Ico } from 'src/domains/@icons/Project2';
 
 import { Input } from 'liw-components/Input';
 
@@ -19,14 +20,14 @@ export const ProjectForm: React.StatelessComponent<IProjectFormProps & InjectedF
     <Field
       name="title"
       component={Input}
-      icon={<FaPaper />}
+      icon={<Project2Ico />}
       label="Название проекта"
       validate={[required({ msg: 'Обязательное поле' })]}
     />
     <Field
       name="monthlyBudget"
       component={Input}
-      icon={<FaMoney />}
+      icon={<MoneyIco />}
       label="Месячный бюджет"
       validate={[required({ msg: 'Обязательное поле' })]}
     />

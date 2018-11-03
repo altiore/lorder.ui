@@ -1,10 +1,10 @@
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import includes from 'lodash-es/includes';
 import * as React from 'react';
-import { FaMinus, FaPlus } from 'react-icons/fa';
 import { RouteComponentProps } from 'react-router-dom';
 
 export interface IDigitsProps {
@@ -43,13 +43,13 @@ export class Digits extends React.PureComponent<RouteComponentProps<{}> & IDigit
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <IconButton onClick={this.handleMinus}>
-              <FaMinus />
+              <Typography variant={'h1'}>-</Typography>
             </IconButton>
 
             <div className={classes.digit}>{counter}</div>
 
             <IconButton onClick={this.handlePlus}>
-              <FaPlus />
+              <Typography variant={'h1'}>+</Typography>
             </IconButton>
           </Paper>
           <Grid container direction="column" alignItems="center" className={classes.cube}>

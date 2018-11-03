@@ -6,7 +6,8 @@ import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required } from 'redux-form-validators';
 
-import { FaMoneyBill as FaMoney, FaPaperPlane as FaPaper } from 'react-icons/fa';
+import { MoneyIco } from 'src/domains/@icons/Money';
+import { ProjectIco } from 'src/domains/@icons/Project';
 
 export interface IProjectFormProps {
   goToPage: any;
@@ -24,14 +25,14 @@ export const CreateProjectPopupJsx: React.StatelessComponent<
         <Field
           name="title"
           component={Input}
-          icon={<FaPaper />}
+          icon={<ProjectIco />}
           label="Название проекта"
           validate={[required({ msg: 'Обязательное поле' })]}
         />
         <Field
           name="monthlyBudget"
           component={Input}
-          icon={<FaMoney />}
+          icon={<MoneyIco />}
           label="Месячный бюджет"
           validate={[required({ msg: 'Обязательное поле' })]}
         />

@@ -1,9 +1,10 @@
 import Button from '@material-ui/core/Button';
+import { Input } from 'liw-components/Input';
 import * as React from 'react';
-import { FaLock, FaUser } from 'react-icons/fa';
 import { Field, InjectedFormProps } from 'redux-form';
 
-import { Input } from 'liw-components/Input';
+import { PasswordIco } from 'src/domains/@icons/Password';
+import { UserIco } from 'src/domains/@icons/User';
 
 export interface ILoginFormProps {
   buttonText?: string;
@@ -15,8 +16,8 @@ export class LoginFormJsx extends React.Component<ILoginFormProps & InjectedForm
     return (
       <div styleName="wrapper">
         <form styleName="form" onSubmit={handleSubmit}>
-          <Field name="email" component={Input} type="email" icon={<FaUser />} />
-          <Field name="password" component={Input} type="password" icon={<FaLock />} />
+          <Field name="email" component={Input} type="email" icon={<UserIco />} />
+          <Field name="password" component={Input} type="password" icon={<PasswordIco />} />
           <Button
             type="submit"
             disabled={pristine || submitting || invalid}
