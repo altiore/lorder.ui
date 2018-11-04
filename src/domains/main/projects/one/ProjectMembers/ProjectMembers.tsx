@@ -65,7 +65,6 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
               <TableRow>
                 <TableCell>Ползователь</TableCell>
                 <TableCell>Активен</TableCell>
-                <TableCell>Роль</TableCell>
                 <TableCell numeric>Уровень доступа</TableCell>
                 <TableCell numeric />
               </TableRow>
@@ -73,14 +72,13 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
             <TableBody>
               {projectMembers
                 .slice(page * perPage, (page + 1) * perPage)
-                .map(({ accessLevel, member: { id, role, email } }) => {
+                .map(({ accessLevel, member: { id, email } }) => {
                   return (
                     <TableRow className={classes.row} key={email} hover onClick={this.handleRowClick(id)}>
                       <TableCell component="th" scope="row">
                         {email}
                       </TableCell>
                       <TableCell>{accessLevel ? 'Да' : 'Нет'}</TableCell>
-                      <TableCell>{role}</TableCell>
                       <TableCell numeric>{accessLevel}</TableCell>
                       <TableCell numeric>
                         <IconButton onClick={this.handleRemoveClick(id)}>
