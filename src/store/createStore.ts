@@ -5,9 +5,8 @@ import { persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 
 import { ROLE } from 'src/@types';
-import { userRole } from 'src/store/identity';
-import { getOwnProjects } from 'src/store/projects';
-import { getUserWorks } from 'src/store/user-works';
+import { loadInitialData } from 'src/store/identity';
+
 import { clientsMiddleware } from './@common/middlewares';
 import { createRootReducer } from './guestReducer';
 
@@ -35,12 +34,8 @@ export async function createStore(initialState?: any) {
     });
   }
 
-  const persistor = persistStore(store, undefined, () => {
-    const role = userRole(store.getState());
-    if (role !== ROLE.GUEST) {
-      store.dispatch(getOwnProjects({}));
-      store.dispatch(getUserWorks({}));
-    }
+  const persistor = persistStore(store, undefined, async () => {
+    await store.dispatch(loadInitialData() as any);
   });
 
   // TODO: split reducers to several chunks

@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { Action, ActionMeta, handleActions } from 'redux-actions';
+import { PURGE } from 'redux-persist';
 
 import { IMeta } from 'src/@types';
 import { DownloadList } from '../@common/entities';
@@ -76,6 +77,10 @@ const patchUserFailHandler = (state: S, { meta }: ActionMeta<P, M>) => {
   });
 };
 
+const logOutHandler = () => {
+  return new DownloadList(User);
+};
+
 export const users = handleActions<S, P, M>(
   {
     [fetchUsers.toString()]: fetchUsersHandler,
@@ -85,6 +90,8 @@ export const users = handleActions<S, P, M>(
     [deleteUser.success]: deleteUserSuccessHandler,
     [patchUser.toString()]: patchUserHandler,
     [patchUser.fail]: patchUserFailHandler,
+
+    [PURGE]: logOutHandler,
   },
   new DownloadList(User)
 );

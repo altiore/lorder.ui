@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 
-import { ITimer } from './reducer';
+import { Timer } from './Timer';
 
 export const tickUserWorkTimer = createAction('TIMER/TICK');
 
-export const setCurrentUserWorkId = createAction<Partial<ITimer>>('TIMER/SET_CURRENT_USER_TASK_ID');
+export const setCurrentUserWorkId = createAction<Partial<Timer>>('TIMER/SET_CURRENT_USER_TASK_ID');

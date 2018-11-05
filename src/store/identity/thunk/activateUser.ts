@@ -1,9 +1,11 @@
 import { push } from 'react-router-redux';
 import { Dispatch } from 'redux';
+import { PURGE } from 'redux-persist';
 
 import { IState } from 'src/@types';
 import { identifier, projectIdSearchParam } from 'src/store/router';
 import { getAuthActivate, IGetAuthActivateData } from '../actions';
+import { userEmail } from '../selectors';
 
 export const activateUser = () => async (dispatch: Dispatch, getState: () => IState) => {
   try {
@@ -11,6 +13,14 @@ export const activateUser = () => async (dispatch: Dispatch, getState: () => ISt
     const bearerKey = identifier(state);
     if (!bearerKey) {
       throw new Error('BearerKey not found');
+    }
+    if (userEmail(state)) {
+      await dispatch({
+        type: PURGE,
+        result: (res: any) => {
+          console.log('purge');
+        },
+      });
     }
     const activateParams: IGetAuthActivateData = {
       oneTimeToken: bearerKey,

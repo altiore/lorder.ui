@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { Action, handleActions } from 'redux-actions';
+import { PURGE } from 'redux-persist';
 
 import { DownloadList } from '../@common/entities';
 import { getAllTaskTypes } from './actions';
@@ -28,11 +29,17 @@ const getAllTaskTypesFailHandler = (state: S): S => {
   return new DownloadList(TaskType);
 };
 
+const logOutHandler = () => {
+  return new DownloadList(TaskType);
+};
+
 export const taskTypes = handleActions<S, P>(
   {
     [getAllTaskTypes.toString()]: getAllTaskTypesHandler,
     [getAllTaskTypes.success]: getAllTaskTypesSuccessHandler,
     [getAllTaskTypes.fail]: getAllTaskTypesFailHandler,
+
+    [PURGE]: logOutHandler,
   },
   new DownloadList(TaskType)
 );

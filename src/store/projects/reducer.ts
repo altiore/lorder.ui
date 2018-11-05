@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import get from 'lodash-es/get';
 import { Action, ActionMeta, combineActions as combineActionsRedux, handleActions } from 'redux-actions';
+import { PURGE } from 'redux-persist';
 
 import { IMeta } from 'src/@types';
 import { DownloadList } from '../@common/entities';
@@ -144,6 +145,10 @@ const getAllProjectTasksHandler = (state: S, { meta, payload }: ActionMeta<Axios
   });
 };
 
+const logOutHandler = () => {
+  return new DownloadList(Project);
+};
+
 export const projects = handleActions<S, P>(
   {
     [postProject.success]: postProjectSuccessHandler,
@@ -160,6 +165,7 @@ export const projects = handleActions<S, P>(
     [deleteProjectMember.toString()]: deleteProjectMemberHandler,
     [combineActions(postProjectTask, patchProjectTask, deleteProjectTask)]: projectTaskHandler,
     [getAllProjectTasks.success]: getAllProjectTasksHandler,
+    [PURGE]: logOutHandler,
   },
   new DownloadList(Project)
 );

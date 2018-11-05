@@ -1,4 +1,5 @@
-import { createAction } from 'redux-actions';
+// import { createAction } from 'redux-actions';
+import { PURGE } from 'redux-persist';
 
 import { requestActions } from 'src/store/@common/requestActions';
 import { LOGIN_FORM_NAME, MAGIC_FORM_NAME } from './consts';
@@ -35,7 +36,7 @@ export const getAuthActivate = requestActions<IGetAuthActivateData>(
   })
 );
 
-export const logIn = requestActions('USER/LOGIN', (data: { username: string; password: string }) => ({
+export const logInPatch = requestActions('USER/LOGIN', (data: { username: string; password: string }) => ({
   form: LOGIN_FORM_NAME,
   request: {
     data,
@@ -48,6 +49,9 @@ export const logIn = requestActions('USER/LOGIN', (data: { username: string; pas
   },
 }));
 
-export const logOut = createAction('USER/LOGOUT');
+export const logOut = () => ({
+  result: Function.prototype,
+  type: PURGE,
+});
 
 export * from './thunk';

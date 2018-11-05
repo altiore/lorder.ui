@@ -10,3 +10,5 @@ export const isAuth = createSelector(baseState, (state: Identity): boolean => st
 export const userRole = createSelector(baseState, (state: Identity): ROLE => state.role);
 
 export const userBearerKey = createSelector(baseState, (state: Identity): string => state.bearerKey);
+
+export const userEmail = createSelector(baseState, (state: Identity): string => state.email);

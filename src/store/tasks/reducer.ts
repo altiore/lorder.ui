@@ -3,6 +3,7 @@ import get from 'lodash-es/get';
 import omit from 'lodash-es/omit';
 import * as moment from 'moment';
 import { Action, ActionMeta, handleActions } from 'redux-actions';
+import { PURGE } from 'redux-persist';
 import uniqid from 'uniqid';
 
 import { DownloadList } from 'src/store/@common/entities';
@@ -144,6 +145,10 @@ const replaceTasksHandler = (state: S, { payload }: Action<Array<Partial<UserWor
   return newState;
 };
 
+const logOutHandler = () => {
+  return new DownloadList(Task);
+};
+
 export const tasks = handleActions<S, P>(
   {
     [getAllTasks.toString()]: getAllTasksHandler,
@@ -157,6 +162,8 @@ export const tasks = handleActions<S, P>(
     [combineActions(patchAndStopUserWork, patchUserWork, deleteUserWork)]: taskUserWorkHandler,
 
     [replaceTasks.toString()]: replaceTasksHandler,
+
+    [PURGE]: logOutHandler,
   },
   new DownloadList(Task)
 );

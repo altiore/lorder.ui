@@ -1,20 +1,14 @@
 import get from 'lodash-es/get';
 import { Action, handleActions } from 'redux-actions';
-import Timer = NodeJS.Timer;
+import { PURGE } from 'redux-persist';
 
-import { covertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
+import { changeIco, covertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
 import { setCurrentUserWorkId, tickUserWorkTimer } from './actions';
+import { Timer } from './Timer';
 
-export interface ITimer {
-  projectId?: number | string;
-  taskId?: number | string;
-  time: number;
-  timer?: Timer;
-  userWorkId?: number | string;
-}
-type P = Partial<ITimer>;
+type P = Partial<Timer>;
 
-const tickUserWorkTimerHandler = (state: ITimer, { payload }: Action<Partial<ITimer>>) => {
+const tickUserWorkTimerHandler = (state: Timer, { payload }: Action<Partial<Timer>>) => {
   const time = state.time + 1;
   document.title =
     covertSecondsToDurationWithLocal(time) +
@@ -25,23 +19,28 @@ const tickUserWorkTimerHandler = (state: ITimer, { payload }: Action<Partial<ITi
   return { ...state, time };
 };
 
-const setCurrentUserWorkIdHandler = (state: ITimer, { payload }: Action<Partial<ITimer>>) => {
+const setCurrentUserWorkIdHandler = (state: Timer, { payload }: Action<Partial<Timer>>) => {
   if (!payload) {
     throw new Error('Error setCurrentUserWorkIdHandler: payload must not be empty!');
   }
   return { ...state, ...payload };
 };
 
-export const timer = handleActions<ITimer, P>(
+const logOutHandler = (state: Timer) => {
+  if (state.timer) {
+    clearTimeout(state.timer);
+    changeIco();
+    document.title = 'Старт';
+  }
+  return new Timer();
+};
+
+export const timer = handleActions<Timer, P>(
   {
     [tickUserWorkTimer.toString()]: tickUserWorkTimerHandler,
     [setCurrentUserWorkId.toString()]: setCurrentUserWorkIdHandler,
+
+    [PURGE]: logOutHandler,
   },
-  {
-    projectId: undefined,
-    taskId: undefined,
-    time: 0,
-    timer: undefined,
-    userWorkId: undefined,
-  }
+  new Timer()
 );
