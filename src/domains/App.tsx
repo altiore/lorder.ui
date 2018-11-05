@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { Redirect, RouteComponentProps, Switch } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 import { IRoute, ROLE } from 'src/@types';
 import { LoadingPage } from 'src/domains/@common/LoadingPage';
 
 import '../styles/app.scss';
 import { RouteWithSubRoutes } from './@common/RouteWithSubRoutes';
+import { Start } from './start';
 
 export interface IAppProps extends RouteComponentProps<{}> {
   // TODO: split reducers to several chunks
   // injectAsyncReducers: (role: ROLE) => Promise<void>;
+  userIsLoading: boolean;
   userRole: ROLE;
 }
 
@@ -42,15 +44,16 @@ export class AppTsx extends React.Component<IAppProps, IState> {
 
   public render() {
     const { isLoading, routes } = this.state;
+    const { userIsLoading } = this.props;
     const { userRole } = this.props;
-    if (isLoading || !routes) {
+    if (isLoading || userIsLoading || !routes) {
       return <LoadingPage />;
     }
     return (
       <Switch>
-        {userRole !== 'guest' && <Redirect from="/start" to="/" />}
+        <Route path={'/start/:identifier'} component={Start} />
         {routes.length && routes.map(route => <RouteWithSubRoutes key={route.path || 'notFound'} {...route} />)}
-        {userRole === 'guest' && <Redirect to="/" />}
+        {userRole === ROLE.GUEST && <Redirect to={'/'} />}
       </Switch>
     );
   }

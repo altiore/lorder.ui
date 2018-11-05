@@ -1,4 +1,4 @@
-// import { createAction } from 'redux-actions';
+import { createAction } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
 import { requestActions } from 'src/store/@common/requestActions';
@@ -53,5 +53,7 @@ export const logOut = () => ({
   result: Function.prototype,
   type: PURGE,
 });
+
+export const setIsLoading = createAction('IDENTITY/SET_IS_LOADING');
 
 export * from './thunk';

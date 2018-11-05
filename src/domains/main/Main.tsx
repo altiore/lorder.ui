@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -15,7 +16,7 @@ import * as classNames from 'classnames';
 import * as React from 'react';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 
-import { IRoute } from 'src/@types';
+import { IRoute, ROLE } from 'src/@types';
 import { LinkButton } from 'src/domains/@common/LinkButton';
 import { RouteWithSubRoutes } from 'src/domains/@common/RouteWithSubRoutes';
 import { Project } from 'src/store/projects';
@@ -31,6 +32,8 @@ export interface IMainProps {
   routes: IRoute[];
   toggleUiSetting: (setting: 'isLeftBarOpen') => void;
   theme: Theme;
+  userEmail?: string;
+  userRole: ROLE;
 }
 
 export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProps, {}> {
@@ -43,11 +46,12 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
   };
 
   public render() {
-    const { classes, isLeftBarOpen, projects, routes } = this.props;
+    const { routes } = this.props;
     if (!routes) {
       return null;
     }
 
+    const { classes, isLeftBarOpen, projects, userEmail, userRole } = this.props;
     return (
       <div className={classes.root}>
         <Drawer
@@ -60,7 +64,7 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
           <div className={classes.toolbar} style={{ justifyContent: isLeftBarOpen ? 'flex-end' : 'center' }}>
             {isLeftBarOpen ? (
               <Typography variant="caption" noWrap>
-                {''}
+                {userRole}
               </Typography>
             ) : null}
             <IconButton onClick={this.handleDrawerToggle}>
@@ -95,7 +99,9 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
             <IconButton onClick={this.clickOnRefresh}>
               <RefreshIcon fontSize={'small'} />
             </IconButton>
-            <Avatar onClick={this.logOut} alt="Remy Sharp" src="/favicon-32x32.png" className={classes.avatar} />
+            <Tooltip title={`${userEmail} (${userRole})`}>
+              <Avatar onClick={this.logOut} alt="Remy Sharp" src="/favicon-32x32.png" className={classes.avatar} />
+            </Tooltip>
           </div>
           <Switch>
             {routes.map((route: IRoute) => (

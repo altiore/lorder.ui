@@ -1,24 +1,18 @@
 import { push } from 'react-router-redux';
 import { Dispatch } from 'redux';
-import { PURGE } from 'redux-persist';
 
 import { IState } from 'src/@types';
 import { identifier, projectIdSearchParam } from 'src/store/router';
-import { getAuthActivate, IGetAuthActivateData } from '../actions';
-import { userEmail } from '../selectors';
+import { getAuthActivate, IGetAuthActivateData, loadInitialData, logOut, setIsLoading } from '../actions';
+import { userBearerKey } from '../selectors';
 
 export const activateUser = () => async (dispatch: Dispatch, getState: () => IState) => {
   try {
+    dispatch(setIsLoading());
     const state = getState();
     const bearerKey = identifier(state);
     if (!bearerKey) {
       throw new Error('BearerKey not found');
-    }
-    if (userEmail(state)) {
-      await dispatch({
-        result: Function.prototype,
-        type: PURGE,
-      });
     }
     const activateParams: IGetAuthActivateData = {
       oneTimeToken: bearerKey,
@@ -27,9 +21,17 @@ export const activateUser = () => async (dispatch: Dispatch, getState: () => ISt
     if (projectId) {
       activateParams.project = projectId;
     }
-    return await dispatch(getAuthActivate(activateParams));
+    const currentBearerKey = userBearerKey(state);
+    if (currentBearerKey) {
+      await dispatch(logOut());
+    }
+    await dispatch(getAuthActivate(activateParams));
+    dispatch(push('/'));
+    dispatch(setIsLoading(false));
+    return dispatch(loadInitialData() as any);
   } catch (e) {
     dispatch(push('/'));
+    dispatch(setIsLoading(false));
     return e;
   }
 };

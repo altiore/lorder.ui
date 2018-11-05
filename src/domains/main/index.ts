@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { logOut } from 'src/store/identity';
+import { logOut, userEmail, userRole } from 'src/store/identity';
 import { ownProjectListWithStatistic } from 'src/store/projects';
 import { isLeftBarOpen, toggleUiSetting } from 'src/store/ui';
 import { getUserWorks } from 'src/store/user-works';
@@ -13,6 +13,8 @@ import { styles } from './styles';
 const mapStateToProps = createStructuredSelector({
   isLeftBarOpen,
   projects: ownProjectListWithStatistic,
+  userEmail,
+  userRole,
 });
 
 const mapDispatchToProps = {

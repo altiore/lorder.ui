@@ -5,13 +5,14 @@ import { LoadingPage } from 'src/domains/@common/LoadingPage';
 
 export interface IStartProps {
   activateUser: () => any;
+  userIsLoading: boolean;
 }
 
 export class Start extends React.Component<RouteComponentProps<{}> & IStartProps, {}> {
-  constructor(props: RouteComponentProps<{}> & IStartProps) {
-    super(props);
-    const { activateUser } = props;
-    activateUser();
+  public async componentDidMount() {
+    if (!this.props.userIsLoading) {
+      await this.props.activateUser();
+    }
   }
 
   public render() {

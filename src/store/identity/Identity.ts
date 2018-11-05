@@ -17,7 +17,7 @@ export class Identity implements IIdentityState {
   public readonly role: ROLE = ROLE.GUEST;
   public readonly bearerKey: string;
 
-  constructor(initial?: IIdentityState) {
+  constructor(initial?: Partial<IIdentityState>) {
     map(initial, (val: any, key: string) => {
       this[key] = val;
     });

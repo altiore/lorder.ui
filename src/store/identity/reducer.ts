@@ -1,15 +1,18 @@
-import { combineActions, handleActions } from 'redux-actions';
+import get from 'lodash-es/get';
+import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { getAuthActivate, logInPatch } from './actions';
+import { getAuthActivate, logInPatch, setIsLoading } from './actions';
 import { Identity, IIdentityState } from './Identity';
 
 const getAuthActivateHandler = (state: IIdentityState) => {
-  state.isLoading = true;
-  return state;
+  return new Identity({
+    ...state,
+    isLoading: true,
+  });
 };
 
-const getAuthActivateSuccessHandler = (state: IIdentityState, { payload, meta }: any): IIdentityState => {
+const logInPatchSuccessHandler = (state: IIdentityState, { payload, meta }: any): IIdentityState => {
   return new Identity({
     ...state,
     ...payload.data,
@@ -18,26 +21,45 @@ const getAuthActivateSuccessHandler = (state: IIdentityState, { payload, meta }:
   });
 };
 
-const getAuthActivateFailHandler = (state: IIdentityState) => {
-  state.isLoading = false;
-  return state;
+const getAuthActivateSuccessHandler = (state: IIdentityState, { payload, meta }: any): IIdentityState => {
+  return new Identity({
+    ...state,
+    ...payload.data,
+    isAuth: true,
+  });
 };
 
-const handleLogIn = (state: IIdentityState): IIdentityState => {
-  state.isLoading = true;
-  return state;
+const handleLogIn = (state: IIdentityState, { payload }: Action<any>): IIdentityState => {
+  return new Identity({
+    ...state,
+    email: get(payload, 'request.data.email'),
+    isLoading: true,
+  });
 };
 
-const logOutHandler = (): IIdentityState => {
-  return new Identity();
+const setIsLoadingHandler = (state: IIdentityState, { payload = true }: Action<any>) => {
+  return new Identity({
+    ...state,
+    isLoading: payload,
+  });
+};
+
+const logOutHandler = (state: IIdentityState): IIdentityState => {
+  return new Identity({
+    isLoading: state.isLoading,
+  });
 };
 
 export const identity = handleActions<IIdentityState, any, any>(
   {
     [getAuthActivate.toString()]: getAuthActivateHandler,
-    [combineActions(getAuthActivate.success, logInPatch.success) as any]: getAuthActivateSuccessHandler,
-    [getAuthActivate.fail]: getAuthActivateFailHandler,
+    [getAuthActivate.success]: getAuthActivateSuccessHandler,
+
     [logInPatch.toString()]: handleLogIn,
+    [logInPatch.success]: logInPatchSuccessHandler,
+
+    [setIsLoading.toString()]: setIsLoadingHandler,
+
     [PURGE]: logOutHandler,
   },
   new Identity()
