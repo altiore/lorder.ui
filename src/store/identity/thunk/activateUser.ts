@@ -16,10 +16,8 @@ export const activateUser = () => async (dispatch: Dispatch, getState: () => ISt
     }
     if (userEmail(state)) {
       await dispatch({
+        result: Function.prototype,
         type: PURGE,
-        result: (res: any) => {
-          console.log('purge');
-        },
       });
     }
     const activateParams: IGetAuthActivateData = {
