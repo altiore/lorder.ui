@@ -16,7 +16,8 @@ import { TaskTypesForm } from './TaskTypesForm';
 export interface IProjectTaskTypesProps {
   classes: any;
   deleteTaskType: any;
-  getAllTaskTypes: any;
+  getAllTaskTypes: () => any;
+  getAllProjectTaskTypes: () => any;
   getTaskTypeById: any;
   projectTaskTypes: DownloadList<TaskType>;
 }
@@ -34,6 +35,7 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
 
   public componentDidMount() {
     this.props.getAllTaskTypes();
+    this.props.getAllProjectTaskTypes();
   }
 
   public render() {

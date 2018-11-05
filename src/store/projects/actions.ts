@@ -61,31 +61,6 @@ export const fetchProjectDetails = requestActions('PROJECTS/FETCH_ONE', (project
   },
 }));
 
-export const addTaskTypeToProject = requestActions(
-  'PROJECTS/TASK_TYPES/POST',
-  ({ projectId, taskTypeId }: { projectId: number; taskTypeId: number }) => ({
-    projectId,
-    request: {
-      data: { taskTypeId },
-      method: 'POST',
-      url: `/projects/${projectId}/task-types`,
-    },
-    taskTypeId,
-  })
-);
-
-export const deleteTaskTypeFromProject = requestActions(
-  'PROJECTS/TASK_TYPES/DELETE',
-  ({ projectId, taskTypeId }: { projectId: number; taskTypeId: number }) => ({
-    projectId,
-    request: {
-      data: { taskTypeId },
-      method: 'DELETE',
-      url: `/projects/${projectId}/task-types`,
-    },
-    taskTypeId,
-  })
-);
-
-export * from './tasks/actions';
 export * from './members/actions';
+export * from './tasks/actions';
+export * from './taskTypes/actions';

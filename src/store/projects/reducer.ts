@@ -14,6 +14,7 @@ import {
   fetchProjectDetails,
   getAllProjects,
   getAllProjectTasks,
+  getAllProjectTaskTypes,
   getOwnProjects,
   patchProjectTask,
   postProject,
@@ -24,6 +25,7 @@ import {
 import { Member } from './members/Member';
 import { Project } from './Project';
 import { projectTasks } from './tasks/reducer';
+import { projectTaskTypes } from './taskTypes/reducer';
 
 type S = DownloadList<Project>;
 interface IM {
@@ -136,6 +138,20 @@ const projectTaskHandler = (state: S, action: ActionMeta<any, any>) => {
   });
 };
 
+const projectTaskTypeHandler = (state: S, action: ActionMeta<any, any>) => {
+  let index: number;
+  // if meta exists get projectId from meta
+  if (action.meta) {
+    index = state.list.findIndex(el => get(action.meta, 'previousAction.payload.projectId') === el.id);
+  } else {
+    index = state.list.findIndex(el => get(action.payload, 'projectId') === el.id);
+  }
+
+  return state.updateItem(index, {
+    taskTypes: projectTaskTypes(state.list[index].taskTypes, action),
+  });
+};
+
 const getAllProjectTasksHandler = (state: S, { meta, payload }: ActionMeta<AxiosResponse, any>) => {
   const data = get(payload, 'data');
   const projectId = get(meta, 'previousAction.payload.projectId');
@@ -164,6 +180,7 @@ export const projects = handleActions<S, P>(
     [postProjectMember.fail]: postProjectMemberFailHandler,
     [deleteProjectMember.toString()]: deleteProjectMemberHandler,
     [combineActions(postProjectTask, patchProjectTask, deleteProjectTask)]: projectTaskHandler,
+    [combineActions(getAllProjectTaskTypes)]: projectTaskTypeHandler,
     [getAllProjectTasks.success]: getAllProjectTasksHandler,
     [PURGE]: logOutHandler,
   },

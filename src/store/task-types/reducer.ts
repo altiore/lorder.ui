@@ -10,23 +10,15 @@ type S = DownloadList<TaskType>;
 type P = AxiosResponse;
 
 const getAllTaskTypesHandler = (state: S): S => {
-  return new DownloadList(TaskType, {
-    ...state,
-    isLoading: true,
-  });
+  return state.startLoading();
 };
 
 const getAllTaskTypesSuccessHandler = (state: S, { payload }: Action<AxiosResponse>): S => {
-  return new DownloadList(TaskType, {
-    ...state,
-    isLoaded: true,
-    isLoading: false,
-    list: payload && payload.data && payload.data.map((el: any) => new TaskType(el)),
-  });
+  return state.finishLoading(payload);
 };
 
 const getAllTaskTypesFailHandler = (state: S): S => {
-  return new DownloadList(TaskType);
+  return state.stopLoading();
 };
 
 const logOutHandler = () => {

@@ -2,7 +2,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { deleteTaskTypeFromProject, projectTaskTypes } from 'src/store/projects';
+import { deleteTaskTypeFromProject, getAllProjectTaskTypes, projectTaskTypes } from 'src/store/projects';
 import { projectId } from 'src/store/router';
 import { getAllTaskTypes, getTaskTypeById } from 'src/store/task-types';
 import { ProjectTaskTypesJsx } from './ProjectTaskTypes';
@@ -16,15 +16,17 @@ const mapState = createStructuredSelector({
 
 const mapDispatch = {
   deleteTaskTypeFromProject,
+  getAllProjectTaskTypes,
   getAllTaskTypes,
 };
 
 const mergeProps = (
   { projectId, ...restState }: any,
-  { deleteTaskTypeFromProject, ...restDispatch }: any,
+  { deleteTaskTypeFromProject, getAllProjectTaskTypes, ...restDispatch }: any,
   { match, ...restOwn }: any
 ) => ({
   deleteTaskType: (taskTypeId: number) => deleteTaskTypeFromProject({ projectId, taskTypeId }),
+  getAllProjectTaskTypes: () => getAllProjectTaskTypes(projectId),
   ...restState,
   ...restDispatch,
   ...restOwn,
