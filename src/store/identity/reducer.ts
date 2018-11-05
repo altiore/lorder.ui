@@ -21,6 +21,10 @@ const logInPatchSuccessHandler = (state: IIdentityState, { payload, meta }: any)
   });
 };
 
+const logInPatchFailHandler = (): IIdentityState => {
+  return new Identity();
+};
+
 const getAuthActivateSuccessHandler = (state: IIdentityState, { payload, meta }: any): IIdentityState => {
   return new Identity({
     ...state,
@@ -57,6 +61,7 @@ export const identity = handleActions<IIdentityState, any, any>(
 
     [logInPatch.toString()]: handleLogIn,
     [logInPatch.success]: logInPatchSuccessHandler,
+    [logInPatch.fail]: logInPatchFailHandler,
 
     [setIsLoading.toString()]: setIsLoadingHandler,
 
