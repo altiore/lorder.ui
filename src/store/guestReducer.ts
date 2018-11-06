@@ -14,6 +14,7 @@ import { TaskType } from './task-types';
 import { Task, UserWork } from './tasks';
 import { uiReducer } from './ui';
 import { User } from './users';
+import { versionHistory } from './versionHistory';
 
 localForage.config({
   description: 'Altiore contribution version 1.0',
@@ -79,6 +80,7 @@ export async function createRootReducer(role: ROLE = ROLE.GUEST) {
       notifications,
       router: routerReducer,
       ui: uiReducer,
+      versionHistory,
       ...(asyncReducers as any),
     })
   );

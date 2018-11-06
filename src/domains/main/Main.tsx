@@ -34,6 +34,7 @@ export interface IMainProps {
   theme: Theme;
   userEmail?: string;
   userRole: ROLE;
+  version: string;
 }
 
 export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProps, {}> {
@@ -51,7 +52,7 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
       return null;
     }
 
-    const { classes, isLeftBarOpen, projects, userEmail, userRole } = this.props;
+    const { classes, isLeftBarOpen, projects, userEmail, userRole, version } = this.props;
     return (
       <div className={classes.root}>
         <Drawer
@@ -63,9 +64,14 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
         >
           <div className={classes.toolbar} style={{ justifyContent: isLeftBarOpen ? 'flex-end' : 'center' }}>
             {isLeftBarOpen ? (
-              <Typography variant="caption" noWrap>
-                {userRole}
-              </Typography>
+              <div>
+                <Typography variant="caption" noWrap>
+                  App: {version}
+                </Typography>
+                <Typography variant="caption" noWrap>
+                  React: {React.version}
+                </Typography>
+              </div>
             ) : null}
             <IconButton onClick={this.handleDrawerToggle}>
               {isLeftBarOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}

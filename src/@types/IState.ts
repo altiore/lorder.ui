@@ -11,6 +11,7 @@ import { Task, UserWork } from 'src/store/tasks';
 import { Timer } from 'src/store/timer';
 import { IUiState } from 'src/store/ui';
 import { IUser } from 'src/store/users';
+import { VersionHistory } from 'src/store/versionHistory';
 
 export interface IState {
   dialog: IDialogState;
@@ -26,4 +27,5 @@ export interface IState {
   ui: IUiState;
   users: DownloadList<IUser>;
   userWorks: DownloadList<UserWork>;
+  versionHistory: VersionHistory;
 }

@@ -1,5 +1,6 @@
 let localConfig: {
   BASE_URL: string;
+  VERSION: string;
 };
 
 if (process.env.NODE_ENV === 'development') {
@@ -7,4 +8,4 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   localConfig = require('./prod');
 }
-export const config = localConfig;
+export const config = { ...require('./common'), ...localConfig };
