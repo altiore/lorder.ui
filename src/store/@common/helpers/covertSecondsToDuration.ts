@@ -1,11 +1,7 @@
 import * as moment from 'moment';
 
+// TODO: simplify conversion. No need moment here!
 export function covertSecondsToDuration(seconds: number): string {
   const m = moment.utc(seconds * 1000);
-  return m.format('HH:mm:ss');
-  // if (seconds < 3600) {
-  //   return m.format('mm:ss') + ' мин';
-  // } else {
-  //   return m.format('HH:mm') + ' ч';
-  // }
+  return Math.floor(m.unix() / 3600) + m.format(':mm:ss');
 }

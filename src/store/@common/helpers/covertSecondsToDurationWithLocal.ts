@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 
+// TODO: simplify conversion. No need moment here!
 export function covertSecondsToDurationWithLocal(seconds: number): string {
   const m = moment.utc(seconds * 1000);
   if (seconds < 60) {
@@ -8,5 +9,5 @@ export function covertSecondsToDurationWithLocal(seconds: number): string {
   if (seconds < 3600) {
     return m.format('m мин s сек');
   }
-  return m.format('H ч m мин');
+  return Math.floor(m.unix() / 3600) + ` ч ${m.format('m мин')}`;
 }
