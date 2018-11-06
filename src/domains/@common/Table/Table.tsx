@@ -10,7 +10,7 @@ import { DownloadList } from 'src/store/@common/entities';
 export interface IProjectTaskTypesProps<T> {
   classes: any;
   colSpan?: number;
-  items: DownloadList<T>;
+  items: DownloadList<T> | T[];
   perPage?: number;
   renderItem: (item: T) => React.ReactNode;
 }

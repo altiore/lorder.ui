@@ -8,6 +8,18 @@ export interface IProjectMemberData {
   email?: string;
 }
 
+export const acceptInvitation = requestActions<number>('PROJECT_MEMBER/ACCEPT_INVITATION', projectId => ({
+  projectId,
+  request: {
+    method: 'PATCH',
+    url: `/projects/${projectId}/members/accept`,
+  },
+  success: {
+    message: `Приглашение принято`,
+    title: 'Успех!',
+  },
+}));
+
 export const postProjectMember = requestActions<IProjectMemberData>(
   'PROJECT_MEMBER/POST',
   ({ projectId, email }: IProjectMemberData) => ({

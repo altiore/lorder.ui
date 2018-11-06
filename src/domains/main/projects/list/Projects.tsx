@@ -1,12 +1,8 @@
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableFooter from '@material-ui/core/TableFooter';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -14,13 +10,15 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Page } from 'src/domains/@common/Page';
-import { Project } from 'src/store/projects';
+import { Table } from 'src/domains/@common/Table';
+import { ACCESS_LEVEL, Project } from 'src/store/projects';
 import { CreateProjectPopup } from './CreateProjectPopup';
 
 const src =
   'https://cache.harvestapp.com/assets/onboarding/landing-projects@2x-e00081706c6ce0b93cf18c21c6e488f1fc913045992fc34dd18e5e290bc971cb.png';
 
 export interface IProjectsProps {
+  acceptInvitation: (projectId: number) => any;
   classes: any;
   closeDialog: any;
   getProjects: any;
@@ -41,33 +39,12 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     this.props.getProjects();
   }
 
-  public handleRowClick = (id: number | undefined) => () => {
-    this.props.selectProject(id);
-    this.props.goToProject(id);
-  };
-
-  public handleRemoveClick = (id: number | undefined) => (e: any) => {
-    e.stopPropagation();
-    this.props.removeProject(id);
-  };
-
-  public handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
-    this.setState({ page });
-  };
-
-  public handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
-    if (event && event.target.value) {
-      this.setState({ perPage: event.target.value });
-    }
-  };
-
   public render() {
     const { classes, projectList } = this.props;
-    const { perPage, page } = this.state;
     return (
-      <Page>
+      <Page className={classes.root}>
         {projectList && projectList.length ? (
-          <Table className={classes.table}>
+          <Table items={projectList} renderItem={this.renderItem}>
             <TableHead>
               <TableRow>
                 <TableCell>Название проекта</TableCell>
@@ -77,41 +54,6 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
                 <TableCell style={{ width: 50 }} />
               </TableRow>
             </TableHead>
-            <TableBody>
-              {projectList
-                .slice(page * perPage, (page + 1) * perPage)
-                .map(({ id, title, monthlyBudget, fullProjectTimeHumanize, valueSum }) => {
-                  return (
-                    <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
-                      <TableCell component="th" scope="row">
-                        {title}
-                      </TableCell>
-                      <TableCell numeric>{monthlyBudget}</TableCell>
-                      <TableCell numeric>{fullProjectTimeHumanize}</TableCell>
-                      <TableCell numeric>{valueSum}</TableCell>
-                      <TableCell>
-                        <IconButton onClick={this.handleRemoveClick(id)}>
-                          <ClearIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  colSpan={3}
-                  count={projectList.length}
-                  rowsPerPage={perPage}
-                  page={page}
-                  onChangePage={this.handleChangePage}
-                  onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                  labelRowsPerPage={'Элементов на странице'}
-                  labelDisplayedRows={this.labelDisplayedRows}
-                />
-              </TableRow>
-            </TableFooter>
           </Table>
         ) : (
           <Grid item xs={12}>
@@ -127,12 +69,47 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     );
   }
 
-  private labelDisplayedRows = ({ from, to, count }: any) => {
-    return ''
-      .concat(from, '-')
-      .concat(to, ' из ')
-      .concat(count);
+  private renderItem = ({ id, accessLevel, title, monthlyBudget, fullProjectTimeHumanize, valueSum }: Project) => {
+    const { classes } = this.props;
+    return (
+      <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id, accessLevel)}>
+        <TableCell component="th" scope="row">
+          {title}
+        </TableCell>
+        {accessLevel === ACCESS_LEVEL.WHITE ? (
+          <TableCell colSpan={3}>
+            <Typography color={'error'}>Нажмите на строку проекта, чтоб принять приглашение</Typography>
+          </TableCell>
+        ) : (
+          <React.Fragment>
+            <TableCell numeric>{monthlyBudget}</TableCell>
+            <TableCell numeric>{fullProjectTimeHumanize}</TableCell>
+            <TableCell numeric>{valueSum}</TableCell>
+          </React.Fragment>
+        )}
+        <TableCell>
+          <IconButton onClick={this.handleRemoveClick(id)}>
+            <ClearIcon />
+          </IconButton>
+        </TableCell>
+      </TableRow>
+    );
   };
 
   private createProject = () => this.props.openDialog(CreateProjectPopup);
+
+  private handleRowClick = (id: number | undefined, accsessLevel?: ACCESS_LEVEL) => async () => {
+    if (accsessLevel === ACCESS_LEVEL.WHITE && typeof id === 'number') {
+      await this.props.acceptInvitation(id);
+      this.props.goToProject(id);
+    } else {
+      this.props.selectProject(id);
+      this.props.goToProject(id);
+    }
+  };
+
+  private handleRemoveClick = (id: number | undefined) => (e: any) => {
+    e.stopPropagation();
+    this.props.removeProject(id);
+  };
 }
