@@ -24,7 +24,7 @@ localForage.config({
 });
 
 const persistConfig: PersistConfig = {
-  blacklist: ['dialog', 'form', 'timer', 'notifications'],
+  blacklist: ['dialog', 'form', 'timer', 'notifications', 'versionHistory'],
   key: 'altiore',
   storage: localForage,
   transforms: [
