@@ -2,15 +2,14 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { patchProjectTask } from 'src/store/projects';
+import { patchProjectTask, projectMembersAsUsers } from 'src/store/projects';
 import { projectId } from 'src/store/router';
-import { userList } from 'src/store/users';
 import { PerformersCellJsx } from './PerformersCell';
 import { styles } from './styles';
 
 const mapStateToProps = createStructuredSelector({
   projectId,
-  userList,
+  projectMembers: projectMembersAsUsers,
 });
 
 const mapDispatchToProps = {

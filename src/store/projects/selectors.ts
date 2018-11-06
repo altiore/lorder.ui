@@ -1,9 +1,11 @@
 import { createSelector } from 'reselect';
 
 import { IState } from 'src/@types';
+import { DownloadList } from 'src/store/@common/entities';
+import { projectId } from 'src/store/router';
 import { timePercentByProjectId, timeSpentByProjectId } from 'src/store/user-works';
-import { DownloadList } from '../@common/entities';
-import { projectId } from '../router';
+import { IUser } from 'src/store/users';
+import { Member } from './members/Member';
 import { Project } from './Project';
 
 const baseState = (state: IState) => state.projects;
@@ -25,6 +27,11 @@ export const selectedProject = createSelector(
 );
 
 export const projectMembers = createSelector(selectedProject, (project: Project) => project && project.members);
+
+export const projectMembersAsUsers = createSelector(
+  projectMembers,
+  (members: Member[] = []): IUser[] => members.map(el => el.member)
+);
 
 export const projectTaskTypes = createSelector(selectedProject, (project: Project) => project && project.taskTypes);
 
