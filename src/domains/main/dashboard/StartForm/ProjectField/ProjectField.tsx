@@ -9,6 +9,7 @@ export interface IProjectFieldProps {
   getValue?: (value: any) => any;
   getLabel?: (value: any) => any;
   name: string;
+  selectProject?: (e: React.SyntheticEvent, value: any) => any;
   validate?: any[];
   items?: Array<{ value: any; label: string }>;
 }
@@ -19,9 +20,17 @@ export const ProjectFieldJsx: React.StatelessComponent<IProjectFieldProps> = ({
   getValue = (item: any) => item.id,
   name,
   items,
+  selectProject,
   validate,
 }) => (
-  <Field name={name} component={SelectField} validate={validate} className={className} label={'Проект'}>
+  <Field
+    name={name}
+    component={SelectField}
+    validate={validate}
+    className={className}
+    label={'Проект'}
+    onChange={selectProject}
+  >
     {items &&
       !!items.length &&
       items.map((item: any) => (

@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { getProjectById } from 'src/store/projects';
-import { allTasks, getAllTasks, startTimer, startUserWork, stopUserWork } from 'src/store/tasks';
+import { filteredByProjectTasks, getAllTasks, startTimer, startUserWork, stopUserWork } from 'src/store/tasks';
 import { currentUserWorkId, isTimerStarted } from 'src/store/timer';
 import { DashboardJsx } from './Dashboard';
 import { styles } from './styles';
 
 const mapStateToProps = createStructuredSelector({
-  allTasks,
   currentUserWorkId,
+  filteredTasks: filteredByProjectTasks,
   getProjectById,
   isTimerStarted,
 });

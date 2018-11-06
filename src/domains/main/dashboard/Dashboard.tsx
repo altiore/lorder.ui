@@ -14,7 +14,6 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { Page } from 'src/domains/@common/Page';
 import { StartStopBtn } from 'src/domains/@common/StartStopBtn';
-import { DownloadList } from 'src/store/@common/entities';
 import { Project } from 'src/store/projects';
 import { IUserWorkData, IUserWorkDelete, Task, UserWork } from 'src/store/tasks';
 import { StartForm } from './StartForm';
@@ -27,7 +26,7 @@ export interface IState {
 }
 
 export interface IDashboardProps extends RouteComponentProps<{}> {
-  allTasks: DownloadList<Task>;
+  filteredTasks: Task[];
   classes: any;
   currentUserWorkId?: number | string;
   isTimerStarted: boolean;
@@ -54,12 +53,12 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
    */
   public componentWillReceiveProps(nextProps: IDashboardProps) {
     if (
-      nextProps.allTasks !== this.props.allTasks &&
+      nextProps.filteredTasks !== this.props.filteredTasks &&
       nextProps.isTimerStarted === this.props.isTimerStarted &&
       !nextProps.isTimerStarted
     ) {
       let currentUserWork: UserWork | undefined;
-      const currentTask = nextProps.allTasks.list.find(task => {
+      const currentTask = nextProps.filteredTasks.find(task => {
         currentUserWork = task.userWorks.list.find(userWork => !userWork.finishAt);
         return !!currentUserWork;
       });
@@ -71,18 +70,20 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
   }
 
   public render() {
-    const { allTasks } = this.props;
+    const { filteredTasks } = this.props;
     const { page } = this.state;
     return (
       <Page>
         <StartForm />
-        {allTasks &&
-          !!allTasks.length && <List>{allTasks.slice(page * 5, (page + 1) * 5).map(this.renderListItem)}</List>}
-        {allTasks &&
-          !!allTasks.length && (
+        {filteredTasks &&
+          !!filteredTasks.length && (
+            <List>{filteredTasks.slice(page * 5, (page + 1) * 5).map(this.renderListItem)}</List>
+          )}
+        {filteredTasks &&
+          !!filteredTasks.length && (
             <TablePagination
               component="div"
-              count={allTasks.length}
+              count={filteredTasks.length}
               rowsPerPage={5}
               page={this.state.page}
               onChangePage={this.handleChangePage}
