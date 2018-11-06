@@ -5,7 +5,6 @@ import { RouteComponentProps } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 
 import { Page } from 'src/domains/@common/Page';
-import { Project } from 'src/store/projects';
 import { ProjectMembers } from './ProjectMembers';
 import { ProjectTasks } from './ProjectTasks';
 import { ProjectTaskTypes } from './ProjectTaskTypes';
@@ -15,7 +14,7 @@ export interface IProjectProps {
   closeDialog: any;
   fetchProjectDetails: any;
   openDialog: any;
-  project: Project;
+  projectId?: number;
   theme: any;
 }
 
@@ -25,7 +24,9 @@ export class ProjectJsx extends React.Component<RouteComponentProps<{}> & IProje
   };
 
   public componentDidMount() {
-    this.props.fetchProjectDetails(this.props.project.id);
+    if (this.props.projectId) {
+      this.props.fetchProjectDetails(this.props.projectId);
+    }
   }
 
   public handleChange = (event: any, value: number) => {
@@ -37,8 +38,8 @@ export class ProjectJsx extends React.Component<RouteComponentProps<{}> & IProje
   };
 
   public render() {
-    const { classes, project, theme } = this.props;
-    if (!project) {
+    const { classes, projectId, theme } = this.props;
+    if (!projectId) {
       return null;
     }
     return (

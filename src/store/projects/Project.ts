@@ -24,9 +24,9 @@ export class Project {
   public monthlyBudget?: number;
   public owner?: any;
   public phases?: any[];
-  public members: Member[];
-  public tasks: DownloadList<ProjectTask>;
-  public taskTypes: DownloadList<TaskType>;
+  public members: Member[] = [];
+  public tasks: DownloadList<ProjectTask> = new DownloadList(ProjectTask);
+  public taskTypes: DownloadList<TaskType> = new DownloadList(TaskType);
   /** время в секундах, потраченное всеми пользователями на этот проект */
   public timeSum?: number;
   /** ценность всех задач в этом проекте */

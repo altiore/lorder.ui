@@ -26,5 +26,5 @@ export const projectIdSearchParam = createSelector(routerSearch, (search: string
 
 export const projectId = createSelector(
   match('/projects/:projectId'),
-  (state): number => parseInt(get(state, 'params.projectId', ''), 0)
+  (state): number | undefined => get(state, 'params.projectId') && parseInt(get(state, 'params.projectId'), 0)
 );
