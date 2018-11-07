@@ -5,6 +5,7 @@ import { selectedProjectId } from 'src/store/project';
 
 export const allTasks = (state: IState) => state.tasks;
 
-export const filteredByProjectTasks = createSelector([allTasks, selectedProjectId], (tasks, projectId) =>
-  tasks.list.filter(el => el.projectId === projectId)
+export const filteredByProjectTasks = createSelector(
+  [allTasks, selectedProjectId],
+  (tasks, projectId) => (projectId ? tasks.list.filter(el => el.projectId === projectId) : tasks.list)
 );

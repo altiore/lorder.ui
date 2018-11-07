@@ -31,6 +31,7 @@ export const ProjectFieldJsx: React.StatelessComponent<IProjectFieldProps> = ({
     label={'Проект'}
     onChange={selectProject}
   >
+    <MenuItem>Все</MenuItem>
     {items &&
       !!items.length &&
       items.map((item: any) => (
