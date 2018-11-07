@@ -2,10 +2,12 @@ import createHistory from 'history/createBrowserHistory';
 import { routerMiddleware } from 'react-router-redux';
 import { applyMiddleware, compose, createStore as createReduxStore } from 'redux';
 import { persistStore } from 'redux-persist';
+import createSagaMiddleware from 'redux-saga';
 import thunk from 'redux-thunk';
 
 import { ROLE } from 'src/@types';
 import { loadInitialData } from 'src/store/identity';
+import { getUserWorksSuccessSaga } from 'src/store/user-works/saga/getUserWorkSuccess';
 
 import { clientsMiddleware } from './@common/middlewares';
 import { createRootReducer } from './guestReducer';
@@ -21,12 +23,15 @@ export async function createStore(initialState?: any) {
   // Create a history of your choosing (we're using a browser history in this case)
   const history = createHistory();
   const rootReducer = await createRootReducer(ROLE.SUPER_ADMIN);
+  const sagaMiddleware = createSagaMiddleware();
 
   const store = createReduxStore(
     rootReducer,
     initialState,
-    composeEnhancers(applyMiddleware(thunk, routerMiddleware(history), clientsMiddleware))
+    composeEnhancers(applyMiddleware(thunk, routerMiddleware(history), clientsMiddleware, sagaMiddleware))
   );
+
+  sagaMiddleware.run(getUserWorksSuccessSaga);
 
   if (module.hot) {
     module.hot.accept('./adminReducers', () => {

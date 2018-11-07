@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import video from './rain.mp4';
+
 export interface IBackGroundVideoProps {
   classes?: any;
   height: number;
@@ -29,7 +31,7 @@ export const BackGroundVideoTsx: React.StatelessComponent<IBackGroundVideoProps>
     <div className={classes.wrap2}>
       <div className={classes.wrap1}>
         <video autoPlay muted loop className={classes.video} style={imageStyle}>
-          <source src="/rain.mp4" type="video/mp4" />
+          <source src={video} type="video/mp4" />
         </video>
       </div>
     </div>

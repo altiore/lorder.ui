@@ -15,7 +15,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Page } from 'src/domains/@common/Page';
 import { StartStopBtn } from 'src/domains/@common/StartStopBtn';
 import { Project } from 'src/store/projects';
-import { IUserWorkData, IUserWorkDelete, Task, UserWork } from 'src/store/tasks';
+import { IUserWorkData, IUserWorkDelete, Task } from 'src/store/tasks';
 import { StartForm } from './StartForm';
 import { TimerListItemText } from './TimerListItemText';
 import { UserWorkTable } from './UserWorkTable';
@@ -29,10 +29,8 @@ export interface IDashboardProps extends RouteComponentProps<{}> {
   filteredTasks: Task[];
   classes: any;
   currentUserWorkId?: number | string;
-  isTimerStarted: boolean;
   getAllTasks: any;
   getProjectById: (id: number | string) => Project;
-  startTimer: (userWork: UserWork, project: Project) => any;
   startUserWork: (data: IUserWorkData) => any;
   stopUserWork: (data: IUserWorkDelete) => any;
 }
@@ -45,28 +43,6 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
 
   public componentDidMount() {
     this.props.getAllTasks();
-  }
-
-  /**
-   * TODO: move to persist first rehydrate place instead of this component,
-   *       because we should start timer even if reload any other page, very important!
-   */
-  public componentWillReceiveProps(nextProps: IDashboardProps) {
-    if (
-      nextProps.filteredTasks !== this.props.filteredTasks &&
-      nextProps.isTimerStarted === this.props.isTimerStarted &&
-      !nextProps.isTimerStarted
-    ) {
-      let currentUserWork: UserWork | undefined;
-      const currentTask = nextProps.filteredTasks.find(task => {
-        currentUserWork = task.userWorks.list.find(userWork => !userWork.finishAt);
-        return !!currentUserWork;
-      });
-      if (currentTask && currentUserWork) {
-        this.setState({ open: { [currentTask.id]: true } });
-        this.props.startTimer(currentUserWork, this.props.getProjectById(currentTask.projectId));
-      }
-    }
   }
 
   public render() {

@@ -1,5 +1,5 @@
 import { Digits } from '../digits';
-import { Info } from '../info';
+import { Info } from '../landing';
 import { Login } from '../login';
 import { Start } from '../start';
 

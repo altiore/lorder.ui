@@ -4,6 +4,7 @@ import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { IRoute, ROLE } from 'src/@types';
 import { LoadingPage } from 'src/domains/@common/LoadingPage';
 
+// import "react-perfect-scrollbar/dist/css/styles.css";
 import '../styles/app.scss';
 import { RouteWithSubRoutes } from './@common/RouteWithSubRoutes';
 import { Start } from './start';
