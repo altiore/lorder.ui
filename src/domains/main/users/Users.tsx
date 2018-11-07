@@ -18,9 +18,6 @@ import { Page } from 'src/domains/@common/Page';
 import Select from 'src/domains/@common/Select';
 import { IUser } from 'src/store/users';
 
-const src =
-  'https://cache.harvestapp.com/assets/onboarding/landing-projects@2x-e00081706c6ce0b93cf18c21c6e488f1fc913045992fc34dd18e5e290bc971cb.png';
-
 export interface IUsersProps {
   classes: any;
   deleteUser: any;
@@ -149,7 +146,7 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
           </Table>
         ) : (
           <Grid item xs={12}>
-            <img src={src} />
+            <img src={'/#'} />
           </Grid>
         )}
       </Page>

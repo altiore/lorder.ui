@@ -14,9 +14,6 @@ import { Table } from 'src/domains/@common/Table';
 import { ACCESS_LEVEL, Project } from 'src/store/projects';
 import { CreateProjectPopup } from './CreateProjectPopup';
 
-const src =
-  'https://cache.harvestapp.com/assets/onboarding/landing-projects@2x-e00081706c6ce0b93cf18c21c6e488f1fc913045992fc34dd18e5e290bc971cb.png';
-
 export interface IProjectsProps {
   acceptInvitation: (projectId: number) => any;
   classes: any;
@@ -57,7 +54,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
           </Table>
         ) : (
           <Grid item xs={12}>
-            <img src={src} />
+            <img src={'/'} />
           </Grid>
         )}
         <Button size="large" variant="contained" color="primary" onClick={this.createProject}>
