@@ -10,6 +10,7 @@ import { Project } from '../main/projects/one';
 import { Users } from '../main/users';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
+import { PublicProject } from '../publicProject';
 
 export const routes = [
   {
@@ -54,6 +55,10 @@ export const routes = [
         icon: AccountCircle,
         path: '/users',
         title: 'Пользователи',
+      },
+      {
+        component: PublicProject,
+        path: '/:projectId',
       },
     ],
   },

@@ -1,6 +1,8 @@
 import { Digits } from '../digits';
 import { Info } from '../landing';
 import { Login } from '../login';
+import { NoMatch } from '../noMatch';
+import { PublicProject } from '../publicProject';
 import { Start } from '../start';
 
 export const routes = [
@@ -21,5 +23,12 @@ export const routes = [
   {
     component: Start,
     path: '/start/:identifier',
+  },
+  {
+    component: PublicProject,
+    path: '/:projectId',
+  },
+  {
+    component: NoMatch,
   },
 ];

@@ -1,32 +1,25 @@
 import AppBar from '@material-ui/core/AppBar';
-import Divider from '@material-ui/core/Divider';
+import Divider from '@material-ui/core/Divider/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import debounce from 'lodash-es/debounce';
 import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
 
 import { Block } from 'src/domains/@common/Block';
-import { LinkButton } from 'src/domains/@common/LinkButton';
 import { MemberCard } from 'src/domains/@common/MemberCard';
 import { TelegramIco } from 'src/domains/@icons/Telegram';
-import { BackGroundVideo } from './BackGroundVideo';
-import { Title } from './Title';
+import { PublicProject } from 'src/store/publicProject';
+import { LinkButton } from '../@common/LinkButton';
 
-export interface IInfoProps {
-  brandName: string;
+export interface IPublicProjectProps extends RouteComponentProps<{ projectId: string }> {
   classes: any;
+  fetchPublicProject: any;
+  publicProjectData: PublicProject;
   team: Array<{
     image: string;
     name: string;
-  }>;
-  tours: Array<{
-    duration: number;
-    image: string;
-    stars: number;
-    reviews: number;
-    title: string;
   }>;
 }
 
@@ -35,44 +28,40 @@ export interface IState {
   width: number;
 }
 
-export class InfoTsx extends React.Component<IInfoProps, IState> {
-  constructor(props: IInfoProps) {
-    super(props);
-    this.state = {
-      ...this.getDimensions(),
-    };
-    this.handleResize = this.handleResize.bind(this);
-  }
-
+export class PublicProjectTsx extends React.Component<IPublicProjectProps, IState> {
   public componentDidMount() {
-    window.addEventListener('resize', debounce(this.handleResize, 200), false);
+    this.props.fetchPublicProject(this.props.match.params.projectId);
   }
 
   public render() {
-    const { brandName, classes, team } = this.props;
-    const { height, width } = this.state;
+    const { publicProjectData, team, classes } = this.props;
+    if (publicProjectData.isLoading && !publicProjectData.isLoaded) {
+      return '...loading';
+    }
+    if (!publicProjectData.title) {
+      return 'Not Found';
+    }
     return (
       <div className={classes.root}>
-        <BackGroundVideo height={height} width={width} />
-
         <AppBar key={'top'} position="static" className={classes.appBar}>
           <Toolbar>
             <Typography variant="h6" color="inherit">
-              {brandName}
+              Altiore
             </Typography>
           </Toolbar>
         </AppBar>
 
-        <div className={classes.overlay} style={{ height: height - 64, width: width - 15 }}>
-          <Title />
-        </div>
-
         <Grid container className={classes.content}>
           <Block>
+            <Grid item>
+              <Typography variant={'h1'}>{publicProjectData.title}</Typography>
+            </Grid>
+          </Block>
+          <Block>
             <Grid item className={classes.profile}>
-              <Typography variant={'h4'}>Пока ты думаешь, время уходит... безвозвратно...</Typography>
+              <Typography variant={'h4'}>Сделай несколько простых шагов - и присоеденись к сообществу</Typography>
               <LinkButton variant={'contained'} color={'primary'} className={classes.button} to={'/login'}>
-                Начать управлять своим временем эффективно!
+                Подключиться к проекту!
               </LinkButton>
             </Grid>
           </Block>
@@ -80,8 +69,8 @@ export class InfoTsx extends React.Component<IInfoProps, IState> {
           <Divider />
           <Block>
             <Grid item className={classes.profile} xs={12}>
-              <Typography variant={'h4'}>Наша комманда</Typography>
-              <Typography>В безумном мире хаоса мы помогаем тебе навести порядок... И себе...</Typography>
+              <Typography variant={'h4'}>Комманда проекта</Typography>
+              <Typography>Мы дарим людям мир и красоту, но только если это будет добром!</Typography>
             </Grid>
             {team.map((member, index) => (
               <Grid item key={index}>
@@ -94,7 +83,7 @@ export class InfoTsx extends React.Component<IInfoProps, IState> {
         <AppBar key={'bottom'} position="static" component={'footer'}>
           <Toolbar className={classes.bottomBar}>
             <Typography variant="h6" color="inherit">
-              Copyright &copy; {brandName}
+              Copyright &copy; Altiore
             </Typography>
             <div className={classes.sectionDesktop}>
               <IconButton color="inherit" href={'https://t.me/joinchat/BmXj_kK5vnoAWdQF7tTc1g'} target={'_blank'}>
@@ -105,22 +94,5 @@ export class InfoTsx extends React.Component<IInfoProps, IState> {
         </AppBar>
       </div>
     );
-  }
-
-  private handleResize() {
-    this.setState(this.getDimensions());
-  }
-
-  private getDimensions() {
-    const w = window;
-    const d = document;
-    const e = d.documentElement;
-    const g = d.getElementsByTagName('body')[0];
-    const width = w.innerWidth || (e && e.clientWidth) || g.clientWidth;
-    const height = w.innerHeight || (e && e.clientHeight) || g.clientHeight;
-    return {
-      height,
-      width,
-    };
   }
 }

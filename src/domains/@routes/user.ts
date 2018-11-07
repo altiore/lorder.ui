@@ -8,6 +8,7 @@ import { OwnProjects } from '../main/projects/list';
 import { Project } from '../main/projects/one';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
+import { PublicProject } from '../publicProject';
 
 export const routes = [
   {
@@ -31,6 +32,10 @@ export const routes = [
       {
         component: Project,
         path: '/projects/:projectId',
+      },
+      {
+        component: PublicProject,
+        path: '/:projectId',
       },
     ],
   },

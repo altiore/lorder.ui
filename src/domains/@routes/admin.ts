@@ -2,6 +2,7 @@ import { Digits } from '../digits';
 import { Main } from '../main';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
+import { PublicProject } from '../publicProject';
 
 export const routes = [
   {
@@ -15,6 +16,10 @@ export const routes = [
   {
     component: Profile,
     path: '/profile',
+  },
+  {
+    component: PublicProject,
+    path: '/:projectId',
   },
   {
     component: NoMatch,

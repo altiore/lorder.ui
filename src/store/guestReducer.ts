@@ -10,6 +10,7 @@ import { DownloadList } from './@common/entities';
 import { dialog } from './dialog';
 import { identity } from './identity';
 import { Project } from './projects';
+import { publicProject } from './publicProject';
 import { TaskType } from './task-types';
 import { Task, UserWork } from './tasks';
 import { uiReducer } from './ui';
@@ -24,7 +25,7 @@ localForage.config({
 });
 
 const persistConfig: PersistConfig = {
-  blacklist: ['dialog', 'form', 'timer', 'notifications', 'versionHistory'],
+  blacklist: ['dialog', 'form', 'timer', 'notifications', 'publicProject', 'versionHistory'],
   key: 'altiore',
   storage: localForage,
   transforms: [
@@ -78,6 +79,7 @@ export async function createRootReducer(role: ROLE = ROLE.GUEST) {
       form,
       identity,
       notifications,
+      publicProject,
       router: routerReducer,
       ui: uiReducer,
       versionHistory,

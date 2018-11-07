@@ -6,6 +6,7 @@ import { DownloadList } from 'src/store/@common/entities';
 import { IDialogState } from 'src/store/dialog';
 import { IIdentityState } from 'src/store/identity';
 import { Project } from 'src/store/projects';
+import { PublicProject } from 'src/store/publicProject';
 import { TaskType } from 'src/store/task-types';
 import { Task, UserWork } from 'src/store/tasks';
 import { Timer } from 'src/store/timer';
@@ -20,6 +21,7 @@ export interface IState {
   notifications: NotificationsState;
   project: { selected?: number };
   projects: DownloadList<Project>;
+  publicProject: PublicProject;
   taskTypes: DownloadList<TaskType>;
   tasks: DownloadList<Task>;
   timer: Timer;
