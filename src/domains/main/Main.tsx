@@ -32,6 +32,7 @@ export interface IMainProps {
   routes: IRoute[];
   toggleUiSetting: (setting: 'isLeftBarOpen') => void;
   theme: Theme;
+  userAvatar?: string;
   userEmail?: string;
   userRole: ROLE;
   version: string;
@@ -52,7 +53,7 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
       return null;
     }
 
-    const { classes, isLeftBarOpen, projects, userEmail, userRole, version } = this.props;
+    const { classes, isLeftBarOpen, projects, userAvatar, userEmail, userRole, version } = this.props;
     return (
       <div className={classes.root}>
         <Drawer
@@ -106,7 +107,12 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
               <RefreshIcon fontSize={'small'} />
             </IconButton>
             <Tooltip title={`${userEmail} (${userRole})`}>
-              <Avatar onClick={this.logOut} alt="Remy Sharp" src="/favicon-32x32.png" className={classes.avatar} />
+              <Avatar
+                onClick={this.logOut}
+                alt="Remy Sharp"
+                src={userAvatar || '/d-avatar.png'}
+                className={classes.avatar}
+              />
             </Tooltip>
           </div>
           <Switch>

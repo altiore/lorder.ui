@@ -4,6 +4,7 @@ import { ROLE } from '../../@types';
 
 export interface IIdentityState {
   email?: string;
+  avatar?: string;
   isAuth: boolean;
   isLoading: boolean;
   role?: ROLE;
@@ -12,6 +13,7 @@ export interface IIdentityState {
 
 export class Identity implements IIdentityState {
   public readonly email: string;
+  public readonly avatar?: string;
   public readonly isAuth: boolean = false;
   public readonly isLoading: boolean = false;
   public readonly role: ROLE = ROLE.GUEST;

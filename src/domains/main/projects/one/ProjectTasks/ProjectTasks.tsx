@@ -16,6 +16,7 @@ import { PerformersCell } from './PerformersCell';
 import { AddTaskForm, PatchTaskForm } from './TaskForm';
 
 export interface IProjectTasksProps {
+  isFormMount: boolean;
   classes: any;
   closeDialog: any;
   deleteProjectTask: (id: number) => void;
@@ -43,7 +44,9 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
   }
 
   public componentWillUnmount() {
-    this.props.destroyEditTaskForm();
+    if (this.props.isFormMount) {
+      this.props.destroyEditTaskForm();
+    }
   }
 
   public render() {
