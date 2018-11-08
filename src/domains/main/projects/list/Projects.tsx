@@ -9,8 +9,8 @@ import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Page } from 'src/domains/@common/Page';
-import { Table } from 'src/domains/@common/Table';
+import { Page } from 'src/components/Page';
+import { Table } from 'src/components/Table';
 import { ACCESS_LEVEL, Project } from 'src/store/projects';
 import { CreateProjectPopup } from './CreateProjectPopup';
 

@@ -5,8 +5,8 @@ import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { StartStopBtn } from 'src/domains/@common/StartStopBtn';
-import { Table } from 'src/domains/@common/Table';
+import { StartStopBtn } from 'src/components/StartStopBtn';
+import { Table } from 'src/components/Table';
 import { DownloadList } from 'src/store/@common/entities';
 import { UserWork } from 'src/store/tasks';
 import { TimerCell } from '../TimerCell';

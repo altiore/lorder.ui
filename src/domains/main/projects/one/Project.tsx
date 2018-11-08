@@ -4,7 +4,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 
-import { Page } from 'src/domains/@common/Page';
+import { Page } from 'src/components/Page';
 import { ProjectMembers } from './ProjectMembers';
 import { ProjectTasks } from './ProjectTasks';
 import { ProjectTaskTypes } from './ProjectTaskTypes';

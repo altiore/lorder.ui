@@ -14,8 +14,8 @@ import get from 'lodash-es/get';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Page } from 'src/domains/@common/Page';
-import Select from 'src/domains/@common/Select';
+import { Page } from 'src/components/Page';
+import Select from 'src/components/Select';
 import { IUser } from 'src/store/users';
 
 export interface IUsersProps {

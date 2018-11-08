@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required } from 'redux-form-validators';
 
-import { StartStopBtn } from 'src/domains/@common/StartStopBtn';
+import { StartStopBtn } from 'src/components/StartStopBtn';
 import { ProjectField } from './ProjectField';
 import { TaskField } from './TaskField';
 

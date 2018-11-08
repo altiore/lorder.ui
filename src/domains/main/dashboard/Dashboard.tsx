@@ -12,8 +12,8 @@ import LinkIcon from '@material-ui/icons/Link';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Page } from 'src/domains/@common/Page';
-import { StartStopBtn } from 'src/domains/@common/StartStopBtn';
+import { Page } from 'src/components/Page';
+import { StartStopBtn } from 'src/components/StartStopBtn';
 import { Project } from 'src/store/projects';
 import { IUserWorkData, IUserWorkDelete, Task } from 'src/store/tasks';
 import { StartForm } from './StartForm';

@@ -8,7 +8,7 @@ import get from 'lodash-es/get';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Table } from 'src/domains/@common/Table';
+import { Table } from 'src/components/Table';
 import { DownloadList } from 'src/store/@common/entities';
 import { TaskType } from 'src/store/task-types';
 import { TaskTypesForm } from './TaskTypesForm';

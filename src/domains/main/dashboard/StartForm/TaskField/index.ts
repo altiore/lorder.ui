@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { IState } from 'src/@types';
-import { ISelectReactFieldProps, SelectReactField } from 'src/domains/@common/SelectReactField';
+import { ISelectReactFieldProps, SelectReactField } from 'src/components/SelectReactField';
 import { selectedProjectId } from 'src/store/project';
 import { getProjectById, Project } from 'src/store/projects';
 import { allTaskList, startUserWork, Task } from 'src/store/tasks';

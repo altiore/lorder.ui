@@ -9,7 +9,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Table } from 'src/domains/@common/Table';
+import { Table } from 'src/components/Table';
 import { DownloadList } from 'src/store/@common/entities';
 import { ProjectTask } from 'src/store/projects';
 import { PerformersCell } from './PerformersCell';

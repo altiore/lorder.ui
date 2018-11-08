@@ -11,6 +11,7 @@ import { Users } from '../main/users';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
 import { PublicProject } from '../publicProject';
+import { User } from '../user';
 
 export const routes = [
   {
@@ -20,6 +21,10 @@ export const routes = [
   {
     component: Profile,
     path: '/profile',
+  },
+  {
+    component: User,
+    path: '/user',
   },
   {
     component: Main,

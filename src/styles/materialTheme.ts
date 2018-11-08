@@ -1,13 +1,24 @@
 import amber from '@material-ui/core/colors/amber';
-import green from '@material-ui/core/colors/green';
+import teal from '@material-ui/core/colors/teal';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 export default createMuiTheme({
   palette: {
-    primary: green,
+    primary: teal,
     secondary: amber,
   },
   typography: {
     useNextVariants: true,
   },
 });
+
+// OLD one
+// export default createMuiTheme({
+//   palette: {
+//     primary: green,
+//     secondary: amber,
+//   },
+//   typography: {
+//     useNextVariants: true,
+//   },
+// });

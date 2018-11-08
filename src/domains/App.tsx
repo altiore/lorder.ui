@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 import { IRoute, ROLE } from 'src/@types';
-import { LoadingPage } from 'src/domains/@common/LoadingPage';
+import { LoadingPage } from 'src/components/LoadingPage';
 
 // import "react-perfect-scrollbar/dist/css/styles.css";
 import '../styles/app.scss';
