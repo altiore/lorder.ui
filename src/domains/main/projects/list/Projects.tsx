@@ -23,7 +23,6 @@ export interface IProjectsProps {
   openDialog: any;
   projectList: Project[];
   removeProject: any;
-  selectProject: any;
 }
 
 export class Projects extends React.Component<RouteComponentProps<{}> & IProjectsProps, {}> {
@@ -100,7 +99,6 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
       await this.props.acceptInvitation(id);
       this.props.goToProject(id);
     } else {
-      this.props.selectProject(id);
       this.props.goToProject(id);
     }
   };

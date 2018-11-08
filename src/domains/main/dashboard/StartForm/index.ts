@@ -4,7 +4,7 @@ import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { onSubmitForm } from 'src/store/@common/helpers';
-import { createUserTaskFormInitials } from 'src/store/project';
+import { createUserTaskFormInitials, selectProject } from 'src/store/project';
 import { CREATE_USER_WORK_FORM_NAME, IUserWorkData, startUserWork, stopUserWork } from 'src/store/tasks';
 import { currentUserWorkData, isTimerStarted } from 'src/store/timer';
 import { IStartFormProps, StartFormJsx } from './StartForm';
@@ -17,6 +17,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
+  selectProject: (e: any, value: any) => selectProject(value),
   stopUserWork,
 };
 
@@ -38,6 +39,7 @@ const StartForm = withStyles(styles, { withTheme: true })(
     mergeProps
   )(
     reduxForm<any, IStartFormProps>({
+      enableReinitialize: true,
       form: CREATE_USER_WORK_FORM_NAME,
       onSubmit: onSubmitForm<IUserWorkData>(startUserWork),
       // onSubmitSuccess: (res, dispatch, { goToNext }) => goToNext(),

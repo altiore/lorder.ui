@@ -1,36 +1,28 @@
 import MenuItem from '@material-ui/core/MenuItem';
 import * as React from 'react';
-import { Field } from 'redux-form';
+import { WrappedFieldProps } from 'redux-form';
 
 import { SelectField } from 'src/domains/@common/SelectField';
 
-export interface IProjectFieldProps {
+export interface IProjectFieldProps extends WrappedFieldProps {
   className?: string;
   getValue?: (value: any) => any;
   getLabel?: (value: any) => any;
   name: string;
-  selectProject?: (e: React.SyntheticEvent, value: any) => any;
-  validate?: any[];
   items?: Array<{ value: any; label: string }>;
 }
 
 export const ProjectFieldJsx: React.StatelessComponent<IProjectFieldProps> = ({
   className,
+  input,
   getLabel = (item: any) => item.title,
   getValue = (item: any) => item.id,
+  label,
+  meta,
   name,
   items,
-  selectProject,
-  validate,
 }) => (
-  <Field
-    name={name}
-    component={SelectField}
-    validate={validate}
-    className={className}
-    label={'Проект'}
-    onChange={selectProject}
-  >
+  <SelectField input={input} label={label} meta={meta} className={className}>
     <MenuItem>Все</MenuItem>
     {items &&
       !!items.length &&
@@ -39,5 +31,5 @@ export const ProjectFieldJsx: React.StatelessComponent<IProjectFieldProps> = ({
           {getLabel(item)}
         </MenuItem>
       ))}
-  </Field>
+  </SelectField>
 );

@@ -9,7 +9,13 @@ import { TaskField } from './TaskField';
 export interface IInternalProps {
   classes: any;
   isTimerStarted: boolean;
+  selectProject: any;
   stopUserWork: () => any;
+}
+
+export interface IStartFormData {
+  description: string;
+  projectId: number;
 }
 
 export interface IStartFormProps {
@@ -18,15 +24,18 @@ export interface IStartFormProps {
 }
 
 export const StartFormJsx: React.StatelessComponent<
-  IInternalProps & IStartFormProps & InjectedFormProps<{}, IStartFormProps>
-> = ({ classes, isTimerStarted, handleSubmit, stopUserWork }) => (
+  IInternalProps & InjectedFormProps<IStartFormData, IStartFormProps>
+> = ({ classes, isTimerStarted, handleSubmit, stopUserWork, initialValues, selectProject }) => (
   <form onSubmit={handleSubmit} className={classes.play}>
     <div className={classes.inputBlock}>
       <Field name="description" component={TaskField} label="Начни новую задачу..." className={classes.input} />
-      <ProjectField
-        name="projectId"
-        validate={[required({ msg: 'Сначала выберите Проект!' })]}
+      <Field
         className={classes.select}
+        name="projectId"
+        component={ProjectField}
+        label="Проект"
+        onChange={selectProject}
+        validate={[required({ msg: 'Сначала выберите Проект!' })]}
       />
     </div>
     <StartStopBtn isStarted={isTimerStarted} isLarge onStart={handleSubmit} onStop={stopUserWork} />

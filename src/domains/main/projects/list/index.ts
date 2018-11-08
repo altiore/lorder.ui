@@ -4,7 +4,6 @@ import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from 'src/store/dialog';
-import { selectProject } from 'src/store/project';
 import {
   acceptInvitation,
   allProjectList,
@@ -28,7 +27,6 @@ const mapToProps = (ownOnly: boolean = true) => ({
   goToPage: push,
   openDialog,
   removeProject,
-  selectProject,
 });
 
 const mergeProps = (state: any, { goToPage, ...restDispatch }: any, { match, ...restOwn }: any) => ({

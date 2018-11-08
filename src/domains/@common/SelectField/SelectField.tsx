@@ -2,7 +2,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
+import Select, { SelectProps } from '@material-ui/core/Select';
 import uniqueId from 'lodash-es/uniqueId';
 import * as React from 'react';
 import { WrappedFieldInputProps, WrappedFieldProps } from 'redux-form';
@@ -11,10 +11,16 @@ const onChange = (input: WrappedFieldInputProps) => (event: React.ChangeEvent<HT
   input.onChange(event.target.value);
 
 export interface ISelectFieldProps extends WrappedFieldProps {
-  children: React.ComponentType;
+  children: React.ReactNode[];
 }
 
-export const SelectField = ({ input, meta: { touched, error }, label, children, ...custom }: ISelectFieldProps) => {
+export const SelectField = ({
+  input,
+  meta: { touched, error },
+  label,
+  children,
+  ...custom
+}: ISelectFieldProps & SelectProps) => {
   const id = uniqueId();
   return (
     <FormControl error={touched && error}>
