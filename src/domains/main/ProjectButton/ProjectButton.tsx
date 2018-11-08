@@ -24,9 +24,14 @@ export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProj
 
   public render() {
     const { isOpen } = this.state;
-    const { classes, id, title } = this.props;
+    const { classes, id, time, title, percent } = this.props;
     return (
-      <Popover place="below" isOpen={isOpen} onOuterAction={this.onClosePopover} body={<ShortChart {...this.props} />}>
+      <Popover
+        place="below"
+        isOpen={isOpen}
+        onOuterAction={this.onClosePopover}
+        body={<ShortChart id={id} title={title} time={time} percent={percent} />}
+      >
         <LinkButton
           to={`/projects/${id}`}
           className={classes.button}

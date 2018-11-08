@@ -35,6 +35,7 @@ export const ProjectTasks = connect(
     deleteProjectTask: (taskId: number) => deleteProjectTask({ taskId, projectId }),
     destroyEditTaskForm: () => destroy(PROJECT_EDIT_TASK_FORM_NAME),
     getAllProjectTasks: () => getAllProjectTasks(projectId),
+    projectId,
     ...restOwn,
   })
 )(withStyles(styles, { withTheme: true })(ProjectTasksJsx));

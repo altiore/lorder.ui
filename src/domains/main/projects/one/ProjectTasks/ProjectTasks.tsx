@@ -23,6 +23,7 @@ export interface IProjectTasksProps {
   destroyEditTaskForm: () => any;
   getAllProjectTasks: () => void;
   openDialog: any;
+  projectId: number;
   projectTasks: DownloadList<ProjectTask>;
 }
 
@@ -41,6 +42,12 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
 
   public componentDidMount() {
     this.props.getAllProjectTasks();
+  }
+
+  public componentWillReceiveProps(nextProps: IProjectTasksProps) {
+    if (nextProps.projectId !== this.props.projectId) {
+      nextProps.getAllProjectTasks();
+    }
   }
 
   public componentWillUnmount() {
