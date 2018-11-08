@@ -14,11 +14,11 @@ export interface ISelectFieldProps extends WrappedFieldProps {
   children: React.ComponentType;
 }
 
-export const SelectField = ({ input, meta: { touched, error }, children, ...custom }: ISelectFieldProps) => {
+export const SelectField = ({ input, meta: { touched, error }, label, children, ...custom }: ISelectFieldProps) => {
   const id = uniqueId();
   return (
     <FormControl error={touched && error}>
-      <InputLabel htmlFor={id}>{'Проект'}</InputLabel>
+      <InputLabel htmlFor={id}>{label}</InputLabel>
       <Select
         error={touched && error}
         {...input}

@@ -45,16 +45,7 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
   // TODO: cover with tests!!!
   public handleRowClick = (id: number | undefined) => (event: React.MouseEvent) => {
     const isOpener = get(event, 'target.dataset.role') === 'opener';
-    const isChangeRole = get(event, 'target.value');
     if (isOpener) {
-      return;
-    }
-    if (isChangeRole && typeof id === 'number') {
-      const user = this.props.findUserById(id);
-      if (!user) {
-        throw new Error(`Пользователь с id ${id} не был найден`);
-      }
-      this.props.patchUser({ user, role: get(event, 'target.value') });
       return;
     }
     console.log('press by row', id, event.target);
@@ -113,6 +104,7 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
                           autoWidth
                           renderValue={this.renderSelectValue}
                           IconComponent={this.renderEmpty}
+                          onChange={this.handleRoleChange(id)}
                           value={role}
                         >
                           <MenuItem value={'user'}>User</MenuItem>
@@ -152,6 +144,17 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
       </Page>
     );
   }
+
+  private handleRoleChange = (id?: number) => (e: React.ChangeEvent<{ value: string }>) => {
+    e.stopPropagation();
+    if (typeof id === 'number') {
+      const user = this.props.findUserById(id);
+      if (!user) {
+        throw new Error(`Пользователь с id ${id} не был найден`);
+      }
+      this.props.patchUser({ user, role: e.target.value });
+    }
+  };
 
   private renderEmpty() {
     return null;

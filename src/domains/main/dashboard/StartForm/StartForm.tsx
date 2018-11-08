@@ -1,10 +1,10 @@
-import { Input } from 'liw-components/Input';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required } from 'redux-form-validators';
 
 import { StartStopBtn } from 'src/domains/@common/StartStopBtn';
 import { ProjectField } from './ProjectField';
+import { TaskField } from './TaskField';
 
 export interface IInternalProps {
   classes: any;
@@ -22,13 +22,7 @@ export const StartFormJsx: React.StatelessComponent<
 > = ({ classes, isTimerStarted, handleSubmit, stopUserWork }) => (
   <form onSubmit={handleSubmit} className={classes.play}>
     <div className={classes.inputBlock}>
-      <Field
-        autoComplete={'off'}
-        name="description"
-        component={Input}
-        label="Начни новую задачу..."
-        wrapperClass={classes.input}
-      />
+      <Field name="description" component={TaskField} label="Начни новую задачу..." className={classes.input} />
       <ProjectField
         name="projectId"
         validate={[required({ msg: 'Сначала выберите Проект!' })]}

@@ -4,6 +4,7 @@ import { Dispatch } from 'react-redux';
 
 import { IState } from 'src/@types';
 import { changeIco } from 'src/store/@common/helpers';
+import { selectProject } from 'src/store/project';
 import { getProjectById, Project } from 'src/store/projects';
 import { replaceTasks } from 'src/store/tasks';
 import { setCurrentUserWorkId, tickUserWorkTimer } from 'src/store/timer';
@@ -40,6 +41,7 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: Dispatch,
       preparedData.title = `Задача для проекта ${project.title}`;
     }
   }
+  dispatch(selectProject(data.projectId));
   const res = await dispatch(
     postAndStartUserWork({
       project,
