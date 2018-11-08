@@ -1,12 +1,13 @@
 import Timer = NodeJS.Timer;
 import get from 'lodash-es/get';
 import { Dispatch } from 'react-redux';
+import { change } from 'redux-form';
 
 import { IState } from 'src/@types';
 import { changeIco } from 'src/store/@common/helpers';
 import { selectProject } from 'src/store/project';
 import { getProjectById, Project } from 'src/store/projects';
-import { replaceTasks } from 'src/store/tasks';
+import { CREATE_USER_WORK_FORM_NAME, replaceTasks } from 'src/store/tasks';
 import { setCurrentUserWorkId, tickUserWorkTimer } from 'src/store/timer';
 import { IUserWorkData, IUserWorkDelete, patchAndStopUserWork, postAndStartUserWork } from '../actions';
 import { UserWork } from '../UserWork';
@@ -42,6 +43,7 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: Dispatch,
     }
   }
   dispatch(selectProject(data.projectId));
+  dispatch(change(CREATE_USER_WORK_FORM_NAME, 'projectId', data.projectId));
   const res = await dispatch(
     postAndStartUserWork({
       project,
