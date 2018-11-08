@@ -17,10 +17,10 @@ import * as React from 'react';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 import { IRoute, ROLE } from 'src/@types';
-import { LinkButton } from 'src/domains/@common/LinkButton';
 import { RouteWithSubRoutes } from 'src/domains/@common/RouteWithSubRoutes';
 import { Project } from 'src/store/projects';
 import { NoMatch } from './noMatch';
+import { ProjectButton } from './ProjectButton';
 
 export interface IMainProps {
   classes: any;
@@ -93,15 +93,7 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
         <main className={classes.content}>
           <div className={classes.toolbar}>
             {projects.map(project => (
-              <LinkButton key={project.id} to={`/projects/${project.id}`} style={{ textTransform: 'none' }}>
-                <Typography variant="body1" noWrap>
-                  {project.title} - {project.percent}%
-                </Typography>
-                <Typography variant="body2" noWrap color={'secondary'}>
-                  &nbsp;(
-                  {project.time})
-                </Typography>
-              </LinkButton>
+              <ProjectButton key={project.id} {...project} />
             ))}
             <IconButton onClick={this.clickOnRefresh}>
               <RefreshIcon fontSize={'small'} />
