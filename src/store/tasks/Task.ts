@@ -40,4 +40,8 @@ export class Task implements ITask {
   get duration(): string {
     return covertSecondsToDuration(this.durationInSeconds);
   }
+
+  public toLowerCase() {
+    return this.title.toLowerCase();
+  }
 }

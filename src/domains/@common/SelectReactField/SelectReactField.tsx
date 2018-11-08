@@ -1,60 +1,61 @@
 import * as React from 'react';
 import Select from 'react-select';
 import { WrappedFieldProps } from 'redux-form';
-import { Key } from 'ts-keycode-enum';
 
-export interface ISelectReactFieldProps extends WrappedFieldProps {
-  classes: any;
-  getLabel?: (opt: any) => string;
-  getValue?: (opt: any) => any;
-  options: any[];
-  onSelect?: (item: any) => any;
+export interface ISelectOptionType {
+  label: React.ReactNode;
+  value: any;
 }
 
-export class SelectReactFieldJsx extends React.Component<ISelectReactFieldProps, {}> {
+export interface ISelectReactFieldProps<ValueType = ISelectOptionType> extends WrappedFieldProps {
+  classes: any;
+  isValidOption?: (opt: ValueType) => boolean;
+  getLabel?: (opt: ValueType) => string;
+  getNewOption?: (inputValue: string) => ValueType;
+  getValue?: (opt: ValueType) => any;
+  options: any[];
+  onSelect: (value: ValueType) => any;
+}
+
+export class SelectReactFieldJsx<ValueType = ISelectOptionType> extends React.Component<
+  ISelectReactFieldProps<ValueType>,
+  {}
+> {
   public static defaultProps = {
     getLabel: (opt: any) => opt && opt.label,
+    getNewOption: (inputValue?: string) => ({ label: `Создать: ${inputValue}`, value: inputValue }),
     getValue: (opt: any) => opt && opt.value,
+    isValidOption: (opt: any) => opt.label,
     onSelect: (item: any) => console.log('selected item is', item),
   };
 
-  private select: React.RefObject<any>;
-
-  constructor(props: ISelectReactFieldProps) {
-    super(props);
-    this.select = React.createRef();
-  }
-
   public render() {
-    const { classes, input, getLabel, getValue, label, onSelect, options, ...rest } = this.props;
+    const { classes, input, isValidOption, getLabel, getNewOption, getValue, label, options, ...rest } = this.props;
+    let preparedOptions;
+    if (isValidOption && getNewOption && isValidOption(getNewOption(input.value))) {
+      preparedOptions = [getNewOption(input.value), ...options];
+    } else {
+      preparedOptions = [...options];
+    }
     return (
       <Select
-        ref={this.select as any}
         className={classes.root}
         getOptionLabel={getLabel}
         getOptionValue={getValue}
-        onChange={onSelect}
         onInputChange={input.onChange}
         onBlur={input.onBlur}
-        onKeyDown={this.onKeyDownHandler}
+        onChange={this.handleOnChange}
         value={input.value}
         placeholder={label}
-        options={options}
+        options={preparedOptions}
         {...rest}
       />
     );
   }
 
-  private onKeyDownHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    switch (e.keyCode) {
-      case Key.Enter:
-        console.log('pressed enter');
-        // e.persist();
-        // this.select.current.blur();
-        break;
-
-      default:
-        break;
+  private handleOnChange = (value: ValueType) => {
+    if (this.props.isValidOption && this.props.isValidOption(value)) {
+      this.props.onSelect(value);
     }
   };
 }
