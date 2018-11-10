@@ -18,7 +18,7 @@ export class Login extends React.PureComponent<ILoginProps, {}> {
       <div styleName="login">
         <div styleName="form">
           {isMagicLoginForm ? <MagicForm buttonText="Отправить магическую ссылку" /> : <LoginForm buttonText="Войти" />}
-          <Button onClick={this.toggleMagic} color={'secondary'}>
+          <Button onClick={this.toggleMagic} color="secondary">
             {isMagicLoginForm ? 'Войти при помощи пароля' : 'Войти при помощи магической ссылки'}
           </Button>
         </div>
