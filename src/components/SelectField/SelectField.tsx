@@ -28,7 +28,6 @@ export const SelectField = ({
       <Select
         error={touched && error}
         {...input}
-        displayEmpty
         input={<Input name={input.name} id={id} />}
         onChange={onChange(input)}
         children={children}

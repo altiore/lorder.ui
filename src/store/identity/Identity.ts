@@ -9,6 +9,7 @@ export interface IIdentityState {
   isLoading: boolean;
   role?: ROLE;
   bearerKey?: string;
+  defaultProjectId?: number;
 }
 
 export class Identity implements IIdentityState {
@@ -18,6 +19,7 @@ export class Identity implements IIdentityState {
   public readonly isLoading: boolean = false;
   public readonly role: ROLE = ROLE.GUEST;
   public readonly bearerKey: string;
+  public readonly defaultProjectId?: number;
 
   constructor(initial?: Partial<IIdentityState>) {
     map(initial, (val: any, key: string) => {

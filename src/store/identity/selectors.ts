@@ -16,3 +16,8 @@ export const userEmail = createSelector(baseState, (state: Identity): string => 
 export const userAvatar = createSelector(baseState, (state: Identity): string | undefined => state.avatar);
 
 export const userIsLoading = createSelector(baseState, (state: Identity): boolean => state.isLoading);
+
+export const defaultProjectId = createSelector(
+  baseState,
+  (state: Identity): number | undefined => state.defaultProjectId
+);

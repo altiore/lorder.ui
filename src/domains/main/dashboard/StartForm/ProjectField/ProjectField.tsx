@@ -23,13 +23,12 @@ export const ProjectFieldJsx: React.StatelessComponent<IProjectFieldProps> = ({
   items,
 }) => (
   <SelectField input={input} label={label} meta={meta} className={className}>
-    <MenuItem>Все</MenuItem>
-    {items &&
-      !!items.length &&
-      items.map((item: any) => (
-        <MenuItem key={item.id} value={getValue(item)}>
-          {getLabel(item)}
-        </MenuItem>
-      ))}
+    {items && !!items.length
+      ? items.map((item: any) => (
+          <MenuItem key={item.id} value={getValue(item)}>
+            {getLabel(item)}
+          </MenuItem>
+        ))
+      : []}
   </SelectField>
 );
