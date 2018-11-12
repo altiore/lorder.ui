@@ -6,8 +6,8 @@ import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required } from 'redux-form-validators';
 
-import { MoneyIco } from 'src/components/@icons/Money/index';
-import { ProjectIco } from 'src/components/@icons/Project/index';
+import { MoneyIco } from 'src/components/@icons/Money';
+import { ProjectIco } from 'src/components/@icons/Project';
 
 export interface IProjectFormProps {
   goToPage: any;

@@ -2,8 +2,8 @@ import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import * as Popover from 'react-popover';
 
-import { LinkButton } from 'src/domains/@common/LinkButton/index';
-import { ShortChart } from './ShortChart/index';
+import { LinkButton } from 'src/domains/@common/LinkButton';
+import { ShortChart } from './ShortChart';
 
 export interface IProjectButtonProps {
   classes?: any;

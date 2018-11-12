@@ -2,8 +2,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { deleteUserWork, startTimer, stopUserWork } from 'src/store/tasks/index';
-import { currentUserWorkId } from 'src/store/timer/index';
+import { deleteUserWork, startTimer, stopUserWork } from 'src/store/tasks';
+import { currentUserWorkId } from 'src/store/timer';
 import { styles } from './styles';
 import { UserWorkTableJsx } from './UserWorkTable';
 

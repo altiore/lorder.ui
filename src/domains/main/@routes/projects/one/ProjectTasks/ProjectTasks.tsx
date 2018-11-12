@@ -9,11 +9,11 @@ import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Table } from 'src/components/Table/index';
-import { DownloadList } from 'src/store/@common/entities/index';
-import { ProjectTask } from 'src/store/projects/index';
-import { PerformersCell } from './PerformersCell/index';
-import { AddTaskForm, PatchTaskForm } from './TaskForm/index';
+import { Table } from 'src/components/Table';
+import { DownloadList } from 'src/store/@common/entities';
+import { ProjectTask } from 'src/store/projects';
+import { PerformersCell } from './PerformersCell';
+import { AddTaskForm, PatchTaskForm } from './TaskForm';
 
 export interface IProjectTasksProps {
   isFormMount: boolean;

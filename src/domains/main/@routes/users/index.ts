@@ -2,7 +2,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { deleteUser, fetchUsers, findUserById, patchUser, userList } from 'src/store/users/index';
+import { deleteUser, fetchUsers, findUserById, patchUser, userList } from 'src/store/users';
 import { styles } from './styles';
 import { Users as UsersJsx } from './Users';
 

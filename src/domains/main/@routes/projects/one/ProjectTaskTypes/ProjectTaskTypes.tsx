@@ -8,10 +8,10 @@ import get from 'lodash-es/get';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Table } from 'src/components/Table/index';
-import { DownloadList } from 'src/store/@common/entities/index';
-import { TaskType } from 'src/store/task-types/index';
-import { TaskTypesForm } from './TaskTypesForm/index';
+import { Table } from 'src/components/Table';
+import { DownloadList } from 'src/store/@common/entities';
+import { TaskType } from 'src/store/task-types';
+import { TaskTypesForm } from './TaskTypesForm';
 
 export interface IProjectTaskTypesProps {
   classes: any;

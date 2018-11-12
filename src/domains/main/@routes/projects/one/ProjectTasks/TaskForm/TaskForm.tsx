@@ -12,7 +12,7 @@ import { Input } from 'liw-components/Input';
 import { TextArea } from 'liw-components/TextArea';
 import { TitleInput } from 'liw-components/TitleInput';
 
-import { nullIfEmpty, parseNumber } from 'src/store/@common/helpers/index';
+import { nullIfEmpty, parseNumber } from 'src/store/@common/helpers';
 
 export interface ITaskFormData {
   description?: string;

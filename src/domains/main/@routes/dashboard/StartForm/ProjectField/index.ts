@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { ownProjectListNoProjectFirst } from 'src/store/projects/index';
+import { ownProjectListNoProjectFirst } from 'src/store/projects';
 import { IProjectFieldProps, ProjectFieldJsx } from './ProjectField';
 
 const mapStateToProps = createStructuredSelector<any, any>({

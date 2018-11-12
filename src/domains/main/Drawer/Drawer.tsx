@@ -5,7 +5,7 @@ import * as React from 'react';
 // import ChevronLeftIcon from '@material-ui/core/SvgIcon/SvgIcon';
 // import Divider from '@material-ui/core/Divider/Divider';
 // import List from '@material-ui/core/List/List';
-// import { IRoute } from '../../../@types/index';
+// import { IRoute } from '../../../@types';
 // import ListItem from '@material-ui/core/ListItem/ListItem';
 // import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
 // import ListItemText from '@material-ui/core/ListItemText/ListItemText';

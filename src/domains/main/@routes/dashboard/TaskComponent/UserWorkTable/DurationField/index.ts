@@ -1,7 +1,7 @@
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
-import { patchUserWork } from 'src/store/tasks/index';
+import { patchUserWork } from 'src/store/tasks';
 import { DurationFieldTsx } from './DurationField';
 import { styles } from './styles';
 

@@ -2,8 +2,8 @@ import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
-import { onSubmitForm } from 'src/store/@common/helpers/index';
-import { EDIT_USER_WORK_DESCRIPTION_FORM, IUpdateUserWork, patchUserWork } from 'src/store/tasks/index';
+import { onSubmitForm } from 'src/store/@common/helpers';
+import { EDIT_USER_WORK_DESCRIPTION_FORM, IUpdateUserWork, patchUserWork } from 'src/store/tasks';
 import { DescriptionFormTsx } from './DescriptionForm';
 import { styles } from './styles';
 

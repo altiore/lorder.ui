@@ -2,7 +2,7 @@ import * as React from 'react';
 import Select from 'react-select';
 import { Props } from 'react-select/lib/Select';
 
-import { IUser } from 'src/store/users/index';
+import { IUser } from 'src/store/users';
 
 export interface IPerformersCellProps extends Props<IUser> {
   classes: any;

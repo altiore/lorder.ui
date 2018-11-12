@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required } from 'redux-form-validators';
 
-import { MoneyIco } from 'src/components/@icons/Money/index';
-import { Project2Ico } from 'src/components/@icons/Project2/index';
+import { MoneyIco } from 'src/components/@icons/Money';
+import { Project2Ico } from 'src/components/@icons/Project2';
 
 import { Input } from 'liw-components/Input';
 

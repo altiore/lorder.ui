@@ -2,15 +2,15 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { onSubmitForm } from 'src/store/@common/helpers/index';
-import { closeDialog } from 'src/store/dialog/index';
+import { onSubmitForm } from 'src/store/@common/helpers';
+import { closeDialog } from 'src/store/dialog';
 import {
   getEditTaskInitialValues,
   patchProjectTask,
   PROJECT_EDIT_TASK_FORM_NAME,
   projectTasksIsLoading,
-} from 'src/store/projects/index';
-import { projectId } from 'src/store/router/index';
+} from 'src/store/projects';
+import { projectId } from 'src/store/router';
 import { TaskForm } from './StyledTaskForm';
 import { ITaskFormData, ITaskFormProps } from './TaskForm';
 

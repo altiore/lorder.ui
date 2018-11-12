@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required } from 'redux-form-validators';
 
-import { StartStopBtn } from 'src/components/StartStopBtn/index';
-import { ProjectField } from './ProjectField/index';
-import { TaskField } from './TaskField/index';
+import { StartStopBtn } from 'src/components/StartStopBtn';
+import { ProjectField } from './ProjectField';
+import { TaskField } from './TaskField';
 
 export interface IInternalProps {
   classes: any;

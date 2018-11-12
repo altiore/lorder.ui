@@ -2,9 +2,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { deleteTaskTypeFromProject, getAllProjectTaskTypes, projectTaskTypes } from 'src/store/projects/index';
-import { projectId } from 'src/store/router/index';
-import { getAllTaskTypes, getTaskTypeById } from 'src/store/task-types/index';
+import { deleteTaskTypeFromProject, getAllProjectTaskTypes, projectTaskTypes } from 'src/store/projects';
+import { projectId } from 'src/store/router';
+import { getAllTaskTypes, getTaskTypeById } from 'src/store/task-types';
 import { ProjectTaskTypesJsx } from './ProjectTaskTypes';
 import { styles } from './styles';
 

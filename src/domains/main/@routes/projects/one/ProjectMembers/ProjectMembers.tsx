@@ -12,7 +12,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Member } from 'src/store/projects/members/Member';
-import { AddMemberForm } from './AddMemberForm/index';
+import { AddMemberForm } from './AddMemberForm';
 
 export interface IProjectMembersProps {
   classes: any;

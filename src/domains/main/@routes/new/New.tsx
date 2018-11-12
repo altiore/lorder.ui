@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { ProjectForm } from './projectForm/index';
+import { ProjectForm } from './projectForm';
 
 function getSteps(): string[] {
   return ['Создать Проект', 'Выбрать Типы Задач', 'Пригласить участников'];

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { onSubmitForm } from 'src/store/@common/helpers/index';
-import { createUserTaskFormInitials, selectProject } from 'src/store/project/index';
-import { CREATE_USER_WORK_FORM_NAME, IUserWorkData, startUserWork } from 'src/store/tasks/index';
+import { onSubmitForm } from 'src/store/@common/helpers';
+import { createUserTaskFormInitials, selectProject } from 'src/store/project';
+import { CREATE_USER_WORK_FORM_NAME, IUserWorkData, startUserWork } from 'src/store/tasks';
 import { IStartFormProps, StartFormJsx } from './StartForm';
 import { styles } from './styles';
 
