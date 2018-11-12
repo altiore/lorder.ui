@@ -17,7 +17,7 @@ export interface ISelectReactFieldProps<ValueType = ISelectOptionType> extends W
   onSelect: (value: ValueType) => any;
 }
 
-export class SelectReactFieldJsx<ValueType = ISelectOptionType> extends React.Component<
+export class SelectReactFieldJsx<ValueType = ISelectOptionType> extends React.PureComponent<
   ISelectReactFieldProps<ValueType>,
   {}
 > {

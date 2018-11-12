@@ -7,9 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
+import { TelegramIco } from 'src/components/@icons/Telegram';
 import { Block } from 'src/components/Block';
 import { MemberCard } from 'src/components/MemberCard';
-import { TelegramIco } from 'src/domains/@icons/Telegram';
 import { PublicProject } from 'src/store/publicProject';
 import { LinkButton } from '../@common/LinkButton';
 

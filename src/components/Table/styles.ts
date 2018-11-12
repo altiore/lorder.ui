@@ -13,4 +13,7 @@ export const styles = (theme: Theme) =>
       },
       cursor: 'pointer',
     },
+    table: {
+      backgroundColor: theme.palette.background.paper,
+    },
   });

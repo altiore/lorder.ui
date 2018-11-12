@@ -23,7 +23,7 @@ export interface IUpdateUserWork {
 }
 
 export interface IUserWorkDelete {
-  projectId: number;
+  projectId: number | string;
   taskId: number | string;
   userWorkId: number;
 }

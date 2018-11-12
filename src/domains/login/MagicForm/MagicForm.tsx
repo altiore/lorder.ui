@@ -3,7 +3,7 @@ import { Input } from 'liw-components/Input';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 
-import { UserIco } from 'src/domains/@icons/User';
+import { UserIco } from 'src/components/@icons/User';
 
 export interface IMagicFormProps {
   buttonText?: string;

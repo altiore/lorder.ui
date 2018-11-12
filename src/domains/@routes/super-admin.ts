@@ -4,14 +4,13 @@ import HomeIcon from '@material-ui/icons/Home';
 
 import { Digits } from '../digits';
 import { Main } from '../main';
-import { Dashboard } from '../main/dashboard';
-import { AllProjects, OwnProjects } from '../main/projects/list';
-import { Project } from '../main/projects/one';
-import { Users } from '../main/users';
+import { Dashboard } from '../main/@routes/dashboard';
+import { AllProjects, OwnProjects } from '../main/@routes/projects/list';
+import { Project } from '../main/@routes/projects/one';
+import { Users } from '../main/@routes/users';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
 import { PublicProject } from '../publicProject';
-import { User } from '../user';
 
 export const routes = [
   {
@@ -21,10 +20,6 @@ export const routes = [
   {
     component: Profile,
     path: '/profile',
-  },
-  {
-    component: User,
-    path: '/user',
   },
   {
     component: Main,
@@ -64,6 +59,9 @@ export const routes = [
       {
         component: PublicProject,
         path: '/:projectId',
+      },
+      {
+        component: NoMatch,
       },
     ],
   },

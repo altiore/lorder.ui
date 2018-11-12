@@ -2,7 +2,7 @@ import { put, select, takeLatest } from 'redux-saga/effects';
 
 import { getProjectById } from 'src/store/projects';
 import { startTimer, stopUserWork, UserWork } from 'src/store/tasks';
-import { currentUserWorkData, isTimerStarted } from 'src/store/timer';
+import { isTimerStarted } from 'src/store/timer';
 import { getUserWorks } from '../actions';
 
 function* getUserWorksSuccessHandler({ payload }: any) {
@@ -16,7 +16,7 @@ function* getUserWorksSuccessHandler({ payload }: any) {
       yield put(startTimer(currentUserWork, project) as any);
     } else {
       if (yield select(isTimerStarted)) {
-        yield put(stopUserWork(yield select(currentUserWorkData)) as any);
+        yield put(stopUserWork() as any);
       }
     }
   } catch (e) {

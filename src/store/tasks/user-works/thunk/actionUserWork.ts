@@ -8,7 +8,7 @@ import { changeIco } from 'src/store/@common/helpers';
 import { selectProject } from 'src/store/project';
 import { getProjectById, Project } from 'src/store/projects';
 import { CREATE_USER_WORK_FORM_NAME, replaceTasks } from 'src/store/tasks';
-import { setCurrentUserWorkId, tickUserWorkTimer } from 'src/store/timer';
+import { currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from 'src/store/timer';
 import { IUserWorkData, IUserWorkDelete, patchAndStopUserWork, postAndStartUserWork } from '../actions';
 import { UserWork } from '../UserWork';
 
@@ -61,7 +61,8 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: Dispatch,
   return await dispatch(startTimer(userWork, project) as any);
 };
 
-export const stopUserWork = (data: IUserWorkDelete) => async (dispatch: Dispatch) => {
+export const stopUserWork = () => async (dispatch: Dispatch, getState: any) => {
+  const data: IUserWorkDelete = currentUserWorkData(getState());
   clearInterval(timer);
   dispatch(
     setCurrentUserWorkId({

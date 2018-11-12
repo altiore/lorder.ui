@@ -2,11 +2,11 @@ import { createSelector } from 'reselect';
 
 import { DownloadList } from '../../@common/entities';
 import { Project } from '../Project';
-import { selectedProject } from '../selectors';
+import { openedProject } from '../selectors';
 import { ProjectTask } from './ProjectTask';
 
 export const projectTasks = createSelector(
-  selectedProject,
+  openedProject,
   (project: Project): DownloadList<ProjectTask> => project && project.tasks
 );
 

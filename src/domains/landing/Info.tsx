@@ -7,10 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import debounce from 'lodash-es/debounce';
 import * as React from 'react';
 
+import { TelegramIco } from 'src/components/@icons/Telegram';
 import { Block } from 'src/components/Block';
 import { MemberCard } from 'src/components/MemberCard';
 import { LinkButton } from 'src/domains/@common/LinkButton';
-import { TelegramIco } from 'src/domains/@icons/Telegram';
 import { BackGroundVideo } from './BackGroundVideo';
 import { Title } from './Title';
 

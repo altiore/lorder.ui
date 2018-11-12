@@ -3,8 +3,8 @@ import { Input } from 'liw-components/Input';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 
-import { PasswordIco } from 'src/domains/@icons/Password';
-import { UserIco } from 'src/domains/@icons/User';
+import { PasswordIco } from 'src/components/@icons/Password';
+import { UserIco } from 'src/components/@icons/User';
 
 export interface ILoginFormProps {
   buttonText?: string;

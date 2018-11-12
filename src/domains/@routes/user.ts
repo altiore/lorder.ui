@@ -3,9 +3,9 @@ import HomeIcon from '@material-ui/icons/Home';
 
 import { Digits } from '../digits';
 import { Main } from '../main';
-import { Dashboard } from '../main/dashboard';
-import { OwnProjects } from '../main/projects/list';
-import { Project } from '../main/projects/one';
+import { Dashboard } from '../main/@routes/dashboard';
+import { OwnProjects } from '../main/@routes/projects/list';
+import { Project } from '../main/@routes/projects/one';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
 import { PublicProject } from '../publicProject';
