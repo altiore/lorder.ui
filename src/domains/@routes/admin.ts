@@ -1,8 +1,7 @@
-import { Digits } from '../digits';
 import { Main } from '../main';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
-import { PublicProject } from '../publicProject';
+import { commonRoutes } from './@common';
 
 export const routes = [
   {
@@ -10,17 +9,10 @@ export const routes = [
     path: '/',
   },
   {
-    component: Digits,
-    path: '/digits',
-  },
-  {
     component: Profile,
     path: '/profile',
   },
-  {
-    component: PublicProject,
-    path: '/:projectId',
-  },
+  ...commonRoutes,
   {
     component: NoMatch,
   },

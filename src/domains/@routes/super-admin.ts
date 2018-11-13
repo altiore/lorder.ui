@@ -2,7 +2,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import HomeIcon from '@material-ui/icons/Home';
 
-import { Digits } from '../digits';
 import { Main } from '../main';
 import { Dashboard } from '../main/@routes/dashboard';
 import { AllProjects, OwnProjects } from '../main/@routes/projects/list';
@@ -10,13 +9,9 @@ import { Project } from '../main/@routes/projects/one';
 import { Users } from '../main/@routes/users';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
-import { PublicProject } from '../publicProject';
+import { commonRoutes } from './@common';
 
 export const routes = [
-  {
-    component: Digits,
-    path: '/digits',
-  },
   {
     component: Profile,
     path: '/profile',
@@ -56,10 +51,7 @@ export const routes = [
         path: '/users',
         title: 'Пользователи',
       },
-      {
-        component: PublicProject,
-        path: '/:projectId',
-      },
+      ...commonRoutes,
       {
         component: NoMatch,
       },

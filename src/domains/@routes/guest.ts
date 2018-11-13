@@ -1,13 +1,10 @@
-import { Digits } from '../digits';
 import { Info } from '../landing';
 import { Login } from '../login';
-import { PublicProject } from '../publicProject';
-import { Start } from '../start';
+import { commonRoutes } from './@common';
 
 export const routes = [
   {
     component: Login,
-    exact: true,
     path: '/login',
   },
   {
@@ -15,18 +12,7 @@ export const routes = [
     exact: true,
     path: '/',
   },
-  {
-    component: Digits,
-    path: '/digits',
-  },
-  {
-    component: Start,
-    path: '/start/:identifier',
-  },
-  {
-    component: PublicProject,
-    path: '/:projectId',
-  },
+  ...commonRoutes,
   {
     redirect: '/login',
   },

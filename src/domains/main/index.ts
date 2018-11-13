@@ -10,6 +10,6 @@ const mapDispatchToProps = {
 };
 
 export const Main = connect(
-  undefined,
+  null,
   mapDispatchToProps
 )(withStyles(styles, { withTheme: true })(MainJsx));

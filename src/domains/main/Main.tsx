@@ -8,7 +8,10 @@ import { RouteWithSubRoutes } from 'src/domains/@common/RouteWithSubRoutes';
 import { Header } from './Header';
 
 export interface IMainProps {
-  classes: any;
+  classes: {
+    main: string;
+    root: string;
+  };
   push: (location: LocationDescriptor, state?: LocationState) => RouterAction;
   routes: IRoute[];
 }
