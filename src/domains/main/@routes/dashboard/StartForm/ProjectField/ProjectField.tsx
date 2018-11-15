@@ -8,6 +8,7 @@ export interface IProjectFieldProps extends WrappedFieldProps {
   className?: string;
   getValue?: (value: any) => any;
   getLabel?: (value: any) => any;
+  label?: string;
   name: string;
   items?: Array<{ value: any; label: string }>;
 }

@@ -12,6 +12,7 @@ const onChange = (input: WrappedFieldInputProps) => (event: React.ChangeEvent<HT
 
 export interface ISelectFieldProps extends WrappedFieldProps {
   children: React.ReactNode[];
+  label: React.ReactNode;
 }
 
 export const SelectField = ({

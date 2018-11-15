@@ -13,6 +13,7 @@ export interface ISelectReactFieldProps<ValueType = ISelectOptionType> extends W
   getLabel?: (opt: ValueType) => string;
   getNewOption?: (inputValue: string) => ValueType;
   getValue?: (opt: ValueType) => any;
+  label?: string;
   options: any[];
   onSelect: (value: ValueType) => any;
 }
