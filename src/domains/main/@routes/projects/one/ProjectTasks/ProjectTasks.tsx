@@ -101,8 +101,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
         </TableCell>
         <TableCell>
           <span ref={this.setPerformersCellRef(id)}>
-            <PerformersCell value={users} taskId={id} />
-            {/*<PerformersCell input={{value: users}} taskId={id} />*/}
+            <PerformersCell input={{ value: users }} taskId={id} />
           </span>
         </TableCell>
         <TableCell numeric>{value}</TableCell>

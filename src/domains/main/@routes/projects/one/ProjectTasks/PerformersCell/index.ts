@@ -1,11 +1,9 @@
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { patchProjectTask, projectMembersAsUsers } from 'src/store/projects';
 import { projectId } from 'src/store/router';
 import { PerformersCellJsx } from './PerformersCell';
-import { styles } from './styles';
 
 const mapStateToProps = createStructuredSelector({
   projectId,
@@ -31,4 +29,4 @@ export const PerformersCell = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(withStyles(styles, { withTheme: true })(PerformersCellJsx));
+)(PerformersCellJsx);
