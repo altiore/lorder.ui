@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import { ROLE } from 'src/@types';
 import { loadInitialData } from 'src/store/identity';
-import { getUserWorksSuccessSaga } from 'src/store/user-works/saga/getUserWorkSuccess';
+import { rootSaga } from './rootSaga';
 
 import { clientsMiddleware } from './@common/middlewares';
 import { createRootReducer } from './guestReducer';
@@ -31,7 +31,7 @@ export async function createStore(initialState?: any) {
     composeEnhancers(applyMiddleware(thunk, routerMiddleware(history), clientsMiddleware, sagaMiddleware))
   );
 
-  sagaMiddleware.run(getUserWorksSuccessSaga);
+  sagaMiddleware.run(rootSaga);
 
   if (module.hot) {
     module.hot.accept('./adminReducers', () => {

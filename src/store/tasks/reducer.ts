@@ -129,6 +129,45 @@ const postAndStartUserWorkFailHandler = (state: S, action: ActionMeta<any, any>)
   return state.stopLoading().removeItem(0);
 };
 
+const patchAndStopUserWorkHandler = (state: S, action: ActionMeta<any, any>) => {
+  let taskId: number;
+  if (action.meta) {
+    taskId = get(action.meta, 'previousAction.payload.taskId');
+  } else {
+    taskId = get(action.payload, 'taskId');
+  }
+  const index = state.list.findIndex(el => taskId === el.id);
+  if (~index) {
+    return state.updateItem(index, {
+      userWorks: userWorks(state.list[index].userWorks, action),
+    });
+  }
+  return state.startLoading();
+};
+
+const patchAndStopUserWorkSuccessHandler = (state: S, action: ActionMeta<any, any>) => {
+  const taskId = get(action.payload.next, 'taskId');
+  const index = state.list.findIndex(el => taskId === el.id);
+  if (~index) {
+    return state.stopLoading().updateItem(index, {
+      userWorks: userWorks(state.list[index].userWorks, action),
+    });
+  }
+  const userWork: Partial<UserWork> = get(action, 'payload.data.next');
+  const task: Partial<Task> = get(action, 'payload.data.next.task');
+  return state.stopLoading().addItem({
+    description: task.description,
+    id: task.id,
+    projectId: userWork.projectId,
+    title: task.title,
+    userWorks: new DownloadList<UserWork>(UserWork, [userWork], true),
+  });
+};
+
+const patchAndStopUserWorkFailHandler = (state: S) => {
+  return state.stopLoading();
+};
+
 const replaceTasksHandler = (state: S, { payload }: Action<Array<Partial<UserWork>>>) => {
   if (!payload || !payload.length) {
     throw new Error('replaceTasksHandler Error: payload is required');
@@ -159,7 +198,11 @@ export const tasks = handleActions<S, P>(
     [postAndStartUserWork.success]: postAndStartUserWorkSuccessHandler,
     [postAndStartUserWork.fail]: postAndStartUserWorkFailHandler,
 
-    [combineActions(patchAndStopUserWork, patchUserWork, deleteUserWork)]: taskUserWorkHandler,
+    [patchAndStopUserWork.toString()]: patchAndStopUserWorkHandler,
+    [patchAndStopUserWork.success]: patchAndStopUserWorkSuccessHandler,
+    [patchAndStopUserWork.fail]: patchAndStopUserWorkFailHandler,
+
+    [combineActions(patchUserWork, deleteUserWork)]: taskUserWorkHandler,
 
     [replaceTasks.toString()]: replaceTasksHandler,
 

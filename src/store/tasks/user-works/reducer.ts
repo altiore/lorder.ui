@@ -57,6 +57,23 @@ const patchUserWorkFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
+const patchAndStopUserWorkSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
+  if (!payload) {
+    throw new Error('patchUserWorkSuccessHandler Error: payload required!');
+  }
+  const previousData: Partial<UserWork> = payload.data.previous;
+  const previousIndex = state.list.findIndex(el => el.id === previousData.id);
+  if (!~previousIndex) {
+    console.log(`Не смог найти предыдущую задачу index= ${previousIndex}`, payload);
+    throw new Error(`Не смог найти предыдущую задачу index= ${previousIndex}`);
+  }
+  const nextData: Partial<UserWork> = payload.data.next;
+  return state
+    .stopLoading()
+    .updateItem(previousIndex, previousData)
+    .addItem(nextData);
+};
+
 const deleteUserWorkHandler = (state: S, { payload }: Action<IDeleteUserWork>) => {
   const index = state.list.findIndex(el => el.id === get(payload, 'userWorkId'));
   return state.removeItem(index);
@@ -69,8 +86,9 @@ export const userWorks = handleActions<S, P>(
     [postAndStartUserWork.fail]: postAndStartUserWorkFailHandler,
 
     [combineActions(patchAndStopUserWork, patchUserWork).toString()]: patchUserWorkHandler,
-    [combineActions(patchAndStopUserWork.success, patchUserWork.success).toString()]: patchUserWorkSuccessHandler,
     [combineActions(patchAndStopUserWork.fail, patchUserWork.fail).toString()]: patchUserWorkFailHandler,
+    [patchUserWork.success]: patchUserWorkSuccessHandler,
+    [patchAndStopUserWork.success]: patchAndStopUserWorkSuccessHandler,
 
     [deleteUserWork.toString()]: deleteUserWorkHandler,
   },
