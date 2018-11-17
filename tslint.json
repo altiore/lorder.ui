@@ -10,6 +10,7 @@
     "no-shadowed-variable": false,
     "jsx-boolean-value": ["never"],
     "no-var-requires": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "interface-name": false
   }
 }
