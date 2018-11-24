@@ -26,16 +26,16 @@ export interface IProjectsProps {
 }
 
 export class Projects extends React.Component<RouteComponentProps<{}> & IProjectsProps, {}> {
-  public state = {
+  state = {
     page: 0,
     perPage: 10,
   };
 
-  public componentDidMount() {
+  componentDidMount() {
     this.props.getProjects();
   }
 
-  public render() {
+  render() {
     const { classes, projectList } = this.props;
     return (
       <Page className={classes.root}>

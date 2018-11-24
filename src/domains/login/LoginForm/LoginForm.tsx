@@ -11,7 +11,7 @@ export interface ILoginFormProps {
 }
 
 export class LoginFormJsx extends React.Component<ILoginFormProps & InjectedFormProps<{}, ILoginFormProps>, object> {
-  public render() {
+  render() {
     const { buttonText, handleSubmit, pristine, submitting, invalid } = this.props;
     return (
       <div styleName="wrapper">

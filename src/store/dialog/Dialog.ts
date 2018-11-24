@@ -7,8 +7,8 @@ export interface IDialogState {
 }
 
 export class Dialog implements IDialogState {
-  public readonly isOpened: boolean = false;
-  public readonly children?: string | StatelessComponent | ComponentClass;
+  readonly isOpened: boolean = false;
+  readonly children?: string | StatelessComponent | ComponentClass;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

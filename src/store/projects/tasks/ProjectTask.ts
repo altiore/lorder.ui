@@ -6,7 +6,7 @@ export interface IProjectTask extends ITask {
 }
 
 export class ProjectTask extends Task implements IProjectTask {
-  public users: User[] = [];
+  users: User[] = [];
 
   constructor(initial?: any) {
     super(initial);

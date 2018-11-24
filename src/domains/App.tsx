@@ -32,18 +32,18 @@ export class AppTsx extends React.Component<IAppProps, IState> {
     };
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     const { userRole } = this.props;
     this.checkAccess(userRole);
   }
 
-  public componentWillUpdate(nextProps: IAppProps, nextState: IState) {
+  componentWillUpdate(nextProps: IAppProps, nextState: IState) {
     if (this.props.userRole !== nextProps.userRole) {
       this.setState({ isLoading: true }, () => this.checkAccess(nextProps.userRole));
     }
   }
 
-  public render() {
+  render() {
     const { isLoading, routes } = this.state;
     const { userIsLoading } = this.props;
     const { userRole } = this.props;

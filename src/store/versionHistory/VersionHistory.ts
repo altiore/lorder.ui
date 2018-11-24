@@ -3,7 +3,7 @@ import map from 'lodash-es/map';
 import { config } from 'src/config';
 
 export class VersionHistory {
-  public readonly version: string = config.VERSION;
+  readonly version: string = config.VERSION;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

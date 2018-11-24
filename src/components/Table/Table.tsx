@@ -21,7 +21,7 @@ export interface IState {
 }
 
 export class TableTsx<T> extends React.Component<IProjectTaskTypesProps<T>, IState> {
-  public state = {
+  state = {
     page: 0,
     perPage: 10,
   };
@@ -34,17 +34,17 @@ export class TableTsx<T> extends React.Component<IProjectTaskTypesProps<T>, ISta
     };
   }
 
-  public handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
+  handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
     this.setState({ page });
   };
 
-  public handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
+  handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
     if (event && event.target.value) {
       this.setState({ perPage: event.target.value });
     }
   };
 
-  public render() {
+  render() {
     const { classes, colSpan, items } = this.props;
     const { page, perPage } = this.state;
     return (

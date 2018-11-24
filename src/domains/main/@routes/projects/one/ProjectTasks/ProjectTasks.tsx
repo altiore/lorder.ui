@@ -33,30 +33,30 @@ export interface IState {
 }
 
 export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & IProjectTasksProps, IState> {
-  public state = {
+  state = {
     page: 0,
     perPage: 10,
   };
 
   private performersCellRef: HTMLElement[] = [];
 
-  public componentDidMount() {
+  componentDidMount() {
     this.props.getAllProjectTasks();
   }
 
-  public componentWillReceiveProps(nextProps: IProjectTasksProps) {
+  componentWillReceiveProps(nextProps: IProjectTasksProps) {
     if (nextProps.projectId !== this.props.projectId) {
       nextProps.getAllProjectTasks();
     }
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     if (this.props.isFormMount) {
       this.props.destroyEditTaskForm();
     }
   }
 
-  public render() {
+  render() {
     const { classes, projectTasks } = this.props;
     return (
       <div className={classes.root}>

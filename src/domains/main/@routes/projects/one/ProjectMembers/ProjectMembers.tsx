@@ -28,33 +28,33 @@ export interface IState {
 }
 
 export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> & IProjectMembersProps, IState> {
-  public state = {
+  state = {
     page: 0,
     perPage: 10,
   };
 
-  public handleRowClick = (id: number | undefined) => () => {
+  handleRowClick = (id: number | undefined) => () => {
     console.log('row click', id);
   };
 
-  public handleRemoveClick = (id: number | undefined) => (e: any) => {
+  handleRemoveClick = (id: number | undefined) => (e: any) => {
     if (typeof id === 'number') {
       e.stopPropagation();
       this.props.deleteProjectMember(id);
     }
   };
 
-  public handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
+  handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
     this.setState({ page });
   };
 
-  public handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
+  handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
     if (event && event.target.value) {
       this.setState({ perPage: event.target.value });
     }
   };
 
-  public render() {
+  render() {
     const { classes, projectMembers } = this.props;
     const { page, perPage } = this.state;
     return (

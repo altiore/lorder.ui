@@ -18,11 +18,11 @@ export interface IProjectButtonState {
 }
 
 export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProjectButtonState> {
-  public state = {
+  state = {
     isOpen: false,
   };
 
-  public render() {
+  render() {
     const { isOpen } = this.state;
     const { classes, id, time, title, percent } = this.props;
     return (

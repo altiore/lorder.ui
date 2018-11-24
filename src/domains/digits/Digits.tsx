@@ -30,11 +30,11 @@ export class Digits extends React.PureComponent<RouteComponentProps<{}> & IDigit
     };
   }
 
-  public handlePlus = () => this.setState(({ counter }) => ({ counter: counter + 1 }));
+  handlePlus = () => this.setState(({ counter }) => ({ counter: counter + 1 }));
 
-  public handleMinus = () => this.setState(({ counter }) => ({ counter: counter - 1 }));
+  handleMinus = () => this.setState(({ counter }) => ({ counter: counter - 1 }));
 
-  public render() {
+  render() {
     const { classes } = this.props;
     const { counter } = this.state;
 

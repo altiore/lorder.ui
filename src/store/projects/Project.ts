@@ -18,19 +18,19 @@ export enum ACCESS_LEVEL {
 }
 
 export class Project {
-  public id?: number;
-  public accessLevel?: ACCESS_LEVEL;
-  public title: string;
-  public monthlyBudget?: number;
-  public owner?: any;
-  public phases?: any[];
-  public members: Member[] = [];
-  public tasks: DownloadList<ProjectTask> = new DownloadList(ProjectTask);
-  public taskTypes: DownloadList<TaskType> = new DownloadList(TaskType);
+  id?: number;
+  accessLevel?: ACCESS_LEVEL;
+  title: string;
+  monthlyBudget?: number;
+  owner?: any;
+  phases?: any[];
+  members: Member[] = [];
+  tasks: DownloadList<ProjectTask> = new DownloadList(ProjectTask);
+  taskTypes: DownloadList<TaskType> = new DownloadList(TaskType);
   /** время в секундах, потраченное всеми пользователями на этот проект */
-  public timeSum?: number;
+  timeSum?: number;
   /** ценность всех задач в этом проекте */
-  public valueSum?: number;
+  valueSum?: number;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

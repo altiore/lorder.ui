@@ -16,18 +16,18 @@ export interface IState {
 }
 
 export class DurationFieldTsx extends React.Component<IDurationFieldProps, IState> {
-  public state = {
+  state = {
     isEdit: false,
     value: '0:00',
   };
 
   private input: HTMLInputElement;
 
-  public componentDidMount() {
+  componentDidMount() {
     this.setState({ value: this.prepareValue(this.props.value) });
   }
 
-  public render() {
+  render() {
     const { classes, value } = this.props;
     return (
       <Popover

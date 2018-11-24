@@ -26,16 +26,16 @@ export interface IDashboardProps extends RouteComponentProps<{}> {
 }
 
 export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
-  public state = {
+  state = {
     open: {},
     page: 0,
   };
 
-  public componentDidMount() {
+  componentDidMount() {
     this.props.getAllTasks();
   }
 
-  public render() {
+  render() {
     const { filteredTasks } = this.props;
     const { page } = this.state;
     return (

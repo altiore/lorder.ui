@@ -17,11 +17,11 @@ export interface IMainProps {
 }
 
 export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProps, {}> {
-  public goTo = (route: string) => () => {
+  goTo = (route: string) => () => {
     this.props.push(route);
   };
 
-  public render() {
+  render() {
     const { routes } = this.props;
     if (!routes) {
       return null;

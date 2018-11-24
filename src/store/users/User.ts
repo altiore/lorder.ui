@@ -6,8 +6,8 @@ export interface IUserRole {
 }
 
 export class UserRole implements IUserRole {
-  public readonly id: number;
-  public readonly name: 'user' | 'admin' | 'super-admin';
+  readonly id: number;
+  readonly name: 'user' | 'admin' | 'super-admin';
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
@@ -28,14 +28,14 @@ export interface IUser {
 }
 
 export class User implements IUser {
-  public readonly id?: number;
-  public readonly email: string;
-  public tel: string;
-  public readonly status: number = 1;
-  public paymentMethod: number;
-  public readonly createdAt: string;
-  public readonly updatedAt: string;
-  public role: 'admin' | 'super-admin' | 'user' = 'user';
+  readonly id?: number;
+  readonly email: string;
+  tel: string;
+  readonly status: number = 1;
+  paymentMethod: number;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+  role: 'admin' | 'super-admin' | 'user' = 'user';
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
@@ -47,7 +47,7 @@ export class User implements IUser {
     });
   }
 
-  public get userName() {
+  get userName() {
     return this.email;
   }
 }

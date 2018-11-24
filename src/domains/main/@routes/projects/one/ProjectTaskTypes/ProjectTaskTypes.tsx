@@ -28,17 +28,17 @@ export interface IState {
 }
 
 export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}> & IProjectTaskTypesProps, IState> {
-  public state = {
+  state = {
     page: 0,
     perPage: 10,
   };
 
-  public componentDidMount() {
+  componentDidMount() {
     this.props.getAllTaskTypes();
     this.props.getAllProjectTaskTypes();
   }
 
-  public render() {
+  render() {
     const { classes, projectTaskTypes } = this.props;
     return (
       <div className={classes.root}>

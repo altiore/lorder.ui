@@ -7,8 +7,8 @@ export interface IMember {
 }
 
 export class Member implements IMember {
-  public accessLevel: number;
-  public member: IUser;
+  accessLevel: number;
+  member: IUser;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

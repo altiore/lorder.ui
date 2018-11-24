@@ -10,7 +10,7 @@ export interface IMagicFormProps {
 }
 
 export class MagicForm extends React.Component<IMagicFormProps & InjectedFormProps<{}, IMagicFormProps>, object> {
-  public render() {
+  render() {
     const { buttonText, handleSubmit, pristine, submitting, invalid } = this.props;
     return (
       <div styleName="wrapper">

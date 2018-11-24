@@ -8,8 +8,8 @@ export interface IUiState {
 }
 
 export class Ui implements IUiState {
-  public readonly isMagicLoginForm: boolean = false;
-  public readonly isLeftBarOpen: boolean = true;
+  readonly isMagicLoginForm: boolean = false;
+  readonly isLeftBarOpen: boolean = true;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

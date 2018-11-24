@@ -44,11 +44,11 @@ export class InfoTsx extends React.Component<IInfoProps, IState> {
     this.handleResize = this.handleResize.bind(this);
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     window.addEventListener('resize', debounce(this.handleResize, 200), false);
   }
 
-  public render() {
+  render() {
     const { brandName, classes, team } = this.props;
     const { height, width } = this.state;
     return (

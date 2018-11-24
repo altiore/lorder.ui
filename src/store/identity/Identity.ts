@@ -13,13 +13,13 @@ export interface IIdentityState {
 }
 
 export class Identity implements IIdentityState {
-  public readonly email: string;
-  public readonly avatar?: string;
-  public readonly isAuth: boolean = false;
-  public readonly isLoading: boolean = false;
-  public readonly role: ROLE = ROLE.GUEST;
-  public readonly bearerKey: string;
-  public readonly defaultProjectId?: number;
+  readonly email: string;
+  readonly avatar?: string;
+  readonly isAuth: boolean = false;
+  readonly isLoading: boolean = false;
+  readonly role: ROLE = ROLE.GUEST;
+  readonly bearerKey: string;
+  readonly defaultProjectId?: number;
 
   constructor(initial?: Partial<IIdentityState>) {
     map(initial, (val: any, key: string) => {

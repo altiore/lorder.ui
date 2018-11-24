@@ -30,7 +30,7 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
 }
 
 export class TaskFormJsx extends React.Component<ITaskFormProps, {}> {
-  public render() {
+  render() {
     const { buttonText, classes, closeDialog, handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit} className={classes.form}>

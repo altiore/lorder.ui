@@ -18,7 +18,7 @@ const customStyles = {
 };
 
 export class TaskTypesFormJsx extends React.Component<ITaskTypesFormProps> {
-  public render() {
+  render() {
     const { filteredTaskTypes } = this.props;
     const getOptionValue = (option: TaskType) => option.id.toString();
     const getOptionLabel = (option: TaskType) => option.title;

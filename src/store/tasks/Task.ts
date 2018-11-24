@@ -15,13 +15,13 @@ export interface ITask {
 }
 
 export class Task implements ITask {
-  public id: number | string;
-  public title: string;
-  public description: string;
-  public projectId: number;
-  public source?: string;
-  public value: number;
-  public userWorks: DownloadList<UserWork> = new DownloadList(UserWork);
+  id: number | string;
+  title: string;
+  description: string;
+  projectId: number;
+  source?: string;
+  value: number;
+  userWorks: DownloadList<UserWork> = new DownloadList(UserWork);
 
   constructor(initial?: any) {
     map(initial, (val: any, key: string) => {
@@ -41,7 +41,7 @@ export class Task implements ITask {
     return covertSecondsToDuration(this.durationInSeconds);
   }
 
-  public toLowerCase() {
+  toLowerCase() {
     return this.title.toLowerCase();
   }
 }

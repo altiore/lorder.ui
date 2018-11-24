@@ -14,7 +14,7 @@ export class AddMemberFormJsx extends React.Component<
   IAddMemberFormProps & InjectedFormProps<{}, IAddMemberFormProps>,
   object
 > {
-  public render() {
+  render() {
     const { handleSubmit, pristine, submitting, invalid } = this.props;
     return (
       <form onSubmit={handleSubmit}>

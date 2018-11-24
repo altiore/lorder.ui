@@ -17,7 +17,7 @@ export interface IDescriptionFormProps extends InjectedFormProps<IDescriptionFor
 export class DescriptionFormTsx extends React.Component<IDescriptionFormProps, {}> {
   private input: HTMLTextAreaElement;
 
-  public componentWillReceiveProps(nextProps: IDescriptionFormProps) {
+  componentWillReceiveProps(nextProps: IDescriptionFormProps) {
     if (
       nextProps.currentUserWorkId &&
       nextProps.currentUserWorkId !== this.props.currentUserWorkId &&
@@ -27,7 +27,7 @@ export class DescriptionFormTsx extends React.Component<IDescriptionFormProps, {
     }
   }
 
-  public render() {
+  render() {
     const { classes, handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit}>

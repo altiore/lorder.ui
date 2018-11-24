@@ -1,60 +1,81 @@
-import * as Highcharts from 'highcharts';
+import * as H from 'highcharts';
 import * as React from 'react';
 
-import {
-  Chart,
-  // ColumnSeries,
-  HighchartsChart,
-  Legend,
-  PieSeries,
-  // PlotOptions,
-  // SplineSeries,
-  Title,
-  Tooltip,
-  withHighcharts,
-  // XAxis,
-  // YAxis
-} from 'react-jsx-highcharts';
+import { Chart, HighchartsChart, Legend, PieSeries, Title, Tooltip, withHighcharts } from 'react-jsx-highcharts';
 
 export interface IPieChartProps {
+  data: any;
   className?: string;
 }
 
-const pieData = [
-  {
-    name: 'Jane',
-    y: 13,
-  },
-  {
-    name: 'John',
-    y: 23,
-  },
-  {
-    name: 'Joe',
-    y: 19,
-  },
-];
+export class PieChartTsxClass extends React.Component<IPieChartProps, {}> {
+  componentWillMount() {
+    H.setOptions({
+      colors: H.map(H.getOptions().colors, function(color: string) {
+        return {
+          radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+          stops: [
+            [0, color],
+            [
+              1,
+              H.Color(color)
+                .brighten(-0.3)
+                .get('rgb'),
+            ] /* darken */,
+          ],
+        };
+      }),
+    });
+  }
 
-export const PieChartTsx1: React.FunctionComponent<IPieChartProps> = ({}) => (
-  <HighchartsChart>
-    <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow={false} type={'pie'} />
+  componentWillUnmount() {
+    H.setOptions({
+      colors: [
+        '#7cb5ec',
+        '#434348',
+        '#90ed7d',
+        '#f7a35c',
+        '#8085e9',
+        '#f15c80',
+        '#e4d354',
+        '#2b908f',
+        '#f45b5b',
+        '#91e8e1',
+      ],
+    });
+  }
 
-    <Title>Combination chart</Title>
+  render() {
+    const { data } = this.props;
+    return (
+      <HighchartsChart exporting>
+        <Title>Combination chart</Title>
 
-    <Tooltip pointFormat={'{series.name}: <b>{point.percentage:.1f}%</b>'} />
+        <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow={false} type={'pie'} />
 
-    <Legend />
+        <Tooltip pointFormat={'{series.name}: <b>{point.percentage:.1f}%</b>'} />
 
-    {/*<XAxis categories={['Apples', 'Oranges', 'Pears', 'Bananas', 'Plums']}/>*/}
+        <Legend />
 
-    {/*<YAxis>*/}
-    {/*<ColumnSeries name="Jane" data={[3, 2, 1, 3, 4]}/>*/}
-    {/*<ColumnSeries name="John" data={[2, 3, 5, 7, 6]}/>*/}
-    {/*<ColumnSeries name="Joe" data={[4, 3, 3, 9, 0]}/>*/}
-    {/*<SplineSeries name="Average" data={[3, 2.67, 3, 6.33, 3.33]}/>*/}
-    <PieSeries name="Total consumption" data={pieData} center={[100, 80]} size={100} showInLegend={false} />
-    {/*</YAxis>*/}
-  </HighchartsChart>
-);
+        <PieSeries
+          allowPointSelect
+          name="Total consumption"
+          data={data}
+          cursor="pointer"
+          center={['50%', 150]}
+          size={300}
+          showInLegend={false}
+          dataLabels={{
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.y} h',
+            style: {
+              color: (H.theme && H.theme.contrastTextColor) || 'black',
+            },
+          }}
+        />
+      </HighchartsChart>
+    );
+  }
+}
 
-export const PieChartTsx = withHighcharts(PieChartTsx1, Highcharts);
+export const PieChartTsx = withHighcharts(PieChartTsxClass, H);

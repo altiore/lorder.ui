@@ -12,7 +12,7 @@ export interface ILoginProps extends RouteComponentProps<{}> {
 }
 
 export class Login extends React.PureComponent<ILoginProps, {}> {
-  public render() {
+  render() {
     const { isMagicLoginForm } = this.props;
     return (
       <div styleName="login">

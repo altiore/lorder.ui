@@ -33,17 +33,17 @@ export interface IState {
 }
 
 export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps, IState> {
-  public state = {
+  state = {
     page: 0,
     perPage: 10,
   };
 
-  public componentDidMount() {
+  componentDidMount() {
     this.props.fetchUsers();
   }
 
   // TODO: cover with tests!!!
-  public handleRowClick = (id: number | undefined) => (event: React.MouseEvent) => {
+  handleRowClick = (id: number | undefined) => (event: React.MouseEvent) => {
     const isOpener = get(event, 'target.dataset.role') === 'opener';
     if (isOpener) {
       return;
@@ -51,22 +51,22 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
     console.log('press by row', id, event.target);
   };
 
-  public handleRemoveClick = (id: number | undefined) => (e: any) => {
+  handleRemoveClick = (id: number | undefined) => (e: any) => {
     e.stopPropagation();
     this.props.deleteUser(id);
   };
 
-  public handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
+  handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
     this.setState({ page });
   };
 
-  public handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
+  handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
     if (event && event.target.value) {
       this.setState({ perPage: event.target.value });
     }
   };
 
-  public render() {
+  render() {
     const { classes, userList } = this.props;
     const { page, perPage } = this.state;
     return (

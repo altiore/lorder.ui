@@ -37,13 +37,13 @@ export interface INewProps {
 }
 
 export class New extends React.Component<RouteComponentProps<{}> & INewProps, { activeStep: number }> {
-  public state = {
+  state = {
     activeStep: 0,
   };
 
-  public handleGoToStep = (activeStep: number) => () => this.setState({ activeStep });
+  handleGoToStep = (activeStep: number) => () => this.setState({ activeStep });
 
-  public handleNext = () => {
+  handleNext = () => {
     if (this.state.activeStep === 0) {
       this.props.submitProjectForm();
     } else {
@@ -53,19 +53,19 @@ export class New extends React.Component<RouteComponentProps<{}> & INewProps, { 
     }
   };
 
-  public handleBack = () => {
+  handleBack = () => {
     this.setState({
       activeStep: this.state.activeStep - 1,
     });
   };
 
-  public handleReset = () => {
+  handleReset = () => {
     this.setState({
       activeStep: 0,
     });
   };
 
-  public render() {
+  render() {
     const { classes } = this.props;
     const steps: string[] = getSteps() as string[];
     const { activeStep } = this.state;

@@ -24,7 +24,7 @@ export interface IUserWorkTableProps extends RouteComponentProps<{}> {
 }
 
 export class UserWorkTableJsx extends React.PureComponent<IUserWorkTableProps> {
-  public render() {
+  render() {
     const { userWorks } = this.props;
     if (!userWorks || !userWorks.length) {
       return null;

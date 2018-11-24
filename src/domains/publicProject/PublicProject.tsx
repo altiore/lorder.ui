@@ -29,11 +29,11 @@ export interface IState {
 }
 
 export class PublicProjectTsx extends React.Component<IPublicProjectProps, IState> {
-  public componentDidMount() {
+  componentDidMount() {
     this.props.fetchPublicProject(this.props.match.params.projectId);
   }
 
-  public render() {
+  render() {
     const { publicProjectData, team, classes } = this.props;
     if (publicProjectData.isLoading && !publicProjectData.isLoaded) {
       return '...loading';

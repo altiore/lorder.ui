@@ -26,11 +26,11 @@ interface ITaskComponentState {
 }
 
 export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, ITaskComponentState> {
-  public state = {
+  state = {
     isWorkTableOpen: false,
   };
 
-  public render() {
+  render() {
     const { classes, isCurrent, project, task } = this.props;
     if (!task || !project) {
       return null;

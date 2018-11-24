@@ -9,13 +9,13 @@ export interface IStartProps {
 }
 
 export class Start extends React.Component<RouteComponentProps<{}> & IStartProps, {}> {
-  public async componentDidMount() {
+  async componentDidMount() {
     if (!this.props.userIsLoading) {
       await this.props.activateUser();
     }
   }
 
-  public render() {
+  render() {
     return <LoadingPage />;
   }
 }

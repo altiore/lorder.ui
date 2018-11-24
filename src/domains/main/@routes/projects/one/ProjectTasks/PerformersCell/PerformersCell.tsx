@@ -19,11 +19,11 @@ export interface IPerformersCellProps extends WrappedFieldProps {
 }
 
 export class PerformersCellJsx extends React.Component<IPerformersCellProps, IPerformersState> {
-  public state = {
+  state = {
     isOpen: false,
   };
 
-  public render() {
+  render() {
     const { projectMembers, input, ...rest } = this.props;
     const { isOpen } = this.state;
 

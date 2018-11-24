@@ -1,9 +1,9 @@
 import { AxiosResponse } from 'axios';
 
 export class DownloadList<T = any> {
-  public isLoaded: boolean = false;
-  public isLoading: boolean = false;
-  public list: T[] = [];
+  isLoaded: boolean = false;
+  isLoading: boolean = false;
+  list: T[] = [];
 
   private readonly Entity: any;
 
@@ -25,36 +25,30 @@ export class DownloadList<T = any> {
     return this.list.length;
   }
 
-  public slice(start?: number, end?: number) {
+  slice(start?: number, end?: number) {
     return this.list.slice(start, end);
   }
 
-  public find<S extends T>(
+  find<S extends T>(
     predicate: (this: void, value: T, index: number, obj: T[]) => value is S,
     thisArg?: any
   ): S | undefined;
-  public find(predicate: (value: T, index: number, obj: T[]) => boolean, thisArg?: any): T | undefined;
-  public find(...args: any[]) {
+  find(predicate: (value: T, index: number, obj: T[]) => boolean, thisArg?: any): T | undefined;
+  find(...args: any[]) {
     return this.list.find.call(this.list, ...args);
   }
 
-  public reduce(
-    callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T,
-    initialValue?: T
-  ): T;
-  public reduce<U>(
-    callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U,
-    initialValue: U
-  ): U;
-  public reduce(...args: any[]) {
+  reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T;
+  reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
+  reduce(...args: any[]) {
     return this.list.reduce.call(this.list, ...args);
   }
 
-  public map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) {
+  map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) {
     return this.list.map(callbackfn, thisArg);
   }
 
-  public startLoading(): DownloadList<T> {
+  startLoading(): DownloadList<T> {
     return new DownloadList<T>(this.Entity, {
       isLoaded: this.isLoaded,
       isLoading: true,
@@ -62,7 +56,7 @@ export class DownloadList<T = any> {
     });
   }
 
-  public finishLoading(payload?: AxiosResponse<T[]>): DownloadList<T> {
+  finishLoading(payload?: AxiosResponse<T[]>): DownloadList<T> {
     const data = payload && payload.data;
     return new DownloadList<T>(this.Entity, {
       isLoaded: !!data,
@@ -71,7 +65,7 @@ export class DownloadList<T = any> {
     });
   }
 
-  public stopLoading(): DownloadList<T> {
+  stopLoading(): DownloadList<T> {
     return new DownloadList<T>(this.Entity, {
       isLoaded: this.isLoaded,
       isLoading: false,
@@ -79,7 +73,7 @@ export class DownloadList<T = any> {
     });
   }
 
-  public addItem(data?: Partial<T>): DownloadList<T> {
+  addItem(data?: Partial<T>): DownloadList<T> {
     return new DownloadList<T>(this.Entity, {
       isLoaded: this.isLoaded,
       isLoading: this.isLoading,
@@ -87,7 +81,7 @@ export class DownloadList<T = any> {
     });
   }
 
-  public removeItem(index: number): DownloadList<T> {
+  removeItem(index: number): DownloadList<T> {
     if (index < 0) {
       index = this.list.length + index;
     }
@@ -98,7 +92,7 @@ export class DownloadList<T = any> {
     });
   }
 
-  public updateItem(index: number, partialItem: Partial<T>): DownloadList<T> {
+  updateItem(index: number, partialItem: Partial<T>): DownloadList<T> {
     if (!partialItem) {
       const errorText = `Error: ${DownloadList.name}.updateItem<${this.Entity.name}> empty data for update`;
       console.log(errorText, { index, partialItem });

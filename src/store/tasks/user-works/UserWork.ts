@@ -20,17 +20,17 @@ export interface IUserWork {
 }
 
 export class UserWork implements IUserWork {
-  public id?: number | string;
-  public description?: string;
-  public finishAt?: moment.Moment;
-  public projectId: number;
-  public source?: string;
-  public startAt?: moment.Moment;
-  public taskId?: number;
-  public taskTypeId?: number;
-  // public task?: Task;
+  id?: number | string;
+  description?: string;
+  finishAt?: moment.Moment;
+  projectId: number;
+  source?: string;
+  startAt?: moment.Moment;
+  taskId?: number;
+  taskTypeId?: number;
+  // task?: Task;
   // user
-  public value?: number;
+  value?: number;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

@@ -22,7 +22,7 @@ export class SelectReactFieldJsx<ValueType = ISelectOptionType> extends React.Pu
   ISelectReactFieldProps<ValueType>,
   {}
 > {
-  public static defaultProps = {
+  static defaultProps = {
     getLabel: (opt: any) => opt && opt.label,
     getNewOption: (inputValue?: string) => ({ label: `Создать: ${inputValue}`, value: inputValue }),
     getValue: (opt: any) => opt && opt.value,
@@ -30,7 +30,7 @@ export class SelectReactFieldJsx<ValueType = ISelectOptionType> extends React.Pu
     onSelect: (item: any) => console.log('selected item is', item),
   };
 
-  public render() {
+  render() {
     const { classes, input, isValidOption, getLabel, getNewOption, getValue, label, options, ...rest } = this.props;
     let preparedOptions;
     if (isValidOption && getNewOption && isValidOption(getNewOption(input.value))) {

@@ -3,18 +3,19 @@ import * as React from 'react';
 import * as Notifications from 'react-notification-system-redux';
 
 export interface INotificationProps {
-  notifications: Notifications.NotificationsState,
+  notifications: Notifications.NotificationsState;
 }
 
 export class Notification extends React.Component<INotificationProps, {}> {
-
-  public render() {
+  render() {
     const { notifications } = this.props;
 
     // Optional styling
     const style = {
-      NotificationItem: { // Override the notification item
-        DefaultStyle: { // Applied to every notification, regardless of the notification level
+      NotificationItem: {
+        // Override the notification item
+        DefaultStyle: {
+          // Applied to every notification, regardless of the notification level
           margin: '10px 5px 2px 1px',
         },
 
@@ -24,11 +25,6 @@ export class Notification extends React.Component<INotificationProps, {}> {
       },
     };
 
-    return (
-      <Notifications
-        notifications={notifications}
-        style={style}
-      />
-    );
+    return <Notifications notifications={notifications} style={style} />;
   }
 }

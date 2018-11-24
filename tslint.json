@@ -11,6 +11,7 @@
     "jsx-boolean-value": ["never"],
     "no-var-requires": false,
     "max-classes-per-file": false,
+    "member-access": [true, "no-public"],
     "interface-name": false
   }
 }

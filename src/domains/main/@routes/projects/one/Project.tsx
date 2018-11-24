@@ -19,25 +19,25 @@ export interface IProjectProps {
 }
 
 export class ProjectJsx extends React.Component<RouteComponentProps<{}> & IProjectProps, { value: number }> {
-  public state = {
+  state = {
     value: 0,
   };
 
-  public componentDidMount() {
+  componentDidMount() {
     if (this.props.projectId) {
       this.props.fetchProjectDetails(this.props.projectId);
     }
   }
 
-  public handleChange = (event: any, value: number) => {
+  handleChange = (event: any, value: number) => {
     this.setState({ value });
   };
 
-  public handleChangeIndex = (index: number) => {
+  handleChangeIndex = (index: number) => {
     this.setState({ value: index });
   };
 
-  public render() {
+  render() {
     const { classes, projectId, theme } = this.props;
     if (!projectId) {
       return null;
