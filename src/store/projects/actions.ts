@@ -61,6 +61,36 @@ export const fetchProjectDetails = requestActions('PROJECTS/FETCH_ONE', (project
   },
 }));
 
+export const publishProject = requestActions<number>('PROJECT/PUBLISH', (projectId: number) => ({
+  error: {
+    message: 'Возможно, у вас нет прав на это',
+    title: 'Не удалось опубликовать проект',
+  },
+  request: {
+    method: 'POST',
+    url: `/projects/${projectId}/publish`,
+  },
+  success: {
+    message: 'Теперь информация о нем доступна в публичном доступе',
+    title: 'Проект опубликован!',
+  },
+}));
+
+export const updateStatistic = requestActions<number>('PROJECT/STATISTIC/UPDATE', (projectId: number) => ({
+  error: {
+    message: 'Возможно, у вас нет прав на это',
+    title: 'Не удалось обновить статистику',
+  },
+  request: {
+    method: 'POST',
+    url: `/projects/${projectId}/statistic`,
+  },
+  success: {
+    message: 'Теперь она доступна на публичной странице проекта',
+    title: 'Статистика обновлена!',
+  },
+}));
+
 export * from './members/actions';
 export * from './tasks/actions';
 export * from './taskTypes/actions';

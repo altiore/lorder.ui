@@ -8,6 +8,7 @@ import { Page } from 'src/components/Page';
 import { ProjectMembers } from './ProjectMembers';
 import { ProjectTasks } from './ProjectTasks';
 import { ProjectTaskTypes } from './ProjectTaskTypes';
+import { Settings } from './Settings';
 
 export interface IProjectProps {
   classes: any;
@@ -67,7 +68,7 @@ export class ProjectJsx extends React.Component<RouteComponentProps<{}> & IProje
             <ProjectTasks />
             <ProjectTaskTypes />
             <ProjectMembers />
-            <p>Item Three</p>
+            <Settings />
           </SwipeableViews>
         </div>
       </Page>
