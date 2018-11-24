@@ -35,10 +35,15 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
     this.props.fetchPublicProject(this.props.match.params.projectId);
   }
 
+  componentDidUpdate(prevProps: IPublicProjectProps) {
+    if (prevProps.match.params.projectId !== this.props.match.params.projectId) {
+      this.props.fetchPublicProject(this.props.match.params.projectId);
+    }
+  }
+
   render() {
     const {
       publicProjectData: { isLoading, isLoaded, title, statistic, chartData, projectId },
-      team,
       classes,
       isAuth,
     } = this.props;
@@ -101,11 +106,12 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
               <Typography variant={'h4'}>Комманда проекта</Typography>
               <Typography>Мы дарим людям мир и красоту, но только если это будет добром!</Typography>
             </Grid>
-            {team.map((member, index) => (
-              <Grid item key={index}>
-                <MemberCard {...member} />
-              </Grid>
-            ))}
+            {statistic &&
+              Object.keys(statistic.members).map((member, index) => (
+                <Grid item key={index}>
+                  <MemberCard avatar={statistic.members[member].avatar} name={statistic.members[member].email} />
+                </Grid>
+              ))}
           </Block>
         </Grid>
 

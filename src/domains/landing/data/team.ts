@@ -4,19 +4,19 @@ import razzwanImg from './members/razzwan.png';
 
 export const team = [
   {
-    image: razzwanImg,
+    avatar: razzwanImg,
     name: 'Павел Безликий (Razzwan)',
   },
   {
-    image: manImg,
+    avatar: manImg,
     name: 'Артем',
   },
   {
-    image: manImg,
+    avatar: manImg,
     name: 'Александр',
   },
   {
-    image: womanImg,
+    avatar: womanImg,
     name: 'Татьяна Геращенко',
   },
 ];

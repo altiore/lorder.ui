@@ -18,7 +18,7 @@ export interface IInfoProps {
   brandName: string;
   classes: any;
   team: Array<{
-    image: string;
+    avatar: string;
     name: string;
   }>;
   tours: Array<{
