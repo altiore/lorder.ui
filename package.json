@@ -49,7 +49,7 @@
     "postinstall": "npm run build",
     "start": "altiore start",
     "build": "altiore build",
-    "test": "altiore test --env=jsdom",
+    "test": "jest --env=jsdom",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "__relink-scripts": "rimraf node_modules/altiore-webpack-react && ln -s ~/www/webpack-react $PWD/node_modules/altiore-webpack-react",
     "__relink-components": "rimraf node_modules/liw-components && ln -s ~/www/react-components $PWD/node_modules/liw-components"
