@@ -1,4 +1,3 @@
-import Timer = NodeJS.Timer;
 import get from 'lodash-es/get';
 import { Dispatch } from 'react-redux';
 import { change } from 'redux-form';
@@ -12,7 +11,7 @@ import { currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from 'sr
 import { IUserWorkData, IUserWorkDelete, patchAndStopUserWork, postAndStartUserWork } from '../actions';
 import { UserWork } from '../UserWork';
 
-export let timer: Timer;
+export let timer: any;
 
 export const startTimer = (userWork: Partial<UserWork>, project: Project) => async (dispatch: Dispatch) => {
   clearInterval(timer);
