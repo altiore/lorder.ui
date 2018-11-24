@@ -10,11 +10,13 @@ import { RouteComponentProps } from 'react-router';
 import { TelegramIco } from 'src/components/@icons/Telegram';
 import { Block } from 'src/components/Block';
 import { MemberCard } from 'src/components/MemberCard';
+import { PieChart } from 'src/components/PieChart';
 import { PublicProject } from 'src/store/publicProject';
 import { LinkButton } from '../@common/LinkButton';
 
 export interface IPublicProjectProps extends RouteComponentProps<{ projectId: string }> {
   classes: any;
+  isAuth: boolean;
   fetchPublicProject: any;
   publicProjectData: PublicProject;
   team: Array<{
@@ -34,37 +36,64 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
   }
 
   render() {
-    const { publicProjectData, team, classes } = this.props;
-    if (publicProjectData.isLoading && !publicProjectData.isLoaded) {
+    const {
+      publicProjectData: { isLoading, isLoaded, title, statistic, chartData, projectId },
+      team,
+      classes,
+      isAuth,
+    } = this.props;
+    if (isLoading && !isLoaded) {
       return '...loading';
     }
-    if (!publicProjectData.title) {
+    if (!title) {
       return 'Not Found';
     }
     return (
       <div className={classes.root}>
-        <AppBar key={'top'} position="static" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" color="inherit">
-              Altiore
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        {!isAuth && (
+          <AppBar key={'top'} position="static" className={classes.appBar}>
+            <Toolbar>
+              <Typography variant="h6" color="inherit">
+                Altiore
+              </Typography>
+            </Toolbar>
+          </AppBar>
+        )}
 
         <Grid container className={classes.content}>
           <Block>
             <Grid item>
-              <Typography variant={'h1'}>{publicProjectData.title}</Typography>
+              <Typography variant={'h1'}>{title}</Typography>
             </Grid>
           </Block>
           <Block>
             <Grid item className={classes.profile}>
-              <Typography variant={'h4'}>Сделай несколько простых шагов - и присоеденись к сообществу</Typography>
-              <LinkButton variant={'contained'} color={'primary'} className={classes.button} to={'/login'}>
-                Подключиться к проекту!
-              </LinkButton>
+              {isAuth ? (
+                <LinkButton
+                  variant={'contained'}
+                  color={'primary'}
+                  className={classes.button}
+                  to={`/projects/${projectId}`}
+                >
+                  Настройки проекта
+                </LinkButton>
+              ) : (
+                <>
+                  <Typography variant={'h4'}>Сделай несколько простых шагов - и присоеденись к сообществу</Typography>
+                  <LinkButton variant={'contained'} color={'primary'} className={classes.button} to={'/login'}>
+                    Подключиться к проекту!
+                  </LinkButton>
+                </>
+              )}
             </Grid>
           </Block>
+
+          {statistic && (
+            <>
+              <Divider />
+              <PieChart data={chartData} title="Статистика по проекту" />
+            </>
+          )}
 
           <Divider />
           <Block>

@@ -6,9 +6,10 @@ import { Chart, HighchartsChart, Legend, PieSeries, Title, Tooltip, withHighchar
 export interface IPieChartProps {
   data: any;
   className?: string;
+  title?: string;
 }
 
-export class PieChartTsxClass extends React.Component<IPieChartProps, {}> {
+export class PieChartTsx extends React.Component<IPieChartProps, {}> {
   componentWillMount() {
     H.setOptions({
       colors: H.map(H.getOptions().colors, function(color: string) {
@@ -46,10 +47,10 @@ export class PieChartTsxClass extends React.Component<IPieChartProps, {}> {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, title } = this.props;
     return (
       <HighchartsChart exporting>
-        <Title>Combination chart</Title>
+        {title && <Title>{title}</Title>}
 
         <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow={false} type={'pie'} />
 
@@ -58,8 +59,8 @@ export class PieChartTsxClass extends React.Component<IPieChartProps, {}> {
         <Legend />
 
         <PieSeries
-          allowPointSelect
-          name="Total consumption"
+          // allowPointSelect
+          name="Доля пользователя"
           data={data}
           cursor="pointer"
           center={['50%', 150]}
@@ -78,4 +79,4 @@ export class PieChartTsxClass extends React.Component<IPieChartProps, {}> {
   }
 }
 
-export const PieChartTsx = withHighcharts(PieChartTsxClass, H);
+export const PieChart = withHighcharts(PieChartTsx, H);

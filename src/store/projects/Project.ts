@@ -19,6 +19,7 @@ export enum ACCESS_LEVEL {
 
 export class Project {
   id?: number;
+  uuid?: string;
   accessLevel?: ACCESS_LEVEL;
   title: string;
   monthlyBudget?: number;

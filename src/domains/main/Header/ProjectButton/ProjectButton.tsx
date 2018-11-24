@@ -8,6 +8,7 @@ import { ShortChart } from './ShortChart';
 export interface IProjectButtonProps {
   classes?: any;
   id?: number;
+  uuid?: string;
   time: string;
   title: string;
   percent: string;
@@ -24,7 +25,7 @@ export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProj
 
   render() {
     const { isOpen } = this.state;
-    const { classes, id, time, title, percent } = this.props;
+    const { classes, uuid, id, time, title, percent } = this.props;
     return (
       <Popover
         place="below"
@@ -33,7 +34,7 @@ export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProj
         body={<ShortChart id={id} title={title} time={time} percent={percent} />}
       >
         <LinkButton
-          to={`/projects/${id}`}
+          to={uuid ? `/p/${uuid}` : `/projects/${id}`}
           className={classes.button}
           onMouseEnter={this.onMouseEnterHandler}
           onMouseLeave={this.onClosePopover}
