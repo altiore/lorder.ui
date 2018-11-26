@@ -7,21 +7,18 @@ export interface ISelectOptionType {
   value: any;
 }
 
-export interface ISelectReactFieldProps<ValueType = ISelectOptionType> extends WrappedFieldProps {
-  classes: any;
-  isValidOption?: (opt: ValueType) => boolean;
-  getLabel?: (opt: ValueType) => string;
-  getNewOption?: (inputValue: string) => ValueType;
-  getValue?: (opt: ValueType) => any;
+export interface ISelectReactFieldProps extends WrappedFieldProps {
+  classes?: any;
+  isValidOption?: (opt: ISelectOptionType) => boolean;
+  getLabel?: (opt: ISelectOptionType) => string;
+  getNewOption?: (inputValue: string) => ISelectOptionType;
+  getValue?: (opt: ISelectOptionType) => any;
   label?: string;
   options: any[];
-  onSelect: (value: ValueType) => any;
+  onSelect: (value: ISelectOptionType) => any;
 }
 
-export class SelectReactFieldJsx<ValueType = ISelectOptionType> extends React.PureComponent<
-  ISelectReactFieldProps<ValueType>,
-  {}
-> {
+export class SelectReactFieldJsx extends React.PureComponent<ISelectReactFieldProps, {}> {
   static defaultProps = {
     getLabel: (opt: any) => opt && opt.label,
     getNewOption: (inputValue?: string) => ({ label: `Создать: ${inputValue}`, value: inputValue }),
@@ -54,7 +51,7 @@ export class SelectReactFieldJsx<ValueType = ISelectOptionType> extends React.Pu
     );
   }
 
-  private handleOnChange = (value: ValueType) => {
+  private handleOnChange = (value: ISelectOptionType) => {
     if (this.props.isValidOption && this.props.isValidOption(value)) {
       this.props.onSelect(value);
     }

@@ -3,10 +3,12 @@ import List from '@material-ui/core/List';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
+import { IEvent } from 'src/components/DailyRoutine';
 import { PageCenter } from 'src/components/PageCenter';
 import { Project } from 'src/store/projects';
 import { Task } from 'src/store/tasks';
 import { CurrentTask } from './CurrentTask';
+import { DailyRoutine } from './DailyRoutine';
 import { Filter } from './Filter';
 import { LastEvents } from './LastEvents';
 import { StartForm } from './StartForm';
@@ -40,6 +42,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     const { page } = this.state;
     return (
       <PageCenter>
+        <DailyRoutine onChange={this.handleOnChange} />
         <Grid item lg={9} md={8} sm={12}>
           <StartForm />
           <List>
@@ -53,6 +56,10 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
         </Grid>
       </PageCenter>
     );
+  }
+
+  private handleOnChange(events: IEvent[]): any {
+    console.log('values', events);
   }
 
   private renderListItem = (task: Task) => {

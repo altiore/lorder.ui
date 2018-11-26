@@ -19,6 +19,7 @@
     "localforage": "1.7.2",
     "lodash-es": "^4.17.11",
     "moment": "^2.22.2",
+    "rc-slider": "^8.6.3",
     "react": "16.6.1",
     "react-css-modules": "4.7.3",
     "react-custom-scrollbars": "4.2.1",
@@ -55,6 +56,7 @@
     "__relink-components": "rimraf node_modules/liw-components && ln -s ~/www/react-components $PWD/node_modules/liw-components"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^4.0.9",
     "@storybook/addon-info": "^4.0.8",
     "@storybook/react": "^4.0.8",
     "@types/classnames": "^2.2.4",
@@ -63,6 +65,7 @@
     "@types/lodash-es": "^4.17.1",
     "@types/moment": "^2.13.0",
     "@types/node": "^10.3.2",
+    "@types/rc-slider": "^8.6.0",
     "@types/react": "^16.7.3",
     "@types/react-css-modules": "^4.6.1",
     "@types/react-custom-scrollbars": "^4.0.5",
@@ -79,6 +82,7 @@
     "@types/redux-form": "^7.4.12",
     "@types/redux-thunk": "^2.1.0",
     "@types/reselect": "^2.2.0",
+    "@types/storybook__addon-actions": "^3.4.1",
     "@types/storybook__react": "^4.0.0",
     "@types/webpack-env": "^1.13.6",
     "altiore-webpack-react": "2.2.0",

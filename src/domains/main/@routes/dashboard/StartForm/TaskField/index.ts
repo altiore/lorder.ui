@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import { IState } from 'src/@types';
-import { ISelectReactFieldProps, SelectReactField } from 'src/components/SelectReactField';
+import { SelectReactField } from 'src/components/SelectReactField';
 import { selectedProjectId } from 'src/store/project';
 import { getProjectById, Project } from 'src/store/projects';
 import { allTaskList, startUserWork, Task } from 'src/store/tasks';
 
+// TODO: move to selector Performance Issue
 function getLabel(state: IState) {
   return (task: Task & { project: Project }) => {
     const project = getProjectById(state)(task.projectId);
@@ -18,24 +20,27 @@ function getLabel(state: IState) {
   };
 }
 
+// TODO: move to selector Performance Issue
 const getNewOption = (state: IState) => (inputValue: string) =>
   new Task({ title: inputValue && inputValue, projectId: selectedProjectId(state) });
-const getValue = (opt: Task) => opt;
-const isValidOption = (opt: Task) => opt.title;
+// TODO: move to selector Performance Issue
+const getValue = () => (opt: Task) => opt;
+// TODO: move to selector Performance Issue
+const isValidOption = () => (opt: Task) => opt.title;
 
-const mapStateToProps = (state: IState) => ({
-  getLabel: getLabel(state),
-  getNewOption: getNewOption(state),
+const mapStateToProps = createStructuredSelector({
+  getLabel,
+  getNewOption,
   getValue,
   isValidOption,
-  options: allTaskList(state),
+  options: allTaskList,
 });
 
 const mapDispatch = {
   onSelect: (task: Task) => startUserWork({ taskId: task.id, projectId: task.projectId, description: task.title }),
 };
 
-export const TaskField = connect<any, any, ISelectReactFieldProps>(
+export const TaskField = connect<{}, any, { name: string; component: any; label: string; className: string }>(
   mapStateToProps,
   mapDispatch
 )(SelectReactField);
