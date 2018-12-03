@@ -6,6 +6,7 @@ import * as React from 'react';
 import * as Popover from 'react-popover';
 
 import { StartStopBtn } from 'src/components/StartStopBtn';
+import { LinkButton } from 'src/domains/@common/LinkButton';
 import { Project } from 'src/store/projects';
 import { Task } from 'src/store/tasks';
 import { TimerListItemText } from './TimerListItemText';
@@ -43,13 +44,25 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
           <StartStopBtn isStarted={isCurrent} onStart={this.startUserTask(task)} onStop={this.stopUserWork} />
         </ListItemIcon>
         <Button className={classes.buttonTitle}>{task.title}</Button>
-        <Button className={classes.buttonProject}>{project.title}</Button>
+        <LinkButton
+          className={classes.buttonProject}
+          to={project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`}
+        >
+          {project.title}
+        </LinkButton>
         <Popover
           tipSize={4}
           className={classes.userWorkTable}
           isOpen={isWorkTableOpen}
           onOuterAction={this.onToggleOpenWorkTable}
-          body={<UserWorkTable userWorks={task.userWorks} taskId={task.id} projectId={project.id} />}
+          body={
+            <UserWorkTable
+              userWorks={task.userWorks}
+              taskId={task.id}
+              projectId={project.id}
+              onClose={this.onToggleOpenWorkTable}
+            />
+          }
         >
           {isCurrent ? (
             <TimerListItemText isOpen={isWorkTableOpen} onClick={this.onToggleOpenWorkTable} />

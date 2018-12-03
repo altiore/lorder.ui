@@ -19,6 +19,9 @@ export const styles = (theme: Theme): any => ({
   button: {
     marginTop: 20,
   },
+  chart: {
+    minHeight: 400,
+  },
   content: {
     display: 'flex',
     flexFlow: 'column nowrap',

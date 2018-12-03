@@ -1,3 +1,4 @@
+// tslint:disable
 export const variant1 = [
   {
     id: 583,

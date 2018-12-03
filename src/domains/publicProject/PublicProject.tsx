@@ -93,12 +93,10 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
             </Grid>
           </Block>
 
-          {statistic && (
-            <>
-              <Divider />
-              <PieChart data={chartData} title="Статистика по проекту" />
-            </>
-          )}
+          <div className={classes.chart}>
+            <Divider />
+            <PieChart data={chartData} title="Статистика по проекту" />
+          </div>
 
           <Divider />
           <Block>

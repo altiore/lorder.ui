@@ -20,8 +20,9 @@ export interface IUserWorkTableProps extends RouteComponentProps<{}> {
   classes: any;
   currentUserWorkId?: number;
   deleteUserWork: any;
+  onClose: any;
   projectId: number;
-  stopUserWork: any;
+  stopUserWork: (arg: any) => Promise<any>;
   taskId: number;
 }
 
@@ -92,13 +93,14 @@ export class UserWorkTableJsx1 extends React.PureComponent<IUserWorkTableProps> 
     }
   };
 
-  private stopUserWork = (userWorkId: number | string | undefined) => (e: React.SyntheticEvent) => {
+  private stopUserWork = (userWorkId: number | string | undefined) => async (e: React.SyntheticEvent) => {
     e.stopPropagation();
     if (typeof userWorkId === 'number') {
-      this.props.stopUserWork(userWorkId);
+      await this.props.stopUserWork(userWorkId);
     } else {
       console.log('deleteUserWork userWorkId type is %s', typeof userWorkId);
     }
+    this.props.onClose();
   };
 }
 
