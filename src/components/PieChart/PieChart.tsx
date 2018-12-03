@@ -1,6 +1,5 @@
 import * as H from 'highcharts';
 import * as React from 'react';
-
 import { Chart, HighchartsChart, Legend, PieSeries, Title, Tooltip, withHighcharts } from 'react-jsx-highcharts';
 
 export interface IPieChartProps {
@@ -9,7 +8,7 @@ export interface IPieChartProps {
   title?: string;
 }
 
-export class PieChartTsx extends React.Component<IPieChartProps, {}> {
+class PieChartTsx extends React.Component<IPieChartProps, {}> {
   componentWillMount() {
     H.setOptions({
       colors: H.map(H.getOptions().colors, function(color: string) {
@@ -52,14 +51,14 @@ export class PieChartTsx extends React.Component<IPieChartProps, {}> {
       <HighchartsChart exporting>
         {title && <Title>{title}</Title>}
 
-        <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow={false} type={'pie'} />
+        <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow={null} type="pie" />
 
         <Tooltip pointFormat={'{series.name}: <b>{point.percentage:.1f}%</b>'} />
 
         <Legend />
 
         <PieSeries
-          // allowPointSelect
+          allowPointSelect
           name="Доля пользователя"
           data={data}
           cursor="pointer"

@@ -5,12 +5,12 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
 
-import { DownloadList } from 'src/store/@common/entities';
+import { IDownloadList } from 'src/@types';
 
 export interface IProjectTaskTypesProps<T> {
   classes: any;
   colSpan?: number;
-  items: DownloadList<T> | T[];
+  items: IDownloadList<T> | T[];
   perPage?: number;
   renderItem: (item: T) => React.ReactNode;
 }

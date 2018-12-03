@@ -9,4 +9,10 @@ export const styles = (theme: Theme) =>
       },
       cursor: 'pointer',
     },
+    wrapper: {
+      backgroundColor: theme.palette.background.default,
+      border: `1px solid ${theme.palette.divider}`,
+      borderRadius: theme.spacing.unit,
+      padding: theme.spacing.unit,
+    },
   });

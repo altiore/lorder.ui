@@ -2,22 +2,8 @@ import includes from 'lodash-es/includes';
 import map from 'lodash-es/map';
 import * as moment from 'moment';
 
+import { IUserWork } from 'src/@types';
 import { covertSecondsToDuration } from 'src/store/@common/helpers';
-// import { Task } from 'src/store/tasks';
-
-export interface IUserWork {
-  id?: number | string;
-  description?: string;
-  finishAt?: moment.Moment;
-  projectId: number;
-  source?: string;
-  startAt?: moment.Moment;
-  taskId?: number;
-  taskTypeId?: number;
-  // task?: Task;
-  // user
-  value?: number;
-}
 
 export class UserWork implements IUserWork {
   id?: number | string;
@@ -28,8 +14,6 @@ export class UserWork implements IUserWork {
   startAt?: moment.Moment;
   taskId?: number;
   taskTypeId?: number;
-  // task?: Task;
-  // user
   value?: number;
 
   constructor(initial?: object) {

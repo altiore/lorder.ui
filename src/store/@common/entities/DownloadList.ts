@@ -1,13 +1,14 @@
 import { AxiosResponse } from 'axios';
+import { IDownloadList } from 'src/@types';
 
-export class DownloadList<T = any> {
+export class DownloadList<T = any> implements IDownloadList<T> {
   isLoaded: boolean = false;
   isLoading: boolean = false;
   list: T[] = [];
 
   private readonly Entity: any;
 
-  constructor(Entity: any, initial?: Partial<DownloadList> | Array<Partial<T>>, fromArray: boolean = false) {
+  constructor(Entity: any, initial?: Partial<DownloadList> | Array<Partial<T>> | T[], fromArray: boolean = false) {
     this.Entity = Entity;
     if (!initial) {
       return;

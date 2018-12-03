@@ -45,6 +45,8 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
         <Button className={classes.buttonTitle}>{task.title}</Button>
         <Button className={classes.buttonProject}>{project.title}</Button>
         <Popover
+          tipSize={4}
+          className={classes.userWorkTable}
           isOpen={isWorkTableOpen}
           onOuterAction={this.onToggleOpenWorkTable}
           body={<UserWorkTable userWorks={task.userWorks} taskId={task.id} projectId={project.id} />}

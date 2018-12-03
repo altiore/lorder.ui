@@ -1,6 +1,5 @@
 import * as Highcharts from 'highcharts';
 import * as React from 'react';
-
 import {
   Chart,
   ColumnSeries,
@@ -20,7 +19,7 @@ export interface ILinearChartProps {
 
 export const LinearChartTsx1: React.FunctionComponent<ILinearChartProps> = ({}) => (
   <HighchartsChart>
-    <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow={false} type={'pie'} />
+    <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow type={'pie'} />
 
     <Title>Combination chart</Title>
 

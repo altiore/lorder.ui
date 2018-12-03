@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 
-import { PieChartTsx } from './PieChart';
+import { PieChart } from './PieChart';
 
 const pieData = [
   { name: 'Jane', y: 13 },
@@ -15,4 +15,4 @@ const pieData = [
   { name: 'Joe', y: 219 },
 ];
 
-storiesOf('PieChart', module).add('with text', () => <PieChartTsx data={pieData} />);
+storiesOf('PieChart', module).add('with text', () => <PieChart data={pieData} />);

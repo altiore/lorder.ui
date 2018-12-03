@@ -1,10 +1,8 @@
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { deleteUserWork, startTimer, stopUserWork } from 'src/store/tasks';
 import { currentUserWorkId } from 'src/store/timer';
-import { styles } from './styles';
 import { UserWorkTableJsx } from './UserWorkTable';
 
 const mapStateToProps = createStructuredSelector({
@@ -35,4 +33,4 @@ export const UserWorkTable = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(withStyles(styles, { withTheme: true })(UserWorkTableJsx));
+)(UserWorkTableJsx);

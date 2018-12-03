@@ -21,4 +21,7 @@ export const styles = (theme: Theme) =>
       justifyContent: 'space-between',
       marginBottom: theme.spacing.unit,
     },
+    userWorkTable: {
+      zIndex: 1202,
+    },
   });
