@@ -3,7 +3,7 @@ import Select from 'react-select';
 
 import { TaskType } from 'src/store/task-types';
 
-export interface ITaskTypesFormProps {
+export class ITaskTypesFormProps {
   addTaskType: any;
   title?: string;
   buttonText?: string;

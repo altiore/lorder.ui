@@ -1,13 +1,15 @@
 import * as React from 'react';
 import Select from 'react-select';
-import { WrappedFieldProps } from 'redux-form';
+import { WrappedFieldInputProps, WrappedFieldMetaProps, WrappedFieldProps } from 'redux-form';
 
 export interface ISelectOptionType {
   label: React.ReactNode;
   value: any;
 }
 
-export interface ISelectReactFieldProps extends WrappedFieldProps {
+export class ISelectReactFieldProps implements WrappedFieldProps {
+  input: WrappedFieldInputProps;
+  meta: WrappedFieldMetaProps;
   classes?: any;
   isValidOption?: (opt: ISelectOptionType) => boolean;
   getLabel?: (opt: ISelectOptionType) => string;

@@ -16,7 +16,7 @@ export interface IStartFormData {
   projectId: number;
 }
 
-export interface IStartFormProps {
+export class IStartFormProps {
   title?: string;
   buttonText?: string;
 }

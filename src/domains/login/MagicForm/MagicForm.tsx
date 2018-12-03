@@ -5,7 +5,7 @@ import { Field, InjectedFormProps } from 'redux-form';
 
 import { UserIco } from 'src/components/@icons/User';
 
-export interface IMagicFormProps {
+export class IMagicFormProps {
   buttonText?: string;
 }
 

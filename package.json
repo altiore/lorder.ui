@@ -48,14 +48,15 @@
   },
   "scripts": {
     "postinstall": "npm run build",
-    "start": "altiore start",
-    "build": "altiore build",
-    "test": "jest --env=jsdom",
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "__relink-scripts": "rimraf node_modules/altiore-webpack-react && ln -s ~/www/webpack-react $PWD/node_modules/altiore-webpack-react",
     "__relink-components": "rimraf node_modules/liw-components && ln -s ~/www/react-components $PWD/node_modules/liw-components"
   },
   "devDependencies": {
+    "@jpavon/react-scripts-ts": "git+https://git@github.com/altiore/react-scripts-ts.git",
     "@storybook/addon-actions": "^4.0.9",
     "@storybook/addon-info": "^4.0.8",
     "@storybook/react": "^4.0.8",
@@ -85,7 +86,6 @@
     "@types/storybook__addon-actions": "^3.4.1",
     "@types/storybook__react": "^4.0.0",
     "@types/webpack-env": "^1.13.6",
-    "altiore-webpack-react": "2.2.0",
     "awesome-typescript-loader": "^5.2.1",
     "husky": "^1.0.1",
     "jest": "^23.6.0",
@@ -111,5 +111,11 @@
       "prettier --write --print-width 120 --single-quote --parser typescript --trailing-comma es5",
       "git add"
     ]
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

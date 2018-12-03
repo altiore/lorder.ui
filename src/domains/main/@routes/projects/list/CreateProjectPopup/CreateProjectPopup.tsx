@@ -9,7 +9,7 @@ import { required } from 'redux-form-validators';
 import { MoneyIco } from 'src/components/@icons/Money';
 import { ProjectIco } from 'src/components/@icons/Project';
 
-export interface IProjectFormProps {
+export class IProjectFormProps {
   goToPage: any;
   onClose: any;
   title?: string;
