@@ -28,6 +28,8 @@ export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProj
     const { classes, uuid, id, time, title, percent } = this.props;
     return (
       <Popover
+        className={classes.projectPopover}
+        tipSize={4}
         place="below"
         isOpen={isOpen}
         onOuterAction={this.onClosePopover}

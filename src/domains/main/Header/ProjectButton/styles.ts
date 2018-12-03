@@ -8,4 +8,7 @@ export const styles = (theme: Theme) =>
       minWidth: 140,
       textTransform: 'none',
     },
+    projectPopover: {
+      zIndex: 1202,
+    },
   });
