@@ -27,3 +27,5 @@ yarn-error.log*
 .env
 src/config/dev.js
 .cache
+
+*.m.scss.d.ts
