@@ -47,6 +47,7 @@
     "uniqid": "5.0.3"
   },
   "scripts": {
+    "analyze": "source-map-explorer build/static/js/vendors.*",
     "postinstall": "npm run build",
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
@@ -93,6 +94,7 @@
     "prettier": "1.14.2",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "rimraf": "^2.6.2",
+    "source-map-explorer": "^1.6.0",
     "ts-jest": "^23.10.5",
     "typescript": "^3.1.1"
   },
