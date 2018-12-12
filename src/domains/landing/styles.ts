@@ -2,7 +2,7 @@ import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme): any => ({
   appBar: {
-    opacity: 0.5,
+    // opacity: 0.5,
   },
   bottomBar: {
     alignItems: 'center',
