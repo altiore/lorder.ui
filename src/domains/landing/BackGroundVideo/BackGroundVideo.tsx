@@ -11,7 +11,7 @@ export interface IBackGroundVideoProps {
 const VIDEO_WIDTH = 1920;
 const VIDEO_HEIGHT = 1080;
 
-export const BackGroundVideoTsx: React.StatelessComponent<IBackGroundVideoProps> = ({ classes, height, width }) => {
+export const BackGroundVideoTsx: React.FunctionComponent<IBackGroundVideoProps> = ({ classes, height, width }) => {
   const isWidth = VIDEO_HEIGHT / VIDEO_WIDTH > height / width;
   let imageStyle: any;
   if (isWidth) {

@@ -11,9 +11,9 @@ import { TelegramIco } from 'src/components/@icons/Telegram';
 import { Block } from 'src/components/Block';
 import { MemberCard } from 'src/components/MemberCard';
 import { LinkButton } from 'src/domains/@common/LinkButton';
-// import { BackGroundVideo } from './BackGroundVideo';
+import { BackGroundVideo } from './BackGroundVideo';
 import { Title } from './Title';
-import { YouTubeVideo } from './YouTubeVideo';
+// import { YouTubeVideo } from './YouTubeVideo';
 
 export interface IInfoProps {
   brandName: string;
@@ -54,7 +54,7 @@ export class InfoTsx extends React.Component<IInfoProps, IState> {
     const { height, width } = this.state;
     return (
       <div className={classes.root}>
-        <YouTubeVideo height={height} width={width} />
+        <BackGroundVideo height={height} width={width} />
 
         <AppBar key={'top'} position="static" className={classes.appBar}>
           <Toolbar>
