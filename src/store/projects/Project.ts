@@ -25,7 +25,7 @@ export class Project {
   monthlyBudget?: number;
   owner?: any;
   phases?: any[];
-  members: Member[] = [];
+  members: DownloadList<Member> = new DownloadList(Member);
   tasks: DownloadList<ProjectTask> = new DownloadList(ProjectTask);
   taskTypes: DownloadList<TaskType> = new DownloadList(TaskType);
   /** время в секундах, потраченное всеми пользователями на этот проект */
@@ -44,7 +44,7 @@ export class Project {
         return;
       }
       if (key === 'members') {
-        this[key] = map(val, (member: Partial<Member>) => new Member(member));
+        this[key] = new DownloadList(Member, val, Array.isArray(val));
         return;
       }
       if (key === 'accessLevel') {

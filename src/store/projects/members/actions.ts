@@ -6,6 +6,7 @@ export interface IProjectMemberData {
   memberId?: number;
   projectId: number;
   email?: string;
+  accessLevel?: number;
 }
 
 export const acceptInvitation = requestActions<number>('PROJECT_MEMBER/ACCEPT_INVITATION', projectId => ({
@@ -51,6 +52,22 @@ export const deleteProjectMember = requestActions<IProjectMemberData>(
     },
     success: {
       message: `Пользователь удален из проекта`,
+    },
+  })
+);
+
+export const updateProjectMemberAccessLevel = requestActions<IProjectMemberData>(
+  'PROJECT_MEMBER/UPDATE',
+  ({ memberId, projectId, accessLevel }: IProjectMemberData) => ({
+    memberId,
+    projectId,
+    request: {
+      data: { accessLevel },
+      method: 'PATCH',
+      url: `/projects/${projectId}/members/${memberId}`,
+    },
+    success: {
+      message: `Вы успешно изменили права доступа пользователю`,
     },
   })
 );

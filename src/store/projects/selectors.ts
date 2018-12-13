@@ -31,7 +31,7 @@ export const openedProject = createSelector(
 export const projectMembers = createSelector(openedProject, (project: Project) => project && project.members);
 
 export const projectMembersAsUsers = createSelector(
-  projectMembers,
+  projectMembers as any,
   (members: Member[] = []): IUser[] => members.map(el => el.member)
 );
 

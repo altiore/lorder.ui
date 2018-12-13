@@ -13,6 +13,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { Member } from 'src/store/projects/members/Member';
 import { AddMemberForm } from './AddMemberForm';
+import { ChangedCell } from './ChangedCell';
 
 export interface IProjectMembersProps {
   classes: any;
@@ -79,7 +80,9 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
                         {email}
                       </TableCell>
                       <TableCell>{accessLevel ? 'Да' : 'Нет'}</TableCell>
-                      <TableCell numeric>{accessLevel}</TableCell>
+                      <TableCell>
+                        <ChangedCell title={'Уровень доступа'} input={{ value: [accessLevel] }} memberId={id} />
+                      </TableCell>
                       <TableCell numeric>
                         <IconButton onClick={this.handleRemoveClick(id)}>
                           <ClearIcon />

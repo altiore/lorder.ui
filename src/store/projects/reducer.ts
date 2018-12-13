@@ -21,6 +21,7 @@ import {
   postProjectMember,
   postProjectTask,
   removeProject,
+  updateProjectMemberAccessLevel,
 } from './actions';
 import { Member } from './members/Member';
 import { Project } from './Project';
@@ -82,45 +83,47 @@ const fetchProjectDetailsSuccessHandler = (state: S, { payload }: Action<P>) => 
 const postProjectMemberHandler = (state: S, { payload }: Action<P>) => {
   const projectIndex = state.list.findIndex(el => get(payload, 'projectId') === el.id);
   return state.updateItem(projectIndex, {
-    members: [
-      ...state.list[projectIndex].members,
+    members: state.list[projectIndex].members.addItem(
       new Member({
         accessLevel: 0,
         member: { email: (payload as IM).email },
-      }),
-    ],
+      })
+    ),
   });
 };
 
 const postProjectMemberSuccessHandler = (state: S, { payload, meta }: ActionMeta<P, M>) => {
   const projectIndex = state.list.findIndex(el => meta.previousAction.payload.projectId === el.id);
-  const memberIndex = state.list[projectIndex].members.findIndex(
+  const memberIndex = state.list[projectIndex].members.list.findIndex(
     el => meta.previousAction.payload.email === el.member.email
   );
   return state.updateItem(projectIndex, {
-    members: [
-      ...state.list[projectIndex].members.slice(0, memberIndex),
-      new Member((payload as AxiosResponse).data),
-      ...state.list[projectIndex].members.slice(memberIndex + 1),
-    ],
+    members: state.list[projectIndex].members.updateItem(memberIndex, new Member((payload as AxiosResponse).data)),
   });
 };
 
 const postProjectMemberFailHandler = (state: S, { meta }: ActionMeta<P, M>) => {
   const projectIndex = state.list.findIndex(el => meta.previousAction.payload.projectId === el.id);
   return state.updateItem(projectIndex, {
-    members: state.list[projectIndex].members.slice(0, state.list[projectIndex].members.length - 1),
+    members: state.list[projectIndex].members.removeItem(-1),
+  });
+};
+
+const updateProjectMemberAccessLevelHandler = (state: S, { payload }: Action<P>) => {
+  const projectIndex = state.list.findIndex(el => get(payload, 'projectId') === el.id);
+  const memberIndex = state.list[projectIndex].members.list.findIndex(el => get(payload, 'memberId') === el.member.id);
+  return state.updateItem(projectIndex, {
+    members: state.list[projectIndex].members.updateItem(memberIndex, {
+      accessLevel: get(payload, 'request.data.accessLevel'),
+    }),
   });
 };
 
 const deleteProjectMemberHandler = (state: S, { payload }: Action<P>) => {
   const projectIndex = state.list.findIndex(el => (payload as IM).projectId === el.id);
-  const memberIndex = state.list[projectIndex].members.findIndex(el => (payload as IM).memberId === el.member.id);
+  const memberIndex = state.list[projectIndex].members.list.findIndex(el => (payload as IM).memberId === el.member.id);
   return state.updateItem(projectIndex, {
-    members: [
-      ...state.list[projectIndex].members.slice(0, memberIndex),
-      ...state.list[projectIndex].members.slice(memberIndex + 1),
-    ],
+    members: state.list[projectIndex].members.removeItem(memberIndex),
   });
 };
 
@@ -178,6 +181,9 @@ export const projects = handleActions<S, P>(
     [postProjectMember.toString()]: postProjectMemberHandler,
     [postProjectMember.success]: postProjectMemberSuccessHandler,
     [postProjectMember.fail]: postProjectMemberFailHandler,
+    [updateProjectMemberAccessLevel.toString()]: updateProjectMemberAccessLevelHandler,
+    // [updateProjectMemberAccessLevel.success]: updateProjectMemberAccessLevelSuccessHandler,
+    // [updateProjectMemberAccessLevel.fail]: updateProjectMemberAccessLevelFailHandler,
     [deleteProjectMember.toString()]: deleteProjectMemberHandler,
     [combineActions(postProjectTask, patchProjectTask, deleteProjectTask)]: projectTaskHandler,
     [combineActions(getAllProjectTaskTypes)]: projectTaskTypeHandler,
