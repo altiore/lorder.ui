@@ -18,4 +18,7 @@ export const styles = (theme: Theme) =>
       borderRadius: 5,
       padding: '5px 10px',
     },
+    popover: {
+      zIndex: 1203,
+    },
   });

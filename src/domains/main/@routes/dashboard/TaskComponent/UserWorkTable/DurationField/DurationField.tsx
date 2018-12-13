@@ -32,6 +32,7 @@ export class DurationFieldTsx extends React.Component<IDurationFieldProps, IStat
     return (
       <Popover
         place="below"
+        className={classes.popover}
         isOpen={this.state.isEdit}
         onOuterAction={this.valueOnClick}
         body={
