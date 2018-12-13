@@ -40,10 +40,10 @@ export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProj
           className={classes.button}
           onMouseEnter={this.onMouseEnterHandler}
           onMouseLeave={this.onClosePopover}
-          // variant={'outlined'}
+          variant={'outlined'}
           color={'secondary'}
         >
-          <Typography variant="body1" noWrap>
+          <Typography variant="body1" noWrap className={classes.text}>
             {title}
           </Typography>
         </LinkButton>

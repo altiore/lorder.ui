@@ -1,11 +1,19 @@
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import BallotIcon from '@material-ui/icons/Ballot';
 import HomeIcon from '@material-ui/icons/Home';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import PeopleIcon from '@material-ui/icons/People';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import { Main } from '../main';
 import { Dashboard } from '../main/@routes/dashboard';
 import { AllProjects, OwnProjects } from '../main/@routes/projects/list';
 import { Project } from '../main/@routes/projects/one';
+import { ProjectMembers } from '../main/@routes/projects/one/ProjectMembers';
+import { ProjectTasks } from '../main/@routes/projects/one/ProjectTasks';
+import { ProjectTaskTypes } from '../main/@routes/projects/one/ProjectTaskTypes';
+import { Settings } from '../main/@routes/projects/one/Settings';
 import { Users } from '../main/@routes/users';
 import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
@@ -44,6 +52,36 @@ export const routes = [
       {
         component: Project,
         path: '/projects/:projectId',
+        routes: [
+          {
+            component: ProjectTasks,
+            exact: true,
+            icon: ListAltIcon,
+            path: '/projects/:projectId/tasks',
+            title: 'Задачи',
+          },
+          {
+            component: ProjectTaskTypes,
+            exact: true,
+            icon: BallotIcon,
+            path: '/projects/:projectId/task-types',
+            title: 'Типы Задач',
+          },
+          {
+            component: ProjectMembers,
+            exact: true,
+            icon: PeopleIcon,
+            path: '/projects/:projectId/members',
+            title: 'Участники',
+          },
+          {
+            component: Settings,
+            exact: true,
+            icon: SettingsIcon,
+            path: '/projects/:projectId/settings',
+            title: 'Другие Настройки',
+          },
+        ],
       },
       {
         component: Users,

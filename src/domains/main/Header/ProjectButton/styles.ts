@@ -11,4 +11,7 @@ export const styles = (theme: Theme) =>
     projectPopover: {
       zIndex: 1202,
     },
+    text: {
+      color: theme.palette.secondary.light,
+    },
   });

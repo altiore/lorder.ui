@@ -21,7 +21,7 @@ export interface IHeaderProps {
 
 export const HeaderTsx: React.FunctionComponent<IHeaderProps> = React.memo(
   ({ classes, projects, logOut, userAvatar, userEmail, userRole }) => (
-    <AppBar position="static" className={classes.appBar}>
+    <AppBar position="static" className={classes.appBar} color="primary">
       <Toolbar>
         <LinkIconButton to="/">
           <AvTimerIcon />
