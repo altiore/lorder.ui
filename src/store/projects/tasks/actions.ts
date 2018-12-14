@@ -52,7 +52,8 @@ export const postProjectTask = requestActions<IProjectTaskData>(
 export const patchProjectTask = requestActions<IPatchProjectTaskData>(
   'PROJECT_TASK/PATCH',
   ({ projectId, id, users, userWorks, ...data }: IPatchProjectTaskData): any => {
-    const preparedData: any = data;
+    const preparedData: any = { ...data };
+    delete preparedData.status;
     if (users) {
       preparedData.users = users.map(el => el.id);
     }

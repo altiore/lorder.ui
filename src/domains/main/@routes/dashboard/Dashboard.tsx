@@ -20,7 +20,7 @@ export interface IState {
 }
 
 export interface IDashboardProps extends RouteComponentProps<{}> {
-  filteredTasks: Task[];
+  tasks: Task[];
   classes?: any;
   currentUserWorkId?: number | string;
   getAllTasks: any;
@@ -31,6 +31,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
   state = {
     open: {},
     page: 0,
+    perPage: 4,
   };
 
   componentDidMount() {
@@ -38,8 +39,10 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
   }
 
   render() {
-    const { filteredTasks } = this.props;
-    const { page } = this.state;
+    const { tasks } = this.props;
+    const { page, perPage } = this.state;
+    const length = tasks.length;
+    const sortedTasks = tasks.slice(page * 4, (page + 1) * 4);
     return (
       <PageCenter>
         <DailyRoutine onChange={this.handleOnChange} />
@@ -47,8 +50,8 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
           <StartForm />
           <List>
             <CurrentTask />
-            <Filter />
-            {filteredTasks.slice(page * 4, (page + 1) * 4).map(this.renderListItem)}
+            <Filter page={page} perPage={perPage} count={length} changePage={this.handleChangePage} />
+            {sortedTasks.map(this.renderListItem)}
           </List>
         </Grid>
         <Grid item lg={3} md={4} sm={12}>
@@ -65,5 +68,20 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
   private renderListItem = (task: Task) => {
     const { getProjectById } = this.props;
     return <TaskComponent key={task.id} isCurrent={false} project={getProjectById(task.projectId)} task={task} />;
+  };
+
+  private handleChangePage = (index: number) => () => {
+    let page = index;
+    const { tasks } = this.props;
+    const { perPage } = this.state;
+    const length = tasks.length;
+    const max = Math.ceil(length / perPage);
+    if (page < 0) {
+      page = max - 1;
+    }
+    if (page > max - 1) {
+      page = 0;
+    }
+    this.setState({ page });
   };
 }

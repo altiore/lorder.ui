@@ -5,6 +5,15 @@ export const styles = (theme: Theme) =>
   createStyles({
     filter: {
       display: 'flex',
-      justifyContent: 'flex-end',
+      justifyContent: 'space-between',
+    },
+    grow: {
+      grow: 1,
+    },
+    left: {
+      marginRight: theme.spacing.unit,
+    },
+    right: {
+      marginLeft: theme.spacing.unit,
     },
   });

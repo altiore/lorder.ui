@@ -24,6 +24,7 @@ export interface IState {
   publicProject: PublicProject;
   taskTypes: DownloadList<TaskType>;
   tasks: DownloadList<Task>;
+  tasksFilter: { filter: 'smart' | 'recent' | 'new' };
   timer: Timer;
   router: RouterState;
   ui: IUiState;
