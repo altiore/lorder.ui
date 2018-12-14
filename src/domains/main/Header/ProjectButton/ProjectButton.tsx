@@ -8,6 +8,7 @@ import { ShortChart } from './ShortChart';
 export interface IProjectButtonProps {
   classes?: any;
   id?: number;
+  inProgress: boolean;
   uuid?: string;
   time: string;
   title: string;
@@ -25,7 +26,7 @@ export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProj
 
   render() {
     const { isOpen } = this.state;
-    const { classes, uuid, id, time, title, percent } = this.props;
+    const { classes, uuid, id, inProgress, time, title, percent } = this.props;
     return (
       <Popover
         className={classes.projectPopover}
@@ -43,6 +44,7 @@ export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProj
           variant={'outlined'}
           color={'secondary'}
         >
+          {inProgress && <span className={classes.inProgress} />}
           <Typography variant="body1" noWrap className={classes.text}>
             {title}
           </Typography>

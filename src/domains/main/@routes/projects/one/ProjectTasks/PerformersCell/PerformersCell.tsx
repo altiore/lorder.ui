@@ -66,11 +66,6 @@ export class PerformersCellJsx extends React.Component<IPerformersCellProps, IPe
   }
 
   private findItemIndex(item: IUser, members: IUser[]) {
-    console.log('compareItem', {
-      item,
-      members,
-      res: members.findIndex(el => el.id === item.id),
-    });
     return members.findIndex(el => el.id === item.id);
   }
 

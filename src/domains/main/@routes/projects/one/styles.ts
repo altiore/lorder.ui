@@ -60,6 +60,12 @@ export const styles = (theme: Theme) =>
       marginLeft: 12,
       marginRight: 20,
     },
+    projectTitle: {
+      overflow: 'hidden',
+      paddingLeft: theme.spacing.unit * 2,
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    },
     root: {
       display: 'flex',
     },

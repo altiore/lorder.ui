@@ -80,7 +80,7 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
                         {email}
                       </TableCell>
                       <TableCell>{accessLevel ? 'Да' : 'Нет'}</TableCell>
-                      <TableCell>
+                      <TableCell numeric>
                         <ChangedCell title={'Уровень доступа'} input={{ value: [accessLevel] }} memberId={id} />
                       </TableCell>
                       <TableCell numeric>

@@ -14,6 +14,15 @@ export const styles = (theme: Theme) =>
       cursor: 'pointer',
       margin: '10px 14px',
     },
+    buttonBlock: {
+      transition: theme.transitions.create('width', {
+        duration: theme.transitions.duration.enteringScreen,
+        easing: theme.transitions.easing.easeOut,
+      }),
+    },
+    expandButton: {
+      marginLeft: theme.spacing.unit,
+    },
     grow: {
       flexGrow: 1,
     },

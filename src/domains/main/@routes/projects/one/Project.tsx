@@ -25,6 +25,7 @@ import { Project } from 'src/store/projects';
 
 export interface IProjectProps {
   classes: any;
+  fetchProjectDetails: any;
   openedProject: Project;
   routes: IRoute[];
   goTo: any;
@@ -40,9 +41,9 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
     open: false,
   };
 
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
+  componentDidMount(): void {
+    this.props.fetchProjectDetails(this.props.openedProject.id);
+  }
 
   handleDrawerClose = () => {
     this.setState({ open: false });
@@ -69,7 +70,9 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
           }}
         >
           <div className={classes.drawerHeader}>
-            <Typography variant="h5">{openedProject.title}</Typography>
+            <Typography variant="h5" className={classes.projectTitle}>
+              {openedProject.title}
+            </Typography>
             <div className={classes.grow} />
             <IconButton onClick={this.handleDrawerClose}>
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
