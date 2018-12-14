@@ -82,7 +82,7 @@ export const updateStatistic = requestActions<number>('PROJECT/STATISTIC/UPDATE'
     title: 'Не удалось обновить статистику',
   },
   request: {
-    method: 'POST',
+    method: 'PATCH',
     url: `/projects/${projectId}/statistic`,
   },
   success: {
