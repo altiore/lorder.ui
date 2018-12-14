@@ -50,7 +50,13 @@ const getOwnProjectsFailHandler = (state: S): S => {
 };
 
 const postProjectSuccessHandler = (state: DownloadList, { payload }: Action<AxiosResponse>) => {
-  return state.addItem(payload && payload.data);
+  if (!payload) {
+    throw new Error('payload is required!');
+  }
+  return state.addItem({
+    ...payload.data,
+    accessLevel: 7,
+  });
 };
 
 const removeProjectSuccessHandler = (state: S, { meta }: ActionMeta<P, M>) => {

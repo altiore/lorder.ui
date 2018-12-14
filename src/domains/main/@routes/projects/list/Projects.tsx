@@ -11,8 +11,8 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { Page } from 'src/components/Page';
 import { Table } from 'src/components/Table';
+import { CreateProjectPopup } from 'src/domains/@common/CreateProjectPopup';
 import { ACCESS_LEVEL, Project } from 'src/store/projects';
-import { CreateProjectPopup } from './CreateProjectPopup';
 
 export interface IProjectsProps {
   acceptInvitation: (projectId: number) => any;

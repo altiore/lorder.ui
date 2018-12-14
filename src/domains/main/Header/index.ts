@@ -2,6 +2,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { closeDialog, openDialog } from 'src/store/dialog';
 import { logOut, userAvatar, userEmail, userRole } from 'src/store/identity';
 import { openedProject, ownProjectListWithStatistic, selectedProject } from 'src/store/projects';
 import { HeaderTsx } from './Header';
@@ -17,7 +18,9 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
+  closeDialog,
   logOut,
+  openDialog,
 };
 
 export const Header = connect(

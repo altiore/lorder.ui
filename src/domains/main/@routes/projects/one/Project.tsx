@@ -42,7 +42,10 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
   };
 
   componentDidMount(): void {
-    this.props.fetchProjectDetails(this.props.openedProject.id);
+    const { fetchProjectDetails, openedProject } = this.props;
+    if (openedProject && openedProject.id) {
+      fetchProjectDetails(openedProject.id);
+    }
   }
 
   handleDrawerClose = () => {
@@ -56,6 +59,10 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
   render() {
     const { classes, openedProject, theme, routes } = this.props;
     const { open } = this.state;
+
+    if (!openedProject || !openedProject.title) {
+      return null;
+    }
 
     return (
       <div className={classes.root}>
