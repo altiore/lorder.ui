@@ -44,7 +44,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
     const { expanded } = this.state;
     let filteredProjects: Array<Project & { percent: string; time: string }> = projects;
     if (!expanded) {
-      filteredProjects = projects.filter(projectFilter([selectedProject]));
+      filteredProjects = selectedProject ? projects.filter(projectFilter([selectedProject])) : projects;
     }
     return (
       <AppBar position="static" className={classes.appBar} color="primary">
@@ -54,7 +54,11 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
           </LinkIconButton>
           <div className={classes.buttonBlock}>
             {filteredProjects.map(project => (
-              <ProjectButton key={project.id} {...project} inProgress={project.id === selectedProject.id} />
+              <ProjectButton
+                key={project.id}
+                {...project}
+                inProgress={selectedProject && project.id === selectedProject.id}
+              />
             ))}
             {expanded && (
               <IconButton color="secondary" onClick={this.openCreateProject} className={classes.expandButton}>
