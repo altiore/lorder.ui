@@ -11,31 +11,37 @@ import { projectId } from 'src/store/router';
 import { ProjectTasksJsx } from './ProjectTasks';
 import { styles } from './styles';
 
+const mapState = createStructuredSelector({
+  isFormMount: isFormMount(PROJECT_EDIT_TASK_FORM_NAME),
+  projectId,
+  projectTasks,
+});
+
+const mapDispatch = {
+  closeDialog,
+  deleteProjectTask,
+  destroy,
+  getAllProjectTasks,
+  goToPage: push,
+  openDialog,
+};
+
+const mergeProps = (
+  { projectId, ...restState }: any,
+  { deleteProjectTask, destroy, getAllProjectTasks, goToPage, ...restDispatch }: any,
+  { match, ...restOwn }: any
+) => ({
+  ...restState,
+  ...restDispatch,
+  deleteProjectTask: (taskId: number) => deleteProjectTask({ taskId, projectId }),
+  destroyEditTaskForm: () => destroy(PROJECT_EDIT_TASK_FORM_NAME),
+  getAllProjectTasks: () => getAllProjectTasks(projectId),
+  projectId,
+  ...restOwn,
+});
+
 export const ProjectTasks = connect(
-  createStructuredSelector({
-    isFormMount: isFormMount(PROJECT_EDIT_TASK_FORM_NAME),
-    projectId,
-    projectTasks,
-  }),
-  {
-    closeDialog,
-    deleteProjectTask,
-    destroy,
-    getAllProjectTasks,
-    goToPage: push,
-    openDialog,
-  },
-  (
-    { projectId, ...restState }: any,
-    { deleteProjectTask, destroy, getAllProjectTasks, goToPage, ...restDispatch }: any,
-    { match, ...restOwn }: any
-  ) => ({
-    ...restState,
-    ...restDispatch,
-    deleteProjectTask: (taskId: number) => deleteProjectTask({ taskId, projectId }),
-    destroyEditTaskForm: () => destroy(PROJECT_EDIT_TASK_FORM_NAME),
-    getAllProjectTasks: () => getAllProjectTasks(projectId),
-    projectId,
-    ...restOwn,
-  })
+  mapState,
+  mapDispatch,
+  mergeProps
 )(withStyles(styles, { withTheme: true })(ProjectTasksJsx));

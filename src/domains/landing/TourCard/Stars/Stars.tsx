@@ -7,7 +7,7 @@ export interface IStarsProps {
   stars: number;
 }
 
-export const StarsTsx: React.StatelessComponent<IStarsProps> = ({ stars }) => {
+export const StarsTsx: React.FunctionComponent<IStarsProps> = ({ stars }) => {
   let arr: number[] = [0, 0, 0, 0, 0];
   if (stars >= 5) {
     arr = [1, 1, 1, 1, 1];

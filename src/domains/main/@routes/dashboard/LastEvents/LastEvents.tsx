@@ -4,6 +4,6 @@ export interface ILastEventsProps {
   classes?: any;
 }
 
-export const LastEventsTsx: React.StatelessComponent<ILastEventsProps> = ({ classes }) => (
+export const LastEventsTsx: React.FunctionComponent<ILastEventsProps> = ({ classes }) => (
   <div className={classes.list}>Здесь будут отображаться последние действия</div>
 );

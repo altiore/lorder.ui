@@ -13,7 +13,7 @@ export interface IStartStopBtnProps {
   onStop?: (event: React.SyntheticEvent<any>) => any;
 }
 
-export const StartStopBtnTsx: React.StatelessComponent<IStartStopBtnProps> = ({
+export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
   className,
   classes,
   isLarge,

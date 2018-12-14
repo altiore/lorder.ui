@@ -10,7 +10,7 @@ export interface IPageProps {
   children?: any;
 }
 
-export const PageJsx: React.StatelessComponent<IPageProps> = ({ className, classes, children }) => (
+export const PageJsx: React.FunctionComponent<IPageProps> = ({ className, classes, children }) => (
   <Grid container className={cn(classes.root, className)}>
     <Grid item xs={12}>
       <Paper className={classes.paper}>

@@ -6,7 +6,7 @@ export interface ITimerCellProps {
   currentTimeHumanize: string;
 }
 
-export const TimerCellJsx: React.StatelessComponent<ITimerCellProps> = ({ currentTimeHumanize }) => (
+export const TimerCellJsx: React.FunctionComponent<ITimerCellProps> = ({ currentTimeHumanize }) => (
   <TableCell numeric>
     <Button disableFocusRipple disableRipple style={{ cursor: 'not-allowed' }}>
       {currentTimeHumanize}

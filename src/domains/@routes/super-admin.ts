@@ -2,6 +2,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import BallotIcon from '@material-ui/icons/Ballot';
 import HomeIcon from '@material-ui/icons/Home';
+import ImportExportIcon from '@material-ui/icons/ImportExport';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -10,6 +11,7 @@ import { Main } from '../main';
 import { Dashboard } from '../main/@routes/dashboard';
 import { AllProjects, OwnProjects } from '../main/@routes/projects/list';
 import { Project } from '../main/@routes/projects/one';
+import DragAndDrop from '../main/@routes/projects/one/DragAndDrop';
 import { ProjectMembers } from '../main/@routes/projects/one/ProjectMembers';
 import { ProjectTasks } from '../main/@routes/projects/one/ProjectTasks';
 import { ProjectTaskTypes } from '../main/@routes/projects/one/ProjectTaskTypes';
@@ -53,6 +55,13 @@ export const routes = [
         component: Project,
         path: '/projects/:projectId',
         routes: [
+          {
+            component: DragAndDrop,
+            exact: true,
+            icon: ImportExportIcon,
+            path: '/projects/:projectId/dnd',
+            title: 'Board',
+          },
           {
             component: ProjectTasks,
             exact: true,

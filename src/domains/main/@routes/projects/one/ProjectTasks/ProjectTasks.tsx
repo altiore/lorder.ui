@@ -70,6 +70,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
                 <TableCell>Исполнители</TableCell>
                 <TableCell numeric>Значимость</TableCell>
                 <TableCell numeric>Время</TableCell>
+                <TableCell numeric>Статус</TableCell>
                 <TableCell numeric />
               </TableRow>
             </TableHead>
@@ -88,7 +89,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     );
   }
 
-  private renderItem = ({ id, title, description, source, value, users, duration }: ProjectTask) => {
+  private renderItem = ({ id, title, description, source, status, value, users, duration }: ProjectTask) => {
     const { classes } = this.props;
     return (
       <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id)}>
@@ -106,6 +107,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
         </TableCell>
         <TableCell numeric>{value}</TableCell>
         <TableCell numeric>{duration}</TableCell>
+        <TableCell numeric>{status}</TableCell>
         <TableCell numeric>
           <IconButton onClick={this.handleRemoveClick(id)}>
             <ClearIcon />

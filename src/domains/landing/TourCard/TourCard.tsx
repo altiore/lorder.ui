@@ -16,7 +16,7 @@ export interface ITourCardProps {
   reviews: number;
 }
 
-export const TourCardTsx: React.StatelessComponent<ITourCardProps> = ({
+export const TourCardTsx: React.FunctionComponent<ITourCardProps> = ({
   classes,
   duration,
   image,

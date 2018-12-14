@@ -13,7 +13,7 @@ export interface IProjectFormProps {
   buttonText?: string;
 }
 
-export const ProjectForm: React.StatelessComponent<IProjectFormProps & InjectedFormProps<{}, IProjectFormProps>> = ({
+export const ProjectForm: React.FunctionComponent<IProjectFormProps & InjectedFormProps<{}, IProjectFormProps>> = ({
   handleSubmit,
 }) => (
   <form onSubmit={handleSubmit}>

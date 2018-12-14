@@ -14,7 +14,7 @@ export interface IShortChartProps {
   percent: string;
 }
 
-export const ShortChartTsx: React.StatelessComponent<IShortChartProps> = ({ classes, id, title, percent, time }) => (
+export const ShortChartTsx: React.FunctionComponent<IShortChartProps> = ({ classes, id, title, percent, time }) => (
   <List className={classes.list}>
     <ListItem>
       <ListItemIcon>

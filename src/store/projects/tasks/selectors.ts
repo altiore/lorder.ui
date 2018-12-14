@@ -7,7 +7,7 @@ import { ProjectTask } from './ProjectTask';
 
 export const projectTasks = createSelector(
   openedProject,
-  (project: Project): DownloadList<ProjectTask> => project && project.tasks
+  (project: Project): DownloadList<ProjectTask> => (project ? project.tasks : new DownloadList(ProjectTask))
 );
 
 export const projectTasksIsLoading = createSelector(

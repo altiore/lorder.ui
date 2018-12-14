@@ -1,14 +1,14 @@
 import map from 'lodash-es/map';
-import { ComponentClass, StatelessComponent } from 'react';
+import { ComponentClass, FunctionComponent } from 'react';
 
 export interface IDialogState {
   isOpened: boolean;
-  children?: string | StatelessComponent | ComponentClass;
+  children?: string | FunctionComponent | ComponentClass;
 }
 
 export class Dialog implements IDialogState {
   readonly isOpened: boolean = false;
-  readonly children?: string | StatelessComponent | ComponentClass;
+  readonly children?: string | FunctionComponent | ComponentClass;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

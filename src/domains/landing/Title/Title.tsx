@@ -8,7 +8,7 @@ export interface ITitleProps {
   classes: any;
 }
 
-export const TitleTsx: React.StatelessComponent<ITitleProps> = ({ classes }) => (
+export const TitleTsx: React.FunctionComponent<ITitleProps> = ({ classes }) => (
   <Grid container className={classes.wrapper}>
     <Grid item className={classes.root2} xs={12} />
     <Grid item className={classes.root}>

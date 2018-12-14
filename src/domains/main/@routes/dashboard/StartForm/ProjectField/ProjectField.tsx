@@ -13,7 +13,7 @@ export interface IProjectFieldProps extends WrappedFieldProps {
   items?: Array<{ value: any; label: string }>;
 }
 
-export const ProjectFieldJsx: React.StatelessComponent<IProjectFieldProps> = ({
+export const ProjectFieldJsx: React.FunctionComponent<IProjectFieldProps> = ({
   className,
   input,
   getLabel = (item: any) => item.title,

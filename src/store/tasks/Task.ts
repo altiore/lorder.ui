@@ -10,6 +10,7 @@ export interface ITask {
   description: string;
   projectId: number;
   source?: string;
+  status: number;
   value: number;
   userWorks: DownloadList<UserWork>;
 }
@@ -20,6 +21,7 @@ export class Task implements ITask {
   description: string;
   projectId: number;
   source?: string;
+  status: number;
   value: number;
   userWorks: DownloadList<UserWork> = new DownloadList(UserWork);
 

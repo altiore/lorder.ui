@@ -7,7 +7,7 @@ export interface IFormProps {
   classes: any;
 }
 
-export const FormTsx: React.StatelessComponent<IFormProps> = ({ classes }) => (
+export const FormTsx: React.FunctionComponent<IFormProps> = ({ classes }) => (
   <form className={classes.range} noValidate>
     <span>
       <TextField
