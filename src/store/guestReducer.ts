@@ -8,6 +8,7 @@ import { createTransform, PersistConfig, persistReducer } from 'redux-persist';
 import { IState, ROLE } from 'src/@types';
 import { DownloadList } from './@common/entities';
 import { dialog } from './dialog';
+import { highcharts } from './highcharts/reducer';
 import { identity } from './identity';
 import { Project } from './projects';
 import { publicProject } from './publicProject';
@@ -25,7 +26,7 @@ localForage.config({
 });
 
 const persistConfig: PersistConfig = {
-  blacklist: ['dialog', 'form', 'timer', 'notifications', 'publicProject', 'versionHistory'],
+  blacklist: ['dialog', 'form', 'highcharts', 'timer', 'notifications', 'publicProject', 'versionHistory'],
   key: 'altiore',
   storage: localForage,
   transforms: [
@@ -77,6 +78,7 @@ export async function createRootReducer(role: ROLE = ROLE.GUEST) {
     combineReducers<IState>({
       dialog,
       form,
+      highcharts,
       identity,
       notifications,
       publicProject,

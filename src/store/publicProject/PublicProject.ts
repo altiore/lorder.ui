@@ -37,8 +37,19 @@ export class PublicProject {
     }
     const { members, data } = this.statistic;
     return Object.keys(data).map(el => ({
-      name: get(members.find(m => m.id.toString() === el), 'email', el),
+      name: get(members.find(m => m.id.toString() === el), 'email'),
       y: millisecondsToHours(data[el].time),
+    }));
+  }
+
+  get chartValueData() {
+    if (!this.statistic) {
+      return [];
+    }
+    const { members, data } = this.statistic;
+    return Object.keys(data).map(el => ({
+      name: get(members.find(m => m.id.toString() === el), 'email'),
+      y: data[el].value || 1,
     }));
   }
 }

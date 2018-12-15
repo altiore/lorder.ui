@@ -10,7 +10,7 @@ import { RouteComponentProps } from 'react-router';
 import { TelegramIco } from 'src/components/@icons/Telegram';
 import { Block } from 'src/components/Block';
 import { MemberCard } from 'src/components/MemberCard';
-import { PieChart } from 'src/components/PieChart';
+import PieChart from 'src/domains/@common/PieChart';
 import { PublicProject } from 'src/store/publicProject';
 import { LinkButton } from '../@common/LinkButton';
 
@@ -43,7 +43,7 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
 
   render() {
     const {
-      publicProjectData: { isLoading, isLoaded, title, statistic, chartData, projectId },
+      publicProjectData: { isLoading, isLoaded, title, statistic, chartData, chartValueData, projectId },
       classes,
       isAuth,
     } = this.props;
@@ -93,10 +93,17 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
             </Grid>
           </Block>
 
-          <div className={classes.chart}>
-            <Divider />
-            <PieChart data={chartData} title="Статистика по проекту" />
-          </div>
+          <Divider />
+          <Block>
+            <Grid container justify="space-around" item xs={12}>
+              <div className={classes.chart}>
+                <PieChart key={1} data={chartData} title="Статистика по времени" unit="h" />
+              </div>
+              <div className={classes.chart}>
+                <PieChart key={2} data={chartValueData} title="Статистика по ценности" />
+              </div>
+            </Grid>
+          </Block>
 
           <Divider />
           <Block>

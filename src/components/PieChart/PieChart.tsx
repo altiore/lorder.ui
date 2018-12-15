@@ -6,49 +6,22 @@ export interface IPieChartProps {
   data: any;
   className?: string;
   title?: string;
+  setUpHighcharts?: any;
+  unit?: string;
 }
 
 class PieChartTsx extends React.Component<IPieChartProps, {}> {
-  componentWillMount() {
-    H.setOptions({
-      colors: H.map(H.getOptions().colors, function(color: string) {
-        return {
-          radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
-          stops: [
-            [0, color],
-            [
-              1,
-              H.Color(color)
-                .brighten(-0.3)
-                .get('rgb'),
-            ] /* darken */,
-          ],
-        };
-      }),
-    });
-  }
-
-  componentWillUnmount() {
-    H.setOptions({
-      colors: [
-        '#7cb5ec',
-        '#434348',
-        '#90ed7d',
-        '#f7a35c',
-        '#8085e9',
-        '#f15c80',
-        '#e4d354',
-        '#2b908f',
-        '#f45b5b',
-        '#91e8e1',
-      ],
-    });
+  componentDidMount(): void {
+    const { setUpHighcharts } = this.props;
+    if (setUpHighcharts) {
+      setUpHighcharts();
+    }
   }
 
   render() {
-    const { data, title } = this.props;
+    const { data, title, unit } = this.props;
     return (
-      <HighchartsChart exporting>
+      <HighchartsChart>
         {title && <Title>{title}</Title>}
 
         <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow={null} type="pie" />
@@ -67,7 +40,7 @@ class PieChartTsx extends React.Component<IPieChartProps, {}> {
           showInLegend={false}
           dataLabels={{
             enabled: true,
-            format: '<b>{point.name}</b>: {point.y} h',
+            format: `<b>{point.name}</b>: {point.y}${unit ? ` ${unit}` : ''}`,
             style: {
               color: (H.theme && H.theme.contrastTextColor) || 'black',
             },

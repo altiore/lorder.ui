@@ -20,7 +20,8 @@ export const styles = (theme: Theme): any => ({
     marginTop: 20,
   },
   chart: {
-    minHeight: 400,
+    flexGrow: 1,
+    maxWidth: 620,
   },
   content: {
     display: 'flex',
