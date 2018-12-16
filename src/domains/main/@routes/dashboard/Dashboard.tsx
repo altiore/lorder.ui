@@ -1,6 +1,8 @@
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
+import { Theme } from '@material-ui/core/styles';
 import * as React from 'react';
+import MediaQuery from 'react-responsive';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { IEvent } from 'src/components/DailyRoutine';
@@ -21,6 +23,7 @@ export interface IState {
 
 export interface IDashboardProps extends RouteComponentProps<{}> {
   tasks: Task[];
+  theme: Theme;
   classes?: any;
   currentUserWorkId?: number | string;
   getAllTasks: any;
@@ -39,24 +42,26 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
   }
 
   render() {
-    const { tasks } = this.props;
+    const { classes, tasks, theme } = this.props;
     const { page, perPage } = this.state;
     const length = tasks.length;
     const sortedTasks = tasks.slice(page * 4, (page + 1) * 4);
     return (
       <PageCenter>
         <DailyRoutine onChange={this.handleOnChange} />
-        <Grid item lg={9} md={8} sm={12}>
+        <Grid item lg={9} md={8} sm={12} className={classes.content}>
           <StartForm />
-          <List>
+          <List classes={{ root: classes.listRoot }}>
             <CurrentTask />
             <Filter page={page} perPage={perPage} count={length} changePage={this.handleChangePage} />
             {sortedTasks.map(this.renderListItem)}
           </List>
         </Grid>
-        <Grid item lg={3} md={4} sm={12}>
-          <LastEvents />
-        </Grid>
+        <MediaQuery minDeviceWidth={theme.breakpoints.values.sm}>
+          <Grid item lg={3} md={4} sm={12}>
+            <LastEvents />
+          </Grid>
+        </MediaQuery>
       </PageCenter>
     );
   }

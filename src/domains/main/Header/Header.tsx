@@ -44,7 +44,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
     const { expanded } = this.state;
     let filteredProjects: Array<Project & { percent: string; time: string }> = projects;
     if (!expanded) {
-      filteredProjects = selectedProject ? projects.filter(projectFilter([selectedProject])) : projects;
+      filteredProjects = selectedProject ? projects.filter(projectFilter([selectedProject])) : [];
     }
     return (
       <AppBar position="static" className={classes.appBar} color="primary">

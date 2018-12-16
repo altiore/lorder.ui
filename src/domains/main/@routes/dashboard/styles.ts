@@ -6,8 +6,19 @@ export const styles = (theme: Theme) =>
     collapse: {
       paddingLeft: 88,
     },
+    content: {
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
+    },
     duration: {
       width: 100,
+    },
+    listRoot: {
+      '& > li:last-child': {
+        marginBottom: 0,
+      },
+      paddingBottom: 0,
     },
     project: {
       width: 100,

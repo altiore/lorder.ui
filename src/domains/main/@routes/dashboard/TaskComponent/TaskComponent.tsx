@@ -1,9 +1,11 @@
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import * as React from 'react';
 import * as Popover from 'react-popover';
+import MediaQuery from 'react-responsive';
 
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { LinkButton } from 'src/domains/@common/LinkButton';
@@ -14,6 +16,7 @@ import { UserWorkTable } from './UserWorkTable';
 
 export interface ITaskComponentProps {
   classes?: any;
+  theme: Theme;
   isCurrent: boolean;
   project: Project;
   task: Task;
@@ -32,7 +35,7 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
   };
 
   render() {
-    const { classes, isCurrent, project, task } = this.props;
+    const { classes, isCurrent, project, task, theme } = this.props;
     if (!task || !project) {
       return null;
     }
@@ -40,16 +43,17 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
     const { isWorkTableOpen } = this.state;
     return (
       <ListItem className={classes.listItem}>
-        <ListItemIcon>
-          <StartStopBtn isStarted={isCurrent} onStart={this.startUserTask(task)} onStop={this.stopUserWork} />
-        </ListItemIcon>
-        <Button className={classes.buttonTitle}>{task.title}</Button>
-        <LinkButton
-          className={classes.buttonProject}
-          to={project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`}
-        >
-          {project.title}
-        </LinkButton>
+        <MediaQuery minWidth={theme.breakpoints.values.sm}>
+          <LinkButton
+            className={classes.buttonProject}
+            to={project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`}
+          >
+            {project.title}
+          </LinkButton>
+        </MediaQuery>
+        <Button classes={{ label: classes.buttonTitleLabel }} className={classes.buttonTitle}>
+          {task.title}
+        </Button>
         <Popover
           tipSize={4}
           className={classes.userWorkTable}
@@ -77,6 +81,9 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
             </Tooltip>
           )}
         </Popover>
+        <ListItemIcon classes={{ root: classes.listItemRoot }}>
+          <StartStopBtn isStarted={isCurrent} onStart={this.startUserTask(task)} onStop={this.stopUserWork} />
+        </ListItemIcon>
       </ListItem>
     );
   }

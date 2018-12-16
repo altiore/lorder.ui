@@ -5,8 +5,12 @@ export const styles = (theme: Theme) =>
   createStyles({
     content: {
       flexGrow: 1,
-      margin: '24px auto',
+      margin: `${theme.spacing.unit * 3}px auto`,
       maxWidth: theme.mainContent.width,
       padding: theme.spacing.unit * 2,
+      [theme.breakpoints.down('sm')]: {
+        margin: 0,
+        padding: theme.spacing.unit,
+      },
     },
   });
