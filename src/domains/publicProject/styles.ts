@@ -56,6 +56,10 @@ export const styles = (theme: Theme): any => ({
       display: 'flex',
     },
   },
+  title: {
+    color: '#ffffff',
+    textDecoration: 'none',
+  },
   toolbar: {
     alignItems: 'center',
     justifyContent: 'space-between',

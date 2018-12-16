@@ -81,7 +81,7 @@ export class InfoTsx extends React.Component<IInfoProps, IState> {
           <Divider />
           <Block>
             <Grid item className={classes.profile} xs={12}>
-              <Typography variant={'h4'}>Наша комманда</Typography>
+              <Typography variant={'h4'}>Наша команда</Typography>
               <Typography>В безумном мире хаоса мы помогаем тебе навести порядок... И себе...</Typography>
             </Grid>
             {team.map((member, index) => (

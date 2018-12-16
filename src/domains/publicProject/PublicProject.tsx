@@ -6,6 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { TelegramIco } from 'src/components/@icons/Telegram';
 import { Block } from 'src/components/Block';
@@ -58,9 +59,11 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
         {!isAuth && (
           <AppBar key={'top'} position="static" className={classes.appBar}>
             <Toolbar>
-              <Typography variant="h6" color="inherit">
-                Altiore
-              </Typography>
+              <Link to="/">
+                <Typography variant="h6" className={classes.title}>
+                  Altiore
+                </Typography>
+              </Link>
             </Toolbar>
           </AppBar>
         )}
@@ -114,7 +117,10 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
             {statistic &&
               Object.keys(statistic.members).map((member, index) => (
                 <Grid item key={index}>
-                  <MemberCard avatar={statistic.members[member].avatar} name={statistic.members[member].email} />
+                  <MemberCard
+                    avatar={statistic.members[member].avatar}
+                    name={statistic.members[member].email.replace(/\@.*$/, '')}
+                  />
                 </Grid>
               ))}
           </Block>
