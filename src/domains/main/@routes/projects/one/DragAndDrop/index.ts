@@ -2,7 +2,7 @@ import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { getAllProjectTasks, projectTasks } from 'src/store/projects';
+import { getAllProjectTasks, moveProjectTask, projectTasks } from 'src/store/projects';
 import { projectId } from 'src/store/router';
 import { DragAndDrop } from './DragAndDrop';
 import { styles } from './styles';
@@ -14,16 +14,19 @@ const mapState = createStructuredSelector({
 
 const mapDispatch = {
   getAllProjectTasks,
+  moveProjectTask,
 };
 
 const mergeProps = (
   { projectId, ...restState }: any,
-  { getAllProjectTasks, ...restDispatch }: any,
+  { getAllProjectTasks, moveProjectTask, ...restDispatch }: any,
   { match, ...restOwn }: any
 ) => ({
   ...restState,
   ...restDispatch,
   getAllProjectTasks: () => getAllProjectTasks(projectId),
+  moveProjectTask: (taskId: number, status: number, prevStatus: number) =>
+    moveProjectTask({ projectId, taskId, status, prevStatus }),
   projectId,
   ...restOwn,
 });

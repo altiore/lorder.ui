@@ -48,6 +48,19 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
     }
   }
 
+  componentWillReceiveProps(
+    nextProps: Readonly<IProjectProps & RouteComponentProps<IProjectProps>>,
+    nextContext: any
+  ): void {
+    if (
+      this.props.openedProject &&
+      nextProps.openedProject &&
+      this.props.openedProject.id !== nextProps.openedProject.id
+    ) {
+      this.props.fetchProjectDetails(nextProps.openedProject.id);
+    }
+  }
+
   handleDrawerClose = () => {
     this.setState({ open: false });
   };

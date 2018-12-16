@@ -6,6 +6,8 @@ import { User } from 'src/store/users';
 export interface IProjectTaskData {
   description?: string;
   projectId: number;
+  status?: number;
+  prevStatus?: number;
   taskId?: number;
   title?: string;
   value?: number;
@@ -86,6 +88,26 @@ export const deleteProjectTask = requestActions<IProjectTaskData>(
     },
     success: {
       message: `Задача удалена из проекта`,
+    },
+    taskId,
+  })
+);
+
+export const moveProjectTask = requestActions<IProjectTaskData>(
+  'PROJECT_TASK/MOVE',
+  ({ projectId, taskId, status, prevStatus }: IProjectTaskData) => ({
+    error: {
+      message: 'Не удалось переместить задачу',
+      title: 'Упс...',
+    },
+    prevStatus,
+    projectId,
+    request: {
+      data: {
+        status,
+      },
+      method: 'PATCH',
+      url: `/projects/${projectId}/tasks/${taskId}/move`,
     },
     taskId,
   })

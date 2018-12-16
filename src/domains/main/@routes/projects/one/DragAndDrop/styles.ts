@@ -6,6 +6,6 @@ export const styles = (theme: Theme) =>
     root: {
       display: 'flex',
       justifyContent: 'space-around',
-      maxWidth: 1000,
+      maxWidth: 1665,
     },
   });

@@ -17,6 +17,7 @@ export interface IDragAndDropProps {
   classes: any;
   items: DownloadList<ProjectTask>;
   getAllProjectTasks: any;
+  moveProjectTask: any;
 }
 
 export interface IDragAndDropState {
@@ -24,6 +25,8 @@ export interface IDragAndDropState {
   selected: any[];
   selected2: any[];
 }
+
+const STATUS_NAMES = ['Резерв', 'Сделать', 'В процессе', 'Обзор', 'Готово'];
 
 export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDropState> {
   componentDidMount(): void {
@@ -33,7 +36,8 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
   getList = (id: string) => this.props.items.list.filter(el => el.status === parseInt(id, 0));
 
   onDragEnd = (result: DropResult) => {
-    const { source, destination } = result;
+    const { source, destination, draggableId } = result;
+    const { moveProjectTask } = this.props;
 
     // dropped outside the list
     if (!destination) {
@@ -46,10 +50,7 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
         source,
       });
     } else {
-      console.log('move task to another status', {
-        destination,
-        source,
-      });
+      moveProjectTask(parseInt(draggableId, 0), parseInt(destination.droppableId, 0), parseInt(source.droppableId, 0));
     }
   };
 
@@ -58,11 +59,11 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
     return (
       <div className={classes.root}>
         <DragDropContext onDragEnd={this.onDragEnd}>
-          {[0, 1, 2].map(status => (
+          {[0, 1, 2, 3, 4].map(status => (
             <Droppable key={status} droppableId={status.toString()}>
               {(provided, snapshot) => (
                 <div ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
-                  <h2>Status {status}</h2>
+                  <h2>{STATUS_NAMES[status]}</h2>
                   {items.list.filter(el => el.status === status).map((item: ProjectTask, index) => (
                     <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
                       {TaskCardTsx(item)}
