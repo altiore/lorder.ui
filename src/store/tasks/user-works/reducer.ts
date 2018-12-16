@@ -47,7 +47,6 @@ const patchUserWorkSuccessHandler = (state: S, { payload }: Action<AxiosResponse
   const data: Partial<UserWork> = payload.data;
   const index = state.list.findIndex(el => el.id === data.id);
   if (!~index) {
-    console.log(`Не смог найти измененную задачу index= ${index}`, payload);
     throw new Error(`Не смог найти измененную задачу index= ${index}`);
   }
   return state.stopLoading().updateItem(index, data);
@@ -64,7 +63,6 @@ const patchAndStopUserWorkSuccessHandler = (state: S, { payload }: Action<AxiosR
   const previousData: Partial<UserWork> = payload.data.previous;
   const previousIndex = state.list.findIndex(el => el.id === previousData.id);
   if (!~previousIndex) {
-    console.log(`Не смог найти предыдущую задачу index= ${previousIndex}`, payload);
     throw new Error(`Не смог найти предыдущую задачу index= ${previousIndex}`);
   }
   const nextData: Partial<UserWork> = payload.data.next;

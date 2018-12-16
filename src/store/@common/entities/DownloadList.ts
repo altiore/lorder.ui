@@ -96,7 +96,6 @@ export class DownloadList<T = any> implements IDownloadList<T> {
   updateItem(index: number, partialItem: Partial<T>): DownloadList<T> {
     if (!partialItem) {
       const errorText = `Error: ${DownloadList.name}.updateItem<${this.Entity.name}> empty data for update`;
-      console.log(errorText, { index, partialItem });
       throw new Error(errorText);
     }
     if (index < 0) {
@@ -104,7 +103,6 @@ export class DownloadList<T = any> implements IDownloadList<T> {
     }
     if (!this.list[index]) {
       const errorText = `Error: ${DownloadList.name}.updateItem<${this.Entity.name}> could not find item in the list`;
-      console.log(errorText, { index, partialItem });
       throw new Error(errorText);
     }
     const newItem = new this.Entity({

@@ -34,9 +34,9 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
     perPage: 10,
   };
 
-  handleRowClick = (id: number | undefined) => () => {
-    console.log('row click', id);
-  };
+  // handleRowClick = (id: number | undefined) => () => {
+  //   console.log('row click', id);
+  // };
 
   handleRemoveClick = (id: number | undefined) => (e: any) => {
     if (typeof id === 'number') {
@@ -75,7 +75,7 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
                 .slice(page * perPage, (page + 1) * perPage)
                 .map(({ accessLevel, member: { id, email } }) => {
                   return (
-                    <TableRow className={classes.row} key={email} hover onClick={this.handleRowClick(id)}>
+                    <TableRow className={classes.row} key={email} hover>
                       <TableCell component="th" scope="row">
                         {email}
                       </TableCell>

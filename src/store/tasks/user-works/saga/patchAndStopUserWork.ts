@@ -12,7 +12,7 @@ function* patchAndStopUserWorkSuccessHandler({ payload }: any) {
       yield put(startTimer(currentUserWork, project) as any);
     }
   } catch (e) {
-    console.log('patchAndStopUserWorkSuccessHandler.catch', e);
+    throw new Error('patchAndStopUserWorkSuccessHandler.catch Error');
   }
 }
 

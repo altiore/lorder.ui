@@ -26,7 +26,7 @@ export class SelectReactFieldJsx extends React.PureComponent<ISelectReactFieldPr
     getNewOption: (inputValue?: string) => ({ label: `Создать: ${inputValue}`, value: inputValue }),
     getValue: (opt: any) => opt && opt.value,
     isValidOption: (opt: any) => opt.label,
-    onSelect: (item: any) => console.log('selected item is', item),
+    onSelect: (item: any) => '',
   };
 
   render() {

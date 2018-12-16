@@ -20,7 +20,7 @@ function* getUserWorksSuccessHandler({ payload }: any) {
       }
     }
   } catch (e) {
-    console.log('getUserWorksSuccessHandler.catch', e);
+    throw new Error('getUserWorksSuccessHandler.catch Error');
   }
 }
 

@@ -44,7 +44,6 @@ const taskUserWorkHandler = (state: S, action: ActionMeta<any, any>) => {
   }
   const index = state.list.findIndex(el => taskId === el.id);
   if (!~index) {
-    console.log(action);
     throw new Error(`Не смог найти измененную задачу index= ${index}`);
   }
 

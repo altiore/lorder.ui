@@ -89,7 +89,7 @@ export class UserWorkTableJsx1 extends React.PureComponent<IUserWorkTableProps> 
     if (typeof userWorkId === 'number') {
       this.props.deleteUserWork(userWorkId);
     } else {
-      console.log('deleteUserWork userWorkId type is %s', typeof userWorkId);
+      throw new Error(`deleteUserWork userWorkId type is ${typeof userWorkId}`);
     }
   };
 
@@ -98,7 +98,7 @@ export class UserWorkTableJsx1 extends React.PureComponent<IUserWorkTableProps> 
     if (typeof userWorkId === 'number') {
       await this.props.stopUserWork(userWorkId);
     } else {
-      console.log('deleteUserWork userWorkId type is %s', typeof userWorkId);
+      throw new Error(`deleteUserWork userWorkId type is ${typeof userWorkId}`);
     }
     this.props.onClose();
   };

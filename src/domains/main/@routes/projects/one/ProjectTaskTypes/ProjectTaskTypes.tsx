@@ -65,7 +65,7 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
   private renderItem = ({ id }: TaskType) => {
     const { classes, getTaskTypeById } = this.props;
     return (
-      <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
+      <TableRow className={classes.row} key={id} hover>
         <TableCell component="th" scope="row">
           {get(getTaskTypeById(id), 'title')}
         </TableCell>
@@ -79,9 +79,9 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
     );
   };
 
-  private handleRowClick = (id: number | undefined) => () => {
-    console.log('clicked by row with id', id);
-  };
+  // private handleRowClick = (id: number | undefined) => () => {
+  //   console.log('clicked by row with id', id);
+  // };
 
   private handleRemoveClick = (id: number | undefined) => (e: any) => {
     e.stopPropagation();

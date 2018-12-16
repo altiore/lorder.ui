@@ -26,10 +26,6 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
   onStop,
   width,
 }) => {
-  console.log('theme.breakpoints.values.sm', {
-    sm: theme.breakpoints.values.sm,
-    width,
-  });
   let size: 'small' | 'medium' = width && width < theme.breakpoints.values.sm ? 'small' : 'medium';
   if (isLarge) {
     size = 'medium';

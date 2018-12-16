@@ -48,7 +48,6 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
     if (isOpener) {
       return;
     }
-    console.log('press by row', id, event.target);
   };
 
   handleRemoveClick = (id: number | undefined) => (e: any) => {

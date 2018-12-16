@@ -108,7 +108,7 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
           <Divider />
           <Block>
             <Grid item className={classes.profile} xs={12}>
-              <Typography variant={'h4'}>Комманда проекта</Typography>
+              <Typography variant={'h4'}>Команда проекта</Typography>
               <Typography>Мы дарим людям мир и красоту, но только если это будет добром!</Typography>
             </Grid>
             {statistic &&
