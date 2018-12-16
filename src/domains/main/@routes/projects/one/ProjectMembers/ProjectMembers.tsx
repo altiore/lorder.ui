@@ -64,7 +64,7 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Ползователь</TableCell>
+                <TableCell>Пользователь</TableCell>
                 <TableCell>Активен</TableCell>
                 <TableCell numeric>Уровень доступа</TableCell>
                 <TableCell numeric />
