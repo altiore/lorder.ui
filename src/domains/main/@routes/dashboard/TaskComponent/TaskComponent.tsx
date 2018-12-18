@@ -9,6 +9,7 @@ import MediaQuery from 'react-responsive';
 
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { LinkButton } from 'src/domains/@common/LinkButton';
+import { DashboardTaskForm } from 'src/domains/@common/TaskForm';
 import { Project } from 'src/store/projects';
 import { Task } from 'src/store/tasks';
 import { TimerListItemText } from './TimerListItemText';
@@ -21,6 +22,7 @@ export interface ITaskComponentProps {
   project: Project;
   task: Task;
   timerComponent?: React.ReactNode;
+  openDialog: any;
   startUserWork: any;
   stopUserWork: any;
 }
@@ -36,7 +38,7 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
 
   render() {
     const { classes, isCurrent, project, task, theme } = this.props;
-    if (!task || !project) {
+    if (!task || !project || !project.id) {
       return null;
     }
 
@@ -51,7 +53,11 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
             {project.title}
           </LinkButton>
         </MediaQuery>
-        <Button classes={{ label: classes.buttonTitleLabel }} className={classes.buttonTitle}>
+        <Button
+          classes={{ label: classes.buttonTitleLabel }}
+          className={classes.buttonTitle}
+          onClick={this.openEditTaskForm(task.id, project.id)}
+        >
           {task.title}
         </Button>
         <Popover
@@ -87,6 +93,10 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
       </ListItem>
     );
   }
+
+  private openEditTaskForm = (id: number | string, projectId: number | string) => () => {
+    this.props.openDialog(<DashboardTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />);
+  };
 
   private onToggleOpenWorkTable = () => this.setState(({ isWorkTableOpen }) => ({ isWorkTableOpen: !isWorkTableOpen }));
 

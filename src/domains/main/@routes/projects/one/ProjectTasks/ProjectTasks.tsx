@@ -10,10 +10,10 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Table } from 'src/components/Table';
+import { AddTaskForm, PatchTaskForm } from 'src/domains/@common/TaskForm';
 import { DownloadList } from 'src/store/@common/entities';
 import { ProjectTask } from 'src/store/projects';
 import { PerformersCell } from './PerformersCell';
-import { AddTaskForm, PatchTaskForm } from './TaskForm';
 
 export interface IProjectTasksProps {
   isFormMount: boolean;
@@ -57,7 +57,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
   }
 
   render() {
-    const { classes, projectTasks } = this.props;
+    const { classes, projectId, projectTasks } = this.props;
     return (
       <div className={classes.root}>
         {projectTasks && projectTasks.length ? (
@@ -80,7 +80,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
             Добавьте первую задачу...
           </Grid>
         )}
-        <Button size="large" variant="contained" color="primary" onClick={this.createTask}>
+        <Button size="large" variant="contained" color="primary" onClick={this.createTask(projectId)}>
           <Typography variant="caption" noWrap>
             {'Добавить задачу'}
           </Typography>
@@ -89,10 +89,10 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     );
   }
 
-  private renderItem = ({ id, title, description, source, status, value, users, duration }: ProjectTask) => {
+  private renderItem = ({ id, title, description, source, status, value, users, duration, projectId }: ProjectTask) => {
     const { classes } = this.props;
     return (
-      <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id)}>
+      <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id, projectId)}>
         <TableCell>{title}</TableCell>
         <TableCell>{description}</TableCell>
         <TableCell>
@@ -123,9 +123,11 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     }
   };
 
-  private createTask = () => this.props.openDialog(<AddTaskForm buttonText="Добавить задачу" />);
+  private createTask = (projectId: number | string) => () => {
+    this.props.openDialog(<AddTaskForm buttonText="Добавить задачу" projectId={projectId} />);
+  };
 
-  private handleRowClick = (id: number | string) => (event: React.MouseEvent) => {
+  private handleRowClick = (id: number | string, projectId: number | string) => (event: React.MouseEvent) => {
     let isInside = false;
     if (this.performersCellRef.length) {
       this.performersCellRef.map((cell: HTMLElement) => {
@@ -135,7 +137,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
       });
     }
     if (!isInside && id) {
-      this.props.openDialog(<PatchTaskForm taskId={id} buttonText="Сохранить" closeDialog={this.props.closeDialog} />);
+      this.props.openDialog(<PatchTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />);
     }
   };
 

@@ -1,11 +1,13 @@
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
+import { openDialog } from 'src/store/dialog';
 import { startUserWork, stopUserWork } from 'src/store/tasks';
 import { styles } from './styles';
 import { TaskComponentTsx } from './TaskComponent';
 
 const mapDispatch = {
+  openDialog,
   startUserWork,
   stopUserWork,
 };

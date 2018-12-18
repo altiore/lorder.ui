@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import { DownloadList } from '../../@common/entities';
 import { Project } from '../Project';
-import { openedProject } from '../selectors';
+import { getProjectById, openedProject } from '../selectors';
 import { ProjectTask } from './ProjectTask';
 
 export const projectTasks = createSelector(
@@ -16,6 +16,9 @@ export const projectTasksIsLoading = createSelector(
 );
 
 export const getEditTaskInitialValues = createSelector(
-  projectTasks,
-  (tasks: DownloadList<ProjectTask>) => (taskId: number) => tasks.list.find(el => el.id === taskId)
+  [projectTasks, getProjectById],
+  (tasks: DownloadList<ProjectTask>, getProject) => (taskId: number, projectId: number) => {
+    const project = getProject(projectId);
+    return project.tasks.list.find((el: ProjectTask) => el.id === taskId);
+  }
 );

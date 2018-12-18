@@ -10,13 +10,11 @@ import {
   PROJECT_EDIT_TASK_FORM_NAME,
   projectTasksIsLoading,
 } from 'src/store/projects';
-import { projectId } from 'src/store/router';
 import { TaskForm } from './StyledTaskForm';
 import { ITaskFormData, ITaskFormProps } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
   getEditTaskInitialValues,
-  projectId,
   projectTasksIsLoading,
 });
 
@@ -27,10 +25,11 @@ const mapDispatchToProps = {
 const mergeProps = (
   { getEditTaskInitialValues, ...restState }: any,
   restDispatch: any,
-  { taskId, ...restOwn }: any
+  { taskId, projectId, ...restOwn }: any
 ) => ({
   ...restState,
-  initialValues: getEditTaskInitialValues(taskId),
+  initialValues: getEditTaskInitialValues(taskId, projectId),
+  projectId,
   ...restDispatch,
   ...restOwn,
 });
@@ -38,7 +37,7 @@ const mergeProps = (
 export const PatchTaskForm = connect<
   any,
   any,
-  { buttonText?: string; taskId: number | string; closeDialog: () => any }
+  { buttonText?: string; taskId: number | string; projectId: number | string }
 >(
   mapStateToProps,
   mapDispatchToProps,
