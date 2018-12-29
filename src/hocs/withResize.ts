@@ -4,21 +4,21 @@ import * as React from 'react';
 export interface IState {
   height: number;
   width: number;
-  ref: React.RefObject<any>;
+  getRef: React.RefObject<any>;
 }
 
 export const withResize = <P = {}>(
   Component: React.FunctionComponent<P> | React.ComponentClass<P>,
   getNode?: (el: any) => any
 ): React.FunctionComponent<P> | React.ComponentClass<P> =>
-  class InfoTsx extends React.Component<P, IState> {
+  class WithResize extends React.Component<P, IState> {
     private handleResize = debounce(() => this.setState(this.getDimensions()), 200);
 
     constructor(props: any) {
       super(props);
       this.state = {
         ...this.getDimensions(),
-        ref: React.createRef(),
+        getRef: React.createRef(),
       };
     }
 
@@ -37,9 +37,9 @@ export const withResize = <P = {}>(
 
     private getDimensions = (): { height: number; width: number } => {
       if (this.state) {
-        const { ref } = this.state;
-        if (ref.current) {
-          let element = ref.current;
+        const { getRef } = this.state;
+        if (getRef && getRef.current) {
+          let element = getRef.current;
           if (getNode) {
             element = getNode(element);
           }

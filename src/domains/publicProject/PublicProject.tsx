@@ -107,14 +107,8 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
 
           <Divider />
           <Block>
-            <Grid container justify="space-around" item xs={12}>
-              <div className={classes.chart}>
-                <PieChart key={1} data={chartData} title="Статистика по времени" unit="h" />
-              </div>
-              <div className={classes.chart}>
-                <PieChart key={2} data={chartValueData} title="Статистика по ценности" />
-              </div>
-            </Grid>
+            <PieChart key={1} data={chartData} title="Статистика по времени" unit="h" />
+            <PieChart key={2} data={chartValueData} title="Статистика по ценности" />
           </Block>
 
           <Divider />

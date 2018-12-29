@@ -8,6 +8,7 @@ export interface IPieChartProps {
   title?: string;
   setUpHighcharts?: any;
   unit?: string;
+  width?: number;
 }
 
 class PieChartTsx extends React.Component<IPieChartProps, {}> {
@@ -19,12 +20,24 @@ class PieChartTsx extends React.Component<IPieChartProps, {}> {
   }
 
   render() {
-    const { data, title, unit } = this.props;
+    const { data, title, unit, width } = this.props;
+    let size = 300;
+    let height = 400;
+    if (width) {
+      if (width <= 320) {
+        size = 100;
+        height = size * 1.8;
+      }
+      if (width > 320 && width < 500) {
+        size = 150;
+        height = size * 1.7;
+      }
+    }
     return (
       <HighchartsChart>
         {title && <Title>{title}</Title>}
 
-        <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow={null} type="pie" />
+        <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow={null} type="pie" height={height} />
 
         <Tooltip pointFormat={'{series.name}: <b>{point.percentage:.1f}%</b>'} />
 
@@ -35,8 +48,8 @@ class PieChartTsx extends React.Component<IPieChartProps, {}> {
           name="Доля пользователя"
           data={data}
           cursor="pointer"
-          center={['50%', 150]}
-          size={300}
+          center={['50%', size / 2]}
+          size={size}
           showInLegend={false}
           dataLabels={{
             enabled: true,

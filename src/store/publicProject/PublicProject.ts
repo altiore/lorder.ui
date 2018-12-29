@@ -37,7 +37,7 @@ export class PublicProject {
     }
     const { members, data } = this.statistic;
     return Object.keys(data).map(el => ({
-      name: get(members.find(m => m.id.toString() === el), 'email'),
+      name: get(members.find(m => m.id.toString() === el), 'email', '').replace(/\@.*$/, ''),
       y: millisecondsToHours(data[el].time),
     }));
   }
@@ -48,7 +48,7 @@ export class PublicProject {
     }
     const { members, data } = this.statistic;
     return Object.keys(data).map(el => ({
-      name: get(members.find(m => m.id.toString() === el), 'email'),
+      name: get(members.find(m => m.id.toString() === el), 'email', '').replace(/\@.*$/, ''),
       y: data[el].value || 1,
     }));
   }

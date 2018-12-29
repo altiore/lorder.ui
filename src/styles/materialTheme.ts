@@ -1,7 +1,11 @@
 import amber from '@material-ui/core/colors/amber';
 import { createMuiTheme, Theme } from '@material-ui/core/styles';
 
-const defaultTheme: Theme = createMuiTheme();
+const defaultTheme: Theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+});
 
 export default createMuiTheme({
   mainContent: {

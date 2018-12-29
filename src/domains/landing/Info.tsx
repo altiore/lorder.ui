@@ -52,6 +52,7 @@ export class InfoTsx extends React.Component<IInfoProps, IState> {
   render() {
     const { brandName, classes, team } = this.props;
     const { height, width } = this.state;
+    console.log('infoTsx render');
     return (
       <div className={classes.root}>
         <BackGroundVideo height={height} width={width} />
