@@ -10,7 +10,7 @@ export interface IState {
 export const withResize = <P = {}>(
   Component: React.FunctionComponent<P> | React.ComponentClass<P>,
   getNode?: (el: any) => any
-) =>
+): React.FunctionComponent<P> | React.ComponentClass<P> =>
   class InfoTsx extends React.Component<P, IState> {
     private handleResize = debounce(() => this.setState(this.getDimensions()), 200);
 
@@ -35,18 +35,20 @@ export const withResize = <P = {}>(
       return React.createElement(Component as any, { ...restProps, ...this.state }, children);
     }
 
-    private getDimensions(): { height: number; width: number } {
-      const { ref } = this.state;
-      if (ref.current) {
-        let element = ref.current;
-        if (getNode) {
-          element = getNode(element);
-        }
+    private getDimensions = (): { height: number; width: number } => {
+      if (this.state) {
+        const { ref } = this.state;
+        if (ref.current) {
+          let element = ref.current;
+          if (getNode) {
+            element = getNode(element);
+          }
 
-        return {
-          height: element.offsetHeight,
-          width: element.offsetWidth,
-        };
+          return {
+            height: element.offsetHeight,
+            width: element.offsetWidth,
+          };
+        }
       }
       const w = window;
       const d = document;
@@ -58,5 +60,5 @@ export const withResize = <P = {}>(
         height,
         width,
       };
-    }
+    };
   };

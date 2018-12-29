@@ -15,7 +15,7 @@ export const styles = (theme: Theme) =>
       padding: '10px 25px 15px 16px',
       position: 'relative',
       textAlign: 'left',
-      width: 600,
+      width: '100%',
       zIndex: 25,
     },
     close: {
@@ -29,9 +29,5 @@ export const styles = (theme: Theme) =>
     header: {
       paddingLeft: 7,
       width: '94%',
-    },
-    root: {
-      height: 1200,
-      width: 320,
     },
   });

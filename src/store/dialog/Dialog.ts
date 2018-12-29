@@ -1,16 +1,19 @@
+import { DialogProps } from '@material-ui/core/Dialog';
 import map from 'lodash-es/map';
-import { ComponentClass, FunctionComponent } from 'react';
+import { ReactNode } from 'react';
 
 export interface IDialogState {
   isOpened: boolean;
-  children?: string | FunctionComponent | ComponentClass;
+  children?: ReactNode;
+  dialogProps?: Partial<DialogProps>;
 }
 
 export class Dialog implements IDialogState {
   readonly isOpened: boolean = false;
-  readonly children?: string | FunctionComponent | ComponentClass;
+  readonly children?: ReactNode;
+  readonly dialogProps?: Partial<DialogProps> = {};
 
-  constructor(initial?: object) {
+  constructor(initial?: Dialog) {
     map(initial, (val: any, key: string) => {
       this[key] = val;
     });

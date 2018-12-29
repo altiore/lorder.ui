@@ -1,4 +1,5 @@
 import Button from '@material-ui/core/Button';
+import { DialogProps } from '@material-ui/core/Dialog';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { Theme } from '@material-ui/core/styles';
@@ -22,9 +23,10 @@ export interface ITaskComponentProps {
   project: Project;
   task: Task;
   timerComponent?: React.ReactNode;
-  openDialog: any;
+  openDialog: (c: React.ReactNode, d?: Partial<DialogProps>) => any;
   startUserWork: any;
   stopUserWork: any;
+  width?: number;
 }
 
 interface ITaskComponentState {
@@ -95,7 +97,10 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
   }
 
   private openEditTaskForm = (id: number | string, projectId: number | string) => () => {
-    this.props.openDialog(<DashboardTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />);
+    const { openDialog, theme, width } = this.props;
+    openDialog(<DashboardTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />, {
+      fullScreen: !!width && width <= theme.breakpoints.values.sm,
+    });
   };
 
   private onToggleOpenWorkTable = () => this.setState(({ isWorkTableOpen }) => ({ isWorkTableOpen: !isWorkTableOpen }));

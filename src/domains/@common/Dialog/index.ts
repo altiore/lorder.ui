@@ -1,17 +1,19 @@
-import Dialog from '@material-ui/core/Dialog';
+import Dialog, { DialogProps } from '@material-ui/core/Dialog';
 import { cloneElement, createElement, isValidElement } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { closeDialog, dialogContent, isDialogOpened } from 'src/store/dialog';
+import { closeDialog, dialogContent, dialogProps, isDialogOpened } from 'src/store/dialog';
 
 interface IMappedState {
   component: any;
+  dialogProps: Partial<DialogProps>;
   open: boolean;
 }
 
 const mapStateToProps = createStructuredSelector<any, any>({
   component: dialogContent,
+  dialogProps,
   open: isDialogOpened,
 });
 
@@ -23,7 +25,7 @@ const mapDispatchToProps = {
   onClose: closeDialog,
 };
 
-const mergeProps = ({ component, open }: IMappedState, { onClose }: IMappedDispatch, ownProps: any) => ({
+const mergeProps = ({ component, dialogProps, open }: IMappedState, { onClose }: IMappedDispatch) => ({
   children: component
     ? isValidElement(component)
       ? cloneElement<any>(component, { onClose })
@@ -32,7 +34,7 @@ const mergeProps = ({ component, open }: IMappedState, { onClose }: IMappedDispa
   onClose,
   open,
   scroll: 'body',
-  ...ownProps,
+  ...dialogProps,
 });
 
 export default connect<IMappedState, IMappedDispatch, any>(

@@ -7,10 +7,12 @@ export const styles = (theme: Theme) =>
       display: 'flex',
       flexFlow: 'column nowrap',
       flexGrow: 1,
+      height: '100%',
     },
     root: {
       display: 'flex',
       flexFlow: 'column nowrap',
       flexGrow: 1,
+      height: '100%',
     },
   });
