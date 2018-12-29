@@ -54,7 +54,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, {}> {
           </Fab>
         </DialogTitle>
         <DialogContent className={classes.card}>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className={classes.header}>
               <Field
                 bold
@@ -83,6 +83,9 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, {}> {
             <div className={classes.field}>
               <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
             </div>
+            <button style={{ display: 'none' }} type="submit">
+              Эта кнопка нужна, чтоб работало сохранение с клавиатуры
+            </button>
           </form>
         </DialogContent>
         <DialogActions key={'actions'}>
