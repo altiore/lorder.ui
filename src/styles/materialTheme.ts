@@ -17,6 +17,7 @@ export default createMuiTheme({
         [defaultTheme.breakpoints.down('sm')]: {
           bottom: 0,
           margin: 0,
+          padding: '4px 0',
           position: 'fixed',
           width: '100%',
           zIndex: 100,
