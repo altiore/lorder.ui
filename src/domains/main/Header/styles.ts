@@ -26,4 +26,7 @@ export const styles = (theme: Theme) =>
     grow: {
       flexGrow: 1,
     },
+    menu: {
+      backgroundColor: theme.palette.primary.dark,
+    },
   });

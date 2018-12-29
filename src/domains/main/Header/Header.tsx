@@ -1,6 +1,8 @@
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import { Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
@@ -13,18 +15,24 @@ import { ROLE } from 'src/@types';
 import { CreateProjectPopup } from 'src/domains/@common/CreateProjectPopup';
 import { LinkIconButton } from 'src/domains/@common/LinkIconButton';
 import { Project } from 'src/store/projects';
+import { IUserWorkData } from 'src/store/tasks/user-works';
 import { ProjectButton } from './ProjectButton';
+import { ProjectField } from './ProjectField';
 
 export interface IHeaderProps {
   classes: any;
+  theme: Theme;
   logOut: any;
   openDialog: any;
   openedProject: Project;
   projects: Array<Project & { percent: string; time: string }>;
+  push: any;
   selectedProject: Project;
+  startUserWork: (data: IUserWorkData) => any;
   userAvatar?: string;
   userEmail: string;
   userRole: ROLE;
+  width?: number;
 }
 
 export interface IHeaderState {
@@ -36,11 +44,12 @@ const projectFilter = (projects: Project[]) => (project: Project) =>
 
 export class HeaderTsx extends React.Component<IHeaderProps> {
   state = {
+    anchorEl: null,
     expanded: false,
   };
 
   render() {
-    const { classes, projects, selectedProject, logOut, userAvatar, userEmail, userRole } = this.props;
+    const { classes, theme, projects, selectedProject, logOut, userAvatar, userEmail, userRole, width } = this.props;
     const { expanded } = this.state;
     let filteredProjects: Array<Project & { percent: string; time: string }> = projects;
     if (!expanded) {
@@ -65,9 +74,25 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
                 <AddIcon />
               </IconButton>
             )}
-            <IconButton color="secondary" onClick={this.toggleExpandProjects} className={classes.expandButton}>
-              {expanded ? <ChevronLeftIcon /> : <MoreHorizIcon />}
-            </IconButton>
+            {width && width > theme.breakpoints.values.sm ? (
+              <IconButton color="secondary" onClick={this.toggleExpandProjects} className={classes.expandButton}>
+                {expanded ? <ChevronLeftIcon /> : <MoreHorizIcon />}
+              </IconButton>
+            ) : (
+              <>
+                <IconButton color="secondary" onClick={this.menuOpen} className={classes.expandButton}>
+                  <MoreHorizIcon />
+                </IconButton>
+                <Menu
+                  anchorEl={this.state.anchorEl}
+                  open={Boolean(this.state.anchorEl)}
+                  onClose={this.handleClose}
+                  classes={{ paper: classes.menu }}
+                >
+                  <ProjectField onClick={this.selectProject} onOpenInNew={this.handleOpenInNew} />
+                </Menu>
+              </>
+            )}
           </div>
           <div className={classes.grow} />
           <div>
@@ -91,4 +116,36 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
 
   // private hideProjects = () => this.setState({ expanded: false });
   private openCreateProject = () => this.props.openDialog(CreateProjectPopup);
+
+  private menuOpen = (event: React.SyntheticEvent) => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  private handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  private selectProject = (projectId: number) => async () => {
+    const { selectedProject, startUserWork, push } = this.props;
+    this.setState({ anchorEl: null });
+    if (selectedProject.id !== projectId) {
+      await startUserWork({
+        projectId,
+      });
+    }
+    push('/');
+  };
+
+  private handleOpenInNew = (project: Project) => async (e: React.SyntheticEvent) => {
+    e.stopPropagation();
+    const { selectedProject, startUserWork, push } = this.props;
+    this.setState({ anchorEl: null });
+    if (selectedProject.id !== project.id) {
+      await startUserWork({
+        projectId: project.id as number,
+        title: 'Обзор',
+      });
+    }
+    push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
+  };
 }

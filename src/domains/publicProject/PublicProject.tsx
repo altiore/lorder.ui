@@ -10,7 +10,9 @@ import { Link } from 'react-router-dom';
 
 import { TelegramIco } from 'src/components/@icons/Telegram';
 import { Block } from 'src/components/Block';
+import { LoadingPage } from 'src/components/LoadingPage';
 import { MemberCard } from 'src/components/MemberCard';
+import { NoMatch } from 'src/components/NoMatch';
 import PieChart from 'src/domains/@common/PieChart';
 import { PublicProject } from 'src/store/publicProject';
 import { LinkButton } from '../@common/LinkButton';
@@ -49,10 +51,17 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
       isAuth,
     } = this.props;
     if (isLoading && !isLoaded) {
-      return '...loading';
+      return <LoadingPage />;
     }
     if (!title) {
-      return 'Not Found';
+      return (
+        <NoMatch
+          location={this.props.location}
+          match={this.props.match}
+          history={this.props.history}
+          staticContext={this.props.staticContext}
+        />
+      );
     }
     return (
       <div className={classes.root}>

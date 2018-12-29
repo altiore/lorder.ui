@@ -11,7 +11,7 @@ const onChange = (input: WrappedFieldInputProps) => (event: React.ChangeEvent<HT
   input.onChange(event.target.value);
 
 export interface ISelectFieldProps extends WrappedFieldProps {
-  children: React.ReactNode[];
+  children: React.ReactNode;
   label: React.ReactNode;
 }
 

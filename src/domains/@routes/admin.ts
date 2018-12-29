@@ -1,5 +1,5 @@
+import { NoMatch } from 'src/components/NoMatch';
 import { Main } from '../main';
-import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
 import { commonRoutes } from './@common';
 

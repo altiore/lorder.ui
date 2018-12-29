@@ -3,20 +3,15 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) =>
   createStyles({
-    chip: {
-      width: '100%',
-    },
-    filter: {
+    item: {
+      backgroundColor: theme.palette.primary.light,
       display: 'flex',
+      flexFlow: 'row nowrap',
       justifyContent: 'space-between',
     },
-    grow: {
-      grow: 1,
-    },
-    left: {
-      marginRight: theme.spacing.unit,
-    },
-    right: {
-      marginLeft: theme.spacing.unit,
+    row: {
+      alignItems: 'center',
+      display: 'flex',
+      flexFlow: 'row nowrap',
     },
   });

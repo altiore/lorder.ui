@@ -21,15 +21,14 @@ export const ProjectFieldJsx: React.FunctionComponent<IProjectFieldProps> = ({
   label,
   meta,
   name,
-  items,
+  items = [],
 }) => (
   <SelectField input={input} label={label} meta={meta} className={className}>
-    {items && !!items.length
-      ? items.map((item: any) => (
-          <MenuItem key={item.id} value={getValue(item)}>
-            {getLabel(item)}
-          </MenuItem>
-        ))
-      : []}
+    {items.length &&
+      items.map((item: any) => (
+        <MenuItem key={item.id} value={getValue(item)}>
+          {getLabel(item)}
+        </MenuItem>
+      ))}
   </SelectField>
 );

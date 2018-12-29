@@ -7,6 +7,7 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
 
+import { NoMatch } from 'src/components/NoMatch';
 import { Main } from '../main';
 import { Dashboard } from '../main/@routes/dashboard';
 import { AllProjects, OwnProjects } from '../main/@routes/projects/list';
@@ -17,7 +18,6 @@ import { ProjectTasks } from '../main/@routes/projects/one/ProjectTasks';
 import { ProjectTaskTypes } from '../main/@routes/projects/one/ProjectTaskTypes';
 import { Settings } from '../main/@routes/projects/one/Settings';
 import { Users } from '../main/@routes/users';
-import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
 import { commonRoutes } from './@common';
 

@@ -1,11 +1,11 @@
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import HomeIcon from '@material-ui/icons/Home';
 
+import { NoMatch } from 'src/components/NoMatch';
 import { Main } from '../main';
 import { Dashboard } from '../main/@routes/dashboard';
 import { OwnProjects } from '../main/@routes/projects/list';
 import { Project } from '../main/@routes/projects/one';
-import { NoMatch } from '../noMatch';
 import { Profile } from '../profile';
 import { commonRoutes } from './@common';
 
