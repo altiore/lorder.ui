@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { onSubmitForm } from 'src/store/@common/helpers';
+import { onSubmitFail, onSubmitForm } from 'src/store/@common/helpers';
 import { closeDialog } from 'src/store/dialog';
 import { postProjectTask, PROJECT_TASK_FORM_NAME, projectTasksIsLoading } from 'src/store/projects';
 import { TaskForm } from './StyledTaskForm';
@@ -22,7 +22,7 @@ export const AddTaskForm = connect<any, any, { buttonText?: string; projectId: n
 )(reduxForm<ITaskFormData, ITaskFormProps>({
   form: PROJECT_TASK_FORM_NAME,
   onSubmit: onSubmitForm(postProjectTask, props => ({ projectId: props.projectId })),
-  onSubmitFail: () => true,
+  onSubmitFail,
   onSubmitSuccess: (res, dispatch, { closeDialog }) => {
     closeDialog();
   },

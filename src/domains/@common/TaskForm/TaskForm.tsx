@@ -1,5 +1,7 @@
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import CloseIcon from '@material-ui/icons/Close';
@@ -29,51 +31,55 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
   projectTasksIsLoading: boolean;
 }
 
-export class TaskFormJsx extends React.Component<ITaskFormProps, {}> {
+export class TaskFormJsx extends React.PureComponent<ITaskFormProps, {}> {
   render() {
-    const { buttonText, classes, closeDialog, handleSubmit } = this.props;
-    console.log();
+    const { buttonText, classes, closeDialog, handleSubmit, submitting } = this.props;
     return (
-      <form onSubmit={handleSubmit} className={classes.form}>
-        <div className={classes.card}>
+      <>
+        <DialogTitle>
           <IconButton onClick={closeDialog} className={classes.close}>
             <CloseIcon fontSize={'small'} />
           </IconButton>
-          <div className={classes.header}>
+        </DialogTitle>
+        <DialogContent className={classes.card}>
+          <form>
+            <div className={classes.header}>
+              <Field
+                bold
+                icon={<EventIcon />}
+                name="title"
+                component={TitleInput}
+                validate={[required({ msg: 'Обязательное поле' })]}
+              />
+            </div>
             <Field
-              bold
-              icon={<EventIcon />}
-              name="title"
-              component={TitleInput}
-              validate={[required({ msg: 'Обязательное поле' })]}
+              name="description"
+              icon={<AssignmentIcon />}
+              component={TextArea}
+              title={'Описание'}
+              placeholder={'Введи ваше описание'}
             />
-          </div>
-          <Field
-            name="description"
-            icon={<AssignmentIcon />}
-            component={TextArea}
-            title={'Описание'}
-            placeholder={'Введи ваше описание'}
-          />
-          <div className={classes.field}>
-            <Field
-              name="source"
-              component={Input}
-              label="Ссылка на сторонний ресурс"
-              parse={nullIfEmpty}
-              validate={[url({ msg: 'Должно быть ссылкой!', if: (vv, v) => !!v })]}
-            />
-          </div>
-          <div className={classes.field}>
-            <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
-          </div>
-        </div>
-        <DialogActions>
-          <Button color="primary" type="submit">
+            <div className={classes.field}>
+              <Field
+                name="source"
+                component={Input}
+                label="Ссылка на сторонний ресурс"
+                parse={nullIfEmpty}
+                validate={[url({ msg: 'Должно быть ссылкой!', if: (vv, v) => !!v })]}
+              />
+            </div>
+            <div className={classes.field}>
+              <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" />
+            </div>
+          </form>
+        </DialogContent>
+        <DialogActions key={'actions'}>
+          <Button color="primary" onClick={handleSubmit} disabled={submitting}>
             {buttonText}
+            {submitting && '...'}
           </Button>
         </DialogActions>
-      </form>
+      </>
     );
   }
 }

@@ -11,7 +11,6 @@ export const styles = (theme: Theme) =>
       display: 'inline-block',
 
       minHeight: 400,
-      overflow: 'hidden',
       padding: '10px 25px 15px 16px',
       position: 'relative',
       textAlign: 'left',

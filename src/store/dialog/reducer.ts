@@ -12,15 +12,12 @@ type M = Partial<DialogProps>;
 const closeDialogHandler = (state: S): S => {
   return new Dialog({
     ...state,
-    children: null,
-    dialogProps: {},
     isOpened: false,
   });
 };
 
-const openDialogHandler = (state: S, { payload, meta }: ActionMeta<P, M>): S => {
+const openDialogHandler = (state: S, { meta }: ActionMeta<P, M>): S => {
   return new Dialog({
-    children: payload,
     dialogProps: meta,
     isOpened: true,
   });

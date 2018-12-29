@@ -114,8 +114,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
 
   private toggleExpandProjects = () => this.setState(({ expanded }: IHeaderState) => ({ expanded: !expanded }));
 
-  // private hideProjects = () => this.setState({ expanded: false });
-  private openCreateProject = () => this.props.openDialog(CreateProjectPopup);
+  private openCreateProject = () => this.props.openDialog(CreateProjectPopup, { scroll: 'body' });
 
   private menuOpen = (event: React.SyntheticEvent) => {
     this.setState({ anchorEl: event.currentTarget });

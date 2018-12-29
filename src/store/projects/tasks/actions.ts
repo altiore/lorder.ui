@@ -19,6 +19,7 @@ export interface IPatchProjectTaskData {
   description?: string;
   projectId: number;
   title?: string;
+  source?: string;
   value?: number;
   users?: User[];
   userWorks?: any;
@@ -53,17 +54,21 @@ export const postProjectTask = requestActions<IProjectTaskData>(
 
 export const patchProjectTask = requestActions<IPatchProjectTaskData>(
   'PROJECT_TASK/PATCH',
-  ({ projectId, id, users, userWorks, ...data }: IPatchProjectTaskData): any => {
-    const preparedData: any = { ...data };
-    delete preparedData.status;
+  ({ description, title, projectId, id, users, userWorks, value, source }: IPatchProjectTaskData): any => {
+    const data: any = {
+      description,
+      source,
+      title,
+      value,
+    };
     if (users) {
-      preparedData.users = users.map(el => el.id);
+      data.users = users.map(el => el.id);
     }
     return {
       form: PROJECT_EDIT_TASK_FORM_NAME,
       projectId,
       request: {
-        data: preparedData,
+        data,
         method: 'PATCH',
         url: `/projects/${projectId}/tasks/${id}`,
       },

@@ -3,6 +3,7 @@ export * from './covertSecondsToDuration';
 export * from './covertSecondsToDurationWithLocal';
 export * from './millisecondsToHours';
 export * from './parseFormErrorsFromResponse';
+export * from './onSubmitFail';
 export * from './onSubmitForm';
 export * from './parseNumber';
 export * from './combineActions';

@@ -92,7 +92,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     );
   };
 
-  private createProject = () => this.props.openDialog(CreateProjectPopup);
+  private createProject = () => this.props.openDialog(CreateProjectPopup, { scroll: 'body' });
 
   private handleRowClick = (id: number | undefined, accsessLevel?: ACCESS_LEVEL) => async () => {
     if (accsessLevel === ACCESS_LEVEL.WHITE && typeof id === 'number') {

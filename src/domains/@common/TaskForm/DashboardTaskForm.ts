@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { onSubmitForm } from 'src/store/@common/helpers';
+import { onSubmitFail, onSubmitForm } from 'src/store/@common/helpers';
 import { closeDialog } from 'src/store/dialog';
 import { patchProjectTask, PROJECT_EDIT_TASK_FORM_NAME, projectTasksIsLoading } from 'src/store/projects';
 import { getEditTaskInitialValues } from 'src/store/tasks';
@@ -38,11 +38,10 @@ export const DashboardTaskForm = connect<
   mapDispatchToProps,
   mergeProps
 )(reduxForm<ITaskFormData, ITaskFormProps>({
-  destroyOnUnmount: false,
   enableReinitialize: true,
   form: PROJECT_EDIT_TASK_FORM_NAME,
-  onSubmit: onSubmitForm(patchProjectTask, props => ({ projectId: props.projectId })),
-  onSubmitFail: () => true,
+  onSubmit: onSubmitForm(patchProjectTask, ({ projectId }) => ({ projectId })),
+  onSubmitFail,
   onSubmitSuccess: (res, dispatch, { closeDialog }) => {
     closeDialog();
   },

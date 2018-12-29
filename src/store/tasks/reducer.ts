@@ -8,6 +8,7 @@ import uniqid from 'uniqid';
 
 import { DownloadList } from 'src/store/@common/entities';
 import { combineActions } from 'src/store/@common/helpers';
+import { deleteProjectTask, patchProjectTask } from 'src/store/projects/tasks/actions';
 import { getAllTasks, replaceTasks } from './actions';
 import { Task } from './Task';
 import {
@@ -183,6 +184,40 @@ const replaceTasksHandler = (state: S, { payload }: Action<Array<Partial<UserWor
   return newState;
 };
 
+const patchProjectTaskHandler = (state: S, { payload }: Action<P>) => {
+  const index = state.list.findIndex(el => el.id === get(payload, 'taskId'));
+  if (!~index) {
+    return state.startLoading();
+  }
+  return state.startLoading().updateItem(index, get(payload, 'request.data'));
+};
+
+const patchProjectTaskSuccessHandler = (state: S) => {
+  return state.stopLoading();
+};
+
+const patchProjectTaskFailHandler = (state: S) => {
+  // TODO: implement revert back to previous state
+  return state.stopLoading();
+};
+
+const deleteProjectTaskHandler = (state: S, { payload }: Action<P>) => {
+  const index = state.list.findIndex(el => el.id === get(payload, 'taskId'));
+  if (!~index) {
+    return state.startLoading();
+  }
+  return state.startLoading().removeItem(index);
+};
+
+const deleteProjectTaskSuccessHandler = (state: S) => {
+  return state.stopLoading();
+};
+
+const deleteProjectTaskFailHandler = (state: S) => {
+  // TODO: implement revert back to previous state
+  return state.stopLoading();
+};
+
 const logOutHandler = () => {
   return new DownloadList(Task);
 };
@@ -204,6 +239,14 @@ export const tasks = handleActions<S, P>(
     [combineActions(patchUserWork, deleteUserWork)]: taskUserWorkHandler,
 
     [replaceTasks.toString()]: replaceTasksHandler,
+
+    [patchProjectTask.toString()]: patchProjectTaskHandler,
+    [patchProjectTask.success]: patchProjectTaskSuccessHandler,
+    [patchProjectTask.fail]: patchProjectTaskFailHandler,
+
+    [deleteProjectTask.toString()]: deleteProjectTaskHandler,
+    [deleteProjectTask.success]: deleteProjectTaskSuccessHandler,
+    [deleteProjectTask.fail]: deleteProjectTaskFailHandler,
 
     [PURGE]: logOutHandler,
   },

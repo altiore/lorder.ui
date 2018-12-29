@@ -41,6 +41,9 @@ const patchProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>)
     preparedData.users = payload.users;
   }
   const taskIndex = state.list.findIndex(el => get(payload, 'taskId') === el.id);
+  if (!~taskIndex) {
+    return state.startLoading();
+  }
   return state.startLoading().updateItem(taskIndex, preparedData);
 };
 
