@@ -26,7 +26,6 @@ export interface ITaskComponentProps {
   openDialog: (c: React.ReactNode, d?: Partial<DialogProps>) => any;
   startUserWork: any;
   stopUserWork: any;
-  width?: number;
 }
 
 interface ITaskComponentState {
@@ -97,10 +96,8 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
   }
 
   private openEditTaskForm = (id: number | string, projectId: number | string) => () => {
-    const { openDialog, theme, width } = this.props;
-    openDialog(<DashboardTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />, {
-      fullScreen: !!width && width <= theme.breakpoints.values.sm,
-    });
+    const { openDialog } = this.props;
+    openDialog(<DashboardTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />);
   };
 
   private onToggleOpenWorkTable = () => this.setState(({ isWorkTableOpen }) => ({ isWorkTableOpen: !isWorkTableOpen }));

@@ -1,8 +1,10 @@
 import { DialogProps } from '@material-ui/core/Dialog';
+import { withStyles } from '@material-ui/core/styles';
 // import { cloneElement, createElement, isValidElement } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { withResize } from 'src/hocs/withResize';
 import { closeDialog, dialogProps, isDialogOpened } from 'src/store/dialog';
 import { DialogTsx } from './DialogTsx';
 
@@ -37,4 +39,4 @@ export default connect<IMappedState, IMappedDispatch, any>(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(DialogTsx);
+)(withStyles({}, { withTheme: true })(withResize(DialogTsx)));

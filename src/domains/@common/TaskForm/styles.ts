@@ -17,11 +17,6 @@ export const styles = (theme: Theme) =>
       width: '100%',
       zIndex: 25,
     },
-    close: {
-      position: 'absolute',
-      right: 4,
-      top: 4,
-    },
     field: {
       paddingLeft: 29,
     },

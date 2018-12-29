@@ -2,7 +2,8 @@ import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton';
+import Fab from '@material-ui/core/Fab';
+import Typography from '@material-ui/core/Typography';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import CloseIcon from '@material-ui/icons/Close';
 import EventIcon from '@material-ui/icons/Event';
@@ -36,10 +37,13 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, {}> {
     const { buttonText, classes, closeDialog, handleSubmit, submitting } = this.props;
     return (
       <>
-        <DialogTitle>
-          <IconButton onClick={closeDialog} className={classes.close}>
+        <DialogTitle disableTypography>
+          <Typography variant="h6" color="secondary">
+            Редактировать:
+          </Typography>
+          <Fab size="small" color="secondary" onClick={closeDialog}>
             <CloseIcon fontSize={'small'} />
-          </IconButton>
+          </Fab>
         </DialogTitle>
         <DialogContent className={classes.card}>
           <form>
@@ -74,7 +78,10 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, {}> {
           </form>
         </DialogContent>
         <DialogActions key={'actions'}>
-          <Button color="primary" onClick={handleSubmit} disabled={submitting}>
+          <Button color="secondary" variant="contained" onClick={closeDialog}>
+            Отмена
+          </Button>
+          <Button color="primary" variant="contained" onClick={handleSubmit} disabled={submitting}>
             {buttonText}
             {submitting && '...'}
           </Button>

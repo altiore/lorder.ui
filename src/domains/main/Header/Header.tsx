@@ -56,7 +56,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
       filteredProjects = selectedProject ? projects.filter(projectFilter([selectedProject])) : [];
     }
     return (
-      <AppBar position="static" className={classes.appBar} color="primary">
+      <AppBar position="static" color="primary">
         <Toolbar>
           <LinkIconButton to="/" color="secondary">
             <AvTimerIcon />

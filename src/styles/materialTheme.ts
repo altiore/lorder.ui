@@ -1,9 +1,51 @@
 import amber from '@material-ui/core/colors/amber';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme, Theme } from '@material-ui/core/styles';
+
+const defaultTheme: Theme = createMuiTheme();
 
 export default createMuiTheme({
   mainContent: {
     width: 1012,
+  },
+  overrides: {
+    MuiDialogActions: {
+      root: {
+        [defaultTheme.breakpoints.down('sm')]: {
+          bottom: 0,
+          margin: 0,
+          position: 'fixed',
+          width: '100%',
+          zIndex: 100,
+        },
+      },
+    },
+    MuiDialogTitle: {
+      root: {
+        alignItems: 'center',
+        [defaultTheme.breakpoints.up('sm')]: {
+          display: 'none',
+        },
+        backgroundColor: '#24292E',
+        display: 'flex',
+        flexFlow: 'row nowrap',
+        height: 60,
+        justifyContent: 'space-between',
+        padding: '0 20px',
+      },
+    },
+    MuiToolbar: {
+      gutters: {
+        paddingLeft: 6,
+        paddingRight: 6,
+      },
+      root: {
+        zIndex: defaultTheme.zIndex.drawer + 1,
+        [defaultTheme.breakpoints.down('sm')]: {
+          ...(defaultTheme.overrides as any).MuiAppBar,
+          padding: 0,
+        },
+      },
+    },
   },
   palette: {
     primary: {
@@ -20,6 +62,9 @@ export default createMuiTheme({
     },
   },
   typography: {
+    button: {
+      textTransform: 'none',
+    },
     useNextVariants: true,
   },
 });
