@@ -9,7 +9,7 @@ export interface IState {
 
 export const withResize = <P = {}>(
   Component: React.FunctionComponent<P> | React.ComponentClass<P>,
-  getNode?: (el: any) => any
+  getNode?: (el: any) => any | boolean
 ): React.FunctionComponent<P> | React.ComponentClass<P> =>
   class WithResize extends React.Component<P, IState> {
     private handleResize = debounce(() => this.setState(this.getDimensions()), 200);
@@ -32,7 +32,15 @@ export const withResize = <P = {}>(
 
     render() {
       const { children, ...restProps } = this.props as any;
-      return React.createElement(Component as any, { ...restProps, ...this.state }, children);
+      const { getRef, ...restState } = this.state;
+      const componentProps: any = {
+        ...restProps,
+        ...restState,
+      };
+      if (getNode) {
+        componentProps.getRef = getRef;
+      }
+      return React.createElement(Component as any, componentProps, children);
     }
 
     private getDimensions = (): { height: number; width: number } => {

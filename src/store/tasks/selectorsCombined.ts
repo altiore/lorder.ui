@@ -21,3 +21,5 @@ export const sortedByFilterTasks = createSelector(
   [filteredByProjectTasks, tasksFilter],
   (tasks = [], filter = 'smart') => [...tasks].sort(filteredFunction[filter])
 );
+
+export const checkIsCurrent = createSelector([currentTaskId], cTaskId => (taskId: number) => cTaskId === taskId);

@@ -15,8 +15,9 @@ export interface IStoreInfo {
   getSourceAction: () => any;
 }
 
-function getError(action: any): false | Notification {
-  const errorFromAction = get(action, 'meta.previousAction.payload.error');
+function getError(action: any, status: number): false | Notification {
+  const errorFromAction =
+    get(action, 'meta.previousAction.payload.error') || get(action, 'meta.previousAction.payload.fail');
   if (typeof errorFromAction === 'object') {
     return {
       level: 'error',
@@ -24,7 +25,7 @@ function getError(action: any): false | Notification {
       ...errorFromAction,
     };
   } else {
-    if (errorFromAction === false) {
+    if (errorFromAction === false || status === 422) {
       return false;
     }
     return {
@@ -104,7 +105,7 @@ export default multiClientMiddleware(
           if (formName) {
             dispatch(stopAsyncValidation(formName, parseFormErrorsFromResponse(action)));
           }
-          const showError = getError(action);
+          const showError = getError(action, status);
           if (showError) {
             dispatch(show(showError, showError.level));
           }

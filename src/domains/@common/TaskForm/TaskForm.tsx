@@ -3,7 +3,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
-import Typography from '@material-ui/core/Typography';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import CloseIcon from '@material-ui/icons/Close';
 import EventIcon from '@material-ui/icons/Event';
@@ -15,6 +14,7 @@ import { Input } from 'liw-components/Input';
 import { TextArea } from 'liw-components/TextArea';
 import { TitleInput } from 'liw-components/TitleInput';
 
+import { StartStopBtn } from 'src/components/StartStopBtn';
 import { nullIfEmpty, parseNumber } from 'src/store/@common/helpers';
 
 export interface ITaskFormData {
@@ -28,19 +28,27 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
   buttonText?: string;
   classes?: any;
   closeDialog: any;
-  projectId: number;
+  isCurrent?: boolean;
   projectTasksIsLoading: boolean;
+  startUserWork?: any;
+  stopUserWork: any;
 }
 
 export class TaskFormJsx extends React.PureComponent<ITaskFormProps, {}> {
   render() {
-    const { buttonText, classes, closeDialog, handleSubmit, submitting } = this.props;
+    const {
+      buttonText,
+      classes,
+      closeDialog,
+      isCurrent,
+      handleSubmit,
+      submitting,
+      startUserWork,
+      stopUserWork,
+    } = this.props;
     return (
       <>
         <DialogTitle disableTypography>
-          <Typography variant="h6" color="secondary">
-            Редактировать:
-          </Typography>
           <Fab size="small" color="secondary" onClick={closeDialog}>
             <CloseIcon fontSize={'small'} />
           </Fab>
@@ -85,6 +93,9 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, {}> {
             {buttonText}
             {submitting && '...'}
           </Button>
+          {isCurrent !== undefined && (
+            <StartStopBtn isStarted={isCurrent} onStart={startUserWork} onStop={stopUserWork} />
+          )}
         </DialogActions>
       </>
     );

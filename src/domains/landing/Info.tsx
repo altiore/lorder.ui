@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import debounce from 'lodash-es/debounce';
 import * as React from 'react';
 
 import { TelegramIco } from 'src/components/@icons/Telegram';
@@ -29,30 +28,13 @@ export interface IInfoProps {
     reviews: number;
     title: string;
   }>;
-}
-
-export interface IState {
   height: number;
   width: number;
 }
 
-export class InfoTsx extends React.Component<IInfoProps, IState> {
-  constructor(props: IInfoProps) {
-    super(props);
-    this.state = {
-      ...this.getDimensions(),
-    };
-    this.handleResize = this.handleResize.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', debounce(this.handleResize, 200), false);
-  }
-
+export class InfoTsx extends React.Component<IInfoProps, {}> {
   render() {
-    const { brandName, classes, team } = this.props;
-    const { height, width } = this.state;
-    console.log('infoTsx render');
+    const { brandName, classes, team, height, width } = this.props;
     return (
       <div className={classes.root}>
         <BackGroundVideo height={height} width={width} />
@@ -107,22 +89,5 @@ export class InfoTsx extends React.Component<IInfoProps, IState> {
         </AppBar>
       </div>
     );
-  }
-
-  private handleResize() {
-    this.setState(this.getDimensions());
-  }
-
-  private getDimensions() {
-    const w = window;
-    const d = document;
-    const e = d.documentElement;
-    const g = d.getElementsByTagName('body')[0];
-    const width = w.innerWidth || (e && e.clientWidth) || g.clientWidth;
-    const height = w.innerHeight || (e && e.clientHeight) || g.clientHeight;
-    return {
-      height,
-      width,
-    };
   }
 }

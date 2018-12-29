@@ -19,23 +19,31 @@ export default createMuiTheme({
           margin: 0,
           padding: '4px 0',
           position: 'fixed',
+          right: 6,
           width: '100%',
           zIndex: 100,
+        },
+      },
+    },
+    MuiDialogContent: {
+      root: {
+        [defaultTheme.breakpoints.up('sm')]: {
+          minWidth: 600,
         },
       },
     },
     MuiDialogTitle: {
       root: {
         alignItems: 'center',
-        [defaultTheme.breakpoints.up('sm')]: {
-          display: 'none',
-        },
         backgroundColor: '#24292E',
         display: 'flex',
         flexFlow: 'row nowrap',
         height: 60,
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         padding: '0 20px',
+        [defaultTheme.breakpoints.up('sm')]: {
+          display: 'none',
+        },
       },
     },
     MuiToolbar: {

@@ -1,3 +1,4 @@
+import get from 'lodash-es/get';
 import { error } from 'react-notification-system-redux';
 import { Dispatch } from 'redux';
 import { FormErrors, InjectedFormProps } from 'redux-form';
@@ -9,12 +10,15 @@ export const onSubmitFail = <P = any, ErrorType = any>(
   props: P & InjectedFormProps<FormData, P, ErrorType>
 ) => {
   if (submitError) {
-    dispatch(
-      error({
-        message: submitError.toString(),
-        position: 'tr',
-        title: 'Ошибка формы',
-      })
-    );
+    const status = get(submitError, 'error.response.status', 0);
+    if (status < 400) {
+      dispatch(
+        error({
+          message: submitError.toString(),
+          position: 'tr',
+          title: 'Ошибка формы',
+        })
+      );
+    }
   }
 };
