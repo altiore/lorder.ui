@@ -1,4 +1,5 @@
-import { ITask, Task } from 'src/store/tasks';
+import { ITask } from 'src/@types';
+import { Task } from 'src/store/tasks';
 import { User } from 'src/store/users';
 
 export interface IProjectTask extends ITask {

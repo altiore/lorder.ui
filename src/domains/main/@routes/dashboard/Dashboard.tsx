@@ -5,7 +5,7 @@ import * as React from 'react';
 import MediaQuery from 'react-responsive';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { IEvent } from 'src/components/DailyRoutine';
+import { IEvent } from 'src/@types';
 import { PageCenter } from 'src/components/PageCenter';
 import { Project } from 'src/store/projects';
 import { Task } from 'src/store/tasks';

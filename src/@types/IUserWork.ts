@@ -7,7 +7,7 @@ export interface IUserWork {
   projectId: number;
   source?: string | null;
   startAt?: moment.Moment;
-  taskId?: number;
+  taskId: number;
   taskTypeId?: number;
   value?: number;
   duration?: string;

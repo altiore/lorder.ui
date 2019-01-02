@@ -1,9 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { IState } from 'src/@types';
+import { IState, IUserWork } from 'src/@types';
 import { covertSecondsToDuration } from 'src/store/@common/helpers';
 import { filteredTaskList } from 'src/store/tasks/selectors';
-import { UserWork } from 'src/store/tasks/user-works/UserWork';
 import { IUserWorkDelete } from '../tasks/user-works';
 
 const baseState = (state: IState) => state.timer;
@@ -35,7 +34,7 @@ export const currentTask = createSelector([filteredTaskList, currentTaskId], (ta
 
 export const currentUserWork = createSelector(
   [currentTask, currentUserWorkId],
-  (task, userWorkId) => (task ? task.userWorks.find(el => el.id === userWorkId) : new UserWork())
+  (task, userWorkId) => task && task.userWorks.find((el: IUserWork) => el.id === userWorkId)
 );
 
 export const currentTaskTime = createSelector(

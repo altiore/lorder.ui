@@ -176,7 +176,7 @@ const replaceTasksHandler = (state: S, { payload }: Action<Array<Partial<UserWor
   payload.map(userWorkData => {
     const index = newState.list.findIndex(el => userWorkData.taskId === el.id);
     if (~index) {
-      const task = { ...get(userWorkData, 'task') };
+      const task = { ...get(userWorkData, 'task') } as any;
       task.userWorks = [omit(userWorkData, ['task'])];
       newState = newState.updateItem(index, task);
     }

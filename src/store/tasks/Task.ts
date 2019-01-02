@@ -1,19 +1,9 @@
 import map from 'lodash-es/map';
 
+import { ITask } from 'src/@types';
 import { DownloadList } from 'src/store/@common/entities';
 import { covertSecondsToDuration } from 'src/store/@common/helpers';
 import { UserWork } from 'src/store/tasks';
-
-export interface ITask {
-  id: number | string;
-  title: string;
-  description: string;
-  projectId: number;
-  source?: string;
-  status: number;
-  value: number;
-  userWorks: DownloadList<UserWork>;
-}
 
 export class Task implements ITask {
   id: number | string;

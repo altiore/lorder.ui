@@ -1,9 +1,13 @@
+import * as moment from 'moment';
 import { createSelector } from 'reselect';
 
+import { IEvent, ITask } from 'src/@types';
+import { DownloadList } from 'src/store/@common/entities';
 import { selectedProjectId } from 'src/store/project';
-import { allTasks, ITask } from 'src/store/tasks';
+import { allTasks, UserWork } from 'src/store/tasks';
 import { tasksFilter } from 'src/store/tasksFilter';
 import { currentTaskId } from 'src/store/timer';
+import { lastUserWorks } from 'src/store/user-works/selectors';
 
 export const filteredByProjectTasks = createSelector(
   [allTasks, selectedProjectId, currentTaskId],
@@ -23,3 +27,17 @@ export const sortedByFilterTasks = createSelector(
 );
 
 export const checkIsCurrent = createSelector([currentTaskId], cTaskId => (taskId: number) => cTaskId === taskId);
+
+export const events = createSelector(
+  [lastUserWorks],
+  (userWorks: DownloadList<UserWork>): IEvent[] =>
+    userWorks.list
+      .filter(uw => moment().diff(uw.startAt, 'hours') <= 24)
+      .sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1))
+      .map(userWork => ({
+        data: userWork,
+        finishAt: userWork.finishAt,
+        name: (userWork.task as ITask).title || userWork.taskId.toString(),
+        startAt: userWork.startAt,
+      }))
+);

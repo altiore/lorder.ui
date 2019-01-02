@@ -1,4 +1,5 @@
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import * as moment from 'moment';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -11,6 +12,8 @@ import { App } from './domains';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore } from './store/createStore';
 import theme from './styles/materialTheme';
+
+moment.locale('ru');
 
 createStore().then(({ store, persistor, history }) => {
   ReactDOM.render(

@@ -25,13 +25,6 @@ export default createMuiTheme({
         },
       },
     },
-    MuiDialogContent: {
-      root: {
-        [defaultTheme.breakpoints.up('sm')]: {
-          minWidth: 600,
-        },
-      },
-    },
     MuiDialogTitle: {
       root: {
         alignItems: 'center',

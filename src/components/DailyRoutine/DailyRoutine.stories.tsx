@@ -10,6 +10,7 @@ const startJob = moment().subtract(5, 'hours');
 
 const events = [
   {
+    data: 1,
     finishAt: startJob,
     name: 'Сон',
     startAt: moment()
@@ -17,6 +18,7 @@ const events = [
       .set('hours', 23),
   },
   {
+    data: 2,
     finishAt: moment().subtract(1, 'hours'),
     name: 'Работа',
     startAt: startJob,
