@@ -1,4 +1,5 @@
 import green from '@material-ui/core/colors/green';
+import grey from '@material-ui/core/colors/grey';
 import debounce from 'lodash-es/debounce';
 import * as moment from 'moment';
 import { createSliderWithTooltip, Range } from 'rc-slider';
@@ -31,29 +32,34 @@ export class DailyRoutine extends React.PureComponent<IDailyRoutineProps, IDaily
   };
 
   state = {
-    values: this.props.events.sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1)),
+    values: this.prepareValues(this.props),
   };
 
-  // TODO: выполняется два раза при каждом единичном изменении. Возможно стоит написать логику, которая будет
-  // производить изменение единожды
   private handleAfterChange = debounce(
     (numberValues: number[]) => {
       const values = this.convertNumbersToEvents(numberValues);
-      this.props.onChange(values);
+      this.props.onChange(values.filter(({ data }) => !!data));
     },
     3000,
     { leading: false, trailing: true }
   );
 
+  componentWillReceiveProps(nextProps: Readonly<IDailyRoutineProps>, nextContext: any): void {
+    if (this.props.events !== nextProps.events) {
+      this.setState({ values: this.prepareValues(nextProps) });
+    }
+  }
+
   render() {
-    const { events, step } = this.props;
+    const { step } = this.props;
+    const { values } = this.state;
     return (
       <div style={{ width: '100%', padding: 10 }}>
         <RangeComponent
           allowCross={false}
           dots
           step={step}
-          count={events.length}
+          count={values.length}
           min={this.getMin()}
           max={this.getMax()}
           value={this.getNumberValues()}
@@ -61,15 +67,17 @@ export class DailyRoutine extends React.PureComponent<IDailyRoutineProps, IDaily
           onChange={this.handleChange}
           onAfterChange={this.handleAfterChange}
           dotStyle={{
-            backgroundColor: green[300],
+            backgroundColor: `rgba(129, 199, 132, .1)`,
             borderColor: 'transparent',
-            bottom: 0,
-            height: 4,
-            marginLeft: -2,
-            width: 4,
+            bottom: -1,
+            height: 6,
+            marginLeft: -3,
+            width: 6,
           }}
-          trackStyle={events.map(_ => ({ backgroundColor: green[100] }))}
-          handleStyle={[{ borderColor: green[700] }]}
+          trackStyle={values.map(
+            ({ data }) => (data ? { backgroundColor: green[100] } : { backgroundColor: grey[100] })
+          )}
+          handleStyle={values.map(({ data }) => (data ? { borderColor: green[700] } : { borderColor: grey[100] }))}
           railStyle={{ backgroundColor: green[100] }}
           tipFormatter={this.tipFormatter}
         />
@@ -170,6 +178,23 @@ export class DailyRoutine extends React.PureComponent<IDailyRoutineProps, IDaily
 
   private getStart(event: IEvent): number {
     return event.startAt.clone().unix();
+  }
+
+  private prepareValues(props: IDailyRoutineProps) {
+    let prepared = [...props.events].sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1));
+    prepared = prepared.reduce((res: IEvent[], current: IEvent, i: number, arr: IEvent[]) => {
+      res.push(current);
+      if (current.finishAt && arr[i + 1] && current.finishAt.unix() < arr[i + 1].startAt.unix()) {
+        res.push({
+          data: null,
+          finishAt: arr[i + 1].startAt,
+          name: 'Удаленная задача',
+          startAt: current.finishAt,
+        });
+      }
+      return res;
+    }, []);
+    return prepared;
   }
 
   // private getFinish(event: IEvent): number {
