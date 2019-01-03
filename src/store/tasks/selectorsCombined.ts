@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 
 import { IEvent, ITask } from 'src/@types';
 import { DownloadList } from 'src/store/@common/entities';
+import { defaultProjectId } from 'src/store/identity/selectors';
 import { selectedProjectId } from 'src/store/project';
 import { allTasks, UserWork } from 'src/store/tasks';
 import { tasksFilter } from 'src/store/tasksFilter';
@@ -29,15 +30,17 @@ export const sortedByFilterTasks = createSelector(
 export const checkIsCurrent = createSelector([currentTaskId], cTaskId => (taskId: number) => cTaskId === taskId);
 
 export const events = createSelector(
-  [lastUserWorks],
-  (userWorks: DownloadList<UserWork>): IEvent[] =>
-    userWorks.list
+  [lastUserWorks, defaultProjectId],
+  (userWorks: DownloadList<UserWork>, defPrId: number): IEvent[] => {
+    return userWorks.list
       .filter(uw => moment().diff(uw.startAt, 'hours') <= 24)
       .sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1))
       .map(userWork => ({
         data: userWork,
         finishAt: userWork.finishAt,
+        isActive: userWork.projectId !== defPrId,
         name: (userWork.task as ITask).title || userWork.taskId.toString(),
         startAt: userWork.startAt,
-      }))
+      }));
+  }
 );

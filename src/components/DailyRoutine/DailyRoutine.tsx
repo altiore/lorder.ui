@@ -1,5 +1,6 @@
 import green from '@material-ui/core/colors/green';
 import grey from '@material-ui/core/colors/grey';
+import red from '@material-ui/core/colors/red';
 import debounce from 'lodash-es/debounce';
 import * as moment from 'moment';
 import { createSliderWithTooltip, Range } from 'rc-slider';
@@ -74,10 +75,12 @@ export class DailyRoutine extends React.PureComponent<IDailyRoutineProps, IDaily
             marginLeft: -3,
             width: 6,
           }}
-          trackStyle={values.map(
-            ({ data }) => (data ? { backgroundColor: green[100] } : { backgroundColor: grey[100] })
-          )}
-          handleStyle={values.map(({ data }) => (data ? { borderColor: green[700] } : { borderColor: grey[100] }))}
+          trackStyle={values.map(({ data, isActive }) => ({
+            backgroundColor: data ? (isActive ? green[100] : red[100]) : grey[100],
+          }))}
+          handleStyle={values.map(({ data, isActive }) => ({
+            borderColor: data ? (isActive ? green[700] : red[300]) : grey[100],
+          }))}
           railStyle={{ backgroundColor: green[100] }}
           tipFormatter={this.tipFormatter}
         />
@@ -184,10 +187,13 @@ export class DailyRoutine extends React.PureComponent<IDailyRoutineProps, IDaily
     let prepared = [...props.events].sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1));
     prepared = prepared.reduce((res: IEvent[], current: IEvent, i: number, arr: IEvent[]) => {
       res.push(current);
+      // превращаем пустые диапазоны (время, когда нет задач) в удаленные задачи,
+      // чтоб их можно было превратить в реальные задачи
       if (current.finishAt && arr[i + 1] && current.finishAt.unix() < arr[i + 1].startAt.unix()) {
         res.push({
           data: null,
           finishAt: arr[i + 1].startAt,
+          isActive: true,
           name: 'Удаленная задача',
           startAt: current.finishAt,
         });

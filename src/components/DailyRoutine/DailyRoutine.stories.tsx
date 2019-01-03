@@ -12,6 +12,7 @@ const events = [
   {
     data: 1,
     finishAt: startJob,
+    isActive: false,
     name: 'Сон',
     startAt: moment()
       .subtract(1, 'day')
@@ -20,6 +21,7 @@ const events = [
   {
     data: 2,
     finishAt: moment().subtract(1, 'hours'),
+    isActive: true,
     name: 'Работа',
     startAt: startJob,
   },

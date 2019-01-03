@@ -5,7 +5,6 @@ import * as React from 'react';
 import MediaQuery from 'react-responsive';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { IEvent } from 'src/@types';
 import { PageCenter } from 'src/components/PageCenter';
 import { Project } from 'src/store/projects';
 import { Task } from 'src/store/tasks';
@@ -48,7 +47,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     const sortedTasks = tasks.slice(page * 4, (page + 1) * 4);
     return (
       <PageCenter>
-        <DailyRoutine onChange={this.handleOnChange} />
+        <DailyRoutine />
         <Grid item lg={9} md={8} sm={12} className={classes.content}>
           <StartForm />
           <List classes={{ root: classes.listRoot }}>
@@ -64,10 +63,6 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
         </MediaQuery>
       </PageCenter>
     );
-  }
-
-  private handleOnChange(events: IEvent[]): any {
-    console.log('values', events);
   }
 
   private renderListItem = (task: Task) => {

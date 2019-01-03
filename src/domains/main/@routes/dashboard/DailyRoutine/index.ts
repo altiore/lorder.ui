@@ -37,7 +37,7 @@ const mergeProps = (
     : saveUserWorks,
 });
 
-export const DailyRoutine = connect<{ events: IEvent[] }, {}, { onChange: (events: IEvent[]) => any }>(
+export const DailyRoutine = connect<{}, {}, {}, { events: IEvent[]; onChange: (events: IEvent[]) => any }, {}>(
   mapStateToProps,
   mapDispatch,
   mergeProps
