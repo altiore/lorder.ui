@@ -49,6 +49,7 @@ export const styles = (theme: Theme) =>
     },
     drawerPaper: {
       width: drawerWidth,
+      zIndex: 1000,
     },
     grow: {
       flexGrow: 1,
