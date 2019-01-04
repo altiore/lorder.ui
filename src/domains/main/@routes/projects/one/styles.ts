@@ -78,7 +78,7 @@ export const styles = (theme: Theme) =>
     },
     toggleButton: {
       '&:hover': {
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: theme.palette.grey[400],
       },
       borderLeft: '3px solid black',
       height: '100%',

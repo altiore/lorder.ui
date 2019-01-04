@@ -1,4 +1,7 @@
+import ButtonBase from '@material-ui/core/ButtonBase';
+import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
 import * as React from 'react';
 import {
   DragDropContext,
@@ -14,12 +17,11 @@ import { DownloadList } from 'src/store/@common/entities';
 import { ProjectTask } from 'src/store/projects';
 import { TaskCard } from './TaskCard';
 
-const grid = 8;
-const CARD_WIDTH = 300;
+const CARD_WIDTH = 296;
 
-const getListStyle = (isDraggingOver: boolean) => ({
+const getListStyle = (isDraggingOver: boolean, height: number) => ({
   background: isDraggingOver ? '#DFE3E6' : '#DFE3E6',
-  padding: grid,
+  maxHeight: height - 188,
   width: CARD_WIDTH,
 });
 
@@ -31,6 +33,8 @@ export interface IDragAndDropProps {
   statuses: number[];
   openDialog: any;
   projectId: number;
+  theme: Theme;
+  height: number;
 }
 
 export interface IDragAndDropState {
@@ -72,33 +76,42 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
   };
 
   render() {
-    const { classes, statuses, items } = this.props;
+    const { classes, statuses, items, theme, height } = this.props;
     return (
-      <div className={classes.root} style={{ width: statuses.length * (CARD_WIDTH + grid) }}>
+      <div className={classes.root} style={{ width: statuses.length * (CARD_WIDTH + theme.spacing.unit * 1.5) }}>
         <DragDropContext onDragEnd={this.onDragEnd}>
           {statuses.map(status => (
-            <Droppable key={status} droppableId={status.toString()}>
-              {(provided, snapshot) => (
-                <div ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)} className={classes.column}>
-                  <Typography variant="h2" className={classes.columnTitle}>
-                    {STATUS_NAMES[status]}
-                  </Typography>
-                  {items.list.filter(el => el.status === status).map((item: ProjectTask, index) => (
-                    <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
-                      {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
-                        <TaskCard
-                          provided={provided}
-                          snapshot={snapshot}
-                          {...item}
-                          onClick={this.handleTaskClick(item.id)}
-                        />
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+            <div className={classes.column} key={status}>
+              <Typography variant="h2" className={classes.columnTitle}>
+                {STATUS_NAMES[status]}
+              </Typography>
+              <Droppable droppableId={status.toString()}>
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    style={getListStyle(snapshot.isDraggingOver, height)}
+                    className={classes.columnContent}
+                  >
+                    {items.list.filter(el => el.status === status).map((item: ProjectTask, index) => (
+                      <Draggable key={item.id} draggableId={item.id.toString()} index={index} type={'div'}>
+                        {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
+                          <TaskCard
+                            provided={provided}
+                            snapshot={snapshot}
+                            {...item}
+                            onClick={this.handleTaskClick(item.id)}
+                          />
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+              <ButtonBase className={classes.columnFooter}>
+                <AddIcon fontSize="small" /> Добавить карточку
+              </ButtonBase>
+            </div>
           ))}
         </DragDropContext>
       </div>

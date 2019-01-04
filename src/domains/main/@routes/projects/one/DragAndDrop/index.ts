@@ -2,6 +2,7 @@ import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { withResize } from 'src/hocs/withResize';
 import { openDialog } from 'src/store/dialog';
 import { getAllProjectTasks, moveProjectTask, projectTasks } from 'src/store/projects';
 import { projectId } from 'src/store/router';
@@ -37,4 +38,4 @@ export default connect(
   mapState,
   mapDispatch,
   mergeProps
-)(withStyles(styles, { withTheme: true })(DragAndDrop));
+)(withResize(withStyles(styles, { withTheme: true })(DragAndDrop)));
