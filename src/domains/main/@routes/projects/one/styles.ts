@@ -69,5 +69,19 @@ export const styles = (theme: Theme) =>
     },
     root: {
       display: 'flex',
+      flexGrow: 1,
+      height: '100%',
+      position: 'relative',
+    },
+    toggleButton: {
+      '&:hover': {
+        backgroundColor: theme.palette.secondary.light,
+      },
+      borderLeft: '3px solid black',
+      height: '100%',
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      width: 30,
     },
   });

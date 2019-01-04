@@ -1,4 +1,4 @@
-import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -131,19 +131,21 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
             </ListItem>
           </List>
         </Drawer>
-        <main
+        <section
           className={classNames(classes.content, {
             [classes.contentShift]: open,
           })}
         >
-          <Button onClick={this.handleDrawerToggle}>Open</Button>
+          <ButtonBase onClick={this.handleDrawerToggle} className={classes.toggleButton}>
+            <ChevronRightIcon />
+          </ButtonBase>
           <Switch>
-            <Redirect from="/projects/:projectId" to="/projects/:projectId/tasks" exact />
+            <Redirect from="/projects/:projectId" to="/projects/:projectId/dnd" exact />
             {routes.map((route: IRoute) => (
               <RouteWithSubRoutes key={route.path || 'NotFound'} {...route} />
             ))}
           </Switch>
-        </main>
+        </section>
       </div>
     );
   }

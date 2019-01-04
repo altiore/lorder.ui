@@ -1,16 +1,26 @@
+import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
-import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import {
+  DragDropContext,
+  Draggable,
+  DraggableProvided,
+  DraggableStateSnapshot,
+  Droppable,
+  DropResult,
+} from 'react-beautiful-dnd';
 
+import { PatchTaskForm } from 'src/domains/@common/TaskForm';
 import { DownloadList } from 'src/store/@common/entities';
 import { ProjectTask } from 'src/store/projects';
-import { TaskCardTsx } from './TaskCard2/TaskCard';
+import { TaskCard } from './TaskCard';
 
 const grid = 8;
+const CARD_WIDTH = 300;
 
 const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  background: isDraggingOver ? '#DFE3E6' : '#DFE3E6',
   padding: grid,
-  width: 300,
+  width: CARD_WIDTH,
 });
 
 export interface IDragAndDropProps {
@@ -18,6 +28,9 @@ export interface IDragAndDropProps {
   items: DownloadList<ProjectTask>;
   getAllProjectTasks: any;
   moveProjectTask: any;
+  statuses: number[];
+  openDialog: any;
+  projectId: number;
 }
 
 export interface IDragAndDropState {
@@ -29,6 +42,10 @@ export interface IDragAndDropState {
 const STATUS_NAMES = ['Резерв', 'Сделать', 'В процессе', 'Обзор', 'Готово'];
 
 export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDropState> {
+  static defaultProps = {
+    statuses: [0, 1, 2, 3, 4],
+  };
+
   componentDidMount(): void {
     this.props.getAllProjectTasks();
   }
@@ -55,18 +72,27 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
   };
 
   render() {
-    const { classes, items } = this.props;
+    const { classes, statuses, items } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.root} style={{ maxWidth: statuses.length * (CARD_WIDTH + grid) }}>
         <DragDropContext onDragEnd={this.onDragEnd}>
-          {[0, 1, 2, 3, 4].map(status => (
+          {statuses.map(status => (
             <Droppable key={status} droppableId={status.toString()}>
               {(provided, snapshot) => (
-                <div ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
-                  <h2>{STATUS_NAMES[status]}</h2>
+                <div ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)} className={classes.column}>
+                  <Typography variant="h2" className={classes.columnTitle}>
+                    {STATUS_NAMES[status]}
+                  </Typography>
                   {items.list.filter(el => el.status === status).map((item: ProjectTask, index) => (
                     <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
-                      {TaskCardTsx(item)}
+                      {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
+                        <TaskCard
+                          provided={provided}
+                          snapshot={snapshot}
+                          {...item}
+                          onClick={this.handleTaskClick(item.id)}
+                        />
+                      )}
                     </Draggable>
                   ))}
                   {provided.placeholder}
@@ -78,4 +104,10 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
       </div>
     );
   }
+
+  private handleTaskClick = (taskId: number | string) => () => {
+    this.props.openDialog(<PatchTaskForm taskId={taskId} projectId={this.props.projectId} buttonText="Сохранить" />, {
+      scroll: 'body',
+    });
+  };
 }

@@ -2,6 +2,7 @@ import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { openDialog } from 'src/store/dialog';
 import { getAllProjectTasks, moveProjectTask, projectTasks } from 'src/store/projects';
 import { projectId } from 'src/store/router';
 import { DragAndDrop } from './DragAndDrop';
@@ -15,6 +16,7 @@ const mapState = createStructuredSelector({
 const mapDispatch = {
   getAllProjectTasks,
   moveProjectTask,
+  openDialog,
 };
 
 const mergeProps = (

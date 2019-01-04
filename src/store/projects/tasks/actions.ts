@@ -30,6 +30,12 @@ export const getAllProjectTasks = requestActions(
   (projectId: number): any => ({
     projectId,
     request: {
+      params: {
+        count: 1000,
+        order: 'desc',
+        orderBy: 'id',
+        skip: 0,
+      },
       url: `/projects/${projectId}/tasks`,
     },
   })
