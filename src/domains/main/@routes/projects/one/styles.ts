@@ -20,7 +20,10 @@ export const styles = (theme: Theme) =>
       width: `calc(100% - ${drawerWidth}px)`,
     },
     content: {
+      alignItems: 'flex-begin',
+      display: 'flex',
       flexGrow: 1,
+      justifyContent: 'center',
       marginLeft: -drawerWidth,
       padding: theme.spacing.unit * 3,
       transition: theme.transitions.create('margin', {

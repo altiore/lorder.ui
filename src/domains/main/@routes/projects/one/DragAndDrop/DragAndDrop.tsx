@@ -74,7 +74,7 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
   render() {
     const { classes, statuses, items } = this.props;
     return (
-      <div className={classes.root} style={{ maxWidth: statuses.length * (CARD_WIDTH + grid) }}>
+      <div className={classes.root} style={{ width: statuses.length * (CARD_WIDTH + grid) }}>
         <DragDropContext onDragEnd={this.onDragEnd}>
           {statuses.map(status => (
             <Droppable key={status} droppableId={status.toString()}>

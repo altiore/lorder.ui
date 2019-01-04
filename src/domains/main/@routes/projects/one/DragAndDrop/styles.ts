@@ -4,7 +4,6 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) =>
   createStyles({
     column: {
-      // backgroundColor: theme.palette.grey[300],
       backgroundColor: '#dfe3e6',
       borderRadius: 3,
     },
