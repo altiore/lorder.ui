@@ -6,6 +6,7 @@ export const styles = (theme: Theme) =>
     buttonProject: {
       flexBasis: '16%',
       textTransform: 'none',
+      whiteSpace: 'nowrap',
     },
     buttonTitle: {
       flexBasis: '60%',
@@ -23,8 +24,8 @@ export const styles = (theme: Theme) =>
       flexBasis: '10%',
     },
     listItem: {
-      border: `1px solid ${theme.palette.grey['300']}`,
       borderRadius: theme.shape.borderRadius,
+      boxShadow: theme.shadows[1],
       flexGrow: 1,
       justifyContent: 'space-between',
       marginBottom: theme.spacing.unit,

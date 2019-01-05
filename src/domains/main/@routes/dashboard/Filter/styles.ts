@@ -7,16 +7,35 @@ export const styles = (theme: Theme) =>
       width: '100%',
     },
     filter: {
-      display: 'flex',
-      justifyContent: 'space-between',
+      width: 144,
     },
+    group: {},
     grow: {
       grow: 1,
     },
     left: {
-      marginRight: theme.spacing.unit,
+      [theme.breakpoints.down('sm')]: {
+        display: 'block!important',
+      },
+    },
+    pagination: {
+      alignItems: 'center',
+      display: 'flex',
+      flexFlow: 'row nowrap',
+      height: 40,
+      justifyContent: 'space-around',
+      width: 144,
     },
     right: {
-      marginLeft: theme.spacing.unit,
+      [theme.breakpoints.down('sm')]: {
+        display: 'block!important',
+      },
+    },
+    root: {
+      alignItems: 'flex-end',
+      display: 'flex',
+      height: 70,
+      justifyContent: 'space-between',
+      padding: '0 2px 8px',
     },
   });

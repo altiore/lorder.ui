@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as Popover from 'react-popover';
 
 import { LinkButton } from 'src/domains/@common/LinkButton';
-import { ShortChart } from './ShortChart';
+import { ShortChart } from 'src/domains/@common/ShortChart';
 
 export interface IProjectButtonProps {
   classes?: any;
@@ -34,7 +34,7 @@ export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProj
         place="below"
         isOpen={isOpen}
         onOuterAction={this.onClosePopover}
-        body={<ShortChart id={id} title={title} time={time} percent={percent} />}
+        body={<ShortChart project={{ time, title, percent }} />}
       >
         <LinkButton
           to={uuid ? `/p/${uuid}` : `/projects/${id}`}

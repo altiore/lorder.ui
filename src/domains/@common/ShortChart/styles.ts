@@ -4,9 +4,8 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) =>
   createStyles({
     list: {
-      backgroundColor: theme.palette.secondary.light,
+      backgroundColor: theme.palette.background.default,
       borderRadius: theme.shape.borderRadius,
-      padding: theme.spacing.unit,
       textAlign: 'center',
     },
   });

@@ -12,5 +12,8 @@ export const styles = (theme: Theme) =>
         margin: 0,
         padding: theme.spacing.unit,
       },
+      [theme.breakpoints.up('lg')]: {
+        width: theme.mainContent.width,
+      },
     },
   });

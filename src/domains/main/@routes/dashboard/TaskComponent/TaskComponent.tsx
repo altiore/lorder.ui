@@ -39,9 +39,7 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
 
   render() {
     const { classes, isCurrent, project, task, theme } = this.props;
-    if (!task || !project || !project.id) {
-      return null;
-    }
+    const isShown = task && project && project.id;
 
     const { isWorkTableOpen } = this.state;
     return (
@@ -49,17 +47,17 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
         <MediaQuery minWidth={theme.breakpoints.values.sm}>
           <LinkButton
             className={classes.buttonProject}
-            to={project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`}
+            to={isShown ? (project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`) : '#'}
           >
-            {project.title}
+            {isShown ? project.title : '...'}
           </LinkButton>
         </MediaQuery>
         <Button
           classes={{ label: classes.buttonTitleLabel }}
           className={classes.buttonTitle}
-          onClick={this.openEditTaskForm(task.id, project.id)}
+          onClick={isShown ? this.openEditTaskForm(task.id, project.id as number) : undefined}
         >
-          {task.title}
+          {isShown ? task.title : '...'}
         </Button>
         <Popover
           tipSize={4}
@@ -67,12 +65,16 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
           isOpen={isWorkTableOpen}
           onOuterAction={this.onToggleOpenWorkTable}
           body={
-            <UserWorkTable
-              userWorks={task.userWorks}
-              taskId={task.id}
-              projectId={project.id}
-              onClose={this.onToggleOpenWorkTable}
-            />
+            isShown ? (
+              <UserWorkTable
+                userWorks={task.userWorks}
+                taskId={task.id}
+                projectId={project.id}
+                onClose={this.onToggleOpenWorkTable}
+              />
+            ) : (
+              <div />
+            )
           }
         >
           {isCurrent ? (
@@ -102,7 +104,11 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
 
   private onToggleOpenWorkTable = () => this.setState(({ isWorkTableOpen }) => ({ isWorkTableOpen: !isWorkTableOpen }));
 
-  private startUserTask = ({ id, projectId }: Task) => (event: React.SyntheticEvent) => {
+  private startUserTask = (task: Task) => (event: React.SyntheticEvent) => {
+    if (!task) {
+      return;
+    }
+    const { id, projectId } = task;
     event.stopPropagation();
     this.props.startUserWork({
       projectId,

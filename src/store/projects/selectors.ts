@@ -50,3 +50,8 @@ export const ownProjectListWithStatistic = createSelector(
       time: getTime(project.id as number),
     }))
 );
+
+export const selectedProjectWithStatistic = createSelector(
+  [ownProjectListWithStatistic, selectedProject],
+  (list, project) => project && list.find(el => el.id === project.id)
+);

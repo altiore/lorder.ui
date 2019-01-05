@@ -11,6 +11,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import * as React from 'react';
 
 import { IEvent } from 'src/@types';
+import { Statistic } from './Statistic';
 
 export interface ILastEventsProps {
   events: IEvent[];
@@ -19,7 +20,7 @@ export interface ILastEventsProps {
 
 export class LastEventsTsx extends React.Component<ILastEventsProps, {}> {
   state = {
-    expanded: 'lastEvents',
+    expanded: 'statistic',
   };
 
   handleChange = (panel: string) => (event: React.SyntheticEvent, expanded: boolean) => {
@@ -34,6 +35,14 @@ export class LastEventsTsx extends React.Component<ILastEventsProps, {}> {
 
     return (
       <div className={classes.root}>
+        <ExpansionPanel expanded={expanded === 'statistic'} onChange={this.handleChange('statistic')}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography className={classes.heading}>Статистика</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Statistic dense />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
         <ExpansionPanel expanded={expanded === 'lastEvents'} onChange={this.handleChange('lastEvents')}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.heading}>Последние действия</Typography>
@@ -52,17 +61,6 @@ export class LastEventsTsx extends React.Component<ILastEventsProps, {}> {
                 </ListItem>
               ))}
             </List>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel expanded={expanded === 'panel2'} onChange={this.handleChange('panel2')}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Статистика</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Typography>
-              Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus, varius pulvinar diam eros in elit.
-              Pellentesque convallis laoreet laoreet.
-            </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>
