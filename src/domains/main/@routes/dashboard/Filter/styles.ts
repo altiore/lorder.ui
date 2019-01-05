@@ -15,7 +15,7 @@ export const styles = (theme: Theme) =>
     },
     left: {
       [theme.breakpoints.down('sm')]: {
-        display: 'block!important',
+        display: 'flex!important',
       },
     },
     pagination: {
@@ -28,7 +28,7 @@ export const styles = (theme: Theme) =>
     },
     right: {
       [theme.breakpoints.down('sm')]: {
-        display: 'block!important',
+        display: 'flex!important',
       },
     },
     root: {

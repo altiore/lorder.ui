@@ -3,6 +3,11 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) =>
   createStyles({
+    actions: {
+      display: 'flex',
+      flexFlow: 'row wrap',
+      justifyContent: 'space-between',
+    },
     card: {
       backgroundColor: theme.palette.background.default,
       borderRadius: 2,
@@ -17,14 +22,32 @@ export const styles = (theme: Theme) =>
       width: '100%',
       zIndex: 25,
       [theme.breakpoints.up('lg')]: {
-        minWidth: 600,
+        minWidth: 1040,
       },
+    },
+    cardFirst: {
+      boxSizing: 'border-box',
+      flexBasis: '75%',
+      flexGrow: 2,
+      paddingRight: theme.spacing.unit,
+    },
+    cardForm: {
+      display: 'flex',
+      flexFlow: 'row wrap',
+    },
+    cardSecond: {
+      boxSizing: 'border-box',
+      flexBasis: '25%',
+      flexGrow: 1,
+      paddingLeft: theme.spacing.unit,
     },
     field: {
       paddingLeft: theme.spacing.unit * 4,
     },
-    header: {
-      paddingLeft: 7,
-      width: '94%',
+    grow: {
+      flexGrow: 1,
+    },
+    margin: {
+      margin: theme.spacing.unit,
     },
   });

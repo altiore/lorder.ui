@@ -7,18 +7,18 @@ import { ListBox } from 'liw-components/ListBox';
 
 import { IUser } from 'src/store/users';
 
-interface IPerformersState {
+interface IPerformerFieldState {
   isOpen: boolean;
 }
 
-export interface IPerformersCellProps extends WrappedFieldProps {
+export interface IPerformerFieldProps extends WrappedFieldProps {
   classes: any;
   patchProjectTask: any;
   taskId: number;
   projectMembers: IUser[];
 }
 
-export class PerformersCellJsx extends React.Component<IPerformersCellProps, IPerformersState> {
+export class PerformerFieldTsx extends React.Component<IPerformerFieldProps, IPerformerFieldState> {
   state = {
     isOpen: false,
   };

@@ -11,5 +11,5 @@ export const allTaskList = createSelector(allTasks, dr => dr.list);
 export const filteredTaskList = createSelector(allTaskList, tasks => tasks);
 
 export const getEditTaskInitialValues = createSelector([allTaskList], (allTaskList: Task[]) => (taskId: number) =>
-  pick(allTaskList.find((el: Task) => el.id === taskId), ['description', 'id', 'source', 'title', 'value'])
+  pick(allTaskList.find((el: Task) => el.id === taskId), ['description', 'id', 'source', 'title', 'users', 'value'])
 );

@@ -124,7 +124,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
   };
 
   private createTask = (projectId: number | string) => () => {
-    this.props.openDialog(<AddTaskForm buttonText="Добавить задачу" projectId={projectId} />);
+    this.props.openDialog(<AddTaskForm buttonText="Добавить задачу" projectId={projectId} />, { maxWidth: 'lg' });
   };
 
   private handleRowClick = (id: number | string, projectId: number | string) => (event: React.MouseEvent) => {
@@ -137,7 +137,9 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
       });
     }
     if (!isInside && id) {
-      this.props.openDialog(<PatchTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />);
+      this.props.openDialog(<PatchTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />, {
+        maxWidth: 'lg',
+      });
     }
   };
 

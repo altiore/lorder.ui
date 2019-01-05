@@ -99,7 +99,7 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
 
   private openEditTaskForm = (id: number | string, projectId: number | string) => () => {
     const { openDialog } = this.props;
-    openDialog(<DashboardTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />);
+    openDialog(<DashboardTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />, { maxWidth: 'lg' });
   };
 
   private onToggleOpenWorkTable = () => this.setState(({ isWorkTableOpen }) => ({ isWorkTableOpen: !isWorkTableOpen }));

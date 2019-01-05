@@ -7,8 +7,27 @@ const defaultTheme: Theme = createMuiTheme({
   },
 });
 
+const prettyScroll1 = {
+  '&::-webkit-scrollbar': {
+    width: defaultTheme.spacing.unit,
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: '#B5BEC5',
+    borderRadius: defaultTheme.spacing.unit / 2,
+    cursor: 'pointer',
+  },
+  '&::-webkit-scrollbar-thumb:hover': {
+    backgroundColor: defaultTheme.palette.text.hint,
+  },
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: '#CED4D9',
+    borderRadius: defaultTheme.spacing.unit / 2,
+  },
+};
+
 export default createMuiTheme({
   mainContent: {
+    scroll: prettyScroll1,
     width: 1012,
   },
   overrides: {
@@ -17,26 +36,26 @@ export default createMuiTheme({
         [defaultTheme.breakpoints.down('sm')]: {
           bottom: 0,
           margin: 0,
-          padding: '4px 0',
+          padding: '4px',
           position: 'fixed',
-          right: 6,
-          width: '100%',
+          width: 'calc(100% - 8px)',
           zIndex: 100,
         },
       },
     },
+    MuiDialogContent: {
+      root: prettyScroll1,
+    },
     MuiDialogTitle: {
       root: {
         alignItems: 'center',
-        backgroundColor: '#24292E',
+        // backgroundColor: '#24292E',
+        borderRadius: defaultTheme.spacing.unit / 2,
         display: 'flex',
         flexFlow: 'row nowrap',
         height: 60,
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         padding: '0 20px',
-        [defaultTheme.breakpoints.up('sm')]: {
-          display: 'none',
-        },
       },
     },
     MuiToolbar: {
@@ -89,12 +108,14 @@ export default createMuiTheme({
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
     mainContent: {
+      scroll: object;
       width: number;
     };
   }
   // allow configuration using `createMuiTheme`
   interface ThemeOptions {
     mainContent?: {
+      scroll?: object;
       width?: number;
     };
   }

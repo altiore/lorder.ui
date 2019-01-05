@@ -12,21 +12,7 @@ export const styles = (theme: Theme) =>
       padding: '0 4px 0 0',
     },
     columnContent: {
-      '&::-webkit-scrollbar': {
-        width: theme.spacing.unit,
-      },
-      '&::-webkit-scrollbar-thumb': {
-        backgroundColor: '#B5BEC5',
-        borderRadius: theme.spacing.unit / 2,
-        cursor: 'pointer',
-      },
-      '&::-webkit-scrollbar-thumb:hover': {
-        backgroundColor: theme.palette.text.hint,
-      },
-      '&::-webkit-scrollbar-track': {
-        backgroundColor: '#CED4D9',
-        borderRadius: theme.spacing.unit / 2,
-      },
+      ...theme.mainContent.scroll,
       overflowY: 'auto',
       padding: `0 4px 2px 8px`,
     },

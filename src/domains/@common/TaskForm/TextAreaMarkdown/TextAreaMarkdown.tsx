@@ -56,7 +56,11 @@ export class TextAreaMarkdownTsx extends React.Component<ITextAreaMarkdownProps,
               <Tabs
                 value={activeTab}
                 onChange={this.handleChange}
-                classes={{ root: classes.tabsRoot, flexContainer: classes.tabsFlexContainer }}
+                classes={{
+                  flexContainer: classes.tabsFlexContainer,
+                  indicator: classes.tabsIndicator,
+                  root: classes.tabsRoot,
+                }}
               >
                 <Tab icon={<CodeIcon fontSize="small" />} value="editor" classes={{ root: classes.tabRoot }} />
                 <Tab icon={<VisibilityIcon fontSize="small" />} value="view" classes={{ root: classes.tabRoot }} />
@@ -68,7 +72,7 @@ export class TextAreaMarkdownTsx extends React.Component<ITextAreaMarkdownProps,
                 {activeTab === 'editor' && (
                   <TextareaAutosize className={classes.editor} autoFocus minRows={5} maxRows={30} {...input} />
                 )}
-                <Button onClick={this.handleSave} className={classes.saveButton}>
+                <Button variant="outlined" onClick={this.handleSave} className={classes.saveButton}>
                   Сохранить
                 </Button>
               </div>

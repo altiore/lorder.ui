@@ -120,7 +120,7 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
 
   private handleTaskClick = (taskId: number | string) => () => {
     this.props.openDialog(<PatchTaskForm taskId={taskId} projectId={this.props.projectId} buttonText="Сохранить" />, {
-      scroll: 'body',
+      maxWidth: 'lg',
     });
   };
 }

@@ -5,6 +5,7 @@ export interface ITask {
   id: number | string;
   title: string;
   description: string;
+  performerId?: number;
   projectId: number;
   source?: string;
   status: number;
