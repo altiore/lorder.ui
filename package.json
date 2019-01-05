@@ -61,7 +61,7 @@
     "__relink-components": "rimraf node_modules/liw-components && ln -s ~/www/react-components $PWD/node_modules/liw-components"
   },
   "devDependencies": {
-    "@jpavon/react-scripts-ts": "git+https://git@github.com/altiore/react-scripts-ts.git",
+    "@jpavon/react-scripts-ts": "^0.11.2",
     "@storybook/addon-actions": "^4.0.9",
     "@storybook/addon-info": "^4.0.8",
     "@storybook/react": "^4.0.8",
