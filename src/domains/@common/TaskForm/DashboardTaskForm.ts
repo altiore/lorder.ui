@@ -54,7 +54,4 @@ export const DashboardTaskForm = connect<
   form: PROJECT_EDIT_TASK_FORM_NAME,
   onSubmit: onSubmitForm<{ projectId: number | string }>(patchProjectTask, ({ projectId }) => ({ projectId })),
   onSubmitFail,
-  onSubmitSuccess: (res, dispatch, { closeDialog }) => {
-    closeDialog();
-  },
 })(TaskForm) as any);

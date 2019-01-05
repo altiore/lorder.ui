@@ -1,3 +1,4 @@
+import pick from 'lodash-es/pick';
 import { createSelector } from 'reselect';
 
 import { DownloadList } from '../../@common/entities';
@@ -19,6 +20,12 @@ export const getEditTaskInitialValues = createSelector(
   [projectTasks, getProjectById],
   (tasks: DownloadList<ProjectTask>, getProject) => (taskId: number, projectId: number) => {
     const project = getProject(projectId);
-    return project.tasks.list.find((el: ProjectTask) => el.id === taskId);
+    return pick(project.tasks.list.find((el: ProjectTask) => el.id === taskId), [
+      'description',
+      'id',
+      'source',
+      'title',
+      'value',
+    ]);
   }
 );

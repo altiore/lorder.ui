@@ -26,7 +26,4 @@ export const AddTaskForm = connect<any, any, { buttonText?: string; projectId: n
   form: PROJECT_TASK_FORM_NAME,
   onSubmit: onSubmitForm<{ projectId: number }>(postProjectTask, ({ projectId }) => ({ projectId })),
   onSubmitFail,
-  onSubmitSuccess: (res, dispatch, { closeDialog }) => {
-    closeDialog();
-  },
 })(TaskForm) as any);

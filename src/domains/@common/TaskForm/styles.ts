@@ -16,9 +16,12 @@ export const styles = (theme: Theme) =>
       textAlign: 'left',
       width: '100%',
       zIndex: 25,
+      [theme.breakpoints.up('lg')]: {
+        minWidth: 600,
+      },
     },
     field: {
-      paddingLeft: 29,
+      paddingLeft: theme.spacing.unit * 4,
     },
     header: {
       paddingLeft: 7,

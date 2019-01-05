@@ -54,6 +54,9 @@ export default createMuiTheme({
     },
   },
   palette: {
+    background: {
+      default: '#EBEEF0',
+    },
     primary: {
       contrastText: '#ffffff',
       dark: '#000000',
@@ -74,6 +77,10 @@ export default createMuiTheme({
     h2: {
       fontSize: 14,
       fontWeight: 700,
+    },
+    h5: {
+      fontSize: 18,
+      fontWeight: 500,
     },
     useNextVariants: true,
   },

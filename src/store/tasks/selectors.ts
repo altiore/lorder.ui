@@ -1,3 +1,4 @@
+import pick from 'lodash-es/pick';
 import { createSelector } from 'reselect';
 
 import { IState } from 'src/@types';
@@ -10,5 +11,5 @@ export const allTaskList = createSelector(allTasks, dr => dr.list);
 export const filteredTaskList = createSelector(allTaskList, tasks => tasks);
 
 export const getEditTaskInitialValues = createSelector([allTaskList], (allTaskList: Task[]) => (taskId: number) =>
-  allTaskList.find((el: Task) => el.id === taskId)
+  pick(allTaskList.find((el: Task) => el.id === taskId), ['description', 'id', 'source', 'title', 'value'])
 );

@@ -3,19 +3,19 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import CloseIcon from '@material-ui/icons/Close';
 import EventIcon from '@material-ui/icons/Event';
+import NotesIcon from '@material-ui/icons/Notes';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required, url } from 'redux-form-validators';
 
 import { Input } from 'liw-components/Input';
-import { TextArea } from 'liw-components/TextArea';
 import { TitleInput } from 'liw-components/TitleInput';
 
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { nullIfEmpty, parseNumber } from 'src/store/@common/helpers';
+import { TextAreaMarkdown } from './TextAreaMarkdown';
 
 export interface ITaskFormData {
   description?: string;
@@ -36,16 +36,7 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
 
 export class TaskFormJsx extends React.PureComponent<ITaskFormProps, {}> {
   render() {
-    const {
-      buttonText,
-      classes,
-      closeDialog,
-      isCurrent,
-      handleSubmit,
-      submitting,
-      startUserWork,
-      stopUserWork,
-    } = this.props;
+    const { buttonText, classes, closeDialog, isCurrent, submitting, startUserWork, stopUserWork } = this.props;
     return (
       <>
         <DialogTitle disableTypography>
@@ -54,22 +45,22 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, {}> {
           </Fab>
         </DialogTitle>
         <DialogContent className={classes.card}>
-          <form onSubmit={handleSubmit}>
-            <div className={classes.header}>
-              <Field
-                bold
-                icon={<EventIcon />}
-                name="title"
-                component={TitleInput}
-                validate={[required({ msg: 'Обязательное поле' })]}
-              />
-            </div>
+          <form onSubmit={this.handleSave()}>
             <Field
-              name="description"
-              icon={<AssignmentIcon />}
-              component={TextArea}
+              bold
+              icon={<EventIcon />}
+              name="title"
+              component={TitleInput}
+              validate={[required({ msg: 'Обязательное поле' })]}
+              onSubmit={this.handleSave(false)}
+            />
+            <Field
+              icon={<NotesIcon fontSize="small" color="inherit" />}
               title={'Описание'}
               placeholder={'Введи ваше описание'}
+              name="description"
+              component={TextAreaMarkdown}
+              onSave={this.handleSave(false)}
             />
             <div className={classes.field}>
               <Field
@@ -92,7 +83,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, {}> {
           <Button color="secondary" variant="contained" onClick={closeDialog}>
             Отмена
           </Button>
-          <Button color="primary" variant="contained" onClick={handleSubmit} disabled={submitting}>
+          <Button color="primary" variant="contained" onClick={this.handleSave()} disabled={submitting}>
             {buttonText}
             {submitting && '...'}
           </Button>
@@ -103,4 +94,14 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, {}> {
       </>
     );
   }
+
+  private handleSave = (isClose: boolean = true) => (e: React.SyntheticEvent) => {
+    const { dirty } = this.props;
+    if (dirty) {
+      this.props.handleSubmit(e);
+    }
+    if (isClose) {
+      this.props.closeDialog();
+    }
+  };
 }
