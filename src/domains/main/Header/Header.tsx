@@ -6,7 +6,6 @@ import { Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
-import AvTimerIcon from '@material-ui/icons/AvTimer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import * as React from 'react';
@@ -18,6 +17,7 @@ import { Project } from 'src/store/projects';
 import { IUserWorkData } from 'src/store/tasks/user-works';
 import { ProjectButton } from './ProjectButton';
 import { ProjectField } from './ProjectField';
+import TimerIcon from './timer.svg';
 
 export interface IHeaderProps {
   classes: any;
@@ -59,7 +59,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
       <AppBar position="static" color="primary">
         <Toolbar>
           <LinkIconButton to="/" color="secondary">
-            <AvTimerIcon />
+            <TimerIcon />
           </LinkIconButton>
           <div className={classes.buttonBlock}>
             {filteredProjects.map(project => (

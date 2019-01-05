@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="34.711" height="40.261" viewBox="0 0 34.711 40.261">
+    <defs>
+        <style>
+            .cls-1,.cls-5{fill:#FFECB3}.cls-1,.cls-3,.cls-4,.cls-5{stroke:#FFECB3;stroke-miterlimit:10}.cls-1,.cls-3,.cls-4{stroke-linecap:round}.cls-2{fill:url(#linear-gradient)}.cls-3,.cls-4{fill:none}.cls-3{stroke-width:2px}
+        </style>
+        <linearGradient id="linear-gradient" x1=".139" x2=".753" y1=".122" y2=".911" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#FFECB3"/>
+            <stop offset=".063" stop-color="#FFECB3" stop-opacity=".855"/>
+            <stop offset=".16" stop-color="#FFECB3" stop-opacity=".655"/>
+            <stop offset=".262" stop-color="#FFECB3" stop-opacity=".482"/>
+            <stop offset=".367" stop-color="#FFECB3" stop-opacity=".333"/>
+            <stop offset=".475" stop-color="#FFECB3" stop-opacity=".212"/>
+            <stop offset=".588" stop-color="#FFECB3" stop-opacity=".118"/>
+            <stop offset=".707" stop-color="#FFECB3" stop-opacity=".051"/>
+            <stop offset=".837" stop-color="#FFECB3" stop-opacity=".012"/>
+            <stop offset="1" stop-color="#FFECB3" stop-opacity="0"/>
+        </linearGradient>
+    </defs>
+    <g id="Group_2" data-name="Group 2" transform="translate(-2008.289 -21.286)">
+        <circle id="Ellipse_3" cx="1.598" cy="1.598" r="1.598" class="cls-1" data-name="Ellipse 3" transform="translate(2023.774 21.786)"/>
+        <path id="Path_3" d="M2042 44.191a16.356 16.356 0 1 1-16.421-16.353l.021 15.628v.742h.772z" class="cls-2" data-name="Path 3"/>
+        <path id="Line_5" d="M0 0v16.051" class="cls-3" data-name="Line 5" transform="translate(2025.594 27.936)"/>
+        <path id="Path_4" d="M2042 44.191a16.356 16.356 0 1 1-16.421-16.353h.066A16.353 16.353 0 0 1 2042 44.191z" class="cls-3" data-name="Path 4"/>
+        <path id="Line_6" d="M0 1.796L.748 0" class="cls-4" data-name="Line 6" transform="translate(2031.08 29.205)"/>
+        <path id="Line_7" d="M0 1.301L1.447 0" class="cls-4" data-name="Line 7" transform="translate(2036.056 33.022)"/>
+        <path id="Line_8" d="M0 .632L1.84 0" class="cls-4" data-name="Line 8" transform="translate(2038.905 38.51)"/>
+        <circle id="Ellipse_4" cx="1.224" cy="1.224" r="1.224" class="cls-5" data-name="Ellipse 4" transform="translate(2024.44 42.77)"/>
+    </g>
+</svg>

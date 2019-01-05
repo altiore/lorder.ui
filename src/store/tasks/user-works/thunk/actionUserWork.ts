@@ -3,7 +3,7 @@ import { Dispatch } from 'react-redux';
 import { change } from 'redux-form';
 
 import { IState } from 'src/@types';
-import { changeIco } from 'src/store/@common/helpers';
+// import { changeIco } from 'src/store/@common/helpers';
 import { selectProject } from 'src/store/project';
 import { getProjectById, Project } from 'src/store/projects';
 import { CREATE_USER_WORK_FORM_NAME, replaceTasks } from 'src/store/tasks';
@@ -28,7 +28,7 @@ export const startTimer = (userWork: Partial<UserWork>, project: Project) => asy
       userWorkId: userWork.id,
     })
   );
-  changeIco('/stop.ico');
+  // changeIco('/stop.ico');
 };
 
 export const startUserWork = (data: IUserWorkData) => async (dispatch: Dispatch, getState: () => IState) => {
@@ -71,7 +71,7 @@ export const stopUserWork = () => async (dispatch: Dispatch, getState: any) => {
       userWorkId: undefined,
     })
   );
-  changeIco();
+  // changeIco();
   document.title = 'Старт';
   return await dispatch(patchAndStopUserWork(data));
 };

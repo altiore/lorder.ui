@@ -2,7 +2,7 @@ import get from 'lodash-es/get';
 import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { changeIco, covertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
+import { covertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
 import { setCurrentUserWorkId, tickUserWorkTimer } from './actions';
 import { Timer } from './Timer';
 
@@ -29,7 +29,7 @@ const setCurrentUserWorkIdHandler = (state: Timer, { payload }: Action<Partial<T
 const logOutHandler = (state: Timer) => {
   if (state.timer) {
     clearTimeout(state.timer);
-    changeIco();
+    // changeIco();
     document.title = 'Старт';
   }
   return new Timer();
