@@ -14,8 +14,8 @@ import get from 'lodash-es/get';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Page } from 'src/components/Page';
 import Select from 'src/components/Select';
+import { LayoutLeftDrawer } from 'src/domains/@common/LayoutLeftDrawer';
 import { IUser } from 'src/store/users';
 
 export interface IUsersProps {
@@ -69,7 +69,7 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
     const { classes, userList } = this.props;
     const { page, perPage } = this.state;
     return (
-      <Page>
+      <LayoutLeftDrawer>
         {userList && userList.length ? (
           <Table className={classes.table}>
             <TableHead>
@@ -140,7 +140,7 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
             <img src={'/#'} />
           </Grid>
         )}
-      </Page>
+      </LayoutLeftDrawer>
     );
   }
 

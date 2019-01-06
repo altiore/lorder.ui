@@ -12,7 +12,7 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 
-import { PatchTaskForm } from 'src/domains/@common/TaskForm';
+import { AddTaskForm, PatchTaskForm } from 'src/domains/@common/TaskForm';
 import { DownloadList } from 'src/store/@common/entities';
 import { ProjectTask } from 'src/store/projects';
 import { TaskCard } from './TaskCard';
@@ -76,7 +76,7 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
   };
 
   render() {
-    const { classes, statuses, items, theme, height } = this.props;
+    const { classes, statuses, items, theme, height, projectId } = this.props;
     return (
       <div className={classes.root} style={{ width: statuses.length * (CARD_WIDTH + theme.spacing.unit * 1.5) }}>
         <DragDropContext onDragEnd={this.onDragEnd}>
@@ -108,8 +108,8 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
                   </div>
                 )}
               </Droppable>
-              <ButtonBase className={classes.columnFooter}>
-                <AddIcon fontSize="small" /> Добавить карточку
+              <ButtonBase className={classes.columnFooter} onClick={this.createTask(projectId)}>
+                <AddIcon fontSize="small" /> Добавить задачу
               </ButtonBase>
             </div>
           ))}
@@ -122,5 +122,9 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
     this.props.openDialog(<PatchTaskForm taskId={taskId} projectId={this.props.projectId} buttonText="Сохранить" />, {
       maxWidth: 'lg',
     });
+  };
+
+  private createTask = (projectId: number | string) => () => {
+    this.props.openDialog(<AddTaskForm buttonText="Создать задачу" projectId={projectId} />, { maxWidth: 'lg' });
   };
 }

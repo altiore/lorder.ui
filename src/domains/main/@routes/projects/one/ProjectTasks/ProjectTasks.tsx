@@ -80,7 +80,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
             Добавьте первую задачу...
           </Grid>
         )}
-        <Button size="large" variant="contained" color="primary" onClick={this.createTask(projectId)}>
+        <Button size="large" variant="outlined" color="primary" onClick={this.createTask(projectId)}>
           <Typography variant="caption" noWrap>
             {'Добавить задачу'}
           </Typography>

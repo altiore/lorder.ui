@@ -61,7 +61,16 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
   }
 
   render() {
-    const { buttonText, classes, closeDialog, isCurrent, submitting, startUserWork, stopUserWork } = this.props;
+    const {
+      buttonText,
+      classes,
+      closeDialog,
+      isCurrent,
+      submitting,
+      startUserWork,
+      stopUserWork,
+      pristine,
+    } = this.props;
     const { invisible } = this.state;
 
     return (
@@ -127,7 +136,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
             <StartStopBtn isStarted={isCurrent} onStart={startUserWork} onStop={stopUserWork} />
           )}
           <div className={classes.grow} />
-          <Button color="primary" variant="contained" onClick={this.handleSave()} disabled={submitting}>
+          <Button color="primary" variant="contained" onClick={this.handleSave()} disabled={submitting || pristine}>
             {buttonText}
             {submitting && '...'}
           </Button>

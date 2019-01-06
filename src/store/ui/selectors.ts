@@ -12,4 +12,4 @@ export const isRequiredConfirmationChangedEvents = createSelector(
   (state: IUiState): boolean => state.isRequiredConfirmationChangedEvents
 );
 
-// export const isLeftBarOpen = createSelector(baseState, (state: IUiState): boolean => state.isLeftBarOpen);
+export const isLeftBarOpen = createSelector(baseState, (state: IUiState): boolean => state.isLeftBarOpen);

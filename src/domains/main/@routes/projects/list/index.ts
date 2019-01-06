@@ -1,9 +1,11 @@
 import { withStyles } from '@material-ui/core/styles';
+import { error } from 'react-notification-system-redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from 'src/store/dialog';
+import { defaultProjectId, userRole } from 'src/store/identity';
 import {
   acceptInvitation,
   allProjectList,
@@ -17,7 +19,9 @@ import { styles } from './styles';
 
 const mapToState = (ownOnly: boolean = true) =>
   createStructuredSelector({
+    defaultProjectId,
     projectList: ownOnly ? ownProjectList : allProjectList,
+    userRole,
   });
 
 const mapToProps = (ownOnly: boolean = true) => ({
@@ -27,6 +31,7 @@ const mapToProps = (ownOnly: boolean = true) => ({
   goToPage: push,
   openDialog,
   removeProject,
+  showError: error,
 });
 
 const mergeProps = (state: any, { goToPage, ...restDispatch }: any, { match, ...restOwn }: any) => ({

@@ -25,7 +25,8 @@ function getError(action: any, status: number): false | Notification {
       ...errorFromAction,
     };
   } else {
-    if (errorFromAction === false || status === 422) {
+    const isFormHanldeValidationErrors = get(action, 'meta.previousAction.payload.form') && status === 422;
+    if (errorFromAction === false || isFormHanldeValidationErrors) {
       return false;
     }
     return {

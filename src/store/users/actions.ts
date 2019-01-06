@@ -26,5 +26,9 @@ export const deleteUser = requestActions('USERS/DELETE', (userId: number) => ({
     method: 'delete',
     url: `/users/${userId}`,
   },
+  success: {
+    message: `Ничего не бойся, я с тобой...`,
+    title: 'Успех!',
+  },
   userId,
 }));

@@ -6,8 +6,7 @@ import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required } from 'redux-form-validators';
 
-import { MoneyIco } from 'src/components/@icons/Money';
-import { ProjectIco } from 'src/components/@icons/Project';
+// import { ProjectIco } from 'src/components/@icons/Project';
 
 export class IProjectFormProps {
   goToPage: any;
@@ -23,17 +22,11 @@ export const CreateProjectPopupJsx: React.FunctionComponent<
     <DialogContent>
       <form onSubmit={handleSubmit}>
         <Field
+          autoFocus
           name="title"
           component={Input}
-          icon={<ProjectIco />}
+          // icon={<ProjectIco />}
           label="Название проекта"
-          validate={[required({ msg: 'Обязательное поле' })]}
-        />
-        <Field
-          name="monthlyBudget"
-          component={Input}
-          icon={<MoneyIco />}
-          label="Месячный бюджет"
           validate={[required({ msg: 'Обязательное поле' })]}
         />
       </form>
