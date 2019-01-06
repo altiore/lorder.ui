@@ -10,7 +10,7 @@ export interface IState {
 export const withResize = <P = {}>(
   Component: React.FunctionComponent<P> | React.ComponentClass<P>,
   getNode?: (el: any) => any | boolean
-): React.FunctionComponent<P> | React.ComponentClass<P> =>
+): React.FunctionComponent<Partial<P>> | React.ComponentClass<Partial<P>> =>
   class WithResize extends React.Component<P, IState> {
     private handleResize = debounce(() => this.setState(this.getDimensions()), 200);
 
