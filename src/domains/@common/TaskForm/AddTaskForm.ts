@@ -22,7 +22,7 @@ const mapDispatchToProps = {
 export const AddTaskForm = connect<
   any,
   any,
-  { buttonText?: string; projectId: number | string; initialValues: Partial<ITaskFormData> }
+  { buttonText?: string; projectId: number | string; initialValues?: Partial<ITaskFormData> }
 >(
   mapStateToProps,
   mapDispatchToProps

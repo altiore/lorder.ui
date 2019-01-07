@@ -23,7 +23,7 @@ import { StartStopBtn } from 'src/components/StartStopBtn';
 import { parseNumber } from 'src/store/@common/helpers';
 import { STATUS_NAMES } from 'src/store/projects';
 import { SelectField } from '../../../components/SelectField';
-// import { PerformerField } from './PerformerField';
+import { PerformerField } from './PerformerField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
 
 export interface ITaskFormData {
@@ -106,11 +106,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
               />
             </div>
             <div className={classes.cardSecond}>
-              {/*<Field*/}
-              {/*name="users"*/}
-              {/*component={PerformerField}*/}
-              {/*taskId={1}*/}
-              {/*/>*/}
+              <Field name="users" component={PerformerField} taskId={1} />
               <Field name="status" component={SelectField} fullWidth parse={parseNumber} label="Status" type="number">
                 {STATUS_NAMES.map((status, i) => (
                   <MenuItem key={i} value={i}>

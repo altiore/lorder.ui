@@ -28,7 +28,7 @@ const mapDispatchToProps = {
   startUserWork,
 };
 
-export const Header = connect(
+export const Header = connect<any, any, {}>(
   mapStateToProps,
   mapDispatchToProps
 )(withResize(withStyles(styles, { withTheme: true })(HeaderTsx)));

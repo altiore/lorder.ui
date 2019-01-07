@@ -36,6 +36,6 @@ export const timeSpentByProjectId = createSelector(timeSpentByProjectIdInSeconds
 
 export const timePercentByProjectId = createSelector(
   [totalTimeSpentTodayInSeconds, timeSpentByProjectIdInSeconds],
-  (totalSec, getProjectSec) => (projectId: number) =>
+  (totalSec, getProjectSec) => (projectId: number): string | number =>
     totalSec ? Math.floor((getProjectSec(projectId) / totalSec) * 100) : '...'
 );

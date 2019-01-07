@@ -13,7 +13,7 @@ const onChange = (input: WrappedFieldInputProps) => (event: React.ChangeEvent<HT
 export interface ISelectFieldProps extends WrappedFieldProps {
   children: React.ReactNode;
   label: React.ReactNode;
-  fullWidth: boolean;
+  fullWidth?: boolean;
 }
 
 export const SelectField = ({

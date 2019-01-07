@@ -11,7 +11,7 @@ import { Project } from 'src/store/projects';
 export interface IShortChartProps {
   classes?: any;
   dense?: boolean;
-  project?: Partial<Project & { percent: string; time: string }>;
+  project?: Partial<Project & { percent: string | number; time: string }>;
 }
 
 export const ShortChartTsx: React.FunctionComponent<IShortChartProps> = ({ classes, dense, project }) => {

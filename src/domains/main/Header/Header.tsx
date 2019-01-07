@@ -19,13 +19,16 @@ import { ProjectButton } from './ProjectButton';
 import { ProjectField } from './ProjectField';
 import TimerIcon from './timer.svg';
 
+type ProjectType = Partial<Project> & { percent: string | number; time: string };
+type ProjectsArrayType = ProjectType[];
+
 export interface IHeaderProps {
   classes: any;
   theme: Theme;
   logOut: any;
   openDialog: any;
   openedProject: Project;
-  projects: Array<Project & { percent: string; time: string }>;
+  projects: ProjectsArrayType;
   push: any;
   selectedProject: Project;
   startUserWork: (data: IUserWorkData) => any;
@@ -39,7 +42,7 @@ export interface IHeaderState {
   expanded: boolean;
 }
 
-const projectFilter = (projects: Project[]) => (project: Project) =>
+const projectFilter = (projects: Project[] = []) => (project: ProjectType) =>
   ~projects.findIndex(pr => pr && project && pr.id === project.id);
 
 export class HeaderTsx extends React.Component<IHeaderProps> {
@@ -51,7 +54,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
   render() {
     const { classes, theme, projects, selectedProject, logOut, userAvatar, userEmail, userRole, width } = this.props;
     const { expanded } = this.state;
-    let filteredProjects: Array<Project & { percent: string; time: string }> = projects;
+    let filteredProjects: ProjectsArrayType = projects;
     if (!expanded) {
       filteredProjects = selectedProject ? projects.filter(projectFilter([selectedProject])) : [];
     }

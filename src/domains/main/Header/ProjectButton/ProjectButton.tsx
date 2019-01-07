@@ -11,8 +11,8 @@ export interface IProjectButtonProps {
   inProgress: boolean;
   uuid?: string;
   time: string;
-  title: string;
-  percent: string;
+  title?: string;
+  percent?: number | string;
 }
 
 export interface IProjectButtonState {

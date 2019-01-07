@@ -43,8 +43,8 @@ export const getProjectById = createSelector(allProjectList, (list: Project[]) =
 
 export const ownProjectListWithStatistic = createSelector(
   [ownProjectList, timePercentByProjectId, timeSpentByProjectId],
-  (list: Project[], getPercent, getTime) =>
-    list.map(project => ({
+  (list: Project[] = [], getPercent, getTime) =>
+    list.map<Partial<Project> & { percent: string | number; time: string }>(project => ({
       ...project,
       percent: getPercent(project.id as number),
       time: getTime(project.id as number),

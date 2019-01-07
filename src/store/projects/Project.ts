@@ -55,7 +55,7 @@ export class Project {
     });
   }
 
-  get fullProjectTimeHumanize() {
+  get fullProjectTimeHumanize(): string | undefined {
     return covertSecondsToDurationWithLocal(this.timeSum || 0);
   }
 }
