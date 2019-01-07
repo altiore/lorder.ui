@@ -24,6 +24,7 @@ export const getEditTaskInitialValues = createSelector(
       'description',
       'id',
       'source',
+      'status',
       'title',
       'value',
     ]);

@@ -5,6 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
+// import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CloseIcon from '@material-ui/icons/Close';
 import EventIcon from '@material-ui/icons/Event';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
@@ -19,10 +20,11 @@ import { required } from 'redux-form-validators';
 import { Input } from 'liw-components/Input';
 import { TitleInput } from 'liw-components/TitleInput';
 
+import { SelectField } from 'src/components/SelectField';
+import { SelectMenuFieldTsx } from 'src/components/SelectMenuField';
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { parseNumber } from 'src/store/@common/helpers';
 import { STATUS_NAMES } from 'src/store/projects';
-import { SelectField } from '../../../components/SelectField';
 import { PerformerField } from './PerformerField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
 
@@ -114,6 +116,20 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                   </MenuItem>
                 ))}
               </Field>
+              <Field
+                name="status"
+                component={SelectMenuFieldTsx}
+                fullWidth
+                parse={parseNumber}
+                label="Status"
+                type="number"
+              >
+                {STATUS_NAMES.map((status, i) => (
+                  <MenuItem key={i} value={i}>
+                    {status}
+                  </MenuItem>
+                ))}
+              </Field>
               <div>
                 <IconButton aria-label="2 members" className={classes.margin}>
                   <Badge badgeContent={2} color="secondary" invisible={invisible[0]}>
@@ -161,4 +177,8 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
       this.props.closeDialog();
     }
   };
+
+  private nullComponent() {
+    return null;
+  }
 }
