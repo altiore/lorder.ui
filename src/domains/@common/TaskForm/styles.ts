@@ -50,7 +50,4 @@ export const styles = (theme: Theme) =>
     margin: {
       margin: theme.spacing.unit,
     },
-    selectField: {
-      flexGrow: 1,
-    },
   });

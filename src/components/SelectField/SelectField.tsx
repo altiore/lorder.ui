@@ -26,7 +26,7 @@ export const SelectField = ({
 }: ISelectFieldProps & SelectProps) => {
   const id = uniqueId();
   return (
-    <FormControl error={touched && error} fullWidth>
+    <FormControl error={touched && error} fullWidth={fullWidth}>
       <InputLabel htmlFor={id}>{label}</InputLabel>
       <Select
         error={touched && error}
