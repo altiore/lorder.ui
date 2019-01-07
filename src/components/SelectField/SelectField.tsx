@@ -13,9 +13,11 @@ const onChange = (input: WrappedFieldInputProps) => (event: React.ChangeEvent<HT
 export interface ISelectFieldProps extends WrappedFieldProps {
   children: React.ReactNode;
   label: React.ReactNode;
+  fullWidth: boolean;
 }
 
 export const SelectField = ({
+  fullWidth,
   input,
   meta: { touched, error },
   label,
@@ -24,7 +26,7 @@ export const SelectField = ({
 }: ISelectFieldProps & SelectProps) => {
   const id = uniqueId();
   return (
-    <FormControl error={touched && error}>
+    <FormControl error={touched && error} fullWidth>
       <InputLabel htmlFor={id}>{label}</InputLabel>
       <Select
         error={touched && error}

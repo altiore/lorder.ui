@@ -29,3 +29,5 @@ export const getEditTaskInitialValues = createSelector(
     ]);
   }
 );
+
+export const STATUS_NAMES = ['Резерв', 'Сделать', 'В процессе', 'Обзор', 'Готово'];

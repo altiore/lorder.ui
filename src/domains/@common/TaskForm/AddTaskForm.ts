@@ -19,7 +19,11 @@ const mapDispatchToProps = {
   stopUserWork,
 };
 
-export const AddTaskForm = connect<any, any, { buttonText?: string; projectId: number | string }>(
+export const AddTaskForm = connect<
+  any,
+  any,
+  { buttonText?: string; projectId: number | string; initialValues: Partial<ITaskFormData> }
+>(
   mapStateToProps,
   mapDispatchToProps
 )(reduxForm<ITaskFormData, ITaskFormProps>({

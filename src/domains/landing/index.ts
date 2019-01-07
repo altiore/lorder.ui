@@ -12,4 +12,4 @@ const masStateToProps = () => ({
   tours,
 });
 
-export const Info = connect(masStateToProps)(withStyles(styles, { withTheme: true })(withResize(InfoTsx)));
+export const Info = connect(masStateToProps)(withStyles(styles, { withTheme: true })(withResize(InfoTsx)) as any);

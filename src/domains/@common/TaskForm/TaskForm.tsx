@@ -4,6 +4,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
 import CloseIcon from '@material-ui/icons/Close';
 import EventIcon from '@material-ui/icons/Event';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
@@ -20,6 +21,8 @@ import { TitleInput } from 'liw-components/TitleInput';
 
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { parseNumber } from 'src/store/@common/helpers';
+import { STATUS_NAMES } from 'src/store/projects';
+import { SelectField } from '../../../components/SelectField';
 // import { PerformerField } from './PerformerField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
 
@@ -28,6 +31,7 @@ export interface ITaskFormData {
   title?: string;
   projectId: number;
   value: number;
+  status: number;
 }
 
 export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFormProps> {
@@ -107,6 +111,13 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
               {/*component={PerformerField}*/}
               {/*taskId={1}*/}
               {/*/>*/}
+              <Field name="status" component={SelectField} fullWidth parse={parseNumber} label="Status" type="number">
+                {STATUS_NAMES.map((status, i) => (
+                  <MenuItem key={i} value={i}>
+                    {status}
+                  </MenuItem>
+                ))}
+              </Field>
               <div>
                 <IconButton aria-label="2 members" className={classes.margin}>
                   <Badge badgeContent={2} color="secondary" invisible={invisible[0]}>

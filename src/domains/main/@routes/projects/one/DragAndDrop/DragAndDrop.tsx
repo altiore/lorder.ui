@@ -14,7 +14,7 @@ import {
 
 import { AddTaskForm, PatchTaskForm } from 'src/domains/@common/TaskForm';
 import { DownloadList } from 'src/store/@common/entities';
-import { ProjectTask } from 'src/store/projects';
+import { ProjectTask, STATUS_NAMES } from 'src/store/projects';
 import { TaskCard } from './TaskCard';
 
 const CARD_WIDTH = 296;
@@ -42,8 +42,6 @@ export interface IDragAndDropState {
   selected: any[];
   selected2: any[];
 }
-
-const STATUS_NAMES = ['Резерв', 'Сделать', 'В процессе', 'Обзор', 'Готово'];
 
 export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDropState> {
   static defaultProps = {
@@ -108,7 +106,7 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
                   </div>
                 )}
               </Droppable>
-              <ButtonBase className={classes.columnFooter} onClick={this.createTask(projectId)}>
+              <ButtonBase className={classes.columnFooter} onClick={this.createTask(projectId, status)}>
                 <AddIcon fontSize="small" /> Добавить задачу
               </ButtonBase>
             </div>
@@ -124,7 +122,10 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
     });
   };
 
-  private createTask = (projectId: number | string) => () => {
-    this.props.openDialog(<AddTaskForm buttonText="Создать задачу" projectId={projectId} />, { maxWidth: 'lg' });
+  private createTask = (projectId: number | string, status: number) => () => {
+    this.props.openDialog(
+      <AddTaskForm buttonText="Создать задачу" projectId={projectId} initialValues={{ status }} />,
+      { maxWidth: 'lg' }
+    );
   };
 }
