@@ -24,6 +24,7 @@ export class Project {
   title: string;
   monthlyBudget?: number;
   owner?: any;
+  ownerId?: number;
   phases?: any[];
   members: DownloadList<Member> = new DownloadList(Member);
   tasks: DownloadList<ProjectTask> = new DownloadList(ProjectTask);

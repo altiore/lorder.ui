@@ -20,12 +20,11 @@ import { required } from 'redux-form-validators';
 import { Input } from 'liw-components/Input';
 import { TitleInput } from 'liw-components/TitleInput';
 
-import { SelectField } from 'src/components/SelectField';
-import { SelectMenuFieldTsx } from 'src/components/SelectMenuField';
+import { SelectMenuField } from 'src/components/SelectMenuField';
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { parseNumber } from 'src/store/@common/helpers';
 import { STATUS_NAMES } from 'src/store/projects';
-import { PerformerField } from './PerformerField';
+// import { PerformerField } from './PerformerField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
 
 export interface ITaskFormData {
@@ -108,19 +107,11 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
               />
             </div>
             <div className={classes.cardSecond}>
-              <Field name="users" component={PerformerField} taskId={1} />
-              <Field name="status" component={SelectField} fullWidth parse={parseNumber} label="Status" type="number">
-                {STATUS_NAMES.map((status, i) => (
-                  <MenuItem key={i} value={i}>
-                    {status}
-                  </MenuItem>
-                ))}
-              </Field>
               <Field
                 name="status"
-                component={SelectMenuFieldTsx}
+                component={SelectMenuField}
+                IconComponent={this.nullComponent}
                 fullWidth
-                parse={parseNumber}
                 label="Status"
                 type="number"
               >
@@ -147,6 +138,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                   </Badge>
                 </IconButton>
               </div>
+              {/*<Field name="users" component={PerformerField} taskId={1} />*/}
               <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" type="number" />
             </div>
             <button style={{ display: 'none' }} type="submit">

@@ -14,12 +14,15 @@ import {
   ownProjectList,
   removeProject,
 } from 'src/store/projects';
+import { findUserById } from 'src/store/users';
 import { Projects as ProjectsJsx } from './Projects';
 import { styles } from './styles';
 
 const mapToState = (ownOnly: boolean = true) =>
   createStructuredSelector({
     defaultProjectId,
+    findUserById,
+    ownOnly: () => ownOnly,
     projectList: ownOnly ? ownProjectList : allProjectList,
     userRole,
   });

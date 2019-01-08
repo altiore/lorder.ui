@@ -1,69 +1,52 @@
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Select, { SelectProps } from '@material-ui/core/Select';
-import get from 'lodash-es/get';
-import uniqueId from 'lodash-es/uniqueId';
 import * as React from 'react';
-import { findDOMNode } from 'react-dom';
-import { WrappedFieldInputProps, WrappedFieldProps } from 'redux-form';
+import { WrappedFieldProps } from 'redux-form';
+import uniqueId from 'uniqid';
 
-export interface ISelectFieldProps extends WrappedFieldProps {
+export interface ISelectFieldProps {
+  classes: any;
   children: React.ReactNode;
-  label: React.ReactNode;
   fullWidth?: boolean;
+  label: React.ReactNode;
+  labelWidth?: number;
 }
 
-export class SelectMenuFieldTsx extends React.PureComponent<ISelectFieldProps & SelectProps> {
-  InputLabelRef: any;
-  constructor(props: ISelectFieldProps & SelectProps) {
+export class SelectMenuFieldTsx extends React.Component<ISelectFieldProps & Partial<SelectProps> & WrappedFieldProps> {
+  constructor(props: ISelectFieldProps & Partial<SelectProps> & WrappedFieldProps) {
     super(props);
-  }
-
-  componentDidMount() {
-    const node = findDOMNode(this.InputLabelRef);
-    if (node) {
-      this.setState({
-        labelWidth: get(node, 'offsetWidth') as number,
-      });
-    }
   }
 
   render() {
     const {
+      classes,
       fullWidth,
       input,
       meta: { touched, error },
       label,
+      labelWidth = 42,
       children,
       ...custom
     } = this.props;
-    const id = uniqueId();
+    const id = uniqueId('select-menu-field');
 
-    console.log('renderI', input.value);
     return (
       <FormControl error={touched && error} fullWidth={fullWidth}>
-        <InputLabel htmlFor={id}>{label}</InputLabel>
+        <InputLabel htmlFor={id} classes={{ formControl: classes.inputLabelFormControl }}>
+          {label}
+        </InputLabel>
         <Select
           {...input}
           error={touched && error}
-          input={<OutlinedInput labelWidth={50} name={input.name} id={id} value={input.value} />}
-          onChange={this.onChange}
+          input={<OutlinedInput labelWidth={labelWidth} name={input.name} id={id} />}
+          children={children}
           {...custom}
-        >
-          <MenuItem value={0}>First</MenuItem>
-          <MenuItem value={1}>Second</MenuItem>
-          <MenuItem value={2}>Third</MenuItem>
-        </Select>
+        />
         {touched && error && <FormHelperText>{error}</FormHelperText>}
       </FormControl>
     );
   }
-
-  private onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log('newValue is', event.target.value);
-    this.props.input.onChange(event.target.value);
-  };
 }

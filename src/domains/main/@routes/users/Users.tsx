@@ -83,13 +83,14 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
                     Способ получения средств
                   </TableCell>
                   <TableCell className={classes.cell}>Роль</TableCell>
+                  <TableCell numeric>Проектов</TableCell>
                   <TableCell style={{ width: 42 }} />
                 </TableRow>
               </TableHead>
               <TableBody>
                 {userList
                   .slice(page * perPage, (page + 1) * perPage)
-                  .map(({ id, email, tel, status, paymentMethod, role }) => {
+                  .map(({ id, email, tel, status, paymentMethod, role, projectsCount }) => {
                     return (
                       <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
                         <TableCell component="th" scope="row">
@@ -113,6 +114,7 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
                             <MenuItem value={'super-admin'}>Super-Admin</MenuItem>
                           </Select>
                         </TableCell>
+                        <TableCell numeric>{projectsCount}</TableCell>
                         <TableCell>
                           <IconButton onClick={this.handleRemoveClick(id)}>
                             <ClearIcon />

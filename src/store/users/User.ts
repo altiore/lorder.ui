@@ -25,6 +25,7 @@ export interface IUser {
   readonly createdAt: string;
   readonly updatedAt: string;
   role: string;
+  projectsCount: number;
 }
 
 export class User implements IUser {
@@ -36,6 +37,7 @@ export class User implements IUser {
   readonly createdAt: string;
   readonly updatedAt: string;
   role: 'admin' | 'super-admin' | 'user' = 'user';
+  projectsCount: number;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

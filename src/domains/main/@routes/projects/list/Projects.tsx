@@ -16,15 +16,18 @@ import { CheckRole } from 'src/domains/@common/CheckRole';
 import { CreateProjectPopup } from 'src/domains/@common/CreateProjectPopup';
 import { LayoutLeftDrawer } from 'src/domains/@common/LayoutLeftDrawer';
 import { ACCESS_LEVEL, Project } from 'src/store/projects';
+import { IUser } from 'src/store/users';
 
 export interface IProjectsProps {
   acceptInvitation: (projectId: number) => any;
   classes: any;
   closeDialog: any;
   defaultProjectId: number;
+  findUserById: (id: number) => IUser | undefined;
   getProjects: any;
   goToProject: any;
   openDialog: any;
+  ownOnly: boolean;
   projectList: Project[];
   removeProject: any;
   showError: any;
@@ -42,7 +45,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   }
 
   render() {
-    const { classes, projectList } = this.props;
+    const { classes, projectList, ownOnly } = this.props;
     return (
       <LayoutLeftDrawer>
         <Page className={classes.root}>
@@ -51,6 +54,11 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
               <TableHead>
                 <TableRow>
                   <TableCell>Название проекта</TableCell>
+                  {!ownOnly && (
+                    <CheckRole role={ROLE.SUPER_ADMIN}>
+                      <TableCell>Владелец</TableCell>
+                    </CheckRole>
+                  )}
                   <CheckRole role={ROLE.SUPER_ADMIN}>
                     <TableCell numeric>Месячный бюджет</TableCell>
                   </CheckRole>
@@ -77,13 +85,26 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     );
   }
 
-  private renderItem = ({ id, accessLevel, title, monthlyBudget, fullProjectTimeHumanize, valueSum }: Project) => {
-    const { classes, userRole } = this.props;
+  private renderItem = ({
+    id,
+    accessLevel,
+    title,
+    monthlyBudget,
+    fullProjectTimeHumanize,
+    ownerId,
+    valueSum,
+  }: Project) => {
+    const { classes, userRole, ownOnly } = this.props;
     return (
       <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id, accessLevel)}>
         <TableCell component="th" scope="row">
           {title}
         </TableCell>
+        {!ownOnly && (
+          <CheckRole role={ROLE.SUPER_ADMIN}>
+            <TableCell>{this.getUserEmail(ownerId)}</TableCell>
+          </CheckRole>
+        )}
         {accessLevel === ACCESS_LEVEL.WHITE ? (
           <TableCell colSpan={userRole === ROLE.SUPER_ADMIN ? 3 : 1}>
             <Typography color={'error'}>Нажмите на строку проекта, чтоб принять приглашение</Typography>
@@ -136,5 +157,16 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
         title: 'Недостаточно прав',
       });
     }
+  };
+
+  private getUserEmail = (id?: number): number | string => {
+    if (!id) {
+      return 'NOT FOUND';
+    }
+    const user = this.props.findUserById(id);
+    if (user) {
+      return user.email;
+    }
+    return id;
   };
 }
