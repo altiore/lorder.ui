@@ -3,7 +3,7 @@ import { Input } from 'liw-components/Input';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 
-import { PasswordIco } from 'src/components/@icons/Password';
+import { PasswordIco as PassIco } from 'src/components/@icons/Password';
 import { UserIco } from 'src/components/@icons/User';
 
 export interface ILoginFormProps {
@@ -16,8 +16,8 @@ export class LoginFormJsx extends React.Component<ILoginFormProps & InjectedForm
     return (
       <div styleName="wrapper">
         <form styleName="form" onSubmit={handleSubmit}>
-          <Field name="email" component={Input} type="email" icon={<UserIco />} />
-          <Field name="password" component={Input} type="password" icon={<PasswordIco />} />
+          <Field autoComplete="username" name="email" component={Input} type="email" icon={<UserIco />} />
+          <Field autoComplete="current-password" name="password" component={Input} type="password" icon={<PassIco />} />
           <Button
             type="submit"
             disabled={pristine || submitting || invalid}

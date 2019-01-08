@@ -15,7 +15,7 @@ export class MagicForm extends React.Component<IMagicFormProps & InjectedFormPro
     return (
       <div styleName="wrapper">
         <form styleName="form" onSubmit={handleSubmit}>
-          <Field name="email" component={Input} type="email" icon={<UserIco />} />
+          <Field autoComplete="username" name="email" component={Input} type="email" icon={<UserIco />} />
           <Button
             type="submit"
             disabled={pristine || submitting || invalid}
