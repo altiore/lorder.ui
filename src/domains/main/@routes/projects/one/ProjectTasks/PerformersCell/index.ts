@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { PerformerFieldTsx } from 'src/domains/@common/PerformerField';
+import { PerformerField as PerformerFieldRaw } from 'src/domains/@common/PerformerField';
 import { patchProjectTask, projectMembersAsUsers } from 'src/store/projects';
 import { projectId } from 'src/store/router';
 
@@ -29,4 +29,4 @@ export const PerformersCell = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(PerformerFieldTsx);
+)(PerformerFieldRaw);

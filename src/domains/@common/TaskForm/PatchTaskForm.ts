@@ -1,12 +1,14 @@
+import get from 'lodash-es/get';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import { change, reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { onSubmitFail, onSubmitForm } from 'src/store/@common/helpers';
+import { onSubmitFail } from 'src/store/@common/helpers';
 import { closeDialog } from 'src/store/dialog';
 import {
   getEditTaskInitialValues,
   patchProjectTask,
+  postProjectTask,
   PROJECT_EDIT_TASK_FORM_NAME,
   projectTasksIsLoading,
 } from 'src/store/projects';
@@ -29,11 +31,11 @@ const mapDispatchToProps = {
 const mergeProps = (
   { checkIsCurrent, getEditTaskInitialValues, ...restState }: any,
   { closeDialog, startUserWork, stopUserWork, ...restDispatch }: any,
-  { taskId, projectId, ...restOwn }: any
+  { taskId, projectId, initialValues, ...restOwn }: any
 ) => ({
   ...restState,
   closeDialog,
-  initialValues: getEditTaskInitialValues(taskId, projectId),
+  initialValues: initialValues || (taskId ? getEditTaskInitialValues(taskId, projectId) : {}),
   isCurrent: checkIsCurrent(taskId),
   projectId,
   startUserWork: () => startUserWork({ taskId, projectId }),
@@ -45,7 +47,7 @@ const mergeProps = (
 export const PatchTaskForm = connect<
   any,
   any,
-  { buttonText?: string; taskId: number | string; projectId: number | string }
+  { buttonText?: string; taskId?: number | string; projectId: number | string; initialValues?: Partial<ITaskFormData> }
 >(
   mapStateToProps,
   mapDispatchToProps,
@@ -53,6 +55,16 @@ export const PatchTaskForm = connect<
 )(reduxForm<ITaskFormData, ITaskFormProps>({
   enableReinitialize: true,
   form: PROJECT_EDIT_TASK_FORM_NAME,
-  onSubmit: onSubmitForm<{ projectId: number }>(patchProjectTask, ({ projectId }) => ({ projectId })),
+  onSubmit: async (values, dispatch, { projectId }: any) => {
+    const val = { ...values, projectId };
+    return val.id ? dispatch(patchProjectTask(val)) : dispatch(postProjectTask(val));
+  },
   onSubmitFail,
+  onSubmitSuccess: (result, dispatch) => {
+    const actionType = get(result, 'meta.previousAction.type');
+    const taskId = get(result, 'payload.data.id');
+    if (actionType === postProjectTask.toString()) {
+      dispatch(change(PROJECT_EDIT_TASK_FORM_NAME, 'id', taskId));
+    }
+  },
 })(TaskForm) as any);

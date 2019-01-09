@@ -24,10 +24,11 @@ import { SelectMenuField } from 'src/components/SelectMenuField';
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { parseNumber } from 'src/store/@common/helpers';
 import { STATUS_NAMES } from 'src/store/projects';
-// import { PerformerField } from './PerformerField';
+import { PerformerField } from './PerformerField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
 
 export interface ITaskFormData {
+  id?: number;
   description?: string;
   title?: string;
   projectId: number;
@@ -67,7 +68,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
 
   render() {
     const {
-      buttonText,
+      buttonText = 'Сохранить',
       classes,
       closeDialog,
       isCurrent,
@@ -122,11 +123,15 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                 ))}
               </Field>
               <div>
-                <IconButton aria-label="2 members" className={classes.margin}>
-                  <Badge badgeContent={2} color="secondary" invisible={invisible[0]}>
-                    <GroupAddIcon fontSize="small" />
-                  </Badge>
-                </IconButton>
+                <Field name="users" component={PerformerField} taskId={1}>
+                  {(count: number, onClick: () => void) => (
+                    <IconButton aria-label={`${count} members`} className={classes.margin} onClick={onClick}>
+                      <Badge badgeContent={count} color="secondary" invisible={invisible[0]}>
+                        <GroupAddIcon fontSize="small" />
+                      </Badge>
+                    </IconButton>
+                  )}
+                </Field>
                 <IconButton aria-label="4 events" className={classes.margin}>
                   <Badge badgeContent={4} color="secondary" invisible={invisible[1]}>
                     <EventAvailableIcon fontSize="small" />
@@ -138,7 +143,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                   </Badge>
                 </IconButton>
               </div>
-              {/*<Field name="users" component={PerformerField} taskId={1} />*/}
+
               <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" type="number" />
             </div>
             <button style={{ display: 'none' }} type="submit">

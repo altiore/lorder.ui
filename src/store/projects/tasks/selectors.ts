@@ -3,12 +3,22 @@ import { createSelector } from 'reselect';
 
 import { DownloadList } from '../../@common/entities';
 import { Project } from '../Project';
-import { getProjectById, openedProject } from '../selectors';
+import { getProjectById, openedProject, selectedProject } from '../selectors';
 import { ProjectTask } from './ProjectTask';
 
 export const projectTasks = createSelector(
   openedProject,
-  (project: Project): DownloadList<ProjectTask> => (project ? project.tasks : new DownloadList(ProjectTask))
+  (project: Project = new Project()): DownloadList<ProjectTask> => project.tasks
+);
+
+export const selectedProjectTasks = createSelector(
+  selectedProject,
+  (project: Project = new Project()): DownloadList<ProjectTask> => project.tasks
+);
+
+export const getSelectedProjectTaskById = createSelector(
+  selectedProjectTasks,
+  (tasks: DownloadList<ProjectTask>) => (id: number) => tasks.list.find(el => el.id === id)
 );
 
 export const projectTasksIsLoading = createSelector(

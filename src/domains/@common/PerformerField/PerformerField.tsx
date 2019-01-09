@@ -16,6 +16,7 @@ export interface IPerformerFieldProps extends WrappedFieldProps {
   patchProjectTask: any;
   taskId: number;
   projectMembers: IUser[];
+  children?: (count: number, onClick: () => void) => React.ReactNode;
 }
 
 export class PerformerFieldTsx extends React.Component<IPerformerFieldProps, IPerformerFieldState> {
@@ -24,18 +25,21 @@ export class PerformerFieldTsx extends React.Component<IPerformerFieldProps, IPe
   };
 
   render() {
-    const { projectMembers, input, ...rest } = this.props;
+    const { children, classes, projectMembers, input, ...rest } = this.props;
     const { isOpen } = this.state;
+    const length = input.value.length || '0';
 
     return (
       <Popover
         preferPlace="below"
         isOpen={isOpen}
         onOuterAction={this.handleOnClick}
+        className={classes.popover}
+        enterExitTransitionDurationMs={400}
         body={
           <ListBox
             isMulti
-            items={projectMembers}
+            items={projectMembers || []}
             showFilter
             onClose={this.handleOnClick}
             getItemLabel={this.getLabel}
@@ -50,7 +54,7 @@ export class PerformerFieldTsx extends React.Component<IPerformerFieldProps, IPe
           />
         }
       >
-        <Button onClick={this.handleOnClick}>{input.value.length || '0'}</Button>
+        {children ? children(length, this.handleOnClick) : <Button onClick={this.handleOnClick}>{length}</Button>}
       </Popover>
     );
   }

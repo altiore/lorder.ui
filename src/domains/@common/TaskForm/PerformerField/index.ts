@@ -1,17 +1,19 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { PerformerFieldTsx } from 'src/domains/@common/PerformerField';
-import { patchProjectTask } from 'src/store/projects';
+import { PerformerField as PerformerFieldRaw } from 'src/domains/@common/PerformerField';
+import { getSelectedProjectTaskById, patchProjectTask } from 'src/store/projects';
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  getSelectedProjectTaskById,
+});
 
 const mapDispatchToProps = {
   patchProjectTask,
 };
 
 const mergeProps = (
-  { ...restState }: any,
+  { getSelectedProjectTaskById, ...restState }: any,
   { patchProjectTask, ...restDispatch }: any,
   { projectId, taskId, ...restOwn }: any
 ) => ({
@@ -19,11 +21,12 @@ const mergeProps = (
   ...restDispatch,
   ...restOwn,
   patchProjectTask: (users: number[]) => patchProjectTask({ projectId, id: taskId, users }),
-  projectMembers: [],
+  projectMembers: getSelectedProjectTaskById(taskId) || [],
+  // projectMembers: [],
 });
 
 export const PerformerField = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(PerformerFieldTsx);
+)(PerformerFieldRaw);

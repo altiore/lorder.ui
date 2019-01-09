@@ -10,7 +10,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Table } from 'src/components/Table';
-import { AddTaskForm, PatchTaskForm } from 'src/domains/@common/TaskForm';
+import { PatchTaskForm } from 'src/domains/@common/TaskForm/PatchTaskForm';
 import { DownloadList } from 'src/store/@common/entities';
 import { ProjectTask } from 'src/store/projects';
 import { PerformersCell } from './PerformersCell';
@@ -124,7 +124,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
   };
 
   private createTask = (projectId: number | string) => () => {
-    this.props.openDialog(<AddTaskForm buttonText="Добавить задачу" projectId={projectId} />, { maxWidth: 'lg' });
+    this.props.openDialog(<PatchTaskForm projectId={projectId} />, { maxWidth: 'lg' });
   };
 
   private handleRowClick = (id: number | string, projectId: number | string) => (event: React.MouseEvent) => {
@@ -137,7 +137,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
       });
     }
     if (!isInside && id) {
-      this.props.openDialog(<PatchTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />, {
+      this.props.openDialog(<PatchTaskForm taskId={id} projectId={projectId} />, {
         maxWidth: 'lg',
       });
     }

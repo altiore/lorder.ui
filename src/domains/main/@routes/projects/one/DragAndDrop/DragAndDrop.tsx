@@ -12,7 +12,7 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 
-import { AddTaskForm, PatchTaskForm } from 'src/domains/@common/TaskForm';
+import { PatchTaskForm } from 'src/domains/@common/TaskForm/PatchTaskForm';
 import { DownloadList } from 'src/store/@common/entities';
 import { ProjectTask, STATUS_NAMES } from 'src/store/projects';
 import { TaskCard } from './TaskCard';
@@ -117,15 +117,12 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
   }
 
   private handleTaskClick = (taskId: number | string) => () => {
-    this.props.openDialog(<PatchTaskForm taskId={taskId} projectId={this.props.projectId} buttonText="Сохранить" />, {
+    this.props.openDialog(<PatchTaskForm taskId={taskId} projectId={this.props.projectId} />, {
       maxWidth: 'lg',
     });
   };
 
   private createTask = (projectId: number | string, status: number) => () => {
-    this.props.openDialog(
-      <AddTaskForm buttonText="Создать задачу" projectId={projectId} initialValues={{ status }} />,
-      { maxWidth: 'lg' }
-    );
+    this.props.openDialog(<PatchTaskForm projectId={projectId} initialValues={{ status }} />, { maxWidth: 'lg' });
   };
 }

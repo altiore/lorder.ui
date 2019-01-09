@@ -10,7 +10,7 @@ import MediaQuery from 'react-responsive';
 
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { LinkButton } from 'src/domains/@common/LinkButton';
-import { DashboardTaskForm } from 'src/domains/@common/TaskForm';
+import { DashboardTaskForm } from 'src/domains/@common/TaskForm/DashboardTaskForm';
 import { Project } from 'src/store/projects';
 import { Task } from 'src/store/tasks';
 import { TimerListItemText } from './TimerListItemText';
@@ -99,7 +99,7 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
 
   private openEditTaskForm = (id: number | string, projectId: number | string) => () => {
     const { openDialog } = this.props;
-    openDialog(<DashboardTaskForm taskId={id} projectId={projectId} buttonText="Сохранить" />, { maxWidth: 'lg' });
+    openDialog(<DashboardTaskForm taskId={id} projectId={projectId} />, { maxWidth: 'lg' });
   };
 
   private onToggleOpenWorkTable = () => this.setState(({ isWorkTableOpen }) => ({ isWorkTableOpen: !isWorkTableOpen }));

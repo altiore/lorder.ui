@@ -44,6 +44,7 @@ export const styles = (theme: Theme) =>
       backgroundColor: theme.palette.background.default,
       flexGrow: 1,
       marginBottom: theme.spacing.unit,
+      maxWidth: 800,
     },
     saveButton: {
       marginTop: theme.spacing.unit,
