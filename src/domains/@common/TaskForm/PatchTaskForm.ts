@@ -40,6 +40,7 @@ const mergeProps = (
   projectId,
   startUserWork: () => startUserWork({ taskId, projectId }),
   stopUserWork: () => closeDialog() && stopUserWork(),
+  taskId,
   ...restDispatch,
   ...restOwn,
 });

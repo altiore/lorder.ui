@@ -1,7 +1,8 @@
 import Avatar from '@material-ui/core/Avatar';
 import grey from '@material-ui/core/colors/grey';
 import Typography from '@material-ui/core/Typography';
-import NotesIcon from '@material-ui/icons/Notes';
+import BugReportIcon from '@material-ui/icons/BugReport';
+import ExtensionIcon from '@material-ui/icons/Extension';
 import * as React from 'react';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 
@@ -40,15 +41,20 @@ export const TaskCardTsx: React.FunctionComponent<ITaskCard> = ({
       className={classes.root}
       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
     >
-      <Typography gutterBottom>{title}</Typography>
-      <div className={classes.value}>
-        <Typography component="span" variant="caption" className={classes.valueText}>
-          {value || '-'}
+      <span className={classes.row}>
+        <BugReportIcon fontSize="small" className={classes.iconBug} />
+        <ExtensionIcon fontSize="small" className={classes.iconStory} />
+        <Typography gutterBottom component="span">
+          {title}
         </Typography>
-      </div>
+      </span>
       <div className={classes.footer}>
-        <div>
-          <NotesIcon fontSize="small" color="inherit" />
+        <div className={classes.row}>
+          <div className={classes.value}>
+            <Typography component="span" variant="caption" className={classes.valueText}>
+              {value || '-'}
+            </Typography>
+          </div>
         </div>
         <Avatar className={classes.avatar}>CK</Avatar>
       </div>

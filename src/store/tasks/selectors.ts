@@ -2,11 +2,17 @@ import pick from 'lodash-es/pick';
 import { createSelector } from 'reselect';
 
 import { IState } from 'src/@types';
+// import { defaultProjectId } from 'src/store/identity/selectors';
 import { Task } from './Task';
 
 export const allTasks = (state: IState) => state.tasks;
 
-export const allTaskList = createSelector(allTasks, dr => dr.list);
+export const allTaskList = createSelector(allTasks, a => a.list);
+
+// export const allTaskListWithoutDefProject = createSelector(
+//   [allTaskList, defaultProjectId],
+//   (list, defProjectId) => list.filter(el => el.projectId !== defProjectId)
+// );
 
 export const filteredTaskList = createSelector(allTaskList, tasks => tasks);
 

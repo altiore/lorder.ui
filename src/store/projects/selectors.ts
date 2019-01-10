@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 
 import { IState } from 'src/@types';
 import { DownloadList } from 'src/store/@common/entities';
+// import { defaultProjectId } from 'src/store/identity/selectors';
 import { projectId } from 'src/store/router';
 import { currentProjectId } from 'src/store/timer';
 import { timePercentByProjectId, timeSpentByProjectId } from 'src/store/user-works';
@@ -17,6 +18,11 @@ export const ownProjectList = createSelector(
   [baseState],
   (state: DownloadList<Project>): Project[] => state.list.filter(el => typeof el.accessLevel === 'number')
 );
+
+// export const ownProjectListWithoutDefault = createSelector(
+//   [ownProjectList, defaultProjectId],
+//   (state: Project[], defProjectId): Project[] => state.filter(el => el.id !== defProjectId)
+// );
 
 export const selectedProject = createSelector(
   [ownProjectList, currentProjectId],

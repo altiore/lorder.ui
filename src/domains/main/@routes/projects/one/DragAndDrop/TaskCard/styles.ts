@@ -12,6 +12,14 @@ export const styles = (theme: Theme): any => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
+  iconBug: {
+    color: theme.palette.error.main,
+    marginRight: theme.spacing.unit / 2,
+  },
+  iconStory: {
+    color: '#4BC800',
+    marginRight: theme.spacing.unit / 2,
+  },
   root: {
     borderRadius: theme.spacing.unit / 2,
     boxShadow: theme.shadows[1],
@@ -21,8 +29,9 @@ export const styles = (theme: Theme): any => ({
     position: 'relative',
     userSelect: 'none',
   },
-  title: {
-    fontSize: 12,
+  row: {
+    display: 'flex',
+    flexFlow: 'row nowrap',
   },
   value: {
     alignItems: 'center',
@@ -33,9 +42,9 @@ export const styles = (theme: Theme): any => ({
     justifyContent: 'center',
     minWidth: 20,
     padding: '0 4px',
-    position: 'absolute',
-    right: theme.spacing.unit / 2,
-    top: theme.spacing.unit / 2,
+    // position: 'absolute',
+    // right: theme.spacing.unit / 2,
+    // top: theme.spacing.unit / 2,
   },
   valueText: {
     color: valueColor[700],

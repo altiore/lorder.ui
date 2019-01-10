@@ -5,10 +5,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
 // import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import BugReportIcon from '@material-ui/icons/BugReport';
 import CloseIcon from '@material-ui/icons/Close';
 import EventIcon from '@material-ui/icons/Event';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import ExtensionIcon from '@material-ui/icons/Extension';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotesIcon from '@material-ui/icons/Notes';
@@ -44,6 +47,7 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
   projectTasksIsLoading: boolean;
   startUserWork?: any;
   stopUserWork: any;
+  taskId?: number;
 }
 
 export interface ITaskFormState {
@@ -72,19 +76,38 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
       classes,
       closeDialog,
       isCurrent,
+      pristine,
       submitting,
       startUserWork,
       stopUserWork,
-      pristine,
+      taskId,
     } = this.props;
     const { invisible } = this.state;
 
     return (
       <>
         <DialogTitle disableTypography>
-          <FileCopyIcon fontSize="small" />
+          <div className={classes.row}>
+            <IconButton>
+              <BugReportIcon className={classes.iconBug} />
+            </IconButton>
+            <IconButton>
+              <ExtensionIcon className={classes.iconStory} />
+            </IconButton>
+            {taskId && (
+              <>
+                <Typography>
+                  A-
+                  {taskId}
+                </Typography>
+                <IconButton>
+                  <FileCopyIcon fontSize="small" />
+                </IconButton>
+              </>
+            )}
+          </div>
           <IconButton onClick={closeDialog}>
-            <CloseIcon fontSize={'small'} />
+            <CloseIcon fontSize="small" />
           </IconButton>
         </DialogTitle>
         <DialogContent className={classes.card}>

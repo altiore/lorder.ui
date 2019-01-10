@@ -37,6 +37,7 @@ const mergeProps = (
     submit(PROJECT_EDIT_TASK_FORM_NAME);
     stopUserWork();
   },
+  taskId,
   ...restDispatch,
   ...restOwn,
 });
