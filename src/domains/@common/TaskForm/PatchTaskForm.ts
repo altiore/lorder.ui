@@ -4,7 +4,6 @@ import { change, reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { onSubmitFail } from 'src/store/@common/helpers';
-import { closeDialog } from 'src/store/dialog';
 import {
   getEditTaskInitialValues,
   patchProjectTask,
@@ -23,23 +22,21 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  closeDialog,
   startUserWork,
   stopUserWork,
 };
 
 const mergeProps = (
   { checkIsCurrent, getEditTaskInitialValues, ...restState }: any,
-  { closeDialog, startUserWork, stopUserWork, ...restDispatch }: any,
+  { startUserWork, stopUserWork, ...restDispatch }: any,
   { taskId, projectId, initialValues, ...restOwn }: any
 ) => ({
   ...restState,
-  closeDialog,
   initialValues: initialValues || (taskId ? getEditTaskInitialValues(taskId, projectId) : {}),
   isCurrent: checkIsCurrent(taskId),
   projectId,
   startUserWork: () => startUserWork({ taskId, projectId }),
-  stopUserWork: () => closeDialog() && stopUserWork(),
+  stopUserWork,
   taskId,
   ...restDispatch,
   ...restOwn,

@@ -33,6 +33,7 @@ export interface IDragAndDropProps {
   statuses: number[];
   openDialog: any;
   projectId: number;
+  push: any;
   theme: Theme;
   height: number;
 }
@@ -117,8 +118,13 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
   }
 
   private handleTaskClick = (taskId: number | string) => () => {
-    this.props.openDialog(<PatchTaskForm taskId={taskId} projectId={this.props.projectId} />, {
-      maxWidth: 'lg',
+    this.props.push({
+      pathname: `/projects/${this.props.projectId}/tasks/${taskId}`,
+      state: {
+        modal: true,
+        projectId: this.props.projectId,
+        taskId,
+      },
     });
   };
 

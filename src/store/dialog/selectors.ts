@@ -12,3 +12,8 @@ export const dialogProps = createSelector(
   baseState,
   (state: IDialogState): Partial<DialogProps> | undefined => state.dialogProps
 );
+
+export const restProps = createSelector(
+  baseState,
+  (state: IDialogState): Partial<DialogProps> | undefined => state.props
+);

@@ -1,9 +1,9 @@
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import { ConnectedRouter } from 'connected-react-router';
 import * as moment from 'moment';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import Dialog from 'src/domains/@common/Dialog';

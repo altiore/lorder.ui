@@ -1,5 +1,5 @@
+import { routerMiddleware } from 'connected-react-router';
 import createHistory from 'history/createBrowserHistory';
-import { routerMiddleware } from 'react-router-redux';
 import { applyMiddleware, compose, createStore as createReduxStore } from 'redux';
 import { persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
@@ -24,7 +24,7 @@ const composeEnhancers =
 export async function createStore(initialState?: any) {
   // Create a history of your choosing (we're using a browser history in this case)
   const history = createHistory();
-  const rootReducer = await createRootReducer(ROLE.SUPER_ADMIN);
+  const rootReducer = await createRootReducer(history, ROLE.SUPER_ADMIN);
   const sagaMiddleware = createSagaMiddleware();
 
   const store = createReduxStore(
@@ -37,7 +37,7 @@ export async function createStore(initialState?: any) {
 
   if (module.hot) {
     module.hot.accept('./adminReducers', () => {
-      createRootReducer().then(newReducer => store.replaceReducer(newReducer));
+      createRootReducer(history).then((newReducer: any) => store.replaceReducer(newReducer(history)));
     });
   }
 

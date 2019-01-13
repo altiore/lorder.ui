@@ -8,6 +8,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import { NoMatch } from 'src/components/NoMatch';
+import { DashboardTaskForm } from 'src/domains/@common/TaskForm';
 import { Main } from 'src/domains/main';
 import { Dashboard } from 'src/domains/main/@routes/dashboard';
 import { AllProjects, OwnProjects } from 'src/domains/main/@routes/projects/list';
@@ -91,11 +92,8 @@ export const routes = [
             title: 'Другие Настройки',
           },
           {
-            component: Settings,
-            exact: true,
-            icon: SettingsIcon,
-            path: '/projects/:projectId/settings',
-            title: 'Другие Настройки',
+            component: DashboardTaskForm,
+            path: '/projects/:projectId/tasks/:taskId',
           },
         ],
       },

@@ -1,6 +1,7 @@
+import { History } from 'history';
 import * as localForage from 'localforage';
 import { reducer as notifications } from 'react-notification-system-redux';
-import { routerReducer } from 'react-router-redux';
+// import { routerReducer } from 'connected-react-router';
 import { combineReducers, Reducer } from 'redux';
 import { reducer as form } from 'redux-form';
 import { createTransform, PersistConfig, persistReducer } from 'redux-persist';
@@ -12,6 +13,7 @@ import { highcharts } from './highcharts/reducer';
 import { identity } from './identity';
 import { Project } from './projects';
 import { publicProject } from './publicProject';
+import { routerReducer } from './router/reducer';
 import { TaskType } from './task-types';
 import { Task, UserWork } from './tasks';
 import { uiReducer } from './ui';
@@ -56,7 +58,7 @@ const persistConfig: PersistConfig = {
   ],
 };
 
-export async function createRootReducer(role: ROLE = ROLE.GUEST) {
+export async function createRootReducer(history: History, role: ROLE = ROLE.GUEST) {
   let asyncReducers: Partial<Reducer<IState>> = {};
   switch (role) {
     case ROLE.ADMIN:
@@ -82,7 +84,7 @@ export async function createRootReducer(role: ROLE = ROLE.GUEST) {
       identity,
       notifications,
       publicProject,
-      router: routerReducer,
+      router: routerReducer(history),
       ui: uiReducer,
       versionHistory,
       ...(asyncReducers as any),

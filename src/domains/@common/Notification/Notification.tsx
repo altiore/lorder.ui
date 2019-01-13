@@ -1,15 +1,58 @@
 // import green from '@material-ui/core/colors/green'
 import * as React from 'react';
-import * as Notifications from 'react-notification-system-redux';
+import * as NotifySystem from 'react-notification-system';
 
 export interface INotificationProps {
+  hide: any;
   notifications: Notifications.NotificationsState;
 }
 
 export class Notification extends React.Component<INotificationProps, {}> {
-  render() {
-    const { notifications } = this.props;
+  notification: React.RefObject<any>;
 
+  constructor(props: INotificationProps) {
+    super(props);
+
+    this.notification = React.createRef();
+  }
+
+  componentWillReceiveProps(nextProps: INotificationProps) {
+    const { notifications } = nextProps;
+    const notificationIds = notifications.map(notification => notification.uid);
+    const systemNotifications = this.notification.current.state.notifications || [];
+
+    if (notifications.length > 0) {
+      // Get all active notifications from react-notification-system
+      /// and remove all where uid is not found in the reducer
+      systemNotifications.forEach((notification: any) => {
+        if (notificationIds.indexOf(notification.uid) < 0) {
+          this.notification.current.removeNotification(notification.uid);
+        }
+      });
+
+      notifications.forEach(notification => {
+        this.notification.current.addNotification({
+          ...notification,
+          onRemove: () => {
+            this.props.hide(notification.uid);
+            if (notification.onRemove) {
+              notification.onRemove(notification);
+            }
+          },
+        });
+      });
+    }
+
+    if (this.props.notifications !== notifications && notifications.length === 0) {
+      this.notification.current.clearNotifications();
+    }
+  }
+
+  shouldComponentUpdate(nextProps: INotificationProps) {
+    return this.props !== nextProps;
+  }
+
+  render() {
     // Optional styling
     const style = {
       NotificationItem: {
@@ -25,6 +68,6 @@ export class Notification extends React.Component<INotificationProps, {}> {
       },
     };
 
-    return <Notifications notifications={notifications} style={style} />;
+    return <NotifySystem ref={this.notification} style={style} {...this.props} />;
   }
 }

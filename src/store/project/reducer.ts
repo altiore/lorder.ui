@@ -1,4 +1,4 @@
-import { LOCATION_CHANGE } from 'react-router-redux';
+import { LOCATION_CHANGE } from 'connected-react-router';
 import { Action, handleActions } from 'redux-actions';
 
 import { selectProject } from './actions';
@@ -16,7 +16,7 @@ const locationChangeHandler = (state: IS, { payload }: Action<IChangePayload>) =
   if (!payload) {
     throw new Error('Project Reducer, locationChangeHandler Error: payload required');
   }
-  const matches = payload.pathname.match(/^\/projects\/(\d+)/);
+  const matches = payload && payload.pathname && payload.pathname.match(/^\/projects\/(\d+)/);
   if (matches && matches[1]) {
     return { selected: parseInt(matches[1], 0) };
   }

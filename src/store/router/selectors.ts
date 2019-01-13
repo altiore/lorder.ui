@@ -1,7 +1,7 @@
 import get from 'lodash-es/get';
 import { match as IMatch } from 'react-router';
-import { createMatchSelector, RouterState } from 'react-router-redux';
 import { createSelector } from 'reselect';
+const { createMatchSelector } = require('connected-react-router');
 
 import { IState } from 'src/@types';
 import { getQueryParam } from 'src/store/@common/helpers';
@@ -16,7 +16,7 @@ const baseState = (state: IState) => state.router;
 const match = (path: string) => (state: IState): IMatchIdentifier =>
   createMatchSelector(path)(state) as IMatchIdentifier;
 
-const routerSearch = createSelector(baseState, (router: RouterState) => router.location && router.location.search);
+const routerSearch = createSelector(baseState, (router: any) => router.location && router.location.search);
 
 export const identifier = createSelector(match('/start/:identifier'), (state: IMatchIdentifier) =>
   get(state, 'params.identifier')

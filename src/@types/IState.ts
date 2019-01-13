@@ -1,5 +1,5 @@
+import { RouterState } from 'connected-react-router';
 import { NotificationsState } from 'react-notification-system-redux';
-import { RouterState } from 'react-router-redux';
 import { FormStateMap } from 'redux-form';
 
 import { DownloadList } from 'src/store/@common/entities';

@@ -1,4 +1,4 @@
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import { Dispatch } from 'redux';
 
 import { IState } from 'src/@types';

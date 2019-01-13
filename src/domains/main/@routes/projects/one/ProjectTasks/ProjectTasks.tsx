@@ -25,6 +25,7 @@ export interface IProjectTasksProps {
   openDialog: any;
   projectId: number;
   projectTasks: DownloadList<ProjectTask>;
+  push: any;
 }
 
 export interface IState {
@@ -129,8 +130,13 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
       });
     }
     if (!isInside && id) {
-      this.props.openDialog(<PatchTaskForm taskId={id} projectId={projectId} />, {
-        maxWidth: 'lg',
+      this.props.push({
+        pathname: `/projects/${projectId}/tasks/${id}`,
+        state: {
+          modal: true,
+          projectId,
+          taskId: id,
+        },
       });
     }
   };

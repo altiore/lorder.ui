@@ -42,9 +42,11 @@ export interface ITaskFormData {
 export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFormProps> {
   buttonText?: string;
   classes?: any;
-  closeDialog: any;
   isCurrent?: boolean;
+  onClose: any;
+  projectId: number;
   projectTasksIsLoading: boolean;
+  replace: any;
   startUserWork?: any;
   stopUserWork: any;
   taskId?: number;
@@ -59,14 +61,24 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
     invisible: [true, true, true],
   };
 
+  timers: any[] = [];
+
   componentDidMount(): void {
     const arr = this.state.invisible.slice(0);
     arr.forEach((inv: boolean, i: number) => {
-      setTimeout(() => {
-        this.setState(({ invisible }: ITaskFormState) => ({
-          invisible: [...invisible.slice(0, i), false, ...invisible.slice(i + 1)],
-        }));
-      }, 500 + i * 500);
+      this.timers.push(
+        setTimeout(() => {
+          this.setState(({ invisible }: ITaskFormState) => ({
+            invisible: [...invisible.slice(0, i), false, ...invisible.slice(i + 1)],
+          }));
+        }, 500 + i * 500)
+      );
+    });
+  }
+
+  componentWillUnmount(): void {
+    this.timers.map(timer => {
+      clearTimeout(timer);
     });
   }
 
@@ -74,8 +86,8 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
     const {
       buttonText = 'Сохранить',
       classes,
-      closeDialog,
       isCurrent,
+      onClose,
       pristine,
       submitting,
       startUserWork,
@@ -96,17 +108,19 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
             </IconButton>
             {taskId && (
               <>
-                <Typography>
-                  A-
-                  {taskId}
-                </Typography>
+                <Button variant="flat" component="a" onClick={this.goToTask(taskId)}>
+                  <Typography component="a">
+                    A-
+                    {taskId}
+                  </Typography>
+                </Button>
                 <IconButton>
                   <FileCopyIcon fontSize="small" />
                 </IconButton>
               </>
             )}
           </div>
-          <IconButton onClick={closeDialog}>
+          <IconButton onClick={onClose}>
             <CloseIcon fontSize="small" />
           </IconButton>
         </DialogTitle>
@@ -194,11 +208,18 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
       this.props.handleSubmit(e);
     }
     if (isClose) {
-      this.props.closeDialog();
+      this.props.onClose();
     }
   };
 
   private nullComponent() {
     return null;
   }
+
+  private goToTask = (taskId: number) => (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    this.props.replace({
+      pathname: `/projects/${this.props.projectId}/tasks/${taskId}`,
+    });
+  };
 }

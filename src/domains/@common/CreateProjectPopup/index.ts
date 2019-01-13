@@ -1,6 +1,6 @@
+import { push } from 'connected-react-router';
 import get from 'lodash-es/get';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { reduxForm } from 'redux-form';
 
 import { onSubmitForm } from 'src/store/@common/helpers';

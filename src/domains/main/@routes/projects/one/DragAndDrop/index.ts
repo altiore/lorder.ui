@@ -1,4 +1,5 @@
 import { withStyles } from '@material-ui/core';
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -18,6 +19,7 @@ const mapDispatch = {
   getAllProjectTasks,
   moveProjectTask,
   openDialog,
+  push,
 };
 
 const mergeProps = (

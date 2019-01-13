@@ -1,7 +1,7 @@
 import { withStyles } from '@material-ui/core/styles';
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from 'src/store/dialog';

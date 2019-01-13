@@ -1,9 +1,9 @@
+import { replace } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { reduxForm, submit } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { onSubmitFail, onSubmitForm } from 'src/store/@common/helpers';
-import { closeDialog } from 'src/store/dialog';
 import { patchProjectTask, PROJECT_EDIT_TASK_FORM_NAME, projectTasksIsLoading } from 'src/store/projects';
 import { checkIsCurrent, getEditTaskInitialValues, startUserWork, stopUserWork } from 'src/store/tasks';
 import { TaskForm } from './StyledTaskForm';
@@ -16,7 +16,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  closeDialog,
+  replace,
   startUserWork,
   stopUserWork,
   submit,
@@ -24,11 +24,10 @@ const mapDispatchToProps = {
 
 const mergeProps = (
   { checkIsCurrent, getEditTaskInitialValues, ...restState }: any,
-  { closeDialog, startUserWork, stopUserWork, submit, ...restDispatch }: any,
+  { startUserWork, stopUserWork, submit, ...restDispatch }: any,
   { taskId, projectId, ...restOwn }: any
 ) => ({
   ...restState,
-  closeDialog,
   initialValues: getEditTaskInitialValues(taskId),
   isCurrent: checkIsCurrent(taskId),
   projectId,

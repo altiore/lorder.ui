@@ -1,10 +1,9 @@
-import { LocationDescriptor, LocationState } from 'history';
 import * as React from 'react';
 import { RouteComponentProps, Switch } from 'react-router-dom';
-import { RouterAction } from 'react-router-redux';
 
 import { IRoute } from 'src/@types';
 import { RouteWithSubRoutes } from 'src/domains/@common/RouteWithSubRoutes';
+import { DashboardTaskForm } from 'src/domains/@common/TaskForm';
 import { Header } from './Header';
 
 export interface IMainProps {
@@ -12,14 +11,25 @@ export interface IMainProps {
     main: string;
     root: string;
   };
-  push: (location: LocationDescriptor, state?: LocationState) => RouterAction;
+  openDialog: any;
+  push: any;
   routes: IRoute[];
 }
 
 export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProps, {}> {
-  goTo = (route: string) => () => {
-    this.props.push(route);
-  };
+  componentWillUpdate(
+    nextProps: Readonly<RouteComponentProps<{}> & IMainProps>,
+    nextState: Readonly<{}>,
+    nextContext: any
+  ): void {
+    if (nextProps.location !== this.props.location && nextProps.location.state && nextProps.location.state.modal) {
+      this.props.openDialog(
+        <DashboardTaskForm taskId={nextProps.location.state.taskId} projectId={nextProps.location.state.projectId} />,
+        { maxWidth: 'lg' },
+        this.props.location
+      );
+    }
+  }
 
   render() {
     const { routes } = this.props;

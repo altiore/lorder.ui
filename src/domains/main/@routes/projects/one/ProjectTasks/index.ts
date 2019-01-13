@@ -1,6 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { destroy } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
@@ -22,13 +22,13 @@ const mapDispatch = {
   deleteProjectTask,
   destroy,
   getAllProjectTasks,
-  goToPage: push,
   openDialog,
+  push,
 };
 
 const mergeProps = (
   { projectId, ...restState }: any,
-  { deleteProjectTask, destroy, getAllProjectTasks, goToPage, ...restDispatch }: any,
+  { deleteProjectTask, destroy, getAllProjectTasks, ...restDispatch }: any,
   { match, ...restOwn }: any
 ) => ({
   ...restState,

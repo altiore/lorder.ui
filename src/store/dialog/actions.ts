@@ -6,9 +6,9 @@ export let CurrentDialog: ReactNode = null;
 
 export const openDialog = createAction<string, Partial<DialogProps>>(
   'DIALOG/OPEN',
-  (p: ReactNode) => {
+  (p: ReactNode, _, props?: any) => {
     CurrentDialog = p;
-    return 'component';
+    return props;
   },
   (_, dialogProps: Partial<DialogProps>) => dialogProps
 );
