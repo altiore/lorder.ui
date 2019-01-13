@@ -108,8 +108,8 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
             </IconButton>
             {taskId && (
               <>
-                <Button variant="flat" component="a" onClick={this.goToTask(taskId)}>
-                  <Typography component="a">
+                <Button variant="text" component="a" onClick={this.goToTask(taskId)} href="#">
+                  <Typography>
                     A-
                     {taskId}
                   </Typography>

@@ -52,6 +52,7 @@ export class AppTsx extends React.Component<IAppProps, IState> {
     }
     return (
       <Switch>
+        <Redirect from="/index.html" to="/" exact />
         <Route path={'/start/:identifier'} component={Start} />
         {routes.length && routes.map(route => <RouteWithSubRoutes key={route.path || 'notFound'} {...route} />)}
         {userRole === ROLE.GUEST && <Redirect to={'/'} />}

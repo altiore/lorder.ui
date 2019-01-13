@@ -53,8 +53,10 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
           </LinkButton>
         </MediaQuery>
         <Button
+          component="a"
           classes={{ label: classes.buttonTitleLabel }}
           className={classes.buttonTitle}
+          href={isShown ? `/projects/${project.id}/tasks/${task.id}` : '#'}
           onClick={isShown ? this.openEditTaskForm(task.id, project.id as number) : undefined}
         >
           {isShown ? task.title : '...'}
@@ -97,7 +99,8 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
     );
   }
 
-  private openEditTaskForm = (id: number | string, projectId: number | string) => () => {
+  private openEditTaskForm = (id: number | string, projectId: number | string) => (e: React.SyntheticEvent) => {
+    e.preventDefault();
     this.props.push({
       pathname: `/projects/${projectId}/tasks/${id}`,
       state: {
