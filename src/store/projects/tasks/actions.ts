@@ -20,6 +20,7 @@ export interface IPatchProjectTaskData {
   projectId: number;
   title?: string;
   source?: string;
+  status?: number;
   value?: number;
   users?: User[];
   userWorks?: any;
@@ -60,10 +61,11 @@ export const postProjectTask = requestActions<IProjectTaskData>(
 
 export const patchProjectTask = requestActions<IPatchProjectTaskData>(
   'PROJECT_TASK/PATCH',
-  ({ description, title, projectId, id, users, userWorks, value, source }: IPatchProjectTaskData): any => {
+  ({ description, title, projectId, id, users, userWorks, value, source, status }: IPatchProjectTaskData): any => {
     const data: any = {
       description,
       source,
+      status,
       title,
       value,
     };
