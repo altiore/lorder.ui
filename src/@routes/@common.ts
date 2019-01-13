@@ -1,6 +1,6 @@
-import { Digits } from '../digits';
-import { PublicProject } from '../publicProject';
-import { Start } from '../start';
+import { Digits } from 'src/domains/digits';
+import { PublicProject } from 'src/domains/publicProject';
+import { Start } from 'src/domains/start';
 
 export const commonRoutes = [
   {

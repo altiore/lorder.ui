@@ -1,5 +1,5 @@
-import { Info } from '../landing';
-import { Login } from '../login';
+import { Info } from 'src/domains/landing';
+import { Login } from 'src/domains/login';
 import { commonRoutes } from './@common';
 
 export const routes = [

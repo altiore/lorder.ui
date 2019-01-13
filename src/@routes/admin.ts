@@ -1,6 +1,6 @@
 import { NoMatch } from 'src/components/NoMatch';
-import { Main } from '../main';
-import { Profile } from '../profile';
+import { Main } from 'src/domains/main';
+import { Profile } from 'src/domains/profile';
 import { commonRoutes } from './@common';
 
 export const routes = [

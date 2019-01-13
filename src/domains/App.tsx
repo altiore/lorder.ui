@@ -82,16 +82,16 @@ export class AppTsx extends React.Component<IAppProps, IState> {
     let getRoutes: Promise<{ routes: any }>;
     switch (role) {
       case ROLE.ADMIN:
-        getRoutes = import(/* webpackChunkName: "admin" */ './@routes/admin');
+        getRoutes = import(/* webpackChunkName: "admin" */ '../@routes/admin');
         break;
       case ROLE.SUPER_ADMIN:
-        getRoutes = import(/* webpackChunkName: "super-admin" */ './@routes/super-admin');
+        getRoutes = import(/* webpackChunkName: "super-admin" */ '../@routes/super-admin');
         break;
       case ROLE.USER:
-        getRoutes = import(/* webpackChunkName: "user" */ './@routes/user');
+        getRoutes = import(/* webpackChunkName: "user" */ '../@routes/user');
         break;
       default:
-        getRoutes = import(/* webpackChunkName: "guest" */ './@routes/guest');
+        getRoutes = import(/* webpackChunkName: "guest" */ '../@routes/guest');
         break;
     }
     this.loadRoutes(getRoutes);

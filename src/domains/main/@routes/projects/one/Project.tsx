@@ -44,7 +44,7 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
       <LayoutLeftDrawer
         title={openedProject.title}
         routes={routes}
-        redirect={<Redirect from="/projects/:projectId" to="/projects/:projectId/dnd" exact />}
+        redirect={<Redirect from="/projects/:projectId" to="/projects/:projectId/board" exact />}
       />
     );
   }

@@ -8,17 +8,17 @@ import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import { NoMatch } from 'src/components/NoMatch';
-import { Main } from '../main';
-import { Dashboard } from '../main/@routes/dashboard';
-import { AllProjects, OwnProjects } from '../main/@routes/projects/list';
-import { Project } from '../main/@routes/projects/one';
-import DragAndDrop from '../main/@routes/projects/one/DragAndDrop';
-import { ProjectMembers } from '../main/@routes/projects/one/ProjectMembers';
-import { ProjectTasks } from '../main/@routes/projects/one/ProjectTasks';
-import { ProjectTaskTypes } from '../main/@routes/projects/one/ProjectTaskTypes';
-import { Settings } from '../main/@routes/projects/one/Settings';
-import { Users } from '../main/@routes/users';
-import { Profile } from '../profile';
+import { Main } from 'src/domains/main';
+import { Dashboard } from 'src/domains/main/@routes/dashboard';
+import { AllProjects, OwnProjects } from 'src/domains/main/@routes/projects/list';
+import { Project } from 'src/domains/main/@routes/projects/one';
+import DragAndDrop from 'src/domains/main/@routes/projects/one/DragAndDrop';
+import { ProjectMembers } from 'src/domains/main/@routes/projects/one/ProjectMembers';
+import { ProjectTasks } from 'src/domains/main/@routes/projects/one/ProjectTasks';
+import { ProjectTaskTypes } from 'src/domains/main/@routes/projects/one/ProjectTaskTypes';
+import { Settings } from 'src/domains/main/@routes/projects/one/Settings';
+import { Users } from 'src/domains/main/@routes/users';
+import { Profile } from 'src/domains/profile';
 import { commonRoutes } from './@common';
 
 export const routes = [
@@ -59,7 +59,7 @@ export const routes = [
             component: DragAndDrop,
             exact: true,
             icon: ImportExportIcon,
-            path: '/projects/:projectId/dnd',
+            path: '/projects/:projectId/board',
             title: 'Board',
           },
           {
@@ -82,6 +82,13 @@ export const routes = [
             icon: PeopleIcon,
             path: '/projects/:projectId/members',
             title: 'Участники',
+          },
+          {
+            component: Settings,
+            exact: true,
+            icon: SettingsIcon,
+            path: '/projects/:projectId/settings',
+            title: 'Другие Настройки',
           },
           {
             component: Settings,
