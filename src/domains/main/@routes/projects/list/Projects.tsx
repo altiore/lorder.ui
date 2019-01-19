@@ -1,18 +1,14 @@
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { TableCellProps } from 'react-virtualized';
 
 import { ROLE } from 'src/@types';
 import { Page } from 'src/components/Page';
-import { Table } from 'src/components/Table';
-import { CheckRole } from 'src/domains/@common/CheckRole';
+import TableVirtualized from 'src/components/TableVirtualized';
 import { CreateProjectPopup } from 'src/domains/@common/CreateProjectPopup';
 import { LayoutLeftDrawer } from 'src/domains/@common/LayoutLeftDrawer';
 import { ACCESS_LEVEL, Project } from 'src/store/projects';
@@ -26,6 +22,7 @@ export interface IProjectsProps {
   findUserById: (id: number) => IUser | undefined;
   getProjects: any;
   goToProject: any;
+  hasRole: any;
   openDialog: any;
   ownOnly: boolean;
   projectList: Project[];
@@ -34,10 +31,15 @@ export interface IProjectsProps {
   userRole: ROLE;
 }
 
-export class Projects extends React.Component<RouteComponentProps<{}> & IProjectsProps, {}> {
+export interface IProjectsState {
+  sortBy: number | string;
+  sortDirection: string;
+}
+
+export class Projects extends React.Component<RouteComponentProps<{}> & IProjectsProps, IProjectsState> {
   state = {
-    page: 0,
-    perPage: 10,
+    sortBy: 'title',
+    sortDirection: 'ASC',
   };
 
   componentDidMount() {
@@ -45,98 +47,99 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   }
 
   render() {
-    const { classes, projectList, ownOnly } = this.props;
+    const { classes, hasRole, ownOnly, projectList } = this.props;
+    const columns = [
+      { label: 'Название', order: 1, isShown: true, dataKey: 'title', width: 230 },
+      // { label: 'Бюджет', order: 3, isShown: hasRole(ROLE.SUPER_ADMIN), dataKey: 'monthlyBudget', width: 230 },
+      { label: 'Потрачено Времени', order: 4, isShown: true, dataKey: 'fullProjectTimeHumanize', width: 160 },
+      { label: 'Ценность', order: 5, isShown: hasRole(ROLE.SUPER_ADMIN), dataKey: 'valueSum', width: 190 },
+      { label: 'Публичный', order: 8, isShown: true, dataKey: 'uuid', width: 190, component: this.renderPublished },
+      { label: '', order: 20, isShown: true, dataKey: 'id', width: 100, component: this.renderRemove },
+    ];
+    if (!ownOnly && hasRole(ROLE.SUPER_ADMIN)) {
+      columns.push({
+        label: 'Владелец',
+        order: 2,
+        isShown: true,
+        dataKey: 'ownerId',
+        width: 230,
+        component: this.renderUser,
+      });
+    }
+    const rows = projectList.sort(this.sortState());
+    const { sortBy, sortDirection } = this.state;
     return (
       <LayoutLeftDrawer>
-        <Page className={classes.root}>
-          {projectList && projectList.length ? (
-            <Table items={projectList} renderItem={this.renderItem}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Название проекта</TableCell>
-                  {!ownOnly && (
-                    <CheckRole role={ROLE.SUPER_ADMIN}>
-                      <TableCell>Владелец</TableCell>
-                    </CheckRole>
-                  )}
-                  <CheckRole role={ROLE.SUPER_ADMIN}>
-                    <TableCell numeric>Месячный бюджет</TableCell>
-                  </CheckRole>
-                  <TableCell numeric>Потречено времени</TableCell>
-                  <CheckRole role={ROLE.SUPER_ADMIN}>
-                    <TableCell numeric>Полная стоимость</TableCell>
-                  </CheckRole>
-                  <TableCell style={{ width: 50 }} />
-                </TableRow>
-              </TableHead>
-            </Table>
-          ) : (
-            <Grid item xs={12}>
-              <img src={'/'} />
-            </Grid>
-          )}
-          <Button size="large" variant="outlined" color="primary" onClick={this.createProject}>
-            <Typography variant="caption" noWrap>
-              {'Создать проект'}
-            </Typography>
-          </Button>
+        <Page>
+          <div className={classes.row}>
+            <Typography>Всего проектов: {projectList.length}</Typography>
+            {ownOnly && (
+              <Button size="large" variant="outlined" color="primary" onClick={this.createProject}>
+                <Typography variant="caption" noWrap>
+                  {'Создать проект'}
+                </Typography>
+              </Button>
+            )}
+          </div>
+          <TableVirtualized
+            columns={columns}
+            rows={rows}
+            height={740}
+            sortBy={sortBy}
+            sortDirection={sortDirection}
+            sort={this.sortTable}
+            onRowClick={ownOnly ? this.handleRowClick : undefined}
+          />
         </Page>
       </LayoutLeftDrawer>
     );
   }
 
-  private renderItem = ({
-    id,
-    accessLevel,
-    title,
-    monthlyBudget,
-    fullProjectTimeHumanize,
-    ownerId,
-    valueSum,
-  }: Project) => {
-    const { classes, userRole, ownOnly } = this.props;
-    return (
-      <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id, accessLevel)}>
-        <TableCell component="th" scope="row">
-          {title}
-        </TableCell>
-        {!ownOnly && (
-          <CheckRole role={ROLE.SUPER_ADMIN}>
-            <TableCell>{this.getUserEmail(ownerId)}</TableCell>
-          </CheckRole>
-        )}
-        {accessLevel === ACCESS_LEVEL.WHITE ? (
-          <TableCell colSpan={userRole === ROLE.SUPER_ADMIN ? 3 : 1}>
-            <Typography color={'error'}>Нажмите на строку проекта, чтоб принять приглашение</Typography>
-          </TableCell>
-        ) : (
-          <>
-            <CheckRole role={ROLE.SUPER_ADMIN}>
-              <TableCell numeric>{monthlyBudget}</TableCell>
-            </CheckRole>
-            <TableCell numeric>{fullProjectTimeHumanize}</TableCell>
-            <CheckRole role={ROLE.SUPER_ADMIN}>
-              <TableCell numeric>{valueSum}</TableCell>
-            </CheckRole>
-          </>
-        )}
-        <TableCell>
-          <IconButton onClick={this.handleRemoveClick(id, accessLevel)}>
-            <ClearIcon />
-          </IconButton>
-        </TableCell>
-      </TableRow>
-    );
+  private renderPublished = ({ cellData }: TableCellProps) => {
+    return cellData ? 'Да' : 'Нет';
+  };
+
+  private renderUser = ({ cellData }: TableCellProps): any => {
+    return this.getUserEmail(cellData);
+  };
+
+  private sortTable = ({ sortBy, sortDirection }: any) => {
+    this.setState({ sortBy, sortDirection });
+  };
+
+  private sortState = () => {
+    let { sortBy } = this.state;
+    if (sortBy === 'ownerId') {
+      return (a: Project, b: Project) => {
+        const aU = this.getUserEmail(a.ownerId as number);
+        const bU = this.getUserEmail(b.ownerId as number);
+        return this.getSortFunctionFromDirection(aU, bU);
+      };
+    }
+    if (sortBy === 'fullProjectTimeHumanize') {
+      sortBy = 'timeSum';
+    }
+    return (a: Project, b: Project) => this.getSortFunctionFromDirection(a[sortBy], b[sortBy]);
+  };
+
+  private getSortFunctionFromDirection = (a: any, b: any) => {
+    const { sortDirection } = this.state;
+    if (sortDirection === 'ASC') {
+      return a > b ? 1 : -1;
+    } else {
+      return a < b ? 1 : -1;
+    }
   };
 
   private createProject = () => this.props.openDialog(CreateProjectPopup, { scroll: 'body' });
 
-  private handleRowClick = (id: number | undefined, accessLevel?: ACCESS_LEVEL) => async () => {
-    if (accessLevel === ACCESS_LEVEL.WHITE && typeof id === 'number') {
-      await this.props.acceptInvitation(id);
-      this.props.goToProject(id);
+  private handleRowClick = async ({ rowData, event }: any) => {
+    event.stopPropagation();
+    if (rowData.accessLevel === ACCESS_LEVEL.WHITE && typeof rowData.id === 'number') {
+      await this.props.acceptInvitation(rowData.id);
+      this.props.goToProject(rowData.id);
     } else {
-      this.props.goToProject(id);
+      this.props.goToProject(rowData.id);
     }
   };
 
@@ -169,4 +172,10 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     }
     return id;
   };
+
+  private renderRemove = ({ cellData, rowData }: TableCellProps) => (
+    <Fab size="small" color="primary" onClick={this.handleRemoveClick(cellData, rowData.accessLevel)}>
+      <ClearIcon />
+    </Fab>
+  );
 }

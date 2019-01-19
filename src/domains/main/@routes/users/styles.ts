@@ -15,10 +15,4 @@ export const styles = (theme: Theme) =>
       flexGrow: 1,
       padding: '0 24px',
     },
-    row: {
-      '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.background.default,
-      },
-      cursor: 'pointer',
-    },
   });

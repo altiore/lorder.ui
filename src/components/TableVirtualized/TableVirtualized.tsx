@@ -2,13 +2,21 @@ import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { AutoSizer, Column, SortDirection, Table, TableCellRenderer } from 'react-virtualized';
+import {
+  AutoSizer,
+  Column,
+  SortDirection,
+  Table,
+  TableCellRenderer,
+  TableHeaderProps,
+  TableProps,
+} from 'react-virtualized';
 
 interface ColumnType {
   component?: any;
   dataKey: string;
   disableSort?: boolean;
-  isSelect?: boolean;
+  isShown?: boolean;
   label: string;
   numeric?: boolean;
   order?: number;
@@ -19,7 +27,7 @@ interface ColumnType {
 
 type ColumnsType = ColumnType[];
 
-export interface ITableVirtualizedProps {
+export interface ITableVirtualizedProps extends TableProps {
   buttonAttr?: any;
   classes: any;
   columns: ColumnsType;
@@ -28,7 +36,6 @@ export interface ITableVirtualizedProps {
   rowClassName?: string;
   rowHeight: number;
   sort?: (...args: any) => any;
-  height?: number;
   className?: string;
   rows: any[];
 }
@@ -49,7 +56,7 @@ export class TableVirtualized extends React.Component<ITableVirtualizedProps, IT
   state = {
     columns:
       this.props.columns &&
-      this.props.columns.map(el => ({ ...el, isSelect: el.isSelect !== undefined ? el.isSelect : true })),
+      this.props.columns.map(el => ({ ...el, isShown: el.isShown !== undefined ? el.isShown : true })),
   };
 
   componentWillReceiveProps(nextProps: ITableVirtualizedState) {
@@ -61,7 +68,12 @@ export class TableVirtualized extends React.Component<ITableVirtualizedProps, IT
   render() {
     const { classes, className, height, rows, ...tableProps } = this.props;
     const { columns } = this.state;
-    const filteredColumns = columns.filter(el => el.isSelect);
+    const filteredColumns = columns
+      .filter(el => el.isShown)
+      .sort(
+        (a: ColumnType, b: ColumnType) =>
+          a.order && b.order ? (a.order > b.order ? 1 : -1) : a.dataKey > b.dataKey ? 1 : -1
+      );
     return (
       <div style={{ height, width: '100%' }} className={className}>
         <AutoSizer>
@@ -97,6 +109,7 @@ export class TableVirtualized extends React.Component<ITableVirtualizedProps, IT
                     cellRenderer={renderer}
                     dataKey={dataKey}
                     width={width / filteredColumns.length}
+                    defaultSortDirection="ASC"
                     {...other}
                   />
                 );
@@ -140,7 +153,7 @@ export class TableVirtualized extends React.Component<ITableVirtualizedProps, IT
     );
   };
 
-  wrappedHeaderRender = (index: number) => (headerProps: any) =>
+  wrappedHeaderRender = (index: number) => (headerProps: TableHeaderProps) =>
     this.headerRenderer({
       ...headerProps,
       columnIndex: index,

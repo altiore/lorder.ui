@@ -2,6 +2,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { withResize } from 'src/hocs/withResize';
 import { deleteUser, fetchUsers, findUserById, patchUser, userList } from 'src/store/users';
 import { styles } from './styles';
 import { Users as UsersJsx } from './Users';
@@ -16,4 +17,4 @@ export const Users = connect(
     fetchUsers,
     patchUser,
   }
-)(withStyles(styles, { withTheme: true })(UsersJsx) as any);
+)(withResize(withStyles(styles, { withTheme: true })(UsersJsx)));

@@ -21,3 +21,11 @@ export const defaultProjectId = createSelector(
   baseState,
   (state: Identity): number | undefined => state.defaultProjectId
 );
+
+export const hasRole = createSelector([userRole], role => (r: ROLE | ROLE[]) => {
+  const roles = Array.isArray(r) ? r : [r];
+  if (~roles.indexOf(role)) {
+    return true;
+  }
+  return false;
+});

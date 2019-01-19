@@ -38,6 +38,12 @@ export const getOwnProjects = requestActions('PROJECTS/GET_ALL_OWN', () => ({
 
 export const getAllProjects = requestActions('PROJECTS/GET_ALL(SUPER_ADMIN)', () => ({
   request: {
+    params: {
+      count: 20000,
+      order: 'desc',
+      orderBy: 'createdAt',
+      skip: 0,
+    },
     url: '/projects/all',
   },
 }));

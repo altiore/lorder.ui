@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from 'src/store/dialog';
-import { defaultProjectId, userRole } from 'src/store/identity';
+import { defaultProjectId, hasRole, userRole } from 'src/store/identity';
 import {
   acceptInvitation,
   allProjectList,
@@ -22,6 +22,7 @@ const mapToState = (ownOnly: boolean = true) =>
   createStructuredSelector({
     defaultProjectId,
     findUserById,
+    hasRole,
     ownOnly: () => ownOnly,
     projectList: ownOnly ? ownProjectList : allProjectList,
     userRole,

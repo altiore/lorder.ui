@@ -3,6 +3,12 @@ import { IUser } from './User';
 
 export const fetchUsers = requestActions('USERS/FETCH_ALL', () => ({
   request: {
+    params: {
+      count: 20000,
+      order: 'desc',
+      orderBy: 'createdAt',
+      skip: 0,
+    },
     url: '/users',
   },
 }));

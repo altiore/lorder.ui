@@ -4,9 +4,8 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) =>
   createStyles({
     row: {
-      '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.background.default,
-      },
-      cursor: 'pointer',
+      alignItems: 'center',
+      display: 'flex',
+      flexFlow: 'row wrap',
     },
   });

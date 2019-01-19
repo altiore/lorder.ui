@@ -20,9 +20,6 @@ export const styles = (theme: Theme) => ({
     flex: 1,
   },
   tableRow: {
-    '&:not(.ReactVirtualized__Table__headerRow):nth-of-type(odd)': {
-      backgroundColor: theme.palette.background.default,
-    },
     cursor: 'pointer',
   },
   tableRowHover: {

@@ -1,42 +1,39 @@
-import { green, orange, red } from '@material-ui/core/colors';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
+import Fab from '@material-ui/core/Fab';
 import MenuItem from '@material-ui/core/MenuItem';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableFooter from '@material-ui/core/TableFooter/TableFooter';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Select from '@material-ui/core/Select';
 import ClearIcon from '@material-ui/icons/Clear';
 import get from 'lodash-es/get';
+import * as moment from 'moment';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { TableCellProps } from 'react-virtualized';
 
 import { Page } from 'src/components/Page';
-import Select from 'src/components/Select';
+import TableVirtualized from 'src/components/TableVirtualized';
 import { LayoutLeftDrawer } from 'src/domains/@common/LayoutLeftDrawer';
 import { IUser } from 'src/store/users';
 
 export interface IUsersProps {
   classes: any;
   deleteUser: any;
-  findUserById: (id: number) => IUser;
+  findUserById: any;
   fetchUsers: any;
-  patchUser: (data: { user: IUser; role: string }) => void;
+  getRef: React.RefObject<{}>;
+  height: number;
+  patchUser: any;
   userList: IUser[];
 }
 
-export interface IState {
-  page: number | string;
-  perPage: number | string;
+export interface IUsersState {
+  sortBy: number | string;
+  sortDirection: string;
 }
 
-export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps, IState> {
+export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps, IUsersState> {
   state = {
-    page: 0,
-    perPage: 10,
+    sortBy: 'email',
+    sortDirection: 'ASC',
   };
 
   componentDidMount() {
@@ -56,98 +53,53 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
     this.props.deleteUser(id);
   };
 
-  handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, page: number = 0) => {
-    this.setState({ page });
-  };
-
-  handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => {
-    if (event && event.target.value) {
-      this.setState({ perPage: event.target.value });
-    }
-  };
-
   render() {
-    const { classes, userList } = this.props;
-    const { page, perPage } = this.state;
+    const { getRef, height, userList } = this.props;
+    const columns = [
+      { label: 'Email', order: 1, isShown: true, dataKey: 'email', width: 230 },
+      { label: 'Создан', order: 2, isShown: true, dataKey: 'createdAt', component: this.renderCreatedAt, width: 230 },
+      { label: 'Телефон', order: 3, isShown: true, dataKey: 'tel', width: 230 },
+      { label: 'Статус', order: 4, isShown: true, dataKey: 'status', width: 130 },
+      { label: 'Роль', order: 5, isShown: true, dataKey: 'role', component: this.renderSelectRole, width: 190 },
+      { label: 'Проектов', order: 6, isShown: true, dataKey: 'projectsCount', width: 230 },
+      { label: '', order: 7, isShown: true, dataKey: 'id', component: this.renderRemove, width: 100 },
+    ];
+    const rows = userList.sort(this.sortState());
+    const { sortBy, sortDirection } = this.state;
     return (
       <LayoutLeftDrawer>
-        <Page>
-          {userList && userList.length ? (
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Телефон</TableCell>
-                  <TableCell numeric>Статус</TableCell>
-                  <TableCell className={classes.cell} numeric>
-                    Способ получения средств
-                  </TableCell>
-                  <TableCell className={classes.cell}>Роль</TableCell>
-                  <TableCell numeric>Проектов</TableCell>
-                  <TableCell style={{ width: 42 }} />
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {userList
-                  .slice(page * perPage, (page + 1) * perPage)
-                  .map(({ id, email, tel, status, paymentMethod, role, projectsCount }) => {
-                    return (
-                      <TableRow className={classes.row} key={id} hover onClick={this.handleRowClick(id)}>
-                        <TableCell component="th" scope="row">
-                          {email}
-                        </TableCell>
-                        <TableCell>{tel}</TableCell>
-                        <TableCell numeric>{status}</TableCell>
-                        <TableCell className={classes.cell} numeric>
-                          {paymentMethod}
-                        </TableCell>
-                        <TableCell className={classes.cell}>
-                          <Select
-                            autoWidth
-                            renderValue={this.renderSelectValue}
-                            IconComponent={this.renderEmpty}
-                            onChange={this.handleRoleChange(id)}
-                            value={role}
-                          >
-                            <MenuItem value={'user'}>User</MenuItem>
-                            <MenuItem value={'admin'}>Admin</MenuItem>
-                            <MenuItem value={'super-admin'}>Super-Admin</MenuItem>
-                          </Select>
-                        </TableCell>
-                        <TableCell numeric>{projectsCount}</TableCell>
-                        <TableCell>
-                          <IconButton onClick={this.handleRemoveClick(id)}>
-                            <ClearIcon />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    colSpan={3}
-                    count={userList.length}
-                    rowsPerPage={perPage}
-                    page={page}
-                    onChangePage={this.handleChangePage}
-                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    labelRowsPerPage={'Элементов на странице'}
-                    labelDisplayedRows={this.labelDisplayedRows}
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          ) : (
-            <Grid item xs={12}>
-              <img src={'/#'} />
-            </Grid>
-          )}
+        <Page innerRef={getRef}>
+          <div>
+            <span>Всего пользователей: {userList.length}</span>
+          </div>
+          <TableVirtualized
+            columns={columns}
+            rows={rows}
+            height={height - 260}
+            sort={this.sortTable}
+            sortBy={sortBy}
+            sortDirection={sortDirection}
+          />
         </Page>
       </LayoutLeftDrawer>
     );
   }
+
+  private renderSelectRole = ({ cellData, rowData }: TableCellProps) => (
+    <Select
+      autoWidth
+      IconComponent={this.renderEmpty}
+      onChange={this.handleRoleChange(rowData.id)}
+      value={cellData}
+      input={<OutlinedInput labelWidth={0} />}
+    >
+      <MenuItem value={'user'}>User</MenuItem>
+      <MenuItem value={'admin'}>Admin</MenuItem>
+      <MenuItem value={'super-admin'}>Super-Admin</MenuItem>
+    </Select>
+  );
+
+  private renderCreatedAt = ({ cellData }: TableCellProps) => <span>{moment(cellData).format('DD MMM YYYY')}</span>;
 
   private handleRoleChange = (id?: number) => (e: React.ChangeEvent<{ value: string }>) => {
     e.stopPropagation();
@@ -164,23 +116,27 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
     return null;
   }
 
-  private renderSelectValue(value: string) {
-    const colors = {
-      admin: orange['500'],
-      user: green['500'],
-      ['super-admin']: red.A700,
-    };
-    return (
-      <div data-role={'opener'} style={{ backgroundColor: colors[value] }}>
-        {value}
-      </div>
-    );
-  }
+  private renderRemove = ({ cellData }: TableCellProps) => (
+    <Fab size="small" color="primary" onClick={this.handleRemoveClick(cellData)}>
+      <ClearIcon />
+    </Fab>
+  );
 
-  private labelDisplayedRows = ({ from, to, count }: any) => {
-    return ''
-      .concat(from, '-')
-      .concat(to, ' из ')
-      .concat(count);
+  private sortTable = ({ sortBy, sortDirection }: any) => {
+    this.setState({ sortBy, sortDirection });
+  };
+
+  private sortState = (): ((a: any, b: any) => number) => {
+    const { sortBy } = this.state;
+    return (a: IUser, b: IUser) => this.getSortFunctionFromDirection(a[sortBy], b[sortBy]);
+  };
+
+  private getSortFunctionFromDirection = (a: any, b: any) => {
+    const { sortDirection } = this.state;
+    if (sortDirection === 'ASC') {
+      return a > b ? 1 : -1;
+    } else {
+      return a < b ? 1 : -1;
+    }
   };
 }
