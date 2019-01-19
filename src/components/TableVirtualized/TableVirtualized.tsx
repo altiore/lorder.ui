@@ -32,6 +32,7 @@ export interface ITableVirtualizedProps extends TableProps {
   classes: any;
   columns: ColumnsType;
   headerHeight: number;
+  height: any;
   onRowClick?: (...args: any) => any;
   rowClassName?: string;
   rowHeight: number;
@@ -48,74 +49,68 @@ export class TableVirtualized extends React.Component<ITableVirtualizedProps, IT
   static defaultProps = {
     className: '',
     headerHeight: 56,
-    height: 400,
+    height: '100%',
     isColumnsSortable: true,
     rowHeight: 56,
   };
 
   state = {
-    columns:
-      this.props.columns &&
-      this.props.columns.map(el => ({ ...el, isShown: el.isShown !== undefined ? el.isShown : true })),
+    columns: this.prepareColumns(this.props),
   };
 
-  componentWillReceiveProps(nextProps: ITableVirtualizedState) {
+  componentWillReceiveProps(nextProps: ITableVirtualizedProps) {
     if (this.props.columns !== nextProps.columns) {
-      this.setState({ columns: nextProps.columns });
+      this.setState({ columns: this.prepareColumns(nextProps) });
     }
   }
 
   render() {
     const { classes, className, height, rows, ...tableProps } = this.props;
     const { columns } = this.state;
-    const filteredColumns = columns
-      .filter(el => el.isShown)
-      .sort(
-        (a: ColumnType, b: ColumnType) =>
-          a.order && b.order ? (a.order > b.order ? 1 : -1) : a.dataKey > b.dataKey ? 1 : -1
-      );
     return (
       <div style={{ height, width: '100%' }} className={className}>
         <AutoSizer>
-          {({ height, width }) => (
-            <Table
-              className={classes.table}
-              height={height || 400}
-              width={width}
-              rowCount={rows.length}
-              rowGetter={this.rowGetter(rows)}
-              {...tableProps}
-              rowClassName={this.getRowClassName}
-            >
-              {filteredColumns.map(({ component = null, dataKey, ...other }, index: number) => {
-                let renderer: TableCellRenderer;
-                if (component !== null) {
-                  renderer = cellRendererProps =>
-                    this.cellRenderer({
-                      cellData: React.isValidElement(component)
-                        ? React.cloneElement(component, cellRendererProps)
-                        : React.createElement(component as any, cellRendererProps),
-                      columnIndex: index,
-                    });
-                } else {
-                  renderer = this.cellRenderer as TableCellRenderer;
-                }
+          {({ height, width }) => {
+            return (
+              <Table
+                className={classes.table}
+                height={height}
+                width={width}
+                rowCount={rows.length}
+                rowGetter={this.rowGetter(rows)}
+                {...tableProps}
+                rowClassName={this.getRowClassName}
+              >
+                {columns.map(({ component = null, dataKey, ...other }, index: number) => {
+                  let renderer: TableCellRenderer;
+                  if (component !== null) {
+                    renderer = cellRendererProps =>
+                      this.cellRenderer({
+                        cellData: React.isValidElement(component)
+                          ? React.cloneElement(component, cellRendererProps)
+                          : React.createElement(component as any, cellRendererProps),
+                        columnIndex: index,
+                      });
+                  } else {
+                    renderer = this.cellRenderer as TableCellRenderer;
+                  }
 
-                return (
-                  <Column
-                    key={dataKey}
-                    headerRenderer={this.wrappedHeaderRender(index)}
-                    className={classNames(classes.flexContainer, className)}
-                    cellRenderer={renderer}
-                    dataKey={dataKey}
-                    width={width / filteredColumns.length}
-                    defaultSortDirection="ASC"
-                    {...other}
-                  />
-                );
-              })}
-            </Table>
-          )}
+                  return (
+                    <Column
+                      key={dataKey}
+                      headerRenderer={this.wrappedHeaderRender(index)}
+                      className={classNames(classes.flexContainer, className)}
+                      cellRenderer={renderer}
+                      dataKey={dataKey}
+                      width={this.calculateColumnWidth(columns, width)}
+                      defaultSortDirection="ASC"
+                      {...other}
+                    />
+                  );
+                })}
+              </Table>
+            );
+          }}
         </AutoSizer>
       </div>
     );
@@ -187,5 +182,34 @@ export class TableVirtualized extends React.Component<ITableVirtualizedProps, IT
         {inner}
       </TableCell>
     );
+  };
+
+  private prepareColumns(props: ITableVirtualizedProps) {
+    return props.columns
+      .map(el => ({ ...el, isShown: el.isShown !== undefined ? el.isShown : true }))
+      .filter(el => el.isShown)
+      .sort(
+        (a: ColumnType, b: ColumnType) =>
+          a.order && b.order ? (a.order > b.order ? 1 : -1) : a.dataKey > b.dataKey ? 1 : -1
+      );
+  }
+
+  private calculateColumnWidth = (filteredColumns: any[], width: number): number => {
+    let restCount = filteredColumns.length;
+    const restWidth = filteredColumns.reduce((res: number, cur: any) => {
+      if (cur.width) {
+        restCount = --restCount;
+        return res - cur.width;
+      }
+      return res;
+    }, width);
+    if (!restCount) {
+      return 88;
+    }
+    const newWidth = restWidth / restCount;
+    if (newWidth < 88) {
+      return 88;
+    }
+    return newWidth;
   };
 }

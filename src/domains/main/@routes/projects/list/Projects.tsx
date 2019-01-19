@@ -1,4 +1,5 @@
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -49,21 +50,26 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   render() {
     const { classes, hasRole, ownOnly, projectList } = this.props;
     const columns = [
-      { label: 'Название', order: 1, isShown: true, dataKey: 'title', width: 230 },
-      // { label: 'Бюджет', order: 3, isShown: hasRole(ROLE.SUPER_ADMIN), dataKey: 'monthlyBudget', width: 230 },
-      { label: 'Потрачено Времени', order: 4, isShown: true, dataKey: 'fullProjectTimeHumanize', width: 160 },
-      { label: 'Ценность', order: 5, isShown: hasRole(ROLE.SUPER_ADMIN), dataKey: 'valueSum', width: 190 },
-      { label: 'Публичный', order: 8, isShown: true, dataKey: 'uuid', width: 190, component: this.renderPublished },
+      { label: 'Название', order: 1, isShown: true, dataKey: 'title' },
+      // { label: 'Бюджет', order: 3, isShown: hasRole(ROLE.SUPER_ADMIN), dataKey: 'monthlyBudget' },
+      { label: 'Потрачено Времени', order: 4, isShown: true, dataKey: 'fullProjectTimeHumanize' },
+      {
+        label: 'Ценность',
+        order: 5,
+        isShown: hasRole(ROLE.SUPER_ADMIN),
+        dataKey: 'valueSum',
+        component: this.renderValue,
+      },
+      { label: 'Публичный', order: 8, isShown: true, dataKey: 'uuid', width: 140, component: this.renderPublished },
       { label: '', order: 20, isShown: true, dataKey: 'id', width: 100, component: this.renderRemove },
     ];
     if (!ownOnly && hasRole(ROLE.SUPER_ADMIN)) {
       columns.push({
+        component: this.renderUser,
+        dataKey: 'ownerId',
+        isShown: true,
         label: 'Владелец',
         order: 2,
-        isShown: true,
-        dataKey: 'ownerId',
-        width: 230,
-        component: this.renderUser,
       });
     }
     const rows = projectList.sort(this.sortState());
@@ -84,7 +90,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
           <TableVirtualized
             columns={columns}
             rows={rows}
-            height={740}
+            height={'calc(100% - 40px)'}
             sortBy={sortBy}
             sortDirection={sortDirection}
             sort={this.sortTable}
@@ -177,5 +183,9 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     <Fab size="small" color="primary" onClick={this.handleRemoveClick(cellData, rowData.accessLevel)}>
       <ClearIcon />
     </Fab>
+  );
+
+  private renderValue = ({ cellData, rowData }: TableCellProps) => (
+    <Chip color="secondary" label={`${(cellData * 20).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}$`} />
   );
 }

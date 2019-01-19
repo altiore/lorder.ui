@@ -20,7 +20,6 @@ export interface IUsersProps {
   findUserById: any;
   fetchUsers: any;
   getRef: React.RefObject<{}>;
-  height: number;
   patchUser: any;
   userList: IUser[];
 }
@@ -54,11 +53,11 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
   };
 
   render() {
-    const { getRef, height, userList } = this.props;
+    const { getRef, userList } = this.props;
     const columns = [
-      { label: 'Email', order: 1, isShown: true, dataKey: 'email', width: 230 },
-      { label: 'Создан', order: 2, isShown: true, dataKey: 'createdAt', component: this.renderCreatedAt, width: 230 },
-      { label: 'Телефон', order: 3, isShown: true, dataKey: 'tel', width: 230 },
+      { label: 'Email', order: 1, isShown: true, dataKey: 'email' },
+      { label: 'Создан', order: 2, isShown: true, dataKey: 'createdAt', component: this.renderCreatedAt },
+      { label: 'Телефон', order: 3, isShown: true, dataKey: 'tel' },
       { label: 'Статус', order: 4, isShown: true, dataKey: 'status', width: 130 },
       { label: 'Роль', order: 5, isShown: true, dataKey: 'role', component: this.renderSelectRole, width: 190 },
       { label: 'Проектов', order: 6, isShown: true, dataKey: 'projectsCount', width: 230 },
@@ -75,7 +74,7 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
           <TableVirtualized
             columns={columns}
             rows={rows}
-            height={height - 260}
+            height={'calc(100% - 40px)'}
             sort={this.sortTable}
             sortBy={sortBy}
             sortDirection={sortDirection}
