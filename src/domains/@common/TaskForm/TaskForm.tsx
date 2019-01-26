@@ -4,9 +4,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
-// import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import BugReportIcon from '@material-ui/icons/BugReport';
 import CloseIcon from '@material-ui/icons/Close';
 import EventIcon from '@material-ui/icons/Event';
@@ -14,6 +14,7 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import ExtensionIcon from '@material-ui/icons/Extension';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import NotesIcon from '@material-ui/icons/Notes';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import * as React from 'react';
@@ -40,6 +41,7 @@ export interface ITaskFormData {
 }
 
 export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFormProps> {
+  archiveTask: any;
   buttonText?: string;
   classes?: any;
   isCurrent?: boolean;
@@ -53,12 +55,14 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
 }
 
 export interface ITaskFormState {
+  anchorEl: React.ReactNode;
   invisible: boolean[];
 }
 
 export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormState> {
   state = {
-    invisible: [true, true, true],
+    anchorEl: null,
+    invisible: [true, true, true, true],
   };
 
   timers: any[] = [];
@@ -179,6 +183,23 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                     <TurnedInIcon fontSize="small" />
                   </Badge>
                 </IconButton>
+                {taskId && (
+                  <>
+                    <IconButton aria-label="more" className={classes.margin} onClick={this.moreMenuOpen}>
+                      <Badge badgeContent={1} color="secondary" invisible={invisible[3]}>
+                        <MoreHorizIcon fontSize="small" />
+                      </Badge>
+                    </IconButton>
+                    <Menu
+                      anchorEl={this.state.anchorEl}
+                      open={Boolean(this.state.anchorEl)}
+                      onClose={this.handleClose}
+                      classes={{ paper: classes.menu }}
+                    >
+                      <MenuItem onClick={this.onArchiveTask}>Архивировать задачу</MenuItem>
+                    </Menu>
+                  </>
+                )}
               </div>
 
               <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" type="number" />
@@ -221,5 +242,16 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
     this.props.replace({
       pathname: `/projects/${this.props.projectId}/tasks/${taskId}`,
     });
+  };
+
+  private moreMenuOpen = (event: React.SyntheticEvent) => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  private handleClose = () => this.setState({ anchorEl: null });
+
+  private onArchiveTask = () => {
+    this.props.onClose();
+    this.props.archiveTask();
   };
 }

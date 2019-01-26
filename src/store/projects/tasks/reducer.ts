@@ -5,6 +5,7 @@ import uniqid from 'uniqid';
 
 import { DownloadList } from 'src/store/@common/entities';
 import { IRequestAction } from 'src/store/@common/requestActions';
+import { archiveTask } from 'src/store/tasks/actions';
 import { User } from 'src/store/users';
 import { deleteProjectTask, moveProjectTask, patchProjectTask, postProjectTask } from './actions';
 import { ProjectTask } from './ProjectTask';
@@ -57,6 +58,9 @@ const patchProjectTaskFailHandler = (state: S) => {
 
 const deleteProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>) => {
   const taskIndex = state.list.findIndex(el => get(payload, 'taskId') === el.id);
+  if (!~taskIndex) {
+    return state.startLoading();
+  }
   return state.startLoading().removeItem(taskIndex);
 };
 
@@ -103,6 +107,10 @@ export const projectTasks = handleActions<S, P>(
     [deleteProjectTask.toString()]: deleteProjectTaskHandler,
     [deleteProjectTask.success]: deleteProjectTaskSuccessHandler,
     [deleteProjectTask.fail]: deleteProjectTaskFailHandler,
+
+    [archiveTask.toString()]: deleteProjectTaskHandler,
+    [archiveTask.success]: deleteProjectTaskSuccessHandler,
+    [archiveTask.fail]: deleteProjectTaskFailHandler,
 
     [moveProjectTask.toString()]: moveProjectTaskHandler,
     [moveProjectTask.success]: moveProjectTaskSuccessHandler,

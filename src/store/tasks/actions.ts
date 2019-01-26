@@ -15,4 +15,19 @@ export const getAllTasks = requestActions(
   })
 );
 
+export const archiveTask = requestActions(
+  'TASKS/ARCHIVE',
+  (taskId: number): any => ({
+    request: {
+      // params: {
+      //   count: 100,
+      //   skip: 0,
+      // },
+      method: 'PATCH',
+      url: `/tasks/${taskId}/archive`,
+    },
+    taskId,
+  })
+);
+
 export const replaceTasks = createAction('TASKS/REPLACE_BY_IDS');

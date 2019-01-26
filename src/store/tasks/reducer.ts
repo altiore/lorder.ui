@@ -9,7 +9,7 @@ import uniqid from 'uniqid';
 import { DownloadList } from 'src/store/@common/entities';
 import { combineActions } from 'src/store/@common/helpers';
 import { deleteProjectTask, patchProjectTask } from 'src/store/projects/tasks/actions';
-import { getAllTasks, replaceTasks } from './actions';
+import { archiveTask, getAllTasks, replaceTasks } from './actions';
 import { Task } from './Task';
 import {
   deleteUserWork,
@@ -247,6 +247,10 @@ export const tasks = handleActions<S, P>(
     [deleteProjectTask.toString()]: deleteProjectTaskHandler,
     [deleteProjectTask.success]: deleteProjectTaskSuccessHandler,
     [deleteProjectTask.fail]: deleteProjectTaskFailHandler,
+
+    [archiveTask.toString()]: deleteProjectTaskHandler,
+    [archiveTask.success]: deleteProjectTaskSuccessHandler,
+    [archiveTask.fail]: deleteProjectTaskFailHandler,
 
     [PURGE]: logOutHandler,
   },
