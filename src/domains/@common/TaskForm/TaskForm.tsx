@@ -44,6 +44,7 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
   archiveTask: any;
   buttonText?: string;
   classes?: any;
+  fetchTaskDetails: any;
   isCurrent?: boolean;
   onClose: any;
   projectId: number;
@@ -78,6 +79,9 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
         }, 500 + i * 500)
       );
     });
+    if (!this.props.initialValues.title) {
+      this.props.fetchTaskDetails();
+    }
   }
 
   componentWillUnmount(): void {

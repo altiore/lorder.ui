@@ -9,7 +9,7 @@ import uniqid from 'uniqid';
 import { DownloadList } from 'src/store/@common/entities';
 import { combineActions } from 'src/store/@common/helpers';
 import { deleteProjectTask, patchProjectTask } from 'src/store/projects/tasks/actions';
-import { archiveTask, getAllTasks, replaceTasks } from './actions';
+import { archiveTask, fetchTaskDetails, getAllTasks, replaceTasks } from './actions';
 import { Task } from './Task';
 import {
   deleteUserWork,
@@ -218,6 +218,24 @@ const deleteProjectTaskFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
+const fetchTaskDetailsHandler = (state: S) => {
+  return state.startLoading();
+};
+
+const fetchTaskDetailsSuccessHandler = (state: S, { payload }: Action<P>) => {
+  console.log('fetchTaskDetailsSuccessHandler', payload);
+  const index = state.list.findIndex(el => el.id === get(payload, 'data', 'taskId'));
+  if (!~index) {
+    return state.updateItem(index, get(payload, 'data')).stopLoading();
+  }
+  return state.stopLoading();
+};
+
+const fetchTaskDetailsFailHandler = (state: S) => {
+  // TODO: implement revert back to previous state
+  return state.stopLoading();
+};
+
 const logOutHandler = () => {
   return new DownloadList(Task);
 };
@@ -251,6 +269,10 @@ export const tasks = handleActions<S, P>(
     [archiveTask.toString()]: deleteProjectTaskHandler,
     [archiveTask.success]: deleteProjectTaskSuccessHandler,
     [archiveTask.fail]: deleteProjectTaskFailHandler,
+
+    [fetchTaskDetails.toString()]: fetchTaskDetailsHandler,
+    [fetchTaskDetails.success]: fetchTaskDetailsSuccessHandler,
+    [fetchTaskDetails.fail]: fetchTaskDetailsFailHandler,
 
     [PURGE]: logOutHandler,
   },

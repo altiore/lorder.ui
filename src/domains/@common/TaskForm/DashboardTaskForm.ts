@@ -5,7 +5,14 @@ import { createStructuredSelector } from 'reselect';
 
 import { onSubmitFail, onSubmitForm } from 'src/store/@common/helpers';
 import { patchProjectTask, PROJECT_EDIT_TASK_FORM_NAME, projectTasksIsLoading } from 'src/store/projects';
-import { archiveTask, checkIsCurrent, getEditTaskInitialValues, startUserWork, stopUserWork } from 'src/store/tasks';
+import {
+  archiveTask,
+  checkIsCurrent,
+  fetchTaskDetails,
+  getEditTaskInitialValues,
+  startUserWork,
+  stopUserWork,
+} from 'src/store/tasks';
 import { TaskForm } from './StyledTaskForm';
 import { ITaskFormData, ITaskFormProps } from './TaskForm';
 
@@ -17,6 +24,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   archiveTask,
+  fetchTaskDetails,
   replace,
   startUserWork,
   stopUserWork,
@@ -25,11 +33,12 @@ const mapDispatchToProps = {
 
 const mergeProps = (
   { checkIsCurrent, getEditTaskInitialValues, ...restState }: any,
-  { archiveTask, startUserWork, stopUserWork, submit, ...restDispatch }: any,
+  { archiveTask, fetchTaskDetails, startUserWork, stopUserWork, submit, ...restDispatch }: any,
   { taskId, projectId, ...restOwn }: any
 ) => ({
   ...restState,
   archiveTask: () => archiveTask(taskId),
+  fetchTaskDetails: () => fetchTaskDetails(taskId),
   initialValues: getEditTaskInitialValues(taskId),
   isCurrent: checkIsCurrent(taskId),
   projectId,

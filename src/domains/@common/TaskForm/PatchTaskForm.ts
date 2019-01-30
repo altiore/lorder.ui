@@ -11,7 +11,7 @@ import {
   PROJECT_EDIT_TASK_FORM_NAME,
   projectTasksIsLoading,
 } from 'src/store/projects';
-import { archiveTask, checkIsCurrent, startUserWork, stopUserWork } from 'src/store/tasks';
+import { archiveTask, checkIsCurrent, fetchTaskDetails, startUserWork, stopUserWork } from 'src/store/tasks';
 import { TaskForm } from './StyledTaskForm';
 import { ITaskFormData, ITaskFormProps } from './TaskForm';
 
@@ -23,17 +23,19 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   archiveTask,
+  fetchTaskDetails,
   startUserWork,
   stopUserWork,
 };
 
 const mergeProps = (
   { checkIsCurrent, getEditTaskInitialValues, ...restState }: any,
-  { archiveTask, startUserWork, stopUserWork, ...restDispatch }: any,
+  { archiveTask, fetchTaskDetails, startUserWork, stopUserWork, ...restDispatch }: any,
   { taskId, projectId, initialValues, ...restOwn }: any
 ) => ({
   ...restState,
   archiveTask: () => archiveTask(taskId),
+  fetchTaskDetails: () => fetchTaskDetails(taskId),
   initialValues: initialValues || (taskId ? getEditTaskInitialValues(taskId, projectId) : {}),
   isCurrent: checkIsCurrent(taskId),
   projectId,

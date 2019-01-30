@@ -15,14 +15,20 @@ export const getAllTasks = requestActions(
   })
 );
 
+export const fetchTaskDetails = requestActions(
+  'TASKS/FETCH_DETAILS',
+  (taskId: number): any => ({
+    request: {
+      url: `/tasks/${taskId}`,
+    },
+    taskId,
+  })
+);
+
 export const archiveTask = requestActions(
   'TASKS/ARCHIVE',
   (taskId: number): any => ({
     request: {
-      // params: {
-      //   count: 100,
-      //   skip: 0,
-      // },
       method: 'PATCH',
       url: `/tasks/${taskId}/archive`,
     },
