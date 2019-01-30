@@ -13,6 +13,7 @@ export const styles = (theme: Theme) =>
     },
     columnContent: {
       ...theme.mainContent.scroll,
+      overflowX: 'hidden',
       overflowY: 'auto',
       padding: `0 4px 2px 8px`,
     },

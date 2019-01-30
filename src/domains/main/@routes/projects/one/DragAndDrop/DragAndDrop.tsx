@@ -1,4 +1,5 @@
 import ButtonBase from '@material-ui/core/ButtonBase';
+import amber from '@material-ui/core/colors/amber';
 import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
@@ -20,8 +21,9 @@ import { TaskCard } from './TaskCard';
 const CARD_WIDTH = 296;
 
 const getListStyle = (isDraggingOver: boolean, height: number) => ({
-  background: isDraggingOver ? '#DFE3E6' : '#DFE3E6',
+  background: isDraggingOver ? amber[50] : '#DFE3E6',
   maxHeight: height - 188,
+  minHeight: 75.89,
   width: CARD_WIDTH,
 });
 
