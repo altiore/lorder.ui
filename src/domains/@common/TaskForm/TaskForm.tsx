@@ -79,7 +79,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
         }, 500 + i * 500)
       );
     });
-    if (!this.props.initialValues.title) {
+    if (this.props.taskId && !this.props.initialValues.title) {
       this.props.fetchTaskDetails();
     }
   }
