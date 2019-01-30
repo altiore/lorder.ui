@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { onSubmitFail, onSubmitForm } from 'src/store/@common/helpers';
 import { patchProjectTask, PROJECT_EDIT_TASK_FORM_NAME, projectTasksIsLoading } from 'src/store/projects';
+import { routeTaskId } from 'src/store/router';
 import {
   archiveTask,
   checkIsCurrent,
@@ -20,6 +21,7 @@ const mapStateToProps = createStructuredSelector({
   checkIsCurrent,
   getEditTaskInitialValues,
   projectTasksIsLoading,
+  routeTaskId,
 });
 
 const mapDispatchToProps = {
@@ -32,25 +34,28 @@ const mapDispatchToProps = {
 };
 
 const mergeProps = (
-  { checkIsCurrent, getEditTaskInitialValues, ...restState }: any,
+  { checkIsCurrent, getEditTaskInitialValues, routeTaskId, ...restState }: any,
   { archiveTask, fetchTaskDetails, startUserWork, stopUserWork, submit, ...restDispatch }: any,
   { taskId, projectId, ...restOwn }: any
-) => ({
-  ...restState,
-  archiveTask: () => archiveTask(taskId),
-  fetchTaskDetails: () => fetchTaskDetails(taskId),
-  initialValues: getEditTaskInitialValues(taskId),
-  isCurrent: checkIsCurrent(taskId),
-  projectId,
-  startUserWork: () => startUserWork({ taskId, projectId }),
-  stopUserWork: () => {
-    submit(PROJECT_EDIT_TASK_FORM_NAME);
-    stopUserWork();
-  },
-  taskId,
-  ...restDispatch,
-  ...restOwn,
-});
+) => {
+  const localTaskId = taskId || routeTaskId;
+  return {
+    ...restState,
+    archiveTask: () => archiveTask(localTaskId),
+    fetchTaskDetails: () => fetchTaskDetails(localTaskId),
+    initialValues: getEditTaskInitialValues(localTaskId),
+    isCurrent: checkIsCurrent(localTaskId),
+    projectId,
+    startUserWork: () => startUserWork({ taskId: localTaskId, projectId }),
+    stopUserWork: () => {
+      submit(PROJECT_EDIT_TASK_FORM_NAME);
+      stopUserWork();
+    },
+    taskId: localTaskId,
+    ...restDispatch,
+    ...restOwn,
+  };
+};
 
 export const DashboardTaskForm = connect<
   any,
@@ -61,6 +66,7 @@ export const DashboardTaskForm = connect<
   mapDispatchToProps,
   mergeProps
 )(reduxForm<ITaskFormData, ITaskFormProps>({
+  destroyOnUnmount: false,
   enableReinitialize: true,
   form: PROJECT_EDIT_TASK_FORM_NAME,
   onSubmit: onSubmitForm<{ projectId: number | string }>(patchProjectTask, ({ projectId }) => ({ projectId })),

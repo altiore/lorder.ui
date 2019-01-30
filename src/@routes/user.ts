@@ -3,6 +3,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 
 import { NoMatch } from 'src/components/NoMatch';
+import { DashboardTaskForm } from 'src/domains/@common/TaskForm';
 import { Main } from 'src/domains/main';
 import { Dashboard } from 'src/domains/main/@routes/dashboard';
 import { OwnProjects } from 'src/domains/main/@routes/projects/list';
@@ -40,6 +41,10 @@ export const routes = [
             icon: ImportExportIcon,
             path: '/projects/:projectId/board',
             title: 'Board',
+          },
+          {
+            component: DashboardTaskForm,
+            path: '/projects/:projectId/tasks/:taskId',
           },
         ],
       },

@@ -223,12 +223,11 @@ const fetchTaskDetailsHandler = (state: S) => {
 };
 
 const fetchTaskDetailsSuccessHandler = (state: S, { payload }: Action<P>) => {
-  console.log('fetchTaskDetailsSuccessHandler', payload);
-  const index = state.list.findIndex(el => el.id === get(payload, 'data', 'taskId'));
-  if (!~index) {
+  const index = state.list.findIndex(el => el.id === get(payload, ['data', 'id']));
+  if (~index) {
     return state.updateItem(index, get(payload, 'data')).stopLoading();
   }
-  return state.stopLoading();
+  return state.addItem(get(payload, 'data')).stopLoading();
 };
 
 const fetchTaskDetailsFailHandler = (state: S) => {

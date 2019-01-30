@@ -24,7 +24,20 @@ export const identifier = createSelector(match('/start/:identifier'), (state: IM
 
 export const projectIdSearchParam = createSelector(routerSearch, (search: string) => getQueryParam(search, 'project'));
 
+/**
+ * @deprecated please use routeProjectId instead
+ */
 export const projectId = createSelector(
   match('/projects/:projectId'),
   (state): number | undefined => get(state, 'params.projectId') && parseInt(get(state, 'params.projectId'), 0)
+);
+
+export const routeProjectId = createSelector(
+  match('/projects/:projectId'),
+  (state): number | undefined => get(state, 'params.projectId') && parseInt(get(state, 'params.projectId'), 0)
+);
+
+export const routeTaskId = createSelector(
+  match('/projects/:projectId/tasks/:taskId'),
+  (state): number | undefined => get(state, 'params.taskId') && parseInt(get(state, 'params.taskId'), 0)
 );
