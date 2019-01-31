@@ -18,6 +18,7 @@ import { ProjectMembers } from 'src/domains/main/@routes/projects/one/ProjectMem
 import { ProjectTasks } from 'src/domains/main/@routes/projects/one/ProjectTasks';
 import { ProjectTaskTypes } from 'src/domains/main/@routes/projects/one/ProjectTaskTypes';
 import { Settings } from 'src/domains/main/@routes/projects/one/Settings';
+import { TaskTypes } from 'src/domains/main/@routes/task-types';
 import { Users } from 'src/domains/main/@routes/users';
 import { Profile } from 'src/domains/profile';
 import { commonRoutes } from './@common';
@@ -102,6 +103,12 @@ export const routes = [
         icon: AccountCircle,
         path: '/users',
         title: 'Пользователи',
+      },
+      {
+        component: TaskTypes,
+        icon: AccountCircle,
+        path: '/task-types',
+        title: 'Типы Задач',
       },
       ...commonRoutes,
       {

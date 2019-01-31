@@ -7,7 +7,7 @@ export interface ITimerCellProps {
 }
 
 export const TimerCellJsx: React.FunctionComponent<ITimerCellProps> = ({ currentTimeHumanize }) => (
-  <TableCell numeric>
+  <TableCell align="right">
     <Button disableFocusRipple disableRipple style={{ cursor: 'not-allowed' }}>
       {currentTimeHumanize}
     </Button>

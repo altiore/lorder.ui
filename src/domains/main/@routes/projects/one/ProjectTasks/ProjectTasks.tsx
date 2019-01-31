@@ -67,10 +67,10 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
               <TableRow>
                 <TableCell>Задача</TableCell>
                 <TableCell>Исполнители</TableCell>
-                <TableCell numeric>Значимость</TableCell>
-                <TableCell numeric>Время</TableCell>
-                <TableCell numeric>Статус</TableCell>
-                <TableCell numeric />
+                <TableCell align="right">Значимость</TableCell>
+                <TableCell align="right">Время</TableCell>
+                <TableCell align="right">Статус</TableCell>
+                <TableCell align="right" />
               </TableRow>
             </TableHead>
           </Table>
@@ -98,10 +98,10 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
             <PerformersCell input={{ value: users }} taskId={id} />
           </span>
         </TableCell>
-        <TableCell numeric>{value}</TableCell>
-        <TableCell numeric>{duration}</TableCell>
-        <TableCell numeric>{status}</TableCell>
-        <TableCell numeric>
+        <TableCell align="right">{value}</TableCell>
+        <TableCell align="right">{duration}</TableCell>
+        <TableCell align="right">{status}</TableCell>
+        <TableCell align="right">
           <IconButton onClick={this.handleRemoveClick(id)}>
             <ClearIcon />
           </IconButton>

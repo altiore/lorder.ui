@@ -38,9 +38,9 @@ export class UserWorkTableJsx1 extends React.PureComponent<IUserWorkTableProps> 
           <TableHead>
             <TableRow>
               <TableCell>Задача</TableCell>
-              <TableCell numeric>Начало</TableCell>
-              <TableCell numeric>Конец</TableCell>
-              <TableCell numeric>Длилась</TableCell>
+              <TableCell align="right">Начало</TableCell>
+              <TableCell align="right">Конец</TableCell>
+              <TableCell align="right">Длилась</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -68,11 +68,11 @@ export class UserWorkTableJsx1 extends React.PureComponent<IUserWorkTableProps> 
         {isCurrent ? (
           <TimerCell />
         ) : (
-          <TableCell numeric>
+          <TableCell align="right">
             <DurationField projectId={projectId} taskId={taskId} value={duration} userWorkId={id} />
           </TableCell>
         )}
-        <TableCell numeric>
+        <TableCell align="right">
           {isCurrent ? (
             <StartStopBtn isStarted={isCurrent} onStop={this.stopUserWork(id)} />
           ) : (

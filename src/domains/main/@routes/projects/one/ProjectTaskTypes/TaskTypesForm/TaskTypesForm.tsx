@@ -5,9 +5,13 @@ import { TaskType } from 'src/store/task-types';
 
 export class ITaskTypesFormProps {
   addTaskType: any;
+  postTaskTypeToProject: any;
   title?: string;
-  buttonText?: string;
   filteredTaskTypes: TaskType[];
+}
+
+export class ITaskTypesFormState {
+  value?: string;
 }
 
 const customStyles = {
@@ -17,16 +21,24 @@ const customStyles = {
   }),
 };
 
-export class TaskTypesFormJsx extends React.Component<ITaskTypesFormProps> {
+export class TaskTypesFormJsx extends React.Component<ITaskTypesFormProps, ITaskTypesFormState> {
+  state = {
+    value: undefined,
+  };
+
   render() {
     const { filteredTaskTypes } = this.props;
     const getOptionValue = (option: TaskType) => option.id.toString();
     const getOptionLabel = (option: TaskType) => option.title;
+    const options = this.state.value
+      ? [...filteredTaskTypes, { id: 0, title: `Создать: ${this.state.value}` }]
+      : filteredTaskTypes;
     return (
       <Select
         getOptionValue={getOptionValue}
         getOptionLabel={getOptionLabel}
-        options={filteredTaskTypes}
+        onInputChange={this.handleInputChange}
+        options={options}
         classNamePrefix="react-select"
         placeholder="Добавить тип задачи..."
         styles={customStyles}
@@ -35,7 +47,15 @@ export class TaskTypesFormJsx extends React.Component<ITaskTypesFormProps> {
     );
   }
 
+  private handleInputChange = (value: string) => {
+    this.setState({ value });
+  };
+
   private handleChange = (selectedTaskType: TaskType) => {
-    this.props.addTaskType(selectedTaskType.id);
+    if (selectedTaskType.id) {
+      this.props.addTaskType(selectedTaskType.id);
+    } else {
+      this.props.postTaskTypeToProject(this.state.value);
+    }
   };
 }

@@ -66,8 +66,8 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
               <TableRow>
                 <TableCell>Пользователь</TableCell>
                 <TableCell>Активен</TableCell>
-                <TableCell numeric>Уровень доступа</TableCell>
-                <TableCell numeric />
+                <TableCell align="right">Уровень доступа</TableCell>
+                <TableCell align="right" />
               </TableRow>
             </TableHead>
             <TableBody>
@@ -80,10 +80,10 @@ export class ProjectMembersJsx extends React.Component<RouteComponentProps<{}> &
                         {email}
                       </TableCell>
                       <TableCell>{accessLevel ? 'Да' : 'Нет'}</TableCell>
-                      <TableCell numeric>
+                      <TableCell align="right">
                         <ChangedCell title={'Уровень доступа'} input={{ value: [accessLevel] }} memberId={id} />
                       </TableCell>
-                      <TableCell numeric>
+                      <TableCell align="right">
                         <IconButton onClick={this.handleRemoveClick(id)}>
                           <ClearIcon />
                         </IconButton>

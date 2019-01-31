@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import FormatSizeIcon from '@material-ui/icons/FormatSize';
 import LaptopIcon from '@material-ui/icons/Laptop';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import * as classNames from 'classnames';
@@ -105,6 +106,12 @@ export class LayoutLeftDrawerTsx extends React.Component<
                     <PeopleOutlinedIcon />
                   </ListItemIcon>
                   <ListItemText primary={'Пользователи'} />
+                </ListItem>
+                <ListItem button onClick={this.goTo('/task-types')}>
+                  <ListItemIcon>
+                    <FormatSizeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Типы Задач'} />
                 </ListItem>
               </>
             )}

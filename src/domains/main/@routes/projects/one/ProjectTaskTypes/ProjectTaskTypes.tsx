@@ -47,8 +47,8 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
             <TableHead>
               <TableRow>
                 <TableCell>Название</TableCell>
-                <TableCell numeric>Количество задач</TableCell>
-                <TableCell numeric />
+                <TableCell align="right">Количество задач</TableCell>
+                <TableCell align="right" />
               </TableRow>
             </TableHead>
           </Table>
@@ -69,8 +69,8 @@ export class ProjectTaskTypesJsx extends React.Component<RouteComponentProps<{}>
         <TableCell component="th" scope="row">
           {get(getTaskTypeById(id), 'title')}
         </TableCell>
-        <TableCell numeric>{id}</TableCell>
-        <TableCell numeric>
+        <TableCell align="right">{id}</TableCell>
+        <TableCell align="right">
           <IconButton onClick={this.handleRemoveClick(id)}>
             <ClearIcon />
           </IconButton>

@@ -21,6 +21,7 @@ import {
   postProject,
   postProjectMember,
   postProjectTask,
+  postTaskTypeToProject,
   removeProject,
   updateProjectMemberAccessLevel,
 } from './actions';
@@ -193,7 +194,7 @@ export const projects = handleActions<S, P>(
     // [updateProjectMemberAccessLevel.fail]: updateProjectMemberAccessLevelFailHandler,
     [deleteProjectMember.toString()]: deleteProjectMemberHandler,
     [combineActions(moveProjectTask, postProjectTask, patchProjectTask, deleteProjectTask)]: projectTaskHandler,
-    [combineActions(getAllProjectTaskTypes)]: projectTaskTypeHandler,
+    [combineActions(getAllProjectTaskTypes, postTaskTypeToProject)]: projectTaskTypeHandler,
     [getAllProjectTasks.success]: getAllProjectTasksHandler,
     [PURGE]: logOutHandler,
   },
