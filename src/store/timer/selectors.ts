@@ -7,9 +7,7 @@ import { IUserWorkDelete } from '../tasks/user-works';
 
 const baseState = (state: IState) => state.timer;
 
-export const currentTime = createSelector(baseState, state => state.time);
-
-export const currentTimeHumanize = createSelector(currentTime, time => convertSecondsToDuration(time));
+export const currentTimerTime = createSelector(baseState, state => state.time);
 
 export const currentProjectId = createSelector(baseState, state => state.projectId);
 
@@ -37,15 +35,22 @@ export const currentUserWork = createSelector(
   (task, userWorkId) => task && task.userWorks.find((el: IUserWork) => el.id === userWorkId)
 );
 
-export const currentTaskTime = createSelector(
-  [currentTime, currentTask, currentUserWork],
-  (time, task, userWork) => (userWork ? userWork.durationInSeconds : time)
+export const currentTime = createSelector(
+  [currentTimerTime, currentUserWork],
+  (time, userWork) => (userWork ? userWork.durationInSeconds : time)
 );
 
-export const currentTaskTimeToString = createSelector([currentTaskTime], seconds => {
+export const currentTimeHumanize = createSelector(currentTime, time => convertSecondsToDuration(time));
+
+export const currentTaskTime = createSelector(
+  [currentTime, currentTask, currentUserWork],
+  (time, task, userWork) => (task && userWork ? task.durationInSeconds : time)
+);
+
+export const currentTimeToString = createSelector([currentTime], seconds => {
   return convertSecondsToDuration(seconds);
 });
 
-export const currentTaskTimeWithLocal = createSelector([currentTaskTime], seconds =>
+export const currentTimeWithLocal = createSelector([currentTime], seconds =>
   convertSecondsToDurationWithLocal(seconds)
 );

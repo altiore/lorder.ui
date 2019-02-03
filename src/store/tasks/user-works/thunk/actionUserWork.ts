@@ -7,7 +7,7 @@ import { IState } from 'src/@types';
 import { selectProject } from 'src/store/project';
 import { getProjectById, Project } from 'src/store/projects';
 import { CREATE_USER_WORK_FORM_NAME, replaceTasks } from 'src/store/tasks';
-import { currentTaskTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from 'src/store/timer';
+import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from 'src/store/timer';
 import { IUserWorkData, IUserWorkDelete, patchAndStopUserWork, postAndStartUserWork } from '../actions';
 import { UserWork } from '../UserWork';
 
@@ -23,10 +23,7 @@ export const startTimer = (userWork: Partial<UserWork>, project: Project) => asy
   }
   timer = setInterval(() => {
     dispatch(tickUserWorkTimer({ userWork, project }));
-    document.title = `${currentTaskTimeToString(getState())} | ${get(userWork, 'task.title')} (${get(
-      project,
-      'title'
-    )})`;
+    document.title = `${currentTimeToString(getState())} | ${get(userWork, 'task.title')} (${get(project, 'title')})`;
   }, 1000);
   dispatch(
     setCurrentUserWorkId({
