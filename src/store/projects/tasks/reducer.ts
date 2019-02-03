@@ -39,7 +39,7 @@ const patchProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>)
   }
   const preparedData: Partial<ProjectTask> = { ...payload.request.data };
   if (preparedData.users) {
-    preparedData.users = payload.users;
+    preparedData.users = [...payload.users];
   }
   const taskIndex = state.list.findIndex(el => get(payload, 'taskId') === el.id);
   if (!~taskIndex) {

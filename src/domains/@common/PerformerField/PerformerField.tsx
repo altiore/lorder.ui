@@ -62,15 +62,25 @@ export class PerformerFieldTsx extends React.Component<IPerformerFieldProps, IPe
   private handleOnClick = () => this.setState(({ isOpen }) => ({ isOpen: !isOpen }));
 
   private handleChange = (selectedUsers: any) => {
-    this.props.patchProjectTask(selectedUsers);
+    if (this.props.input.onChange) {
+      this.props.input.onChange(selectedUsers);
+    } else if (this.props.patchProjectTask) {
+      this.props.patchProjectTask(selectedUsers);
+    } else {
+      throw new Error('please, implement "input.onChange" or "patchProjectTask"');
+    }
   };
 
   private filterItem(filterKw: string, item: any) {
     return item.email.toLowerCase().indexOf(filterKw.toLowerCase()) === 0;
   }
 
-  private findItemIndex(item: IUser, members: IUser[]) {
-    return members.findIndex(el => el.id === item.id);
+  private findItemIndex(item: IUser, list: any) {
+    const members: IUser[] = list.list ? list.list : list;
+    if (Array.isArray(members)) {
+      return members.findIndex(el => el.id === item.id);
+    }
+    return -1;
   }
 
   private getLabel = (member: IUser) => member.email;

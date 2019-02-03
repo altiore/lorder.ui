@@ -6,6 +6,7 @@ import { convertSecondsToDuration } from 'src/store/@common/helpers';
 import { UserWork } from 'src/store/tasks';
 
 export class Task implements ITask {
+  isDetailsLoaded: boolean;
   id: number | string;
   title: string;
   description: string;

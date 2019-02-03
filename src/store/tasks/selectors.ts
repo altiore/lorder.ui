@@ -19,6 +19,7 @@ export const getEditTaskInitialValues = createSelector([allTaskList], (allTaskLi
   pick(allTaskList.find((el: Task) => el.id === taskId), [
     'description',
     'id',
+    'isDetailsLoaded',
     'source',
     'title',
     'users',

@@ -189,7 +189,7 @@ const patchProjectTaskHandler = (state: S, { payload }: Action<P>) => {
   if (!~index) {
     return state.startLoading();
   }
-  return state.startLoading().updateItem(index, get(payload, 'request.data'));
+  return state.startLoading().updateItem(index, { ...get(payload, 'request.data'), users: get(payload, 'users') });
 };
 
 const patchProjectTaskSuccessHandler = (state: S) => {
@@ -224,10 +224,11 @@ const fetchTaskDetailsHandler = (state: S) => {
 
 const fetchTaskDetailsSuccessHandler = (state: S, { payload }: Action<P>) => {
   const index = state.list.findIndex(el => el.id === get(payload, ['data', 'id']));
+  const taskWithDetails = { ...get(payload, 'data'), isDetailsLoaded: true };
   if (~index) {
-    return state.updateItem(index, get(payload, 'data')).stopLoading();
+    return state.updateItem(index, taskWithDetails).stopLoading();
   }
-  return state.addItem(get(payload, 'data')).stopLoading();
+  return state.addItem(taskWithDetails).stopLoading();
 };
 
 const fetchTaskDetailsFailHandler = (state: S) => {

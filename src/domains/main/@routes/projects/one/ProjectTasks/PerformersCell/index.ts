@@ -3,10 +3,10 @@ import { createStructuredSelector } from 'reselect';
 
 import { PerformerField as PerformerFieldRaw } from 'src/domains/@common/PerformerField';
 import { patchProjectTask, projectMembersAsUsers } from 'src/store/projects';
-import { projectId } from 'src/store/router';
+import { routeProjectId } from 'src/store/router';
 
 const mapStateToProps = createStructuredSelector({
-  projectId,
+  projectId: routeProjectId,
   projectMembers: projectMembersAsUsers,
 });
 

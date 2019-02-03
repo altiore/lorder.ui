@@ -33,11 +33,15 @@ export const openedProject = createSelector(
   (projects, id) => id && projects.find(el => el.id === id)
 );
 
-export const projectMembers = createSelector(openedProject, (project: Project) => project && project.members);
+export const projectMembers = createSelector([openedProject, selectedProject], (opened: Project, selected: Project) => {
+  return opened ? opened.members : selected && selected.members;
+});
 
 export const projectMembersAsUsers = createSelector(
   projectMembers as any,
-  (members: Member[] = []): IUser[] => members.map(el => el.member)
+  (members: Member[] = []): IUser[] => {
+    return members.map(el => el.member);
+  }
 );
 
 export const projectTaskTypes = createSelector(openedProject, (project: Project) => project && project.taskTypes);

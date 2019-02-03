@@ -22,12 +22,10 @@ const getUserWorksFailHandler = (state: S) => {
 };
 
 const saveUserWorksHandler = (state: S, { payload }: any) => {
-  console.log('payload', payload);
   return state.startLoading();
 };
 
 const saveUserWorksSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
-  console.log('saveUserWorksSuccessHandler', payload);
   return state.stopLoading();
 };
 

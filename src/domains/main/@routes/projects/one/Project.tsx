@@ -8,15 +8,15 @@ import { Project } from 'src/store/projects';
 
 export interface IProjectProps {
   fetchProjectDetails: any;
+  openedProject: Project;
   routes: IRoute[];
-  selectedProject: Project;
 }
 
 export class ProjectTsx extends React.Component<IProjectProps & RouteComponentProps<IProjectProps>, {}> {
   componentDidMount(): void {
-    const { fetchProjectDetails, selectedProject } = this.props;
-    if (selectedProject && selectedProject.id) {
-      fetchProjectDetails(selectedProject.id);
+    const { fetchProjectDetails, openedProject } = this.props;
+    if (openedProject && openedProject.id) {
+      fetchProjectDetails(openedProject.id);
     }
   }
 
@@ -25,24 +25,24 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
     nextContext: any
   ): void {
     if (
-      this.props.selectedProject &&
-      nextProps.selectedProject &&
-      this.props.selectedProject.id !== nextProps.selectedProject.id
+      this.props.openedProject &&
+      nextProps.openedProject &&
+      this.props.openedProject.id !== nextProps.openedProject.id
     ) {
-      this.props.fetchProjectDetails(nextProps.selectedProject.id);
+      this.props.fetchProjectDetails(nextProps.openedProject.id);
     }
   }
 
   render() {
-    const { selectedProject, routes } = this.props;
+    const { openedProject, routes } = this.props;
 
-    if (!selectedProject || !selectedProject.title) {
+    if (!openedProject || !openedProject.title) {
       return null;
     }
 
     const availableRoutes = routes.filter(
       (route: IRoute) =>
-        !route.accessLevel || !selectedProject.accessLevel || route.accessLevel <= selectedProject.accessLevel
+        !route.accessLevel || !openedProject.accessLevel || route.accessLevel <= openedProject.accessLevel
     );
 
     return (

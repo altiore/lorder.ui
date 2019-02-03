@@ -5,13 +5,13 @@ import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from 'src/store/dialog';
 import { deleteProjectMember, projectMembers } from 'src/store/projects';
-import { projectId } from 'src/store/router';
+import { routeProjectId } from 'src/store/router';
 import { ProjectMembersJsx } from './ProjectMembers';
 import { styles } from './styles';
 
 export const ProjectMembers = connect(
   createStructuredSelector({
-    projectId,
+    projectId: routeProjectId,
     projectMembers,
   }),
   {

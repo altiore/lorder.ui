@@ -3,9 +3,14 @@ import { connect } from 'react-redux';
 import { reduxForm, submit } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { onSubmitFail, onSubmitForm } from 'src/store/@common/helpers';
-import { patchProjectTask, PROJECT_EDIT_TASK_FORM_NAME, projectTasksIsLoading } from 'src/store/projects';
-import { routeTaskId } from 'src/store/router';
+import { onSubmitFail } from 'src/store/@common/helpers';
+import {
+  patchProjectTask,
+  postProjectTask,
+  PROJECT_EDIT_TASK_FORM_NAME,
+  projectTasksIsLoading,
+} from 'src/store/projects';
+import { routeProjectId, routeTaskId } from 'src/store/router';
 import {
   archiveTask,
   checkIsCurrent,
@@ -21,6 +26,7 @@ const mapStateToProps = createStructuredSelector({
   checkIsCurrent,
   getEditTaskInitialValues,
   projectTasksIsLoading,
+  routeProjectId,
   routeTaskId,
 });
 
@@ -34,19 +40,20 @@ const mapDispatchToProps = {
 };
 
 const mergeProps = (
-  { checkIsCurrent, getEditTaskInitialValues, routeTaskId, ...restState }: any,
+  { checkIsCurrent, getEditTaskInitialValues, routeProjectId, routeTaskId, ...restState }: any,
   { archiveTask, fetchTaskDetails, startUserWork, stopUserWork, submit, ...restDispatch }: any,
   { taskId, projectId, ...restOwn }: any
 ) => {
   const localTaskId = taskId || routeTaskId;
+  const localProjectId = projectId || routeProjectId;
   return {
     ...restState,
     archiveTask: () => archiveTask(localTaskId),
     fetchTaskDetails: () => fetchTaskDetails(localTaskId),
     initialValues: getEditTaskInitialValues(localTaskId),
     isCurrent: checkIsCurrent(localTaskId),
-    projectId,
-    startUserWork: () => startUserWork({ taskId: localTaskId, projectId }),
+    projectId: localProjectId,
+    startUserWork: () => startUserWork({ taskId: localTaskId, projectId: localProjectId }),
     stopUserWork: () => {
       submit(PROJECT_EDIT_TASK_FORM_NAME);
       stopUserWork();
@@ -69,6 +76,9 @@ export const DashboardTaskForm = connect<
   destroyOnUnmount: false,
   enableReinitialize: true,
   form: PROJECT_EDIT_TASK_FORM_NAME,
-  onSubmit: onSubmitForm<{ projectId: number | string }>(patchProjectTask, ({ projectId }) => ({ projectId })),
+  onSubmit: async (values, dispatch, { projectId }: any) => {
+    const val = { ...values, projectId };
+    return val.id ? dispatch(patchProjectTask(val)) : dispatch(postProjectTask(val));
+  },
   onSubmitFail,
 })(TaskForm) as any);

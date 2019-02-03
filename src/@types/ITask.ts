@@ -2,6 +2,7 @@ import { IDownloadList } from './IDownloadList';
 import { IUserWork } from './IUserWork';
 
 export interface ITask {
+  isDetailsLoaded: boolean;
   id: number | string;
   title: string;
   description: string;

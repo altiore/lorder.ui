@@ -1,5 +1,4 @@
 import { requestActions } from 'src/store/@common/requestActions';
-
 import { PROJECT_EDIT_TASK_FORM_NAME, PROJECT_TASK_FORM_NAME } from 'src/store/projects';
 import { User } from 'src/store/users';
 
@@ -69,7 +68,7 @@ export const patchProjectTask = requestActions<IPatchProjectTaskData>(
       title,
       value,
     };
-    if (users) {
+    if (users && users[0]) {
       data.users = users.map(el => el.id);
     }
     return {

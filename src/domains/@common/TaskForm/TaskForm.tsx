@@ -32,6 +32,7 @@ import { PerformerField } from './PerformerField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
 
 export interface ITaskFormData {
+  isDetailsLoaded: boolean;
   id?: number;
   description?: string;
   title?: string;
@@ -79,7 +80,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
         }, 500 + i * 500)
       );
     });
-    if (this.props.taskId && !this.props.initialValues.title) {
+    if (this.props.taskId && !this.props.initialValues.isDetailsLoaded) {
       this.props.fetchTaskDetails();
     }
   }
@@ -228,12 +229,12 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
   }
 
   private handleSave = (isClose: boolean = true) => (e: React.SyntheticEvent) => {
-    const { dirty } = this.props;
+    const { dirty, onClose } = this.props;
     if (dirty) {
       this.props.handleSubmit(e);
     }
-    if (isClose) {
-      this.props.onClose();
+    if (isClose && onClose) {
+      onClose();
     }
   };
 
@@ -255,7 +256,10 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
   private handleClose = () => this.setState({ anchorEl: null });
 
   private onArchiveTask = () => {
-    this.props.onClose();
-    this.props.archiveTask();
+    const { archiveTask, onClose } = this.props;
+    if (onClose) {
+      onClose();
+    }
+    archiveTask();
   };
 }

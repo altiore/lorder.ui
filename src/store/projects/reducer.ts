@@ -143,6 +143,9 @@ const projectTaskHandler = (state: S, action: ActionMeta<any, any>) => {
   } else {
     index = state.list.findIndex(el => get(action.payload, 'projectId') === el.id);
   }
+  if (!~index) {
+    return state;
+  }
 
   return state.updateItem(index, {
     tasks: projectTasks(state.list[index].tasks, action),
