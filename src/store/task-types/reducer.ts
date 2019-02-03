@@ -3,7 +3,7 @@ import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
 import { DownloadList } from '../@common/entities';
-import { postTaskTypeToProject } from '../projects';
+import { postTaskTypeToProject } from '../projects/actions';
 import { getAllTaskTypes } from './actions';
 import { TaskType } from './task-type';
 

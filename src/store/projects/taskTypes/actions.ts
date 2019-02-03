@@ -1,5 +1,4 @@
 import { requestActions } from 'src/store/@common/requestActions';
-import { IPostTaskTypeData } from '../../task-types';
 
 export const getAllProjectTaskTypes = requestActions('PROJECT_TASK_TYPE/GET_ALL', (projectId: number) => ({
   projectId,
@@ -24,27 +23,24 @@ export const addTaskTypeToProject = requestActions(
   })
 );
 
-export const postTaskTypeToProject = requestActions<IPostTaskTypeData>(
-  'PROJECTS/TASK_TYPES/CREATE',
-  ({ projectId, title }: any) => ({
-    error: {
-      message: 'Не удалось сохранить тип задачи',
-      title: 'Неудача',
+export const postTaskTypeToProject = requestActions<any>('PROJECTS/TASK_TYPES/CREATE', ({ projectId, title }: any) => ({
+  error: {
+    message: 'Не удалось сохранить тип задачи',
+    title: 'Неудача',
+  },
+  projectId,
+  request: {
+    data: {
+      title,
     },
-    projectId,
-    request: {
-      data: {
-        title,
-      },
-      method: 'POST',
-      url: `/projects/${projectId}/task-types/create`,
-    },
-    success: {
-      message: 'Тип задачи успешно создан и добавлен в проект',
-      title: 'Успех!',
-    },
-  })
-);
+    method: 'POST',
+    url: `/projects/${projectId}/task-types/create`,
+  },
+  success: {
+    message: 'Тип задачи успешно создан и добавлен в проект',
+    title: 'Успех!',
+  },
+}));
 
 export const deleteTaskTypeFromProject = requestActions(
   'PROJECTS/TASK_TYPES/DELETE',

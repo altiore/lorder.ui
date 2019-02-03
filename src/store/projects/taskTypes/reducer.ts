@@ -32,7 +32,6 @@ const postTaskTypeToProjectHandler = (state: S) => {
 };
 
 const postTaskTypeToProjectSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
-  console.log('postTaskTypeToProjectSuccessHandler', payload);
   return state.addItem((payload as any).data).stopLoading();
 };
 
