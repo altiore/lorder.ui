@@ -21,7 +21,9 @@ import * as React from 'react';
 import { match, RouteComponentProps, Switch } from 'react-router';
 
 import { IRoute, ROLE } from 'src/@types';
+import { LinkButton } from 'src/domains/@common/LinkButton';
 import { RouteWithSubRoutes } from 'src/domains/@common/RouteWithSubRoutes';
+import { Project } from 'src/store/projects';
 
 export interface ILayoutLeftDrawerProps {
   children?: React.ReactNode;
@@ -31,7 +33,7 @@ export interface ILayoutLeftDrawerProps {
   isLeftBarOpen: boolean;
   match: match<any>;
   routes?: IRoute[];
-  title?: string;
+  selectedProject: Project;
   toggleUiSetting: any;
   theme: Theme;
   userRole: ROLE;
@@ -46,7 +48,7 @@ export class LayoutLeftDrawerTsx extends React.Component<
   };
 
   render() {
-    const { children, classes, isLeftBarOpen, title, theme, redirect, routes, userRole } = this.props;
+    const { children, classes, isLeftBarOpen, selectedProject, theme, redirect, routes, userRole } = this.props;
 
     return (
       <div className={classes.root}>
@@ -61,9 +63,12 @@ export class LayoutLeftDrawerTsx extends React.Component<
           }}
         >
           <div className={classes.drawerHeader}>
-            <Typography variant="h5" className={classes.projectTitle}>
-              {title || upperFirst(userRole)}
-            </Typography>
+            {selectedProject && (
+              <LinkButton to={`/projects/${selectedProject.id}`} className={classes.projectTitle}>
+                {selectedProject.title}
+              </LinkButton>
+            )}
+            {userRole !== ROLE.USER && <Typography className={classes.userRole}>{upperFirst(userRole)}</Typography>}
             <div className={classes.grow} />
             <IconButton onClick={this.handleDrawerToggle}>
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

@@ -2,10 +2,8 @@ import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import * as React from 'react';
 
-import { covertSecondsToDuration } from 'src/store/@common/helpers';
-
 export interface ITimerListItemTextProps {
-  time: number;
+  time: string;
   isOpen: boolean;
   onClick: any;
 }
@@ -16,6 +14,6 @@ export const TimerListItemTextJsx: React.FunctionComponent<ITimerListItemTextPro
   onClick,
 }) => (
   <Tooltip placement={'right'} title={isOpen ? 'Закрыть подробности' : 'Нажмите, чтоб раскрыть подробности'}>
-    <Button onClick={onClick}>{covertSecondsToDuration(time)}</Button>
+    <Button onClick={onClick}>{time}</Button>
   </Tooltip>
 );

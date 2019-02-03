@@ -21,6 +21,7 @@ import { Settings } from 'src/domains/main/@routes/projects/one/Settings';
 import { TaskTypes } from 'src/domains/main/@routes/task-types';
 import { Users } from 'src/domains/main/@routes/users';
 import { Profile } from 'src/domains/profile';
+import { ACCESS_LEVEL } from 'src/store/projects';
 import { commonRoutes } from './@common';
 
 export const routes = [
@@ -58,6 +59,7 @@ export const routes = [
         path: '/projects/:projectId',
         routes: [
           {
+            accessLevel: ACCESS_LEVEL.RED,
             component: DragAndDrop,
             exact: true,
             icon: ImportExportIcon,
@@ -65,6 +67,7 @@ export const routes = [
             title: 'Board',
           },
           {
+            accessLevel: ACCESS_LEVEL.INDIGO,
             component: ProjectTasks,
             exact: true,
             icon: ListAltIcon,
@@ -72,6 +75,7 @@ export const routes = [
             title: 'Задачи',
           },
           {
+            accessLevel: ACCESS_LEVEL.INDIGO,
             component: ProjectTaskTypes,
             exact: true,
             icon: BallotIcon,
@@ -79,6 +83,7 @@ export const routes = [
             title: 'Типы Задач',
           },
           {
+            accessLevel: ACCESS_LEVEL.INDIGO,
             component: ProjectMembers,
             exact: true,
             icon: PeopleIcon,
@@ -86,6 +91,7 @@ export const routes = [
             title: 'Участники',
           },
           {
+            accessLevel: ACCESS_LEVEL.INDIGO,
             component: Settings,
             exact: true,
             icon: SettingsIcon,
@@ -93,6 +99,7 @@ export const routes = [
             title: 'Другие Настройки',
           },
           {
+            accessLevel: ACCESS_LEVEL.RED,
             component: DashboardTaskForm,
             path: '/projects/:projectId/tasks/:taskId',
           },

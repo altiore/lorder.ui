@@ -2,7 +2,7 @@ import groupBy from 'lodash-es/groupBy';
 import { createSelector } from 'reselect';
 
 import { IState } from 'src/@types';
-import { covertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
+import { convertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
 import { UserWork } from 'src/store/tasks';
 
 export const lastUserWorks = (state: IState) => state.userWorks;
@@ -12,7 +12,7 @@ export const totalTimeSpentTodayInSeconds = createSelector(lastUserWorks, state 
 );
 
 export const totalTimeSpentToday = createSelector(totalTimeSpentTodayInSeconds, seconds =>
-  covertSecondsToDurationWithLocal(seconds)
+  convertSecondsToDurationWithLocal(seconds)
 );
 
 export const userWorksGroupedByProject = createSelector(lastUserWorks, state => groupBy(state.list, 'projectId'));
@@ -31,7 +31,7 @@ export const timeSpentByProjectIdInSeconds = createSelector(
 );
 
 export const timeSpentByProjectId = createSelector(timeSpentByProjectIdInSeconds, getSeconds => (projectId: number) =>
-  covertSecondsToDurationWithLocal(getSeconds(projectId))
+  convertSecondsToDurationWithLocal(getSeconds(projectId))
 );
 
 export const timePercentByProjectId = createSelector(

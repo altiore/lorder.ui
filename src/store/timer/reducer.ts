@@ -1,21 +1,13 @@
-import get from 'lodash-es/get';
 import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { covertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
 import { setCurrentUserWorkId, tickUserWorkTimer } from './actions';
 import { Timer } from './Timer';
 
 type P = Partial<Timer>;
 
-const tickUserWorkTimerHandler = (state: Timer, { payload }: Action<Partial<Timer>>) => {
+const tickUserWorkTimerHandler = (state: Timer) => {
   const time = state.time + 1;
-  document.title =
-    covertSecondsToDurationWithLocal(time) +
-    ` | ${get(payload, 'project.title')} - ${get(payload, 'task.title') ||
-      get(payload, 'userWork.task.title') ||
-      get(payload, 'userWork.description') ||
-      '...'}`;
   return { ...state, time };
 };
 

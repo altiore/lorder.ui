@@ -53,6 +53,12 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
 
   timer: any = null;
 
+  componentWillUnmount(): void {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+  }
+
   render() {
     const { classes, theme, projects, selectedProject, logOut, userAvatar, userEmail, userRole, width } = this.props;
     const { expanded } = this.state;
@@ -156,8 +162,8 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
   private handleOpenInNew = (project: Project) => async (e: React.SyntheticEvent) => {
     e.stopPropagation();
     const { selectedProject, startUserWork, push } = this.props;
-    this.setState({ anchorEl: null });
-    if (selectedProject.id !== project.id) {
+    this.setState({ anchorEl: null, expanded: false });
+    if (!selectedProject || selectedProject.id !== project.id) {
       await startUserWork({
         projectId: project.id as number,
         title: 'Обзор',

@@ -6,12 +6,14 @@ import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from 'src/store/dialog';
 import { userRole } from 'src/store/identity';
+import { selectedProject } from 'src/store/projects';
 import { isLeftBarOpen, toggleUiSetting } from 'src/store/ui';
 import { LayoutLeftDrawerTsx } from './LayoutLeftDrawer';
 import { styles } from './styles';
 
 const mapState = createStructuredSelector({
   isLeftBarOpen,
+  selectedProject,
   userRole,
 });
 

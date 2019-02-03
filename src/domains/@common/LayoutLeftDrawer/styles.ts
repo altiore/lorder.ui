@@ -48,6 +48,7 @@ export const styles = (theme: Theme) =>
       justifyContent: 'flex-end',
       marginTop: 62,
       padding: '0 8px',
+      position: 'relative',
       ...theme.mixins.toolbar,
     },
     drawerPaper: {
@@ -86,5 +87,16 @@ export const styles = (theme: Theme) =>
       position: 'absolute',
       top: 0,
       width: 30,
+    },
+    userRole: {
+      bottom: 0,
+      color: theme.palette.divider,
+      overflow: 'hidden',
+      paddingBottom: theme.spacing.unit,
+      paddingRight: theme.spacing.unit + 48,
+      position: 'absolute',
+      right: 0,
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
     },
   });

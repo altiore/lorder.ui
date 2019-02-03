@@ -3,7 +3,7 @@ import map from 'lodash-es/map';
 import * as moment from 'moment';
 
 import { ITask, IUserWork } from 'src/@types';
-import { covertSecondsToDuration } from 'src/store/@common/helpers';
+import { convertSecondsToDuration } from 'src/store/@common/helpers';
 import { Task } from '../Task';
 
 export class UserWork implements IUserWork {
@@ -43,6 +43,6 @@ export class UserWork implements IUserWork {
   }
 
   get duration() {
-    return covertSecondsToDuration(this.durationInSeconds);
+    return convertSecondsToDuration(this.durationInSeconds);
   }
 }

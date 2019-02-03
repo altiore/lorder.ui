@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from 'src/store/dialog';
-import { fetchProjectDetails, openedProject } from 'src/store/projects';
+import { fetchProjectDetails, selectedProject } from 'src/store/projects';
 import { ProjectTsx } from './Project';
 import { styles } from './styles';
 
 const mapState = createStructuredSelector({
-  openedProject,
+  selectedProject,
 });
 
 const mapDispatch = {

@@ -1,7 +1,7 @@
 import get from 'lodash-es/get';
 import map from 'lodash-es/map';
 
-import { covertSecondsToDurationWithLocal, millisecondsToHours } from 'src/store/@common/helpers';
+import { convertSecondsToDurationWithLocal, millisecondsToHours } from 'src/store/@common/helpers';
 
 export class Statistic {
   members: Array<{ accessLevel: number; avatar: string; id: number; email: string }>;
@@ -28,7 +28,7 @@ export class PublicProject {
   }
 
   get fullProjectTimeHumanize() {
-    return covertSecondsToDurationWithLocal(this.timeSum || 0);
+    return convertSecondsToDurationWithLocal(this.timeSum || 0);
   }
 
   get chartData() {

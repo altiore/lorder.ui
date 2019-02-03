@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { IState, IUserWork } from 'src/@types';
-import { covertSecondsToDuration } from 'src/store/@common/helpers';
+import { convertSecondsToDuration, convertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
 import { filteredTaskList } from 'src/store/tasks/selectors';
 import { IUserWorkDelete } from '../tasks/user-works';
 
@@ -9,7 +9,7 @@ const baseState = (state: IState) => state.timer;
 
 export const currentTime = createSelector(baseState, state => state.time);
 
-export const currentTimeHumanize = createSelector(currentTime, time => covertSecondsToDuration(time));
+export const currentTimeHumanize = createSelector(currentTime, time => convertSecondsToDuration(time));
 
 export const currentProjectId = createSelector(baseState, state => state.projectId);
 
@@ -39,5 +39,13 @@ export const currentUserWork = createSelector(
 
 export const currentTaskTime = createSelector(
   [currentTime, currentTask, currentUserWork],
-  (time, task, userWork) => (task && userWork ? time + task.durationInSeconds - userWork.durationInSeconds : time)
+  (time, task, userWork) => (userWork ? userWork.durationInSeconds : time)
+);
+
+export const currentTaskTimeToString = createSelector([currentTaskTime], seconds => {
+  return convertSecondsToDuration(seconds);
+});
+
+export const currentTaskTimeWithLocal = createSelector([currentTaskTime], seconds =>
+  convertSecondsToDurationWithLocal(seconds)
 );

@@ -7,18 +7,27 @@ import { IState } from 'src/@types';
 import { selectProject } from 'src/store/project';
 import { getProjectById, Project } from 'src/store/projects';
 import { CREATE_USER_WORK_FORM_NAME, replaceTasks } from 'src/store/tasks';
-import { currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from 'src/store/timer';
+import { currentTaskTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from 'src/store/timer';
 import { IUserWorkData, IUserWorkDelete, patchAndStopUserWork, postAndStartUserWork } from '../actions';
 import { UserWork } from '../UserWork';
 
 export let timer: any;
 
-export const startTimer = (userWork: Partial<UserWork>, project: Project) => async (dispatch: Dispatch) => {
+export const startTimer = (userWork: Partial<UserWork>, project: Project) => async (
+  dispatch: Dispatch,
+  getState: any
+) => {
   clearInterval(timer);
   if (!userWork.durationInSeconds) {
     userWork = new UserWork(userWork);
   }
-  timer = setInterval(() => dispatch(tickUserWorkTimer({ userWork, project })), 1000);
+  timer = setInterval(() => {
+    dispatch(tickUserWorkTimer({ userWork, project }));
+    document.title = `${currentTaskTimeToString(getState())} | ${get(userWork, 'task.title')} (${get(
+      project,
+      'title'
+    )})`;
+  }, 1000);
   dispatch(
     setCurrentUserWorkId({
       projectId: project.id,

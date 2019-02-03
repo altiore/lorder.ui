@@ -2,7 +2,7 @@ import map from 'lodash-es/map';
 
 import { ITask } from 'src/@types';
 import { DownloadList } from 'src/store/@common/entities';
-import { covertSecondsToDuration } from 'src/store/@common/helpers';
+import { convertSecondsToDuration } from 'src/store/@common/helpers';
 import { UserWork } from 'src/store/tasks';
 
 export class Task implements ITask {
@@ -31,7 +31,7 @@ export class Task implements ITask {
   }
 
   get duration(): string {
-    return covertSecondsToDuration(this.durationInSeconds);
+    return convertSecondsToDuration(this.durationInSeconds);
   }
 
   toLowerCase() {

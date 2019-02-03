@@ -1,6 +1,6 @@
 import map from 'lodash-es/map';
 
-import { covertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
+import { convertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
 import { DownloadList } from '../@common/entities';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';
@@ -57,6 +57,6 @@ export class Project {
   }
 
   get fullProjectTimeHumanize(): string | undefined {
-    return covertSecondsToDurationWithLocal(this.timeSum || 0);
+    return convertSecondsToDurationWithLocal(this.timeSum || 0);
   }
 }

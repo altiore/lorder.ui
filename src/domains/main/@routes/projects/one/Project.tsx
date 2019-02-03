@@ -8,15 +8,15 @@ import { Project } from 'src/store/projects';
 
 export interface IProjectProps {
   fetchProjectDetails: any;
-  openedProject: Project;
   routes: IRoute[];
+  selectedProject: Project;
 }
 
 export class ProjectTsx extends React.Component<IProjectProps & RouteComponentProps<IProjectProps>, {}> {
   componentDidMount(): void {
-    const { fetchProjectDetails, openedProject } = this.props;
-    if (openedProject && openedProject.id) {
-      fetchProjectDetails(openedProject.id);
+    const { fetchProjectDetails, selectedProject } = this.props;
+    if (selectedProject && selectedProject.id) {
+      fetchProjectDetails(selectedProject.id);
     }
   }
 
@@ -25,25 +25,29 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
     nextContext: any
   ): void {
     if (
-      this.props.openedProject &&
-      nextProps.openedProject &&
-      this.props.openedProject.id !== nextProps.openedProject.id
+      this.props.selectedProject &&
+      nextProps.selectedProject &&
+      this.props.selectedProject.id !== nextProps.selectedProject.id
     ) {
-      this.props.fetchProjectDetails(nextProps.openedProject.id);
+      this.props.fetchProjectDetails(nextProps.selectedProject.id);
     }
   }
 
   render() {
-    const { openedProject, routes } = this.props;
+    const { selectedProject, routes } = this.props;
 
-    if (!openedProject || !openedProject.title) {
+    if (!selectedProject || !selectedProject.title) {
       return null;
     }
 
+    const availableRoutes = routes.filter(
+      (route: IRoute) =>
+        !route.accessLevel || !selectedProject.accessLevel || route.accessLevel <= selectedProject.accessLevel
+    );
+
     return (
       <LayoutLeftDrawer
-        title={openedProject.title}
-        routes={routes}
+        routes={availableRoutes}
         redirect={<Redirect from="/projects/:projectId" to="/projects/:projectId/board" exact />}
       />
     );
