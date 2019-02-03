@@ -5,12 +5,7 @@ export const styles = (theme: Theme) =>
   createStyles({
     input: {
       flexGrow: 1,
-      marginBottom: theme.spacing.unit * 3,
-      marginRight: theme.spacing.unit * 3,
-      [theme.breakpoints.down('sm')]: {
-        marginBottom: theme.spacing.unit,
-        marginRight: 0,
-      },
+      marginBottom: theme.spacing.unit,
     },
     inputBlock: {
       alignItems: 'baseline',
@@ -23,6 +18,7 @@ export const styles = (theme: Theme) =>
       display: 'flex',
       flexFlow: 'column',
       justifyContent: 'center',
+      marginBottom: theme.spacing.unit * 2,
       width: '100%',
     },
     select: {

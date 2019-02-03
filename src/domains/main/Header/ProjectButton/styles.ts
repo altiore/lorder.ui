@@ -5,8 +5,14 @@ export const styles = (theme: Theme) =>
   createStyles({
     button: {
       marginLeft: 4,
+      minHeight: 42,
       minWidth: 140,
+      padding: `0 0 0 ${theme.spacing.unit * 2}px`,
+      position: 'relative',
       textTransform: 'none',
+      [theme.breakpoints.down('sm')]: {
+        maxWidth: 160,
+      },
     },
     inProgress: {
       backgroundImage:
@@ -17,6 +23,10 @@ export const styles = (theme: Theme) =>
       right: 9,
       top: 9,
       width: 6,
+    },
+    openInNew: {
+      marginLeft: theme.spacing.unit,
+      // marginRight: -theme.spacing.unit * 3,
     },
     projectPopover: {
       zIndex: 1202,

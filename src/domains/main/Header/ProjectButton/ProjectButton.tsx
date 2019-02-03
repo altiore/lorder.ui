@@ -1,10 +1,11 @@
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import * as React from 'react';
 import * as Popover from 'react-popover';
 
-import { LinkButton } from 'src/domains/@common/LinkButton';
 import { ShortChart } from 'src/domains/@common/ShortChart';
-
 export interface IProjectButtonProps {
   classes?: any;
   id?: number;
@@ -13,6 +14,8 @@ export interface IProjectButtonProps {
   time: string;
   title?: string;
   percent?: number | string;
+  onOpenInNew: any;
+  selectProject: any;
 }
 
 export interface IProjectButtonState {
@@ -26,7 +29,7 @@ export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProj
 
   render() {
     const { isOpen } = this.state;
-    const { classes, uuid, id, inProgress, time, title, percent } = this.props;
+    const { classes, inProgress, onOpenInNew, selectProject, time, title, percent } = this.props;
     return (
       <Popover
         className={classes.projectPopover}
@@ -36,19 +39,29 @@ export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProj
         onOuterAction={this.onClosePopover}
         body={<ShortChart project={{ time, title, percent }} />}
       >
-        <LinkButton
-          to={uuid ? `/p/${uuid}` : `/projects/${id}`}
+        <Button
           className={classes.button}
+          component="div"
+          onClick={selectProject}
           onMouseEnter={this.onMouseEnterHandler}
           onMouseLeave={this.onClosePopover}
+          onMouseOver={this.onMouseEnterHandler}
           variant={'outlined'}
           color={'secondary'}
         >
-          {inProgress && <span className={classes.inProgress} />}
           <Typography variant="body1" noWrap className={classes.text}>
             {title}
           </Typography>
-        </LinkButton>
+          <IconButton
+            color="secondary"
+            onClick={onOpenInNew}
+            className={classes.openInNew}
+            style={{ visibility: isOpen ? 'visible' : 'hidden' }}
+          >
+            <OpenInNewIcon fontSize="small" />
+          </IconButton>
+          {inProgress && <span className={classes.inProgress} />}
+        </Button>
       </Popover>
     );
   }

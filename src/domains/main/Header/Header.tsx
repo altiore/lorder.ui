@@ -51,6 +51,8 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
     expanded: false,
   };
 
+  timer: any = null;
+
   render() {
     const { classes, theme, projects, selectedProject, logOut, userAvatar, userEmail, userRole, width } = this.props;
     const { expanded } = this.state;
@@ -68,6 +70,8 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
             {filteredProjects.map(project => (
               <ProjectButton
                 key={project.id}
+                selectProject={this.selectProject(project.id as number)}
+                onOpenInNew={this.handleOpenInNew(project as Project)}
                 {...project}
                 inProgress={selectedProject && project.id === selectedProject.id}
               />
@@ -115,7 +119,18 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
     );
   }
 
-  private toggleExpandProjects = () => this.setState(({ expanded }: IHeaderState) => ({ expanded: !expanded }));
+  private toggleExpandProjects = () => {
+    this.setState(({ expanded }: IHeaderState) => {
+      if (!expanded) {
+        this.timer = setTimeout(() => {
+          this.toggleExpandProjects();
+        }, 15000);
+      } else if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      return { expanded: !expanded };
+    });
+  };
 
   private openCreateProject = () => this.props.openDialog(CreateProjectPopup, { scroll: 'body' });
 
@@ -129,7 +144,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
 
   private selectProject = (projectId: number) => async () => {
     const { selectedProject, startUserWork, push } = this.props;
-    this.setState({ anchorEl: null });
+    this.setState({ anchorEl: null, expanded: false });
     if (selectedProject.id !== projectId) {
       await startUserWork({
         projectId,

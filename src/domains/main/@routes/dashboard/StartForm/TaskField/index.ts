@@ -5,7 +5,7 @@ import { IState } from 'src/@types';
 import { SelectReactField } from 'src/components/SelectReactField';
 import { selectedProjectId } from 'src/store/project';
 import { getProjectById, Project } from 'src/store/projects';
-import { allTaskList, startUserWork, Task } from 'src/store/tasks';
+import { allTaskListWithoutDefProject, startUserWork, Task } from 'src/store/tasks';
 
 // TODO: move to selector Performance Issue
 function getLabel(state: IState) {
@@ -33,7 +33,7 @@ const mapStateToProps = createStructuredSelector({
   getNewOption,
   getValue,
   isValidOption,
-  options: allTaskList,
+  options: allTaskListWithoutDefProject,
 });
 
 const mapDispatch = {

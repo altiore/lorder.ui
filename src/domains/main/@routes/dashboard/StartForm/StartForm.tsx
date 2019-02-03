@@ -1,16 +1,15 @@
+import Fab from '@material-ui/core/Fab';
 import { Theme } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import AddIcon from '@material-ui/icons/Add';
 import * as React from 'react';
-import MediaQuery from 'react-responsive';
 import { Field, InjectedFormProps } from 'redux-form';
-import { required } from 'redux-form-validators';
 
-import { StartStopBtn } from 'src/components/StartStopBtn';
-import { ProjectField } from './ProjectField';
 import { TaskField } from './TaskField';
 
 export interface IInternalProps {
   classes: any;
-  selectProject: any;
+  selectedProject: any;
   theme: Theme;
 }
 
@@ -26,21 +25,18 @@ export class IStartFormProps {
 
 export const StartFormJsx: React.FunctionComponent<
   IInternalProps & InjectedFormProps<IStartFormData, IStartFormProps>
-> = React.memo(({ classes, handleSubmit, initialValues, selectProject, theme }) => (
+> = React.memo(({ classes, handleSubmit, selectedProject }) => (
   <form onSubmit={handleSubmit} className={classes.play}>
     <div className={classes.inputBlock}>
-      <Field name="description" component={TaskField} label="Начни новую задачу..." className={classes.input} />
-      <MediaQuery minWidth={theme.breakpoints.values.sm}>
-        <Field
-          className={classes.select}
-          name="projectId"
-          component={ProjectField}
-          label="Проект"
-          onChange={selectProject}
-          validate={[required({ msg: 'Сначала выберите Проект!' })]}
-        />
-      </MediaQuery>
+      <Field name="description" component={TaskField} label="Выбери или создай задачу..." className={classes.input} />
     </div>
-    <StartStopBtn isStarted={false} isLarge onStart={handleSubmit} />
+    <Tooltip
+      title={selectedProject ? `Создать новую задачу в проекте "${selectedProject.title}"` : ''}
+      placement={'top'}
+    >
+      <Fab onClick={handleSubmit} className={classes.stop}>
+        <AddIcon fontSize={'default'} />
+      </Fab>
+    </Tooltip>
   </form>
 ));
