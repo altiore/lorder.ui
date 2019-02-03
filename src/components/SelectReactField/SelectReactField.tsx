@@ -20,7 +20,7 @@ export class ISelectReactFieldProps implements WrappedFieldProps {
   onSelect: (value: ISelectOptionType) => any;
 }
 
-export class SelectReactFieldJsx extends React.PureComponent<ISelectReactFieldProps, {}> {
+export class SelectReactFieldJsx extends React.Component<ISelectReactFieldProps, {}> {
   static defaultProps = {
     getLabel: (opt: any) => opt && opt.label,
     getNewOption: (inputValue?: string) => ({ label: `Создать: ${inputValue}`, value: inputValue }),
@@ -28,6 +28,22 @@ export class SelectReactFieldJsx extends React.PureComponent<ISelectReactFieldPr
     isValidOption: (opt: any) => opt.label,
     onSelect: (item: any) => '',
   };
+
+  shouldComponentUpdate(
+    nextProps: Readonly<ISelectReactFieldProps>,
+    nextState: Readonly<{}>,
+    nextContext: any
+  ): boolean {
+    if (
+      nextProps.input !== this.props.input ||
+      nextProps.meta !== this.props.meta ||
+      nextProps.options !== this.props.options ||
+      nextProps.label !== this.props.label
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   render() {
     const { classes, input, isValidOption, getLabel, getNewOption, getValue, label, options, ...rest } = this.props;

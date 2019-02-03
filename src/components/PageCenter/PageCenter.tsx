@@ -8,10 +8,12 @@ export interface IPageCenterProps {
   children?: any;
 }
 
-export const PageCenterJsx: React.FunctionComponent<IPageCenterProps> = ({ className, classes, children }) => (
-  <div className={cn(classes.content, className)}>
-    <Grid container spacing={16}>
-      {children}
-    </Grid>
-  </div>
+export const PageCenterJsx: React.FunctionComponent<IPageCenterProps> = React.memo(
+  ({ className, classes, children }) => (
+    <div className={cn(classes.content, className)}>
+      <Grid container spacing={16}>
+        {children}
+      </Grid>
+    </div>
+  )
 );

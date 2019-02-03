@@ -1,39 +1,47 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { IState } from 'src/@types';
 import { SelectReactField } from 'src/components/SelectReactField';
-import { selectedProjectId } from 'src/store/project';
-import { getProjectById, Project } from 'src/store/projects';
+import { getNewOption } from 'src/store/project';
+import { getLabelForSelectField } from 'src/store/projects';
 import { allTaskListWithoutDefProject, startUserWork, Task } from 'src/store/tasks';
 
-// TODO: move to selector Performance Issue
-function getLabel(state: IState) {
-  return (task: Task & { project: Project }) => {
-    const project = getProjectById(state)(task.projectId);
-    const projectInfo = project.title ? ` (${project.title})` : ' (Без проекта)';
-    if (task.id) {
-      return task.title + projectInfo;
-    } else {
-      return `Создать: "${task.title}${projectInfo}"`;
-    }
-  };
-}
-
-// TODO: move to selector Performance Issue
-const getNewOption = (state: IState) => (inputValue: string) =>
-  new Task({ title: inputValue && inputValue, projectId: selectedProjectId(state) });
-// TODO: move to selector Performance Issue
 const getValue = () => (opt: Task) => opt;
-// TODO: move to selector Performance Issue
 const isValidOption = () => (opt: Task) => opt.title;
 
+const dot = (isNew = false) => ({
+  alignItems: 'center',
+  display: 'flex',
+
+  ':before': {
+    alignItems: 'center',
+    borderRadius: 10,
+    color: '#000',
+    content: isNew ? '"+"' : '"✓"',
+    display: 'flex',
+    height: 10,
+    marginRight: 8,
+    width: 10,
+  },
+});
+
+const styles = () => ({
+  option: (styles: any, { data, isDisabled, isFocused, isSelected }: any) => {
+    return {
+      ...styles,
+      backgroundColor: isFocused ? '#EBEEF0' : 'inherit',
+      ...dot(!data.id),
+    };
+  },
+});
+
 const mapStateToProps = createStructuredSelector({
-  getLabel,
+  getLabel: getLabelForSelectField,
   getNewOption,
   getValue,
   isValidOption,
   options: allTaskListWithoutDefProject,
+  styles,
 });
 
 const mapDispatch = {

@@ -1,9 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { IState } from 'src/@types';
+import { IState, ITask } from 'src/@types';
 import { DownloadList } from 'src/store/@common/entities';
-// import { defaultProjectId } from 'src/store/identity/selectors';
-import { projectId } from 'src/store/router';
+import { routeProjectId } from 'src/store/router';
 import { currentProjectId } from 'src/store/timer';
 import { timePercentByProjectId, timeSpentByProjectId } from 'src/store/user-works';
 import { IUser } from 'src/store/users';
@@ -30,7 +29,7 @@ export const selectedProject = createSelector(
 );
 
 export const openedProject = createSelector(
-  [ownProjectList, projectId],
+  [ownProjectList, routeProjectId],
   (projects, id) => id && projects.find(el => el.id === id)
 );
 
@@ -46,6 +45,12 @@ export const projectTaskTypes = createSelector(openedProject, (project: Project)
 export const getProjectById = createSelector(allProjectList, (list: Project[]) => (id: number): Project =>
   list.find(e => e.id === id) || new Project()
 );
+
+export const getLabelForSelectField = createSelector([getProjectById], getProject => (task: ITask) => {
+  const project = getProject(task.projectId);
+  const projectInfo = project.title ? ` (${project.title})` : '';
+  return task.title + projectInfo;
+});
 
 export const ownProjectListWithStatistic = createSelector(
   [ownProjectList, timePercentByProjectId, timeSpentByProjectId],
