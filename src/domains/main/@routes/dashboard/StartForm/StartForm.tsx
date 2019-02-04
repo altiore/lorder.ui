@@ -4,6 +4,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
+import { length } from 'redux-form-validators';
 
 import { TaskField } from './TaskField';
 
@@ -28,7 +29,13 @@ export const StartFormJsx: React.FunctionComponent<
 > = React.memo(({ classes, handleSubmit, selectedProject }) => (
   <form onSubmit={handleSubmit} className={classes.play}>
     <div className={classes.inputBlock}>
-      <Field name="description" component={TaskField} label="Выбери или создай задачу..." className={classes.input} />
+      <Field
+        name="description"
+        component={TaskField}
+        label="Выбери или создай задачу..."
+        className={classes.input}
+        validate={[length({ max: 40, msg: 'Превышен максимум 40 символов' })]}
+      />
     </div>
     <Tooltip
       title={selectedProject ? `Создать новую задачу в проекте "${selectedProject.title}"` : ''}

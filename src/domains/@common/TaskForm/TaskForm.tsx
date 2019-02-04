@@ -19,7 +19,7 @@ import NotesIcon from '@material-ui/icons/Notes';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
-import { required } from 'redux-form-validators';
+import { length, required } from 'redux-form-validators';
 
 import { Input } from 'liw-components/Input';
 import { TitleInput } from 'liw-components/TitleInput';
@@ -145,7 +145,10 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                 icon={<EventIcon />}
                 name="title"
                 component={TitleInput}
-                validate={[required({ msg: 'Обязательное поле' })]}
+                validate={[
+                  required({ msg: 'Обязательное поле' }),
+                  length({ max: 40, msg: 'Превышен максимум 40 символов' }),
+                ]}
                 onSubmit={this.handleSave(false)}
               />
               <Field
@@ -233,11 +236,11 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
   }
 
   private handleSave = (isClose: boolean = true) => (e: React.SyntheticEvent) => {
-    const { dirty, onClose } = this.props;
-    if (dirty) {
+    const { dirty, valid, onClose } = this.props;
+    if (dirty && valid) {
       this.props.handleSubmit(e);
     }
-    if (isClose && onClose) {
+    if (isClose && onClose && valid) {
       onClose();
     }
   };

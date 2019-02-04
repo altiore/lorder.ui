@@ -46,7 +46,18 @@ export class SelectReactFieldJsx extends React.Component<ISelectReactFieldProps,
   }
 
   render() {
-    const { classes, input, isValidOption, getLabel, getNewOption, getValue, label, options, ...rest } = this.props;
+    const {
+      classes,
+      input,
+      meta: { error },
+      isValidOption,
+      getLabel,
+      getNewOption,
+      getValue,
+      label,
+      options,
+      ...rest
+    } = this.props;
     let preparedOptions;
     if (isValidOption && getNewOption && isValidOption(getNewOption(input.value))) {
       preparedOptions = [getNewOption(input.value), ...options];
@@ -54,18 +65,21 @@ export class SelectReactFieldJsx extends React.Component<ISelectReactFieldProps,
       preparedOptions = [...options];
     }
     return (
-      <Select
-        className={classes.root}
-        getOptionLabel={getLabel}
-        getOptionValue={getValue}
-        onInputChange={input.onChange}
-        onBlur={input.onBlur}
-        onChange={this.handleOnChange}
-        value={input.value}
-        placeholder={label}
-        options={preparedOptions}
-        {...rest}
-      />
+      <div className={classes.wrapper}>
+        {!!error && <span className={classes.error}>{error}</span>}
+        <Select
+          className={classes.root}
+          getOptionLabel={getLabel}
+          getOptionValue={getValue}
+          onInputChange={input.onChange}
+          onBlur={input.onBlur}
+          onChange={this.handleOnChange}
+          value={input.value}
+          placeholder={label}
+          options={preparedOptions}
+          {...rest}
+        />
+      </div>
     );
   }
 
