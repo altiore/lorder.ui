@@ -4,7 +4,7 @@ import get from 'lodash-es/get';
 import { ReactNode } from 'react';
 import { ActionMeta, handleActions } from 'redux-actions';
 
-import { closeDialog, openDialog } from './actions';
+import { changeSettings, closeDialog, openDialog } from './actions';
 import { Dialog, IDialogState } from './Dialog';
 
 type S = IDialogState;
@@ -40,10 +40,18 @@ const locationChangeHandler = (state: S, { payload }: any) => {
   return state;
 };
 
+const changeSettingsHandler = (state: S, { payload }: any) => {
+  return new Dialog({
+    ...state,
+    dialogProps: { ...state.dialogProps, ...payload },
+  });
+};
+
 export const dialog = handleActions<S, P>(
   {
     [closeDialog.toString()]: closeDialogHandler,
     [openDialog.toString()]: openDialogHandler,
+    [changeSettings.toString()]: changeSettingsHandler,
 
     [LOCATION_CHANGE]: locationChangeHandler,
   },

@@ -45,6 +45,7 @@ export interface ITaskFormData {
 export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFormProps> {
   archiveTask: any;
   buttonText?: string;
+  changeSettings?: any;
   classes?: any;
   fetchTaskDetails: any;
   isCurrent?: boolean;
@@ -247,6 +248,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
 
   private goToTask = (taskId: number) => (e: React.SyntheticEvent) => {
     e.preventDefault();
+    // this.props.changeSettings({ fullScreen: true });
     this.props.replace({
       pathname: `/projects/${this.props.projectId}/tasks/${taskId}`,
     });

@@ -4,6 +4,7 @@ import { reduxForm, submit } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { onSubmitFail } from 'src/store/@common/helpers';
+import { changeSettings } from 'src/store/dialog';
 import {
   patchProjectTask,
   postProjectTask,
@@ -32,6 +33,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   archiveTask,
+  changeSettings,
   fetchTaskDetails,
   replace,
   startUserWork,

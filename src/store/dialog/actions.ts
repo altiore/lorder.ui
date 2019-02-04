@@ -14,3 +14,5 @@ export const openDialog = createAction<string, Partial<DialogProps>>(
 );
 
 export const closeDialog = createAction('DIALOG/CLOSE');
+
+export const changeSettings = createAction('DIALOG/CHANGE_SETTINGS');
