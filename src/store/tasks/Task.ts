@@ -15,6 +15,7 @@ export class Task implements ITask {
   source?: string;
   status: number;
   value: number;
+  typeId?: number;
   userWorks: DownloadList<UserWork> = new DownloadList(UserWork);
 
   constructor(initial?: any) {

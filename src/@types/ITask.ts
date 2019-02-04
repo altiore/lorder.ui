@@ -11,5 +11,6 @@ export interface ITask {
   source?: string;
   status: number;
   value: number;
+  typeId?: number;
   userWorks: IDownloadList<IUserWork>;
 }

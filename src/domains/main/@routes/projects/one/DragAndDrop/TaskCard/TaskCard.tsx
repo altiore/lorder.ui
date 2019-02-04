@@ -28,6 +28,7 @@ export const TaskCardTsx: React.FunctionComponent<ITaskCard> = ({
   classes,
   onClick,
   title,
+  typeId,
   value,
   provided,
   snapshot,
@@ -42,8 +43,11 @@ export const TaskCardTsx: React.FunctionComponent<ITaskCard> = ({
       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
     >
       <span className={classes.row}>
-        <BugReportIcon fontSize="small" className={classes.iconBug} />
-        <ExtensionIcon fontSize="small" className={classes.iconStory} />
+        {typeId ? (
+          <BugReportIcon fontSize="small" className={classes.iconBug} />
+        ) : (
+          <ExtensionIcon fontSize="small" className={classes.iconStory} />
+        )}
         <Typography gutterBottom component="span">
           {title}
         </Typography>

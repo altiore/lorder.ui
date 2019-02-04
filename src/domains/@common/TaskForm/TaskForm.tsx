@@ -36,6 +36,7 @@ export interface ITaskFormData {
   id?: number;
   description?: string;
   title?: string;
+  typeId?: number;
   projectId: number;
   value: number;
   status: number;
@@ -95,6 +96,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
     const {
       buttonText = 'Сохранить',
       classes,
+      initialValues,
       isCurrent,
       onClose,
       pristine,
@@ -110,10 +112,11 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
         <DialogTitle disableTypography>
           <div className={classes.row}>
             <IconButton>
-              <BugReportIcon className={classes.iconBug} />
-            </IconButton>
-            <IconButton>
-              <ExtensionIcon className={classes.iconStory} />
+              {initialValues.typeId ? (
+                <BugReportIcon className={classes.iconBug} />
+              ) : (
+                <ExtensionIcon className={classes.iconStory} />
+              )}
             </IconButton>
             {taskId && (
               <>
