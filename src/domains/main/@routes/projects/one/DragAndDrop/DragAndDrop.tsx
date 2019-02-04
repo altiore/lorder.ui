@@ -1,8 +1,11 @@
 import ButtonBase from '@material-ui/core/ButtonBase';
 import amber from '@material-ui/core/colors/amber';
+import Fab from '@material-ui/core/Fab';
 import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import * as React from 'react';
 import {
   DragDropContext,
@@ -22,7 +25,7 @@ const CARD_WIDTH = 296;
 
 const getListStyle = (isDraggingOver: boolean, height: number) => ({
   background: isDraggingOver ? amber[50] : '#DFE3E6',
-  maxHeight: height - 188,
+  maxHeight: height - 198,
   minHeight: 75.89,
   width: CARD_WIDTH,
 });
@@ -41,14 +44,16 @@ export interface IDragAndDropProps {
 }
 
 export interface IDragAndDropState {
-  items: any[];
-  selected: any[];
-  selected2: any[];
+  columns: boolean[];
 }
 
 export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDropState> {
   static defaultProps = {
     statuses: [0, 1, 2, 3, 4],
+  };
+
+  state = {
+    columns: [false, true, true, true, false],
   };
 
   componentDidMount(): void {
@@ -78,6 +83,7 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
 
   render() {
     const { classes, statuses, items, theme, height, projectId } = this.props;
+    const { columns } = this.state;
     return (
       <div className={classes.root} style={{ width: statuses.length * (CARD_WIDTH + theme.spacing.unit * 1.5) }}>
         <DragDropContext onDragEnd={this.onDragEnd}>
@@ -85,6 +91,9 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
             <div className={classes.column} key={status}>
               <Typography variant="h2" className={classes.columnTitle}>
                 {STATUS_NAMES[status]}
+                <Fab size="small" onClick={this.toggleCollapse(status)} className={classes.toggle}>
+                  {columns[status] ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                </Fab>
               </Typography>
               <Droppable droppableId={status.toString()}>
                 {(provided, snapshot) => (
@@ -93,18 +102,24 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
                     style={getListStyle(snapshot.isDraggingOver, height)}
                     className={classes.columnContent}
                   >
-                    {items.list.filter(el => el.status === status).map((item: ProjectTask, index) => (
-                      <Draggable key={item.id} draggableId={item.id.toString()} index={index} type={'div'}>
-                        {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
-                          <TaskCard
-                            provided={provided}
-                            snapshot={snapshot}
-                            {...item}
-                            onClick={this.handleTaskClick(item.id)}
-                          />
-                        )}
-                      </Draggable>
-                    ))}
+                    {columns[status] ? (
+                      items.list.filter(el => el.status === status).map((item: ProjectTask, index) => (
+                        <Draggable key={item.id} draggableId={item.id.toString()} index={index} type={'div'}>
+                          {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
+                            <TaskCard
+                              provided={provided}
+                              snapshot={snapshot}
+                              {...item}
+                              onClick={this.handleTaskClick(item.id)}
+                            />
+                          )}
+                        </Draggable>
+                      ))
+                    ) : (
+                      <div className={classes.placeholderCard} onClick={this.toggleCollapse(status)}>
+                        {items.list.filter(el => el.status === status).length} задач
+                      </div>
+                    )}
                     {provided.placeholder}
                   </div>
                 )}
@@ -132,5 +147,11 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
 
   private createTask = (projectId: number | string, status: number) => () => {
     this.props.openDialog(<PatchTaskForm projectId={projectId} initialValues={{ status }} />, { maxWidth: 'lg' });
+  };
+
+  private toggleCollapse = (status: number) => () => {
+    const columns = [...this.state.columns];
+    columns[status] = !columns[status];
+    this.setState({ columns });
   };
 }
