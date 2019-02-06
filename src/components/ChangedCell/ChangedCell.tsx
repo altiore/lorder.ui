@@ -30,6 +30,7 @@ export class ChangedCellTsx extends React.Component<IChangedCellProps, IChangedC
         preferPlace="below"
         isOpen={isOpen}
         onOuterAction={this.handleOnClick}
+        style={{ zIndex: 3003 }}
         body={
           <ListBox
             items={items}

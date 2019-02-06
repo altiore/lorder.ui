@@ -131,11 +131,17 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
         this.timer = setTimeout(() => {
           this.toggleExpandProjects();
         }, 15000);
-      } else if (this.timer) {
-        clearTimeout(this.timer);
+      } else {
+        this.clearTimeout();
       }
       return { expanded: !expanded };
     });
+  };
+
+  private clearTimeout = () => {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
   };
 
   private openCreateProject = () => this.props.openDialog(CreateProjectPopup, { scroll: 'body' });
@@ -150,6 +156,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
 
   private selectProject = (projectId: number) => async () => {
     const { selectedProject, startUserWork, push } = this.props;
+    this.clearTimeout();
     this.setState({ anchorEl: null, expanded: false });
     if (selectedProject.id !== projectId) {
       await startUserWork({
@@ -162,6 +169,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
   private handleOpenInNew = (project: Project) => async (e: React.SyntheticEvent) => {
     e.stopPropagation();
     const { selectedProject, startUserWork, push } = this.props;
+    this.clearTimeout();
     this.setState({ anchorEl: null, expanded: false });
     if (!selectedProject || selectedProject.id !== project.id) {
       await startUserWork({

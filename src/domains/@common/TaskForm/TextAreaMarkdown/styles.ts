@@ -33,6 +33,10 @@ export const styles = (theme: Theme) =>
       marginTop: -TAB_HEIGHT - 4,
     },
     markdown: {
+      '& img': {
+        maxHeight: 420,
+        maxWidth: '100%',
+      },
       backgroundColor: theme.palette.background.default,
       paddingLeft: 1,
     },
