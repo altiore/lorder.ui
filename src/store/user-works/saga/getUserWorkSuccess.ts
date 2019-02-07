@@ -1,6 +1,6 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
 
-import { getProjectById } from 'src/store/projects';
+import { fetchProjectDetails, getProjectById, projectMembers } from 'src/store/projects';
 import { startTimer, stopUserWork, UserWork } from 'src/store/tasks';
 import { isTimerStarted } from 'src/store/timer';
 import { getUserWorks } from '../actions';
@@ -14,6 +14,10 @@ function* getUserWorksSuccessHandler({ payload }: any) {
     if (currentUserWork) {
       const project = (yield select(getProjectById))(currentUserWork.projectId);
       yield put(startTimer(currentUserWork, project) as any);
+      const members = yield select(projectMembers);
+      if (!members || !members.length) {
+        yield put(fetchProjectDetails(project.id));
+      }
     } else {
       if (yield select(isTimerStarted)) {
         yield put(stopUserWork() as any);

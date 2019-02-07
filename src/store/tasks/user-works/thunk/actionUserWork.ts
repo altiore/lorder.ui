@@ -5,7 +5,7 @@ import { change } from 'redux-form';
 import { IState } from 'src/@types';
 // import { changeIco } from 'src/store/@common/helpers';
 import { selectProject } from 'src/store/project';
-import { getProjectById, Project } from 'src/store/projects';
+import { fetchProjectDetails, getProjectById, Project, projectMembers } from 'src/store/projects';
 import { CREATE_USER_WORK_FORM_NAME, replaceTasks } from 'src/store/tasks';
 import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from 'src/store/timer';
 import { IUserWorkData, IUserWorkDelete, patchAndStopUserWork, postAndStartUserWork } from '../actions';
@@ -46,6 +46,10 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: Dispatch,
     } else {
       preparedData.title = `Задача для проекта ${project.title}`;
     }
+  }
+  const members = projectMembers(getState());
+  if (!members || !members.length) {
+    dispatch(fetchProjectDetails(data.projectId));
   }
   dispatch(selectProject(data.projectId));
   dispatch(change(CREATE_USER_WORK_FORM_NAME, 'projectId', data.projectId));
