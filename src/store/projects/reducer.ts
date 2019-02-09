@@ -24,6 +24,7 @@ import {
   postProjectTask,
   postTaskTypeToProject,
   removeProject,
+  removeProjectByAdmin,
   updateProjectMemberAccessLevel,
 } from './actions';
 import { Member } from './members/Member';
@@ -187,7 +188,7 @@ export const projects = handleActions<S, P>(
     [combineActionsRedux(getOwnProjects.success, getAllProjects.success).toString()]: getOwnProjectsSuccessHandler,
     [combineActionsRedux(getOwnProjects.fail, getAllProjects.fail).toString()]: getOwnProjectsFailHandler,
     [addTaskTypeToProject.toString()]: addTaskTypeToProjectHandler,
-    [removeProject.success]: removeProjectSuccessHandler,
+    [combineActionsRedux(removeProject.success, removeProjectByAdmin.success).toString()]: removeProjectSuccessHandler,
     [fetchProjectDetails.success]: fetchProjectDetailsSuccessHandler,
     [deleteTaskTypeFromProject.toString()]: deleteTaskTypeFromProjectHandler,
     [postProjectMember.toString()]: postProjectMemberHandler,

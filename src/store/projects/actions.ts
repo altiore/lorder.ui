@@ -61,6 +61,19 @@ export const removeProject = requestActions('PROJECTS/REMOVE', (projectId: numbe
   } as Notification,
 }));
 
+export const removeProjectByAdmin = requestActions('PROJECTS/REMOVE', (projectId: number) => ({
+  projectId,
+  request: {
+    method: 'DELETE',
+    url: `/projects/${projectId}/admin`,
+  },
+  success: {
+    level: 'warning',
+    message: 'Ничего не бойся - я с тобой!',
+    title: 'Проект успешно удален',
+  } as Notification,
+}));
+
 export const fetchProjectDetails = requestActions('PROJECTS/FETCH_ONE', (projectId: number) => ({
   request: {
     url: `/projects/${projectId}`,

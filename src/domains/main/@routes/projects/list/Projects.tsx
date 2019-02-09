@@ -9,6 +9,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { TableCellProps } from 'react-virtualized';
 
 import { ROLE } from 'src/@types';
+import { Confirmation } from 'src/components/Dialogs/Confirmation';
 import { Page } from 'src/components/Page';
 import TableVirtualized, { ColumnType } from 'src/components/TableVirtualized';
 import { CreateProjectPopup } from 'src/domains/@common/CreateProjectPopup';
@@ -29,6 +30,7 @@ export interface IProjectsProps {
   ownOnly: boolean;
   projectList: Project[];
   removeProject: any;
+  removeProjectByAdmin: any;
   showError: any;
   userRole: ROLE;
   height: number;
@@ -167,13 +169,27 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
       return;
     }
     if (accessLevel === ACCESS_LEVEL.VIOLET || this.props.userRole === ROLE.SUPER_ADMIN) {
-      this.props.removeProject(id);
+      this.props.openDialog(
+        <Confirmation
+          text="Это действие нельзя будет отменить! Вы уверены, что хотите удалить проект безвозвратно?"
+          onConfirm={this.removeProjectById(id)}
+        />
+      );
     } else {
       this.props.showError({
         message: 'Только владелец может удалить проект!',
         title: 'Недостаточно прав',
       });
     }
+  };
+
+  private removeProjectById = (id: any) => async () => {
+    if (this.props.ownOnly) {
+      await this.props.removeProject(id);
+    } else {
+      await this.props.removeProjectByAdmin(id);
+    }
+    this.props.closeDialog();
   };
 
   private getUserEmail = (id?: number): number | string => {

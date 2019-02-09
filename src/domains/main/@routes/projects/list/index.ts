@@ -14,6 +14,7 @@ import {
   getOwnProjects,
   ownProjectList,
   removeProject,
+  removeProjectByAdmin,
 } from 'src/store/projects';
 import { findUserById } from 'src/store/users';
 import { Projects as ProjectsJsx } from './Projects';
@@ -36,6 +37,7 @@ const mapToProps = (ownOnly: boolean = true) => ({
   goToPage: push,
   openDialog,
   removeProject,
+  removeProjectByAdmin,
   showError: error,
 });
 
