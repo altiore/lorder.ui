@@ -21,6 +21,9 @@ class PieChartTsx extends React.Component<IPieChartProps, {}> {
 
   render() {
     const { data, title, unit, width } = this.props;
+    if (!data) {
+      return null;
+    }
     let size = 300;
     let height = 400;
     if (width) {

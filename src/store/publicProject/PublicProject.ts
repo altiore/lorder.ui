@@ -36,6 +36,9 @@ export class PublicProject {
       return [];
     }
     const { members, data } = this.statistic;
+    if (!data || !members) {
+      return [];
+    }
     return Object.keys(data).map(el => ({
       name: get(members.find(m => m.id.toString() === el), 'email', '').replace(/\@.*$/, ''),
       y: millisecondsToHours(data[el].time),
@@ -47,6 +50,9 @@ export class PublicProject {
       return [];
     }
     const { members, data } = this.statistic;
+    if (!data || !members) {
+      return [];
+    }
     return Object.keys(data).map(el => ({
       name: get(members.find(m => m.id.toString() === el), 'email', '').replace(/\@.*$/, ''),
       y: data[el].value || 1,
