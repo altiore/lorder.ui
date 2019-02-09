@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
+import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
@@ -32,6 +33,7 @@ export interface IProjectsProps {
   userRole: ROLE;
   height: number;
   isWidthSm: boolean;
+  theme: Theme;
 }
 
 export interface IProjectsState {
@@ -50,13 +52,13 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   }
 
   render() {
-    const { classes, hasRole, ownOnly, projectList, height, isWidthSm } = this.props;
-    const columns: ColumnType[] = [
-      { label: 'Название', order: 1, isShown: true, dataKey: 'title' },
+    const { classes, hasRole, ownOnly, projectList, height: pHeight, isWidthSm, theme } = this.props;
+    let columns: ColumnType[] = [
+      { label: `Название (${projectList.length})`, order: 1, isShown: true, dataKey: 'title' },
       { label: '', order: 20, isShown: true, dataKey: 'id', width: 100, component: this.renderRemove },
     ];
     if (!isWidthSm) {
-      columns.concat([
+      columns = columns.concat([
         // { label: 'Бюджет', order: 3, isShown: hasRole(ROLE.SUPER_ADMIN), dataKey: 'monthlyBudget' },
         { label: 'Потрачено Времени', order: 4, isShown: true, dataKey: 'fullProjectTimeHumanize' },
         {
@@ -80,11 +82,20 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     }
     const rows = projectList.sort(this.sortState());
     const { sortBy, sortDirection } = this.state;
+    const height = pHeight - 69.6 - (isWidthSm ? 0 : theme.spacing.unit * 14) - (ownOnly ? 37 : 0);
     return (
       <LayoutLeftDrawer>
         <Page>
+          <TableVirtualized
+            columns={columns}
+            rows={rows}
+            height={height}
+            sortBy={sortBy}
+            sortDirection={sortDirection}
+            sort={this.sortTable}
+            onRowClick={ownOnly ? this.handleRowClick : undefined}
+          />
           <div className={classes.row}>
-            {!isWidthSm && <Typography>Всего проектов: {projectList.length}</Typography>}
             {ownOnly && (
               <Button size="large" variant="outlined" color="primary" onClick={this.createProject}>
                 <Typography variant="caption" noWrap>
@@ -93,15 +104,6 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
               </Button>
             )}
           </div>
-          <TableVirtualized
-            columns={columns}
-            rows={rows}
-            height={height - 69.6 - (ownOnly ? 37 : 0)}
-            sortBy={sortBy}
-            sortDirection={sortDirection}
-            sort={this.sortTable}
-            onRowClick={ownOnly ? this.handleRowClick : undefined}
-          />
         </Page>
       </LayoutLeftDrawer>
     );

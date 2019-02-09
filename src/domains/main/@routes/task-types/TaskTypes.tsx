@@ -34,23 +34,10 @@ export class TaskTypesTsx extends React.Component<RouteComponentProps<{}> & ITas
     this.props.getAllTaskTypes();
   }
 
-  // TODO: cover with tests!!!
-  handleRowClick = (id: number | undefined) => (event: React.MouseEvent) => {
-    const isOpener = get(event, 'target.dataset.role') === 'opener';
-    if (isOpener) {
-      return;
-    }
-  };
-
-  handleRemoveClick = (id: number | undefined) => (e: any) => {
-    e.stopPropagation();
-    this.props.deleteTaskType(id);
-  };
-
   render() {
     const { getRef, list } = this.props;
     const columns = [
-      { label: 'Название', order: 1, isShown: true, dataKey: 'title' },
+      { label: `Название (${list.length})`, order: 1, isShown: true, dataKey: 'title' },
       { label: 'Публичная', order: 2, isShown: true, dataKey: 'isPublic', component: this.renderPublished },
       { label: '', order: 7, isShown: true, dataKey: 'id', component: this.renderRemove, width: 100 },
     ];
@@ -59,9 +46,6 @@ export class TaskTypesTsx extends React.Component<RouteComponentProps<{}> & ITas
     return (
       <LayoutLeftDrawer>
         <Page innerRef={getRef}>
-          <div>
-            <span>Всего типов задач: {list.length}</span>
-          </div>
           <TableVirtualized
             columns={columns}
             rows={rows}
@@ -74,6 +58,19 @@ export class TaskTypesTsx extends React.Component<RouteComponentProps<{}> & ITas
       </LayoutLeftDrawer>
     );
   }
+
+  // TODO: cover with tests!!!
+  handleRowClick = (id: number | undefined) => (event: React.MouseEvent) => {
+    const isOpener = get(event, 'target.dataset.role') === 'opener';
+    if (isOpener) {
+      return;
+    }
+  };
+
+  handleRemoveClick = (id: number | undefined) => (e: any) => {
+    e.stopPropagation();
+    this.props.deleteTaskType(id);
+  };
 
   private renderRemove = ({ cellData }: TableCellProps) => (
     <Fab size="small" color="primary" onClick={this.handleRemoveClick(cellData)}>

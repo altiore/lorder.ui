@@ -7,5 +7,6 @@ export const styles = (theme: Theme) =>
       alignItems: 'center',
       display: 'flex',
       flexFlow: 'row wrap',
+      justifyContent: 'center',
     },
   });

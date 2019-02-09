@@ -2,6 +2,7 @@ import Fab from '@material-ui/core/Fab';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Select from '@material-ui/core/Select';
+import { Theme } from '@material-ui/core/styles';
 import ClearIcon from '@material-ui/icons/Clear';
 import get from 'lodash-es/get';
 import * as moment from 'moment';
@@ -10,9 +11,10 @@ import { RouteComponentProps } from 'react-router-dom';
 import { TableCellProps } from 'react-virtualized';
 
 import { Page } from 'src/components/Page';
-import TableVirtualized from 'src/components/TableVirtualized';
+import TableVirtualized, { ColumnType } from 'src/components/TableVirtualized';
 import { LayoutLeftDrawer } from 'src/domains/@common/LayoutLeftDrawer';
 import { IUser } from 'src/store/users';
+import { ROLE } from '../../../../@types';
 
 export interface IUsersProps {
   classes: any;
@@ -22,6 +24,9 @@ export interface IUsersProps {
   getRef: React.RefObject<{}>;
   patchUser: any;
   userList: IUser[];
+  height: number;
+  isWidthSm: boolean;
+  theme: Theme;
 }
 
 export interface IUsersState {
@@ -53,24 +58,25 @@ export class Users extends React.Component<RouteComponentProps<{}> & IUsersProps
   };
 
   render() {
-    const { getRef, userList } = this.props;
-    const columns = [
-      { label: 'Email', order: 1, isShown: true, dataKey: 'email' },
-      { label: 'Создан', order: 2, isShown: true, dataKey: 'createdAt', component: this.renderCreatedAt },
-      { label: 'Телефон', order: 3, isShown: true, dataKey: 'tel' },
-      { label: 'Статус', order: 4, isShown: true, dataKey: 'status', width: 130 },
-      { label: 'Роль', order: 5, isShown: true, dataKey: 'role', component: this.renderSelectRole, width: 190 },
-      { label: 'Проектов', order: 6, isShown: true, dataKey: 'projectsCount', width: 230 },
+    const { isWidthSm, getRef, userList } = this.props;
+    let columns: ColumnType[] = [
+      { label: `Email (${userList.length})`, order: 1, isShown: true, dataKey: 'email' },
       { label: '', order: 7, isShown: true, dataKey: 'id', component: this.renderRemove, width: 100 },
     ];
+    if (!isWidthSm) {
+      columns = columns.concat([
+        { label: 'Создан', order: 2, isShown: true, dataKey: 'createdAt', component: this.renderCreatedAt },
+        { label: 'Телефон', order: 3, isShown: true, dataKey: 'tel' },
+        { label: 'Статус', order: 4, isShown: true, dataKey: 'status', width: 130 },
+        { label: 'Роль', order: 5, isShown: true, dataKey: 'role', component: this.renderSelectRole, width: 190 },
+        { label: 'Проектов', order: 6, isShown: true, dataKey: 'projectsCount', width: 230 },
+      ]);
+    }
     const rows = userList.sort(this.sortState());
     const { sortBy, sortDirection } = this.state;
     return (
       <LayoutLeftDrawer>
         <Page innerRef={getRef}>
-          <div>
-            <span>Всего пользователей: {userList.length}</span>
-          </div>
           <TableVirtualized
             columns={columns}
             rows={rows}

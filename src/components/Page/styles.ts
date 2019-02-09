@@ -13,7 +13,7 @@ export const styles = (theme: Theme) =>
     },
     root: {
       flexGrow: 1,
-      padding: '0 24px',
+      padding: `0 ${theme.spacing.unit * 3}px`,
       [theme.breakpoints.down('sm')]: {
         padding: 0,
       },
