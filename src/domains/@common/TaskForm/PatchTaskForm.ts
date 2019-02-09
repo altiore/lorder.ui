@@ -50,11 +50,11 @@ const mergeProps = (
   const localProjectId = projectId || routeProjectId;
   return {
     ...restState,
-    archiveTask: () => archiveTask(taskId),
+    archiveTask: () => archiveTask({ taskId: localTaskId, projectId: localProjectId }),
     fetchTaskDetails: () => fetchTaskDetails(localTaskId),
     initialValues: initialValues || (localTaskId ? getEditTaskInitialValues(localTaskId) : {}),
-    isCurrent: checkIsCurrent(taskId),
-    projectId,
+    isCurrent: checkIsCurrent(localTaskId),
+    projectId: localProjectId,
     startUserWork: () => startUserWork({ taskId: localTaskId, projectId: localProjectId }),
     stopUserWork,
     taskId: localTaskId,

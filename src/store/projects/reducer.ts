@@ -4,6 +4,7 @@ import { Action, ActionMeta, combineActions as combineActionsRedux, handleAction
 import { PURGE } from 'redux-persist';
 
 import { IMeta } from 'src/@types';
+import { archiveTask } from 'src/store/tasks/actions';
 import { DownloadList } from '../@common/entities';
 import { combineActions } from '../@common/helpers';
 import {
@@ -196,7 +197,13 @@ export const projects = handleActions<S, P>(
     // [updateProjectMemberAccessLevel.success]: updateProjectMemberAccessLevelSuccessHandler,
     // [updateProjectMemberAccessLevel.fail]: updateProjectMemberAccessLevelFailHandler,
     [deleteProjectMember.toString()]: deleteProjectMemberHandler,
-    [combineActions(moveProjectTask, postProjectTask, patchProjectTask, deleteProjectTask)]: projectTaskHandler,
+    [combineActions(
+      moveProjectTask,
+      postProjectTask,
+      patchProjectTask,
+      deleteProjectTask,
+      archiveTask
+    )]: projectTaskHandler,
     [combineActions(getAllProjectTaskTypes, postTaskTypeToProject)]: projectTaskTypeHandler,
     [getAllProjectTasks.success]: getAllProjectTasksHandler,
     [PURGE]: logOutHandler,

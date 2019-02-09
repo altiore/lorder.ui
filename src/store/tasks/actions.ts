@@ -27,7 +27,8 @@ export const fetchTaskDetails = requestActions(
 
 export const archiveTask = requestActions(
   'TASKS/ARCHIVE',
-  (taskId: number): any => ({
+  ({ taskId, projectId }: { taskId: number; projectId: number }): any => ({
+    projectId,
     request: {
       method: 'PATCH',
       url: `/tasks/${taskId}/archive`,
