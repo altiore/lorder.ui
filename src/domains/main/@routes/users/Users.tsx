@@ -14,7 +14,6 @@ import { Page } from 'src/components/Page';
 import TableVirtualized, { ColumnType } from 'src/components/TableVirtualized';
 import { LayoutLeftDrawer } from 'src/domains/@common/LayoutLeftDrawer';
 import { IUser } from 'src/store/users';
-import { ROLE } from '../../../../@types';
 
 export interface IUsersProps {
   classes: any;
