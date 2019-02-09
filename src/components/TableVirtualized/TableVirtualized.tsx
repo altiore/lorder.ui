@@ -12,7 +12,7 @@ import {
   TableProps,
 } from 'react-virtualized';
 
-interface ColumnType {
+export interface ColumnType {
   component?: any;
   dataKey: string;
   disableSort?: boolean;
@@ -22,7 +22,7 @@ interface ColumnType {
   order?: number;
   sortBy?: string;
   sortDirection?: 'ASC' | 'DESC';
-  width?: number;
+  width?: number | undefined;
 }
 
 type ColumnsType = ColumnType[];

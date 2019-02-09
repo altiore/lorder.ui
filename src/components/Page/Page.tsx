@@ -8,13 +8,14 @@ export interface IPageProps {
   className?: string;
   classes?: any;
   children?: any;
+  height: number;
 }
 
-export const PageJsx: React.FunctionComponent<IPageProps> = ({ className, classes, children }) => (
+export const PageJsx: React.FunctionComponent<IPageProps> = ({ className, classes, children, height }) => (
   <Grid container className={cn(classes.root, className)}>
     <Grid item xs={12}>
       <Paper className={classes.paper}>
-        <Scrollbars autoHide autoHeightMin={0} autoHeightMax={800} style={{ height: 800 }}>
+        <Scrollbars autoHide autoHeightMin={0} autoHeightMax={height - 70} style={{ height: height - 70 }}>
           {children}
         </Scrollbars>
       </Paper>

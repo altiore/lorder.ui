@@ -9,7 +9,7 @@ import { TableCellProps } from 'react-virtualized';
 
 import { ROLE } from 'src/@types';
 import { Page } from 'src/components/Page';
-import TableVirtualized from 'src/components/TableVirtualized';
+import TableVirtualized, { ColumnType } from 'src/components/TableVirtualized';
 import { CreateProjectPopup } from 'src/domains/@common/CreateProjectPopup';
 import { LayoutLeftDrawer } from 'src/domains/@common/LayoutLeftDrawer';
 import { ACCESS_LEVEL, Project } from 'src/store/projects';
@@ -30,6 +30,8 @@ export interface IProjectsProps {
   removeProject: any;
   showError: any;
   userRole: ROLE;
+  height: number;
+  isWidthSm: boolean;
 }
 
 export interface IProjectsState {
@@ -48,22 +50,26 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   }
 
   render() {
-    const { classes, hasRole, ownOnly, projectList } = this.props;
-    const columns = [
+    const { classes, hasRole, ownOnly, projectList, height, isWidthSm } = this.props;
+    const columns: ColumnType[] = [
       { label: 'Название', order: 1, isShown: true, dataKey: 'title' },
-      // { label: 'Бюджет', order: 3, isShown: hasRole(ROLE.SUPER_ADMIN), dataKey: 'monthlyBudget' },
-      { label: 'Потрачено Времени', order: 4, isShown: true, dataKey: 'fullProjectTimeHumanize' },
-      {
-        component: this.renderValue,
-        dataKey: 'valueSum',
-        isShown: hasRole(ROLE.SUPER_ADMIN),
-        label: 'Ценность',
-        order: 5,
-      },
-      { label: 'Публичный', order: 8, isShown: true, dataKey: 'uuid', width: 140, component: this.renderPublished },
       { label: '', order: 20, isShown: true, dataKey: 'id', width: 100, component: this.renderRemove },
     ];
-    if (!ownOnly && hasRole(ROLE.SUPER_ADMIN)) {
+    if (!isWidthSm) {
+      columns.concat([
+        // { label: 'Бюджет', order: 3, isShown: hasRole(ROLE.SUPER_ADMIN), dataKey: 'monthlyBudget' },
+        { label: 'Потрачено Времени', order: 4, isShown: true, dataKey: 'fullProjectTimeHumanize' },
+        {
+          component: this.renderValue,
+          dataKey: 'valueSum',
+          isShown: hasRole(ROLE.SUPER_ADMIN),
+          label: 'Ценность',
+          order: 5,
+        },
+        { label: 'Публичный', order: 8, isShown: true, dataKey: 'uuid', width: 140, component: this.renderPublished },
+      ]);
+    }
+    if (!ownOnly && hasRole(ROLE.SUPER_ADMIN) && !isWidthSm) {
       columns.push({
         component: this.renderUser,
         dataKey: 'ownerId',
@@ -78,7 +84,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
       <LayoutLeftDrawer>
         <Page>
           <div className={classes.row}>
-            <Typography>Всего проектов: {projectList.length}</Typography>
+            {!isWidthSm && <Typography>Всего проектов: {projectList.length}</Typography>}
             {ownOnly && (
               <Button size="large" variant="outlined" color="primary" onClick={this.createProject}>
                 <Typography variant="caption" noWrap>
@@ -90,7 +96,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
           <TableVirtualized
             columns={columns}
             rows={rows}
-            height={'calc(100% - 40px)'}
+            height={height - 69.6 - (ownOnly ? 37 : 0)}
             sortBy={sortBy}
             sortDirection={sortDirection}
             sort={this.sortTable}
@@ -109,7 +115,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     return this.getUserEmail(cellData);
   };
 
-  private sortTable = ({ sortBy, sortDirection }: any) => {
+  private sortTable = ({ sortBy, sortDirection }: any, w: any) => {
     this.setState({ sortBy, sortDirection });
   };
 

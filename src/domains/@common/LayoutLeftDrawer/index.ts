@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 
+import { withResize } from 'src/hocs/withResize';
 import { closeDialog, openDialog } from 'src/store/dialog';
 import { userRole } from 'src/store/identity';
 import { selectedProject } from 'src/store/projects';
@@ -24,7 +25,7 @@ const mapDispatch = {
   toggleUiSetting,
 };
 
-export const LayoutLeftDrawer = connect(
+export const LayoutLeftDrawer = connect<any, any, any>(
   mapState,
   mapDispatch
-)(withRouter(withStyles(styles, { withTheme: true })(LayoutLeftDrawerTsx)));
+)(withRouter(withResize(withStyles(styles, { withTheme: true })(LayoutLeftDrawerTsx))));

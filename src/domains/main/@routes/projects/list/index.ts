@@ -4,6 +4,7 @@ import { error } from 'react-notification-system-redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { withResize } from 'src/hocs/withResize';
 import { closeDialog, openDialog } from 'src/store/dialog';
 import { defaultProjectId, hasRole, userRole } from 'src/store/identity';
 import {
@@ -49,10 +50,10 @@ export const OwnProjects = connect(
   mapToState(true),
   mapToProps(true),
   mergeProps
-)(withStyles(styles, { withTheme: true })(ProjectsJsx));
+)(withResize(withStyles(styles, { withTheme: true })(ProjectsJsx)));
 
 export const AllProjects = connect(
   mapToState(false),
   mapToProps(false),
   mergeProps
-)(withStyles(styles, { withTheme: true })(ProjectsJsx));
+)(withResize(withStyles(styles, { withTheme: true })(ProjectsJsx)));

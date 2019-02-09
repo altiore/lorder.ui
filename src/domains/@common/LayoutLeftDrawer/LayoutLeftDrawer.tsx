@@ -31,6 +31,7 @@ export interface ILayoutLeftDrawerProps {
   classes: any;
   goTo: any;
   isLeftBarOpen: boolean;
+  isWidthSm: boolean;
   match: match<any>;
   routes?: IRoute[];
   selectedProject: Project;
@@ -142,7 +143,10 @@ export class LayoutLeftDrawerTsx extends React.Component<
 
   private goTo = (path?: string) => () => {
     if (path) {
-      const { goTo, match } = this.props;
+      const { goTo, match, isWidthSm } = this.props;
+      if (isWidthSm) {
+        this.handleDrawerToggle();
+      }
       goTo(path.replace(match.path, match.url));
     }
   };

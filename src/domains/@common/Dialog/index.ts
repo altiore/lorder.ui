@@ -1,5 +1,5 @@
 import { DialogProps } from '@material-ui/core/Dialog';
-import { withStyles } from '@material-ui/core/styles';
+import { withTheme } from '@material-ui/core/styles';
 import { push } from 'connected-react-router';
 // import { cloneElement, createElement, isValidElement } from 'react';
 import { connect } from 'react-redux';
@@ -47,4 +47,4 @@ export default connect<IMappedState, IMappedDispatch, any>(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(withStyles({}, { withTheme: true })(withResize(DialogTsx)));
+)(withTheme()(withResize(DialogTsx)));

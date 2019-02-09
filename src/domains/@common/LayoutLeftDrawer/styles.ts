@@ -20,7 +20,7 @@ export const styles = (theme: Theme) =>
       width: `calc(100% - ${drawerWidth}px)`,
     },
     content: {
-      alignItems: 'flex-begin',
+      alignItems: 'flex-start',
       display: 'flex',
       flexGrow: 1,
       justifyContent: 'center',
@@ -30,6 +30,11 @@ export const styles = (theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
         easing: theme.transitions.easing.sharp,
       }),
+      [theme.breakpoints.down('sm')]: {
+        justifyContent: 'flex-start',
+        overflowX: 'auto',
+        padding: 0,
+      },
     },
     contentShift: {
       marginLeft: 0,
@@ -87,6 +92,7 @@ export const styles = (theme: Theme) =>
       position: 'absolute',
       top: 0,
       width: 30,
+      zIndex: 1200,
     },
     userRole: {
       bottom: 0,

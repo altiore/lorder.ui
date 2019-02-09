@@ -1,11 +1,16 @@
 import Dialog, { DialogProps } from '@material-ui/core/Dialog';
 import { Theme } from '@material-ui/core/styles';
+import omit from 'lodash-es/omit';
 import * as React from 'react';
 
 import { CurrentDialog } from 'src/store/dialog/actions';
 
 export interface IDialogTsx {
+  isWidthLg: boolean;
+  isWidthMd: boolean;
+  isWidthSm: boolean;
   theme: Theme;
+  height?: number;
   width?: number;
 }
 
@@ -13,9 +18,10 @@ export const DialogTsx: React.FunctionComponent<DialogProps & IDialogTsx> = prop
   if (!CurrentDialog) {
     return null;
   }
-  const { theme, width } = props;
+  const { isWidthSm } = props;
+  const rest = omit(props, ['isWidthLg', 'isWidthMd', 'isWidthSm', 'theme', 'height', 'width']);
   return (
-    <Dialog fullScreen={(width || 0) <= theme.breakpoints.values.sm} {...props} aria-labelledby="scroll-dialog-title">
+    <Dialog fullScreen={isWidthSm} {...rest} aria-labelledby="scroll-dialog-title">
       {React.isValidElement(CurrentDialog)
         ? React.cloneElement<any>(CurrentDialog, { onClose: props.onClose })
         : React.createElement(CurrentDialog as any, { onClose: props.onClose })}
