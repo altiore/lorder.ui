@@ -16,7 +16,7 @@ export interface IState extends IDimensions {
 
 export const withResize = <P>(
   Component: React.FunctionComponent<P> | React.ComponentClass<P>,
-  getNode?: (el: any) => any | boolean
+  getNode: (el: any) => any | boolean = (el: any) => el
 ): any => {
   return withTheme()(
     class WithResize extends React.Component<WithTheme, IState> {
@@ -32,6 +32,7 @@ export const withResize = <P>(
 
       componentDidMount(): void {
         window.addEventListener('resize', this.handleResize, false);
+        this.setState(this.getDimensions());
       }
 
       componentWillUnmount(): void {

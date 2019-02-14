@@ -9,5 +9,6 @@ module.exports = (baseConfig, env, config) => {
   config.plugins.push(new TSDocgenPlugin()); // optional
   config.resolve.extensions.push('.ts', '.tsx');
   config.resolve.alias['.storybook'] = path.resolve(__dirname);
+  config.resolve.alias['src'] = path.resolve(__dirname + '/../src');
   return config;
 };
