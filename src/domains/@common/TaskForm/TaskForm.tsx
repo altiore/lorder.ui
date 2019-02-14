@@ -10,14 +10,13 @@ import Typography from '@material-ui/core/Typography';
 import BugReportIcon from '@material-ui/icons/BugReport';
 import CloseIcon from '@material-ui/icons/Close';
 import EventIcon from '@material-ui/icons/Event';
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import ExtensionIcon from '@material-ui/icons/Extension';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import NotesIcon from '@material-ui/icons/Notes';
-import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import * as React from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Field, InjectedFormProps } from 'redux-form';
 import { length, required } from 'redux-form-validators';
 
@@ -27,6 +26,7 @@ import { TitleInput } from 'liw-components/TitleInput';
 import { SelectMenuField } from 'src/components/SelectMenuField';
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { parseNumber } from 'src/store/@common/helpers';
+import { INotification } from 'src/store/notifications';
 import { STATUS_NAMES } from 'src/store/projects';
 import { PerformerField } from './PerformerField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
@@ -52,7 +52,9 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
   onClose: any;
   projectId: number;
   projectTasksIsLoading: boolean;
+  push: any;
   replace: any;
+  showSuccess: (args: INotification) => any;
   startUserWork?: any;
   stopUserWork: any;
   taskId?: number;
@@ -99,7 +101,6 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
       classes,
       initialValues,
       isCurrent,
-      onClose,
       pristine,
       submitting,
       startUserWork,
@@ -121,19 +122,21 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
             </IconButton>
             {taskId && (
               <>
-                <Button variant="text" component="a" onClick={this.goToTask(taskId)} href="#">
+                <Button variant="text" component="a" onClick={this.goToTask()} href="#">
                   <Typography>
                     A-
                     {taskId}
                   </Typography>
                 </Button>
-                <IconButton>
-                  <FileCopyIcon fontSize="small" />
-                </IconButton>
+                <CopyToClipboard text={this.getLink(true)} onCopy={this.copyToClipboard}>
+                  <IconButton onClick={this.copyToClipboard}>
+                    <FileCopyIcon fontSize="small" />
+                  </IconButton>
+                </CopyToClipboard>
               </>
             )}
           </div>
-          <IconButton onClick={onClose}>
+          <IconButton onClick={this.onClose}>
             <CloseIcon fontSize="small" />
           </IconButton>
         </DialogTitle>
@@ -185,20 +188,10 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                     </IconButton>
                   )}
                 </Field>
-                <IconButton aria-label="4 events" className={classes.margin}>
-                  <Badge badgeContent={4} color="secondary" invisible={invisible[1]}>
-                    <EventAvailableIcon fontSize="small" />
-                  </Badge>
-                </IconButton>
-                <IconButton aria-label="123 labels" className={classes.margin}>
-                  <Badge badgeContent={12} color="secondary" invisible={invisible[2]}>
-                    <TurnedInIcon fontSize="small" />
-                  </Badge>
-                </IconButton>
                 {taskId && (
                   <>
                     <IconButton aria-label="more" className={classes.margin} onClick={this.moreMenuOpen}>
-                      <Badge badgeContent={1} color="secondary" invisible={invisible[3]}>
+                      <Badge badgeContent={1} color="secondary" invisible={invisible[1]}>
                         <MoreHorizIcon fontSize="small" />
                       </Badge>
                     </IconButton>
@@ -249,12 +242,48 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
     return null;
   }
 
-  private goToTask = (taskId: number) => (e: React.SyntheticEvent) => {
+  private onClose = () => {
+    if (this.props.hasOwnProperty('location')) {
+      this.props.push('/');
+    } else {
+      this.props.onClose();
+    }
+  };
+
+  private getLink = (absolute: boolean = false) => {
+    const path = `/projects/${this.props.projectId}/tasks/${this.props.taskId}`;
+    if (absolute) {
+      return window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + path;
+    }
+    return path;
+  };
+
+  private goToTask = () => (e: React.SyntheticEvent) => {
     e.preventDefault();
-    // this.props.changeSettings({ fullScreen: true });
-    this.props.replace({
-      pathname: `/projects/${this.props.projectId}/tasks/${taskId}`,
-    });
+    if (this.props.hasOwnProperty('location')) {
+      this.copyToClipboard();
+    } else {
+      // this.props.changeSettings({ fullScreen: true });
+      this.props.replace({
+        pathname: this.getLink(false),
+      });
+    }
+  };
+
+  private copyToClipboard = (e?: React.SyntheticEvent | string) => {
+    if (e) {
+      if (typeof e === 'string') {
+        this.props.showSuccess({
+          message: 'Ссылка на задачу скопирована в буфер обмена!',
+          title: e,
+        });
+      }
+    } else {
+      this.props.showSuccess({
+        message: 'Ссылка на задачу скопирована в буфер обмена!',
+        title: this.getLink(true),
+      });
+    }
   };
 
   private moreMenuOpen = (event: React.SyntheticEvent) => {

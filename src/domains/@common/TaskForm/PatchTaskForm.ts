@@ -1,4 +1,4 @@
-import { replace } from 'connected-react-router';
+import { push, replace } from 'connected-react-router';
 import get from 'lodash-es/get';
 import { connect } from 'react-redux';
 import { change, reduxForm } from 'redux-form';
@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { onSubmitFail } from 'src/store/@common/helpers';
 import { changeSettings } from 'src/store/dialog';
+import { showSuccess } from 'src/store/notifications';
 import {
   patchProjectTask,
   postProjectTask,
@@ -36,7 +37,9 @@ const mapDispatchToProps = {
   archiveTask,
   changeSettings,
   fetchTaskDetails,
+  push,
   replace,
+  showSuccess,
   startUserWork,
   stopUserWork,
 };

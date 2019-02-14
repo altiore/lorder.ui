@@ -23,6 +23,7 @@
     "rc-slider": "^8.6.3",
     "react": "16.7.0",
     "react-beautiful-dnd": "^10.0.3",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-css-modules": "4.7.9",
     "react-custom-scrollbars": "4.2.1",
     "react-dom": "16.8.1",
