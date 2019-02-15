@@ -49,7 +49,7 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     return (
       <>
         <div className={classes.timeLine}>
-          <DailyRoutine startAt={0} finishAt={6} />
+          <DailyRoutine startAt={6} finishAt={23} />
         </div>
         <PageCenter className={classes.root}>
           <Grid item lg={9} md={8} sm={12} className={classes.content}>
