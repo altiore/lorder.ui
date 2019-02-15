@@ -29,6 +29,7 @@ export const styles = (theme: Theme) =>
       top: 0,
     },
     text: {
-      fill: '#77909D',
+      // fill: '#77909D',
+      fill: '#87A082',
     },
   });

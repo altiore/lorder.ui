@@ -68,9 +68,9 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
                   </text>
                 )}
               <line
-                stroke="#D8DDE6"
+                stroke="#FAB203"
                 x1={x + X_OFFSET}
-                y1={y ? (height === Y_HEIGHT_BIG ? 16 : 2) : height === Y_HEIGHT_BIG ? height - 8 : height - 2}
+                y1={y ? (height === Y_HEIGHT_BIG ? 16 : 1) : height === Y_HEIGHT_BIG ? height - 8 : height - 4}
                 x2={x + X_OFFSET}
                 y2={height}
               />
@@ -92,7 +92,7 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
   }
 
   private getColor(el: IEvent) {
-    return el.isActive ? '#FFF0B5' : '#99ABB8';
+    return el.isActive ? '#FFF0B5' : '#eeeeee';
   }
 
   private getBorderColor(el: IEvent) {
