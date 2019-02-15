@@ -6,7 +6,6 @@ import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import { NoMatch } from 'src/components/NoMatch';
-import { DashboardTaskForm } from 'src/domains/@common/TaskForm';
 import { Main } from 'src/domains/main';
 import { Dashboard } from 'src/domains/main/@routes/dashboard';
 import { OwnProjects } from 'src/domains/main/@routes/projects/list';
@@ -15,6 +14,7 @@ import DragAndDrop from 'src/domains/main/@routes/projects/one/DragAndDrop';
 import { ProjectMembers } from 'src/domains/main/@routes/projects/one/ProjectMembers';
 import { ProjectTaskTypes } from 'src/domains/main/@routes/projects/one/ProjectTaskTypes';
 import { Settings } from 'src/domains/main/@routes/projects/one/Settings';
+import Task from 'src/domains/main/@routes/task';
 import { Profile } from 'src/domains/profile';
 import { ACCESS_LEVEL } from 'src/store/projects';
 import { commonRoutes } from './@common';
@@ -76,7 +76,7 @@ export const routes = [
           },
           {
             accessLevel: ACCESS_LEVEL.RED,
-            component: DashboardTaskForm,
+            component: Task,
             path: '/projects/:projectId/tasks/:taskId',
           },
         ],

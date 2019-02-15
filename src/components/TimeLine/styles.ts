@@ -4,16 +4,24 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) =>
   createStyles({
     block: {
-      backgroundColor: 'green',
-      height: 50,
-      width: 120,
+      // backgroundColor: '#FFF0B5',
+      // backgroundColor: '#FAB203',
+      // border: '1px solid #FFB200',
+      borderRadius: 2,
+      borderStyle: 'solid',
+      borderWidth: 1,
+      boxSizing: 'border-box',
+      height: '100%',
+      position: 'absolute',
     },
     root: {
       backgroundColor: theme.palette.background.paper,
+      border: '1px solid #FFB200',
       borderRadius: theme.shape.borderRadius,
       cursor: 'pointer',
-      height: '50px',
+      flexGrow: 1,
       position: 'relative',
+      width: '100%',
     },
     svg: {
       left: 0,
@@ -21,6 +29,6 @@ export const styles = (theme: Theme) =>
       top: 0,
     },
     text: {
-      fill: 'red',
+      fill: '#77909D',
     },
   });

@@ -8,7 +8,6 @@ import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import { NoMatch } from 'src/components/NoMatch';
-import { DashboardTaskForm } from 'src/domains/@common/TaskForm';
 import { Main } from 'src/domains/main';
 import { Dashboard } from 'src/domains/main/@routes/dashboard';
 import { AllProjects, OwnProjects } from 'src/domains/main/@routes/projects/list';
@@ -18,6 +17,7 @@ import { ProjectMembers } from 'src/domains/main/@routes/projects/one/ProjectMem
 import { ProjectTasks } from 'src/domains/main/@routes/projects/one/ProjectTasks';
 import { ProjectTaskTypes } from 'src/domains/main/@routes/projects/one/ProjectTaskTypes';
 import { Settings } from 'src/domains/main/@routes/projects/one/Settings';
+import Task from 'src/domains/main/@routes/task';
 import { TaskTypes } from 'src/domains/main/@routes/task-types';
 import { Users } from 'src/domains/main/@routes/users';
 import { Profile } from 'src/domains/profile';
@@ -100,7 +100,7 @@ export const routes = [
           },
           {
             accessLevel: ACCESS_LEVEL.RED,
-            component: DashboardTaskForm,
+            component: Task,
             path: '/projects/:projectId/tasks/:taskId',
           },
         ],

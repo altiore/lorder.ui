@@ -6,6 +6,7 @@ import MediaQuery from 'react-responsive';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { PageCenter } from 'src/components/PageCenter';
+// import { TimeLine } from 'src/components/TimeLine';
 import { Project } from 'src/store/projects';
 import { Task } from 'src/store/tasks';
 import { CurrentTask } from './CurrentTask';
@@ -46,22 +47,26 @@ export class DashboardJsx extends React.PureComponent<IDashboardProps, IState> {
     const length = tasks.length;
     const sortedTasks = tasks.slice(page * 4, (page + 1) * 4);
     return (
-      <PageCenter>
-        <DailyRoutine />
-        <Grid item lg={9} md={8} sm={12} className={classes.content}>
-          <StartForm />
-          <List classes={{ root: classes.listRoot }}>
-            <CurrentTask />
-            <Filter page={page} perPage={perPage} count={length} changePage={this.handleChangePage} />
-            {sortedTasks.map(this.renderListItem)}
-          </List>
-        </Grid>
-        <MediaQuery minDeviceWidth={theme.breakpoints.values.sm}>
-          <Grid item lg={3} md={4} sm={12}>
-            <LastEvents />
+      <>
+        <div className={classes.timeLine}>
+          <DailyRoutine startAt={0} finishAt={6} />
+        </div>
+        <PageCenter className={classes.root}>
+          <Grid item lg={9} md={8} sm={12} className={classes.content}>
+            <StartForm />
+            <List classes={{ root: classes.listRoot }}>
+              <CurrentTask />
+              <Filter page={page} perPage={perPage} count={length} changePage={this.handleChangePage} />
+              {sortedTasks.map(this.renderListItem)}
+            </List>
           </Grid>
-        </MediaQuery>
-      </PageCenter>
+          <MediaQuery minDeviceWidth={theme.breakpoints.values.sm}>
+            <Grid item lg={3} md={4} sm={12}>
+              <LastEvents />
+            </Grid>
+          </MediaQuery>
+        </PageCenter>
+      </>
     );
   }
 

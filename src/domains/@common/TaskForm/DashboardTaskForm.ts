@@ -72,7 +72,7 @@ const mergeProps = (
 export const DashboardTaskForm = connect<
   any,
   any,
-  { buttonText?: string; taskId: number | string; projectId: number | string }
+  { buttonText?: string; taskId?: number | string; projectId?: number | string }
 >(
   mapStateToProps,
   mapDispatchToProps,

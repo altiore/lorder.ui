@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { IEvent } from 'src/@types';
-import { DailyRoutine as DailyRoutineTsx } from 'src/components/DailyRoutine';
+import { TimeLine } from 'src/components/TimeLine';
 import { openDialog } from 'src/store/dialog';
 import { events } from 'src/store/tasks';
 import { isRequiredConfirmationChangedEvents } from 'src/store/ui';
@@ -37,8 +37,8 @@ const mergeProps = (
     : saveUserWorks,
 });
 
-export const DailyRoutine = connect<{}, {}, {}, { events: IEvent[]; onChange: (events: IEvent[]) => any }, {}>(
+export const DailyRoutine = connect(
   mapStateToProps,
   mapDispatch,
   mergeProps
-)(DailyRoutineTsx);
+)(TimeLine);

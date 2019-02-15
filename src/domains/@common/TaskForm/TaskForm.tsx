@@ -6,7 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 import BugReportIcon from '@material-ui/icons/BugReport';
 import CloseIcon from '@material-ui/icons/Close';
 import EventIcon from '@material-ui/icons/Event';
@@ -63,12 +63,14 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
 export interface ITaskFormState {
   anchorEl: React.ReactNode;
   invisible: boolean[];
+  isShownCopy: boolean;
 }
 
 export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormState> {
   state = {
     anchorEl: null,
     invisible: [true, true, true, true],
+    isShownCopy: false,
   };
 
   timers: any[] = [];
@@ -107,8 +109,10 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
       stopUserWork,
       taskId,
     } = this.props;
-    const { invisible } = this.state;
+    const { invisible, isShownCopy } = this.state;
 
+    const copyText = 'Скопировать ссылку на задачу';
+    const isPage = this.isPage();
     return (
       <>
         <DialogTitle disableTypography>
@@ -121,24 +125,51 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
               )}
             </IconButton>
             {taskId && (
-              <>
-                <Button variant="text" component="a" onClick={this.goToTask()} href="#">
-                  <Typography>
-                    A-
-                    {taskId}
-                  </Typography>
-                </Button>
-                <CopyToClipboard text={this.getLink(true)} onCopy={this.copyToClipboard}>
-                  <IconButton onClick={this.copyToClipboard}>
-                    <FileCopyIcon fontSize="small" />
-                  </IconButton>
-                </CopyToClipboard>
-              </>
+              <div onMouseLeave={this.hideCopy}>
+                <Tooltip title={isPage ? copyText : 'Открыть в отдельном окне'} placement="bottom">
+                  <Button
+                    variant="text"
+                    component={isPage ? undefined : 'a'}
+                    href={isPage ? undefined : '#'}
+                    onClick={this.goToTask()}
+                    onMouseOver={this.showCopy}
+                  >
+                    #{taskId}
+                  </Button>
+                </Tooltip>
+                {!isPage &&
+                  isShownCopy && (
+                    <Tooltip title={copyText} placement="right">
+                      <CopyToClipboard text={this.getLink(true)} onCopy={this.copyToClipboard}>
+                        <IconButton onClick={this.copyToClipboard}>
+                          <FileCopyIcon fontSize="small" />
+                        </IconButton>
+                      </CopyToClipboard>
+                    </Tooltip>
+                  )}
+              </div>
             )}
           </div>
-          <IconButton onClick={this.onClose}>
-            <CloseIcon fontSize="small" />
-          </IconButton>
+          <div>
+            {taskId && (
+              <>
+                <IconButton aria-label="more" className={classes.margin} onClick={this.moreMenuOpen}>
+                  <MoreHorizIcon fontSize="small" />
+                </IconButton>
+                <Menu
+                  anchorEl={this.state.anchorEl}
+                  open={Boolean(this.state.anchorEl)}
+                  onClose={this.handleClose}
+                  classes={{ paper: classes.menu }}
+                >
+                  <MenuItem onClick={this.onArchiveTask}>Архивировать задачу</MenuItem>
+                </Menu>
+              </>
+            )}
+            <IconButton onClick={this.onClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </div>
         </DialogTitle>
         <DialogContent className={classes.card}>
           <form onSubmit={this.handleSave()} className={classes.cardForm}>
@@ -188,23 +219,6 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                     </IconButton>
                   )}
                 </Field>
-                {taskId && (
-                  <>
-                    <IconButton aria-label="more" className={classes.margin} onClick={this.moreMenuOpen}>
-                      <Badge badgeContent={1} color="secondary" invisible={invisible[1]}>
-                        <MoreHorizIcon fontSize="small" />
-                      </Badge>
-                    </IconButton>
-                    <Menu
-                      anchorEl={this.state.anchorEl}
-                      open={Boolean(this.state.anchorEl)}
-                      onClose={this.handleClose}
-                      classes={{ paper: classes.menu }}
-                    >
-                      <MenuItem onClick={this.onArchiveTask}>Архивировать задачу</MenuItem>
-                    </Menu>
-                  </>
-                )}
               </div>
 
               <Field name="value" component={Input} parse={parseNumber} label="Оценка задачи" type="number" />
@@ -228,6 +242,14 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
     );
   }
 
+  private showCopy = () => {
+    this.setState({ isShownCopy: true });
+  };
+
+  private hideCopy = () => {
+    this.setState({ isShownCopy: false });
+  };
+
   private handleSave = (isClose: boolean = true) => (e: React.SyntheticEvent) => {
     const { dirty, valid, onClose } = this.props;
     if (dirty && valid) {
@@ -243,7 +265,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
   }
 
   private onClose = () => {
-    if (this.props.hasOwnProperty('location')) {
+    if (this.isPage()) {
       this.props.push('/');
     } else {
       this.props.onClose();
@@ -258,9 +280,13 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
     return path;
   };
 
+  private isPage = () => {
+    return this.props.hasOwnProperty('location');
+  };
+
   private goToTask = () => (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (this.props.hasOwnProperty('location')) {
+    if (this.isPage()) {
       this.copyToClipboard();
     } else {
       // this.props.changeSettings({ fullScreen: true });

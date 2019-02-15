@@ -23,11 +23,27 @@ export const styles = (theme: Theme) =>
     project: {
       width: 100,
     },
+    root: {
+      [theme.breakpoints.up('md')]: {
+        marginTop: 0,
+      },
+    },
     row: {
       '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.background.default,
       },
       cursor: 'pointer',
+    },
+    timeLine: {
+      alignItems: 'flex-end',
+      display: 'flex',
+      height: 50,
+      marginTop: -theme.spacing.unit * 3,
+      padding: `0 ${theme.spacing.unit * 2}px`,
+      zIndex: 3005,
+      [theme.breakpoints.down('md')]: {
+        display: 'none',
+      },
     },
     title: {
       width: 320,
