@@ -47,6 +47,9 @@ export class TasksListJsx extends React.Component<ITasksListProps, ITaskListStat
       if (i === 1) {
         continue;
       }
+      if ((newTs[i] as ITask).id !== (oldTs[i] as ITask).id) {
+        return false;
+      }
       if ((newTs[i] as ITask).title !== (oldTs[i] as ITask).title) {
         return true;
       }
