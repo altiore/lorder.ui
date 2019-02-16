@@ -6,6 +6,7 @@ export const styles = (theme: Theme) =>
     list: {
       backgroundColor: theme.palette.background.default,
       borderRadius: theme.shape.borderRadius,
+      flexGrow: 1,
       textAlign: 'center',
     },
   });

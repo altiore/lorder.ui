@@ -27,9 +27,11 @@ export const styles = (theme: Theme) =>
       borderRadius: theme.shape.borderRadius,
       boxShadow: theme.shadows[1],
       flexGrow: 1,
+      height: 64,
       justifyContent: 'space-between',
-      marginBottom: theme.spacing.unit,
+      marginBottom: theme.spacing.unit * 2,
       [theme.breakpoints.down('sm')]: {
+        marginBottom: theme.spacing.unit,
         paddingBottom: theme.spacing.unit,
         paddingLeft: 2,
         paddingTop: theme.spacing.unit,

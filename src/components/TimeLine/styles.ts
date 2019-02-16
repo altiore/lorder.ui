@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import { Theme } from '@material-ui/core/styles';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) =>
@@ -22,11 +22,12 @@ export const styles = (theme: Theme) =>
       backgroundColor: theme.palette.background.paper,
       border: '1px solid #FFB200',
       borderRadius: theme.shape.borderRadius,
+      boxSizing: 'border-box',
       cursor: 'pointer',
       flexGrow: 1,
       overflow: 'hidden',
       position: 'relative',
-      transition: theme.transitions.create(['height'], {
+      transition: theme.transitions.create(['height', 'z-index'], {
         duration: theme.transitions.duration.shortest,
         easing: theme.transitions.easing.easeIn,
       }),

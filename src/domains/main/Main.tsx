@@ -38,8 +38,8 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
     return (
       <div className={classes.root}>
         <Header />
-        <div className={classes.background} />
-        <div className={classes.background2} />
+        {/*<div className={classes.background} />*/}
+        {/*<div className={classes.background2} />*/}
         <main className={classes.main}>
           <Switch>
             {routes.map((route: IRoute) => (

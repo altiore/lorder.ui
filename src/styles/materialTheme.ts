@@ -58,6 +58,11 @@ export default createMuiTheme({
         padding: '0 20px',
       },
     },
+    MuiExpansionPanelDetails: {
+      root: {
+        padding: '0 16px 16px',
+      },
+    },
     MuiToolbar: {
       gutters: {
         paddingLeft: 6,

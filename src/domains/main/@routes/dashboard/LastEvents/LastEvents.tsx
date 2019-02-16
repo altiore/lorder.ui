@@ -39,7 +39,7 @@ export class LastEventsTsx extends React.Component<ILastEventsProps, {}> {
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.heading}>Статистика</Typography>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          <ExpansionPanelDetails classes={{ root: classes.expanded }}>
             <Statistic dense />
           </ExpansionPanelDetails>
         </ExpansionPanel>

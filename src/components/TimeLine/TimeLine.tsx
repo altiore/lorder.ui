@@ -1,6 +1,8 @@
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
 import Popover from '@material-ui/core/Popover';
+import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import get from 'lodash-es/get';
 import minBy from 'lodash-es/minBy';
@@ -15,6 +17,7 @@ export interface IDailyRoutineProps {
   events: IEvent[];
   onChange: (events: IEvent[]) => any;
   onEventClick?: (ev: IEvent) => any;
+  theme: Theme;
   step?: number;
   width: number;
 }
@@ -27,7 +30,7 @@ export interface IDailyRoutineState {
   startAt: number;
 }
 
-const Y_HEIGHT_BIG = 56;
+const Y_HEIGHT_BIG = 64;
 const Y_HEIGHT_LITTLE = 8;
 const X_OFFSET = 24;
 
@@ -66,89 +69,96 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
   }
 
   render() {
-    const { classes, events, getRef, width } = this.props;
+    const { classes, events, getRef, theme, width } = this.props;
     const { height, hoveredEl, hoveredEvent } = this.state;
     const preparedEvents = events.filter(this.filterEvents);
+    const isExpended = height === Y_HEIGHT_BIG;
 
     return (
-      <div
-        ref={getRef}
-        className={classes.root}
-        style={{ height }}
-        onClick={this.increaseHeight}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.decreaseHeight}
-      >
-        {preparedEvents.map(event => (
-          <div
-            key={event.startAt.toString()}
-            className={classes.block}
-            style={{
-              ...this.getStyle(event),
-              left: this.getPosition(event.startAt),
-              width: this.getWidth(event),
-            }}
-            onClick={this.handleEventClick(event)}
-            onMouseOver={this.handleHover(event)}
-            onMouseLeave={this.handlePopoverClose}
-          />
-        ))}
-        <Popover
-          className={classes.popover}
-          classes={{
-            paper: classes.popoverPaper,
+      <ClickAwayListener onClickAway={this.decreaseHeightNow}>
+        <div
+          ref={getRef}
+          className={classes.root}
+          style={{
+            boxShadow: isExpended ? theme.shadows[1] : 'none',
+            height,
+            zIndex: isExpended ? 1200 : 0,
           }}
-          open={Boolean(hoveredEl)}
-          anchorEl={hoveredEl}
-          anchorOrigin={{
-            horizontal: 'center',
-            vertical: 'bottom',
-          }}
-          transformOrigin={{
-            horizontal: 'center',
-            vertical: 'center',
-          }}
-          onClose={this.handlePopoverClose}
-          disableRestoreFocus
+          onClick={this.increaseHeight}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.decreaseHeight}
         >
-          <Typography>{get(hoveredEvent, 'name')}</Typography>
-          <Typography>
-            {this.getHoursWithMinutes(get(hoveredEvent, 'startAt'))} -{' '}
-            {this.getHoursWithMinutes(get(hoveredEvent, 'finishAt'))}
-          </Typography>
-        </Popover>
-        <svg height={height} width={width} className={classes.svg}>
-          {this.getLines().map(({ x, isHour, label }, i) => (
-            <React.Fragment key={x}>
-              {label &&
-                height === Y_HEIGHT_BIG && (
-                  <text x={x + X_OFFSET} y="14" className={classes.text}>
-                    <tspan x={x + X_OFFSET} textAnchor="middle">
-                      {label}
-                      :00
-                    </tspan>
-                  </text>
-                )}
-              <line
-                // stroke="#FAB203"
-                stroke={orange[300]}
-                x1={x + X_OFFSET}
-                y1={
-                  isHour
-                    ? height === Y_HEIGHT_BIG
-                      ? 17
-                      : 0
-                    : height === Y_HEIGHT_BIG
-                      ? height - (i % 2 ? 8 : 17)
-                      : height - 3
-                }
-                x2={x + X_OFFSET}
-                y2={height}
-              />
-            </React.Fragment>
+          {preparedEvents.map(event => (
+            <div
+              key={event.startAt.toString()}
+              className={classes.block}
+              style={{
+                ...this.getStyle(event),
+                left: this.getPosition(event.startAt),
+                width: this.getWidth(event),
+              }}
+              onClick={this.handleEventClick(event)}
+              onMouseOver={this.handleHover(event)}
+              onMouseLeave={this.handlePopoverClose}
+            />
           ))}
-        </svg>
-      </div>
+          <Popover
+            className={classes.popover}
+            classes={{
+              paper: classes.popoverPaper,
+            }}
+            open={Boolean(hoveredEl)}
+            anchorEl={hoveredEl}
+            anchorOrigin={{
+              horizontal: 'center',
+              vertical: 'top',
+            }}
+            transformOrigin={{
+              horizontal: 'center',
+              vertical: 'bottom',
+            }}
+            onClose={this.handlePopoverClose}
+            disableRestoreFocus
+          >
+            <Typography>{get(hoveredEvent, 'name')}</Typography>
+            <Typography>
+              {this.getHoursWithMinutes(get(hoveredEvent, 'startAt'))} -{' '}
+              {this.getHoursWithMinutes(get(hoveredEvent, 'finishAt'))}
+            </Typography>
+          </Popover>
+          <svg height={height} width={width} className={classes.svg}>
+            {this.getLines().map(({ x, isHour, label }, i) => (
+              <React.Fragment key={x}>
+                {label &&
+                  height === Y_HEIGHT_BIG && (
+                    <text x={x + X_OFFSET} y="14" className={classes.text}>
+                      <tspan x={x + X_OFFSET} textAnchor="middle">
+                        {label}
+                        :00
+                      </tspan>
+                    </text>
+                  )}
+                <line
+                  // stroke="#FAB203"
+                  stroke={orange[300]}
+                  x1={x + X_OFFSET}
+                  y1={
+                    isHour
+                      ? height === Y_HEIGHT_BIG
+                        ? 17
+                        : 0
+                      : height === Y_HEIGHT_BIG
+                        ? height - (i % 2 ? 8 : 17)
+                        : height - 3
+                  }
+                  x2={x + X_OFFSET}
+                  y2={height}
+                />
+              </React.Fragment>
+            ))}
+          </svg>
+        </div>
+      </ClickAwayListener>
     );
   }
 
@@ -171,7 +181,10 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
   };
 
   private handlePopoverClose = () => {
-    this.setState({ hoveredEl: null });
+    this.setState({
+      hoveredEl: null,
+      hoveredEvent: undefined,
+    });
   };
 
   private getPosition(el?: moment.Moment) {
@@ -250,7 +263,12 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
       this.setState({ height: Y_HEIGHT_LITTLE }, () => {
         this.clearTimer();
       });
-    }, 1200);
+    }, 5000);
+  };
+
+  private decreaseHeightNow = () => {
+    this.clearTimer();
+    this.setState({ height: Y_HEIGHT_LITTLE });
   };
 
   private clearTimer = () => {

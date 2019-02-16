@@ -16,7 +16,7 @@ export const styles = (theme: Theme) =>
       display: 'flex',
       flexFlow: 'column nowrap',
       justifyContent: 'flex-end',
-      marginBottom: -16,
+      marginBottom: -8,
       position: 'relative',
       width: 144,
     },
@@ -37,6 +37,7 @@ export const styles = (theme: Theme) =>
       flexFlow: 'row nowrap',
       height: 40,
       justifyContent: 'space-around',
+      marginBottom: theme.spacing.unit / 2,
       width: 144,
     },
     right: {

@@ -35,12 +35,12 @@ export const styles = (theme: Theme) =>
       cursor: 'pointer',
     },
     timeLine: {
-      alignItems: 'flex-end',
+      alignItems: 'flex-start',
       display: 'flex',
-      height: 50,
-      marginTop: -theme.spacing.unit * 3,
-      padding: `0 ${theme.spacing.unit * 2}px`,
-      zIndex: 1200,
+      height: 64,
+      marginBottom: -56,
+      marginTop: theme.spacing.unit * 2,
+      padding: `0 ${theme.spacing.unit * 4}px`,
       [theme.breakpoints.down('md')]: {
         display: 'none',
       },
