@@ -4,15 +4,19 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) =>
   createStyles({
     block: {
-      // backgroundColor: '#FFF0B5',
-      // backgroundColor: '#FAB203',
-      // border: '1px solid #FFB200',
-      borderRadius: 2,
-      borderStyle: 'solid',
-      borderWidth: 1,
       boxSizing: 'border-box',
       height: '100%',
       position: 'absolute',
+    },
+    popover: {
+      pointerEvents: 'none',
+    },
+    popoverPaper: {
+      alignItems: 'center',
+      display: 'flex',
+      flexFlow: 'column nowrap',
+      justifyContent: 'center',
+      padding: `0 ${theme.spacing.unit}px`,
     },
     root: {
       backgroundColor: theme.palette.background.paper,
@@ -25,11 +29,11 @@ export const styles = (theme: Theme) =>
     },
     svg: {
       left: 0,
+      pointerEvents: 'none',
       position: 'absolute',
       top: 0,
     },
     text: {
-      // fill: '#77909D',
-      fill: '#87A082',
+      fill: '#24292E',
     },
   });

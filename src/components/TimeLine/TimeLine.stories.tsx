@@ -7,6 +7,7 @@ const moment = require('moment');
 import { TimeLine } from '.';
 
 const startJob = moment().subtract(5, 'hours');
+const startJob3 = moment().subtract(1, 'hours');
 
 const events = [
   {
@@ -20,15 +21,22 @@ const events = [
   },
   {
     data: 2,
-    finishAt: moment().subtract(1, 'hours'),
+    finishAt: startJob3,
     isActive: true,
     name: 'Работа',
     startAt: startJob,
   },
+  {
+    data: 3,
+    finishAt: null,
+    isActive: true,
+    name: 'Работа вторая',
+    startAt: startJob3,
+  },
 ];
 
 storiesOf('TimeLine', module).add('default', () => (
-  <div style={{ backgroundColor: '#ccc', width: '98%', margin: '100px auto', padding: 8 }}>
-    <TimeLine events={events} onChange={action('onEventsChange')} startAt={6} finishAt={23} />
+  <div style={{ backgroundColor: '#fff', width: '98%', margin: '100px auto', padding: 8 }}>
+    <TimeLine events={events} onChange={action('onEventsChange')} startAt={0} finishAt={23} />
   </div>
 ));

@@ -40,7 +40,7 @@ export const styles = (theme: Theme) =>
       height: 50,
       marginTop: -theme.spacing.unit * 3,
       padding: `0 ${theme.spacing.unit * 2}px`,
-      zIndex: 3005,
+      zIndex: 1200,
       [theme.breakpoints.down('md')]: {
         display: 'none',
       },
