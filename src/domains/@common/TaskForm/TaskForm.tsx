@@ -23,10 +23,10 @@ import { length, required } from 'redux-form-validators';
 import { Input } from 'liw-components/Input';
 import { TitleInput } from 'liw-components/TitleInput';
 
+import { INotification } from 'src/@types';
 import { SelectMenuField } from 'src/components/SelectMenuField';
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { parseNumber } from 'src/store/@common/helpers';
-import { INotification } from 'src/store/notifications';
 import { STATUS_NAMES } from 'src/store/projects';
 import { PerformerField } from './PerformerField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';

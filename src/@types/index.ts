@@ -1,6 +1,7 @@
 export * from './IEvent';
 export * from './IRoute';
 export * from './IMeta';
+export * from './INotification';
 export * from './IState';
 export * from './ITask';
 export * from './ROLE';

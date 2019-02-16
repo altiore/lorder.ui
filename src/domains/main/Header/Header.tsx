@@ -10,7 +10,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import * as React from 'react';
 
-import { ROLE } from 'src/@types';
+import { INotification, ROLE } from 'src/@types';
 import { CreateProjectPopup } from 'src/domains/@common/CreateProjectPopup';
 import { LinkIconButton } from 'src/domains/@common/LinkIconButton';
 import { Project } from 'src/store/projects';
@@ -28,9 +28,11 @@ export interface IHeaderProps {
   logOut: any;
   openDialog: any;
   openedProject: Project;
+  openTaskModal: any;
   projects: ProjectsArrayType;
   push: any;
   selectedProject: Project;
+  showWarning: (ev: INotification) => any;
   startUserWork: (data: IUserWorkData) => any;
   userAvatar?: string;
   userEmail: string;
@@ -76,7 +78,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
             {filteredProjects.map(project => (
               <ProjectButton
                 key={project.id}
-                selectProject={this.selectProject(project.id as number)}
+                selectProject={this.selectProject(project as Project)}
                 onOpenInNew={this.handleOpenInNew(project as Project)}
                 {...project}
                 inProgress={selectedProject && project.id === selectedProject.id}
@@ -154,11 +156,20 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
     this.setState({ anchorEl: null });
   };
 
-  private selectProject = (projectId: number) => async () => {
+  private selectProject = (project: Project) => async () => {
+    const projectId = project.id as number;
     const { selectedProject, startUserWork, push } = this.props;
     this.clearTimeout();
     this.setState({ anchorEl: null, expanded: false });
     if (selectedProject.id !== projectId) {
+      this.props.showWarning({
+        action: {
+          callback: this.props.openTaskModal,
+          label: 'Редактировать созданную задачу',
+        },
+        message: 'Новая задача в этом проекте успешно создана!',
+        title: `Вы выбрали проект "${project.title}"!`,
+      });
       await startUserWork({
         projectId,
       });
@@ -171,12 +182,21 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
     const { selectedProject, startUserWork, push } = this.props;
     this.clearTimeout();
     this.setState({ anchorEl: null, expanded: false });
+    push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
     if (!selectedProject || selectedProject.id !== project.id) {
+      const taskTitle = 'Обзор';
       await startUserWork({
         projectId: project.id as number,
-        title: 'Обзор',
+        title: taskTitle,
+      });
+      this.props.showWarning({
+        action: {
+          callback: this.props.openTaskModal,
+          label: 'Редактировать созданную задачу',
+        },
+        message: `Задача "${taskTitle}" успешно создана!`,
+        title: `Вы начали работу над проектом "${project.title}"!`,
       });
     }
-    push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
   };
 }
