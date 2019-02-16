@@ -23,6 +23,7 @@ export const styles = (theme: Theme) =>
       flexBasis: '10%',
     },
     listItem: {
+      backgroundColor: theme.palette.background.paper,
       borderRadius: theme.shape.borderRadius,
       boxShadow: theme.shadows[1],
       flexGrow: 1,

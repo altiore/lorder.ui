@@ -3,6 +3,7 @@ import orange from '@material-ui/core/colors/orange';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import get from 'lodash-es/get';
+import minBy from 'lodash-es/minBy';
 import * as moment from 'moment';
 import * as React from 'react';
 
@@ -14,16 +15,16 @@ export interface IDailyRoutineProps {
   events: IEvent[];
   onChange: (events: IEvent[]) => any;
   onEventClick?: (ev: IEvent) => any;
-  startAt: number;
-  finishAt: number;
   step?: number;
   width: number;
 }
 
 export interface IDailyRoutineState {
+  finishAt: number;
   height: number;
   hoveredEl: React.ReactNode;
   hoveredEvent?: IEvent;
+  startAt: number;
 }
 
 const Y_HEIGHT_BIG = 56;
@@ -32,12 +33,37 @@ const X_OFFSET = 24;
 
 export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyRoutineState> {
   state = {
+    finishAt: 24,
     height: Y_HEIGHT_LITTLE,
     hoveredEl: null,
     hoveredEvent: undefined,
+    startAt: 6,
   };
 
-  timer: any;
+  heightTimer: any;
+  updateInterval: any;
+
+  componentDidMount(): void {
+    this.setState({
+      finishAt: this.getFinishAt(),
+      startAt: this.getStartAt(),
+    });
+    this.updateInterval = setInterval(() => {
+      this.setState({
+        finishAt: this.getFinishAt(),
+        startAt: this.getStartAt(),
+      });
+    }, 600000);
+  }
+
+  componentWillUnmount(): void {
+    if (this.heightTimer) {
+      clearTimeout(this.heightTimer);
+    }
+    if (this.updateInterval) {
+      clearInterval(this.updateInterval);
+    }
+  }
 
   render() {
     const { classes, events, getRef, width } = this.props;
@@ -149,8 +175,9 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
   };
 
   private getPosition(el?: moment.Moment) {
+    const { startAt, finishAt } = this.state;
     const svgWidth = this.getSvgWidth();
-    const res = ((this.getHours(el) - this.props.startAt) * svgWidth) / (this.props.finishAt - this.props.startAt);
+    const res = ((this.getHours(el) - startAt) * svgWidth) / (finishAt - startAt);
     return res >= 0 ? res + X_OFFSET : X_OFFSET;
   }
 
@@ -181,11 +208,12 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
   }
 
   private filterEvents = (el: IEvent) => {
-    return !el.finishAt || (el.finishAt.day() === moment().day() && this.getHours(el.finishAt) > this.props.startAt);
+    const { startAt } = this.state;
+    return !el.finishAt || (el.finishAt.day() === moment().day() && this.getHours(el.finishAt) > startAt);
   };
 
   private getLines() {
-    const { finishAt, startAt } = this.props;
+    const { startAt, finishAt } = this.state;
     const svgWidth = this.getSvgWidth();
     const parts = (finishAt - startAt) * 4;
     const step = svgWidth / parts;
@@ -211,14 +239,14 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
 
   private handleMouseEnter = () => {
     this.clearTimer();
-    this.timer = setTimeout(() => {
+    this.heightTimer = setTimeout(() => {
       this.increaseHeight();
     }, 500);
   };
 
   private decreaseHeight = () => {
     this.clearTimer();
-    this.timer = setTimeout(() => {
+    this.heightTimer = setTimeout(() => {
       this.setState({ height: Y_HEIGHT_LITTLE }, () => {
         this.clearTimer();
       });
@@ -226,8 +254,8 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
   };
 
   private clearTimer = () => {
-    if (this.timer) {
-      clearInterval(this.timer);
+    if (this.heightTimer) {
+      clearInterval(this.heightTimer);
     }
   };
 
@@ -236,7 +264,7 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
     return el
       ? el.day() === current.day()
         ? el.hours() + el.minutes() / 60
-        : this.props.startAt
+        : this.state.startAt
       : current.hours() + current.minutes() / 60;
   };
 
@@ -251,5 +279,19 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
     } else {
       return current.format('HH:mm');
     }
+  };
+
+  private getStartAt = (): number => {
+    const current = moment();
+    const first = minBy(
+      this.props.events,
+      (ev: IEvent) => (ev.startAt.day() === current.day() ? ev.startAt.unix() : current.unix())
+    );
+    return first ? first.startAt.hours() : 0;
+  };
+
+  private getFinishAt = (): number => {
+    const hours = moment().hours();
+    return hours < 24 ? (hours < 23 ? hours + 2 : hours + 1) : 24;
   };
 }
