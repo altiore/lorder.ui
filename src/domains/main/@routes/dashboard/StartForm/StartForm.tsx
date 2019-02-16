@@ -6,7 +6,7 @@ import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { length } from 'redux-form-validators';
 
-import { TaskField } from './TaskField';
+import AutoTaskField from './AutoTaskField';
 
 export interface IInternalProps {
   classes: any;
@@ -31,9 +31,8 @@ export const StartFormJsx: React.FunctionComponent<
     <div className={classes.inputBlock}>
       <Field
         name="description"
-        component={TaskField}
+        component={AutoTaskField}
         label="Выбери или создай задачу..."
-        className={classes.input}
         validate={[length({ max: 140, msg: 'Превышен максимум 140 символов' })]}
       />
     </div>

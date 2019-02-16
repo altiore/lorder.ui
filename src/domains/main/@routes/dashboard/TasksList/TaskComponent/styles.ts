@@ -23,7 +23,11 @@ export const styles = (theme: Theme) =>
       flexBasis: '10%',
     },
     listItem: {
+      '&:hover': {
+        borderColor: theme.palette.primary.main,
+      },
       backgroundColor: theme.palette.background.paper,
+      border: '1px solid rgba(0, 0, 0, 0.1)',
       borderRadius: theme.shape.borderRadius,
       boxShadow: theme.shadows[1],
       flexGrow: 1,
@@ -43,7 +47,7 @@ export const styles = (theme: Theme) =>
       },
     },
     projectButton: {
-      '&:hover p': {
+      '&:hover p, &:focus p': {
         opacity: 1,
       },
       flexBasis: '16%',

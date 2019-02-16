@@ -12,12 +12,12 @@ const prettyScroll1 = {
     width: defaultTheme.spacing.unit,
   },
   '&::-webkit-scrollbar-thumb': {
-    backgroundColor: '#B5BEC5',
+    backgroundColor: '#404448',
     borderRadius: defaultTheme.spacing.unit / 2,
     cursor: 'pointer',
   },
   '&::-webkit-scrollbar-thumb:hover': {
-    backgroundColor: defaultTheme.palette.text.hint,
+    backgroundColor: '#24292E',
   },
   '&::-webkit-scrollbar-track': {
     backgroundColor: '#CED4D9',

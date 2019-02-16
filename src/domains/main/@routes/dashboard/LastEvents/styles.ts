@@ -1,17 +1,19 @@
 import { Theme } from '@material-ui/core/styles';
 
+const BLOCK_MAX_HEIGHT = 462;
+
 export const styles = (theme: Theme) =>
   ({
     details: {
       ...theme.mainContent.scroll,
-      maxHeight: 444,
+      maxHeight: BLOCK_MAX_HEIGHT,
       overflowX: 'hidden',
       overflowY: 'auto',
       padding: 0,
     },
     expanded: {
       ...theme.mainContent.scroll,
-      maxHeight: 444,
+      maxHeight: BLOCK_MAX_HEIGHT,
       overflowX: 'hidden',
       overflowY: 'auto',
     },

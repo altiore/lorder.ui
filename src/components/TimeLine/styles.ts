@@ -8,6 +8,13 @@ export const styles = (theme: Theme) =>
       height: '100%',
       position: 'absolute',
     },
+    filled: {
+      border: '1px solid #FFB200',
+      borderRadius: theme.shape.borderRadius,
+      boxSizing: 'border-box',
+      position: 'relative',
+      width: '100%',
+    },
     popover: {
       pointerEvents: 'none',
     },
@@ -19,12 +26,16 @@ export const styles = (theme: Theme) =>
       padding: `0 ${theme.spacing.unit}px`,
     },
     root: {
+      alignItems: 'flex-end',
       backgroundColor: theme.palette.background.paper,
-      border: '1px solid #FFB200',
-      borderRadius: theme.shape.borderRadius,
-      boxSizing: 'border-box',
+      // border: '1px solid #FFB200',
+      // border: '1px solid #eeeeee',
+      // boxSizing: 'border-box',
       cursor: 'pointer',
+      display: 'flex',
+      flexFlow: 'column nowrap',
       flexGrow: 1,
+      justifyContent: 'flex-end',
       overflow: 'hidden',
       position: 'relative',
       transition: theme.transitions.create(['height', 'z-index'], {

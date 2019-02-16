@@ -12,7 +12,7 @@ export interface ITask {
   status: number;
   value: number;
   typeId?: number;
-  userWorks: IDownloadList<IUserWork>;
+  userWorks?: IDownloadList<IUserWork>;
 
   duration: string;
 }

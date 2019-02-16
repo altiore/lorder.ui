@@ -1,6 +1,8 @@
 import { Theme } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 
+import { TIME_LINE_HEIGHT } from 'src/components/TimeLine';
+
 export const styles = (theme: Theme) =>
   createStyles({
     collapse: {
@@ -37,8 +39,8 @@ export const styles = (theme: Theme) =>
     timeLine: {
       alignItems: 'flex-start',
       display: 'flex',
-      height: 64,
-      marginBottom: -56,
+      height: TIME_LINE_HEIGHT,
+      marginBottom: -TIME_LINE_HEIGHT + 8,
       marginTop: theme.spacing.unit * 2,
       padding: `0 ${theme.spacing.unit * 4}px`,
       [theme.breakpoints.down('md')]: {

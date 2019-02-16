@@ -1,6 +1,6 @@
 import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import { change, reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { onSubmitForm } from 'src/store/@common/helpers';
@@ -21,6 +21,9 @@ const StartForm = withStyles(styles, { withTheme: true })(
       enableReinitialize: true,
       form: CREATE_USER_WORK_FORM_NAME,
       onSubmit: onSubmitForm<IUserWorkData>(startUserWork),
+      onSubmitSuccess(result: any, dispatch: any): void {
+        dispatch(change(CREATE_USER_WORK_FORM_NAME, 'description', ''));
+      },
     })(StartFormJsx)
   )
 );

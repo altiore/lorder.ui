@@ -11,6 +11,7 @@ export const styles = (theme: Theme) =>
       alignItems: 'baseline',
       display: 'flex',
       flexFlow: 'row nowrap',
+      marginBottom: theme.spacing.unit,
       width: '100%',
     },
     play: {

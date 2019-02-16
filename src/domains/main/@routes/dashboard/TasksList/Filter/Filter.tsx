@@ -48,6 +48,8 @@ export class FilterTsx extends React.PureComponent<IFilterProps, IFilterState> {
           className={classes.pagination}
           onMouseEnter={this.handlePaginatorEnter}
           onMouseLeave={this.handlePaginatorLeave}
+          onFocus={this.handlePaginatorEnter}
+          onBlur={this.handlePaginatorLeave}
         >
           <Grow in={isPaginatorHovered} timeout={600}>
             <Fab size="small" color="secondary" onClick={changePage(page - 1)} className={classes.left}>
@@ -69,8 +71,10 @@ export class FilterTsx extends React.PureComponent<IFilterProps, IFilterState> {
             className={classes.chip}
             color="secondary"
             deleteIcon={<DoneIcon />}
-            onClick={this.toggleFilterHovered}
+            onClick={this.toggleFilterHovered(!this.state.isFilterHovered)}
             style={{ bottom: isFilterHovered ? 40 : 16 }}
+            onFocus={this.toggleFilterHovered(true)}
+            onBlur={this.toggleFilterHovered(false)}
           />
           {isFilterHovered && (
             <Grow in={isFilterHovered} timeout={500}>
@@ -117,8 +121,8 @@ export class FilterTsx extends React.PureComponent<IFilterProps, IFilterState> {
     this.setState({ isFilterHovered: false });
   };
 
-  private toggleFilterHovered = () => {
-    this.setState(({ isFilterHovered }) => ({ isFilterHovered: !isFilterHovered }));
+  private toggleFilterHovered = (isFilterHovered: boolean) => () => {
+    this.setState({ isFilterHovered });
   };
 
   private handleRadioEnter = (e: React.SyntheticEvent) => {

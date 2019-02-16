@@ -30,9 +30,10 @@ export interface IDailyRoutineState {
   startAt: number;
 }
 
-const Y_HEIGHT_BIG = 64;
+export const Y_HEIGHT_BIG = 82;
 const Y_HEIGHT_LITTLE = 8;
 const X_OFFSET = 24;
+const LABEL_HEIGHT = 12;
 
 export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyRoutineState> {
   state = {
@@ -80,7 +81,6 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
           ref={getRef}
           className={classes.root}
           style={{
-            boxShadow: isExpended ? theme.shadows[1] : 'none',
             height,
             zIndex: isExpended ? 1200 : 0,
           }}
@@ -88,20 +88,28 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.decreaseHeight}
         >
-          {preparedEvents.map(event => (
-            <div
-              key={event.startAt.toString()}
-              className={classes.block}
-              style={{
-                ...this.getStyle(event),
-                left: this.getPosition(event.startAt),
-                width: this.getWidth(event),
-              }}
-              onClick={this.handleEventClick(event)}
-              onMouseOver={this.handleHover(event)}
-              onMouseLeave={this.handlePopoverClose}
-            />
-          ))}
+          <div
+            className={classes.filled}
+            style={{
+              boxShadow: isExpended ? theme.shadows[1] : 'none',
+              flexBasis: isExpended ? '76%' : '100%',
+            }}
+          >
+            {preparedEvents.map(event => (
+              <div
+                key={event.startAt.unix()}
+                className={classes.block}
+                style={{
+                  ...this.getStyle(event),
+                  left: this.getPosition(event.startAt),
+                  width: this.getWidth(event),
+                }}
+                onClick={this.handleEventClick(event)}
+                onMouseOver={this.handleHover(event)}
+                onMouseLeave={this.handlePopoverClose}
+              />
+            ))}
+          </div>
           <Popover
             className={classes.popover}
             classes={{
@@ -111,11 +119,11 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
             anchorEl={hoveredEl}
             anchorOrigin={{
               horizontal: 'center',
-              vertical: 'top',
+              vertical: 'bottom',
             }}
             transformOrigin={{
               horizontal: 'center',
-              vertical: 'bottom',
+              vertical: 'top',
             }}
             onClose={this.handlePopoverClose}
             disableRestoreFocus
@@ -127,33 +135,27 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
             </Typography>
           </Popover>
           <svg height={height} width={width} className={classes.svg}>
-            {this.getLines().map(({ x, isHour, label }, i) => (
+            {this.getLines().map(({ x, isHour, label }) => (
               <React.Fragment key={x}>
                 {label &&
                   height === Y_HEIGHT_BIG && (
-                    <text x={x + X_OFFSET} y="14" className={classes.text}>
+                    <text x={x + X_OFFSET} y={LABEL_HEIGHT} className={classes.text}>
                       <tspan x={x + X_OFFSET} textAnchor="middle">
                         {label}
                         :00
                       </tspan>
                     </text>
                   )}
-                <line
-                  // stroke="#FAB203"
-                  stroke={orange[300]}
-                  x1={x + X_OFFSET}
-                  y1={
-                    isHour
-                      ? height === Y_HEIGHT_BIG
-                        ? 17
-                        : 0
-                      : height === Y_HEIGHT_BIG
-                        ? height - (i % 2 ? 8 : 17)
-                        : height - 3
-                  }
-                  x2={x + X_OFFSET}
-                  y2={height}
-                />
+                {isExpended && (
+                  <line
+                    // stroke="#FAB203"
+                    stroke={orange[300]}
+                    x1={x + X_OFFSET}
+                    y1={LABEL_HEIGHT + 2}
+                    x2={x + X_OFFSET}
+                    y2={LABEL_HEIGHT + 8}
+                  />
+                )}
               </React.Fragment>
             ))}
           </svg>
@@ -229,6 +231,9 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
     const { startAt, finishAt } = this.state;
     const svgWidth = this.getSvgWidth();
     const parts = (finishAt - startAt) * 4;
+    if (parts <= 0) {
+      return [];
+    }
     const step = svgWidth / parts;
     const arr = new Array(parts).fill(0).map((_, i) => ({
       isHour: !(i % 4),
@@ -263,7 +268,7 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
       this.setState({ height: Y_HEIGHT_LITTLE }, () => {
         this.clearTimer();
       });
-    }, 5000);
+    }, 10000);
   };
 
   private decreaseHeightNow = () => {
@@ -303,9 +308,10 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
     const current = moment();
     const first = minBy(
       this.props.events,
-      (ev: IEvent) => (ev.startAt.day() === current.day() ? ev.startAt.unix() : current.unix())
+      (ev: IEvent) => (ev.startAt.day() === current.day() ? ev.startAt.hours() : 24)
     );
-    return first ? first.startAt.hours() : 0;
+    const hours = first ? first.startAt.hours() : 0;
+    return first && hours < current.hours() ? hours : 0;
   };
 
   private getFinishAt = (): number => {
