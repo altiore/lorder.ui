@@ -1,7 +1,6 @@
 import { DialogProps } from '@material-ui/core/Dialog';
 import { withTheme } from '@material-ui/core/styles';
 import { push } from 'connected-react-router';
-// import { cloneElement, createElement, isValidElement } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 

@@ -1,8 +1,9 @@
+import { push } from 'connected-react-router';
 import { createElement } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { IEvent } from 'src/@types';
+import { IEvent, IUserWork } from 'src/@types';
 import { TimeLine } from 'src/components/TimeLine';
 import { openDialog } from 'src/store/dialog';
 import { events } from 'src/store/tasks';
@@ -16,6 +17,15 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatch = {
+  onEventClick: ({ data: { projectId, taskId } }: IEvent<IUserWork>) =>
+    push({
+      pathname: `/projects/${projectId}/tasks/${taskId}`,
+      state: {
+        modal: true,
+        projectId,
+        taskId,
+      },
+    }),
   openDialog,
   saveUserWorks,
 };

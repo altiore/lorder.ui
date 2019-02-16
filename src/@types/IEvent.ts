@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 
-export interface IEvent {
-  data: any;
+export interface IEvent<D = any> {
+  data: D;
   finishAt?: moment.Moment;
   isActive: boolean;
   name: string;

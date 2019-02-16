@@ -37,6 +37,12 @@ const events = [
 
 storiesOf('TimeLine', module).add('default', () => (
   <div style={{ backgroundColor: '#fff', width: '98%', margin: '100px auto', padding: 8 }}>
-    <TimeLine events={events} onChange={action('onEventsChange')} startAt={0} finishAt={23} />
+    <TimeLine
+      events={events}
+      onChange={action('onEventsChange')}
+      onEventClick={action('onEventClick')}
+      startAt={0}
+      finishAt={23}
+    />
   </div>
 ));

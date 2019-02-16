@@ -19,7 +19,7 @@ export const DialogTsx: React.FunctionComponent<DialogProps & IDialogTsx> = prop
     return null;
   }
   const { isWidthSm } = props;
-  const rest = omit(props, ['isWidthLg', 'isWidthMd', 'isWidthSm', 'theme', 'height', 'width']);
+  const rest = omit(props, ['getRef', 'isWidthLg', 'isWidthMd', 'isWidthSm', 'theme', 'height', 'width']);
   return (
     <Dialog fullScreen={isWidthSm} {...rest} aria-labelledby="scroll-dialog-title">
       {React.isValidElement(CurrentDialog)

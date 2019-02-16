@@ -13,6 +13,7 @@ export interface IDailyRoutineProps {
   getRef: any;
   events: IEvent[];
   onChange: (events: IEvent[]) => any;
+  onEventClick?: (ev: IEvent) => any;
   startAt: number;
   finishAt: number;
   step?: number;
@@ -61,6 +62,7 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
               left: this.getPosition(event.startAt),
               width: this.getWidth(event),
             }}
+            onClick={this.handleEventClick(event)}
             onMouseOver={this.handleHover(event)}
             onMouseLeave={this.handlePopoverClose}
           />
@@ -123,6 +125,17 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
       </div>
     );
   }
+
+  private handleEventClick = (event: IEvent) => (e: React.SyntheticEvent) => {
+    const { height } = this.state;
+    if (height === Y_HEIGHT_BIG) {
+      e.stopPropagation();
+      const { onEventClick } = this.props;
+      if (onEventClick) {
+        onEventClick(event);
+      }
+    }
+  };
 
   private handleHover = (hoveredEvent: IEvent) => (e: React.SyntheticEvent) => {
     this.setState({
