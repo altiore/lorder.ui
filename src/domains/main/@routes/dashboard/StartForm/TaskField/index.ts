@@ -61,7 +61,7 @@ const mergeProps = ({ isValid, ...restState }: any, { error, startUserWork, ...r
       startUserWork(task);
     } else {
       error({
-        message: 'Длина названия задачи не может превышать 40 символов',
+        message: 'Длина названия задачи не может превышать 140 символов',
         position: 'tc',
         title: 'Ошибка валидации!',
       });

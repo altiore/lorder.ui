@@ -34,7 +34,7 @@ export const StartFormJsx: React.FunctionComponent<
         component={TaskField}
         label="Выбери или создай задачу..."
         className={classes.input}
-        validate={[length({ max: 40, msg: 'Превышен максимум 40 символов' })]}
+        validate={[length({ max: 140, msg: 'Превышен максимум 140 символов' })]}
       />
     </div>
     <Tooltip

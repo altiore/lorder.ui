@@ -181,7 +181,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                 component={TitleInput}
                 validate={[
                   required({ msg: 'Обязательное поле' }),
-                  length({ max: 40, msg: 'Превышен максимум 40 символов' }),
+                  length({ max: 140, msg: 'Превышен максимум 140 символов' }),
                 ]}
                 onSubmit={this.handleSave(false)}
               />
