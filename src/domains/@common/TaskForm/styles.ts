@@ -47,12 +47,6 @@ export const styles = (theme: Theme) =>
     grow: {
       flexGrow: 1,
     },
-    iconBug: {
-      color: theme.palette.error.main,
-    },
-    iconStory: {
-      color: '#4BC800',
-    },
     margin: {
       margin: theme.spacing.unit,
     },

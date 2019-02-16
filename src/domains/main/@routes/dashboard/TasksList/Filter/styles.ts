@@ -4,12 +4,25 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) =>
   createStyles({
     chip: {
+      position: 'absolute',
+      transition: theme.transitions.create(['bottom'], {
+        duration: theme.transitions.duration.shortest,
+        easing: theme.transitions.easing.easeIn,
+      }),
       width: '100%',
     },
     filter: {
+      alignItems: 'center',
+      display: 'flex',
+      flexFlow: 'column nowrap',
+      justifyContent: 'flex-end',
+      marginBottom: -16,
+      position: 'relative',
       width: 144,
     },
-    group: {},
+    group: {
+      display: 'flex',
+    },
     grow: {
       grow: 1,
     },

@@ -32,7 +32,7 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
   }
   if (isStarted) {
     return (
-      <Tooltip title="Остановить задачу" placement={'top'}>
+      <Tooltip title="Остановить задачу" placement={'right'}>
         <Fab onClick={onStop} className={classes.stop} size={size as any}>
           <StopIcon fontSize={isLarge ? 'large' : 'default'} />
         </Fab>
@@ -40,7 +40,7 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
     );
   }
   return (
-    <Tooltip title="Начать задачу" placement={'top'}>
+    <Tooltip title="Начать задачу" placement={'right'}>
       <Fab aria-label="Play button" className={classes.play} onClick={onStart} size={size as any}>
         <PlayArrowRounded fontSize={isLarge ? 'large' : 'default'} />
       </Fab>

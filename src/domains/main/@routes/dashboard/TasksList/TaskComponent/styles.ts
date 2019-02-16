@@ -3,21 +3,20 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) =>
   createStyles({
-    buttonProject: {
-      flexBasis: '16%',
-      textTransform: 'none',
-      whiteSpace: 'nowrap',
-    },
     buttonTitle: {
       flexBasis: '60%',
-      textTransform: 'none',
+      paddingLeft: theme.spacing.unit * 4.5,
       [theme.breakpoints.down('sm')]: {
         display: 'inline-block',
         maxWidth: 146,
       },
     },
     buttonTitleLabel: {
+      display: 'block',
+      maxWidth: '100%',
       overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      textTransform: 'none',
       whiteSpace: 'nowrap',
     },
     duration: {
@@ -39,6 +38,25 @@ export const styles = (theme: Theme) =>
       [theme.breakpoints.down('sm')]: {
         marginRight: 0,
       },
+    },
+    projectButton: {
+      '&:hover p': {
+        opacity: 1,
+      },
+      flexBasis: '16%',
+      textTransform: 'none',
+      whiteSpace: 'nowrap',
+    },
+    // projectIcon: {
+    //   color: theme.palette.secondary.dark,
+    //   marginRight: 4,
+    // },
+    projectText: {
+      opacity: 0.2,
+    },
+    taskIcon: {
+      left: 8,
+      position: 'absolute',
     },
     userWorkTable: {
       zIndex: 1202,

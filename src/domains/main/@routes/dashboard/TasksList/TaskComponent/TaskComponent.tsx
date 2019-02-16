@@ -4,11 +4,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import * as Popover from 'react-popover';
 import MediaQuery from 'react-responsive';
 
 import { ITask } from 'src/@types';
+import TaskTypeIcon from 'src/components/@icons/TaskTypeIcon';
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { LinkButton } from 'src/domains/@common/LinkButton';
 import { Project } from 'src/store/projects';
@@ -42,25 +44,28 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
     const isShown = task && project && project.id;
 
     const { isWorkTableOpen } = this.state;
+    const didNotTouched = task.duration === '00:00';
     return (
       <ListItem className={classes.listItem}>
         <MediaQuery minWidth={theme.breakpoints.values.sm}>
-          <LinkButton
-            className={classes.buttonProject}
-            to={isShown ? (project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`) : '#'}
-          >
-            {isShown ? project.title : '...'}
-          </LinkButton>
+          <Tooltip title="Открыть доску проекта" placement="bottom">
+            <LinkButton className={classes.projectButton} to={isShown ? `/projects/${project.id}` : '#'}>
+              <Typography className={classes.projectText}>{isShown ? project.title : '...'}</Typography>
+            </LinkButton>
+          </Tooltip>
         </MediaQuery>
-        <Button
-          component="a"
-          classes={{ label: classes.buttonTitleLabel }}
-          className={classes.buttonTitle}
-          href={isShown ? `/projects/${project.id}/tasks/${task.id}` : '#'}
-          onClick={isShown ? this.openEditTaskForm(task.id, project.id as number) : undefined}
-        >
-          {isShown ? task.title : '...'}
-        </Button>
+        <Tooltip title="Редактировать задачу" placement="bottom">
+          <Button
+            component="a"
+            classes={{ label: classes.buttonTitleLabel }}
+            className={classes.buttonTitle}
+            href={isShown ? `/projects/${project.id}/tasks/${task.id}` : '#'}
+            onClick={isShown ? this.openEditTaskForm(task.id, project.id as number) : undefined}
+          >
+            {isShown ? <TaskTypeIcon typeId={task.typeId} className={classes.taskIcon} /> : ''}
+            {isShown ? task.title : '...'}
+          </Button>
+        </Tooltip>
         <Popover
           tipSize={4}
           className={classes.userWorkTable}
@@ -84,9 +89,18 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
           ) : (
             <Tooltip
               placement={'right'}
-              title={isWorkTableOpen ? 'Закрыть подробности' : 'Нажмите, чтоб раскрыть подробности'}
+              title={
+                didNotTouched
+                  ? 'Вы пока не работали над этой задачей'
+                  : isWorkTableOpen
+                    ? 'Закрыть подробности'
+                    : 'Нажмите, чтоб раскрыть подробности'
+              }
             >
-              <Button className={classes.duration} onClick={this.onToggleOpenWorkTable}>
+              <Button
+                className={classes.duration}
+                onClick={task.duration === '00:00' ? undefined : this.onToggleOpenWorkTable}
+              >
                 {task.duration}
               </Button>
             </Tooltip>

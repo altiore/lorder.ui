@@ -7,10 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
-import BugReportIcon from '@material-ui/icons/BugReport';
 import CloseIcon from '@material-ui/icons/Close';
 import EventIcon from '@material-ui/icons/Event';
-import ExtensionIcon from '@material-ui/icons/Extension';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -24,6 +22,7 @@ import { Input } from 'liw-components/Input';
 import { TitleInput } from 'liw-components/TitleInput';
 
 import { INotification } from 'src/@types';
+import TaskTypeIcon from 'src/components/@icons/TaskTypeIcon';
 import { SelectMenuField } from 'src/components/SelectMenuField';
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { parseNumber } from 'src/store/@common/helpers';
@@ -118,11 +117,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
         <DialogTitle disableTypography>
           <div className={classes.row}>
             <IconButton>
-              {initialValues.typeId ? (
-                <BugReportIcon className={classes.iconBug} />
-              ) : (
-                <ExtensionIcon className={classes.iconStory} />
-              )}
+              <TaskTypeIcon typeId={initialValues.typeId} />
             </IconButton>
             {taskId && (
               <div onMouseLeave={this.hideCopy}>

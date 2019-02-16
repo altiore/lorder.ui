@@ -84,9 +84,9 @@ export default createMuiTheme({
     },
     secondary: {
       contrastText: '#24292E',
-      dark: amber[500],
+      dark: '#FFB200',
       light: amber[50],
-      main: amber[100],
+      main: '#FFF0B5',
     },
   },
   typography: {
