@@ -24,7 +24,12 @@ export const styles = (theme: Theme) =>
       borderRadius: theme.shape.borderRadius,
       cursor: 'pointer',
       flexGrow: 1,
+      overflow: 'hidden',
       position: 'relative',
+      transition: theme.transitions.create(['height'], {
+        duration: theme.transitions.duration.shortest,
+        easing: theme.transitions.easing.easeIn,
+      }),
       width: '100%',
     },
     svg: {
