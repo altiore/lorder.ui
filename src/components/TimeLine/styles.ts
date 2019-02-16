@@ -34,6 +34,9 @@ export const styles = (theme: Theme) =>
       top: 0,
     },
     text: {
-      fill: '#24292E',
+      // fill: '#77909D',
+      fill: '#87A082',
+      // fill: theme.palette.primary.main,
+      // fill: '#24292E',
     },
   });
