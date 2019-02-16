@@ -46,6 +46,7 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
       >
         {preparedEvents.map(event => (
           <div
+            key={event.startAt.toString()}
             className={classes.block}
             style={{
               backgroundColor: this.getColor(event),

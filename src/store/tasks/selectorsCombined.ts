@@ -5,9 +5,9 @@ import { IEvent, ITask } from 'src/@types';
 import { DownloadList } from 'src/store/@common/entities';
 import { defaultProjectId } from 'src/store/identity/selectors';
 import { selectedProjectId } from 'src/store/project';
-import { allTasks, UserWork } from 'src/store/tasks';
+import { allTasks, Task, UserWork } from 'src/store/tasks';
 import { tasksFilter } from 'src/store/tasksFilter';
-import { currentTaskId } from 'src/store/timer';
+import { currentTask, currentTaskId } from 'src/store/timer';
 import { lastUserWorks } from 'src/store/user-works/selectors';
 
 export const filteredByProjectTasks = createSelector(
@@ -25,6 +25,11 @@ const filteredFunction = {
 export const sortedByFilterTasks = createSelector(
   [filteredByProjectTasks, tasksFilter],
   (tasks = [], filter = 'smart') => [...tasks].sort(filteredFunction[filter])
+);
+
+export const sortedByFilterTasksWithActive = createSelector(
+  [sortedByFilterTasks, currentTask],
+  (tasks = [], curTask): Array<ITask | 'filter'> => [curTask || new Task({ id: 0 }), 'filter', ...tasks]
 );
 
 export const checkIsCurrent = createSelector([currentTaskId], cTaskId => (taskId: number) => cTaskId === taskId);

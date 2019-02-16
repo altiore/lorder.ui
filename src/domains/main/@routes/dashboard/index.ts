@@ -1,24 +1,15 @@
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
-import { getProjectById } from 'src/store/projects';
-import { getAllTasks, sortedByFilterTasks } from 'src/store/tasks';
-import { currentUserWorkId } from 'src/store/timer';
+import { getAllTasks } from 'src/store/tasks';
 import { DashboardJsx } from './Dashboard';
 import { styles } from './styles';
-
-const mapStateToProps = createStructuredSelector({
-  currentUserWorkId,
-  getProjectById,
-  tasks: sortedByFilterTasks,
-});
 
 const mapDispatchToProps = {
   getAllTasks,
 };
 
 export const Dashboard = connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps
 )(withStyles(styles, { withTheme: true })(DashboardJsx));

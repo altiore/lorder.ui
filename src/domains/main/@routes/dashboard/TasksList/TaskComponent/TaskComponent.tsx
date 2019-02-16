@@ -8,10 +8,10 @@ import * as React from 'react';
 import * as Popover from 'react-popover';
 import MediaQuery from 'react-responsive';
 
+import { ITask } from 'src/@types';
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { LinkButton } from 'src/domains/@common/LinkButton';
 import { Project } from 'src/store/projects';
-import { Task } from 'src/store/tasks';
 import { TimerListItemText } from './TimerListItemText';
 import { UserWorkTable } from './UserWorkTable';
 
@@ -21,7 +21,7 @@ export interface ITaskComponentProps {
   isCurrent: boolean;
   project: Project;
   push: any;
-  task: Task;
+  task: ITask;
   timerComponent?: React.ReactNode;
   openDialog: (c: React.ReactNode, d?: Partial<DialogProps>) => any;
   startUserWork: any;
@@ -113,7 +113,7 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
 
   private onToggleOpenWorkTable = () => this.setState(({ isWorkTableOpen }) => ({ isWorkTableOpen: !isWorkTableOpen }));
 
-  private startUserTask = (task: Task) => (event: React.SyntheticEvent) => {
+  private startUserTask = (task: ITask) => (event: React.SyntheticEvent) => {
     if (!task) {
       return;
     }
