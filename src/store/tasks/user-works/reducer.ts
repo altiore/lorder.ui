@@ -5,7 +5,8 @@ import uniqid from 'uniqid';
 
 import { DownloadList } from 'src/store/@common/entities';
 import { IRequestAction } from 'src/store/@common/requestActions';
-import { deleteUserWork, patchAndStopUserWork, patchUserWork, postAndStartUserWork } from './actions';
+import { patchUserWork } from 'src/store/user-works';
+import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork } from './actions';
 import { UserWork } from './UserWork';
 
 type S = DownloadList<UserWork>;
@@ -44,7 +45,7 @@ const patchUserWorkSuccessHandler = (state: S, { payload }: Action<AxiosResponse
   if (!payload) {
     throw new Error('patchUserWorkSuccessHandler Error: payload required!');
   }
-  const data: Partial<UserWork> = payload.data;
+  const data: Partial<UserWork> = payload.data.edited;
   const index = state.list.findIndex(el => el.id === data.id);
   if (!~index) {
     throw new Error(`Не смог найти измененную задачу index= ${index}`);

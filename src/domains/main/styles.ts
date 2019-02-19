@@ -4,7 +4,8 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) =>
   createStyles({
     background: {
-      background: 'url(/3a1d420f46.png)',
+      // background: 'url(/3a1d420f46.png)',
+      background: 'url(/09ed844b43.png)',
       filter: 'blur(5px)',
       height: '100%',
       position: 'absolute',

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import { onSubmitForm } from 'src/store/@common/helpers';
-import { EDIT_USER_WORK_DESCRIPTION_FORM, IUpdateUserWork, patchUserWork } from 'src/store/tasks';
+import { IUpdateUserWork } from 'src/store/tasks';
+import { EDIT_USER_WORK_DESCRIPTION_FORM, patchUserWork } from 'src/store/user-works';
 import { DescriptionFormTsx } from './DescriptionForm';
 import { styles } from './styles';
 
@@ -23,5 +24,9 @@ export const DescriptionForm = connect(
   mapDispatchToProps,
   mergeProps
 )(reduxForm<IUpdateUserWork, IUpdateUserWork>({
-  onSubmit: onSubmitForm(patchUserWork, ({ projectId, taskId, userWorkId }) => ({ projectId, taskId, userWorkId })),
+  onSubmit: onSubmitForm<any, any>(patchUserWork, ({ projectId, taskId, userWorkId }) => ({
+    projectId,
+    taskId,
+    id: userWorkId,
+  })),
 })(withStyles(styles, { withTheme: true })(DescriptionFormTsx) as any) as any);

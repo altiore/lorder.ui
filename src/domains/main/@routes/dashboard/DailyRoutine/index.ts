@@ -1,5 +1,4 @@
 import { push } from 'connected-react-router';
-import { createElement } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -8,8 +7,8 @@ import { TimeLine } from 'src/components/TimeLine';
 import { openDialog } from 'src/store/dialog';
 import { events } from 'src/store/tasks';
 import { isRequiredConfirmationChangedEvents } from 'src/store/ui';
-import { saveUserWorks } from 'src/store/user-works';
-import { ConfirmDialogTsx } from './ConfirmDialog';
+// import { updateUserWork } from 'src/store/user-works';
+// import { ConfirmDialogTsx } from './ConfirmDialog';
 
 const mapStateToProps = createStructuredSelector({
   events,
@@ -27,7 +26,7 @@ const mapDispatch = {
       },
     }),
   openDialog,
-  saveUserWorks,
+  // updateUserWork,
 };
 
 const mergeProps = (
@@ -38,13 +37,6 @@ const mergeProps = (
   ...restState,
   ...restDispatch,
   ...restOwn,
-  onChange: isRequiredConfirmationChangedEvents
-    ? (data: IEvent[]) =>
-        openDialog(createElement(ConfirmDialogTsx, { onSubmit: () => saveUserWorks(data) }), {
-          maxWidth: 'xs',
-          scroll: 'body',
-        })
-    : saveUserWorks,
 });
 
 export const DailyRoutine = connect(

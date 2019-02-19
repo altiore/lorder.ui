@@ -9,16 +9,10 @@ import uniqid from 'uniqid';
 import { DownloadList } from 'src/store/@common/entities';
 import { combineActions } from 'src/store/@common/helpers';
 import { deleteProjectTask, patchProjectTask } from 'src/store/projects/tasks/actions';
+import { patchUserWork } from 'src/store/user-works/actions';
 import { archiveTask, fetchTaskDetails, getAllTasks, replaceTasks } from './actions';
 import { Task } from './Task';
-import {
-  deleteUserWork,
-  patchAndStopUserWork,
-  patchUserWork,
-  postAndStartUserWork,
-  UserWork,
-  userWorks,
-} from './user-works';
+import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork, UserWork, userWorks } from './user-works';
 
 type S = DownloadList<Task>;
 type P<T = any> = AxiosResponse<T> | Array<Partial<Task>>;

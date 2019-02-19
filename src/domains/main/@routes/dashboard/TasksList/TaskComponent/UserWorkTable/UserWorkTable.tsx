@@ -3,7 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import ClearIcon from '@material-ui/icons/Clear';
+// import ClearIcon from '@material-ui/icons/Clear';
+import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -28,19 +29,24 @@ export interface IUserWorkTableProps extends RouteComponentProps<{}> {
 
 export class UserWorkTableJsx1 extends React.PureComponent<IUserWorkTableProps> {
   render() {
-    const { classes, userWorks } = this.props;
+    const { classes, onClose, userWorks } = this.props;
     if (!userWorks || !userWorks.length) {
       return null;
     }
     return (
       <div className={classes.wrapper}>
+        <div className={classes.header}>
+          <IconButton onClick={onClose}>
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </div>
         <Table items={userWorks} renderItem={this.renderItem} perPage={7}>
           <TableHead>
             <TableRow>
-              <TableCell>Задача</TableCell>
-              <TableCell align="right">Начало</TableCell>
-              <TableCell align="right">Конец</TableCell>
-              <TableCell align="right">Длилась</TableCell>
+              <TableCell align="left">Задача</TableCell>
+              <TableCell align="center">Начало</TableCell>
+              <TableCell align="center">Конец</TableCell>
+              <TableCell align="center">Длилась</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -54,7 +60,7 @@ export class UserWorkTableJsx1 extends React.PureComponent<IUserWorkTableProps> 
     const isCurrent = currentUserWorkId === id;
     return (
       <TableRow className={classes.row} key={id} hover>
-        <TableCell>
+        <TableCell align="left">
           <DescriptionForm
             currentUserWorkId={currentUserWorkId}
             projectId={projectId}
@@ -63,35 +69,29 @@ export class UserWorkTableJsx1 extends React.PureComponent<IUserWorkTableProps> 
             initialValues={{ description }}
           />
         </TableCell>
-        <TableCell>{startAt && startAt.format('YYYY-MM-DD HH:mm:ss')}</TableCell>
-        <TableCell>{finishAt && finishAt.format('YYYY-MM-DD HH:mm:ss')}</TableCell>
+        <TableCell align="center">{startAt && startAt.format('YYYY-MM-DD HH:mm:ss')}</TableCell>
+        <TableCell align="center">{finishAt && finishAt.format('YYYY-MM-DD HH:mm:ss')}</TableCell>
         {isCurrent ? (
           <TimerCell />
         ) : (
-          <TableCell align="right">
+          <TableCell align="center">
             <DurationField projectId={projectId} taskId={taskId} value={duration} userWorkId={id} />
           </TableCell>
         )}
-        <TableCell align="right">
-          {isCurrent ? (
-            <StartStopBtn isStarted={isCurrent} onStop={this.stopUserWork(id)} />
-          ) : (
-            <IconButton onClick={this.deleteUserWork(id)}>
-              <ClearIcon />
-            </IconButton>
-          )}
+        <TableCell align="center">
+          {isCurrent ? <StartStopBtn isStarted={isCurrent} onStop={this.stopUserWork(id)} /> : null}
         </TableCell>
       </TableRow>
     );
   };
 
-  private deleteUserWork = (userWorkId: number | string | undefined) => () => {
-    if (typeof userWorkId === 'number') {
-      this.props.deleteUserWork(userWorkId);
-    } else {
-      throw new Error(`deleteUserWork userWorkId type is ${typeof userWorkId}`);
-    }
-  };
+  // private deleteUserWork = (userWorkId: number | string | undefined) => () => {
+  //   if (typeof userWorkId === 'number') {
+  //     this.props.deleteUserWork(userWorkId);
+  //   } else {
+  //     throw new Error(`deleteUserWork userWorkId type is ${typeof userWorkId}`);
+  //   }
+  // };
 
   private stopUserWork = (userWorkId: number | string | undefined) => async (e: React.SyntheticEvent) => {
     e.stopPropagation();

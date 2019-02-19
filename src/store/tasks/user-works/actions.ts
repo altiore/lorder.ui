@@ -1,6 +1,6 @@
 import { requestActions } from 'src/store/@common/requestActions';
 import { Project } from 'src/store/projects';
-import { CREATE_USER_WORK_FORM_NAME, EDIT_USER_WORK_DESCRIPTION_FORM } from './consts';
+import { CREATE_USER_WORK_FORM_NAME } from './consts';
 
 export interface IUserWorkData {
   description?: string;
@@ -39,21 +39,6 @@ export const postAndStartUserWork = requestActions<IPostData>(
       url: '/user-works',
     },
     taskId: userWork.taskId,
-  })
-);
-
-export const patchUserWork = requestActions<IUpdateUserWork>(
-  'USER_WORK/PATCH',
-  ({ projectId, taskId, userWorkId, ...data }: IUpdateUserWork) => ({
-    form: EDIT_USER_WORK_DESCRIPTION_FORM + userWorkId,
-    projectId,
-    request: {
-      data,
-      method: 'PATCH',
-      url: `/user-works/${userWorkId}`,
-    },
-    taskId,
-    userWorkId,
   })
 );
 

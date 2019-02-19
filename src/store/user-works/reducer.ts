@@ -4,7 +4,7 @@ import { PURGE } from 'redux-persist';
 
 import { DownloadList } from 'src/store/@common/entities';
 import { UserWork } from 'src/store/tasks';
-import { getUserWorks, saveUserWorks } from './actions';
+import { getUserWorks, patchUserWork } from './actions';
 
 type S = DownloadList<UserWork>;
 type P<T = any> = AxiosResponse<T>;
@@ -21,15 +21,16 @@ const getUserWorksFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
-const saveUserWorksHandler = (state: S, { payload }: any) => {
+const patchUserWorkHandler = (state: S, { payload }: any) => {
   return state.startLoading();
 };
 
-const saveUserWorksSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
+const patchUserWorkSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
+  console.log('patchUserWorkSuccessHandler', payload);
   return state.stopLoading();
 };
 
-const saveUserWorksFailHandler = (state: S) => {
+const patchUserWorkFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
@@ -43,9 +44,9 @@ export const userWorks = handleActions<S, P>(
     [getUserWorks.success]: getUserWorksSuccessHandler,
     [getUserWorks.fail]: getUserWorksFailHandler,
 
-    [saveUserWorks.toString()]: saveUserWorksHandler,
-    [saveUserWorks.success]: saveUserWorksSuccessHandler,
-    [saveUserWorks.fail]: saveUserWorksFailHandler,
+    [patchUserWork.toString()]: patchUserWorkHandler,
+    [patchUserWork.success]: patchUserWorkSuccessHandler,
+    [patchUserWork.fail]: patchUserWorkFailHandler,
 
     [PURGE]: logOutHandler,
   },

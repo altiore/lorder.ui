@@ -15,7 +15,6 @@ export interface IDailyRoutineProps {
   classes: any;
   getRef: any;
   events: IEvent[];
-  onChange: (events: IEvent[]) => any;
   onEventClick?: (ev: IEvent) => any;
   theme: Theme;
   step?: number;
