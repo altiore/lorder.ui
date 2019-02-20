@@ -86,7 +86,7 @@ export const userWorks = handleActions<S, P>(
 
     [deleteUserWork.toString()]: deleteUserWorkHandler,
 
-    update: updateHandler,
+    ['update']: updateHandler,
   },
   new DownloadList(UserWork)
 );
