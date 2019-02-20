@@ -5,7 +5,7 @@ import uniqid from 'uniqid';
 
 import { DownloadList } from 'src/store/@common/entities';
 import { IRequestAction } from 'src/store/@common/requestActions';
-import { patchUserWork } from 'src/store/user-works';
+import { patchUserWork } from 'src/store/user-works/actions';
 import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork } from './actions';
 import { UserWork } from './UserWork';
 
@@ -80,8 +80,8 @@ export const userWorks = handleActions<S, P>(
     [postAndStartUserWork.success]: postAndStartUserWorkSuccessHandler,
     [postAndStartUserWork.fail]: postAndStartUserWorkFailHandler,
 
-    [combineActions(patchAndStopUserWork, patchUserWork).toString()]: patchUserWorkHandler,
-    [combineActions(patchAndStopUserWork.fail, patchUserWork.fail).toString()]: patchUserWorkFailHandler,
+    [combineActions(patchAndStopUserWork.toString(), patchUserWork.toString()) as any]: patchUserWorkHandler,
+    [combineActions(patchAndStopUserWork.fail, patchUserWork.fail) as any]: patchUserWorkFailHandler,
     [patchUserWork.success]: patchUserWorkSuccessHandler,
 
     [deleteUserWork.toString()]: deleteUserWorkHandler,

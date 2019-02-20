@@ -184,7 +184,7 @@ const logOutHandler = () => {
 export const projects = handleActions<S, P>(
   {
     [postProject.success]: postProjectSuccessHandler,
-    [combineActionsRedux(getOwnProjects, getAllProjects).toString()]: getOwnProjectsHandler,
+    [combineActionsRedux(getOwnProjects.toString(), getAllProjects.toString()).toString()]: getOwnProjectsHandler,
     [combineActionsRedux(getOwnProjects.success, getAllProjects.success).toString()]: getOwnProjectsSuccessHandler,
     [combineActionsRedux(getOwnProjects.fail, getAllProjects.fail).toString()]: getOwnProjectsFailHandler,
     [addTaskTypeToProject.toString()]: addTaskTypeToProjectHandler,

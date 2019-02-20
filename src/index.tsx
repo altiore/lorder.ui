@@ -1,4 +1,5 @@
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import * as Sentry from '@sentry/browser';
 import { ConnectedRouter } from 'connected-react-router';
 import * as moment from 'moment';
 import * as React from 'react';
@@ -6,6 +7,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import Boundary from 'src/components/Boundary';
 import Dialog from 'src/domains/@common/Dialog';
 import Notification from 'src/domains/@common/Notification';
 import { App } from './domains';
@@ -15,19 +17,27 @@ import theme from './styles/materialTheme';
 
 moment.locale('ru');
 
+Sentry.init({
+  dsn: 'https://c42e3efc3fa94160953f93a01647fdd7@sentry.io/1398903',
+  enabled: process.env.NODE_ENV !== 'development',
+  environment: process.env.NODE_ENV,
+});
+
 createStore().then(({ store, persistor, history }) => {
   ReactDOM.render(
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ConnectedRouter history={history}>
-          <MuiThemeProvider theme={theme}>
-            <App />
-            <Notification />
-            <Dialog />
-          </MuiThemeProvider>
-        </ConnectedRouter>
-      </PersistGate>
-    </Provider>,
+    <Boundary>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ConnectedRouter history={history}>
+            <MuiThemeProvider theme={theme}>
+              <App />
+              <Notification />
+              <Dialog />
+            </MuiThemeProvider>
+          </ConnectedRouter>
+        </PersistGate>
+      </Provider>
+    </Boundary>,
     document.getElementById('root') as HTMLElement
   );
 });
