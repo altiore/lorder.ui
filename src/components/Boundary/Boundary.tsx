@@ -1,9 +1,12 @@
+import Tooltip from '@material-ui/core/Tooltip';
 import * as Sentry from '@sentry/browser';
 import * as React from 'react';
 
+import ReportIcon from './freshdesk-icon-export.svg';
+
 export interface IBoundaryProps {
   children: React.ReactNode;
-  // classes: any;
+  classes: any;
 }
 
 export interface IBoundaryState {
@@ -24,16 +27,30 @@ export default class Boundary extends React.Component<IBoundaryProps, IBoundaryS
   }
 
   render() {
+    const { classes } = this.props;
+
     if (this.state.error) {
       // render fallback UI
-      return <a onClick={this.showReportDialog}>Report feedback</a>;
+      return <a onClick={this.showReportDialog('boundery')}>Report feedback</a>;
     } else {
+      if (!this.props.children) {
+        return null;
+      }
       // when there's not an error, render children untouched
-      return this.props.children;
+      return (
+        <>
+          {this.props.children}
+          <div className={classes.report} onClick={this.showReportDialog('manual')}>
+            <Tooltip title="Оставить отзыв">
+              <ReportIcon />
+            </Tooltip>
+          </div>
+        </>
+      );
     }
   }
 
-  private showReportDialog = () => {
-    Sentry.showReportDialog();
+  private showReportDialog = (eventId: string) => () => {
+    Sentry.showReportDialog({ eventId });
   };
 }
