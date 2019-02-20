@@ -140,22 +140,37 @@ const patchAndStopUserWorkHandler = (state: S, action: ActionMeta<any, any>) => 
 };
 
 const patchAndStopUserWorkSuccessHandler = (state: S, action: ActionMeta<any, any>) => {
-  const taskId = get(action.payload.next, 'taskId');
-  const index = state.list.findIndex(el => taskId === el.id);
-  if (~index) {
-    return state.stopLoading().updateItem(index, {
-      userWorks: userWorks(state.list[index].userWorks, action),
+  const { next, previous } = get(action, ['payload', 'data']);
+  let resState: S = state;
+  const nextIndex = resState.list.findIndex(el => next.taskId === el.id);
+  if (~nextIndex) {
+    resState = resState.updateItem(nextIndex, {
+      userWorks: userWorks(resState.list[nextIndex].userWorks, { type: 'update', payload: next }),
+    });
+  } else {
+    resState = resState.addItem({
+      description: next.task.description,
+      id: next.task.id,
+      projectId: next.projectId,
+      title: next.task.title,
+      userWorks: new DownloadList<UserWork>(UserWork, [next], true),
     });
   }
-  const userWork: Partial<UserWork> = get(action, 'payload.data.next');
-  const task: Partial<Task> = get(action, 'payload.data.next.task');
-  return state.stopLoading().addItem({
-    description: task.description,
-    id: task.id,
-    projectId: userWork.projectId,
-    title: task.title,
-    userWorks: new DownloadList<UserWork>(UserWork, [userWork], true),
-  });
+  const prevIndex = resState.list.findIndex(el => previous.taskId === el.id);
+  if (~prevIndex) {
+    resState = resState.updateItem(prevIndex, {
+      userWorks: userWorks(resState.list[prevIndex].userWorks, { type: 'update', payload: previous }),
+    });
+  } else {
+    resState = resState.addItem({
+      description: previous.task.description,
+      id: previous.task.id,
+      projectId: previous.projectId,
+      title: previous.task.title,
+      userWorks: new DownloadList<UserWork>(UserWork, [previous], true),
+    });
+  }
+  return resState.stopLoading();
 };
 
 const patchAndStopUserWorkFailHandler = (state: S) => {

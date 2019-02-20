@@ -73,12 +73,7 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
           onOuterAction={this.onToggleOpenWorkTable}
           body={
             isShown ? (
-              <UserWorkTable
-                userWorks={task.userWorks}
-                taskId={task.id}
-                projectId={project.id}
-                onClose={this.onToggleOpenWorkTable}
-              />
+              <UserWorkTable taskId={task.id} projectId={project.id} onClose={this.onToggleOpenWorkTable} />
             ) : (
               <div />
             )

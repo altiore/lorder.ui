@@ -24,9 +24,10 @@ export const DescriptionForm = connect(
   mapDispatchToProps,
   mergeProps
 )(reduxForm<IUpdateUserWork, IUpdateUserWork>({
+  enableReinitialize: true,
   onSubmit: onSubmitForm<any, any>(patchUserWork, ({ projectId, taskId, userWorkId }) => ({
+    id: userWorkId,
     projectId,
     taskId,
-    id: userWorkId,
   })),
 })(withStyles(styles, { withTheme: true })(DescriptionFormTsx) as any) as any);

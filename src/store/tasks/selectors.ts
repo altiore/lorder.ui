@@ -27,3 +27,11 @@ export const getEditTaskInitialValues = createSelector([allTaskList], (allTaskLi
     'value',
   ])
 );
+
+export const getUserWorksById = createSelector([allTaskList], tasks => (taskId: number) => {
+  const task = tasks.find(t => t.id === taskId);
+  if (task) {
+    return task.userWorks;
+  }
+  return [];
+});
