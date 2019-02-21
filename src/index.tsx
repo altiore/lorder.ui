@@ -21,6 +21,7 @@ Sentry.init({
   dsn: 'https://c42e3efc3fa94160953f93a01647fdd7@sentry.io/1398903',
   enabled: process.env.NODE_ENV !== 'development',
   environment: process.env.NODE_ENV,
+  whitelistUrls: ['https://altiore.org'],
 });
 
 createStore().then(({ store, persistor, history }) => {

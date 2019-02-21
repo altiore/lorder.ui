@@ -1,3 +1,4 @@
+import Tooltip from '@material-ui/core/Tooltip';
 import * as React from 'react';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
@@ -7,11 +8,15 @@ import { LoadingPage } from 'src/components/LoadingPage';
 // import "react-perfect-scrollbar/dist/css/styles.css";
 import '../styles/app.scss';
 import { RouteWithSubRoutes } from './@common/RouteWithSubRoutes';
+import ReportIcon from './freshdesk-icon-export.svg';
+import { PostFeedback } from './PostFeedback';
 import { Start } from './start';
 
 export interface IAppProps extends RouteComponentProps<{}> {
   // TODO: split reducers to several chunks
   // injectAsyncReducers: (role: ROLE) => Promise<void>;
+  classes: any;
+  openDialog: any;
   userIsLoading: boolean;
   userRole: ROLE;
 }
@@ -45,18 +50,25 @@ export class AppTsx extends React.Component<IAppProps, IState> {
 
   render() {
     const { isLoading, routes } = this.state;
-    const { userIsLoading } = this.props;
+    const { classes, userIsLoading } = this.props;
     const { userRole } = this.props;
     if (isLoading || userIsLoading || !routes) {
       return <LoadingPage />;
     }
     return (
-      <Switch>
-        <Redirect from="/index.html" to="/" exact />
-        <Route path={'/start/:identifier'} component={Start} />
-        {routes.length && routes.map(route => <RouteWithSubRoutes key={route.path || 'notFound'} {...route} />)}
-        {userRole === ROLE.GUEST && <Redirect to={'/'} />}
-      </Switch>
+      <>
+        <Switch>
+          <Redirect from="/index.html" to="/" exact />
+          <Route path={'/start/:identifier'} component={Start} />
+          {routes.length && routes.map(route => <RouteWithSubRoutes key={route.path || 'notFound'} {...route} />)}
+          {userRole === ROLE.GUEST && <Redirect to={'/'} />}
+        </Switch>
+        <div className={classes.report} onClick={this.showReportDialog}>
+          <Tooltip title="Оставить отзыв">
+            <ReportIcon />
+          </Tooltip>
+        </div>
+      </>
     );
   }
 
@@ -103,4 +115,8 @@ export class AppTsx extends React.Component<IAppProps, IState> {
       .then(({ routes }) => this.setState({ routes, isLoading: false }))
       .catch((error: any) => this.setState({ error, isLoading: false }));
   }
+
+  private showReportDialog = () => {
+    this.props.openDialog(PostFeedback);
+  };
 }

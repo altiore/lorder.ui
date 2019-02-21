@@ -4,6 +4,7 @@ import { FormStateMap } from 'redux-form';
 
 import { DownloadList } from 'src/store/@common/entities';
 import { IDialogState } from 'src/store/dialog';
+import { Feedback } from 'src/store/feedback';
 import { IIdentityState } from 'src/store/identity';
 import { Project } from 'src/store/projects';
 import { PublicProject } from 'src/store/publicProject';
@@ -16,6 +17,7 @@ import { VersionHistory } from 'src/store/versionHistory';
 
 export interface IState {
   dialog: IDialogState;
+  feedbacks: DownloadList<Feedback>;
   form: FormStateMap;
   identity: IIdentityState;
   notifications: NotificationsState;
