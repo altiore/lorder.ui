@@ -164,14 +164,23 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
     if (selectedProject.id !== projectId) {
       this.props.showWarning({
         action: {
-          callback: this.props.openTaskModal,
-          label: 'Редактировать созданную задачу',
+          callback: async () => {
+            await startUserWork({
+              projectId,
+            });
+            this.props.showWarning({
+              action: {
+                callback: this.props.openTaskModal,
+                label: 'Редактировать',
+              },
+              message: 'Хотите редактировать созданную задачу?',
+              title: `Задача для проекта "${project.title}" успешно создана!`,
+            });
+          },
+          label: 'Создать',
         },
-        message: 'Новая задача в этом проекте успешно создана!',
-        title: `Вы выбрали проект "${project.title}"!`,
-      });
-      await startUserWork({
-        projectId,
+        message: 'Просто создайте новую задачу для этого проекта',
+        title: `Чтобы переключиться на проект "${project.title}"`,
       });
     }
     push('/');
@@ -182,21 +191,33 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
     const { selectedProject, startUserWork, push } = this.props;
     this.clearTimeout();
     this.setState({ anchorEl: null, expanded: false });
-    push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
     if (!selectedProject || selectedProject.id !== project.id) {
       const taskTitle = 'Обзор';
-      await startUserWork({
-        projectId: project.id as number,
-        title: taskTitle,
-      });
       this.props.showWarning({
         action: {
-          callback: this.props.openTaskModal,
-          label: 'Редактировать созданную задачу',
+          // callback: this.props.openTaskModal,
+          callback: async () => {
+            await startUserWork({
+              projectId: project.id as number,
+              title: taskTitle,
+            });
+            push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
+            this.props.showWarning({
+              action: {
+                callback: this.props.openTaskModal,
+                label: 'Редактировать',
+              },
+              message: `Редактировать задачу "${taskTitle}"?`,
+              title: `Задача для проекта "${project.title}" успешно создана!`,
+            });
+          },
+          label: 'Создать и перейти',
         },
-        message: `Задача "${taskTitle}" успешно создана!`,
-        title: `Вы начали работу над проектом "${project.title}"!`,
+        message: `Для него будет создана задача "${taskTitle}"`,
+        title: `Вы собираетесь перейти к проекту "${project.title}"`,
       });
+    } else {
+      push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
     }
   };
 }
