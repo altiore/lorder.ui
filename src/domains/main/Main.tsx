@@ -8,6 +8,7 @@ import { Header } from './Header';
 
 export interface IMainProps {
   classes: any;
+  closeDialog: any;
   openDialog: any;
   push: any;
   routes: IRoute[];
@@ -20,9 +21,16 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
     nextContext: any
   ): void {
     if (nextProps.location !== this.props.location && nextProps.location.state && nextProps.location.state.modal) {
+      const prevLocation = this.props.location;
       this.props.openDialog(
         <DashboardTaskForm taskId={nextProps.location.state.taskId} projectId={nextProps.location.state.projectId} />,
-        { maxWidth: 'lg' },
+        {
+          maxWidth: 'lg',
+          onClose: () => {
+            this.props.closeDialog();
+            this.props.push(prevLocation.pathname);
+          },
+        },
         this.props.location
       );
     }
@@ -38,8 +46,8 @@ export class MainJsx extends React.Component<RouteComponentProps<{}> & IMainProp
     return (
       <div className={classes.root}>
         <Header />
-        {/*<div className={classes.background} />*/}
-        {/*<div className={classes.background2} />*/}
+        <div className={classes.background} />
+        <div className={classes.background2} />
         <main className={classes.main}>
           <Switch>
             {routes.map((route: IRoute) => (

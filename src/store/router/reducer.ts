@@ -4,8 +4,6 @@ import get from 'lodash-es/get';
 import { handleActions } from 'redux-actions';
 import { REHYDRATE } from 'redux-persist';
 
-import { closeDialog } from 'src/store/dialog';
-
 const rehydrateHandler = (state: any, { payload }: any) => {
   const isModal = get(payload, 'router.location.state.modal');
   if (isModal) {
@@ -26,23 +24,11 @@ const locationChangeHandler = (state: any, { payload }: any) => {
     : { ...state, location, action, prevLocation: state.location };
 };
 
-const closeDialogHandler = (state: any, { payload }: any) => {
-  if (get(state, 'location.state.modal')) {
-    const location = {
-      ...state.location,
-      state: undefined,
-    };
-    return { ...state, location };
-  }
-  return state;
-};
-
 export const routerReducer = (history: History) =>
   handleActions<any, any>(
     {
       [REHYDRATE]: rehydrateHandler,
       [LOCATION_CHANGE]: locationChangeHandler,
-      [closeDialog.toString()]: closeDialogHandler,
     },
     {
       action: history.action,

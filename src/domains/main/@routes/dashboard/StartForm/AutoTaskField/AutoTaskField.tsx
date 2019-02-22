@@ -23,11 +23,14 @@ export interface IAutoTaskFieldState {
 }
 
 export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAutoTaskFieldState> {
-  state = {
-    suggestions: [],
-  };
-
   popperNode: HTMLElement;
+
+  constructor(props: IAutoTaskFieldProps) {
+    super(props);
+    this.state = {
+      suggestions: [],
+    };
+  }
 
   handleSuggestionsFetchRequested = ({ value }: any) => {
     this.setState({
@@ -48,9 +51,11 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
   render() {
     const { classes, input, label } = this.props;
     const { suggestions } = this.state;
+    const isOpen = Boolean(suggestions.length);
 
     return (
       <div className={classes.root}>
+        {isOpen && <div className={classes.overlay} />}
         <Autosuggest
           onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
@@ -84,22 +89,24 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
 
   private renderSuggestionsContainer = (options: any) => {
     const { classes } = this.props;
+    const isOpen = Boolean(options.children);
     return (
       <Popper
         anchorEl={this.popperNode}
-        open={Boolean(options.children)}
+        open={isOpen}
         placement="bottom"
         modifiers={{
           flip: {
             enabled: false,
           },
         }}
+        style={{ zIndex: 1301 }}
       >
         <Paper
           square
           {...options.containerProps}
           style={{ width: this.popperNode ? this.popperNode.clientWidth : 'none' }}
-          className={classes.popper}
+          className={classes.popperPaper}
         >
           {options.children}
         </Paper>
@@ -133,6 +140,7 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
       meta: { error, touched },
     } = this.props;
 
+    const isOpen = Boolean(this.state.suggestions.length);
     return (
       <TextField
         fullWidth
@@ -146,6 +154,11 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
           inputRef: node => {
             ref(node);
             inputRef(node);
+          },
+          style: {
+            backgroundColor: isOpen ? '#fff' : 'transparent',
+            borderRadius: 4,
+            zIndex: isOpen ? 1305 : 'auto',
           },
         }}
         FormHelperTextProps={{ classes: { error: globalClasses.inputError } }}

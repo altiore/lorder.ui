@@ -8,12 +8,21 @@ export const styles = (theme: Theme) =>
       display: 'flex',
       flexBasis: '16%',
       justifyContent: 'center',
+      opacity: 0.2,
+    },
+    projectSelected: {
+      opacity: 1,
     },
     root: {
       alignItems: 'center',
+      border: `1px solid transparent`,
       display: 'flex',
       flexFlow: 'row nowrap',
       justifyContent: 'space-between',
+    },
+    rootSelected: {
+      backgroundColor: `${theme.palette.background.default}!important`,
+      borderColor: theme.palette.secondary.main,
     },
     runButton: {
       alignItems: 'center',

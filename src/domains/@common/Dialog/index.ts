@@ -1,6 +1,5 @@
 import { DialogProps } from '@material-ui/core/Dialog';
 import { withTheme } from '@material-ui/core/styles';
-import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -23,19 +22,14 @@ const mapStateToProps = createStructuredSelector<any, any>({
 
 interface IMappedDispatch {
   closeDialog: any;
-  push: any;
 }
 
 const mapDispatchToProps = {
   closeDialog,
-  push,
 };
 
-const mergeProps = (
-  { component, dialogProps, open, restProps }: IMappedState,
-  { closeDialog, push }: IMappedDispatch
-) => ({
-  onClose: restProps ? () => push({ ...restProps }) : closeDialog,
+const mergeProps = ({ component, dialogProps, open, restProps }: IMappedState, { closeDialog }: IMappedDispatch) => ({
+  onClose: closeDialog,
   open,
   scroll: 'paper',
   transitionDuration: 400,

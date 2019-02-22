@@ -94,9 +94,9 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
               flexBasis: isExpended ? '76%' : '100%',
             }}
           >
-            {preparedEvents.map(event => (
+            {preparedEvents.map((event, i) => (
               <div
-                key={event.startAt.unix()}
+                key={event.data.id || i}
                 className={classes.block}
                 style={{
                   ...this.getStyle(event),

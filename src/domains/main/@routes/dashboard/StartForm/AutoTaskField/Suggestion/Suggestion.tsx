@@ -1,5 +1,6 @@
 import MenuItem from '@material-ui/core/MenuItem';
 import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
+import * as cn from 'classnames';
 import * as React from 'react';
 const match = require('autosuggest-highlight/match');
 const parse = require('autosuggest-highlight/parse');
@@ -26,10 +27,8 @@ export const SuggestionTsx: React.FunctionComponent<ISuggestionProps> = ({
   const parts = parse(task.title, matches);
 
   return (
-    <MenuItem selected={selected} component="div" className={classes.root}>
-      <div className={classes.project} style={{ opacity: selected ? 1 : 0.2 }}>
-        {project.title}
-      </div>
+    <MenuItem selected={selected} component="div" className={classes.root} classes={{ selected: classes.rootSelected }}>
+      <div className={cn(classes.project, { [classes.projectSelected]: selected })}>{project.title}</div>
       <div className={classes.task}>
         <TaskTypeIcon typeId={task.typeId} className={classes.taskIcon} />
         <span className={classes.taskText}>

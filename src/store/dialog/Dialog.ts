@@ -8,9 +8,9 @@ export interface IDialogState {
 }
 
 export class Dialog implements IDialogState {
-  readonly isOpened: boolean = false;
-  readonly dialogProps?: Partial<DialogProps> = {};
-  readonly props?: any;
+  isOpened: boolean = false;
+  dialogProps?: Partial<DialogProps> = {};
+  props?: any;
 
   constructor(initial?: Dialog) {
     map(initial, (val: any, key: string) => {

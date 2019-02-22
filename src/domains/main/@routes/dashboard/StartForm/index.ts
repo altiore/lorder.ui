@@ -23,6 +23,9 @@ const StartForm = withStyles(styles, { withTheme: true })(
       onSubmit: onSubmitForm<IUserWorkData>(startUserWork),
       onSubmitSuccess(result: any, dispatch: any): void {
         dispatch(change(CREATE_USER_WORK_FORM_NAME, 'description', ''));
+        if ('activeElement' in document) {
+          (document.activeElement as any).blur();
+        }
       },
     })(StartFormJsx)
   )

@@ -13,9 +13,26 @@ export const styles = (theme: Theme) =>
       marginTop: -14,
       position: 'absolute',
     },
-    popper: {
+    overlay: {
+      backgroundColor: theme.palette.primary.dark,
+      height: '100%',
+      left: 0,
+      opacity: 0.6,
+      position: 'absolute',
+      top: 0,
+      width: '100%',
+      zIndex: 1300,
+    },
+    popperPaper: {
       ...theme.mainContent.scroll,
-      marginLeft: theme.spacing.unit * 2,
+      border: `2px solid ${theme.palette.primary.main}`,
+      borderBottomLeftRadius: theme.shape.borderRadius,
+      borderBottomRightRadius: theme.shape.borderRadius,
+      boxShadow: theme.shadows[5],
+      boxSizing: 'border-box',
+      marginLeft: theme.spacing.unit * 2 + 2,
+      marginRight: 2,
+      marginTop: -2,
       maxHeight: 534,
       overflowY: 'auto',
       [theme.breakpoints.down('sm')]: {

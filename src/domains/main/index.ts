@@ -2,11 +2,12 @@ import { withStyles } from '@material-ui/core/styles';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
-import { openDialog } from 'src/store/dialog';
+import { closeDialog, openDialog } from 'src/store/dialog';
 import { MainJsx } from './Main';
 import { styles } from './styles';
 
 const mapDispatchToProps = {
+  closeDialog,
   openDialog,
   push,
 };
