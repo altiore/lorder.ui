@@ -10,10 +10,10 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { TableCellProps } from 'react-virtualized';
 
+import { IUser } from 'src/@types';
 import { Page } from 'src/components/Page';
 import TableVirtualized, { ColumnType } from 'src/components/TableVirtualized';
 import { LayoutLeftDrawer } from 'src/domains/@common/LayoutLeftDrawer';
-import { IUser } from 'src/store/users';
 
 export interface IUsersProps {
   classes: any;

@@ -17,7 +17,6 @@ import {
 } from 'react-beautiful-dnd';
 
 import { PatchTaskForm } from 'src/domains/@common/TaskForm/PatchTaskForm';
-import { DownloadList } from 'src/store/@common/entities';
 import { ProjectTask, STATUS_NAMES } from 'src/store/projects';
 import { TaskCard } from './TaskCard';
 
@@ -32,7 +31,7 @@ const getListStyle = (isDraggingOver: boolean, height: number) => ({
 
 export interface IDragAndDropProps {
   classes: any;
-  items: DownloadList<ProjectTask>;
+  items: ProjectTask[];
   getAllProjectTasks: any;
   moveProjectTask: any;
   statuses: number[];
@@ -60,7 +59,7 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
     this.props.getAllProjectTasks();
   }
 
-  getList = (id: string) => this.props.items.list.filter(el => el.status === parseInt(id, 0));
+  getList = (id: string) => this.props.items.filter(el => el.status === parseInt(id, 0));
 
   onDragEnd = (result: DropResult) => {
     const { source, destination, draggableId } = result;
@@ -103,7 +102,7 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
                     className={classes.columnContent}
                   >
                     {columns[status] ? (
-                      items.list.filter(el => el.status === status).map((item: ProjectTask, index) => (
+                      items.filter(el => el.status === status).map((item: ProjectTask, index) => (
                         <Draggable key={item.id} draggableId={item.id.toString()} index={index} type={'div'}>
                           {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
                             <TaskCard
@@ -117,7 +116,7 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
                       ))
                     ) : (
                       <div className={classes.placeholderCard} onClick={this.toggleCollapse(status)}>
-                        {items.list.filter(el => el.status === status).length} задач
+                        {items.filter(el => el.status === status).length} задач
                       </div>
                     )}
                     {provided.placeholder}

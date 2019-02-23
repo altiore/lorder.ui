@@ -5,14 +5,14 @@ import { createStructuredSelector } from 'reselect';
 
 import { withResize } from 'src/hocs/withResize';
 import { openDialog } from 'src/store/dialog';
-import { getAllProjectTasks, moveProjectTask, projectTasks } from 'src/store/projects';
-import { projectId } from 'src/store/router';
+import { filteredProjectTasks, getAllProjectTasks, moveProjectTask } from 'src/store/projects';
+import { routeProjectId } from 'src/store/router';
 import { DragAndDrop } from './DragAndDrop';
 import { styles } from './styles';
 
 const mapState = createStructuredSelector({
-  items: projectTasks,
-  projectId,
+  items: filteredProjectTasks,
+  projectId: routeProjectId,
 });
 
 const mapDispatch = {

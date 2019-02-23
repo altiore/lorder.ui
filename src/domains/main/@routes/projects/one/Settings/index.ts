@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { publishProject, updateStatistic } from 'src/store/projects';
-import { projectId } from 'src/store/router';
+import { routeProjectId } from 'src/store/router';
 import { SettingsTsx } from './Settings';
 
 const mapState = createStructuredSelector({
-  projectId,
+  projectId: routeProjectId,
 });
 
 const mapDispatch = {

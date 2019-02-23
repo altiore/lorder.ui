@@ -1,35 +1,10 @@
 import map from 'lodash-es/map';
 
-export interface IUserRole {
-  id: number;
-  name: 'user' | 'admin' | 'super-admin';
-}
-
-export class UserRole implements IUserRole {
-  readonly id: number;
-  readonly name: 'user' | 'admin' | 'super-admin';
-
-  constructor(initial?: object) {
-    map(initial, (val: any, key: string) => {
-      this[key] = val;
-    });
-  }
-}
-
-export interface IUser {
-  readonly id?: number;
-  readonly email: string;
-  tel: string;
-  readonly status: number;
-  paymentMethod: number;
-  readonly createdAt: string;
-  readonly updatedAt: string;
-  role: string;
-  projectsCount: number;
-}
+import { IUser } from 'src/@types';
 
 export class User implements IUser {
   readonly id?: number;
+  avatar?: string;
   readonly email: string;
   tel: string;
   readonly status: number = 1;

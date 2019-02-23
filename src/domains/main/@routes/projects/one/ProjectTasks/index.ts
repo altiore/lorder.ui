@@ -7,13 +7,13 @@ import { createStructuredSelector } from 'reselect';
 import { closeDialog, openDialog } from 'src/store/dialog';
 import { isFormMount } from 'src/store/form';
 import { deleteProjectTask, getAllProjectTasks, PROJECT_EDIT_TASK_FORM_NAME, projectTasks } from 'src/store/projects';
-import { projectId } from 'src/store/router';
+import { routeProjectId } from 'src/store/router';
 import { ProjectTasksJsx } from './ProjectTasks';
 import { styles } from './styles';
 
 const mapState = createStructuredSelector({
   isFormMount: isFormMount(PROJECT_EDIT_TASK_FORM_NAME),
-  projectId,
+  projectId: routeProjectId,
   projectTasks,
 });
 

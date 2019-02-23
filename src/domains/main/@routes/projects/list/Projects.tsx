@@ -8,14 +8,13 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { TableCellProps } from 'react-virtualized';
 
-import { ROLE } from 'src/@types';
+import { IUser, ROLE } from 'src/@types';
 import { Confirmation } from 'src/components/Dialogs/Confirmation';
 import { Page } from 'src/components/Page';
 import TableVirtualized, { ColumnType } from 'src/components/TableVirtualized';
 import { CreateProjectPopup } from 'src/domains/@common/CreateProjectPopup';
 import { LayoutLeftDrawer } from 'src/domains/@common/LayoutLeftDrawer';
 import { ACCESS_LEVEL, Project } from 'src/store/projects';
-import { IUser } from 'src/store/users';
 
 export interface IProjectsProps {
   acceptInvitation: (projectId: number) => any;

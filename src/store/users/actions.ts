@@ -1,5 +1,5 @@
+import { IUser } from 'src/@types';
 import { requestActions } from 'src/store/@common/requestActions';
-import { IUser } from './User';
 
 export const fetchUsers = requestActions('USERS/FETCH_ALL', () => ({
   request: {

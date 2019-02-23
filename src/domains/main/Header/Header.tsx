@@ -7,12 +7,14 @@ import AddIcon from '@material-ui/icons/Add';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import * as React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 import { INotification } from 'src/@types';
 import { CreateProjectPopup } from 'src/domains/@common/CreateProjectPopup';
 import { LinkIconButton } from 'src/domains/@common/LinkIconButton';
 import { Project } from 'src/store/projects';
 import { IUserWorkData } from 'src/store/tasks/user-works';
+import Filters from './Filters';
 import { ProjectButton } from './ProjectButton';
 import { ProjectField } from './ProjectField';
 import { RightMenu } from './RightMenu';
@@ -105,7 +107,12 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
               </>
             )}
           </div>
-          <div className={classes.grow} />
+          <div className={classes.grow}>
+            <Switch>
+              <Route path="/projects/:projectId/board" component={Filters} />
+              <Route component={this.nullComponent} />
+            </Switch>
+          </div>
           <div>
             <RightMenu />
           </div>
@@ -207,4 +214,8 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
       push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
     }
   };
+
+  private nullComponent() {
+    return null;
+  }
 }

@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { deleteTaskTypeFromProject, getAllProjectTaskTypes, projectTaskTypes } from 'src/store/projects';
-import { projectId } from 'src/store/router';
+import { routeProjectId } from 'src/store/router';
 import { getAllTaskTypes, getTaskTypeById } from 'src/store/task-types';
 import { ProjectTaskTypesJsx } from './ProjectTaskTypes';
 import { styles } from './styles';
 
 const mapState = createStructuredSelector({
   getTaskTypeById,
-  projectId,
+  projectId: routeProjectId,
   projectTaskTypes,
 });
 

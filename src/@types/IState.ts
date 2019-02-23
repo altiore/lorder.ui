@@ -12,8 +12,9 @@ import { TaskType } from 'src/store/task-types';
 import { Task, UserWork } from 'src/store/tasks';
 import { Timer } from 'src/store/timer';
 import { IUiState } from 'src/store/ui';
-import { IUser } from 'src/store/users';
 import { VersionHistory } from 'src/store/versionHistory';
+import { ITasksFilter } from './ITasksFilter';
+import { IUser } from './IUser';
 
 export interface IState {
   dialog: IDialogState;
@@ -26,7 +27,7 @@ export interface IState {
   publicProject: PublicProject;
   taskTypes: DownloadList<TaskType>;
   tasks: DownloadList<Task>;
-  tasksFilter: { filter: 'smart' | 'recent' | 'new' };
+  tasksFilter: ITasksFilter;
   timer: Timer;
   router: RouterState;
   ui: IUiState;

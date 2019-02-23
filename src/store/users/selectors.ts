@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { IState } from 'src/@types';
+import { IState, IUser } from 'src/@types';
 import { DownloadList } from '../@common/entities';
-import { IUser, User } from './User';
+import { User } from './User';
 
 const baseState = (state: IState) => state.users;
 

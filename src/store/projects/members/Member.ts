@@ -1,5 +1,7 @@
 import map from 'lodash-es/map';
-import { IUser, User } from '../../users';
+
+import { IUser } from 'src/@types';
+import { User } from '../../users';
 
 export interface IMember {
   accessLevel: number;
