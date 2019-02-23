@@ -64,7 +64,7 @@ export const routes = [
             exact: true,
             icon: ImportExportIcon,
             path: '/projects/:projectId/board',
-            title: 'Board',
+            title: 'Доска',
           },
           {
             accessLevel: ACCESS_LEVEL.INDIGO,

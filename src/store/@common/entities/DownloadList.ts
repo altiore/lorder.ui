@@ -62,7 +62,13 @@ export class DownloadList<T = any> implements IDownloadList<T> {
     return new DownloadList<T>(this.Entity, {
       isLoaded: !!data,
       isLoading: false,
-      list: (data || []).map((el: any) => new this.Entity(el)),
+      list: (data || []).map(
+        (el: any) =>
+          new this.Entity({
+            ...(this.list.find(e => (e as any).id === el.id) || {}),
+            ...el,
+          })
+      ),
     });
   }
 

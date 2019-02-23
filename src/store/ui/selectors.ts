@@ -13,3 +13,5 @@ export const isRequiredConfirmationChangedEvents = createSelector(
 );
 
 export const isLeftBarOpen = createSelector(baseState, (state: IUiState): boolean => state.isLeftBarOpen);
+
+export const isBoardFilterOpened = createSelector(baseState, (state: IUiState): boolean => state.isBoardFilterOpened);

@@ -1,11 +1,10 @@
 import ButtonBase from '@material-ui/core/ButtonBase';
 import amber from '@material-ui/core/colors/amber';
-import Fab from '@material-ui/core/Fab';
 import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
+import * as cn from 'classnames';
 import * as React from 'react';
 import {
   DragDropContext,
@@ -86,48 +85,57 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
     return (
       <div className={classes.root} style={{ width: statuses.length * (CARD_WIDTH + theme.spacing.unit * 1.5) }}>
         <DragDropContext onDragEnd={this.onDragEnd}>
-          {statuses.map(status => (
-            <div className={classes.column} key={status}>
-              <Typography variant="h2" className={classes.columnTitle}>
-                {STATUS_NAMES[status]}
-                <Fab size="small" onClick={this.toggleCollapse(status)} className={classes.toggle}>
-                  {columns[status] ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-                </Fab>
-              </Typography>
-              <Droppable droppableId={status.toString()}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    style={getListStyle(snapshot.isDraggingOver, height)}
-                    className={classes.columnContent}
-                  >
-                    {columns[status] ? (
-                      items.filter(el => el.status === status).map((item: ProjectTask, index) => (
-                        <Draggable key={item.id} draggableId={item.id.toString()} index={index} type={'div'}>
-                          {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
-                            <TaskCard
-                              provided={provided}
-                              snapshot={snapshot}
-                              {...item}
-                              onClick={this.handleTaskClick(item.id)}
-                            />
-                          )}
-                        </Draggable>
-                      ))
-                    ) : (
-                      <div className={classes.placeholderCard} onClick={this.toggleCollapse(status)}>
-                        {items.filter(el => el.status === status).length} задач
-                      </div>
-                    )}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-              <ButtonBase className={classes.columnFooter} onClick={this.createTask(projectId, status)}>
-                <AddIcon fontSize="small" /> Добавить задачу
-              </ButtonBase>
-            </div>
-          ))}
+          {statuses.map(status => {
+            const filteredItems = items.filter(el => el.status === status);
+            const filteredItemsLength = filteredItems.length;
+            return (
+              <div className={classes.column} key={status}>
+                <Typography variant="h2" className={classes.columnTitle}>
+                  <span>{STATUS_NAMES[status]}</span>
+                  {!!filteredItemsLength && (
+                    <ButtonBase className={classes.arrowWrap} onClick={this.toggleCollapse(status)}>
+                      <KeyboardArrowUp className={cn(classes.arrow, { [classes.arrowDown]: columns[status] })} />
+                    </ButtonBase>
+                  )}
+                </Typography>
+                <Droppable droppableId={status.toString()}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      style={getListStyle(snapshot.isDraggingOver, height)}
+                      className={classes.columnContent}
+                    >
+                      {columns[status] && filteredItemsLength ? (
+                        filteredItems.map((item: ProjectTask, index) => (
+                          <Draggable key={item.id} draggableId={item.id.toString()} index={index} type={'div'}>
+                            {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
+                              <TaskCard
+                                provided={provided}
+                                snapshot={snapshot}
+                                {...item}
+                                onClick={this.handleTaskClick(item.id)}
+                              />
+                            )}
+                          </Draggable>
+                        ))
+                      ) : (
+                        <div
+                          className={cn(classes.placeholderCard, { [classes.pointer]: !!filteredItemsLength })}
+                          onClick={this.toggleCollapse(status)}
+                        >
+                          {filteredItemsLength} задач
+                        </div>
+                      )}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+                <ButtonBase className={classes.columnFooter} onClick={this.createTask(projectId, status)}>
+                  <AddIcon fontSize="small" /> Добавить задачу
+                </ButtonBase>
+              </div>
+            );
+          })}
         </DragDropContext>
       </div>
     );
