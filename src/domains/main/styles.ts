@@ -21,6 +21,7 @@ export const styles = (theme: Theme) =>
       flexFlow: 'column nowrap',
       flexGrow: 1,
       minHeight: '100%',
+      zIndex: 1,
     },
     root: {
       display: 'flex',

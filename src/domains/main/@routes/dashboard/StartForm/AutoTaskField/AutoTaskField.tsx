@@ -176,7 +176,7 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
     const inputLength = inputValue.length;
     let count = 0;
 
-    if (!value) {
+    if (!inputValue) {
       return this.props.suggestions;
     }
 
@@ -184,7 +184,7 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
       inputLength === 0
         ? []
         : this.props.suggestions.filter(suggestion => {
-            const keep = count < 5 && suggestion.title.slice(0, inputLength).toLowerCase() === inputValue;
+            const keep = count < 5 && ~suggestion.title.toLowerCase().indexOf(inputValue);
 
             if (keep) {
               count += 1;

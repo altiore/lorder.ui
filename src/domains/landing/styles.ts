@@ -1,6 +1,15 @@
 import { Theme } from '@material-ui/core';
+import cloudsImage from './clouds.png';
 
 export const styles = (theme: Theme): any => ({
+  '@keyframes move-clouds-back': {
+    from: {
+      backgroundPosition: 0,
+    },
+    to: {
+      backgroundPosition: '10000px 0',
+    },
+  },
   appBar: {
     opacity: 0.5,
   },
@@ -8,7 +17,9 @@ export const styles = (theme: Theme): any => ({
     alignItems: 'center',
     display: 'flex',
     flexFlow: 'column',
+    height: 80,
     justifyContent: 'center',
+    paddingLeft: 80,
     [theme.breakpoints.up('md')]: {
       alignItems: 'center',
       display: 'flex',
@@ -18,6 +29,22 @@ export const styles = (theme: Theme): any => ({
   },
   button: {
     marginTop: 20,
+  },
+  clouds: {
+    animation: 'move-clouds-back 200s linear infinite',
+    background: `transparent url(${cloudsImage}) repeat-x center center`,
+    display: 'block',
+    height: '90%',
+    left: 0,
+    pointerEvents: 'none',
+    position: 'absolute',
+    top: 0,
+    transition: theme.transitions.create(['opacity'], {
+      duration: theme.transitions.duration.complex,
+      easing: theme.transitions.easing.sharp,
+    }),
+    width: '100%',
+    zIndex: 3,
   },
   content: {
     display: 'flex',

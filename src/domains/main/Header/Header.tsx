@@ -1,22 +1,21 @@
 import AppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import { Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import * as React from 'react';
 
-import { INotification, ROLE } from 'src/@types';
+import { INotification } from 'src/@types';
 import { CreateProjectPopup } from 'src/domains/@common/CreateProjectPopup';
 import { LinkIconButton } from 'src/domains/@common/LinkIconButton';
 import { Project } from 'src/store/projects';
 import { IUserWorkData } from 'src/store/tasks/user-works';
 import { ProjectButton } from './ProjectButton';
 import { ProjectField } from './ProjectField';
+import { RightMenu } from './RightMenu';
 import TimerIcon from './timer.svg';
 
 type ProjectType = Partial<Project> & { percent: string | number; time: string };
@@ -25,7 +24,6 @@ type ProjectsArrayType = ProjectType[];
 export interface IHeaderProps {
   classes: any;
   theme: Theme;
-  logOut: any;
   openDialog: any;
   openedProject: Project;
   openTaskModal: any;
@@ -34,13 +32,11 @@ export interface IHeaderProps {
   selectedProject: Project;
   showWarning: (ev: INotification) => any;
   startUserWork: (data: IUserWorkData) => any;
-  userAvatar?: string;
-  userEmail: string;
-  userRole: ROLE;
   width?: number;
 }
 
 export interface IHeaderState {
+  anchorEl: EventTarget;
   expanded: boolean;
 }
 
@@ -62,7 +58,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
   }
 
   render() {
-    const { classes, theme, projects, selectedProject, logOut, userAvatar, userEmail, userRole, width } = this.props;
+    const { classes, theme, projects, selectedProject, width } = this.props;
     const { expanded } = this.state;
     let filteredProjects: ProjectsArrayType = projects;
     if (!expanded) {
@@ -101,7 +97,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
                 <Menu
                   anchorEl={this.state.anchorEl}
                   open={Boolean(this.state.anchorEl)}
-                  onClose={this.handleClose}
+                  onClose={this.handleClose('anchorEl')}
                   classes={{ paper: classes.menu }}
                 >
                   <ProjectField onClick={this.selectProject} onOpenInNew={this.handleOpenInNew} />
@@ -111,16 +107,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
           </div>
           <div className={classes.grow} />
           <div>
-            <Tooltip
-              title={
-                <div>
-                  <p>Вы вошли как: {`${userEmail} (${userRole})`}</p>
-                  <p>Нажмите, чтобы выйти</p>
-                </div>
-              }
-            >
-              <Avatar onClick={logOut} alt={userEmail} src={userAvatar || '/d-avatar.png'} className={classes.avatar} />
-            </Tooltip>
+            <RightMenu />
           </div>
         </Toolbar>
       </AppBar>
@@ -152,8 +139,8 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  private handleClose = () => {
-    this.setState({ anchorEl: null });
+  private handleClose = (element: string) => () => {
+    this.setState({ [element]: null });
   };
 
   private selectProject = (project: Project) => async () => {

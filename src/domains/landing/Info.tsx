@@ -10,13 +10,24 @@ import { TelegramIco } from 'src/components/@icons/Telegram';
 import { Block } from 'src/components/Block';
 import { MemberCard } from 'src/components/MemberCard';
 import { LinkButton } from 'src/domains/@common/LinkButton';
-import { BackGroundVideo } from './BackGroundVideo';
+import { BackGroundImage } from './BackGroundImage';
+// import { BackGroundVideo } from './BackGroundVideo';
 import { Title } from './Title';
 // import { YouTubeVideo } from './YouTubeVideo';
 
 export interface IInfoProps {
   brandName: string;
   classes: any;
+  texts: {
+    btnText1: string;
+    btnText2: string;
+    btnText3: string;
+    ourTeam: string;
+    text1: string;
+    text2: string;
+    text3: string;
+    text4: string;
+  };
   team: Array<{
     avatar: string;
     name: string;
@@ -32,12 +43,23 @@ export interface IInfoProps {
   width: number;
 }
 
-export class InfoTsx extends React.Component<IInfoProps, {}> {
+export interface IInfoState {
+  cloudy: boolean;
+}
+
+export class InfoTsx extends React.Component<IInfoProps, IInfoState> {
+  state = {
+    cloudy: true,
+  };
+
   render() {
-    const { brandName, classes, team, height, width } = this.props;
+    const { brandName, classes, team, texts, height, width } = this.props;
+    const { btnText1, btnText2, btnText3, ourTeam, text1, text2, text3, text4 } = texts;
+    const { cloudy } = this.state;
     return (
       <div className={classes.root}>
-        <BackGroundVideo height={height} width={width} />
+        <BackGroundImage height={height} width={width} />
+        <div className={classes.clouds} style={{ opacity: Number(cloudy) }} />
 
         <AppBar key={'top'} position="static" className={classes.appBar}>
           <Toolbar>
@@ -48,15 +70,27 @@ export class InfoTsx extends React.Component<IInfoProps, {}> {
         </AppBar>
 
         <div className={classes.overlay} style={{ height: height - 64, width: width - 15 }}>
-          <Title />
+          <Title title={text1} btnText={btnText1} onOver={this.handleMouseOver} onLeave={this.handleMouseLeave} />
         </div>
 
         <Grid container className={classes.content}>
           <Block>
             <Grid item className={classes.profile}>
-              <Typography variant={'h4'}>Пока ты думаешь, время уходит... безвозвратно...</Typography>
+              <Typography variant={'h4'}>{text2}</Typography>
               <LinkButton variant={'contained'} color={'primary'} className={classes.button} to={'/login'}>
-                Начать управлять своим временем эффективно!
+                {btnText2}
+              </LinkButton>
+            </Grid>
+          </Block>
+          <Divider />
+        </Grid>
+
+        <Grid container className={classes.content}>
+          <Block>
+            <Grid item className={classes.profile}>
+              <Typography variant={'h4'}>{text3}</Typography>
+              <LinkButton variant={'contained'} color={'primary'} className={classes.button} to={'/login'}>
+                {btnText3}
               </LinkButton>
             </Grid>
           </Block>
@@ -64,8 +98,8 @@ export class InfoTsx extends React.Component<IInfoProps, {}> {
           <Divider />
           <Block>
             <Grid item className={classes.profile} xs={12}>
-              <Typography variant={'h4'}>Наша команда</Typography>
-              <Typography>В безумном мире хаоса мы помогаем тебе навести порядок... И себе...</Typography>
+              <Typography variant={'h4'}>{ourTeam}</Typography>
+              <Typography>{text4}</Typography>
             </Grid>
             {team.map((member, index) => (
               <Grid item key={index}>
@@ -90,4 +124,12 @@ export class InfoTsx extends React.Component<IInfoProps, {}> {
       </div>
     );
   }
+
+  private handleMouseOver = () => {
+    this.setState({ cloudy: false });
+  };
+
+  private handleMouseLeave = () => {
+    this.setState({ cloudy: true });
+  };
 }

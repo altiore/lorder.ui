@@ -22,6 +22,8 @@ export const styles = (theme: Theme): any => ({
     flexGrow: 1,
   },
   title: {
+    color: theme.palette.background.paper,
+    textShadow: `1px 1px 2px ${theme.palette.primary.dark}, 0 0 1em ${theme.palette.primary.light};`,
     [theme.breakpoints.down('xs')]: {
       fontSize: 46,
     },

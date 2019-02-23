@@ -33,7 +33,7 @@ export const styles = (theme: Theme) =>
       marginLeft: theme.spacing.unit * 2 + 2,
       marginRight: 2,
       marginTop: -2,
-      maxHeight: 534,
+      maxHeight: 536,
       overflowY: 'auto',
       [theme.breakpoints.down('sm')]: {
         maxHeight: 200,
