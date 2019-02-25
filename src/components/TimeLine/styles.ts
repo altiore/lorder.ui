@@ -16,7 +16,7 @@ export const styles = (theme: Theme) =>
       width: '100%',
     },
     popover: {
-      pointerEvents: 'none',
+      zIndex: 1300,
     },
     popoverPaper: {
       alignItems: 'center',
@@ -24,6 +24,7 @@ export const styles = (theme: Theme) =>
       flexFlow: 'column nowrap',
       justifyContent: 'center',
       padding: `0 ${theme.spacing.unit}px`,
+      pointerEvents: 'auto',
     },
     root: {
       alignItems: 'flex-end',

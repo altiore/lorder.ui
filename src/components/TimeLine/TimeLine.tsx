@@ -1,13 +1,14 @@
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
-import Popover from '@material-ui/core/Popover';
+import Paper from '@material-ui/core/Paper';
 import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import get from 'lodash-es/get';
 import minBy from 'lodash-es/minBy';
 import * as moment from 'moment';
 import * as React from 'react';
+import * as Popover from 'react-popover';
 
 import { IEvent } from 'src/@types';
 
@@ -45,6 +46,7 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
 
   heightTimer: any;
   updateInterval: any;
+  leaveTimer: any;
 
   componentDidMount(): void {
     this.setState({
@@ -83,7 +85,7 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
             height,
             zIndex: isExpended ? 1200 : 0,
           }}
-          onClick={this.increaseHeight}
+          onClick={isExpended ? undefined : this.increaseHeight}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.decreaseHeight}
         >
@@ -94,45 +96,50 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
               flexBasis: isExpended ? '76%' : '100%',
             }}
           >
-            {preparedEvents.map((event, i) => (
-              <div
-                key={event.data.id || i}
-                className={classes.block}
-                style={{
-                  ...this.getStyle(event),
-                  left: this.getPosition(event.startAt),
-                  width: this.getWidth(event),
-                }}
-                onClick={this.handleEventClick(event)}
-                onMouseOver={this.handleHover(event)}
-                onMouseLeave={this.handlePopoverClose}
-              />
-            ))}
+            {preparedEvents.map((event, i) => {
+              return (
+                <Popover
+                  key={event.data.id}
+                  place="below"
+                  tipSize={0.01}
+                  className={classes.popover}
+                  isOpen={get(hoveredEvent, 'data.id') === event.data.id}
+                  target={hoveredEl as any}
+                  onOuterAction={this.handlePopoverClose}
+                  body={
+                    <Paper
+                      className={classes.popoverPaper}
+                      id={`popover-body-${event.data.id}`}
+                      onMouseOver={this.handleHover(event)}
+                      onMouseLeave={this.handlePopoverClose}
+                    >
+                      {!!hoveredEvent && [
+                        <Typography key="name">{get(hoveredEvent, 'name')}</Typography>,
+                        <Typography key="date">
+                          {this.getHoursWithMinutes(get(hoveredEvent, 'startAt'))} -{' '}
+                          {this.getHoursWithMinutes(get(hoveredEvent, 'finishAt'))}
+                        </Typography>,
+                      ]}
+                    </Paper>
+                  }
+                >
+                  <div
+                    aria-owns={`popover-body-${event.data.id}`}
+                    key={event.data.id || i}
+                    className={classes.block}
+                    style={{
+                      ...this.getStyle(event),
+                      left: this.getPosition(event.startAt),
+                      width: this.getWidth(event),
+                    }}
+                    onClick={this.handleEventClick(event)}
+                    onMouseOver={this.handleHover(event)}
+                    onMouseLeave={this.handlePopoverClose}
+                  />
+                </Popover>
+              );
+            })}
           </div>
-          <Popover
-            className={classes.popover}
-            classes={{
-              paper: classes.popoverPaper,
-            }}
-            open={Boolean(hoveredEl)}
-            anchorEl={hoveredEl}
-            anchorOrigin={{
-              horizontal: 'center',
-              vertical: 'bottom',
-            }}
-            transformOrigin={{
-              horizontal: 'center',
-              vertical: 'top',
-            }}
-            onClose={this.handlePopoverClose}
-            disableRestoreFocus
-          >
-            <Typography>{get(hoveredEvent, 'name')}</Typography>
-            <Typography>
-              {this.getHoursWithMinutes(get(hoveredEvent, 'startAt'))} -{' '}
-              {this.getHoursWithMinutes(get(hoveredEvent, 'finishAt'))}
-            </Typography>
-          </Popover>
           <svg height={height} width={width} className={classes.svg}>
             {this.getLines().map(({ x, isHour, label }) => (
               <React.Fragment key={x}>
@@ -175,6 +182,7 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
   };
 
   private handleHover = (hoveredEvent: IEvent) => (e: React.SyntheticEvent) => {
+    this.cleanLeaveTimer();
     this.setState({
       hoveredEl: e.currentTarget,
       hoveredEvent,
@@ -182,10 +190,18 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
   };
 
   private handlePopoverClose = () => {
-    this.setState({
-      hoveredEl: null,
-      hoveredEvent: undefined,
-    });
+    this.leaveTimer = setTimeout(() => {
+      this.setState({
+        hoveredEl: null,
+        hoveredEvent: undefined,
+      });
+    }, 500);
+  };
+
+  private cleanLeaveTimer = () => {
+    if (this.leaveTimer) {
+      clearTimeout(this.leaveTimer);
+    }
   };
 
   private getPosition(el?: moment.Moment) {
@@ -248,7 +264,10 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
     return width - 2 * X_OFFSET;
   }
 
-  private increaseHeight = () => {
+  private increaseHeight = (e?: React.SyntheticEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
     this.setState({ height: Y_HEIGHT_BIG }, () => {
       this.clearTimer();
     });
