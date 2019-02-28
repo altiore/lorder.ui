@@ -3,6 +3,7 @@ import map from 'lodash-es/map';
 import { ROLE } from '../../@types';
 
 export interface IIdentityState {
+  id?: number;
   email?: string;
   avatar?: string;
   isAuth: boolean;
@@ -13,6 +14,7 @@ export interface IIdentityState {
 }
 
 export class Identity implements IIdentityState {
+  readonly id?: number;
   readonly email: string;
   readonly avatar?: string;
   readonly isAuth: boolean = false;

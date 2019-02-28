@@ -1,9 +1,63 @@
+import Button from '@material-ui/core/Button';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import * as React from 'react';
+import { Field, InjectedFormProps } from 'redux-form';
+import { email, length, required } from 'redux-form-validators';
 
-export interface IPostFeedbackProps {
-  classes: any;
+import { TextField } from 'src/components/TextField';
+import { TextAreaMarkdown } from 'src/domains/@common/TaskForm/TextAreaMarkdown';
+
+export interface IPostFeedbackData {
+  email: string;
+  name: string;
+  feedback: string;
 }
 
-export const PostFeedbackTsx: React.FunctionComponent<IPostFeedbackProps> = ({ classes }) => (
-  <div className={classes.root}>test test test</div>
+export interface IPostFeedbackProps extends InjectedFormProps<IPostFeedbackData, IPostFeedbackProps> {
+  classes: any;
+  onClose: any;
+}
+
+export const PostFeedbackTsx: React.FunctionComponent<IPostFeedbackProps> = ({ classes, onClose, handleSubmit }) => (
+  <form onSubmit={handleSubmit}>
+    <DialogTitle className={classes.title}>Оставить Отзыв</DialogTitle>
+    <DialogContent className={classes.content}>
+      <Field
+        className={classes.email}
+        name="email"
+        label="E-mail"
+        placeholder="E-mail..."
+        component={TextField}
+        variant="outlined"
+        validate={[
+          required({ msg: 'Обязательное поле' }),
+          email({ msg: 'Поле должно быть правильным E-mail адресом' }),
+        ]}
+      />
+      <Field
+        className={classes.email}
+        name="name"
+        label="Имя"
+        placeholder="Как к вам обращаться?"
+        component={TextField}
+        variant="outlined"
+        validate={[required({ msg: 'Обязательное поле' }), length({ min: 2, msg: 'Минимум 2 символа' })]}
+      />
+      <Field
+        placeholder={`Опишите ваше впечатление о сервисе...\t\n Что вам понравилось? Что можно улучшить?`}
+        name="feedback"
+        component={TextAreaMarkdown}
+      />
+    </DialogContent>
+    <DialogActions>
+      <Button color="primary" onClick={onClose}>
+        Отмена
+      </Button>
+      <Button color="primary" variant="contained" type="submit">
+        Отправить
+      </Button>
+    </DialogActions>
+  </form>
 );

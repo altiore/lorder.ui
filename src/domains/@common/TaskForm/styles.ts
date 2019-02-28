@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import { Theme } from '@material-ui/core/styles';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) =>
@@ -16,7 +16,7 @@ export const styles = (theme: Theme) =>
       display: 'inline-block',
 
       minHeight: 400,
-      padding: '10px 25px 15px 16px',
+      padding: '10px 25px 15px 8px',
       position: 'relative',
       textAlign: 'left',
       width: '100%',

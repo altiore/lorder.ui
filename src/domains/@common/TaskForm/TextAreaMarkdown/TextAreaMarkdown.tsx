@@ -1,4 +1,5 @@
 import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
@@ -14,8 +15,9 @@ type TabsType = 'editor' | 'view';
 
 export interface ITextAreaMarkdownProps extends WrappedFieldProps {
   classes: any;
-  icon: React.ReactNode;
-  title: string;
+  icon?: React.ReactNode;
+  title?: string;
+  placeholder?: string;
   onSave?: any;
 }
 
@@ -35,16 +37,28 @@ export class TextAreaMarkdownTsx extends React.Component<ITextAreaMarkdownProps,
   };
 
   render() {
-    const { classes, icon, input, title } = this.props;
+    const { classes, icon, input, placeholder, title } = this.props;
     const { active, activeTab } = this.state;
+
+    if (!input.value && !active) {
+      return (
+        <div className={classes.root}>
+          <ButtonBase className={classes.button} onClick={this.handleClick}>
+            {placeholder || 'Добавьте описание...'}
+          </ButtonBase>
+        </div>
+      );
+    }
 
     return (
       <div className={classes.root} onClick={active ? undefined : this.handleClick}>
         <div className={classes.header}>
-          {icon}
-          <Typography variant="h5" className={classes.headerTitle}>
-            {title}
-          </Typography>
+          {!!icon && icon}
+          {!!title && (
+            <Typography variant="h5" className={classes.headerTitle}>
+              {title}
+            </Typography>
+          )}
         </div>
         <div
           className={cn(classes.main, {

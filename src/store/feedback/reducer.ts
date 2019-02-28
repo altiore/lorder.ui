@@ -4,21 +4,21 @@ import { PURGE } from 'redux-persist';
 
 import { IMeta } from 'src/@types';
 import { DownloadList } from '../@common/entities';
-import { fetchFeedbacks } from './actions';
+import { fetchFeedbackList } from './actions';
 import { Feedback } from './Feedback';
 
 type S = DownloadList<Feedback>;
 type P = AxiosResponse<any>;
 type M = IMeta<any>;
 
-const fetchFeedbacksHandler = (state: S): S => {
+const fetchFeedbackListHandler = (state: S): S => {
   return new DownloadList(Feedback, {
     ...state,
     isLoading: true,
   });
 };
 
-const fetchFeedbacksSuccessHandler = (state: S, { payload }: Action<AxiosResponse>): S => {
+const fetchFeedbackListSuccessHandler = (state: S, { payload }: Action<AxiosResponse>): S => {
   return new DownloadList(Feedback, {
     ...state,
     isLoaded: true,
@@ -27,7 +27,7 @@ const fetchFeedbacksSuccessHandler = (state: S, { payload }: Action<AxiosRespons
   });
 };
 
-const fetchFeedbacksFailHandler = (state: S): S => {
+const fetchFeedbackListFailHandler = (state: S): S => {
   return new DownloadList(Feedback);
 };
 
@@ -35,11 +35,11 @@ const logOutHandler = () => {
   return new DownloadList(Feedback);
 };
 
-export const feedbacks = handleActions<S, P, M>(
+export const feedback = handleActions<S, P, M>(
   {
-    [fetchFeedbacks.toString()]: fetchFeedbacksHandler,
-    [fetchFeedbacks.success]: fetchFeedbacksSuccessHandler,
-    [fetchFeedbacks.fail]: fetchFeedbacksFailHandler,
+    [fetchFeedbackList.toString()]: fetchFeedbackListHandler,
+    [fetchFeedbackList.success]: fetchFeedbackListSuccessHandler,
+    [fetchFeedbackList.fail]: fetchFeedbackListFailHandler,
 
     [PURGE]: logOutHandler,
   },

@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 import { styles } from './styles';
 import { TaskCardTsx } from './TaskCard';

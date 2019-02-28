@@ -31,7 +31,7 @@ export interface IFiltersProps {
 export class FiltersTsx extends React.Component<IFiltersProps, {}> {
   render() {
     const { classes, filteredMembers, isBoardFilterOpened, members, searchTerm } = this.props;
-    const isFiltered = !!(filteredMembers.length || searchTerm);
+    const isFiltered = !!((filteredMembers && filteredMembers.length) || searchTerm);
 
     return (
       <div className={cn(classes.root, { [classes.rootOpen]: isBoardFilterOpened })}>

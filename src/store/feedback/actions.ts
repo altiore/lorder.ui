@@ -1,7 +1,7 @@
 import { requestActions } from 'src/store/@common/requestActions';
 import { Feedback } from './Feedback';
 
-export const fetchFeedbacks = requestActions('FEEDBACK/FETCH_ALL', () => ({
+export const fetchFeedbackList = requestActions('FEEDBACK/FETCH_ALL', () => ({
   request: {
     params: {
       count: 2000,
@@ -13,14 +13,14 @@ export const fetchFeedbacks = requestActions('FEEDBACK/FETCH_ALL', () => ({
   },
 }));
 
-export const postFeedback = requestActions('FEEDBACK/POST', (data: Partial<Feedback>) => ({
+export const postFeedbackReq = requestActions('FEEDBACK/POST', (data: Partial<Feedback>) => ({
   request: {
     data,
-    method: 'patch',
+    method: 'post',
     url: '/feedback',
   },
   success: {
-    message: 'Наши специалисты свяжутся с вами в ближайшее время',
-    title: 'Успех!',
+    message: 'Нам очень важно ваше мнение!',
+    title: 'Спасибо за ваш отзыв!',
   },
 }));

@@ -55,7 +55,7 @@ export default createMuiTheme({
         flexFlow: 'row nowrap',
         height: 60,
         justifyContent: 'space-between',
-        padding: '0 20px',
+        padding: `0 ${defaultTheme.spacing.unit}px`,
       },
     },
     MuiExpansionPanelDetails: {

@@ -8,11 +8,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
-import EventIcon from '@material-ui/icons/Event';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import NotesIcon from '@material-ui/icons/Notes';
 import * as React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Field, InjectedFormProps } from 'redux-form';
@@ -171,8 +169,8 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
             <div className={classes.cardFirst}>
               <Field
                 bold
-                icon={<EventIcon />}
                 name="title"
+                placeholder="Заголовок задачи..."
                 component={TitleInput}
                 validate={[
                   required({ msg: 'Обязательное поле' }),
@@ -181,9 +179,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                 onSubmit={this.handleSave(false)}
               />
               <Field
-                icon={<NotesIcon fontSize="small" color="inherit" />}
-                title={'Описание'}
-                placeholder={'Введи ваше описание'}
+                placeholder="Описание задачи..."
                 name="description"
                 component={TextAreaMarkdown}
                 onSave={this.handleSave(false)}

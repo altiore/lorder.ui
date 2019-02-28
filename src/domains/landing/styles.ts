@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import { Theme } from '@material-ui/core/styles';
 import cloudsImage from './clouds.png';
 
 export const styles = (theme: Theme): any => ({

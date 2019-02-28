@@ -1,3 +1,4 @@
+import grey from '@material-ui/core/colors/grey';
 import { Theme } from '@material-ui/core/styles';
 import createStyles from '@material-ui/core/styles/createStyles';
 
@@ -5,6 +6,18 @@ const TAB_HEIGHT = 24;
 
 export const styles = (theme: Theme) =>
   createStyles({
+    button: {
+      backgroundColor: grey[300],
+      borderRadius: theme.shape.borderRadius,
+      color: 'gray',
+      cursor: 'text',
+      height: 300,
+      lineHeight: '24px',
+      marginLeft: 12,
+      marginTop: 20,
+      whiteSpace: 'pre-line',
+      width: '100%',
+    },
     content: {
       display: 'flex',
       flexFlow: 'column nowrap',
@@ -18,7 +31,7 @@ export const styles = (theme: Theme) =>
     },
     header: {
       alignItems: 'center',
-      backgroundColor: theme.palette.background.default,
+      backgroundColor: 'transparent',
       display: 'flex',
       flexFlow: 'row nowrap',
       justifyContent: 'flex-start',
@@ -27,7 +40,7 @@ export const styles = (theme: Theme) =>
       marginLeft: theme.spacing.unit * 1.5,
     },
     main: {
-      paddingLeft: theme.spacing.unit * 4,
+      paddingLeft: theme.spacing.unit * 1.5,
     },
     mainActive: {
       marginTop: -TAB_HEIGHT - 4,
@@ -37,7 +50,7 @@ export const styles = (theme: Theme) =>
         maxHeight: 420,
         maxWidth: '100%',
       },
-      backgroundColor: theme.palette.background.default,
+      backgroundColor: 'transparent',
       paddingLeft: 1,
     },
     markdownNested: {
@@ -45,10 +58,10 @@ export const styles = (theme: Theme) =>
       minHeight: 109,
     },
     root: {
-      backgroundColor: theme.palette.background.default,
+      backgroundColor: 'transparent',
       flexGrow: 1,
       marginBottom: theme.spacing.unit,
-      maxWidth: 800,
+      marginRight: theme.spacing.unit * 2,
     },
     saveButton: {
       marginTop: theme.spacing.unit,

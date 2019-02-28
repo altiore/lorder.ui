@@ -18,7 +18,7 @@ import { IUser } from './IUser';
 
 export interface IState {
   dialog: IDialogState;
-  feedbacks: DownloadList<Feedback>;
+  feedback: DownloadList<Feedback>;
   form: FormStateMap;
   identity: IIdentityState;
   notifications: NotificationsState;

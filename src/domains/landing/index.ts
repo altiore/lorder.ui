@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
 import { withResize } from 'src/hocs/withResize';

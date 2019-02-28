@@ -1,5 +1,5 @@
-export const onSubmitForm = <T = {}, M = any>(action: (v: T) => any, propsSelector?: (p: M) => Partial<T>) => (
-  values: T,
-  dispatch: any,
-  props: M
-) => dispatch(action(Object.assign({}, values, propsSelector ? propsSelector(props) : {})));
+export const onSubmitForm = <FormData = any, P = any>(
+  action: (v: FormData) => any,
+  propsSelector?: (p: P) => Partial<P>
+): any => (values: FormData, dispatch: any, props: P): any =>
+  dispatch(action(Object.assign({}, values, propsSelector ? propsSelector(props) : {})));
