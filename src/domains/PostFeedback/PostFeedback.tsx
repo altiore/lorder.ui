@@ -2,6 +2,9 @@ import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { email, length, required } from 'redux-form-validators';
@@ -22,7 +25,12 @@ export interface IPostFeedbackProps extends InjectedFormProps<IPostFeedbackData,
 
 export const PostFeedbackTsx: React.FunctionComponent<IPostFeedbackProps> = ({ classes, onClose, handleSubmit }) => (
   <form onSubmit={handleSubmit}>
-    <DialogTitle className={classes.title}>Оставить Отзыв</DialogTitle>
+    <DialogTitle className={classes.title} disableTypography>
+      <Typography variant="h5">Оставить Отзыв</Typography>
+      <IconButton onClick={onClose}>
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </DialogTitle>
     <DialogContent className={classes.content}>
       <Field
         className={classes.email}
@@ -52,9 +60,6 @@ export const PostFeedbackTsx: React.FunctionComponent<IPostFeedbackProps> = ({ c
       />
     </DialogContent>
     <DialogActions>
-      <Button color="primary" onClick={onClose}>
-        Отмена
-      </Button>
       <Button color="primary" variant="contained" type="submit">
         Отправить
       </Button>

@@ -3,7 +3,6 @@ import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
 import Paper from '@material-ui/core/Paper';
 import { Theme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import get from 'lodash-es/get';
 import minBy from 'lodash-es/minBy';
 import * as moment from 'moment';
@@ -11,6 +10,7 @@ import * as React from 'react';
 import * as Popover from 'react-popover';
 
 import { IEvent } from 'src/@types';
+import { HoverInfo } from './HoverInfo';
 
 export interface IDailyRoutineProps {
   classes: any;
@@ -18,11 +18,13 @@ export interface IDailyRoutineProps {
   events: IEvent[];
   onEventClick?: (ev: IEvent) => any;
   theme: Theme;
+  EditEvent?: any;
   step?: number;
   width: number;
 }
 
 export interface IDailyRoutineState {
+  editedEvent?: IEvent;
   finishAt: number;
   height: number;
   hoveredEl: React.ReactNode;
@@ -37,6 +39,7 @@ const LABEL_HEIGHT = 12;
 
 export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyRoutineState> {
   state = {
+    editedEvent: undefined,
     finishAt: 24,
     height: Y_HEIGHT_LITTLE,
     hoveredEl: null,
@@ -47,6 +50,7 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
   heightTimer: any;
   updateInterval: any;
   leaveTimer: any;
+  mainRef: React.ReactNode;
 
   componentDidMount(): void {
     this.setState({
@@ -71,114 +75,124 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
   }
 
   render() {
-    const { classes, events, getRef, theme, width } = this.props;
-    const { height, hoveredEl, hoveredEvent } = this.state;
+    const { classes, events, EditEvent, getRef, theme, width } = this.props;
+    const { height, hoveredEl, hoveredEvent, editedEvent } = this.state;
     const preparedEvents = events.filter(this.filterEvents);
     const isExpended = height === Y_HEIGHT_BIG;
 
     return (
       <ClickAwayListener onClickAway={this.decreaseHeightNow}>
-        <div
-          ref={getRef}
-          className={classes.root}
-          style={{
-            height,
-            zIndex: isExpended ? 1200 : 0,
-          }}
-          onClick={isExpended ? undefined : this.increaseHeight}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.decreaseHeight}
+        <Popover
+          style={{ zIndex: 1 }}
+          preferPlace="below"
+          isOpen={Boolean(editedEvent)}
+          target={this.mainRef as any}
+          tipSize={0.01}
+          onOuterAction={this.handleEditEventClose}
+          body={
+            <Paper className={classes.popoverPaper}>
+              <EditEvent initialValues={get(editedEvent, 'data')} />
+            </Paper>
+          }
         >
           <div
-            className={classes.filled}
+            ref={getRef}
+            className={classes.root}
             style={{
-              boxShadow: isExpended ? theme.shadows[1] : 'none',
-              flexBasis: isExpended ? '76%' : '100%',
+              height,
+              zIndex: isExpended ? 1200 : 0,
             }}
+            onClick={isExpended ? undefined : this.increaseHeight}
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.decreaseHeight}
           >
-            {preparedEvents.map((event, i) => {
-              return (
-                <Popover
-                  key={event.data.id}
-                  place="below"
-                  tipSize={0.01}
-                  className={classes.popover}
-                  isOpen={get(hoveredEvent, 'data.id') === event.data.id}
-                  target={hoveredEl as any}
-                  onOuterAction={this.handlePopoverClose}
-                  body={
-                    <Paper
-                      className={classes.popoverPaper}
-                      id={`popover-body-${event.data.id}`}
+            <div
+              className={classes.filled}
+              style={{
+                boxShadow: isExpended ? theme.shadows[1] : 'none',
+                flexBasis: isExpended ? '76%' : '100%',
+              }}
+            >
+              {preparedEvents.map((event, i) => {
+                return (
+                  <Popover
+                    key={event.data.id}
+                    preferPlace="below"
+                    tipSize={0.01}
+                    className={classes.popover}
+                    isOpen={get(hoveredEvent, 'data.id') === event.data.id && !!hoveredEvent}
+                    target={hoveredEl as any}
+                    onOuterAction={this.handlePopoverClose}
+                    body={
+                      <HoverInfo
+                        onOver={this.handleHover(event)}
+                        onLeave={this.handlePopoverClose}
+                        hoveredEvent={event}
+                      />
+                    }
+                  >
+                    <div
+                      aria-owns={`popover-body-${event.data.id}`}
+                      key={event.data.id || i}
+                      className={classes.block}
+                      style={{
+                        ...this.getStyle(event),
+                        left: this.getPosition(event.startAt),
+                        width: this.getWidth(event),
+                      }}
+                      onClick={this.handleEventClick(event)}
                       onMouseOver={this.handleHover(event)}
                       onMouseLeave={this.handlePopoverClose}
-                    >
-                      {!!hoveredEvent && [
-                        <Typography key="name">{get(hoveredEvent, 'name')}</Typography>,
-                        <Typography key="date">
-                          {this.getHoursWithMinutes(get(hoveredEvent, 'startAt'))} -{' '}
-                          {this.getHoursWithMinutes(get(hoveredEvent, 'finishAt'))}
-                        </Typography>,
-                      ]}
-                    </Paper>
-                  }
-                >
-                  <div
-                    aria-owns={`popover-body-${event.data.id}`}
-                    key={event.data.id || i}
-                    className={classes.block}
-                    style={{
-                      ...this.getStyle(event),
-                      left: this.getPosition(event.startAt),
-                      width: this.getWidth(event),
-                    }}
-                    onClick={this.handleEventClick(event)}
-                    onMouseOver={this.handleHover(event)}
-                    onMouseLeave={this.handlePopoverClose}
-                  />
-                </Popover>
-              );
-            })}
-          </div>
-          <svg height={height} width={width} className={classes.svg}>
-            {this.getLines().map(({ x, isHour, label }) => (
-              <React.Fragment key={x}>
-                {label &&
-                  height === Y_HEIGHT_BIG && (
-                    <text x={x + X_OFFSET} y={LABEL_HEIGHT} className={classes.text}>
-                      <tspan x={x + X_OFFSET} textAnchor="middle">
-                        {label}
-                        :00
-                      </tspan>
-                    </text>
+                    />
+                  </Popover>
+                );
+              })}
+            </div>
+            <svg height={height} width={width} className={classes.svg}>
+              {this.getLines().map(({ x, isHour, label }) => (
+                <React.Fragment key={x}>
+                  {label &&
+                    height === Y_HEIGHT_BIG && (
+                      <text x={x + X_OFFSET} y={LABEL_HEIGHT} className={classes.text}>
+                        <tspan x={x + X_OFFSET} textAnchor="middle">
+                          {label}
+                          :00
+                        </tspan>
+                      </text>
+                    )}
+                  {isExpended && (
+                    <line
+                      // stroke="#FAB203"
+                      stroke={orange[300]}
+                      x1={x + X_OFFSET}
+                      y1={LABEL_HEIGHT + 2}
+                      x2={x + X_OFFSET}
+                      y2={LABEL_HEIGHT + 8}
+                    />
                   )}
-                {isExpended && (
-                  <line
-                    // stroke="#FAB203"
-                    stroke={orange[300]}
-                    x1={x + X_OFFSET}
-                    y1={LABEL_HEIGHT + 2}
-                    x2={x + X_OFFSET}
-                    y2={LABEL_HEIGHT + 8}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </svg>
-        </div>
+                </React.Fragment>
+              ))}
+            </svg>
+          </div>
+        </Popover>
       </ClickAwayListener>
     );
   }
 
-  private handleEventClick = (event: IEvent) => (e: React.SyntheticEvent) => {
+  private handleEventClick = (editedEvent: IEvent) => (e: React.SyntheticEvent) => {
     const { height } = this.state;
     if (height === Y_HEIGHT_BIG) {
       e.stopPropagation();
-      const { onEventClick } = this.props;
-      if (onEventClick) {
-        onEventClick(event);
+      if (editedEvent.data.id === get(this.state.editedEvent, 'data.id')) {
+        this.setState({ editedEvent: undefined });
+      } else {
+        this.setState({ editedEvent });
       }
     }
+  };
+
+  private handleEditEventClose = () => {
+    this.setState({ editedEvent: undefined });
   };
 
   private handleHover = (hoveredEvent: IEvent) => (e: React.SyntheticEvent) => {
@@ -281,17 +295,21 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
   };
 
   private decreaseHeight = () => {
-    this.clearTimer();
-    this.heightTimer = setTimeout(() => {
-      this.setState({ height: Y_HEIGHT_LITTLE }, () => {
-        this.clearTimer();
-      });
-    }, 10000);
+    if (!this.state.editedEvent) {
+      this.clearTimer();
+      this.heightTimer = setTimeout(() => {
+        this.setState({ height: Y_HEIGHT_LITTLE }, () => {
+          this.clearTimer();
+        });
+      }, 10000);
+    }
   };
 
   private decreaseHeightNow = () => {
-    this.clearTimer();
-    this.setState({ height: Y_HEIGHT_LITTLE });
+    if (!this.state.editedEvent) {
+      this.clearTimer();
+      this.setState({ height: Y_HEIGHT_LITTLE });
+    }
   };
 
   private clearTimer = () => {
@@ -307,19 +325,6 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
         ? el.hours() + el.minutes() / 60
         : this.state.startAt
       : current.hours() + current.minutes() / 60;
-  };
-
-  private getHoursWithMinutes = (el?: moment.Moment) => {
-    const current = moment();
-    if (el) {
-      if (el.day() === current.day()) {
-        return el.format('HH:mm');
-      } else {
-        return el.format('DD.MM HH:mm');
-      }
-    } else {
-      return current.format('HH:mm');
-    }
   };
 
   private getStartAt = (): number => {
