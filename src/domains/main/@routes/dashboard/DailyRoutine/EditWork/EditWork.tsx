@@ -3,7 +3,7 @@ import * as React from 'react';
 import { InjectedFormProps } from 'redux-form';
 
 import 'rc-time-picker/assets/index.css';
-const TimePicker = require('rc-time-picker');
+const TimePicker = require('rc-time-picker').default;
 
 export interface IEditWorkData {
   email: string;
