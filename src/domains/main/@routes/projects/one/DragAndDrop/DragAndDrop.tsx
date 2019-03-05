@@ -3,7 +3,7 @@ import amber from '@material-ui/core/colors/amber';
 import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
-import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import * as cn from 'classnames';
 import * as React from 'react';
 import {
@@ -94,7 +94,7 @@ export class DragAndDrop extends React.Component<IDragAndDropProps, IDragAndDrop
                   <span>{STATUS_NAMES[status]}</span>
                   {!!filteredItemsLength && (
                     <ButtonBase className={classes.arrowWrap} onClick={this.toggleCollapse(status)}>
-                      <KeyboardArrowUp className={cn(classes.arrow, { [classes.arrowDown]: columns[status] })} />
+                      <KeyboardArrowDown className={cn(classes.arrow, { [classes.arrowDown]: columns[status] })} />
                     </ButtonBase>
                   )}
                 </Typography>

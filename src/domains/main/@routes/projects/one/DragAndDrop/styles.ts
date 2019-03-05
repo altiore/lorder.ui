@@ -11,7 +11,7 @@ export const styles = (theme: Theme) =>
       }),
     },
     arrowDown: {
-      transform: 'rotate(-180deg)',
+      transform: 'rotate(180deg)',
     },
     arrowWrap: {
       alignItems: 'center',
