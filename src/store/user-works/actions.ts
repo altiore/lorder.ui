@@ -1,4 +1,6 @@
-import omit from 'lodash-es/omit';
+import identity from 'lodash-es/identity';
+import pick from 'lodash-es/pick';
+import pickBy from 'lodash-es/pickBy';
 
 import { IUserWork } from 'src/@types';
 import { requestActions } from 'src/store/@common/requestActions';
@@ -24,7 +26,13 @@ export const patchUserWork = requestActions('USER_WORK/PATCH', (userWork: Partia
   form: EDIT_USER_WORK_DESCRIPTION_FORM + userWork.id,
   projectId: userWork.projectId,
   request: {
-    data: omit(userWork, ['id']),
+    data: {
+      ...pickBy(
+        pick(userWork, ['description', 'finishAt', 'startAt', 'value', 'source', 'taskId', 'projectId']),
+        identity
+      ),
+      finishAt: userWork.finishAt || null,
+    },
     method: 'PATCH',
     url: `/user-works/${userWork.id}`,
   },

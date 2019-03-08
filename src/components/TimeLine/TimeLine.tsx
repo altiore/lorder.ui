@@ -88,10 +88,9 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
           isOpen={Boolean(editedEvent)}
           target={this.mainRef as any}
           tipSize={0.01}
-          onOuterAction={this.handleEditEventClose}
           body={
             <Paper className={classes.popoverPaper}>
-              <EditEvent initialValues={get(editedEvent, 'data')} />
+              <EditEvent initialValues={get(editedEvent, 'data', {})} onClose={this.handleEditEventClose} />
             </Paper>
           }
         >

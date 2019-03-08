@@ -1,14 +1,14 @@
+import Button from '@material-ui/core/Button';
+import * as cn from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
-import { InjectedFormProps } from 'redux-form';
+import { Field, InjectedFormProps } from 'redux-form';
 
-import 'rc-time-picker/assets/index.css';
-const TimePicker = require('rc-time-picker').default;
+import TimeField from 'src/components/TimeField';
 
 export interface IEditWorkData {
-  email: string;
-  name: string;
-  feedback: string;
+  finishAt: moment.Moment;
+  startAt: moment.Moment;
 }
 
 export interface IEditWorkProps extends InjectedFormProps<IEditWorkData, IEditWorkProps> {
@@ -16,55 +16,32 @@ export interface IEditWorkProps extends InjectedFormProps<IEditWorkData, IEditWo
   onClose: any;
 }
 
-export interface IEditWorkState {
-  time?: moment.Moment;
-}
-
-export class EditWorkTsx extends React.Component<IEditWorkProps, IEditWorkState> {
-  state = {
-    time: moment(),
-  };
-
+export class EditWorkTsx extends React.Component<IEditWorkProps, {}> {
   render() {
-    const { classes } = this.props;
-    const { time } = this.state;
+    const { classes, handleSubmit, initialValues } = this.props;
 
     return (
-      <form className={classes.root}>
+      <form className={classes.root} onSubmit={handleSubmit}>
         <div className={classes.rowSpaceBetween}>
           <div className={classes.col}>
             <span>Начало</span>
-            <TimePicker
-              name="startAt"
-              style={{ width: 100 }}
-              showSecond
-              value={time}
-              className={classes.time}
-              minuteStep={5}
-              onChange={this.onCustomChange}
-              popupStyle={{ zIndex: 4000 }}
-            />
+            <Field name="startAt" component={TimeField} />
           </div>
-          <div>55:12</div>
-          <div className={classes.col}>
+          <div>
+            {moment((initialValues.finishAt || moment()).diff(initialValues.startAt as moment.Moment)).format(
+              'Hч mmмин'
+            )}
+          </div>
+          <div className={cn(classes.col, classes.end)}>
             <span>Конец</span>
-            <TimePicker
-              name="finishAt"
-              style={{ width: 100 }}
-              showSecond={false}
-              value={time}
-              className={classes.time}
-              minuteStep={5}
-              onChange={this.onCustomChange}
-              popupStyle={{ zIndex: 4000 }}
-            />
+            <Field name="finishAt" component={TimeField} />
           </div>
         </div>
+        <div className={classes.grow} />
+        <Button color="primary" variant="contained" type="submit">
+          Сохранить
+        </Button>
       </form>
     );
   }
-
-  private onCustomChange = (time: moment.Moment) => {
-    this.setState({ time });
-  };
 }

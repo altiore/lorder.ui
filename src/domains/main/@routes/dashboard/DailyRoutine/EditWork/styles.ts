@@ -9,22 +9,26 @@ export const styles = (theme: Theme) =>
       flexFlow: 'column nowrap',
       justifyContent: 'center',
     },
+    end: {
+      alignItems: 'flex-end',
+    },
+    grow: {
+      flexGrow: 1,
+    },
     root: {
-      alignItems: 'flex-start',
+      alignItems: 'stretch',
       display: 'flex',
-      flexFlow: 'row nowrap',
+      flexFlow: 'column nowrap',
+      justifyContent: 'flex-start',
       minHeight: 300,
       minWidth: 500,
       padding: theme.spacing.unit * 2,
     },
     rowSpaceBetween: {
-      alignItems: 'center',
+      alignItems: 'flex-end',
       display: 'flex',
+      flexBasis: 50,
       flexFlow: 'row nowrap',
-      flexGrow: 1,
       justifyContent: 'space-between',
-    },
-    time: {
-      zIndex: 4000,
     },
   });
