@@ -2,10 +2,6 @@ import valueColor from '@material-ui/core/colors/green';
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme): any => ({
-  avatar: {
-    height: 28,
-    width: 28,
-  },
   footer: {
     alignItems: 'flex-end',
     color: '#dfe3e6',

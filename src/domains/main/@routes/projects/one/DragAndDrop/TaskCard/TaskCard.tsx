@@ -1,4 +1,3 @@
-import Avatar from '@material-ui/core/Avatar';
 import grey from '@material-ui/core/colors/grey';
 import Typography from '@material-ui/core/Typography';
 import BugReportIcon from '@material-ui/icons/BugReport';
@@ -6,6 +5,7 @@ import ExtensionIcon from '@material-ui/icons/Extension';
 import * as React from 'react';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 
+import Avatar from 'src/components/Avatar';
 import { ProjectTask } from 'src/store/projects';
 
 export interface ITaskCard extends Partial<ProjectTask> {
@@ -30,6 +30,7 @@ export const TaskCardTsx: React.FunctionComponent<ITaskCard> = ({
   title,
   typeId,
   value,
+  performer,
   provided,
   snapshot,
 }) => {
@@ -60,7 +61,9 @@ export const TaskCardTsx: React.FunctionComponent<ITaskCard> = ({
             </Typography>
           </div>
         </div>
-        <Avatar className={classes.avatar}>CK</Avatar>
+        <Avatar size="sm" src={performer && performer.avatar}>
+          {performer && performer.email}
+        </Avatar>
       </div>
     </div>
   );

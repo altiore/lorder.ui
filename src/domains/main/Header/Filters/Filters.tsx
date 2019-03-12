@@ -1,6 +1,4 @@
-import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
@@ -14,6 +12,7 @@ import * as cn from 'classnames';
 import * as React from 'react';
 
 import { IUser } from 'src/@types';
+import Avatar from 'src/components/Avatar';
 
 export interface IFiltersProps {
   changeFilter: any;
@@ -42,21 +41,13 @@ export class FiltersTsx extends React.Component<IFiltersProps, {}> {
                 const isSelected = !!~filteredMembers.indexOf(member.id as number);
                 return (
                   <Tooltip key={member.id} title={member.email}>
-                    <div
-                      className={cn(classes.avatarBorder, {
-                        [classes.avatarSelected]: isSelected,
-                      })}
-                      onClick={isSelected ? this.handleToggleMember(member.id as number) : undefined}
+                    <Avatar
+                      isSelected={isSelected}
+                      onClick={this.handleToggleMember(member.id as number)}
+                      src={undefined}
                     >
-                      <ButtonBase
-                        className={classes.avatarWrapper}
-                        onClick={this.handleToggleMember(member.id as number)}
-                      >
-                        <Avatar className={classes.avatar} alt={member.email} src={member.avatar}>
-                          {member.email.substr(0, 2).toUpperCase()}
-                        </Avatar>
-                      </ButtonBase>
-                    </div>
+                      {member.email}
+                    </Avatar>
                   </Tooltip>
                 );
               })}

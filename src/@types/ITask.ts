@@ -1,4 +1,5 @@
 import { IDownloadList } from './IDownloadList';
+import { IUser } from './IUser';
 import { IUserWork } from './IUserWork';
 
 export interface ITask {
@@ -7,6 +8,7 @@ export interface ITask {
   title: string;
   description: string;
   performerId?: number;
+  performer?: IUser;
   projectId: number;
   source?: string;
   status: number;

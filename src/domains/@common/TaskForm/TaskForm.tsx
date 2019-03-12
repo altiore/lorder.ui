@@ -21,6 +21,7 @@ import { TitleInput } from 'liw-components/TitleInput';
 
 import { INotification } from 'src/@types';
 import TaskTypeIcon from 'src/components/@icons/TaskTypeIcon';
+import Avatar from 'src/components/Avatar';
 import { SelectMenuField } from 'src/components/SelectMenuField';
 import { StartStopBtn } from 'src/components/StartStopBtn';
 import { parseNumber } from 'src/store/@common/helpers';
@@ -201,7 +202,10 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                 ))}
               </Field>
               <div>
-                <Field name="users" component={PerformerField} taskId={1}>
+                <Field name="performer" component={PerformerField} taskId={taskId}>
+                  {(count: number, onClick: () => void) => <Avatar onClick={onClick}>{count}</Avatar>}
+                </Field>
+                <Field name="users" component={PerformerField} taskId={taskId}>
                   {(count: number, onClick: () => void) => (
                     <IconButton aria-label={`${count} members`} className={classes.margin} onClick={onClick}>
                       <Badge badgeContent={count} color="secondary" invisible={invisible[0]}>

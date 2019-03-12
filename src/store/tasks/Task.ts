@@ -1,6 +1,6 @@
 import map from 'lodash-es/map';
 
-import { ITask } from 'src/@types';
+import { ITask, IUser } from 'src/@types';
 import { DownloadList } from 'src/store/@common/entities';
 import { convertSecondsToDuration } from 'src/store/@common/helpers';
 import { UserWork } from 'src/store/tasks';
@@ -11,6 +11,7 @@ export class Task implements ITask {
   title: string;
   description: string;
   performerId?: number;
+  performer?: IUser;
   projectId: number;
   source?: string;
   status: number;

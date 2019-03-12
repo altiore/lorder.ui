@@ -3,29 +3,6 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) =>
   createStyles({
-    avatar: {
-      margin: 0,
-    },
-    avatarBorder: {
-      '&:last-child': {
-        marginRight: theme.spacing.unit,
-      },
-      border: `2px solid transparent`,
-      borderRadius: '50%',
-      marginLeft: -theme.spacing.unit * 1.5,
-      pointerEvents: 'none',
-      zIndex: 1,
-    },
-    avatarSelected: {
-      border: `2px solid ${theme.palette.secondary.dark}`,
-      cursor: 'pointer',
-      pointerEvents: 'auto',
-    },
-    avatarWrapper: {
-      borderRadius: '50%',
-      margin: 2,
-      pointerEvents: 'auto',
-    },
     close: {
       marginLeft: theme.spacing.unit,
     },

@@ -155,7 +155,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
     const { selectedProject, startUserWork, push } = this.props;
     this.clearTimeout();
     this.setState({ anchorEl: null, expanded: false });
-    if (selectedProject.id !== projectId) {
+    if (selectedProject && selectedProject.id !== projectId) {
       this.props.showWarning({
         action: {
           callback: async () => {
