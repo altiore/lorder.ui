@@ -1,6 +1,7 @@
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import BallotIcon from '@material-ui/icons/Ballot';
+import FeedbackIcon from '@material-ui/icons/Feedback';
 import HomeIcon from '@material-ui/icons/Home';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import ListAltIcon from '@material-ui/icons/ListAlt';
@@ -10,6 +11,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { NoMatch } from 'src/components/NoMatch';
 import { Main } from 'src/domains/main';
 import { Dashboard } from 'src/domains/main/@routes/dashboard';
+import { Feedback } from 'src/domains/main/@routes/feedback';
 import { AllProjects, OwnProjects } from 'src/domains/main/@routes/projects/list';
 import { Project } from 'src/domains/main/@routes/projects/one';
 import DragAndDrop from 'src/domains/main/@routes/projects/one/DragAndDrop';
@@ -110,6 +112,12 @@ export const routes = [
         icon: AccountCircle,
         path: '/users',
         title: 'Пользователи',
+      },
+      {
+        component: Feedback,
+        icon: FeedbackIcon,
+        path: '/feedback',
+        title: 'Обратная связь',
       },
       {
         component: TaskTypes,

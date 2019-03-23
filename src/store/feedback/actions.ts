@@ -6,7 +6,7 @@ export const fetchFeedbackList = requestActions('FEEDBACK/FETCH_ALL', () => ({
     params: {
       count: 2000,
       order: 'desc',
-      orderBy: 'createdAt',
+      orderBy: 'id',
       skip: 0,
     },
     url: '/feedback',

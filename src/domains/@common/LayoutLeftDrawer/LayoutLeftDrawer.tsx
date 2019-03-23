@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import FeedbackIcon from '@material-ui/icons/Feedback';
 import FormatSizeIcon from '@material-ui/icons/FormatSize';
 import LaptopIcon from '@material-ui/icons/Laptop';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
@@ -118,6 +119,12 @@ export class LayoutLeftDrawerTsx extends React.Component<
                     <FormatSizeIcon />
                   </ListItemIcon>
                   <ListItemText primary={'Типы Задач'} />
+                </ListItem>
+                <ListItem button onClick={this.goTo('/feedback')}>
+                  <ListItemIcon>
+                    <FeedbackIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Обратная связь'} />
                 </ListItem>
               </>
             )}
