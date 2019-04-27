@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { defaultProjectId } from 'src/store/identity/selectors';
+import { defaultProjectId } from 'store/identity/selectors';
 import { ownProjectList } from './selectors';
 
 export const ownProjectListNoProjectFirst = createSelector([ownProjectList, defaultProjectId], (list, projectId) => {

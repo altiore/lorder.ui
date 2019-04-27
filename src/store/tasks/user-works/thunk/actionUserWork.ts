@@ -2,12 +2,12 @@ import get from 'lodash-es/get';
 import { Dispatch } from 'react-redux';
 import { change } from 'redux-form';
 
-import { IState } from 'src/@types';
-// import { changeIco } from 'src/store/@common/helpers';
-import { selectProject } from 'src/store/project';
-import { fetchProjectDetails, getProjectById, Project, projectMembers } from 'src/store/projects';
-import { CREATE_USER_WORK_FORM_NAME, replaceTasks } from 'src/store/tasks';
-import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from 'src/store/timer';
+import { IState } from '@types';
+// import { changeIco } from 'store/@common/helpers';
+import { selectProject } from 'store/project';
+import { fetchProjectDetails, getProjectById, Project, projectMembers } from 'store/projects';
+import { CREATE_USER_WORK_FORM_NAME, replaceTasks } from 'store/tasks';
+import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from 'store/timer';
 import { IUserWorkData, IUserWorkDelete, patchAndStopUserWork, postAndStartUserWork } from '../actions';
 import { UserWork } from '../UserWork';
 

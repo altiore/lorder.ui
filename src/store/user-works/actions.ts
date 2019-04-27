@@ -2,8 +2,8 @@ import identity from 'lodash-es/identity';
 import pick from 'lodash-es/pick';
 import pickBy from 'lodash-es/pickBy';
 
-import { IUserWork } from 'src/@types';
-import { requestActions } from 'src/store/@common/requestActions';
+import { IUserWork } from '@types';
+import { requestActions } from 'store/@common/requestActions';
 import { EDIT_USER_WORK_DESCRIPTION_FORM } from './consts';
 
 export const getUserWorks = requestActions(

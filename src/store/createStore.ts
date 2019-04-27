@@ -5,8 +5,8 @@ import { persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import thunk from 'redux-thunk';
 
-import { ROLE } from 'src/@types';
-import { loadInitialData } from 'src/store/identity';
+import { ROLE } from '@types';
+import { loadInitialData } from 'store/identity';
 import { rootSaga } from './rootSaga';
 
 import { clientsMiddleware } from './@common/middlewares';

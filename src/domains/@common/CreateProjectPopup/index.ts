@@ -3,8 +3,8 @@ import get from 'lodash-es/get';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
-import { onSubmitForm } from 'src/store/@common/helpers';
-import { IPostProjectData, postProject } from 'src/store/projects';
+import { onSubmitForm } from 'store/@common/helpers';
+import { IPostProjectData, postProject } from 'store/projects';
 import { CreateProjectPopupJsx, IProjectFormProps } from './CreateProjectPopup';
 
 const CreateProjectPopup = connect(

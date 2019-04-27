@@ -3,8 +3,8 @@ import get from 'lodash-es/get';
 import { Action, ActionMeta, combineActions as combineActionsRedux, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { IMeta } from 'src/@types';
-import { archiveTask } from 'src/store/tasks/actions';
+import { IMeta } from '@types';
+import { archiveTask } from 'store/tasks/actions';
 import { DownloadList } from '../@common/entities';
 import { combineActions } from '../@common/helpers';
 import {

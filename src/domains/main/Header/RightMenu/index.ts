@@ -2,7 +2,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { logOut, userAvatar, userEmail, userRole } from 'src/store/identity';
+import { logOut, userAvatar, userEmail, userRole } from 'store/identity';
 import { RightMenuTsx } from './RightMenu';
 import { styles } from './styles';
 

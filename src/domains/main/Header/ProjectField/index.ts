@@ -2,7 +2,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { ownProjectListNoProjectFirst } from 'src/store/projects';
+import { ownProjectListNoProjectFirst } from 'store/projects';
 import { IProjectFieldProps, ProjectFieldJsx } from './ProjectField';
 import { styles } from './styles';
 

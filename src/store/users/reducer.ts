@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { Action, ActionMeta, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { IMeta, IUser } from 'src/@types';
+import { IMeta, IUser } from '@types';
 import { DownloadList } from '../@common/entities';
 import { deleteUser, fetchUsers, patchUser } from './actions';
 import { User } from './User';

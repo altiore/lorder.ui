@@ -2,8 +2,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import * as React from 'react';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
-import { IRoute, ROLE } from 'src/@types';
-import { LoadingPage } from 'src/components/LoadingPage';
+import { IRoute, ROLE } from '@types';
+import { LoadingPage } from 'components/LoadingPage';
 
 // import "react-perfect-scrollbar/dist/css/styles.css";
 import '../styles/app.scss';

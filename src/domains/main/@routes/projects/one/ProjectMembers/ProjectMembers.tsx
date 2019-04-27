@@ -11,7 +11,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Member } from 'src/store/projects/members/Member';
+import { Member } from 'store/projects/members/Member';
 import { AddMemberForm } from './AddMemberForm';
 import { ChangedCell } from './ChangedCell';
 

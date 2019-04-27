@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { IState, ROLE } from 'src/@types';
+import { IState, ROLE } from '@types';
 import { Identity } from './Identity';
 
 const baseState = (state: IState) => state.identity;

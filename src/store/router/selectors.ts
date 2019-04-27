@@ -3,8 +3,8 @@ import { match as IMatch } from 'react-router';
 import { createSelector } from 'reselect';
 const { createMatchSelector } = require('connected-react-router');
 
-import { IState } from 'src/@types';
-import { getQueryParam } from 'src/store/@common/helpers';
+import { IState } from '@types';
+import { getQueryParam } from 'store/@common/helpers';
 
 type IMatchIdentifier = IMatch<{
   identifier?: string;

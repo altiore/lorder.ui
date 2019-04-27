@@ -2,8 +2,8 @@ import includes from 'lodash-es/includes';
 import map from 'lodash-es/map';
 import * as moment from 'moment';
 
-import { ITask, IUserWork } from 'src/@types';
-import { convertSecondsToDuration } from 'src/store/@common/helpers';
+import { ITask, IUserWork } from '@types';
+import { convertSecondsToDuration } from 'store/@common/helpers';
 import { Task } from '../Task';
 
 export class UserWork implements IUserWork {

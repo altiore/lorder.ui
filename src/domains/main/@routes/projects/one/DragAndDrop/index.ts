@@ -3,10 +3,10 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { withResize } from 'src/hocs/withResize';
-import { openDialog } from 'src/store/dialog';
-import { filteredProjectTasks, getAllProjectTasks, moveProjectTask } from 'src/store/projects';
-import { routeProjectId } from 'src/store/router';
+import { withResize } from 'hocs/withResize';
+import { openDialog } from 'store/dialog';
+import { filteredProjectTasks, getAllProjectTasks, moveProjectTask } from 'store/projects';
+import { routeProjectId } from 'store/router';
 import { DragAndDrop } from './DragAndDrop';
 import { styles } from './styles';
 

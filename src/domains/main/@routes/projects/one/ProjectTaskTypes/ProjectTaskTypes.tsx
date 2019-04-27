@@ -8,9 +8,9 @@ import get from 'lodash-es/get';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Table } from 'src/components/Table';
-import { DownloadList } from 'src/store/@common/entities';
-import { TaskType } from 'src/store/task-types';
+import { Table } from 'components/Table';
+import { DownloadList } from 'store/@common/entities';
+import { TaskType } from 'store/task-types';
 import { TaskTypesForm } from './TaskTypesForm';
 
 export interface IProjectTaskTypesProps {

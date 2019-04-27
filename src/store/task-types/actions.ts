@@ -1,4 +1,4 @@
-import { requestActions } from 'src/store/@common/requestActions';
+import { requestActions } from 'store/@common/requestActions';
 
 export interface IPostTaskTypeData {
   title: string;

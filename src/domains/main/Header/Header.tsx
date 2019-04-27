@@ -9,11 +9,11 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { INotification } from 'src/@types';
-import { CreateProjectPopup } from 'src/domains/@common/CreateProjectPopup';
-import { LinkIconButton } from 'src/domains/@common/LinkIconButton';
-import { Project } from 'src/store/projects';
-import { IUserWorkData } from 'src/store/tasks/user-works';
+import { INotification } from '@types';
+import { CreateProjectPopup } from 'domains/@common/CreateProjectPopup';
+import { LinkIconButton } from 'domains/@common/LinkIconButton';
+import { Project } from 'store/projects';
+import { IUserWorkData } from 'store/tasks/user-works';
 import Filters from './Filters';
 import { ProjectButton } from './ProjectButton';
 import { ProjectField } from './ProjectField';

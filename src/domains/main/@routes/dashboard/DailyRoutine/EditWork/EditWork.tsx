@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 
-import TimeField from 'src/components/TimeField';
+import TimeField from 'components/TimeField';
 
 export interface IEditWorkData {
   finishAt: moment.Moment;

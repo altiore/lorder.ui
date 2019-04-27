@@ -3,10 +3,10 @@ import get from 'lodash-es/get';
 import { Action, ActionMeta, handleActions } from 'redux-actions';
 import uniqid from 'uniqid';
 
-import { DownloadList } from 'src/store/@common/entities';
-import { IRequestAction } from 'src/store/@common/requestActions';
-import { archiveTask } from 'src/store/tasks/actions';
-import { User } from 'src/store/users';
+import { DownloadList } from 'store/@common/entities';
+import { IRequestAction } from 'store/@common/requestActions';
+import { archiveTask } from 'store/tasks/actions';
+import { User } from 'store/users';
 import { deleteProjectTask, moveProjectTask, patchProjectTask, postProjectTask } from './actions';
 import { ProjectTask } from './ProjectTask';
 

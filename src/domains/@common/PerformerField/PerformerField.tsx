@@ -5,7 +5,7 @@ import { WrappedFieldProps } from 'redux-form';
 
 import { ListBox } from 'liw-components/ListBox';
 
-import { IUser } from 'src/@types';
+import { IUser } from '@types';
 
 interface IPerformerFieldState {
   isOpen: boolean;

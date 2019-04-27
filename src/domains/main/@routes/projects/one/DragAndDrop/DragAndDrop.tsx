@@ -15,8 +15,8 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 
-import { PatchTaskForm } from 'src/domains/@common/TaskForm/PatchTaskForm';
-import { ProjectTask, STATUS_NAMES } from 'src/store/projects';
+import { PatchTaskForm } from 'domains/@common/TaskForm/PatchTaskForm';
+import { ProjectTask, STATUS_NAMES } from 'store/projects';
 import { TaskCard } from './TaskCard';
 
 const CARD_WIDTH = 296;

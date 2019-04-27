@@ -6,10 +6,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 
-import { TelegramIco } from 'src/components/@icons/Telegram';
-import { Block } from 'src/components/Block';
-import { MemberCard } from 'src/components/MemberCard';
-import { LinkButton } from 'src/domains/@common/LinkButton';
+import { TelegramIco } from 'components/@icons/Telegram';
+import { Block } from 'components/Block';
+import { MemberCard } from 'components/MemberCard';
+import { LinkButton } from 'domains/@common/LinkButton';
 import { BackGroundImage } from './BackGroundImage';
 // import { BackGroundVideo } from './BackGroundVideo';
 import { Title } from './Title';

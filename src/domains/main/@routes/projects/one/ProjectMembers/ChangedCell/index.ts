@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { ChangedCellTsx } from 'src/components/ChangedCell';
-import { mapEnum } from 'src/store/@common/helpers';
-import { ACCESS_LEVEL, updateProjectMemberAccessLevel } from 'src/store/projects';
-import { routeProjectId } from 'src/store/router';
+import { ChangedCellTsx } from 'components/ChangedCell';
+import { mapEnum } from 'store/@common/helpers';
+import { ACCESS_LEVEL, updateProjectMemberAccessLevel } from 'store/projects';
+import { routeProjectId } from 'store/router';
 
 const getAccessLevels = () =>
   mapEnum(ACCESS_LEVEL, (accessLevel: number) => ({

@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 
-import { withResize } from 'src/hocs/withResize';
-import { closeDialog, openDialog } from 'src/store/dialog';
-import { userRole } from 'src/store/identity';
-import { selectedProject } from 'src/store/projects';
-import { isLeftBarOpen, toggleUiSetting } from 'src/store/ui';
+import { withResize } from 'hocs/withResize';
+import { closeDialog, openDialog } from 'store/dialog';
+import { userRole } from 'store/identity';
+import { selectedProject } from 'store/projects';
+import { isLeftBarOpen, toggleUiSetting } from 'store/ui';
 import { LayoutLeftDrawerTsx } from './LayoutLeftDrawer';
 import { styles } from './styles';
 

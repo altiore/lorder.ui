@@ -9,10 +9,10 @@ import ClearIcon from '@material-ui/icons/Clear';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Table } from 'src/components/Table';
-import { PatchTaskForm } from 'src/domains/@common/TaskForm/PatchTaskForm';
-import { DownloadList } from 'src/store/@common/entities';
-import { ProjectTask } from 'src/store/projects';
+import { Table } from 'components/Table';
+import { PatchTaskForm } from 'domains/@common/TaskForm/PatchTaskForm';
+import { DownloadList } from 'store/@common/entities';
+import { ProjectTask } from 'store/projects';
 import { PerformersCell } from './PerformersCell';
 
 export interface IProjectTasksProps {

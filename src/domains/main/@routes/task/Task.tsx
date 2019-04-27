@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { DashboardTaskForm } from 'src/domains/@common/TaskForm';
+import { DashboardTaskForm } from 'domains/@common/TaskForm';
 
 export interface ITaskProps {
   classes: any;

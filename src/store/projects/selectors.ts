@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
 
-import { IState, ITask, IUser } from 'src/@types';
-import { DownloadList } from 'src/store/@common/entities';
-import { routeProjectId } from 'src/store/router';
-import { currentProjectId } from 'src/store/timer';
-import { timePercentByProjectId, timeSpentByProjectId } from 'src/store/user-works';
+import { IState, ITask, IUser } from '@types';
+import { DownloadList } from 'store/@common/entities';
+import { routeProjectId } from 'store/router';
+import { currentProjectId } from 'store/timer';
+import { timePercentByProjectId, timeSpentByProjectId } from 'store/user-works';
 import { Member } from './members/Member';
 import { Project } from './Project';
 

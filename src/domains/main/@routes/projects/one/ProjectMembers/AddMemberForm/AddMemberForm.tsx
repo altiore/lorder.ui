@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { email, required } from 'redux-form-validators';
 
-import { UserIco } from 'src/components/@icons/User';
+import { UserIco } from 'components/@icons/User';
 
 export interface IAddMemberFormProps {
   buttonText?: string;

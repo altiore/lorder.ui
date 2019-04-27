@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 
-import { IPieChartProps, PieChart } from 'src/components/PieChart';
-import { withResize } from 'src/hocs/withResize';
-import { setUpHighcharts } from 'src/store/highcharts';
+import { IPieChartProps, PieChart } from 'components/PieChart';
+import { withResize } from 'hocs/withResize';
+import { setUpHighcharts } from 'store/highcharts';
 
 const mapDispatchToProps = {
   setUpHighcharts,

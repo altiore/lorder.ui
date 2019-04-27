@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { RouteComponentProps, Switch } from 'react-router-dom';
 
-import { IRoute } from 'src/@types';
-import { RouteWithSubRoutes } from 'src/domains/@common/RouteWithSubRoutes';
-import { DashboardTaskForm } from 'src/domains/@common/TaskForm';
+import { IRoute } from '@types';
+import { RouteWithSubRoutes } from 'domains/@common/RouteWithSubRoutes';
+import { DashboardTaskForm } from 'domains/@common/TaskForm';
 import { Header } from './Header';
 
 export interface IMainProps {

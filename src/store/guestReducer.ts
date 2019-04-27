@@ -6,7 +6,7 @@ import { combineReducers, Reducer } from 'redux';
 import { reducer as form } from 'redux-form';
 import { createTransform, PersistConfig, persistReducer } from 'redux-persist';
 
-import { IState, ROLE } from 'src/@types';
+import { IState, ROLE } from '@types';
 import { DownloadList } from './@common/entities';
 import { dialog } from './dialog';
 import { highcharts } from './highcharts/reducer';
@@ -62,13 +62,13 @@ export async function createRootReducer(history: History, role: ROLE = ROLE.GUES
   let asyncReducers: Partial<Reducer<IState>> = {};
   switch (role) {
     case ROLE.ADMIN:
-      asyncReducers = (await import(/* webpackChunkName: "admin" */ 'src/store/adminReducers')).adminReducers;
+      asyncReducers = (await import(/* webpackChunkName: "admin" */ 'store/adminReducers')).adminReducers;
       break;
     case ROLE.SUPER_ADMIN:
-      asyncReducers = (await import(/* webpackChunkName: "super-admin" */ 'src/store/adminReducers')).adminReducers;
+      asyncReducers = (await import(/* webpackChunkName: "super-admin" */ 'store/adminReducers')).adminReducers;
       break;
     case ROLE.USER:
-      asyncReducers = (await import(/* webpackChunkName: "user" */ 'src/store/userReducers')).userReducers;
+      asyncReducers = (await import(/* webpackChunkName: "user" */ 'store/userReducers')).userReducers;
       break;
     case ROLE.GUEST:
     default:

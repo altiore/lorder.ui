@@ -1,7 +1,7 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
 
-import { getProjectById } from 'src/store/projects';
-import { startTimer, UserWork } from 'src/store/tasks';
+import { getProjectById } from 'store/projects';
+import { startTimer, UserWork } from 'store/tasks';
 import { patchAndStopUserWork } from '../actions';
 
 function* patchAndStopUserWorkSuccessHandler({ payload }: any) {

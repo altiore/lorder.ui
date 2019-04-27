@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { PerformerField as PerformerFieldRaw } from 'src/domains/@common/PerformerField';
-import { patchProjectTask, projectMembersAsUsers } from 'src/store/projects';
-import { routeProjectId } from 'src/store/router';
+import { PerformerField as PerformerFieldRaw } from 'domains/@common/PerformerField';
+import { patchProjectTask, projectMembersAsUsers } from 'store/projects';
+import { routeProjectId } from 'store/router';
 
 const mapStateToProps = createStructuredSelector({
   projectId: routeProjectId,

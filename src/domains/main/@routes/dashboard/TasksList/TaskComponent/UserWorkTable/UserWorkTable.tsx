@@ -8,9 +8,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { IDownloadList, IUserWork } from 'src/@types';
-import { StartStopBtn } from 'src/components/StartStopBtn';
-import { Table } from 'src/components/Table';
+import { IDownloadList, IUserWork } from '@types';
+import { StartStopBtn } from 'components/StartStopBtn';
+import { Table } from 'components/Table';
 import { DescriptionForm } from './DescriptionForm';
 import { DurationField } from './DurationField';
 import { styles } from './styles';

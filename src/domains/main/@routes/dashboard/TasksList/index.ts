@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { getProjectById } from 'src/store/projects';
-import { sortedByFilterTasksWithActive } from 'src/store/tasks';
-import { tasksFilter } from 'src/store/tasksFilter';
-import { currentTaskId } from 'src/store/timer';
+import { getProjectById } from 'store/projects';
+import { sortedByFilterTasksWithActive } from 'store/tasks';
+import { tasksFilter } from 'store/tasksFilter';
+import { currentTaskId } from 'store/timer';
 import { ITasksListProps, TasksListJsx } from './TasksList';
 
 const mapStateToProps = createStructuredSelector({

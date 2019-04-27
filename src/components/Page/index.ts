@@ -1,6 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
 
-import { withResize } from 'src/hocs/withResize';
+import { withResize } from 'hocs/withResize';
 import { PageJsx } from './Page';
 import { styles } from './styles';
 

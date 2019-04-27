@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { IState } from 'src/@types';
+import { IState } from '@types';
 
 const baseState = (state: IState) => state.form;
 

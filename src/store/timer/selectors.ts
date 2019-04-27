@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { IState, IUserWork } from 'src/@types';
-import { convertSecondsToDuration, convertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
-import { filteredTaskList } from 'src/store/tasks/selectors';
+import { IState, IUserWork } from '@types';
+import { convertSecondsToDuration, convertSecondsToDurationWithLocal } from 'store/@common/helpers';
+import { filteredTaskList } from 'store/tasks/selectors';
 import { IUserWorkDelete } from '../tasks/user-works';
 
 const baseState = (state: IState) => state.timer;

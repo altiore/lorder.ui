@@ -5,8 +5,8 @@ import * as React from 'react';
 const match = require('autosuggest-highlight/match');
 const parse = require('autosuggest-highlight/parse');
 
-import { ITask } from 'src/@types';
-import TaskTypeIcon from 'src/components/@icons/TaskTypeIcon';
+import { ITask } from '@types';
+import TaskTypeIcon from 'components/@icons/TaskTypeIcon';
 
 export interface ISuggestionProps {
   classes: any;

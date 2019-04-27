@@ -3,7 +3,7 @@ import { Theme } from '@material-ui/core/styles';
 import omit from 'lodash-es/omit';
 import * as React from 'react';
 
-import { CurrentDialog } from 'src/store/dialog/actions';
+import { CurrentDialog } from 'store/dialog/actions';
 
 export interface IDialogTsx {
   isWidthLg: boolean;

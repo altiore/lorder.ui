@@ -1,6 +1,6 @@
-import { requestActions } from 'src/store/@common/requestActions';
+import { requestActions } from 'store/@common/requestActions';
 
-import { PROJECT_MEMBER_FORM_NAME } from 'src/store/projects';
+import { PROJECT_MEMBER_FORM_NAME } from 'store/projects';
 
 export interface IProjectMemberData {
   memberId?: number;

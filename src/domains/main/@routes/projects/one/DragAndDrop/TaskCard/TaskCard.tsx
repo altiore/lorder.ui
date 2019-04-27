@@ -5,8 +5,8 @@ import ExtensionIcon from '@material-ui/icons/Extension';
 import * as React from 'react';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 
-import Avatar from 'src/components/Avatar';
-import { ProjectTask } from 'src/store/projects';
+import Avatar from 'components/Avatar';
+import { ProjectTask } from 'store/projects';
 
 export interface ITaskCard extends Partial<ProjectTask> {
   classes: any;

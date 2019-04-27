@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 // import TodayIcon from '@material-ui/icons/Today';
 import * as React from 'react';
 
-import { Project } from 'src/store/projects';
+import { Project } from 'store/projects';
 
 export interface IShortChartProps {
   classes?: any;

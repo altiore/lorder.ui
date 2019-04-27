@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Redirect } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { IRoute } from 'src/@types';
-import { LayoutLeftDrawer } from 'src/domains/@common/LayoutLeftDrawer';
-import { Project } from 'src/store/projects';
+import { IRoute } from '@types';
+import { LayoutLeftDrawer } from 'domains/@common/LayoutLeftDrawer';
+import { Project } from 'store/projects';
 
 export interface IProjectProps {
   fetchProjectDetails: any;

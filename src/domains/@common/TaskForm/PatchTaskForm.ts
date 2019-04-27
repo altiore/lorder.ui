@@ -4,16 +4,11 @@ import { connect } from 'react-redux';
 import { change, reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { onSubmitFail } from 'src/store/@common/helpers';
-import { changeSettings } from 'src/store/dialog';
-import { showSuccess } from 'src/store/notifications';
-import {
-  patchProjectTask,
-  postProjectTask,
-  PROJECT_EDIT_TASK_FORM_NAME,
-  projectTasksIsLoading,
-} from 'src/store/projects';
-import { routeProjectId, routeTaskId } from 'src/store/router';
+import { onSubmitFail } from 'store/@common/helpers';
+import { changeSettings } from 'store/dialog';
+import { showSuccess } from 'store/notifications';
+import { patchProjectTask, postProjectTask, PROJECT_EDIT_TASK_FORM_NAME, projectTasksIsLoading } from 'store/projects';
+import { routeProjectId, routeTaskId } from 'store/router';
 import {
   archiveTask,
   checkIsCurrent,
@@ -21,7 +16,7 @@ import {
   getEditTaskInitialValues,
   startUserWork,
   stopUserWork,
-} from 'src/store/tasks';
+} from 'store/tasks';
 import { TaskForm } from './StyledTaskForm';
 import { ITaskFormData, ITaskFormProps } from './TaskForm';
 

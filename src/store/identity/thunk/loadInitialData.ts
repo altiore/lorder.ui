@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
 
-import { IState, ROLE } from 'src/@types';
-import { getOwnProjects } from 'src/store/projects';
-import { identifier } from 'src/store/router';
-import { getUserWorks } from 'src/store/user-works';
+import { IState, ROLE } from '@types';
+import { getOwnProjects } from 'store/projects';
+import { identifier } from 'store/router';
+import { getUserWorks } from 'store/user-works';
 import { userIsLoading, userRole } from '../selectors';
 
 export const loadInitialData = () => async (dispatch: Dispatch, getState: () => IState) => {

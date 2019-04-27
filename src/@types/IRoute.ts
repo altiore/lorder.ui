@@ -1,4 +1,5 @@
 import { ComponentType } from 'react';
+
 import { ACCESS_LEVEL } from '../store/projects';
 
 export interface IRoute {

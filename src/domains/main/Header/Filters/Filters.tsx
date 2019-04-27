@@ -11,8 +11,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import * as cn from 'classnames';
 import * as React from 'react';
 
-import { IUser } from 'src/@types';
-import Avatar from 'src/components/Avatar';
+import { IUser } from '@types';
+import Avatar from 'components/Avatar';
 
 export interface IFiltersProps {
   changeFilter: any;

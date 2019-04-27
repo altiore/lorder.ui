@@ -1,6 +1,6 @@
 import map from 'lodash-es/map';
 
-import { ITasksFilter } from 'src/@types';
+import { ITasksFilter } from '@types';
 
 export class TasksFilter implements ITasksFilter {
   filter: string = 'recent';

@@ -19,13 +19,13 @@ import { length, required } from 'redux-form-validators';
 import { Input } from 'liw-components/Input';
 import { TitleInput } from 'liw-components/TitleInput';
 
-import { INotification } from 'src/@types';
-import TaskTypeIcon from 'src/components/@icons/TaskTypeIcon';
-import Avatar from 'src/components/Avatar';
-import { SelectMenuField } from 'src/components/SelectMenuField';
-import { StartStopBtn } from 'src/components/StartStopBtn';
-import { parseNumber } from 'src/store/@common/helpers';
-import { STATUS_NAMES } from 'src/store/projects';
+import { INotification } from '@types';
+import TaskTypeIcon from 'components/@icons/TaskTypeIcon';
+import Avatar from 'components/Avatar';
+import { SelectMenuField } from 'components/SelectMenuField';
+import { StartStopBtn } from 'components/StartStopBtn';
+import { parseNumber } from 'store/@common/helpers';
+import { STATUS_NAMES } from 'store/projects';
 import { PerformerField } from './PerformerField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
 

@@ -1,5 +1,5 @@
+import { IDownloadList } from '@types';
 import { AxiosResponse } from 'axios';
-import { IDownloadList } from 'src/@types';
 
 export class DownloadList<T = any> implements IDownloadList<T> {
   isLoaded: boolean = false;

@@ -5,18 +5,18 @@ import ImportExportIcon from '@material-ui/icons/ImportExport';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-import { NoMatch } from 'src/components/NoMatch';
-import { Main } from 'src/domains/main';
-import { Dashboard } from 'src/domains/main/@routes/dashboard';
-import { OwnProjects } from 'src/domains/main/@routes/projects/list';
-import { Project } from 'src/domains/main/@routes/projects/one';
-import DragAndDrop from 'src/domains/main/@routes/projects/one/DragAndDrop';
-import { ProjectMembers } from 'src/domains/main/@routes/projects/one/ProjectMembers';
-import { ProjectTaskTypes } from 'src/domains/main/@routes/projects/one/ProjectTaskTypes';
-import { Settings } from 'src/domains/main/@routes/projects/one/Settings';
-import Task from 'src/domains/main/@routes/task';
-import { Profile } from 'src/domains/profile';
-import { ACCESS_LEVEL } from 'src/store/projects';
+import { NoMatch } from 'components/NoMatch';
+import { Main } from 'domains/main';
+import { Dashboard } from 'domains/main/@routes/dashboard';
+import { OwnProjects } from 'domains/main/@routes/projects/list';
+import { Project } from 'domains/main/@routes/projects/one';
+import DragAndDrop from 'domains/main/@routes/projects/one/DragAndDrop';
+import { ProjectMembers } from 'domains/main/@routes/projects/one/ProjectMembers';
+import { ProjectTaskTypes } from 'domains/main/@routes/projects/one/ProjectTaskTypes';
+import { Settings } from 'domains/main/@routes/projects/one/Settings';
+import Task from 'domains/main/@routes/task';
+import { Profile } from 'domains/profile';
+import { ACCESS_LEVEL } from 'store/projects';
 import { commonRoutes } from './@common';
 
 export const routes = [

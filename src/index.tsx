@@ -7,9 +7,9 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import Boundary from 'src/components/Boundary';
-import Dialog from 'src/domains/@common/Dialog';
-import Notification from 'src/domains/@common/Notification';
+import Boundary from 'components/Boundary';
+import Dialog from 'domains/@common/Dialog';
+import Notification from 'domains/@common/Notification';
 import { App } from './domains';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore } from './store/createStore';

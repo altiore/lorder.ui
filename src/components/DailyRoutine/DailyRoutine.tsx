@@ -9,7 +9,7 @@ import * as React from 'react';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 
-import { IEvent } from 'src/@types';
+import { IEvent } from '@types';
 
 const RangeComponent = createSliderWithTooltip(Range);
 

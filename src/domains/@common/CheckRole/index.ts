@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { userRole } from 'src/store/identity';
+import { userRole } from 'store/identity';
 
 import { CheckRoleTsx } from './CheckRole';
 

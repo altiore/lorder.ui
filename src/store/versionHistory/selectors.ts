@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { IState } from 'src/@types';
+import { IState } from '@types';
 import { VersionHistory } from './VersionHistory';
 
 const baseState = (state: IState) => state.versionHistory;

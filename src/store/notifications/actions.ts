@@ -1,6 +1,6 @@
 import { error, success, warning } from 'react-notification-system-redux';
 
-import { INotification } from 'src/@types';
+import { INotification } from '@types';
 
 export const showError = (opts: INotification, report = false) =>
   error({

@@ -3,9 +3,9 @@ import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 
 // import {routeContext} from '.storybook/helpers';
-// import {IUserWork} from "src/@types";
-// import {DownloadList} from "src/store/@common/entities";
-// import {UserWork} from "src/store/tasks/user-works/UserWork";
+// import {IUserWork} from "@types";
+// import {DownloadList} from "store/@common/entities";
+// import {UserWork} from "store/tasks/user-works/UserWork";
 // import { UserWorkTableJsx } from './UserWorkTable';
 // import { variant1 } from './_mock'
 

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { IState, IUser } from 'src/@types';
+import { IState, IUser } from '@types';
 import { DownloadList } from '../@common/entities';
 import { User } from './User';
 

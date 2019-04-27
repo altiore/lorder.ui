@@ -1,7 +1,7 @@
 import intersection from 'lodash-es/intersection';
 import { createSelector } from 'reselect';
 
-import { filteredMembers, searchTerm } from 'src/store/tasksFilter/selectors';
+import { filteredMembers, searchTerm } from 'store/tasksFilter/selectors';
 import { DownloadList } from '../../@common/entities';
 import { Project } from '../Project';
 import { openedProject, selectedProject } from '../selectors';

@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import { ITasksFilter } from 'src/@types';
+import { ITasksFilter } from '@types';
 import { changeFilter, changeTasksFilter, IChangeFilterP, toggleMember } from './actions';
 import { TasksFilter } from './TasksFilter';
 

@@ -1,7 +1,7 @@
 import get from 'lodash-es/get';
 import map from 'lodash-es/map';
 
-import { convertSecondsToDurationWithLocal, millisecondsToHours } from 'src/store/@common/helpers';
+import { convertSecondsToDurationWithLocal, millisecondsToHours } from 'store/@common/helpers';
 
 export class Statistic {
   members: Array<{ accessLevel: number; avatar: string; id: number; email: string }>;

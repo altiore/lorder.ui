@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { currentTimeWithLocal } from 'src/store/timer';
+import { currentTimeWithLocal } from 'store/timer';
 import { TimerListItemTextJsx } from './TimerListItemText';
 
 const mapStateToProps = createStructuredSelector({

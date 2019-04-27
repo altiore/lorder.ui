@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
-import { openDialog } from 'src/store/dialog';
-import { userIsLoading, userRole } from 'src/store/identity';
+import { openDialog } from 'store/dialog';
+import { userIsLoading, userRole } from 'store/identity';
 import { AppTsx } from './App';
 import { styles } from './styles';
 

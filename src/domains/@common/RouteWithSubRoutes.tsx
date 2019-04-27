@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Redirect, Route, RouteComponentProps } from 'react-router-dom';
 
-import { IRoute } from 'src/@types';
+import { IRoute } from '@types';
 
 const renderRoute = (route: IRoute) => (props: RouteComponentProps<any>) => {
   return <route.component key={route.path || 'NotFound'} {...props} routes={route.routes} />;

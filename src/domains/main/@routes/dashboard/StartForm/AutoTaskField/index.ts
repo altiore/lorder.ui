@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { isValid } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { ITask } from 'src/@types';
-import { showError } from 'src/store/notifications';
-import { getProjectById } from 'src/store/projects';
-import { allTaskListWithoutDefProject, CREATE_USER_WORK_FORM_NAME, startUserWork } from 'src/store/tasks';
-import { currentProjectId } from 'src/store/timer';
+import { ITask } from '@types';
+import { showError } from 'store/notifications';
+import { getProjectById } from 'store/projects';
+import { allTaskListWithoutDefProject, CREATE_USER_WORK_FORM_NAME, startUserWork } from 'store/tasks';
+import { currentProjectId } from 'store/timer';
 import { AutoTaskFieldTsx } from './AutoTaskField';
 import { styles } from './styles';
 

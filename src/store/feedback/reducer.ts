@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { IMeta } from 'src/@types';
+import { IMeta } from '@types';
 import { DownloadList } from '../@common/entities';
 import { fetchFeedbackList } from './actions';
 import { Feedback } from './Feedback';

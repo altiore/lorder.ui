@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ROLE } from 'src/@types';
+import { ROLE } from '@types';
 
 export interface ICheckRoleProps {
   children: any;

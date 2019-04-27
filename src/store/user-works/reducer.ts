@@ -3,8 +3,8 @@ import get from 'lodash-es/get';
 import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { DownloadList } from 'src/store/@common/entities';
-import { patchAndStopUserWork, postAndStartUserWork, UserWork } from 'src/store/tasks';
+import { DownloadList } from 'store/@common/entities';
+import { patchAndStopUserWork, postAndStartUserWork, UserWork } from 'store/tasks';
 import { getUserWorks, patchUserWork } from './actions';
 
 type S = DownloadList<UserWork>;

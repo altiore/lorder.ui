@@ -6,7 +6,7 @@ import * as React from 'react';
 import * as Autosuggest from 'react-autosuggest';
 import { WrappedFieldProps } from 'redux-form';
 
-import { ITask } from 'src/@types';
+import { ITask } from '@types';
 import Suggestion from './Suggestion';
 
 export interface IAutoTaskFieldProps extends WrappedFieldProps {

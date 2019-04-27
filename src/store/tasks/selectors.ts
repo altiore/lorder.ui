@@ -1,8 +1,8 @@
 import pick from 'lodash-es/pick';
 import { createSelector } from 'reselect';
 
-import { IState } from 'src/@types';
-import { defaultProjectId } from 'src/store/identity/selectors';
+import { IState } from '@types';
+import { defaultProjectId } from 'store/identity/selectors';
 import { Task } from './Task';
 
 export const allTasks = (state: IState) => state.tasks;

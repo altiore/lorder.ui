@@ -3,8 +3,8 @@ import { withTheme } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { withResize } from 'src/hocs/withResize';
-import { closeDialog, dialogProps, isDialogOpened, restProps } from 'src/store/dialog';
+import { withResize } from 'hocs/withResize';
+import { closeDialog, dialogProps, isDialogOpened, restProps } from 'store/dialog';
 import { DialogTsx } from './DialogTsx';
 
 interface IMappedState {

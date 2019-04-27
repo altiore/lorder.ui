@@ -1,6 +1,6 @@
 import map from 'lodash-es/map';
 
-import { config } from 'src/config';
+import { config } from 'config';
 
 export class VersionHistory {
   readonly version: string = config.VERSION;

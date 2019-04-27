@@ -1,6 +1,6 @@
 import map from 'lodash-es/map';
 
-import { convertSecondsToDurationWithLocal } from 'src/store/@common/helpers';
+import { convertSecondsToDurationWithLocal } from 'store/@common/helpers';
 import { DownloadList } from '../@common/entities';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';

@@ -1,4 +1,4 @@
-import { requestActions } from 'src/store/@common/requestActions';
+import { requestActions } from 'store/@common/requestActions';
 
 export const fetchPublicProject = requestActions<string>('PUBLIC_PROJECT/FETCH_ONE', (projectId: string) => ({
   request: {

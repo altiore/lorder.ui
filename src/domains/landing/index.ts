@@ -1,7 +1,7 @@
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
-import { withResize } from 'src/hocs/withResize';
+import { withResize } from 'hocs/withResize';
 import { team, tours } from './data';
 import { InfoTsx } from './Info';
 import { styles } from './styles';

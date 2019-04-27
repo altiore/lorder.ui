@@ -5,9 +5,9 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { TableCellProps } from 'react-virtualized';
 
-import { Page } from 'src/components/Page';
-import TableVirtualized from 'src/components/TableVirtualized';
-import { LayoutLeftDrawer } from 'src/domains/@common/LayoutLeftDrawer';
+import { Page } from 'components/Page';
+import TableVirtualized from 'components/TableVirtualized';
+import { LayoutLeftDrawer } from 'domains/@common/LayoutLeftDrawer';
 
 export interface ITaskTypesProps {
   classes: any;

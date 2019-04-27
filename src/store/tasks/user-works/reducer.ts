@@ -3,9 +3,9 @@ import get from 'lodash-es/get';
 import { Action, combineActions, handleActions } from 'redux-actions';
 import uniqid from 'uniqid';
 
-import { DownloadList } from 'src/store/@common/entities';
-import { IRequestAction } from 'src/store/@common/requestActions';
-import { patchUserWork } from 'src/store/user-works/actions';
+import { DownloadList } from 'store/@common/entities';
+import { IRequestAction } from 'store/@common/requestActions';
+import { patchUserWork } from 'store/user-works/actions';
 import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork } from './actions';
 import { UserWork } from './UserWork';
 

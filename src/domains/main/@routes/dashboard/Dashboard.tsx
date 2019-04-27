@@ -4,7 +4,7 @@ import * as React from 'react';
 import MediaQuery from 'react-responsive';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { PageCenter } from 'src/components/PageCenter';
+import { PageCenter } from 'components/PageCenter';
 import { DailyRoutine } from './DailyRoutine';
 import { LastEvents } from './LastEvents';
 import { StartForm } from './StartForm';

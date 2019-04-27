@@ -3,8 +3,8 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { closeDialog, openDialog } from 'src/store/dialog';
-import { fetchProjectDetails, openedProject } from 'src/store/projects';
+import { closeDialog, openDialog } from 'store/dialog';
+import { fetchProjectDetails, openedProject } from 'store/projects';
 import { ProjectTsx } from './Project';
 import { styles } from './styles';
 

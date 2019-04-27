@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { LoadingPage } from 'src/components/LoadingPage';
+import { LoadingPage } from 'components/LoadingPage';
 
 export interface IStartProps {
   activateUser: () => any;

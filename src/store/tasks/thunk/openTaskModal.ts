@@ -1,9 +1,9 @@
 import { push } from 'connected-react-router';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { IState, ITask } from 'src/@types';
-import { showError } from 'src/store/notifications';
-import { currentTask } from 'src/store/timer';
+import { IState, ITask } from '@types';
+import { showError } from 'store/notifications';
+import { currentTask } from 'store/timer';
 
 export const openTaskModal = (task?: ITask, count = 0) => async (
   dispatch: ThunkDispatch<any, any, any>,

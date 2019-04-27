@@ -6,10 +6,10 @@ import { Action, ActionMeta, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 import uniqid from 'uniqid';
 
-import { DownloadList } from 'src/store/@common/entities';
-import { combineActions } from 'src/store/@common/helpers';
-import { deleteProjectTask, patchProjectTask } from 'src/store/projects/tasks/actions';
-import { patchUserWork } from 'src/store/user-works/actions';
+import { DownloadList } from 'store/@common/entities';
+import { combineActions } from 'store/@common/helpers';
+import { deleteProjectTask, patchProjectTask } from 'store/projects/tasks/actions';
+import { patchUserWork } from 'store/user-works/actions';
 import { archiveTask, fetchTaskDetails, getAllTasks, replaceTasks } from './actions';
 import { Task } from './Task';
 import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork, UserWork, userWorks } from './user-works';

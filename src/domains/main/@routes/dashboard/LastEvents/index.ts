@@ -2,7 +2,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { events } from 'src/store/tasks';
+import { events } from 'store/tasks';
 import { LastEventsTsx } from './LastEvents';
 import { styles } from './styles';
 

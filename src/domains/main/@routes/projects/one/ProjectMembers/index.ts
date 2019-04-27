@@ -3,9 +3,9 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { closeDialog, openDialog } from 'src/store/dialog';
-import { deleteProjectMember, projectMembers } from 'src/store/projects';
-import { routeProjectId } from 'src/store/router';
+import { closeDialog, openDialog } from 'store/dialog';
+import { deleteProjectMember, projectMembers } from 'store/projects';
+import { routeProjectId } from 'store/router';
 import { ProjectMembersJsx } from './ProjectMembers';
 import { styles } from './styles';
 

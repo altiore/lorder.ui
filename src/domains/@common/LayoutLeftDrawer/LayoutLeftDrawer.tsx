@@ -21,10 +21,10 @@ import upperFirst from 'lodash-es/upperFirst';
 import * as React from 'react';
 import { match, RouteComponentProps, Switch } from 'react-router';
 
-import { IRoute, ROLE } from 'src/@types';
-import { LinkButton } from 'src/domains/@common/LinkButton';
-import { RouteWithSubRoutes } from 'src/domains/@common/RouteWithSubRoutes';
-import { Project } from 'src/store/projects';
+import { IRoute, ROLE } from '@types';
+import { LinkButton } from 'domains/@common/LinkButton';
+import { RouteWithSubRoutes } from 'domains/@common/RouteWithSubRoutes';
+import { Project } from 'store/projects';
 
 export interface ILayoutLeftDrawerProps {
   children?: React.ReactNode;

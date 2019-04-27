@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Select from 'react-select';
 
-import { TaskType } from 'src/store/task-types';
+import { TaskType } from 'store/task-types';
 
 export class ITaskTypesFormProps {
   addTaskType: any;

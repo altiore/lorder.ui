@@ -8,13 +8,13 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import { TelegramIco } from 'src/components/@icons/Telegram';
-import { Block } from 'src/components/Block';
-import { LoadingPage } from 'src/components/LoadingPage';
-import { MemberCard } from 'src/components/MemberCard';
-import { NoMatch } from 'src/components/NoMatch';
-import PieChart from 'src/domains/@common/PieChart';
-import { PublicProject } from 'src/store/publicProject';
+import { TelegramIco } from 'components/@icons/Telegram';
+import { Block } from 'components/Block';
+import { LoadingPage } from 'components/LoadingPage';
+import { MemberCard } from 'components/MemberCard';
+import { NoMatch } from 'components/NoMatch';
+import PieChart from 'domains/@common/PieChart';
+import { PublicProject } from 'store/publicProject';
 import { LinkButton } from '../@common/LinkButton';
 
 export interface IPublicProjectProps extends RouteComponentProps<{ projectId: string }> {

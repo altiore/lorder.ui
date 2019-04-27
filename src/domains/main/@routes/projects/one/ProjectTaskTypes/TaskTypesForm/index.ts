@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { addTaskTypeToProject, postTaskTypeToProject } from 'src/store/projects';
-import { routeProjectId } from 'src/store/router';
-import { filteredTaskTypes } from 'src/store/task-types';
+import { addTaskTypeToProject, postTaskTypeToProject } from 'store/projects';
+import { routeProjectId } from 'store/router';
+import { filteredTaskTypes } from 'store/task-types';
 import { ITaskTypesFormProps, TaskTypesFormJsx } from './TaskTypesForm';
 
 const mapState = createStructuredSelector({

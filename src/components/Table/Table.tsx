@@ -5,7 +5,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
 
-import { IDownloadList } from 'src/@types';
+import { IDownloadList } from '@types';
 
 export interface IProjectTaskTypesProps<T> {
   classes: any;

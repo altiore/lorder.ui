@@ -5,7 +5,7 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import * as React from 'react';
 import * as Popover from 'react-popover';
 
-import { ShortChart } from 'src/domains/@common/ShortChart';
+import { ShortChart } from 'domains/@common/ShortChart';
 export interface IProjectButtonProps {
   classes?: any;
   id?: number;

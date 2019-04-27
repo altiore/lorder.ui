@@ -1,6 +1,6 @@
-import { requestActions } from 'src/store/@common/requestActions';
-import { PROJECT_EDIT_TASK_FORM_NAME, PROJECT_TASK_FORM_NAME } from 'src/store/projects';
-import { User } from 'src/store/users';
+import { requestActions } from 'store/@common/requestActions';
+import { PROJECT_EDIT_TASK_FORM_NAME, PROJECT_TASK_FORM_NAME } from 'store/projects';
+import { User } from 'store/users';
 
 export interface IProjectTaskData {
   description?: string;

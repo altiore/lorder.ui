@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { change, reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { onSubmitForm } from 'src/store/@common/helpers';
-import { createUserTaskFormInitials } from 'src/store/project';
-import { selectedProject } from 'src/store/projects';
-import { CREATE_USER_WORK_FORM_NAME, IUserWorkData, startUserWork } from 'src/store/tasks';
+import { onSubmitForm } from 'store/@common/helpers';
+import { createUserTaskFormInitials } from 'store/project';
+import { selectedProject } from 'store/projects';
+import { CREATE_USER_WORK_FORM_NAME, IUserWorkData, startUserWork } from 'store/tasks';
 import { IStartFormProps, StartFormJsx } from './StartForm';
 import { styles } from './styles';
 

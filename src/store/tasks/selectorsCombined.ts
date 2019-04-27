@@ -1,14 +1,14 @@
 import * as moment from 'moment';
 import { createSelector } from 'reselect';
 
-import { IEvent, ITask } from 'src/@types';
-import { DownloadList } from 'src/store/@common/entities';
-import { defaultProjectId } from 'src/store/identity/selectors';
-import { selectedProjectId } from 'src/store/project';
-import { allTasks, Task, UserWork } from 'src/store/tasks';
-import { tasksFilter } from 'src/store/tasksFilter';
-import { currentTask, currentTaskId } from 'src/store/timer';
-import { lastUserWorks } from 'src/store/user-works/selectors';
+import { IEvent, ITask } from '@types';
+import { DownloadList } from 'store/@common/entities';
+import { defaultProjectId } from 'store/identity/selectors';
+import { selectedProjectId } from 'store/project';
+import { allTasks, Task, UserWork } from 'store/tasks';
+import { tasksFilter } from 'store/tasksFilter';
+import { currentTask, currentTaskId } from 'store/timer';
+import { lastUserWorks } from 'store/user-works/selectors';
 
 export const filteredByProjectTasks = createSelector(
   [allTasks, selectedProjectId, currentTaskId],

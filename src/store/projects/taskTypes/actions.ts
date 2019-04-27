@@ -1,4 +1,4 @@
-import { requestActions } from 'src/store/@common/requestActions';
+import { requestActions } from 'store/@common/requestActions';
 
 export const getAllProjectTaskTypes = requestActions('PROJECT_TASK_TYPE/GET_ALL', (projectId: number) => ({
   projectId,

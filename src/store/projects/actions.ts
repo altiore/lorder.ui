@@ -1,6 +1,6 @@
 import { Notification } from 'react-notification-system';
 
-import { requestActions } from 'src/store/@common/requestActions';
+import { requestActions } from 'store/@common/requestActions';
 
 export interface IPostProjectData {
   monthlyBudget?: string | number;

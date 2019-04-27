@@ -1,8 +1,8 @@
 import * as React from 'react';
 import FlipMove from 'react-flip-move';
 
-import { ITask } from 'src/@types';
-import { Project } from 'src/store/projects';
+import { ITask } from '@types';
+import { Project } from 'store/projects';
 import { Filter } from './Filter';
 import { TaskComponent } from './TaskComponent';
 

@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 
-import { LinkButton } from 'src/domains/@common/LinkButton';
+import { LinkButton } from 'domains/@common/LinkButton';
 
 export interface ITitleProps {
   classes: any;

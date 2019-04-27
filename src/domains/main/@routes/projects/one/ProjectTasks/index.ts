@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { closeDialog, openDialog } from 'src/store/dialog';
-import { isFormMount } from 'src/store/form';
-import { deleteProjectTask, getAllProjectTasks, PROJECT_EDIT_TASK_FORM_NAME, projectTasks } from 'src/store/projects';
-import { routeProjectId } from 'src/store/router';
+import { closeDialog, openDialog } from 'store/dialog';
+import { isFormMount } from 'store/form';
+import { deleteProjectTask, getAllProjectTasks, PROJECT_EDIT_TASK_FORM_NAME, projectTasks } from 'store/projects';
+import { routeProjectId } from 'store/router';
 import { ProjectTasksJsx } from './ProjectTasks';
 import { styles } from './styles';
 

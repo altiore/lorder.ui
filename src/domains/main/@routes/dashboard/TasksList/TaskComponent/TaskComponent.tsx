@@ -9,11 +9,11 @@ import * as React from 'react';
 import * as Popover from 'react-popover';
 import MediaQuery from 'react-responsive';
 
-import { ITask } from 'src/@types';
-import TaskTypeIcon from 'src/components/@icons/TaskTypeIcon';
-import { StartStopBtn } from 'src/components/StartStopBtn';
-import { LinkButton } from 'src/domains/@common/LinkButton';
-import { Project } from 'src/store/projects';
+import { ITask } from '@types';
+import TaskTypeIcon from 'components/@icons/TaskTypeIcon';
+import { StartStopBtn } from 'components/StartStopBtn';
+import { LinkButton } from 'domains/@common/LinkButton';
+import { Project } from 'store/projects';
 import { TimerListItemText } from './TimerListItemText';
 import { UserWorkTable } from './UserWorkTable';
 

@@ -1,5 +1,5 @@
-import { requestActions } from 'src/store/@common/requestActions';
-import { Project } from 'src/store/projects';
+import { requestActions } from 'store/@common/requestActions';
+import { Project } from 'store/projects';
 import { CREATE_USER_WORK_FORM_NAME } from './consts';
 
 export interface IUserWorkData {

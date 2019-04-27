@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
-import { IState } from 'src/@types';
-import { userId } from 'src/store/identity';
+import { IState } from '@types';
+import { userId } from 'store/identity';
 import { postFeedbackReq } from '../actions';
 
 export const postFeedback = (values: any) => async (dispatch: Dispatch, getState: () => IState) => {

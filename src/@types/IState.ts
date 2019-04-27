@@ -2,17 +2,17 @@ import { RouterState } from 'connected-react-router';
 import { NotificationsState } from 'react-notification-system-redux';
 import { FormStateMap } from 'redux-form';
 
-import { DownloadList } from 'src/store/@common/entities';
-import { IDialogState } from 'src/store/dialog';
-import { Feedback } from 'src/store/feedback';
-import { IIdentityState } from 'src/store/identity';
-import { Project } from 'src/store/projects';
-import { PublicProject } from 'src/store/publicProject';
-import { TaskType } from 'src/store/task-types';
-import { Task, UserWork } from 'src/store/tasks';
-import { Timer } from 'src/store/timer';
-import { IUiState } from 'src/store/ui';
-import { VersionHistory } from 'src/store/versionHistory';
+import { DownloadList } from 'store/@common/entities';
+import { IDialogState } from 'store/dialog';
+import { Feedback } from 'store/feedback';
+import { IIdentityState } from 'store/identity';
+import { Project } from 'store/projects';
+import { PublicProject } from 'store/publicProject';
+import { TaskType } from 'store/task-types';
+import { Task, UserWork } from 'store/tasks';
+import { Timer } from 'store/timer';
+import { IUiState } from 'store/ui';
+import { VersionHistory } from 'store/versionHistory';
 import { ITasksFilter } from './ITasksFilter';
 import { IUser } from './IUser';
 

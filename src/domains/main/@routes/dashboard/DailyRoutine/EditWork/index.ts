@@ -3,7 +3,7 @@ import { connect, Dispatch } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { patchUserWork } from 'src/store/user-works';
+import { patchUserWork } from 'store/user-works';
 import { EditWorkTsx, IEditWorkData } from './EditWork';
 import { styles } from './styles';
 

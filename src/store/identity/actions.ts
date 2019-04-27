@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { requestActions } from 'src/store/@common/requestActions';
+import { requestActions } from 'store/@common/requestActions';
 import { LOGIN_FORM_NAME, MAGIC_FORM_NAME } from './consts';
 
 export interface IPostAuthMagicData {

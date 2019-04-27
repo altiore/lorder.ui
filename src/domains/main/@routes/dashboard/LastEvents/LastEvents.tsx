@@ -10,7 +10,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FolderIcon from '@material-ui/icons/Folder';
 import * as React from 'react';
 
-import { IEvent } from 'src/@types';
+import { IEvent } from '@types';
 import { Statistic } from './Statistic';
 
 export interface ILastEventsProps {

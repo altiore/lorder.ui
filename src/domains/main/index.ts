@@ -2,7 +2,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
-import { closeDialog, openDialog } from 'src/store/dialog';
+import { closeDialog, openDialog } from 'store/dialog';
 import { MainJsx } from './Main';
 import { styles } from './styles';
 

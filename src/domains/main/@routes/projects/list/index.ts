@@ -4,9 +4,9 @@ import { error } from 'react-notification-system-redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { withResize } from 'src/hocs/withResize';
-import { closeDialog, openDialog } from 'src/store/dialog';
-import { defaultProjectId, hasRole, userRole } from 'src/store/identity';
+import { withResize } from 'hocs/withResize';
+import { closeDialog, openDialog } from 'store/dialog';
+import { defaultProjectId, hasRole, userRole } from 'store/identity';
 import {
   acceptInvitation,
   allProjectList,
@@ -15,8 +15,8 @@ import {
   ownProjectList,
   removeProject,
   removeProjectByAdmin,
-} from 'src/store/projects';
-import { findUserById } from 'src/store/users';
+} from 'store/projects';
+import { findUserById } from 'store/users';
 import { Projects as ProjectsJsx } from './Projects';
 import { styles } from './styles';
 
