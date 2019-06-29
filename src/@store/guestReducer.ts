@@ -60,17 +60,18 @@ const persistConfig: PersistConfig = {
   ],
 };
 
+// TODO: fix async loading for reducers considering user role
 export async function createRootReducer(history: History, role: ROLE = ROLE.GUEST) {
   let asyncReducers: Partial<Reducer<IState>> = {};
   switch (role) {
     case ROLE.ADMIN:
-      asyncReducers = (await import(/* webpackChunkName: "admin" */ '@store/adminReducers')).adminReducers;
+      asyncReducers = (await import('@store/adminReducers')).adminReducers;
       break;
     case ROLE.SUPER_ADMIN:
-      asyncReducers = (await import(/* webpackChunkName: "super-admin" */ '@store/adminReducers')).adminReducers;
+      asyncReducers = (await import('@store/adminReducers')).adminReducers;
       break;
     case ROLE.USER:
-      asyncReducers = (await import(/* webpackChunkName: "user" */ '@store/userReducers')).userReducers;
+      asyncReducers = (await import('@store/userReducers')).userReducers;
       break;
     case ROLE.GUEST:
     default:

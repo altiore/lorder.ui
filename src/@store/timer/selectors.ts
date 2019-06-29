@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { IState, IUserWork } from '@types';
 import { convertSecondsToDuration, convertSecondsToDurationWithLocal } from '@store/@common/helpers';
 import { filteredTaskList } from '@store/tasks/selectors';
-import { IUserWorkDelete } from '../tasks/user-works';
+import { IUserWorkDelete } from '../tasks/user-works/actions';
 
 const baseState = (state: IState) => state.timer;
 
@@ -48,7 +48,8 @@ export const currentTask = createSelector(
 
 export const currentUserWork = createSelector(
   [currentTask, currentUserWorkId],
-  (task, userWorkId) => task && task.userWorks.find((el: IUserWork) => el.id === userWorkId)
+  (task, userWorkId) =>
+    task && task.userWorks && task.userWorks.find && task.userWorks.find((el: IUserWork) => el.id === userWorkId)
 );
 
 export const currentTime = createSelector(
