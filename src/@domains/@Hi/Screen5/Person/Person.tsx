@@ -1,6 +1,6 @@
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import Typography from "@material-ui/core/Typography";
+import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
 import { useStyles } from './styles';
@@ -16,11 +16,7 @@ export const Person: React.FC<PersonI> = ({ avatar, name }) => {
   return (
     <Grid item className={classes.item}>
       <div className={classes.avatarWrapper}>
-        <Avatar
-          alt={name}
-          srcSet={avatar}
-          className={classes.avatar}
-        />
+        <Avatar alt={name} srcSet={avatar} className={classes.avatar} />
       </div>
       <Typography align="center" color="textPrimary" variant="h5">
         {name}

@@ -4,7 +4,7 @@ import { Field, InjectedFormProps } from 'redux-form';
 import { email } from 'redux-form-validators';
 
 import { UserIco } from '@components/@icons/User';
-import InputField from "@components/InputField";
+import InputField from '@components/InputField';
 
 export class IMagicFormProps {
   autoFocus?: boolean;
@@ -32,15 +32,9 @@ const MagicForm: React.FC<IMagicFormProps & InjectedFormProps<{}, IMagicFormProp
           name="email"
           placeholder="Введите email..."
           type="email"
-          validate={[email({ msg: "Введите валидный email-адрес" })]}
+          validate={[email({ msg: 'Введите валидный email-адрес' })]}
         />
-        <Button
-          color="secondary"
-          disabled={submitting}
-          fullWidth
-          type="submit"
-          variant="outlined"
-        >
+        <Button color="secondary" disabled={submitting} fullWidth type="submit" variant="outlined">
           <span>{buttonText}</span>
         </Button>
       </form>

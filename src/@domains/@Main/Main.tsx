@@ -1,4 +1,4 @@
-import React, {lazy} from 'react';
+import React, { lazy } from 'react';
 import { RouteComponentProps, Switch } from 'react-router-dom';
 
 import { IRoute } from '@types';
@@ -7,13 +7,13 @@ import { DashboardTaskForm } from '@domains/@common/TaskForm';
 import { Header } from './Header';
 
 export const ROUTES_BY_PATH = {
-  "/": lazy(() => import("./@routes/dashboard")),
-  "/projects/:projectId": lazy(() => import("./@routes/projects/one")),
-  "/projects": lazy(() => import("./@routes/projects/list")),
-  "/all-projects": lazy(() => import("@domains/@Main/@routes/projects/list/all")),
-  "/users": lazy(() => import("@domains/@Main/@routes/users")),
-  "/task-types": lazy(() => import("@domains/@Main/@routes/task-types")),
-  "/feedback": lazy(() => import("@domains/@Main/@routes/feedback")),
+  '/': lazy(() => import('./@routes/dashboard')),
+  '/all-projects': lazy(() => import('@domains/@Main/@routes/projects/list/all')),
+  '/feedback': lazy(() => import('@domains/@Main/@routes/feedback')),
+  '/projects': lazy(() => import('./@routes/projects/list')),
+  '/projects/:projectId': lazy(() => import('./@routes/projects/one')),
+  '/task-types': lazy(() => import('@domains/@Main/@routes/task-types')),
+  '/users': lazy(() => import('@domains/@Main/@routes/users')),
 };
 
 export interface IMainProps {

@@ -10,4 +10,4 @@ export const LoadingPage = () => {
       <CircularProgress size={100} color="secondary" />
     </div>
   );
-}
+};

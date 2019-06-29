@@ -1,1 +1,1 @@
-export { BlockContent as default } from "./BlockContent";
+export { BlockContent as default } from './BlockContent';

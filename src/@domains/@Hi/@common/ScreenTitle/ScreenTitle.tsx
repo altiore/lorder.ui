@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import cn from 'classnames';
 import React from 'react';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 interface ScreenTitleI {
   black?: boolean;
@@ -16,11 +16,9 @@ const ScreenTitle: React.FC<ScreenTitleI> = ({ children, black }) => {
   return (
     <>
       <Grid item md={1} xs={false} />
-      <Grid item className={cn(classes.title, {[classes.titleBlack]: black})} md={11} xs={12}>
+      <Grid item className={cn(classes.title, { [classes.titleBlack]: black })} md={11} xs={12}>
         <div className={classes.line} />
-        <Typography variant="h5">
-          {children}
-        </Typography>
+        <Typography variant="h5">{children}</Typography>
       </Grid>
     </>
   );

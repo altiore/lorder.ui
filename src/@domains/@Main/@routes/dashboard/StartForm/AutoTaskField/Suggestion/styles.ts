@@ -44,7 +44,7 @@ export const styles = (theme: Theme) =>
       maxWidth: 400,
     },
     taskIcon: {
-      marginRight: theme.spacing(1/2),
+      marginRight: theme.spacing(1 / 2),
     },
     taskText: {
       display: 'block',

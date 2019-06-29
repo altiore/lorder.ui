@@ -1,3 +1,3 @@
-import ScreenTitle from "./ScreenTitle";
+import ScreenTitle from './ScreenTitle';
 
 export default ScreenTitle;

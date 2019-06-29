@@ -8,4 +8,4 @@ const mapStateToProps = createStructuredSelector({
   time: currentTaskTime,
 } as any);
 
-export const TimerListItemText = connect<any,any,any>(mapStateToProps)(TimerListItemTextJsx);
+export const TimerListItemText = connect<any, any, any>(mapStateToProps)(TimerListItemTextJsx);

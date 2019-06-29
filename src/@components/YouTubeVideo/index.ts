@@ -1,1 +1,1 @@
-export { YouTubeVideoTsx as default } from "./YouTubeVideo";
+export { YouTubeVideoTsx as default } from './YouTubeVideo';

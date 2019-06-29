@@ -35,11 +35,11 @@ export class SelectMenuFieldTsx extends React.Component<ISelectFieldProps & Part
           {label}
         </InputLabel>
         <Select
-          {...input as any}
+          {...(input as any)}
           error={touched && error}
           input={<OutlinedInput labelWidth={labelWidth} name={input.name} id={id} />}
           children={children as any}
-          {...custom as any}
+          {...(custom as any)}
         />
         {touched && error && <FormHelperText>{error}</FormHelperText>}
       </FormControl>

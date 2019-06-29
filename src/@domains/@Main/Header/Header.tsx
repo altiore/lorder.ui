@@ -71,7 +71,7 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
       <AppBar position="static" color="primary">
         <Toolbar>
           <LinkIconButton to="/" color="secondary">
-            <TimerIcon fontSize="large" color="inherit" className={classes.timerIco}/>
+            <TimerIcon fontSize="large" color="inherit" className={classes.timerIco} />
           </LinkIconButton>
           <div className={classes.buttonBlock}>
             {filteredProjects.map(project => (

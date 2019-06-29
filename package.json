@@ -94,6 +94,9 @@
     "redux-saga": "1.0.2",
     "redux-thunk": "2.3.0",
     "reselect": "4.0.0",
+    "tslint": "5.18.0",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-react": "4.0.0",
     "typescript": "3.4.5",
     "uniqid": "5.0.3"
   },
@@ -103,6 +106,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "tslint-lint": "tslint -t verbose \"src/**/*.{ts,tsx}\" --fix",
+    "prettier-lint": "prettier --write \"src/**/*.{ts,tsx}\" --print-width 120 --single-quote --parser typescript --trailing-comma es5",
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "husky": {

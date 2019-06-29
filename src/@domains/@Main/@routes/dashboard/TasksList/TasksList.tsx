@@ -82,11 +82,7 @@ export class TasksListJsx extends React.Component<ITasksListProps, ITaskListStat
     }
     return (
       <div key={task.id}>
-        <TaskComponent
-          isCurrent={currentTaskId === task.id}
-          task={task}
-          project={getProjectById(task.projectId)}
-        />
+        <TaskComponent isCurrent={currentTaskId === task.id} task={task} project={getProjectById(task.projectId)} />
       </div>
     );
   };

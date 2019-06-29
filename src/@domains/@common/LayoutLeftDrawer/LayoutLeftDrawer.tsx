@@ -23,7 +23,7 @@ import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
 import classNames from 'classnames';
 import upperFirst from 'lodash/upperFirst';
-import React, {lazy} from 'react';
+import React, { lazy } from 'react';
 import { match, RouteComponentProps, Switch } from 'react-router';
 
 import { IRoute, ROLE } from '@types';
@@ -48,26 +48,23 @@ export interface ILayoutLeftDrawerProps {
 
 // TODO: move to correct place in route paths
 export const ROUTES_BY_PATH = {
-  "/projects/:projectId/board": lazy(() => import("@domains/@Main/@routes/projects/one/DragAndDrop")),
-  "/projects/:projectId/tasks/:taskId": lazy(() => import("@domains/@Main/@routes/task")),
-  "/projects/:projectId/tasks": lazy(() => import("@domains/@Main/@routes/projects/one/ProjectTasks")),
-  "/projects/:projectId/task-types": lazy(() => import("@domains/@Main/@routes/projects/one/ProjectTaskTypes")),
-  "/projects/:projectId/members": lazy(() => import("@domains/@Main/@routes/projects/one/ProjectMembers")),
-  "/projects/:projectId/settings": lazy(() => import("@domains/@Main/@routes/projects/one/Settings")),
+  '/projects/:projectId/board': lazy(() => import('@domains/@Main/@routes/projects/one/DragAndDrop')),
+  '/projects/:projectId/members': lazy(() => import('@domains/@Main/@routes/projects/one/ProjectMembers')),
+  '/projects/:projectId/settings': lazy(() => import('@domains/@Main/@routes/projects/one/Settings')),
+  '/projects/:projectId/task-types': lazy(() => import('@domains/@Main/@routes/projects/one/ProjectTaskTypes')),
+  '/projects/:projectId/tasks': lazy(() => import('@domains/@Main/@routes/projects/one/ProjectTasks')),
+  '/projects/:projectId/tasks/:taskId': lazy(() => import('@domains/@Main/@routes/task')),
 };
 
 export const ICONS_MAP = {
-  "import-export": AllInboxIcon,
-  "list-alt": ListAltIcon,
   ballot: BallotIcon,
+  'import-export': AllInboxIcon,
+  'list-alt': ListAltIcon,
   people: PeopleOutlinedIcon,
   settings: SettingsIcon,
 };
 
-export class LayoutLeftDrawerTsx extends React.Component<
-  ILayoutLeftDrawerProps & RouteComponentProps<any>,
-  {}
-> {
+export class LayoutLeftDrawerTsx extends React.Component<ILayoutLeftDrawerProps & RouteComponentProps<any>, {}> {
   handleDrawerToggle = () => {
     this.props.toggleUiSetting('isLeftBarOpen');
   };
@@ -100,25 +97,24 @@ export class LayoutLeftDrawerTsx extends React.Component<
             </IconButton>
           </div>
           <Divider />
-          {routes &&
-            routes.length && (
-              <>
-                <List>
-                  {routes.filter((el: any) => el.icon).map((route: IRoute) => {
+          {routes && routes.length && (
+            <>
+              <List>
+                {routes
+                  .filter((el: any) => el.icon)
+                  .map((route: IRoute) => {
                     const CurIcon = ICONS_MAP[route.icon];
                     return (
                       <ListItem key={route.path} button onClick={this.goTo(route.path)}>
-                        <ListItemIcon>
-                          {CurIcon ? <CurIcon /> : route.icon}
-                        </ListItemIcon>
+                        <ListItemIcon>{CurIcon ? <CurIcon /> : route.icon}</ListItemIcon>
                         <ListItemText primary={route.title} />
                       </ListItem>
-                    )
+                    );
                   })}
-                </List>
-                <Divider />
-              </>
-            )}
+              </List>
+              <Divider />
+            </>
+          )}
           <List>
             <ListItem button onClick={this.goTo('/projects')}>
               <ListItemIcon>
@@ -167,7 +163,10 @@ export class LayoutLeftDrawerTsx extends React.Component<
           {children}
           <Switch>
             {redirect}
-            {routes && routes.map((route: IRoute) => <RouteWithSubRoutes component={ROUTES_BY_PATH[route.path]} key={route.path} {...route} />)}
+            {routes &&
+              routes.map((route: IRoute) => (
+                <RouteWithSubRoutes component={ROUTES_BY_PATH[route.path]} key={route.path} {...route} />
+              ))}
           </Switch>
         </section>
       </div>

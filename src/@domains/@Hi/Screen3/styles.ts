@@ -3,7 +3,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme: Theme) => ({
   block: {
     alignItems: 'center',
-    color: "white",
+    color: 'white',
     display: 'flex',
     flexFlow: 'column nowrap',
     justifyContent: 'center',
@@ -11,7 +11,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   blockTexts: {
     alignItems: 'justify',
-    color: "white",
+    color: 'white',
     display: 'flex',
     flexFlow: 'column nowrap',
     justifyContent: 'flex-start',
@@ -28,9 +28,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     zIndex: 1,
   },
   title: {
-    alignItems: "center",
-    color: "white",
-    display: "flex",
+    alignItems: 'center',
+    color: 'white',
+    display: 'flex',
     height: theme.mixins.toolbar.height,
   },
 }));

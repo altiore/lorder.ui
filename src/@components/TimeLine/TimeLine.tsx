@@ -150,15 +150,14 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
             <svg height={height} width={width} className={classes.svg}>
               {this.getLines().map(({ x, isHour, label }) => (
                 <React.Fragment key={x}>
-                  {label &&
-                    height === Y_HEIGHT_BIG && (
-                      <text x={x + X_OFFSET} y={LABEL_HEIGHT} className={classes.text}>
-                        <tspan x={x + X_OFFSET} textAnchor="middle">
-                          {label}
-                          :00
-                        </tspan>
-                      </text>
-                    )}
+                  {label && height === Y_HEIGHT_BIG && (
+                    <text x={x + X_OFFSET} y={LABEL_HEIGHT} className={classes.text}>
+                      <tspan x={x + X_OFFSET} textAnchor="middle">
+                        {label}
+                        :00
+                      </tspan>
+                    </text>
+                  )}
                   {isExpended && (
                     <line
                       // stroke="#FAB203"
@@ -328,9 +327,8 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
 
   private getStartAt = (): number => {
     const current = moment();
-    const first = minBy(
-      this.props.events,
-      (ev: IEvent) => (ev.startAt.day() === current.day() ? ev.startAt.hours() : 24)
+    const first = minBy(this.props.events, (ev: IEvent) =>
+      ev.startAt.day() === current.day() ? ev.startAt.hours() : 24
     );
     const hours = first ? first.startAt.hours() : 0;
     return first && hours < current.hours() ? hours : 0;

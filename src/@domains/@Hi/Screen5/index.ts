@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { createStructuredSelector } from "reselect";
+import { createStructuredSelector } from 'reselect';
 
 import { team } from '@domains/@Hi/data';
-import Screen5 from "./Screen5";
+import Screen5 from './Screen5';
 
 const getTeam = () => team;
 

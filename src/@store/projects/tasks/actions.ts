@@ -25,21 +25,18 @@ export interface IPatchProjectTaskData {
   userWorks?: any;
 }
 
-export const getAllProjectTasks = requestActions(
-  'PROJECT_TASK/GET_ALL',
-  (projectId: number): any => ({
-    projectId,
-    request: {
-      params: {
-        count: 1000,
-        order: 'desc',
-        orderBy: 'id',
-        skip: 0,
-      },
-      url: `/projects/${projectId}/tasks`,
+export const getAllProjectTasks = requestActions('PROJECT_TASK/GET_ALL', (projectId: number): any => ({
+  projectId,
+  request: {
+    params: {
+      count: 1000,
+      order: 'desc',
+      orderBy: 'id',
+      skip: 0,
     },
-  })
-);
+    url: `/projects/${projectId}/tasks`,
+  },
+}));
 
 export const postProjectTask = requestActions<IProjectTaskData>(
   'PROJECT_TASK/POST',

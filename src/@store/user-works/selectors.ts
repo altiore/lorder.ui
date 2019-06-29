@@ -7,15 +7,20 @@ import { UserWork } from '@store/tasks';
 
 export const lastUserWorks = (state: IState) => state.userWorks;
 
-export const totalTimeSpentTodayInSeconds = createSelector(lastUserWorks, state =>
-  state.list.reduce((res, userWork: UserWork) => res + userWork.durationInSeconds, 0)
+export const totalTimeSpentTodayInSeconds = createSelector(
+  lastUserWorks,
+  state => state.list.reduce((res, userWork: UserWork) => res + userWork.durationInSeconds, 0)
 );
 
-export const totalTimeSpentToday = createSelector(totalTimeSpentTodayInSeconds, seconds =>
-  convertSecondsToDurationWithLocal(seconds)
+export const totalTimeSpentToday = createSelector(
+  totalTimeSpentTodayInSeconds,
+  seconds => convertSecondsToDurationWithLocal(seconds)
 );
 
-export const userWorksGroupedByProject = createSelector(lastUserWorks, state => groupBy(state.list, 'projectId'));
+export const userWorksGroupedByProject = createSelector(
+  lastUserWorks,
+  state => groupBy(state.list, 'projectId')
+);
 
 export const getUserWorksByProjectId = createSelector(
   userWorksGroupedByProject,
@@ -30,8 +35,9 @@ export const timeSpentByProjectIdInSeconds = createSelector(
     }, 0)
 );
 
-export const timeSpentByProjectId = createSelector(timeSpentByProjectIdInSeconds, getSeconds => (projectId: number) =>
-  convertSecondsToDurationWithLocal(getSeconds(projectId))
+export const timeSpentByProjectId = createSelector(
+  timeSpentByProjectIdInSeconds,
+  getSeconds => (projectId: number) => convertSecondsToDurationWithLocal(getSeconds(projectId))
 );
 
 export const timePercentByProjectId = createSelector(

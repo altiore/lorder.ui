@@ -26,7 +26,11 @@ export default class Boundary extends React.Component<IBoundaryProps, IBoundaryS
   render() {
     if (this.state.error) {
       // render fallback UI
-      return <a href="/" onClick={this.showReportDialog('boundary')}>Report feedback</a>;
+      return (
+        <a href="/" onClick={this.showReportDialog('boundary')}>
+          Report feedback
+        </a>
+      );
     } else {
       // when there's not an error, render children untouched
       return this.props.children;

@@ -12,10 +12,7 @@ import { UserWork } from '../UserWork';
 
 export let timer: any;
 
-export const startTimer = (userWork: Partial<UserWork>, project: Project) => async (
-  dispatch: any,
-  getState: any
-) => {
+export const startTimer = (userWork: Partial<UserWork>, project: Project) => async (dispatch: any, getState: any) => {
   clearInterval(timer);
   if (!userWork.durationInSeconds) {
     userWork = new UserWork(userWork);

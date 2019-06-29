@@ -188,9 +188,8 @@ export class TableVirtualized extends React.Component<ITableVirtualizedProps, IT
     return props.columns
       .map(el => ({ ...el, isShown: el.isShown !== undefined ? el.isShown : true }))
       .filter(el => el.isShown)
-      .sort(
-        (a: ColumnType, b: ColumnType) =>
-          a.order && b.order ? (a.order > b.order ? 1 : -1) : a.dataKey > b.dataKey ? 1 : -1
+      .sort((a: ColumnType, b: ColumnType) =>
+        a.order && b.order ? (a.order > b.order ? 1 : -1) : a.dataKey > b.dataKey ? 1 : -1
       );
   }
 

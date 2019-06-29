@@ -60,4 +60,4 @@ export const AllProjects = connect(
   mergeProps
 )(withResize(withStyles(styles, { withTheme: true })(ProjectsJsx)));
 
-export default OwnProjects
+export default OwnProjects;

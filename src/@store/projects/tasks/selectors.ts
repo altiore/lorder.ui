@@ -9,7 +9,7 @@ import { ProjectTask } from './ProjectTask';
 
 export const projectTasks = createSelector(
   [openedProject],
-  (project: Project|undefined = new Project()): DownloadList<ProjectTask> => project && project.tasks
+  (project: Project | undefined = new Project()): DownloadList<ProjectTask> => project && project.tasks
 );
 
 export const filteredProjectTasks = createSelector(

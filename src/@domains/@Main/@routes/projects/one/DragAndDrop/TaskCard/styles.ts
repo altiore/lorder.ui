@@ -10,14 +10,14 @@ export const styles = (theme: Theme): any => ({
   },
   iconBug: {
     color: theme.palette.error.main,
-    marginRight: theme.spacing(1/2),
+    marginRight: theme.spacing(1 / 2),
   },
   iconStory: {
     color: '#4BC800',
-    marginRight: theme.spacing(1/2),
+    marginRight: theme.spacing(1 / 2),
   },
   root: {
-    borderRadius: theme.spacing(1/2),
+    borderRadius: theme.spacing(1 / 2),
     boxShadow: theme.shadows[1],
     margin: `0 0 ${theme.spacing(1)}px 0`,
     minHeight: 60,

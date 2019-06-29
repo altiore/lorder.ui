@@ -1,11 +1,11 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-const MIN_HEIGHT = "calc(100vh - 88px)";
+const MIN_HEIGHT = 'calc(100vh - 88px)';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   block: {
     alignItems: 'center',
-    color: "white",
+    color: 'white',
     display: 'flex',
     flexFlow: 'column nowrap',
     justifyContent: 'center',
@@ -17,7 +17,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginTop: 20,
   },
   content: {
-    backgroundColor: "rgba(37, 36, 38, 0.6)",
+    backgroundColor: 'rgba(37, 36, 38, 0.6)',
     display: 'flex',
     flexFlow: 'column nowrap',
     flexGrow: 1,
@@ -28,18 +28,18 @@ export const useStyles = makeStyles((theme: Theme) => ({
   divider: {
     backgroundColor: theme.palette.secondary.dark,
     maxWidth: theme.spacing(32),
-    width: "100%",
+    width: '100%',
   },
   motto: {
     marginTop: theme.spacing(2),
-    textAlign: "center",
-  },
-  title: {
-    color: theme.palette.secondary.dark,
+    textAlign: 'center',
   },
   question: {
     marginBottom: theme.spacing(2),
     maxWidth: 300,
-    textAlign: "center",
-  }
+    textAlign: 'center',
+  },
+  title: {
+    color: theme.palette.secondary.dark,
+  },
 }));

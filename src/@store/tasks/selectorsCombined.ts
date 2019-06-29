@@ -17,9 +17,9 @@ export const filteredByProjectTasks = createSelector(
 );
 
 const filteredFunction = {
+  new: (a: ITask, b: ITask) => (a.id > b.id ? -1 : 1),
   recent: (a: ITask, b: ITask) => (a.id < b.id ? -1 : 1),
   smart: (a: ITask, b: ITask) => (a.value > b.value ? -1 : 1),
-  new: (a: ITask, b: ITask) => (a.id > b.id ? -1 : 1),
 };
 
 export const sortedByFilterTasks = createSelector(
@@ -32,11 +32,14 @@ export const sortedByFilterTasksWithActive = createSelector(
   (tasks = [], curTask): Array<ITask | 'filter'> => [curTask || new Task({ id: 0 }), 'filter', ...tasks]
 );
 
-export const checkIsCurrent = createSelector([currentTaskId], cTaskId => (taskId: number) => cTaskId === taskId);
+export const checkIsCurrent = createSelector(
+  [currentTaskId],
+  cTaskId => (taskId: number) => cTaskId === taskId
+);
 
 export const events = createSelector(
   [lastUserWorks, defaultProjectId],
-  (userWorks: DownloadList<UserWork>, defPrId: number|undefined): IEvent[] => {
+  (userWorks: DownloadList<UserWork>, defPrId: number | undefined): IEvent[] => {
     return userWorks.list
       .filter(uw => moment().diff(uw.startAt, 'hours') <= 24)
       .sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1))

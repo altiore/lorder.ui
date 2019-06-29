@@ -10,7 +10,10 @@ import { Project } from './Project';
 
 const baseState = (state: IState) => state.projects;
 
-export const allProjectList = createSelector([baseState], (state: DownloadList<Project>): Project[] => state.list);
+export const allProjectList = createSelector(
+  [baseState],
+  (state: DownloadList<Project>): Project[] => state.list
+);
 
 export const ownProjectList = createSelector(
   [baseState],
@@ -38,9 +41,12 @@ export const openedProject = createSelector(
   }
 );
 
-export const projectMembers = createSelector([openedProject, selectedProject], (opened: Project, selected: Project) => {
-  return opened ? opened.members : selected && selected.members;
-});
+export const projectMembers = createSelector(
+  [openedProject, selectedProject],
+  (opened: Project, selected: Project) => {
+    return opened ? opened.members : selected && selected.members;
+  }
+);
 
 export const projectMembersAsUsers = createSelector(
   projectMembers as any,
@@ -49,17 +55,24 @@ export const projectMembersAsUsers = createSelector(
   }
 );
 
-export const projectTaskTypes = createSelector(openedProject as any, (project: Project) => project && project.taskTypes);
-
-export const getProjectById = createSelector(allProjectList, (list: Project[]) => (id: number): Project =>
-  list.find(e => e.id === id) || new Project()
+export const projectTaskTypes = createSelector(
+  openedProject as any,
+  (project: Project) => project && project.taskTypes
 );
 
-export const getLabelForSelectField = createSelector([getProjectById], getProject => (task: ITask) => {
-  const project = getProject(task.projectId);
-  const projectInfo = project.title ? ` (${project.title})` : '';
-  return task.title + projectInfo;
-});
+export const getProjectById = createSelector(
+  allProjectList,
+  (list: Project[]) => (id: number): Project => list.find(e => e.id === id) || new Project()
+);
+
+export const getLabelForSelectField = createSelector(
+  [getProjectById],
+  getProject => (task: ITask) => {
+    const project = getProject(task.projectId);
+    const projectInfo = project.title ? ` (${project.title})` : '';
+    return task.title + projectInfo;
+  }
+);
 
 export const ownProjectListWithStatistic = createSelector(
   [ownProjectList, timePercentByProjectId, timeSpentByProjectId],

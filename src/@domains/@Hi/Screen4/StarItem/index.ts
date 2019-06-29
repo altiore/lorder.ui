@@ -1,1 +1,1 @@
-export { default } from "./StarItem";
+export { default } from './StarItem';

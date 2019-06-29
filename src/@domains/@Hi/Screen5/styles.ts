@@ -1,6 +1,6 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-const MIN_HEIGHT = "calc(50vh - 80px)";
+const MIN_HEIGHT = 'calc(50vh - 80px)';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   achievement: {
@@ -13,7 +13,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     zIndex: 1,
   },
   achievementBlock: {
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
   },
   team: {
     backgroundColor: theme.palette.background.paper,

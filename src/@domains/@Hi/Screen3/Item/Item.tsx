@@ -2,7 +2,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 interface ItemI {
   children: any;
@@ -13,9 +13,7 @@ const Item: React.FC<ItemI> = ({ children }) => {
 
   return (
     <Paper className={classes.item}>
-      <Typography>
-        {children}
-      </Typography>
+      <Typography>{children}</Typography>
     </Paper>
   );
 };

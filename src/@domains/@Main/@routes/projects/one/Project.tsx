@@ -20,10 +20,7 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
     }
   }
 
-  componentWillReceiveProps(
-    nextProps: Readonly<IProjectProps & RouteComponentProps<any>>,
-    nextContext: any
-  ): void {
+  componentWillReceiveProps(nextProps: Readonly<IProjectProps & RouteComponentProps<any>>, nextContext: any): void {
     if (
       this.props.openedProject &&
       nextProps.openedProject &&

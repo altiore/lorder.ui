@@ -1,3 +1,3 @@
-import { AllProjects } from "./index";
+import { AllProjects } from './index';
 
 export default AllProjects;

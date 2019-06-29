@@ -3,15 +3,15 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import Boundary from '@components/Boundary';
 import Dialog from '@domains/@common/Dialog';
 import Notification from '@domains/@common/Notification';
 import { createStore } from '@store/createStore';
-import theme from "@styles/materialTheme";
-import "@styles/base.css";
+import theme from '@styles/materialTheme';
+import '@styles/base.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

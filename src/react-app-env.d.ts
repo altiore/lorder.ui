@@ -67,4 +67,3 @@ declare module 'react-copy-to-clipboard' {
     render(): JSX.Element | null;
   }
 }
-

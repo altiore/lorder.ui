@@ -90,8 +90,8 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
                 didNotTouched
                   ? 'Вы пока не работали над этой задачей'
                   : isWorkTableOpen
-                    ? 'Закрыть подробности'
-                    : 'Нажмите, чтоб раскрыть подробности'
+                  ? 'Закрыть подробности'
+                  : 'Нажмите, чтоб раскрыть подробности'
               }
             >
               <Button

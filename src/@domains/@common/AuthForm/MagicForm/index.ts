@@ -6,9 +6,11 @@ import { MAGIC_FORM_NAME, postAuthMagic } from '@store/identity';
 import MagicFormJsx, { IMagicFormProps } from './MagicForm';
 import { styles } from './styles';
 
-const MagicForm = withStyles(styles)(reduxForm<{}, IMagicFormProps>({
-  form: MAGIC_FORM_NAME,
-  onSubmit: onSubmitForm(postAuthMagic),
-})(MagicFormJsx));
+const MagicForm = withStyles(styles)(
+  reduxForm<{}, IMagicFormProps>({
+    form: MAGIC_FORM_NAME,
+    onSubmit: onSubmitForm(postAuthMagic),
+  })(MagicFormJsx)
+);
 
 export { MagicForm, IMagicFormProps };

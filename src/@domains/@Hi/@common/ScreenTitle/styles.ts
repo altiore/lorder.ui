@@ -8,9 +8,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: 80,
   },
   title: {
-    alignItems: "center",
-    color: "white",
-    display: "flex",
+    alignItems: 'center',
+    color: 'white',
+    display: 'flex',
     height: theme.mixins.toolbar.height,
   },
   titleBlack: {

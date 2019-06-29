@@ -6,7 +6,9 @@ import { logIn, LOGIN_FORM_NAME } from '@store/identity';
 import LoginFormJsx, { ILoginFormProps } from './LoginForm';
 import { styles } from './styles';
 
-export const LoginForm = withStyles(styles)(reduxForm<{}, ILoginFormProps>({
-  form: LOGIN_FORM_NAME,
-  onSubmit: onSubmitForm(logIn),
-})(LoginFormJsx));
+export const LoginForm = withStyles(styles)(
+  reduxForm<{}, ILoginFormProps>({
+    form: LOGIN_FORM_NAME,
+    onSubmit: onSubmitForm(logIn),
+  })(LoginFormJsx)
+);

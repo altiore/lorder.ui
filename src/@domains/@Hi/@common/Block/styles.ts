@@ -1,6 +1,6 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-const MIN_HEIGHT = "100vh";
+const MIN_HEIGHT = '100vh';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   container: {

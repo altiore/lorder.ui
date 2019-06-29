@@ -1,1 +1,1 @@
-export { default } from "./MainClockIco";
+export { default } from './MainClockIco';

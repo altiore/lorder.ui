@@ -6,9 +6,9 @@ export const styles = (theme: Theme): any => ({
     width: 300,
   },
   wrapper: {
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "center",
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
     width: 330,
   },
 });

@@ -8,35 +8,33 @@ import SwapCallsIco from '@material-ui/icons/SwapCalls';
 import TimelineIco from '@material-ui/icons/Timeline';
 import React from 'react';
 
-import Block from "@domains/@Hi/@common/Block";
-import BlockContent from "@domains/@Hi/@common/BlockContent";
-import ScreenTitle from "@domains/@Hi/@common/ScreenTitle";
-import SubTitle from "@domains/@Hi/@common/SubTitle";
-import HoveredItem from "./HoveredItem";
-import {useStyles} from "./styles";
+import Block from '@domains/@Hi/@common/Block';
+import BlockContent from '@domains/@Hi/@common/BlockContent';
+import ScreenTitle from '@domains/@Hi/@common/ScreenTitle';
+import SubTitle from '@domains/@Hi/@common/SubTitle';
+import HoveredItem from './HoveredItem';
+import { useStyles } from './styles';
 
 interface Screen1I {
   services?: any[];
 }
 
-const Screen2: React.FC<Screen1I> = ({services}) => {
+const Screen2: React.FC<Screen1I> = ({ services }) => {
   const classes = useStyles();
 
   return (
     <Block alignItems="flex-start" className={classes.content}>
-      <ScreenTitle black>
-        Мы поможем
-      </ScreenTitle>
+      <ScreenTitle black>Мы поможем</ScreenTitle>
       <SubTitle black>
-        <Typography noWrap variant='subtitle2'>
+        <Typography noWrap variant="subtitle2">
           WEB сервис для регистрации потраченного на работу времени.
         </Typography>
-        <Typography noWrap variant='subtitle2'>
+        <Typography noWrap variant="subtitle2">
           Управление задачами IT проекта
         </Typography>
       </SubTitle>
       <BlockContent className={classes.hoveredItems}>
-        <Grid container spacing={4  }>
+        <Grid container spacing={4}>
           <HoveredItem
             description="Регистрация времени еще никогда не была таким приятным занятием. Все работает автоматически"
             icon={<HistoryIco fontSize="large" />}

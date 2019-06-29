@@ -1,6 +1,6 @@
-import { routes } from './routes'
+import { routes } from './routes';
 
-export default function (history) {
+export default function(history) {
   return {
     action: history.action,
     location: history.location,

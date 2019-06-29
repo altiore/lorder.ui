@@ -33,17 +33,16 @@ export const SuggestionTsx: React.FunctionComponent<ISuggestionProps> = ({
       <div className={classes.task}>
         <TaskTypeIcon typeId={task.typeId} className={classes.taskIcon} />
         <span className={classes.taskText}>
-          {parts.map(
-            (part: any, index: any) =>
-              part.highlight ? (
-                <span key={String(index)} style={{ fontWeight: 500 }}>
-                  {part.text}
-                </span>
-              ) : (
-                <strong key={String(index)} style={{ fontWeight: 300 }}>
-                  {part.text}
-                </strong>
-              )
+          {parts.map((part: any, index: any) =>
+            part.highlight ? (
+              <span key={String(index)} style={{ fontWeight: 500 }}>
+                {part.text}
+              </span>
+            ) : (
+              <strong key={String(index)} style={{ fontWeight: 300 }}>
+                {part.text}
+              </strong>
+            )
           )}
         </span>
       </div>

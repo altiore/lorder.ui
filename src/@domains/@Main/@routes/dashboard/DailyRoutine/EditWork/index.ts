@@ -1,7 +1,7 @@
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import {ThunkDispatch} from "redux-thunk";
+import { ThunkDispatch } from 'redux-thunk';
 import { createStructuredSelector } from 'reselect';
 
 import { patchUserWork } from '@store/user-works';

@@ -12,6 +12,13 @@
     "no-var-requires": false,
     "max-classes-per-file": false,
     "member-access": [true, "no-public"],
-    "interface-name": false
+    "interface-name": false,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "any",
+        "named-imports-order": "case-insensitive"
+      }
+    ]
   }
 }

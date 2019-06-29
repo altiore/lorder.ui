@@ -22,12 +22,11 @@ export interface IHiProps {
 }
 
 export const HiTsx: React.FC<IHiProps> = ({ brandName, classes, height, scrollWidth, width }) => {
-
   return (
     <Grid container direction="column">
       <YouTubeVideo
         videoId="PT8urv0CtUw"
-        opts={{start: 14, end: 280}}
+        opts={{ start: 14, end: 280 }}
         height={height}
         scrollWidth={scrollWidth}
         width={width}
@@ -65,4 +64,4 @@ export const HiTsx: React.FC<IHiProps> = ({ brandName, classes, height, scrollWi
       </AppBar>
     </Grid>
   );
-}
+};

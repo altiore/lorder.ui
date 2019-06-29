@@ -32,13 +32,20 @@ export const getAvailableRoutes = createSelector(
 const match = (path: string) => (state: IState): IMatchIdentifier =>
   createMatchSelector(path)(state) as IMatchIdentifier;
 
-const routerSearch = createSelector(baseState, (router: any) => router.location && router.location.search);
-
-export const identifier = createSelector(match('/start/:identifier'), (state: IMatchIdentifier) =>
-  get(state, 'params.identifier')
+const routerSearch = createSelector(
+  baseState,
+  (router: any) => router.location && router.location.search
 );
 
-export const projectIdSearchParam = createSelector(routerSearch, (search: string) => getQueryParam(search, 'project'));
+export const identifier = createSelector(
+  match('/start/:identifier'),
+  (state: IMatchIdentifier) => get(state, 'params.identifier')
+);
+
+export const projectIdSearchParam = createSelector(
+  routerSearch,
+  (search: string) => getQueryParam(search, 'project')
+);
 
 export const routeProjectId = createSelector(
   match('/projects/:projectId'),

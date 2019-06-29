@@ -1,8 +1,8 @@
-import cn from "classnames";
+import cn from 'classnames';
 import React from 'react';
 
-import BlockContent from "@domains/@Hi/@common/BlockContent";
-import {useStyles} from "./styles";
+import BlockContent from '@domains/@Hi/@common/BlockContent';
+import { useStyles } from './styles';
 
 interface SubTitleI {
   black?: boolean;
@@ -10,7 +10,7 @@ interface SubTitleI {
   className?: string;
 }
 
-const SubTitle: React.FC<SubTitleI> = ({black, children, className}) => {
+const SubTitle: React.FC<SubTitleI> = ({ black, children, className }) => {
   const classes = useStyles();
 
   return (

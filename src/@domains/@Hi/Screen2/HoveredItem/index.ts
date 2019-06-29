@@ -1,1 +1,1 @@
-export { default } from "./HoveredItem";
+export { default } from './HoveredItem';

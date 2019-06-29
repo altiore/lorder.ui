@@ -1,11 +1,11 @@
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
 
-import Block from "@domains/@Hi/@common/Block";
-import ScreenTitle from "@domains/@Hi/@common/ScreenTitle";
-import { ReactComponent as AltioreSvg } from "./Altiore_2.svg";
-import Item from "./Item";
-import { useStyles } from "./styles";
+import Block from '@domains/@Hi/@common/Block';
+import ScreenTitle from '@domains/@Hi/@common/ScreenTitle';
+import { ReactComponent as AltioreSvg } from './Altiore_2.svg';
+import Item from './Item';
+import { useStyles } from './styles';
 
 interface Screen3I {
   texts: {
@@ -22,9 +22,7 @@ const Screen3: React.FC<Screen3I> = ({ texts }) => {
 
   return (
     <Block className={classes.content}>
-      <ScreenTitle>
-        Что позволяет наш сервис?
-      </ScreenTitle>
+      <ScreenTitle>Что позволяет наш сервис?</ScreenTitle>
       <Grid item md={1} xs={false} />
       <Grid item className={classes.block} md={5} xs={12}>
         <AltioreSvg />

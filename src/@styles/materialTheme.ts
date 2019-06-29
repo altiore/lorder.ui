@@ -1,4 +1,4 @@
-import {createMuiTheme, darken, lighten, Theme} from '@material-ui/core/styles';
+import { createMuiTheme, darken, lighten, Theme } from '@material-ui/core/styles';
 
 const defaultTheme: Theme = createMuiTheme({});
 
@@ -6,9 +6,9 @@ const BACKGROUND_DEFAULT = '#EBEEF0';
 const BACKGROUND_DARK = '#242426';
 
 const SECONDARY_DARK = '#FFB200';
-const SECONDARY_DARKEN = darken(SECONDARY_DARK, .8);
+const SECONDARY_DARKEN = darken(SECONDARY_DARK, 0.8);
 const SECONDARY_MAIN = '#FFF0B5';
-const SECONDARY_LIGHT = lighten(SECONDARY_MAIN, .2);
+const SECONDARY_LIGHT = lighten(SECONDARY_MAIN, 0.2);
 
 const prettyScroll1 = {
   '&::-webkit-scrollbar': {
@@ -33,21 +33,11 @@ export default createMuiTheme({
     scroll: prettyScroll1,
     width: 1012,
   },
-  textGradient: [
-    {
-      background: `linear-gradient(60deg,
-     ${SECONDARY_DARKEN} 0%,
-      ${SECONDARY_DARK} 10%,
-      ${SECONDARY_DARK} 40%,
-       ${SECONDARY_LIGHT} 55%,
-        ${SECONDARY_DARK} 70%,
-         ${SECONDARY_DARK} 100%
-         )`,
-      backgroundClip: "text",
-      "-webkit-background-clip": "text",
-      textFillColor: "transparent",
+  mixins: {
+    toolbar: {
+      height: 56,
     },
-  ],
+  },
   overrides: {
     MuiDialogActions: {
       root: {
@@ -83,19 +73,19 @@ export default createMuiTheme({
     },
     MuiFormHelperText: {
       root: {
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
         bottom: -13,
-        position: "absolute",
+        position: 'absolute',
       },
     },
     MuiInputAdornment: {
       positionStart: {
-        position: "absolute",
         left: defaultTheme.spacing(1.25),
+        position: 'absolute',
         zIndex: 1,
       },
       root: {
-        color: "#878787",
+        color: '#878787',
       },
     },
     MuiInputBase: {
@@ -107,16 +97,16 @@ export default createMuiTheme({
       adornedStart: {
         paddingLeft: 0,
       },
-      inputAdornedStart: {
-        paddingLeft: defaultTheme.spacing(4.25),
-      },
       input: {
         fontSize: defaultTheme.typography.pxToRem(14),
         height: defaultTheme.typography.pxToRem(36),
         minWidth: defaultTheme.spacing(20),
         padding: 0,
-        position: "absolute",
-        width: `calc(100% - ${defaultTheme.spacing(4.25)}px)`
+        position: 'absolute',
+        width: `calc(100% - ${defaultTheme.spacing(4.25)}px)`,
+      },
+      inputAdornedStart: {
+        paddingLeft: defaultTheme.spacing(4.25),
       },
       notchedOutline: {
         zIndex: 1,
@@ -130,7 +120,7 @@ export default createMuiTheme({
     MuiTextField: {
       root: {
         marginBottom: defaultTheme.spacing(2),
-        width: "100%"
+        width: '100%',
       },
     },
     MuiToolbar: {
@@ -147,15 +137,10 @@ export default createMuiTheme({
       },
     },
   },
-  mixins: {
-    toolbar: {
-      height: 56,
-    },
-  },
   palette: {
     background: {
       default: BACKGROUND_DEFAULT,
-      paper: "#fff",
+      paper: '#fff',
     },
     primary: {
       contrastText: '#ffffff',
@@ -170,6 +155,21 @@ export default createMuiTheme({
       main: SECONDARY_MAIN,
     },
   },
+  textGradient: [
+    {
+      '-webkit-background-clip': 'text',
+      background: `linear-gradient(60deg,
+     ${SECONDARY_DARKEN} 0%,
+      ${SECONDARY_DARK} 10%,
+      ${SECONDARY_DARK} 40%,
+       ${SECONDARY_LIGHT} 55%,
+        ${SECONDARY_DARK} 70%,
+         ${SECONDARY_DARK} 100%
+         )`,
+      backgroundClip: 'text',
+      textFillColor: 'transparent',
+    },
+  ],
   typography: {
     button: {
       textTransform: 'none',

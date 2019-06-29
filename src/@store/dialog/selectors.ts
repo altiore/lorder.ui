@@ -6,7 +6,10 @@ import { IDialogState } from './Dialog';
 
 const baseState = (state: IState) => state.dialog;
 
-export const isDialogOpened = createSelector(baseState, (state: IDialogState): boolean => state.isOpened);
+export const isDialogOpened = createSelector(
+  baseState,
+  (state: IDialogState): boolean => state.isOpened
+);
 
 export const dialogProps = createSelector(
   baseState,

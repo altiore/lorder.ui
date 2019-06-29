@@ -1,1 +1,1 @@
-export { default } from "./Screen4";
+export { default } from './Screen4';

@@ -122,25 +122,24 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
               <div onMouseLeave={this.hideCopy}>
                 <Tooltip title={isPage ? copyText : 'Открыть в отдельном окне'} placement="bottom">
                   <Button
-                    // variant="text"
-                    // component={isPage ? undefined : 'a'}
-                    // href={isPage ? undefined : '#'}
-                    // onClick={this.goToTask()}
-                    // onMouseOver={this.showCopy}
+                  // variant="text"
+                  // component={isPage ? undefined : 'a'}
+                  // href={isPage ? undefined : '#'}
+                  // onClick={this.goToTask()}
+                  // onMouseOver={this.showCopy}
                   >
                     #{taskId}
                   </Button>
                 </Tooltip>
-                {!isPage &&
-                  isShownCopy && (
-                    <Tooltip title={copyText} placement="right">
-                      <CopyToClipboard text={this.getLink(true)} onCopy={this.copyToClipboard}>
-                        <IconButton onClick={this.copyToClipboard}>
-                          <FileCopyIcon fontSize="small" />
-                        </IconButton>
-                      </CopyToClipboard>
-                    </Tooltip>
-                  )}
+                {!isPage && isShownCopy && (
+                  <Tooltip title={copyText} placement="right">
+                    <CopyToClipboard text={this.getLink(true)} onCopy={this.copyToClipboard}>
+                      <IconButton onClick={this.copyToClipboard}>
+                        <FileCopyIcon fontSize="small" />
+                      </IconButton>
+                    </CopyToClipboard>
+                  </Tooltip>
+                )}
               </div>
             )}
           </div>
