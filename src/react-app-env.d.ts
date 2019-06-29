@@ -22,7 +22,7 @@ declare module 'highcharts' {
   // export default : any;
 }
 
-// import * as React from 'react';
+// import React from 'react';
 declare module 'react-jsx-highcharts' {
   export class Chart extends React.Component<any> {
     render(): JSX.Element | null;
@@ -57,7 +57,7 @@ declare module 'react-jsx-highcharts' {
   }
 }
 
-// import * as React from 'react';
+// import React from 'react';
 declare module 'react-copy-to-clipboard' {
   export class CopyToClipboard extends React.Component<{
     text: string;
@@ -67,3 +67,4 @@ declare module 'react-copy-to-clipboard' {
     render(): JSX.Element | null;
   }
 }
+
