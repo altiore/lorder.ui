@@ -7,6 +7,8 @@ export interface IDimensions {
   isWidthLg: boolean;
   isWidthMd: boolean;
   isWidthSm: boolean;
+  scrollHeight: number;
+  scrollWidth: number;
   width: number;
 }
 
@@ -55,6 +57,8 @@ export const withResize = <P>(
       private getDimensions = (): IDimensions => {
         let height;
         let width;
+        let scrollHeight;
+        let scrollWidth;
         if (this.state) {
           const { getRef } = this.state;
           if (getRef && getRef.current) {
@@ -65,6 +69,8 @@ export const withResize = <P>(
 
             width = element.offsetWidth;
             height = element.offsetHeight;
+            scrollHeight = element.clientWidth;
+            scrollWidth = element.clientWidth;
           }
         }
         if (width === undefined) {
@@ -74,6 +80,8 @@ export const withResize = <P>(
           const g = d.getElementsByTagName('body')[0];
           width = w.innerWidth || (e && e.clientWidth) || g.clientWidth;
           height = w.innerHeight || (e && e.clientHeight) || g.clientHeight;
+          scrollHeight = (e && e.clientWidth) || g.clientWidth;
+          scrollWidth = (e && e.clientWidth) || g.clientWidth;
         }
         const { theme } = this.props;
         return {
@@ -81,6 +89,8 @@ export const withResize = <P>(
           isWidthLg: width <= theme.breakpoints.values.lg && width > theme.breakpoints.values.md,
           isWidthMd: width <= theme.breakpoints.values.md && width > theme.breakpoints.values.sm,
           isWidthSm: width <= theme.breakpoints.values.sm,
+          scrollHeight,
+          scrollWidth,
           width,
         };
       };

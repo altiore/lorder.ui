@@ -9,6 +9,7 @@ export interface IYouTubeVideoProps {
     end?: number;
     start?: number;
   };
+  scrollWidth: number;
   videoId: string;
   width: number;
 }
@@ -28,10 +29,12 @@ const VIDEO_STATUSES = {
 export const YouTubeVideoTsx: React.FC<IYouTubeVideoProps> = ({
   height,
   opts = {},
+  scrollWidth,
   videoId,
-  width,
+  width: globalWidth,
 }) => {
   const classes = useStyles();
+  const width = useMemo(() => scrollWidth || globalWidth, [scrollWidth, globalWidth]);
   const onStateChange = useCallback((event) => {
     if (opts.start && opts.end && event.data === VIDEO_STATUSES.ENDED) {
       event.target.loadVideoById({
@@ -44,8 +47,8 @@ export const YouTubeVideoTsx: React.FC<IYouTubeVideoProps> = ({
   const isWidth = useMemo(() => VIDEO_HEIGHT / VIDEO_WIDTH > height / width, [height, width]);
   const wrapperStyle = useMemo(() => ({
     position: "absolute",
-    top: isWidth ? -((width * VIDEO_HEIGHT) / VIDEO_WIDTH - height) / 2 : "initial",
-    left: isWidth ? "initial" : -((height * VIDEO_WIDTH) / VIDEO_HEIGHT - width) / 2,
+    top: isWidth ? -((width * VIDEO_HEIGHT) / VIDEO_WIDTH - height) / 2 : 0,
+    left: isWidth ? 0 : -((height * VIDEO_WIDTH) / VIDEO_HEIGHT - width) / 2,
   }), [isWidth, height, width]);
   const videoStyle = useMemo(() => {
     return {

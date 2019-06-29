@@ -17,10 +17,11 @@ export interface IHiProps {
   brandName: string;
   classes: any;
   height: number;
+  scrollWidth: number;
   width: number;
 }
 
-export const HiTsx: React.FC<IHiProps> = ({ brandName, classes, height, width }) => {
+export const HiTsx: React.FC<IHiProps> = ({ brandName, classes, height, scrollWidth, width }) => {
 
   return (
     <Grid container direction="column">
@@ -28,6 +29,7 @@ export const HiTsx: React.FC<IHiProps> = ({ brandName, classes, height, width })
         videoId="PT8urv0CtUw"
         opts={{start: 14, end: 280}}
         height={height}
+        scrollWidth={scrollWidth}
         width={width}
       />
 
