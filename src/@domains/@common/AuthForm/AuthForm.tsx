@@ -18,13 +18,9 @@ export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, isMagicLoginForm, t
 
   return (
     <div className={classes.form}>
-      {isMagicLoginForm ? (
-        <MagicForm autoFocus={autoFocus} buttonText="Отправить магическую ссылку" />
-      ) : (
-        <LoginForm autoFocus={autoFocus} buttonText="Войти" />
-      )}
+      {isMagicLoginForm ? <MagicForm autoFocus={autoFocus} /> : <LoginForm autoFocus={autoFocus} />}
       <Button type="button" className={classes.toggleButton} onClick={toggleMagic} color="secondary">
-        {isMagicLoginForm ? 'Войти при помощи пароля' : 'Войти при помощи магической ссылки'}
+        {isMagicLoginForm ? 'Вход / Регистрация по паролю' : 'Отправить магическую ссылку'}
       </Button>
     </div>
   );

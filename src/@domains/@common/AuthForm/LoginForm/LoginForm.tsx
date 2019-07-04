@@ -1,5 +1,5 @@
 import Button from '@material-ui/core/Button';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { email } from 'redux-form-validators';
 
@@ -16,12 +16,28 @@ export interface ILoginFormProps {
 const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProps>> = ({
   autoFocus,
   classes,
-  buttonText,
   handleSubmit,
   // pristine,
   submitting,
   // invalid,
 }) => {
+  useEffect(() => {
+    // if ('credentials' in navigator) {
+    //   (navigator as any).credentials.get({
+    //     password: true,
+    //     // unmediated: true,
+    //   })
+    //     .then(function(creds) {
+    //       //Do something with the credentials.
+    //       console.log('creds here', creds);
+    //       setIsKnownUser(true);
+    //     });
+    // } else {
+    //   console.log("No credentials");
+    //   //Handle sign-in the way you did before.
+    // };
+  }, []);
+
   return (
     <div className={classes.wrapper}>
       <form className={classes.form} onSubmit={handleSubmit}>
@@ -45,7 +61,7 @@ const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProp
           type="password"
         />
         <Button color="secondary" disabled={submitting} fullWidth type="submit" variant="outlined">
-          <span>{buttonText}</span>
+          <span>Войти / Регистрироваться</span>
         </Button>
       </form>
     </div>

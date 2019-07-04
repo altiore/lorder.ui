@@ -8,13 +8,11 @@ import InputField from '@components/InputField';
 
 export class IMagicFormProps {
   autoFocus?: boolean;
-  buttonText?: string;
   classes?: any;
 }
 
 const MagicForm: React.FC<IMagicFormProps & InjectedFormProps<{}, IMagicFormProps>> = ({
   autoFocus,
-  buttonText,
   classes,
   handleSubmit,
   // pristine,
@@ -35,7 +33,7 @@ const MagicForm: React.FC<IMagicFormProps & InjectedFormProps<{}, IMagicFormProp
           validate={[email({ msg: 'Введите валидный email-адрес' })]}
         />
         <Button color="secondary" disabled={submitting} fullWidth type="submit" variant="outlined">
-          <span>{buttonText}</span>
+          <span>Отправить магическую ссылку</span>
         </Button>
       </form>
     </div>
