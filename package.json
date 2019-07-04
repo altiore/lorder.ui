@@ -97,7 +97,7 @@
     "tslint": "5.18.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-react": "4.0.0",
-    "typescript": "3.4.5",
+    "typescript": "3.4.2",
     "uniqid": "5.0.3"
   },
   "scripts": {

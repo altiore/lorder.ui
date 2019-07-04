@@ -39,8 +39,8 @@ export class DownloadList<T = any> implements IDownloadList<T> {
   // eslint-disable-next-line
   find(predicate: (value: T, index: number, obj: T[]) => boolean, thisArg?: any): T | undefined;
   // eslint-disable-next-line
-  find(...args: any[]) {
-    return (this.list.find.call as any)(this.list, ...args);
+  find(predicate, thisArg) {
+    return this.list.find(predicate, thisArg);
   }
 
   // eslint-disable-next-line
