@@ -7,20 +7,21 @@ import { PasswordIco as PassIco } from '@components/@icons/Password';
 import { UserIco } from '@components/@icons/User';
 import InputField from '@components/InputField';
 
+import { useStyles } from './styles';
+
 export interface ILoginFormProps {
   autoFocus?: boolean;
-  classes: any;
   buttonText?: string;
+  isLogin: boolean;
 }
 
 const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProps>> = ({
   autoFocus,
-  classes,
   handleSubmit,
-  // pristine,
+  isLogin,
   submitting,
-  // invalid,
 }) => {
+  const classes = useStyles();
   useEffect(() => {
     // if ('credentials' in navigator) {
     //   (navigator as any).credentials.get({
@@ -53,7 +54,6 @@ const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProp
         />
         <Field
           autoComplete="current-password"
-          className={classes.field}
           component={InputField}
           icon={<PassIco />}
           name="password"
@@ -61,7 +61,7 @@ const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProp
           type="password"
         />
         <Button color="secondary" disabled={submitting} fullWidth type="submit" variant="outlined">
-          <span>Войти / Регистрироваться</span>
+          <span>{isLogin ? 'Войти' : 'Регистрироваться'}</span>
         </Button>
       </form>
     </div>

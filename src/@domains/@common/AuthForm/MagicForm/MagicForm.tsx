@@ -6,19 +6,18 @@ import { email } from 'redux-form-validators';
 import { UserIco } from '@components/@icons/User';
 import InputField from '@components/InputField';
 
+import { useStyles } from '@domains/@common/AuthForm/LoginForm/styles';
+
 export class IMagicFormProps {
   autoFocus?: boolean;
-  classes?: any;
 }
 
 const MagicForm: React.FC<IMagicFormProps & InjectedFormProps<{}, IMagicFormProps>> = ({
   autoFocus,
-  classes,
   handleSubmit,
-  // pristine,
   submitting,
-  // invalid,
 }) => {
+  const classes = useStyles();
   return (
     <div className={classes.wrapper}>
       <form className={classes.form} onSubmit={handleSubmit}>

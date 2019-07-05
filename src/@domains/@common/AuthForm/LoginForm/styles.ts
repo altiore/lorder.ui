@@ -1,14 +1,14 @@
-import { Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme): any => ({
+export const useStyles = makeStyles((theme: Theme) => ({
   form: {
-    paddingBottom: 18,
-    width: 300,
+    paddingBottom: theme.spacing(2),
+    width: '100%',
   },
   wrapper: {
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
-    width: 330,
+    width: theme.spacing(40),
   },
-});
+}));

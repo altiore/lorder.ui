@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+
 import AssignmentIco from '@material-ui/icons/Assignment';
 import HistoryIco from '@material-ui/icons/History';
 import LocationSearchingIco from '@material-ui/icons/LocationSearching';
@@ -19,6 +20,47 @@ interface Screen1I {
   services?: any[];
 }
 
+const INFO_LIST = [
+  {
+    description: 'Регистрация времени еще никогда не была таким приятным занятием. Все работает автоматически',
+    icon: <HistoryIco fontSize="large" />,
+    title: 'Регистрация времени, потраченного на задачу',
+  },
+  {
+    description:
+      'Не так-то просто сопоставить работу разных людей. Кто отработал меньше, а кто больше - как понять? Эту непростую задачу мастерски решает наш сервис',
+    icon: <PeopleOutlineIco fontSize="large" />,
+    title: 'Совместная работа над проектом',
+  },
+  {
+    description: 'Сервис не позволит вам забрасывать задачи. А лишние он завершит сам. Да, так тоже можно',
+    icon: <AssignmentIco fontSize="large" />,
+    title: 'Удобное управление задачами в проекте',
+  },
+  {
+    description: 'Иногда приятно понаблюдать, как лихо партнеры справляются со своими задачми',
+    icon: <LocationSearchingIco fontSize="large" />,
+    title: 'Отслеживание хода выполнения задач в проекте',
+  },
+  {
+    description:
+      'Вы знали, что с математическо точки зрения справедливое распределение ресурсов в команде - это решаемая задача? По крайней мере, для небольшого количества участников...',
+    icon: <SwapCallsIco fontSize="large" />,
+    title: 'Справедливое распределение результатов работы между членами команды',
+  },
+  {
+    description:
+      'Нет ничего лучше, чем посмотреть на проделанное за последний год. Объемы ошеломляют. Результат работы вдохновляет',
+    icon: <TimelineIco fontSize="large" />,
+    title: 'Статистика',
+  },
+  // {
+  //   description: "Увидеть свой вклад в проект так важно. Иногда кажется, что никто в проекте не работает, кроме тебя, но вклад 2% в статистике проекта говорит об обратном",
+  //   icon: <TimelineIco fontSize"large"  />,
+  //   title: "Статистика проекта",
+  // },
+];
+
 const Screen2: React.FC<Screen1I> = ({ services }) => {
   const classes = useStyles();
 
@@ -35,41 +77,9 @@ const Screen2: React.FC<Screen1I> = ({ services }) => {
       </SubTitle>
       <BlockContent className={classes.hoveredItems}>
         <Grid container spacing={4}>
-          <HoveredItem
-            description="Регистрация времени еще никогда не была таким приятным занятием. Все работает автоматически"
-            icon={<HistoryIco fontSize="large" />}
-            title="Регистрация времени, потраченного на задачу"
-          />
-          <HoveredItem
-            description="Не так-то просто сопоставить работу разных людей. Кто отработал меньше, а кто больше - как понять? Эту непростую задачу мастерски решает наш сервис"
-            icon={<PeopleOutlineIco fontSize="large" />}
-            title="Совместная работа над проектом"
-          />
-          <HoveredItem
-            description="Сервис не позволит вам забрасывать задачи. А лишние он завершит сам. Да, так тоже можно"
-            icon={<AssignmentIco fontSize="large" />}
-            title="Удобное управление задачами в проекте"
-          />
-          <HoveredItem
-            description="Иногда приятно понаблюдать, как лихо партнеры справляются со своими задачми"
-            icon={<LocationSearchingIco fontSize="large" />}
-            title="Отслеживание хода выполнения задач в проекте"
-          />
-          <HoveredItem
-            description="Вы знали, что с математическо точки зрения справедливое распределение ресурсов в команде - это решаемая задача? По крайней мере, для небольшого количества участников..."
-            icon={<SwapCallsIco fontSize="large" />}
-            title="Справедливое распределение результатов работы между членами команды"
-          />
-          <HoveredItem
-            description="Нет ничего лучше, чем посмотреть на проделанное за последний год. Объемы ошеломляют. Результат работы вдохновляет"
-            icon={<TimelineIco fontSize="large" />}
-            title="Статистика"
-          />
-          {/*<HoveredItem*/}
-          {/*  description="Увидеть свой вклад в проект так важно. Иногда кажется, что никто в проекте не работает, кроме тебя, но вклад 2% в статистике проекта говорит об обратном"*/}
-          {/*  icon={<TimelineIco fontSize="large" />}*/}
-          {/*  title="Статистика проекта"*/}
-          {/*/>*/}
+          {INFO_LIST.map((data, index) => (
+            <HoveredItem key={index} index={index} {...data} />
+          ))}
         </Grid>
       </BlockContent>
     </Block>

@@ -1,32 +1,17 @@
-import { createMuiTheme, darken, lighten, Theme } from '@material-ui/core/styles';
+import { createMuiTheme, Theme } from '@material-ui/core/styles';
+
+import MuiDialog from './MuiDialog';
+import {
+  BACKGROUND_DARK,
+  BACKGROUND_DEFAULT,
+  prettyScroll1,
+  SECONDARY_DARK,
+  SECONDARY_DARKEN,
+  SECONDARY_LIGHT,
+  SECONDARY_MAIN,
+} from './variables';
 
 const defaultTheme: Theme = createMuiTheme({});
-
-const BACKGROUND_DEFAULT = '#EBEEF0';
-const BACKGROUND_DARK = '#242426';
-
-const SECONDARY_DARK = '#FFB200';
-const SECONDARY_DARKEN = darken(SECONDARY_DARK, 0.8);
-const SECONDARY_MAIN = '#FFF0B5';
-const SECONDARY_LIGHT = lighten(SECONDARY_MAIN, 0.2);
-
-const prettyScroll1 = {
-  '&::-webkit-scrollbar': {
-    width: defaultTheme.spacing(),
-  },
-  '&::-webkit-scrollbar-thumb': {
-    backgroundColor: '#404448',
-    borderRadius: defaultTheme.spacing(0.5),
-    cursor: 'pointer',
-  },
-  '&::-webkit-scrollbar-thumb:hover': {
-    backgroundColor: '#24292E',
-  },
-  '&::-webkit-scrollbar-track': {
-    backgroundColor: '#CED4D9',
-    borderRadius: defaultTheme.spacing(0.5),
-  },
-};
 
 export default createMuiTheme({
   mainContent: {
@@ -39,33 +24,7 @@ export default createMuiTheme({
     },
   },
   overrides: {
-    MuiDialogActions: {
-      root: {
-        [defaultTheme.breakpoints.down('sm')]: {
-          bottom: 0,
-          margin: 0,
-          padding: '4px',
-          position: 'fixed',
-          width: 'calc(100% - 8px)',
-          zIndex: 100,
-        },
-      },
-    },
-    MuiDialogContent: {
-      root: prettyScroll1,
-    },
-    MuiDialogTitle: {
-      root: {
-        alignItems: 'center',
-        // backgroundColor: '#24292E',
-        borderRadius: defaultTheme.spacing(0.5),
-        display: 'flex',
-        flexFlow: 'row nowrap',
-        height: 60,
-        justifyContent: 'space-between',
-        padding: `0 ${defaultTheme.spacing(1)}px`,
-      },
-    },
+    ...MuiDialog(defaultTheme),
     MuiExpansionPanelDetails: {
       root: {
         padding: '0 16px 16px',
@@ -175,11 +134,11 @@ export default createMuiTheme({
       textTransform: 'none',
     },
     h2: {
-      fontSize: 14,
+      fontSize: defaultTheme.typography.pxToRem(14),
       fontWeight: 700,
     },
     h5: {
-      fontSize: 18,
+      fontSize: defaultTheme.typography.pxToRem(18),
       fontWeight: 500,
     },
   },

@@ -18,6 +18,7 @@ const App: React.FC = () => {
         ))}
         <Redirect from="/index.html" to="/" exact />
         <Redirect from="/" to="/hi" exact />
+        <Redirect to="/login" />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

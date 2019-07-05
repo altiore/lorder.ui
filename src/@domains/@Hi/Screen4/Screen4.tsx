@@ -1,8 +1,10 @@
+import Collapse from '@material-ui/core/Collapse';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import React, { useState } from 'react';
+import VisibilitySensor from 'react-visibility-sensor';
 
 import AuthForm from '@domains/@common/AuthForm';
 import Block from '@domains/@Hi/@common/Block';
@@ -15,43 +17,45 @@ interface Screen4I {
   services?: any[];
 }
 
+const LIST = [
+  'Главная ценность - это пользователь. Мы сами являемся пользователями, поэтому относимся к каждому пользователю проетка, как к самим себее',
+  'Удобство пользователя - превыше всего.',
+  'Справедливое распределение результатов работы между членами команды',
+  'Удобное управление задачами в проекте',
+  'Мы стараемся учесть интересы максимально возможного количества активных пользователей, занимающих активную жизненную позицию, людей которые заинтересованы в совершенствовании мира',
+  'Главная цель - сделать мир более организованным и справедливым для умных людей, создающих блага, целеустремленных, заинтересованных в успехе',
+];
+
 const Screen4: React.FC<Screen4I> = ({ services }) => {
   const classes = useStyles();
+  const [isVisible, setIsVisible] = useState(false);
 
   return (
     <Block className={classes.content}>
       <ScreenTitle black>Преимущества нашего сервиса:</ScreenTitle>
-      <BlockContent black>
-        <Grid container spacing={2}>
-          <Grid item xs={7}>
-            <List>
-              <StarItem>
-                Главная ценность - это пользователь. Мы сами являемся пользователями, поэтому относимся к каждому
-                пользователю проетка, как к самим себее
-              </StarItem>
-              <StarItem>Удобство пользователя - превыше всего.</StarItem>
-              <StarItem>Справедливое распределение результатов работы между членами команды</StarItem>
-              <StarItem>Удобное управление задачами в проекте</StarItem>
-              <StarItem>
-                Мы стараемся учесть интересы максимально возможного количества активных пользователей, занимающих
-                активную жизненную позицию, людей которые заинтересованы в совершенствовании мира
-              </StarItem>
-              <StarItem>
-                Главная цель - сделать мир более организованным и справедливым для умных людей, создающих блага,
-                целеустремленных, заинтересованных в успехе
-              </StarItem>
-            </List>
+      <VisibilitySensor onChange={setIsVisible} partialVisibility>
+        <BlockContent black>
+          <Grid container spacing={2}>
+            <Grid item xs={7}>
+              <Collapse in={isVisible} timeout={2000}>
+                <List>
+                  {LIST.map((text, index) => (
+                    <StarItem key={index}>{text}</StarItem>
+                  ))}
+                </List>
+              </Collapse>
+            </Grid>
+            <Grid item xs={5}>
+              <Paper className={classes.loginBlock}>
+                <Typography gutterBottom color="secondary" className={classes.loginTitle} variant="h5">
+                  Присоединитесь к нашей команде просто сейчас
+                </Typography>
+                <AuthForm />
+              </Paper>
+            </Grid>
           </Grid>
-          <Grid item xs={5}>
-            <Paper className={classes.loginBlock}>
-              <Typography gutterBottom color="secondary" className={classes.loginTitle} variant="h5">
-                Присоединитесь к нашей команде просто сейчас
-              </Typography>
-              <AuthForm />
-            </Paper>
-          </Grid>
-        </Grid>
-      </BlockContent>
+        </BlockContent>
+      </VisibilitySensor>
     </Block>
   );
 };

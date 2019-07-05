@@ -13,7 +13,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(2),
     width: 'fit-content',
   },
+  header: {
+    backgroundColor: 'transparent',
+    marginBottom: theme.spacing(2),
+  },
   toggleButton: {
-    width: 300,
+    width: '100%',
   },
 }));
