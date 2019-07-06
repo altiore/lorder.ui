@@ -10,9 +10,10 @@ import { useStyles } from '@domains/@common/AuthForm/LoginForm/styles';
 
 export class IMagicFormProps {
   autoFocus?: boolean;
+  isLogin: boolean;
 }
 
-const MagicForm: React.FC<IMagicFormProps & InjectedFormProps<{}, IMagicFormProps>> = ({
+const MagicForm: React.FC<InjectedFormProps<any, IMagicFormProps> & IMagicFormProps> = ({
   autoFocus,
   handleSubmit,
   submitting,

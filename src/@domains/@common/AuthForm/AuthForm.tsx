@@ -1,8 +1,10 @@
 import Button from '@material-ui/core/Button';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import { useTheme } from '@material-ui/core/styles';
+import SwipeableViews from 'react-swipeable-views';
 
 import { LoginForm } from './LoginForm';
 import { MagicForm } from './MagicForm';
@@ -14,39 +16,57 @@ export interface ILoginProps {
   toggleUiSetting: any;
 }
 
-const FORM_TYPES = ['login', 'signUp', 'magic'];
-
 export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, isMagicLoginForm, toggleUiSetting }) => {
   const classes = useStyles();
+  const theme = useTheme();
 
-  const [formType, setFormType] = useState(FORM_TYPES[0]);
+  const [formTypeIndex, setFormType] = useState(0);
+  const isLogin = useMemo(() => formTypeIndex === 0, [formTypeIndex]);
 
   const handleChange = useCallback(
-    (event: React.ChangeEvent<{}>, newValue: string) => {
+    (event: React.ChangeEvent<{}>, newValue: number) => {
       setFormType(newValue);
     },
     [setFormType]
   );
 
   const changeToMagic = useCallback(() => {
-    setFormType(curFormType => (curFormType === FORM_TYPES[2] ? FORM_TYPES[0] : FORM_TYPES[2]));
-  }, [setFormType]);
+    toggleUiSetting('isMagicLoginForm');
+  }, [toggleUiSetting]);
+
+  const handleChangeIndex = useCallback(
+    (index: number) => {
+      if (index < 2) {
+        setFormType(index);
+      } else {
+        toggleUiSetting('isMagicLoginForm');
+      }
+    },
+    [setFormType, toggleUiSetting]
+  );
 
   return (
     <div className={classes.form}>
       <AppBar position="static" className={classes.header}>
-        <Tabs value={formType} onChange={handleChange}>
-          <Tab label="Вход" value={FORM_TYPES[0]} />
-          <Tab label="Регистрация" value={FORM_TYPES[1]} />
+        <Tabs value={formTypeIndex} onChange={handleChange} variant="fullWidth">
+          <Tab label="Вход" />
+          <Tab label="Регистрация" />
         </Tabs>
       </AppBar>
-      {isMagicLoginForm ? (
-        <MagicForm autoFocus={autoFocus} />
-      ) : (
-        <LoginForm isLogin={formType === FORM_TYPES[0]} autoFocus={autoFocus} />
-      )}
+      <SwipeableViews
+        style={{ width: 320 }}
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={isMagicLoginForm ? 2 : formTypeIndex}
+        onChangeIndex={handleChangeIndex}
+      >
+        <LoginForm isLogin={isLogin} />
+        <LoginForm isLogin={isLogin} />
+        <MagicForm isLogin={isLogin} />
+      </SwipeableViews>
       <Button type="button" className={classes.toggleButton} onClick={changeToMagic} color="secondary">
-        {isMagicLoginForm ? 'Вход / Регистрация по паролю' : 'Отправить магическую ссылку'}
+        {isMagicLoginForm
+          ? `${isLogin ? 'Вход' : 'Регистрация'} по паролю`
+          : `Прислать ссылку для ${isLogin ? 'входа' : 'регистрации'}`}
       </Button>
     </div>
   );

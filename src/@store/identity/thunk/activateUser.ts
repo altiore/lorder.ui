@@ -6,7 +6,7 @@ import { identifier, projectIdSearchParam } from '@store/router';
 import { getAuthActivate, IGetAuthActivateData, loadInitialData, logOut, setIsLoading } from '../actions';
 import { userBearerKey } from '../selectors';
 
-export const activateUser = () => async (dispatch: Dispatch, getState: () => IState) => {
+export const activateUser = () => async (dispatch: Dispatch<any>, getState: () => IState) => {
   try {
     dispatch(setIsLoading());
     const state = getState();

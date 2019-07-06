@@ -10,7 +10,7 @@ import Boundary from '@components/Boundary';
 import Dialog from '@domains/@common/Dialog';
 import Notification from '@domains/@common/Notification';
 import { createStore } from '@store/createStore';
-import theme from '@styles/materialTheme';
+import lightTheme from '@styles/themes/light';
 import '@styles/base.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -21,7 +21,7 @@ createStore().then(({ store, persistor, history }) => {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ConnectedRouter history={history}>
-            <MuiThemeProvider theme={theme}>
+            <MuiThemeProvider theme={lightTheme}>
               <CssBaseline />
               <App />
               <Notification />

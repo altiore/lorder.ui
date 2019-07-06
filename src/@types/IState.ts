@@ -5,6 +5,7 @@ import { DownloadList } from '@store/@common/entities';
 import { IDialogState } from '@store/dialog';
 import { Feedback } from '@store/feedback';
 import { IIdentityState } from '@store/identity';
+import { IInfo } from '@store/info';
 import { Project } from '@store/projects';
 import { PublicProject } from '@store/publicProject';
 import { TaskType } from '@store/task-types';
@@ -21,6 +22,7 @@ export interface IState {
   feedback: DownloadList<Feedback>;
   form: FormStateMap;
   identity: IIdentityState;
+  info: IInfo;
   notifications: NotificationsState;
   project: { selected?: number };
   projects: DownloadList<Project>;

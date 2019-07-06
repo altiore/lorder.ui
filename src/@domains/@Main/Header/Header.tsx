@@ -19,7 +19,7 @@ import Filters from './Filters';
 import { ProjectButton } from './ProjectButton';
 import { ProjectField } from './ProjectField';
 import { RightMenu } from './RightMenu';
-// import { ReactComponent as TimerIcon } from './timer.svg';
+// import { ReactComponent as TimerIcon } from './clock.svg';
 
 type ProjectType = Partial<Project> & { percent: string | number; time: string };
 type ProjectsArrayType = ProjectType[];

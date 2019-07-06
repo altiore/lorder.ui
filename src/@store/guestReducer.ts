@@ -11,6 +11,7 @@ import { DownloadList } from './@common/entities';
 import { dialog } from './dialog';
 import { highcharts } from './highcharts/reducer';
 import { identity } from './identity';
+import { info } from './info/reducer';
 import { Project } from './projects';
 import { publicProject } from './publicProject';
 import { routerReducer } from './router/reducer';
@@ -85,6 +86,7 @@ export async function createRootReducer(history: History, role: ROLE = ROLE.GUES
       form,
       highcharts,
       identity,
+      info,
       notifications,
       publicProject,
       router: routerReducer(history),

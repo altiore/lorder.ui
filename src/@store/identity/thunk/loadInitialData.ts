@@ -6,7 +6,7 @@ import { identifier } from '@store/router';
 import { getUserWorks } from '@store/user-works';
 import { userIsLoading, userRole } from '../selectors';
 
-export const loadInitialData = () => async (dispatch: Dispatch, getState: () => IState) => {
+export const loadInitialData = () => async (dispatch: Dispatch<any>, getState: () => IState) => {
   const state = getState();
   const role = userRole(state);
   const isLoading = userIsLoading(state);

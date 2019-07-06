@@ -5,7 +5,7 @@ import React from 'react';
 
 import { LinkButton } from '@domains/@common/LinkButton';
 import Block from '@domains/@Hi/@common/Block';
-import MainClockIco from './MainClock';
+import ActiveClock from './ActiveClock';
 import { useStyles } from './styles';
 
 interface Screen1I {
@@ -20,7 +20,7 @@ const Screen1: React.FC<Screen1I> = ({ btnText2, text2 }) => {
     <Block className={classes.content} direction="row-reverse">
       <Grid item md={1} xs={false} />
       <Grid item className={classes.block} md={5} xs={12}>
-        <MainClockIco />
+        <ActiveClock />
       </Grid>
       <Grid item className={classes.block} md={5} xs={12}>
         <Typography className={classes.question} variant="h4">

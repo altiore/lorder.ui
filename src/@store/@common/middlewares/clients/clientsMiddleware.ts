@@ -22,7 +22,7 @@ function getError(action: any, status: number): false | Notification {
     return {
       level: 'error',
       position: 'tr',
-      ...errorFromAction,
+      ...(typeof errorFromAction === 'function' ? errorFromAction(action) : errorFromAction),
     };
   } else {
     const isFormHanldeValidationErrors = get(action, 'meta.previousAction.payload.form') && status === 422;
@@ -103,7 +103,7 @@ export default multiClientMiddleware(
         } else {
           // Если форма указана, то вставляем ошибки в форму
           const formName = get(action, 'meta.previousAction.payload.form');
-          if (formName) {
+          if (formName && status === 422) {
             dispatch(stopAsyncValidation(formName, parseFormErrorsFromResponse(action)));
           }
           const showError = getError(action, status);

@@ -417,9 +417,9 @@
       }
     </style>
     <linearGradient id="a" x1="185.98" y1="239.93" x2="313.39" y2="239.93" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#d1bf73"/>
-      <stop offset="0.55" stop-color="#f9edad"/>
-      <stop offset="1" stop-color="#bfa759"/>
+      <stop offset="0" stopColor="#d1bf73"/>
+      <stop offset="0.55" stopColor="#f9edad"/>
+      <stop offset="1" stopColor="#bfa759"/>
     </linearGradient>
     <linearGradient id="b" x1="198.98" y1="77.29" x2="245.87" y2="77.29" xlink:href="#a"/>
     <linearGradient id="c" x1="147.54" y1="89.67" x2="204.79" y2="89.67" xlink:href="#a"/>

@@ -15,7 +15,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   header: {
     backgroundColor: 'transparent',
+    boxShadow: 'none',
     marginBottom: theme.spacing(2),
+    width: theme.spacing(40),
   },
   toggleButton: {
     width: '100%',

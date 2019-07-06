@@ -2557,9 +2557,9 @@
       <rect class="a" x="36.61" width="500" height="500"/>
     </clipPath>
     <linearGradient id="b" x1="331.94" y1="-539.34" x2="331.94" y2="1354.19" gradientTransform="translate(-84.02 106.21) rotate(-20.13)" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#d1bf73"/>
-      <stop offset="0.55" stop-color="#f9edad"/>
-      <stop offset="1" stop-color="#bfa759"/>
+      <stop offset="0" stopColor="#d1bf73"/>
+      <stop offset="0.55" stopColor="#f9edad"/>
+      <stop offset="1" stopColor="#bfa759"/>
     </linearGradient>
     <linearGradient id="c" x1="337.84" y1="-98.8" x2="337.84" y2="771.61" xlink:href="#b"/>
     <linearGradient id="d" x1="338.4" y1="-31.62" x2="338.4" y2="679.77" xlink:href="#b"/>
