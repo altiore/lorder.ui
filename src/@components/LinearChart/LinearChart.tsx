@@ -17,7 +17,7 @@ export interface ILinearChartProps {
   className?: string;
 }
 
-export const LinearChartTsx1: React.FunctionComponent<ILinearChartProps> = ({}) => (
+export const LinearChartTsx1: React.FC<ILinearChartProps> = () => (
   <HighchartsChart>
     <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow type={'pie'} />
 

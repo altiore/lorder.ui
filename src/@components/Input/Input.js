@@ -1,21 +1,16 @@
 import InputAdornment from '@material-ui/core/InputAdornment';
-import TextFieldBase from "@material-ui/core/TextField";
-import React from "react";
+import TextFieldBase from '@material-ui/core/TextField';
+import React from 'react';
 
-const Input = ({ classes, className, view, icon, InputProps = {}, InputLabelProps, ...rest }) => {
-
+const Input = ({ className, icon, InputProps = {}, ...rest }) => {
   return (
     <TextFieldBase
       variant="outlined"
       InputProps={{
-        startAdornment: icon ? (
-          <InputAdornment position="start">
-            {icon}
-          </InputAdornment>
-        ) : undefined,
+        startAdornment: icon ? <InputAdornment position="start">{icon}</InputAdornment> : undefined,
+        className,
         ...InputProps,
       }}
-      InputLabelProps={InputLabelProps}
       {...rest}
     />
   );

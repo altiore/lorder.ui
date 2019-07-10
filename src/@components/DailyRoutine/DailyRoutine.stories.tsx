@@ -2,9 +2,9 @@ import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 
-const moment = require('moment');
-
 import { DailyRoutine } from './DailyRoutine';
+
+const moment = require('moment');
 
 const startJob = moment().subtract(5, 'hours');
 

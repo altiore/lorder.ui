@@ -25,6 +25,7 @@ const MagicForm: React.FC<InjectedFormProps<any, IMagicFormProps> & IMagicFormPr
         <Field
           autoComplete="username"
           autoFocus={autoFocus}
+          className={classes.field}
           component={InputField}
           icon={<UserIco />}
           name="email"

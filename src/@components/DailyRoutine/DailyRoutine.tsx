@@ -95,7 +95,7 @@ export class DailyRoutine extends React.PureComponent<IDailyRoutineProps, IDaily
   private getMinDate(): moment.Moment {
     const { events } = this.props;
     let minDate = moment();
-    events.map(event => {
+    events.forEach(event => {
       if (minDate.diff(event.startAt, 'hours') > 1) {
         minDate = event.startAt;
       }

@@ -1,6 +1,7 @@
 import { createMuiTheme, Theme } from '@material-ui/core/styles';
 
 import MuiDialog from './MuiDialog';
+import MuiTextField from './MuiTextField';
 import {
   BACKGROUND_DARK,
   BACKGROUND_DEFAULT,
@@ -26,61 +27,10 @@ export default createMuiTheme({
   },
   overrides: {
     ...MuiDialog(defaultTheme),
+    ...MuiTextField(defaultTheme),
     MuiExpansionPanelDetails: {
       root: {
         padding: '0 16px 16px',
-      },
-    },
-    MuiFormHelperText: {
-      root: {
-        backgroundColor: 'transparent',
-        bottom: -13,
-        position: 'absolute',
-      },
-    },
-    MuiInputAdornment: {
-      positionStart: {
-        left: defaultTheme.spacing(1.25),
-        position: 'absolute',
-        zIndex: 1,
-      },
-      root: {
-        color: '#878787',
-      },
-    },
-    MuiInputBase: {
-      input: {
-        borderRadius: 4,
-      },
-    },
-    MuiOutlinedInput: {
-      adornedStart: {
-        paddingLeft: 0,
-      },
-      input: {
-        fontSize: defaultTheme.typography.pxToRem(14),
-        height: defaultTheme.typography.pxToRem(36),
-        minWidth: defaultTheme.spacing(20),
-        padding: 0,
-        position: 'absolute',
-        width: `calc(100% - ${defaultTheme.spacing(4.25)}px)`,
-      },
-      inputAdornedStart: {
-        paddingLeft: defaultTheme.spacing(4.25),
-      },
-      notchedOutline: {
-        zIndex: 1,
-      },
-      root: {
-        backgroundColor: defaultTheme.palette.background.default,
-        borderRadius: defaultTheme.shape.borderRadius,
-        height: defaultTheme.typography.pxToRem(36),
-      },
-    },
-    MuiTextField: {
-      root: {
-        marginBottom: defaultTheme.spacing(2),
-        width: '100%',
       },
     },
     MuiToolbar: {

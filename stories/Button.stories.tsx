@@ -1,12 +1,13 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-// import { linkTo } from '@storybook/addon-links';
+
+import Center from '../.storybook/decor/Center';
 
 import Button from '@material-ui/core/Button';
 
 storiesOf('Button', module)
+  .addDecorator(Center)
   .add('variant="text", color="default"', () => <Button>Hello Button</Button>)
   .add('variant="text", color="primary"', () => <Button color="primary">Hello Button</Button>)
   .add('variant="text", color="secondary"', () => <Button color="secondary">Hello Button</Button>)
