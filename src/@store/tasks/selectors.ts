@@ -24,8 +24,8 @@ export const filteredTaskList = createSelector(
 
 export const getEditTaskInitialValues = createSelector(
   [allTaskList],
-  (allTaskList: Task[]) => (taskId: number) =>
-    pick(allTaskList.find((el: Task) => el.id === taskId), [
+  (allTaskList: Task[]) => (taskId: number) => {
+    return pick<any>(allTaskList.find((el: Task) => el.id === taskId), [
       'description',
       'id',
       'isDetailsLoaded',
@@ -34,7 +34,8 @@ export const getEditTaskInitialValues = createSelector(
       'users',
       'status',
       'value',
-    ])
+    ]);
+  }
 );
 
 export const getUserWorksById = createSelector(

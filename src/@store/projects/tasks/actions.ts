@@ -66,7 +66,7 @@ export const patchProjectTask = requestActions<IPatchProjectTaskData>(
       value,
     };
     if (users && users[0]) {
-      data.users = users.map(el => el.id);
+      data.users = users.map(el => (el as any).value);
     }
     return {
       form: PROJECT_EDIT_TASK_FORM_NAME,

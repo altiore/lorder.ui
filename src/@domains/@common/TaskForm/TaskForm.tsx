@@ -13,7 +13,7 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Field, InjectedFormProps } from 'redux-form';
+import { Field, FieldArray, InjectedFormProps } from 'redux-form';
 import { length, required } from 'redux-form-validators';
 
 import { TextField } from '@components/TextField';
@@ -27,6 +27,7 @@ import { StartStopBtn } from '@components/StartStopBtn';
 import { parseNumber } from '@store/@common/helpers';
 import { STATUS_NAMES } from '@store/projects';
 import { PerformerField } from './PerformerField';
+import { MembersField } from './MembersField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
 
 export interface ITaskFormData {
@@ -204,7 +205,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                 <Field name="performer" component={PerformerField} taskId={taskId}>
                   {(count: number, onClick: () => void) => <Avatar onClick={onClick}>{count}</Avatar>}
                 </Field>
-                <Field name="users" component={PerformerField} taskId={taskId}>
+                <FieldArray name="users" component={MembersField} taskId={taskId}>
                   {(count: number, onClick: () => void) => (
                     <IconButton aria-label={`${count} members`} className={classes.margin} onClick={onClick}>
                       <Badge badgeContent={count} color="secondary" invisible={invisible[0]}>
@@ -212,7 +213,7 @@ export class TaskFormJsx extends React.PureComponent<ITaskFormProps, ITaskFormSt
                       </Badge>
                     </IconButton>
                   )}
-                </Field>
+                </FieldArray>
               </div>
 
               <Field name="value" component={TextField} parse={parseNumber} label="Оценка задачи" type="number" />
