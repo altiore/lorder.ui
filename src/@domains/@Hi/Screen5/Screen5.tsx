@@ -7,21 +7,11 @@ import BlockContent from '@domains/@Hi/@common/BlockContent';
 import ScreenTitle from '@domains/@Hi/@common/ScreenTitle';
 import SubTitle from '@domains/@Hi/@common/SubTitle';
 import { IProjectMember } from '@types';
-import Achievement from './Achievement';
 import Person from './Person';
 import { useStyles } from './styles';
+import ProjectsAch from './ProjectsAch';
+import PublicProjectsAch from './PublicProjectsAch';
 import UsersAch from './UsersAch';
-
-const achievements = [
-  {
-    title: 'Проектов',
-    value: 200,
-  },
-  {
-    title: 'Публичных проектов',
-    value: 5,
-  },
-];
 
 interface Screen5I {
   team: IProjectMember[];
@@ -37,9 +27,8 @@ const Screen5: React.FC<Screen5I> = ({ team }) => {
         <BlockContent>
           <Grid container justify="space-evenly" alignItems="center" spacing={4}>
             <UsersAch title="Пользователей" />
-            {achievements.map(({ title, value }) => (
-              <Achievement key={title} title={title} value={value} />
-            ))}
+            <ProjectsAch title="Проектов" />
+            <PublicProjectsAch title="Публичных проектов" />
           </Grid>
         </BlockContent>
       </Block>
