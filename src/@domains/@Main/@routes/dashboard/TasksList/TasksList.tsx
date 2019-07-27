@@ -75,7 +75,7 @@ export class TasksListJsx extends React.Component<ITasksListProps, ITaskListStat
       const { page, perPage } = this.state;
       const length = tasks.length - 2;
       return (
-        <div key={index}>
+        <div key={task + index}>
           <Filter page={page} perPage={perPage} count={length} changePage={this.handleChangePage} />
         </div>
       );

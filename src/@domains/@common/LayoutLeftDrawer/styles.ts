@@ -21,6 +21,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'flex-start',
     display: 'flex',
     flexGrow: 1,
+    height: `calc(100vh - ${theme.spacing(7)}px)`,
     justifyContent: 'center',
     marginLeft: 0,
     overflowX: 'auto',

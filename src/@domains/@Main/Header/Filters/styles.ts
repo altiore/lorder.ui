@@ -46,14 +46,14 @@ export const styles = (theme: Theme) =>
       height: 56,
       left: 86,
       position: 'absolute',
-      top: 4,
+      top: 0,
       width: 'calc(100% - 110px)',
       zIndex: 1300,
     },
     search: {
       alignItems: 'center',
       display: 'flex',
-      padding: '2px 4px',
+      padding: 0,
       width: 400,
     },
   });

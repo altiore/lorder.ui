@@ -14,6 +14,8 @@ interface Screen3I {
     adv3: string;
     adv4: string;
     adv5: string;
+    adv6: string;
+    adv7: string;
   };
 }
 
@@ -33,6 +35,8 @@ const Screen3: React.FC<Screen3I> = ({ texts }) => {
         <Item key={3}>{texts.adv3}</Item>
         <Item key={4}>{texts.adv4}</Item>
         <Item key={5}>{texts.adv5}</Item>
+        <Item key={6}>{texts.adv6}</Item>
+        <Item key={7}>{texts.adv7}</Item>
       </Grid>
       <Grid item md={1} xs={false} />
     </Block>
