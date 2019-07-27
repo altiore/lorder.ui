@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useStyles } from './styles';
 
@@ -9,9 +9,7 @@ export interface IActivityG {
 const ActivityG: React.FC<IActivityG> = ({ activity = 0.1 }) => {
   const classes = useStyles();
 
-  if (activity > 1) {
-    throw new Error('Activity should not be more then 100%');
-  }
+  const preparedActivity = useMemo(() => (activity > 1 ? 1 : activity), [activity]);
 
   return (
     <>
@@ -30,7 +28,7 @@ const ActivityG: React.FC<IActivityG> = ({ activity = 0.1 }) => {
       </g>
       <g transform="translate(205.8,403)">
         <text className={classes.activity}>
-          <tspan textAnchor="middle">{Math.round(activity * 100)}%</tspan>
+          <tspan textAnchor="middle">{Math.round(preparedActivity * 100)}%</tspan>
         </text>
       </g>
     </>
