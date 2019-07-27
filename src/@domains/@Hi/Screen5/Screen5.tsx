@@ -10,12 +10,9 @@ import { IProjectMember } from '@types';
 import Achievement from './Achievement';
 import Person from './Person';
 import { useStyles } from './styles';
+import UsersAch from './UsersAch';
 
 const achievements = [
-  {
-    title: 'Пользователей',
-    value: 63,
-  },
   {
     title: 'Проектов',
     value: 200,
@@ -39,6 +36,7 @@ const Screen5: React.FC<Screen5I> = ({ team }) => {
         <ScreenTitle>Достижения</ScreenTitle>
         <BlockContent>
           <Grid container justify="space-evenly" alignItems="center" spacing={4}>
+            <UsersAch title="Пользователей" />
             {achievements.map(({ title, value }) => (
               <Achievement key={title} title={title} value={value} />
             ))}

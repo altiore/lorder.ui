@@ -8,6 +8,7 @@ import { IIdentityState } from '@store/identity';
 import { IInfo } from '@store/info';
 import { Project } from '@store/projects';
 import { PublicProject } from '@store/publicProject';
+import { Statistics } from '@store/statistics';
 import { TaskType } from '@store/task-types';
 import { Task, UserWork } from '@store/tasks';
 import { Timer } from '@store/timer';
@@ -28,6 +29,7 @@ export interface IState {
   projects: DownloadList<Project>;
   publicAltiore: PublicProject;
   publicProject: PublicProject;
+  statistics: Statistics;
   taskTypes: DownloadList<TaskType>;
   tasks: DownloadList<Task>;
   tasksFilter: ITasksFilter;

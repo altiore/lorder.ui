@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { withResize } from '@hooks/withResize';
 import { fetchAltiore } from '@store/publicAltiore';
+import { fetchStatistics } from '@store/statistics';
 import { HiTsx } from './Hi';
 import { styles } from './styles';
 
@@ -12,6 +13,7 @@ const masStateToProps = () => ({
 
 const mapDispatch = {
   fetchAltiore,
+  fetchStatistics,
 };
 
 export default connect(

@@ -17,15 +17,25 @@ export interface IHiProps {
   brandName: string;
   classes: any;
   fetchAltiore: () => any;
+  fetchStatistics: () => any;
   height: number;
   scrollWidth: number;
   width: number;
 }
 
-export const HiTsx: React.FC<IHiProps> = ({ brandName, classes, fetchAltiore, height, scrollWidth, width }) => {
+export const HiTsx: React.FC<IHiProps> = ({
+  brandName,
+  classes,
+  fetchAltiore,
+  fetchStatistics,
+  height,
+  scrollWidth,
+  width,
+}) => {
   useEffect(() => {
+    fetchStatistics();
     fetchAltiore();
-  }, [fetchAltiore]);
+  }, [fetchAltiore, fetchStatistics]);
 
   return (
     <Grid container direction="column">

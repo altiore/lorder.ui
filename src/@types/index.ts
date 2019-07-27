@@ -4,6 +4,7 @@ export * from './IMeta';
 export * from './INotification';
 export * from './IProjectMember';
 export * from './IState';
+export * from './IStatistics';
 export * from './ITask';
 export * from './ITasksFilter';
 export * from './IUser';
