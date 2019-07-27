@@ -23,13 +23,14 @@ import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
 import classNames from 'classnames';
 import upperFirst from 'lodash/upperFirst';
-import React, { lazy } from 'react';
+import React, { lazy, useCallback } from 'react';
 import { match, RouteComponentProps, Switch } from 'react-router';
 
 import { IRoute, ROLE } from '@types';
 import { LinkButton } from '@domains/@common/LinkButton';
 import { RouteWithSubRoutes } from '@domains/@common/RouteWithSubRoutes';
 import { Project } from '@store/projects';
+import { useStyles } from './styles';
 
 export interface ILayoutLeftDrawerProps {
   children?: React.ReactNode;
@@ -64,122 +65,134 @@ export const ICONS_MAP = {
   settings: SettingsIcon,
 };
 
-export class LayoutLeftDrawerTsx extends React.Component<ILayoutLeftDrawerProps & RouteComponentProps<any>, {}> {
-  handleDrawerToggle = () => {
-    this.props.toggleUiSetting('isLeftBarOpen');
-  };
+export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteComponentProps<any>> = ({
+  children,
+  goTo,
+  isLeftBarOpen,
+  isWidthSm,
+  match,
+  redirect,
+  routes,
+  selectedProject,
+  theme,
+  toggleUiSetting,
+  userRole,
+}) => {
+  const classes = useStyles();
 
-  render() {
-    const { children, classes, isLeftBarOpen, selectedProject, theme, redirect, routes, userRole } = this.props;
+  const handleDrawerToggle = useCallback(() => {
+    toggleUiSetting('isLeftBarOpen');
+  }, [toggleUiSetting]);
 
-    return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={isLeftBarOpen}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <div className={classes.drawerHeader}>
-            {selectedProject && (
-              <LinkButton to={`/projects/${selectedProject.id}`} className={classes.projectTitle}>
-                {selectedProject.title}
-              </LinkButton>
-            )}
-            {userRole !== ROLE.USER && <Typography className={classes.userRole}>{upperFirst(userRole)}</Typography>}
-            <div className={classes.grow} />
-            <IconButton onClick={this.handleDrawerToggle}>
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </div>
-          <Divider />
-          {routes && routes.length && (
+  const goToPage = useCallback(
+    (path?: string) => () => {
+      if (path) {
+        if (isWidthSm) {
+          handleDrawerToggle();
+        }
+        goTo(path.replace(match.path, match.url));
+      }
+    },
+    [handleDrawerToggle, goTo, match, isWidthSm]
+  );
+
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={isLeftBarOpen}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          {selectedProject && (
+            <LinkButton to={`/projects/${selectedProject.id}`} className={classes.projectTitle}>
+              {selectedProject.title}
+            </LinkButton>
+          )}
+          {userRole !== ROLE.USER && <Typography className={classes.userRole}>{upperFirst(userRole)}</Typography>}
+          <div className={classes.grow} />
+          <IconButton onClick={handleDrawerToggle}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        {routes && routes.length && (
+          <>
+            <List>
+              {routes
+                .filter((el: any) => el.icon)
+                .map((route: IRoute) => {
+                  const CurIcon = ICONS_MAP[route.icon];
+                  return (
+                    <ListItem key={route.path} button onClick={goToPage(route.path)}>
+                      <ListItemIcon>{CurIcon ? <CurIcon /> : route.icon}</ListItemIcon>
+                      <ListItemText primary={route.title} />
+                    </ListItem>
+                  );
+                })}
+            </List>
+            <Divider />
+          </>
+        )}
+        <List>
+          <ListItem button onClick={goToPage('/projects')}>
+            <ListItemIcon>
+              <LaptopIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Проекты'} />
+          </ListItem>
+          {userRole === ROLE.SUPER_ADMIN && (
             <>
-              <List>
-                {routes
-                  .filter((el: any) => el.icon)
-                  .map((route: IRoute) => {
-                    const CurIcon = ICONS_MAP[route.icon];
-                    return (
-                      <ListItem key={route.path} button onClick={this.goTo(route.path)}>
-                        <ListItemIcon>{CurIcon ? <CurIcon /> : route.icon}</ListItemIcon>
-                        <ListItemText primary={route.title} />
-                      </ListItem>
-                    );
-                  })}
-              </List>
-              <Divider />
+              <ListItem button onClick={goToPage('/all-projects')}>
+                <ListItemIcon>
+                  <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Все Проекты'} />
+              </ListItem>
+              <ListItem button onClick={goToPage('/users')}>
+                <ListItemIcon>
+                  <PeopleOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Пользователи'} />
+              </ListItem>
+              <ListItem button onClick={goToPage('/task-types')}>
+                <ListItemIcon>
+                  <FormatSizeIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Типы Задач'} />
+              </ListItem>
+              <ListItem button onClick={goToPage('/feedback')}>
+                <ListItemIcon>
+                  <FeedbackIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Обратная связь'} />
+              </ListItem>
             </>
           )}
-          <List>
-            <ListItem button onClick={this.goTo('/projects')}>
-              <ListItemIcon>
-                <LaptopIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Проекты'} />
-            </ListItem>
-            {userRole === ROLE.SUPER_ADMIN && (
-              <>
-                <ListItem button onClick={this.goTo('/all-projects')}>
-                  <ListItemIcon>
-                    <AssignmentIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={'Все Проекты'} />
-                </ListItem>
-                <ListItem button onClick={this.goTo('/users')}>
-                  <ListItemIcon>
-                    <PeopleOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={'Пользователи'} />
-                </ListItem>
-                <ListItem button onClick={this.goTo('/task-types')}>
-                  <ListItemIcon>
-                    <FormatSizeIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={'Типы Задач'} />
-                </ListItem>
-                <ListItem button onClick={this.goTo('/feedback')}>
-                  <ListItemIcon>
-                    <FeedbackIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={'Обратная связь'} />
-                </ListItem>
-              </>
-            )}
-          </List>
-        </Drawer>
-        <section
-          className={(classNames as any)(classes.content, {
-            [classes.contentShift]: isLeftBarOpen,
-          })}
-        >
-          <ButtonBase onClick={this.handleDrawerToggle} className={classes.toggleButton}>
-            <ChevronRightIcon />
-          </ButtonBase>
-          {children}
-          <Switch>
-            {redirect}
-            {routes &&
-              routes.map((route: IRoute) => (
-                <RouteWithSubRoutes component={ROUTES_BY_PATH[route.path]} key={route.path} {...route} />
-              ))}
-          </Switch>
-        </section>
-      </div>
-    );
-  }
-
-  private goTo = (path?: string) => () => {
-    if (path) {
-      const { goTo, match, isWidthSm } = this.props;
-      if (isWidthSm) {
-        this.handleDrawerToggle();
-      }
-      goTo(path.replace(match.path, match.url));
-    }
-  };
-}
+        </List>
+      </Drawer>
+      <section
+        className={(classNames as any)(classes.content, {
+          [classes.contentShift]: isLeftBarOpen,
+        })}
+      >
+        <ButtonBase onClick={handleDrawerToggle} className={classes.toggleButton}>
+          <ChevronRightIcon />
+        </ButtonBase>
+        {children}
+        <Switch>
+          {redirect}
+          {routes &&
+            routes.map((route: IRoute) => (
+              <RouteWithSubRoutes component={ROUTES_BY_PATH[route.path]} key={route.path} {...route} />
+            ))}
+        </Switch>
+      </section>
+    </div>
+  );
+};

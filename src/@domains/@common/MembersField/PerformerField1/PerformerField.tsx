@@ -1,5 +1,5 @@
 import React, { CSSProperties, HTMLAttributes, useCallback } from 'react';
-import clsx from 'classnames';
+import cn from 'classnames';
 import Select from 'react-select';
 import { createStyles, emphasize, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -198,7 +198,7 @@ function MultiValue(props: MultiValueProps<OptionType>) {
       key={props.data.value}
       tabIndex={-1}
       label={props.children}
-      className={clsx(props.selectProps.classes.chip, {
+      className={cn(props.selectProps.classes.chip, {
         [props.selectProps.classes.chipFocused]: props.isFocused,
       })}
       onDelete={props.removeProps.onClick}

@@ -1,4 +1,3 @@
-import { withStyles } from '@material-ui/core/styles';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -8,7 +7,6 @@ import { openDialog } from '@store/dialog';
 import { filteredProjectTasks, getAllProjectTasks, moveProjectTask } from '@store/projects';
 import { routeProjectId } from '@store/router';
 import { DragAndDrop } from './DragAndDrop';
-import { styles } from './styles';
 
 const mapState = createStructuredSelector({
   items: filteredProjectTasks,
@@ -40,4 +38,4 @@ export default connect(
   mapState,
   mapDispatch,
   mergeProps
-)(withResize(withStyles(styles, { withTheme: true })(DragAndDrop)));
+)(withResize(DragAndDrop));

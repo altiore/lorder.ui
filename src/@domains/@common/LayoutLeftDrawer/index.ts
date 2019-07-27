@@ -1,4 +1,3 @@
-import { withStyles } from '@material-ui/core/styles';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -10,7 +9,6 @@ import { userRole } from '@store/identity';
 import { selectedProject } from '@store/projects';
 import { isLeftBarOpen, toggleUiSetting } from '@store/ui';
 import { LayoutLeftDrawerTsx } from './LayoutLeftDrawer';
-import { styles } from './styles';
 
 const mapState = createStructuredSelector({
   isLeftBarOpen,
@@ -28,4 +26,4 @@ const mapDispatch = {
 export const LayoutLeftDrawer = connect<any, any, any>(
   mapState,
   mapDispatch
-)(withRouter(withResize(withStyles(styles, { withTheme: true })(LayoutLeftDrawerTsx))));
+)(withRouter(withResize(LayoutLeftDrawerTsx)));
