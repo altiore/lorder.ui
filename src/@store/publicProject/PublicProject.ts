@@ -1,10 +1,11 @@
 import get from 'lodash/get';
 import map from 'lodash/map';
 
+import { IProjectMember } from '@types';
 import { convertSecondsToDurationWithLocal, millisecondsToHours } from '@store/@common/helpers';
 
 export class Statistic {
-  members: Array<{ accessLevel: number; avatar: string; id: number; email: string }>;
+  members: IProjectMember[];
   data: { [key in any]: { time: number; value: number } };
 }
 

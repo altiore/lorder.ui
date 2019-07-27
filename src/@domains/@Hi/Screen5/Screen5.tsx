@@ -6,6 +6,7 @@ import Block from '@domains/@Hi/@common/Block';
 import BlockContent from '@domains/@Hi/@common/BlockContent';
 import ScreenTitle from '@domains/@Hi/@common/ScreenTitle';
 import SubTitle from '@domains/@Hi/@common/SubTitle';
+import { IProjectMember } from '@types';
 import Achievement from './Achievement';
 import Person from './Person';
 import { useStyles } from './styles';
@@ -26,10 +27,7 @@ const achievements = [
 ];
 
 interface Screen5I {
-  team: Array<{
-    avatar: string;
-    name: string;
-  }>;
+  team: IProjectMember[];
 }
 
 const Screen5: React.FC<Screen5I> = ({ team }) => {
@@ -59,8 +57,8 @@ const Screen5: React.FC<Screen5I> = ({ team }) => {
         </SubTitle>
         <BlockContent>
           <Grid container justify="space-evenly" alignItems="center" spacing={4}>
-            {team.map(({ avatar, name }) => (
-              <Person key={name} avatar={avatar} name={name} />
+            {team.map(({ avatar, email }) => (
+              <Person key={email} avatar={avatar} name={email} />
             ))}
           </Grid>
         </BlockContent>

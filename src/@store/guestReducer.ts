@@ -13,6 +13,7 @@ import { highcharts } from './highcharts/reducer';
 import { identity } from './identity';
 import { info } from './info/reducer';
 import { Project } from './projects';
+import { publicAltiore } from './publicAltiore/reducer';
 import { publicProject } from './publicProject';
 import { routerReducer } from './router/reducer';
 import { TaskType } from './task-types';
@@ -88,6 +89,7 @@ export async function createRootReducer(history: History, role: ROLE = ROLE.GUES
       identity,
       info,
       notifications,
+      publicAltiore,
       publicProject,
       router: routerReducer(history),
       ui: uiReducer,

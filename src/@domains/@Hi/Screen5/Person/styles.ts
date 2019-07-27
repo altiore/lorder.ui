@@ -9,11 +9,17 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: IMAGE_SIZE,
   },
   avatarWrapper: {
+    alignItems: 'center',
     border: `1px solid ${theme.palette.secondary.dark}`,
     borderRadius: '50%',
+    display: 'flex',
+    heigth: theme.spacing(23.5),
+    justifyContent: 'center',
     marginBottom: theme.spacing(2),
+    width: theme.spacing(23.5),
   },
   item: {
     marginBottom: theme.spacing(2),
+    maxWidth: theme.spacing(27.5),
   },
 }));

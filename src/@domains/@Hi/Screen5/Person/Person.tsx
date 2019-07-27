@@ -16,9 +16,9 @@ export const Person: React.FC<PersonI> = ({ avatar, name }) => {
   return (
     <Grid item className={classes.item}>
       <div className={classes.avatarWrapper}>
-        <Avatar alt={name} srcSet={avatar} className={classes.avatar} />
+        <Avatar alt={name} src={avatar} className={classes.avatar} />
       </div>
-      <Typography align="center" color="textPrimary" variant="h5">
+      <Typography noWrap align="center" color="textPrimary" variant="h5">
         {name}
       </Typography>
     </Grid>

@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { TelegramIco } from '@components/@icons/Telegram';
 import YouTubeVideo from '@components/YouTubeVideo';
@@ -16,12 +16,17 @@ import Screen5 from './Screen5';
 export interface IHiProps {
   brandName: string;
   classes: any;
+  fetchAltiore: () => any;
   height: number;
   scrollWidth: number;
   width: number;
 }
 
-export const HiTsx: React.FC<IHiProps> = ({ brandName, classes, height, scrollWidth, width }) => {
+export const HiTsx: React.FC<IHiProps> = ({ brandName, classes, fetchAltiore, height, scrollWidth, width }) => {
+  useEffect(() => {
+    fetchAltiore();
+  }, [fetchAltiore]);
+
   return (
     <Grid container direction="column">
       <YouTubeVideo

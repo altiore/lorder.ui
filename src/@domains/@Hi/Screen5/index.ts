@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { team } from '@domains/@Hi/data';
+import { IProjectMember, IState } from '@types';
+import { altioreMembers } from '@store/publicAltiore';
 import Screen5 from './Screen5';
 
-const getTeam = () => team;
-
-const mapState = createStructuredSelector({
-  team: getTeam,
+const mapState = createStructuredSelector<IState, { team: IProjectMember[] }>({
+  team: altioreMembers,
 });
 
 export default connect(mapState)(Screen5);

@@ -26,6 +26,7 @@ export interface IState {
   notifications: NotificationsState;
   project: { selected?: number };
   projects: DownloadList<Project>;
+  publicAltiore: PublicProject;
   publicProject: PublicProject;
   taskTypes: DownloadList<TaskType>;
   tasks: DownloadList<Task>;
