@@ -21,7 +21,7 @@ import LaptopIcon from '@material-ui/icons/Laptop';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
-import classNames from 'classnames';
+import cn from 'classnames';
 import upperFirst from 'lodash/upperFirst';
 import React, { lazy, useCallback } from 'react';
 import { match, RouteComponentProps, Switch } from 'react-router';
@@ -177,7 +177,7 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
         </List>
       </Drawer>
       <section
-        className={(classNames as any)(classes.content, {
+        className={cn(classes.content, {
           [classes.contentShift]: isLeftBarOpen,
         })}
       >

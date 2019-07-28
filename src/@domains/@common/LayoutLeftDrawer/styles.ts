@@ -39,7 +39,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   contentShift: {
     marginLeft: drawerWidth,
-    transition: theme.transitions.create('margin', {
+    paddingLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'padding'], {
       duration: theme.transitions.duration.enteringScreen,
       easing: theme.transitions.easing.easeOut,
     }),
