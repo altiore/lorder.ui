@@ -2,20 +2,15 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { onSubmitForm } from '@store/@common/helpers';
 import { closeDialog } from '@store/dialog';
-import {
-  getSelectedProjectTaskById,
-  patchProjectTask,
-  PROJECT_EDIT_TASK_FORM_NAME,
-  projectTasksIsLoading,
-} from '@store/projects';
+import { getSelectedProjectTaskById, PROJECT_EDIT_TASK_FORM_NAME, projectTasksIsLoading } from '@store/projects';
+import { onSubmitTaskForm } from '@store/projects/tasks';
 import { routeProjectId } from '@store/router';
 import { TaskForm } from './StyledTaskForm';
 import { ITaskFormData, ITaskFormProps } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
-  getEditTaskInitialValues: getSelectedProjectTaskById,
+  getSelectedProjectTaskById,
   projectId: routeProjectId,
   projectTasksIsLoading,
 } as any);
@@ -25,15 +20,19 @@ const mapDispatchToProps = {
 };
 
 const mergeProps = (
-  { getEditTaskInitialValues, ...restState }: any,
+  { getSelectedProjectTaskById, ...restState }: any,
   restDispatch: any,
   { taskId, ...restOwn }: any
 ) => ({
   ...restState,
-  initialValues: getEditTaskInitialValues(taskId),
+  initialValues: getSelectedProjectTaskById(taskId),
   ...restDispatch,
   ...restOwn,
 });
+
+function returnTrue() {
+  return true;
+}
 
 export const PatchTaskForm = connect<
   any,
@@ -47,9 +46,7 @@ export const PatchTaskForm = connect<
   destroyOnUnmount: false,
   enableReinitialize: true,
   form: PROJECT_EDIT_TASK_FORM_NAME,
-  onSubmit: onSubmitForm(patchProjectTask, props => ({ projectId: props.projectId })),
-  onSubmitFail: () => true,
-  onSubmitSuccess: (res, dispatch, { closeDialog }) => {
-    closeDialog();
-  },
+  onSubmit: onSubmitTaskForm,
+  onSubmitFail: returnTrue,
+  onSubmitSuccess: closeDialog,
 })(TaskForm) as any);

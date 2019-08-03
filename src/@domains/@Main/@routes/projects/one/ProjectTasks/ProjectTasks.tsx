@@ -15,13 +15,15 @@ import { DownloadList } from '@store/@common/entities';
 import { ProjectTask } from '@store/projects';
 import { PerformersCell } from './PerformersCell';
 
+import { PROJECT_EDIT_TASK_FORM_NAME } from '@store/projects';
+
 export interface IProjectTasksProps {
   isFormMount: boolean;
   classes: any;
   closeDialog: any;
-  deleteProjectTask: (id: number) => void;
-  destroyEditTaskForm: () => any;
-  getAllProjectTasks: () => void;
+  deleteProjectTask: ({ projectId, taskId }: { projectId: number; taskId: number }) => void;
+  destroy: (formName: string) => any;
+  getAllProjectTasks: (p: number) => void;
   openDialog: any;
   projectId: number;
   projectTasks: DownloadList<ProjectTask>;
@@ -42,18 +44,18 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
   private performersCellRef: HTMLElement[] = [];
 
   componentDidMount() {
-    this.props.getAllProjectTasks();
+    this.props.getAllProjectTasks(this.props.projectId);
   }
 
   componentWillReceiveProps(nextProps: IProjectTasksProps) {
     if (nextProps.projectId !== this.props.projectId) {
-      nextProps.getAllProjectTasks();
+      nextProps.getAllProjectTasks(this.props.projectId);
     }
   }
 
   componentWillUnmount() {
     if (this.props.isFormMount) {
-      this.props.destroyEditTaskForm();
+      this.props.destroy(PROJECT_EDIT_TASK_FORM_NAME);
     }
   }
 
@@ -141,10 +143,10 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     }
   };
 
-  private handleRemoveClick = (id: number | string) => (e: any) => {
-    if (typeof id === 'number') {
+  private handleRemoveClick = (taskId: number | string) => (e: any) => {
+    if (typeof taskId === 'number') {
       e.stopPropagation();
-      this.props.deleteProjectTask(id);
+      this.props.deleteProjectTask({ projectId: this.props.projectId, taskId });
     }
   };
 }

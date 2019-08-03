@@ -1,5 +1,5 @@
 import { ACCESS_LEVEL } from '@store/projects';
-import { ROLES } from "@store/roles";
+import { ROLES } from '@store/roles';
 
 export const routes = [
   {
@@ -17,21 +17,26 @@ export const routes = [
       {
         access: [ROLES.USERS],
         exact: true,
-        icon: "home",
+        icon: 'home',
         path: '/',
         title: 'Дом',
       },
       {
         access: [ROLES.USERS],
+        path: '/profile',
+        title: 'Настройки пользователя',
+      },
+      {
+        access: [ROLES.USERS],
         exact: true,
-        icon: "assignment",
+        icon: 'assignment',
         path: '/projects',
         title: 'Мои Проекты',
       },
       {
         access: [ROLES.USERS],
         exact: true,
-        icon: "assignments",
+        icon: 'assignments',
         path: '/all-projects',
         title: 'Все Проекты',
       },
@@ -42,7 +47,7 @@ export const routes = [
           {
             access: [ROLES.USERS, ACCESS_LEVEL.RED],
             exact: true,
-            icon: "import-export",
+            icon: 'import-export',
             path: '/projects/:projectId/board',
             title: 'Доска',
           },

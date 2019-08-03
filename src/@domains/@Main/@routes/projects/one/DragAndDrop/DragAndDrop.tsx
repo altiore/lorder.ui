@@ -99,7 +99,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
         });
       }
     },
-    [moveProjectTask]
+    [moveProjectTask, projectId]
   );
 
   const createTask = useCallback(

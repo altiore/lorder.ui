@@ -10,12 +10,13 @@ import { deleteProjectTask, getAllProjectTasks, PROJECT_EDIT_TASK_FORM_NAME, pro
 import { routeProjectId } from '@store/router';
 import { ProjectTasksJsx } from './ProjectTasks';
 import { styles } from './styles';
+import { IState } from '@types';
 
-const mapState = createStructuredSelector({
+const mapState = createStructuredSelector<IState, any>({
   isFormMount: isFormMount(PROJECT_EDIT_TASK_FORM_NAME),
   projectId: routeProjectId,
   projectTasks,
-} as any);
+});
 
 const mapDispatch = {
   closeDialog,
@@ -26,22 +27,7 @@ const mapDispatch = {
   push,
 };
 
-const mergeProps = (
-  { projectId, ...restState }: any,
-  { deleteProjectTask, destroy, getAllProjectTasks, ...restDispatch }: any,
-  { match, ...restOwn }: any
-) => ({
-  ...restState,
-  ...restDispatch,
-  deleteProjectTask: (taskId: number) => deleteProjectTask({ taskId, projectId }),
-  destroyEditTaskForm: () => destroy(PROJECT_EDIT_TASK_FORM_NAME),
-  getAllProjectTasks: () => getAllProjectTasks(projectId),
-  projectId,
-  ...restOwn,
-});
-
 export default connect(
   mapState,
-  mapDispatch,
-  mergeProps
-)(withStyles(styles, { withTheme: true })(ProjectTasksJsx));
+  mapDispatch
+)(withStyles(styles)(ProjectTasksJsx));

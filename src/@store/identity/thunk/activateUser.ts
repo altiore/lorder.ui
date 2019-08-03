@@ -3,7 +3,8 @@ import { Dispatch } from 'redux';
 
 import { IState } from '@types';
 import { identifier, projectIdSearchParam } from '@store/router';
-import { getAuthActivate, IGetAuthActivateData, loadInitialData, logOut, setIsLoading } from '../actions';
+import { loadInitialData } from './loadInitialData';
+import { getAuthActivate, IGetAuthActivateData, logOut, setIsLoading } from '../actions';
 import { userBearerKey } from '../selectors';
 
 export const activateUser = () => async (dispatch: Dispatch<any>, getState: () => IState) => {

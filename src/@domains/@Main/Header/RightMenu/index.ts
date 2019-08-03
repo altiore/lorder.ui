@@ -1,22 +1,23 @@
-import { withStyles } from '@material-ui/core/styles';
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { logOut, userAvatar, userEmail, userRole } from '@store/identity';
+import { IState } from '@types';
 import { RightMenuTsx } from './RightMenu';
-import { styles } from './styles';
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createStructuredSelector<IState, any>({
   userAvatar,
   userEmail,
   userRole,
-} as any);
+});
 
 const mapDispatchToProps = {
   logOut,
+  push,
 };
 
-export const RightMenu = connect<any, any, any>(
+export const RightMenu = connect<any, any, any, any>(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(RightMenuTsx));
+)(RightMenuTsx);

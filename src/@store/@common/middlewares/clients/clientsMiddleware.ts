@@ -9,6 +9,8 @@ import { logOut, userBearerKey } from '@store/identity';
 import { parseFormErrorsFromResponse } from '../../helpers';
 import { api } from './api';
 
+const objectToFormData = require('object-to-formdata');
+
 export interface IStoreInfo {
   getState: () => any;
   dispatch: (fn: any) => any;
@@ -72,6 +74,13 @@ export default multiClientMiddleware(
           const bearerKey = userBearerKey(getState());
           if (bearerKey) {
             req.headers.Authorization = 'Bearer ' + bearerKey;
+          }
+
+          return req;
+        },
+        ({ getState, dispatch, getSourceAction }: IStoreInfo, req: AxiosRequestConfig) => {
+          if (get(req, ['headers', 'Content-Type']) === 'multipart/form-data') {
+            req.data = objectToFormData(req.data);
           }
 
           return req;

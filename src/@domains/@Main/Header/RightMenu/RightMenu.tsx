@@ -1,3 +1,5 @@
+import React, { useCallback, useState } from 'react';
+
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -7,11 +9,12 @@ import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import Tooltip from '@material-ui/core/Tooltip';
-import React from 'react';
+
+import { useStyles } from './styles';
 
 export interface IRightMenuProps {
-  classes: any;
   logOut: any;
+  push: (path: string) => void;
   userAvatar: any;
   userEmail: any;
   userRole: any;
@@ -21,76 +24,76 @@ export interface IRightMenuState {
   open: boolean;
 }
 
-export class RightMenuTsx extends React.Component<IRightMenuProps, IRightMenuState> {
-  state = {
-    open: false,
-  };
+export const RightMenuTsx: React.FC<IRightMenuProps> = ({ logOut, push, userAvatar, userEmail, userRole }) => {
+  const classes = useStyles();
 
-  anchorEl: EventTarget | any;
+  const [open, setOpen] = useState(false);
 
-  render() {
-    const { classes, logOut, userAvatar, userEmail, userRole } = this.props;
-    const { open } = this.state;
-    const elId = 'header-right-menu';
+  const handleToggle = useCallback(() => {
+    setOpen(o => !o);
+  }, [setOpen]);
 
-    return (
-      <div className={classes.root}>
-        <ButtonBase
-          aria-owns={open ? elId : undefined}
-          aria-haspopup="true"
-          buttonRef={this.getButtonRef}
-          className={classes.avatarButton}
-          onClick={this.handleToggle}
-        >
-          <Avatar alt={userEmail} src={userAvatar || '/d-avatar.png'} className={classes.avatar} />
-        </ButtonBase>
-        <Popper open={open} anchorEl={this.anchorEl} transition className={classes.menu}>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper id={elId} className={classes.menuPaper}>
-                <ClickAwayListener onClickAway={this.handleClose as any}>
-                  <MenuList>
-                    <MenuItem onClick={this.handleClose} className={classes.item}>
-                      Профиль
+  const [anchorEl, setAnchorEl] = useState();
+  const handleClose = useCallback(
+    (event: React.SyntheticEvent) => {
+      if (anchorEl.contains(event.target)) {
+        return;
+      }
+      setOpen(false);
+    },
+    [anchorEl, setOpen]
+  );
+
+  const goToProfile = useCallback(
+    (event: React.SyntheticEvent) => {
+      handleClose(event);
+      push('/profile');
+    },
+    [handleClose, push]
+  );
+
+  const elId = 'header-right-menu';
+  return (
+    <div className={classes.root}>
+      <ButtonBase
+        aria-owns={open ? elId : undefined}
+        aria-haspopup="true"
+        buttonRef={setAnchorEl}
+        className={classes.avatarButton}
+        onClick={handleToggle}
+      >
+        <Avatar alt={userEmail} src={userAvatar || '/d-avatar.png'} className={classes.avatar} />
+      </ButtonBase>
+      <Popper open={open} anchorEl={anchorEl} transition className={classes.menu}>
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+          >
+            <Paper id={elId} className={classes.menuPaper}>
+              <ClickAwayListener onClickAway={handleClose as any}>
+                <MenuList>
+                  <MenuItem onClick={goToProfile} className={classes.item}>
+                    Профиль
+                  </MenuItem>
+                  <Tooltip
+                    title={
+                      <div>
+                        <p>Вы вошли как: {`${userEmail} (${userRole})`}</p>
+                        <p>Нажмите, чтобы выйти</p>
+                      </div>
+                    }
+                  >
+                    <MenuItem onClick={logOut} className={classes.item}>
+                      Выйти
                     </MenuItem>
-                    <Tooltip
-                      title={
-                        <div>
-                          <p>Вы вошли как: {`${userEmail} (${userRole})`}</p>
-                          <p>Нажмите, чтобы выйти</p>
-                        </div>
-                      }
-                    >
-                      <MenuItem onClick={logOut} className={classes.item}>
-                        Выйти
-                      </MenuItem>
-                    </Tooltip>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </div>
-    );
-  }
-
-  private handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
-  };
-
-  private handleClose = (event: React.SyntheticEvent) => {
-    if (this.anchorEl.contains(event.target)) {
-      return;
-    }
-
-    this.setState({ open: false });
-  };
-
-  private getButtonRef = (node: any) => {
-    this.anchorEl = node;
-  };
-}
+                  </Tooltip>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </div>
+  );
+};

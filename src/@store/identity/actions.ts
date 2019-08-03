@@ -56,4 +56,13 @@ export const logOut = () => ({
 
 export const setIsLoading = createAction('IDENTITY/SET_IS_LOADING');
 
-export * from './thunk';
+export const uploadAvatar = requestActions('USER/UPLOAD_AVATAR', file => ({
+  request: {
+    method: 'POST',
+    url: '/users/avatar/update',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data: { file },
+  },
+}));

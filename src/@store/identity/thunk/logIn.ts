@@ -7,7 +7,8 @@ import { showSuccess } from '@store/notifications';
 import { INotification } from '@types';
 import getMailClientLinkByEmail from '@utils/getMailClientLinkByEmail';
 import openUrlInNewTab from '@utils/openUrlInNewTab';
-import { loadInitialData, logInPatch } from '../actions';
+import { logInPatch } from '../actions';
+import { loadInitialData } from './loadInitialData';
 
 export const logIn = async (data: { username: string; password: string }, dispatch: Dispatch<any>, { isLogin }) => {
   try {

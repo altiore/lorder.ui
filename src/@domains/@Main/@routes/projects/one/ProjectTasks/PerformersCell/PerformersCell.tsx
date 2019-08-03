@@ -3,8 +3,6 @@ import React from 'react';
 import Popover from 'react-popover';
 import { WrappedFieldProps } from 'redux-form';
 
-// import { ListBox } from 'liw-components/ListBox';
-
 import { IUser } from '@types';
 
 interface IPerformersState {
@@ -15,6 +13,7 @@ export interface IPerformersCellProps extends WrappedFieldProps {
   classes: any;
   patchProjectTask: any;
   taskId: number;
+  projectId: number;
   projectMembers: IUser[];
 }
 
@@ -28,29 +27,7 @@ export class PerformersCellJsx extends React.Component<IPerformersCellProps, IPe
     const { isOpen } = this.state;
 
     return (
-      <Popover
-        preferPlace="below"
-        isOpen={isOpen}
-        onOuterAction={this.handleOnClick}
-        body={<div>testBox</div>}
-        // body={
-        //   <ListBox
-        //     isMulti
-        //     items={projectMembers}
-        //     showFilter
-        //     onClose={this.handleOnClick}
-        //     getItemLabel={this.getLabel}
-        //     filterItem={this.filterItem}
-        //     findItemIndex={this.findItemIndex}
-        //     input={{
-        //       ...input,
-        //       onChange: this.handleChange,
-        //     }}
-        //     label={'Исполнители'}
-        //     {...rest}
-        //   />
-        // }
-      >
+      <Popover preferPlace="below" isOpen={isOpen} onOuterAction={this.handleOnClick} body={<div>testBox</div>}>
         <Button onClick={this.handleOnClick}>{input.value.length || '0'}</Button>
       </Popover>
     );
@@ -58,8 +35,8 @@ export class PerformersCellJsx extends React.Component<IPerformersCellProps, IPe
 
   private handleOnClick = () => this.setState(({ isOpen }) => ({ isOpen: !isOpen }));
 
-  private handleChange = (selectedUsers: any) => {
-    this.props.patchProjectTask(selectedUsers);
+  private handleChange = (users: any) => {
+    this.props.patchProjectTask({ users, projectId: this.props.projectId, taskId: this.props.taskId });
   };
 
   private filterItem(filterKw: string, item: any) {

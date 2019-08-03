@@ -4,29 +4,18 @@ import { createStructuredSelector } from 'reselect';
 import PerformerFieldRaw from '@domains/@common/PerformerField';
 import { patchProjectTask, projectMembersAsUsers } from '@store/projects';
 import { routeProjectId } from '@store/router';
+import { IState } from '@types';
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createStructuredSelector<IState, { projectId?: number; projectMembers: any[] }>({
   projectId: routeProjectId,
   projectMembers: projectMembersAsUsers,
-} as any);
+});
 
 const mapDispatchToProps = {
   patchProjectTask,
 };
 
-const mergeProps = (
-  { projectId, ...restState }: any,
-  { patchProjectTask, ...restDispatch }: any,
-  { taskId, ...restOwn }: any
-) => ({
-  ...restState,
-  ...restDispatch,
-  ...restOwn,
-  patchProjectTask: (users: number[]) => patchProjectTask({ projectId, id: taskId, users }),
-});
-
-export const PerformersCell = connect(
+export const PerformersCell = connect<any, any, any, any>(
   mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
+  mapDispatchToProps
 )(PerformerFieldRaw);

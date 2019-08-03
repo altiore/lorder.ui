@@ -1,31 +1,25 @@
-import { Theme } from '@material-ui/core/styles';
-import createStyles from '@material-ui/core/styles/createStyles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme) =>
-  createStyles({
-    avatar: {
-      margin: '10px',
-    },
-    avatarButton: {
-      borderRadius: '50%',
-    },
-    item: {
-      // backgroundColor: theme.palette.primary.light,
-      // color: theme.palette.secondary.light,
-      display: 'flex',
-      flexFlow: 'row nowrap',
-      justifyContent: 'space-between',
-    },
-    menu: {
-      zIndex: 1301,
-    },
-    menuPaper: {
-      // backgroundColor: theme.palette.primary.dark,
-    },
-    paper: {
-      marginRight: theme.spacing(2),
-    },
-    root: {
-      display: 'flex',
-    },
-  });
+export const useStyles = makeStyles((theme: Theme) => ({
+  avatar: {
+    margin: '10px',
+  },
+  avatarButton: {
+    borderRadius: '50%',
+  },
+  item: {
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'space-between',
+  },
+  menu: {
+    zIndex: 1301,
+  },
+  menuPaper: {},
+  paper: {
+    marginRight: theme.spacing(2),
+  },
+  root: {
+    display: 'flex',
+  },
+}));
