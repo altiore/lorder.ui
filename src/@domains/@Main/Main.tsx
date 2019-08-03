@@ -8,10 +8,10 @@ import { Header } from './Header';
 
 export const ROUTES_BY_PATH = {
   '/': lazy(() => import('./@Dashboard')),
-  '/all-projects': lazy(() => import('@domains/@Main/@routes/projects/list/all')),
+  '/all-projects': lazy(() => import('@domains/@Main/@Projects/list/all')),
   '/feedback': lazy(() => import('@domains/@Main/@routes/feedback')),
-  '/projects': lazy(() => import('./@routes/projects/list')),
-  '/projects/:projectId': lazy(() => import('./@routes/projects/one')),
+  '/projects': lazy(() => import('./@Projects/list')),
+  '/projects/:projectId': lazy(() => import('./@Projects/one')),
   '/task-types': lazy(() => import('@domains/@Main/@routes/task-types')),
   '/users': lazy(() => import('@domains/@Main/@routes/users')),
   '/profile': lazy(() => import('@domains/@Main/@Profile')),

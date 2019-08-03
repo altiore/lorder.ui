@@ -44,7 +44,7 @@ export class FiltersTsx extends React.Component<IFiltersProps, {}> {
                     <Avatar
                       isSelected={isSelected}
                       onClick={this.handleToggleMember(member.id as number)}
-                      src={undefined}
+                      src={member.avatar}
                     >
                       {member.email}
                     </Avatar>

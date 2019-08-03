@@ -49,11 +49,11 @@ export interface ILayoutLeftDrawerProps {
 
 // TODO: move to correct place in route paths
 export const ROUTES_BY_PATH = {
-  '/projects/:projectId/board': lazy(() => import('@domains/@Main/@routes/projects/one/DragAndDrop')),
-  '/projects/:projectId/members': lazy(() => import('@domains/@Main/@routes/projects/one/ProjectMembers')),
-  '/projects/:projectId/settings': lazy(() => import('@domains/@Main/@routes/projects/one/Settings')),
-  '/projects/:projectId/task-types': lazy(() => import('@domains/@Main/@routes/projects/one/ProjectTaskTypes')),
-  '/projects/:projectId/tasks': lazy(() => import('@domains/@Main/@routes/projects/one/ProjectTasks')),
+  '/projects/:projectId/board': lazy(() => import('@domains/@Main/@Projects/one/DragAndDrop')),
+  '/projects/:projectId/members': lazy(() => import('@domains/@Main/@Projects/one/ProjectMembers')),
+  '/projects/:projectId/settings': lazy(() => import('@domains/@Main/@Projects/one/Settings')),
+  '/projects/:projectId/task-types': lazy(() => import('@domains/@Main/@Projects/one/ProjectTaskTypes')),
+  '/projects/:projectId/tasks': lazy(() => import('@domains/@Main/@Projects/one/ProjectTasks')),
   '/projects/:projectId/tasks/:taskId': lazy(() => import('@domains/@Main/@routes/task')),
 };
 
