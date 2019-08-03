@@ -1,3 +1,4 @@
+import get from 'lodash/get';
 import { createSelector } from 'reselect';
 
 import { IState } from '@types';
@@ -12,5 +13,5 @@ export const altioreStatistic = createSelector(
 
 export const altioreMembers = createSelector(
   altioreStatistic,
-  s => (s ? s.members : [])
+  s => get(s, 'members', [])
 );

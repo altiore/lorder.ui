@@ -7,13 +7,14 @@ import { DashboardTaskForm } from '@domains/@common/TaskForm';
 import { Header } from './Header';
 
 export const ROUTES_BY_PATH = {
-  '/': lazy(() => import('./@routes/dashboard')),
+  '/': lazy(() => import('./@Dashboard')),
   '/all-projects': lazy(() => import('@domains/@Main/@routes/projects/list/all')),
   '/feedback': lazy(() => import('@domains/@Main/@routes/feedback')),
   '/projects': lazy(() => import('./@routes/projects/list')),
   '/projects/:projectId': lazy(() => import('./@routes/projects/one')),
   '/task-types': lazy(() => import('@domains/@Main/@routes/task-types')),
   '/users': lazy(() => import('@domains/@Main/@routes/users')),
+  '/profile': lazy(() => import('@domains/@Main/@Profile')),
 };
 
 export interface IMainProps {

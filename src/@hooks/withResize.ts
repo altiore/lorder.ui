@@ -69,7 +69,7 @@ export const withResize = <P>(
 
             width = element.offsetWidth;
             height = element.offsetHeight;
-            scrollHeight = element.clientWidth;
+            scrollHeight = element.clientHeight;
             scrollWidth = element.clientWidth;
           }
         }
@@ -80,7 +80,7 @@ export const withResize = <P>(
           const g = d.getElementsByTagName('body')[0];
           width = w.innerWidth || (e && e.clientWidth) || g.clientWidth;
           height = w.innerHeight || (e && e.clientHeight) || g.clientHeight;
-          scrollHeight = (e && e.clientWidth) || g.clientWidth;
+          scrollHeight = (e && e.clientHeight) || g.clientHeight;
           scrollWidth = (e && e.clientWidth) || g.clientWidth;
         }
         const { theme } = this.props;

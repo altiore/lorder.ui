@@ -7,5 +7,5 @@ const baseState = (state: IState) => state.versionHistory;
 
 export const version = createSelector(
   baseState,
-  (state: VersionHistory): string => state.version
+  (state: VersionHistory): string | undefined => state.version
 );
