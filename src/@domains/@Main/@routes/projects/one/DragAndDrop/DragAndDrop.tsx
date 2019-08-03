@@ -55,8 +55,8 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   const classes = useStyles();
 
   useEffect(() => {
-    getAllProjectTasks();
-  }, [getAllProjectTasks]);
+    getAllProjectTasks(projectId);
+  }, [getAllProjectTasks, projectId]);
 
   const [columns, setColumns] = useState([false, true, true, true, false]);
 
@@ -91,11 +91,12 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
           source,
         });
       } else {
-        moveProjectTask(
-          parseInt(draggableId, 0),
-          parseInt(destination.droppableId, 0),
-          parseInt(source.droppableId, 0)
-        );
+        moveProjectTask({
+          projectId,
+          taskId: parseInt(draggableId, 0),
+          status: parseInt(destination.droppableId, 0),
+          prevStatus: parseInt(source.droppableId, 0),
+        });
       }
     },
     [moveProjectTask]
