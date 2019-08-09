@@ -1,13 +1,13 @@
+import React from 'react';
+
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import { Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import AddIcon from '@material-ui/icons/Add';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import TimerIcon from '@material-ui/icons/Timer';
-import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { INotification } from '@types';
@@ -19,7 +19,6 @@ import Filters from './Filters';
 import { ProjectButton } from './ProjectButton';
 import { ProjectField } from './ProjectField';
 import { RightMenu } from './RightMenu';
-// import { ReactComponent as TimerIcon } from './clock.svg';
 
 type ProjectType = Partial<Project> & { percent: string | number; time: string };
 type ProjectsArrayType = ProjectType[];
@@ -43,9 +42,6 @@ export interface IHeaderState {
   expanded: boolean;
 }
 
-const projectFilter = (projects: Project[] = []) => (project: ProjectType) =>
-  ~projects.findIndex(pr => pr && project && pr.id === project.id);
-
 export class HeaderTsx extends React.Component<IHeaderProps> {
   state = {
     anchorEl: null,
@@ -61,12 +57,8 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
   }
 
   render() {
-    const { classes, theme, projects, selectedProject, width } = this.props;
+    const { classes, selectedProject } = this.props;
     const { expanded } = this.state;
-    let filteredProjects: ProjectsArrayType = projects;
-    if (!expanded) {
-      filteredProjects = selectedProject ? projects.filter(projectFilter([selectedProject])) : [];
-    }
     return (
       <AppBar position="static" color="primary">
         <Toolbar>
@@ -74,39 +66,28 @@ export class HeaderTsx extends React.Component<IHeaderProps> {
             <TimerIcon fontSize="large" color="inherit" className={classes.timerIco} />
           </LinkIconButton>
           <div className={classes.buttonBlock}>
-            {filteredProjects.map(project => (
-              <ProjectButton
-                key={project.id}
-                selectProject={this.selectProject(project as Project)}
-                onOpenInNew={this.handleOpenInNew(project as Project)}
-                {...project}
-                inProgress={selectedProject && project.id === selectedProject.id}
-              />
-            ))}
+            <ProjectButton
+              selectProject={this.selectProject(selectedProject)}
+              onOpenInNew={this.handleOpenInNew(selectedProject)}
+              {...selectedProject}
+              inProgress
+            />
             {expanded && (
               <IconButton color="secondary" onClick={this.openCreateProject} className={classes.expandButton}>
                 <AddIcon />
               </IconButton>
             )}
-            {width && width > theme.breakpoints.values.sm ? (
-              <IconButton color="secondary" onClick={this.toggleExpandProjects} className={classes.expandButton}>
-                {expanded ? <ChevronLeftIcon /> : <MoreHorizIcon />}
-              </IconButton>
-            ) : (
-              <>
-                <IconButton color="secondary" onClick={this.menuOpen} className={classes.expandButton}>
-                  <MoreHorizIcon />
-                </IconButton>
-                <Menu
-                  anchorEl={this.state.anchorEl}
-                  open={Boolean(this.state.anchorEl)}
-                  onClose={this.handleClose('anchorEl')}
-                  classes={{ paper: classes.menu }}
-                >
-                  <ProjectField onClick={this.selectProject} onOpenInNew={this.handleOpenInNew} />
-                </Menu>
-              </>
-            )}
+            <IconButton color="secondary" onClick={this.menuOpen} className={classes.expandButton}>
+              <MoreHorizIcon />
+            </IconButton>
+            <Menu
+              anchorEl={this.state.anchorEl}
+              open={Boolean(this.state.anchorEl)}
+              onClose={this.handleClose('anchorEl')}
+              classes={{ paper: classes.menu }}
+            >
+              <ProjectField onClick={this.selectProject} onOpenInNew={this.handleOpenInNew} />
+            </Menu>
           </div>
           <div className={classes.grow}>
             <Switch>

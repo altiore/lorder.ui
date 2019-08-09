@@ -1,10 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import Badge from '@material-ui/core/Badge';
-import Button from '@material-ui/core/Button';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { Badge, Button, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,15 +13,17 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Field, FieldArray, InjectedFormProps } from 'redux-form';
 import { length, required } from 'redux-form-validators';
 
-import { TextField } from '@components/TextField';
-
 import { INotification } from '@types';
+
+import { TextField } from '@components/TextField';
 import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
 import Avatar from '@components/Avatar';
 import { SelectMenuField } from '@components/SelectMenuField';
 import { StartStopBtn } from '@components/StartStopBtn';
+
 import { parseNumber } from '@store/@common/helpers';
 import { STATUS_NAMES } from '@store/projects';
+
 import { PerformerField } from './PerformerField';
 import { MembersField } from './MembersField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
@@ -62,6 +60,11 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
 }
 
 const timers: any[] = [];
+
+const titleValidate = [
+  required({ msg: 'Обязательное поле' }),
+  length({ max: 140, msg: 'Превышен максимум 140 символов' }),
+];
 
 export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   archiveTask,
@@ -255,14 +258,10 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
         <form onSubmit={handleSave()} className={classes.cardForm}>
           <div className={classes.cardFirst}>
             <Field
-              // bold
               name="title"
               placeholder="Заголовок задачи..."
               component={TextField}
-              validate={[
-                required({ msg: 'Обязательное поле' }),
-                length({ max: 140, msg: 'Превышен максимум 140 символов' }),
-              ]}
+              validate={titleValidate}
               onSubmit={handleSave(false)}
             />
             <Field

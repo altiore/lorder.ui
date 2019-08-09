@@ -11,7 +11,7 @@ export interface IProjectButtonProps {
   id?: number;
   inProgress: boolean;
   uuid?: string;
-  time: string;
+  time?: string;
   title?: string;
   percent?: number | string;
   onOpenInNew: any;
