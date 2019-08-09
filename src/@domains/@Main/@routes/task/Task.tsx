@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DashboardTaskForm } from '@domains/@common/TaskForm';
+import { PatchTaskForm } from '@domains/@common/TaskForm';
 
 export interface ITaskProps {
   classes: any;
@@ -11,7 +11,7 @@ export class TaskTsx extends React.Component<ITaskProps, {}> {
     const { classes, ...rest } = this.props;
     return (
       <div className={classes.root}>
-        <DashboardTaskForm {...rest} />
+        <PatchTaskForm {...rest} />
       </div>
     );
   }

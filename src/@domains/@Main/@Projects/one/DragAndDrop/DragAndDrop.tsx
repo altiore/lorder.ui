@@ -15,7 +15,7 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 
-import { PatchTaskForm } from '@domains/@common/TaskForm/PatchTaskForm';
+import { PatchTaskForm } from '@domains/@common/TaskForm';
 import { ProjectTask, STATUS_NAMES } from '@store/projects';
 import { TaskCard } from './TaskCard';
 import { useStyles } from './styles';

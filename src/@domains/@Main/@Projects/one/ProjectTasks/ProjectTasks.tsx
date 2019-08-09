@@ -10,7 +10,7 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Table } from '@components/Table';
-import { PatchTaskForm } from '@domains/@common/TaskForm/PatchTaskForm';
+import { PatchTaskForm } from '@domains/@common/TaskForm';
 import { DownloadList } from '@store/@common/entities';
 import { ProjectTask } from '@store/projects';
 import { PerformersCell } from './PerformersCell';

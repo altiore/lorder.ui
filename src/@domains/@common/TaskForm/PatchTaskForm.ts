@@ -63,7 +63,7 @@ const mergeProps = (
 export const PatchTaskForm = connect<
   any,
   any,
-  { buttonText?: string; taskId?: number | string; projectId: number | string; initialValues?: Partial<ITaskFormData> }
+  { buttonText?: string; taskId?: number | string; projectId?: number | string; initialValues?: Partial<ITaskFormData> }
 >(
   mapStateToProps,
   mapDispatchToProps,
