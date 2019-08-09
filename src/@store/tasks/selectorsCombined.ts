@@ -5,7 +5,7 @@ import { IEvent, ITask } from '@types';
 import { DownloadList } from '@store/@common/entities';
 import { defaultProjectId } from '@store/identity/selectors';
 import { selectedProjectId } from '@store/project';
-import { allTasks, Task, UserWork } from '@store/tasks';
+import { allTasks, UserWork } from '@store/tasks';
 import { tasksFilter } from '@store/tasksFilter';
 import { currentTask, currentTaskId } from '@store/timer';
 import { lastUserWorks } from '@store/user-works/selectors';
@@ -29,7 +29,7 @@ export const sortedByFilterTasks = createSelector(
 
 export const sortedByFilterTasksWithActive = createSelector(
   [sortedByFilterTasks, currentTask],
-  (tasks = [], curTask): Array<ITask | 'filter'> => [curTask || new Task({ id: 0 }), 'filter', ...tasks]
+  (tasks = [], curTask): Array<ITask | 'filter' | undefined> => [curTask, 'filter', ...tasks]
 );
 
 export const checkIsCurrent = createSelector(

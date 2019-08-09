@@ -6,7 +6,7 @@ import { RouteComponentProps, Switch } from 'react-router-dom';
 import { IRoute } from '@types';
 
 import { RouteWithSubRoutes } from '@domains/@common/RouteWithSubRoutes';
-import { DashboardTaskForm } from '@domains/@common/TaskForm';
+import { PatchTaskForm } from '@domains/@common/TaskForm';
 
 import { Header } from './Header';
 import { useStyles } from './styles';
@@ -43,7 +43,7 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
   useEffect(() => {
     if (get(location, ['state', 'modal'])) {
       openDialog(
-        <DashboardTaskForm taskId={location.state.taskId} projectId={location.state.projectId} />,
+        <PatchTaskForm taskId={location.state.taskId} projectId={location.state.projectId} />,
         {
           maxWidth: 'lg',
           onClose: () => {

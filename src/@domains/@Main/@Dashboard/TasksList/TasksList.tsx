@@ -44,7 +44,7 @@ export class TasksListJsx extends React.Component<ITasksListProps, ITaskListStat
       return true;
     }
     for (let i = 0; i < newL; i++) {
-      if (i === 1) {
+      if (i === 1 || !newTs[i]) {
         continue;
       }
       if ((newTs[i] as ITask).id !== (oldTs[i] as ITask).id) {
@@ -69,6 +69,9 @@ export class TasksListJsx extends React.Component<ITasksListProps, ITaskListStat
   }
 
   private renderListItem = (task: ITask | 'filter', index: number) => {
+    if (!task) {
+      return <div key="undefined task" />;
+    }
     const { currentTaskId, getProjectById } = this.props;
     if (task === 'filter') {
       const { tasks } = this.props;
