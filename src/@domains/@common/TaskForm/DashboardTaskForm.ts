@@ -16,8 +16,7 @@ import {
   startUserWork,
   stopUserWork,
 } from '@store/tasks';
-import { TaskForm } from './StyledTaskForm';
-import { ITaskFormData, ITaskFormProps } from './TaskForm';
+import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
   checkIsCurrent,
@@ -81,4 +80,4 @@ export const DashboardTaskForm = connect<
     return val.id ? dispatch(patchProjectTask(val)) : dispatch(postProjectTask(val));
   },
   onSubmitFail,
-})(TaskForm) as any);
+})(TaskFormJsx) as any);

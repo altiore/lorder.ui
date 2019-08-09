@@ -6,8 +6,7 @@ import { closeDialog } from '@store/dialog';
 import { getSelectedProjectTaskById, PROJECT_EDIT_TASK_FORM_NAME, projectTasksIsLoading } from '@store/projects';
 import { onSubmitTaskForm } from '@store/projects/tasks';
 import { routeProjectId } from '@store/router';
-import { TaskForm } from './StyledTaskForm';
-import { ITaskFormData, ITaskFormProps } from './TaskForm';
+import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
   getSelectedProjectTaskById,
@@ -49,4 +48,4 @@ export const PatchTaskForm = connect<
   onSubmit: onSubmitTaskForm,
   onSubmitFail: returnTrue,
   onSubmitSuccess: closeDialog,
-})(TaskForm) as any);
+})(TaskFormJsx) as any);

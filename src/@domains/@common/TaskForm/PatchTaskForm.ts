@@ -17,8 +17,7 @@ import {
   startUserWork,
   stopUserWork,
 } from '@store/tasks';
-import { TaskForm } from './StyledTaskForm';
-import { ITaskFormData, ITaskFormProps } from './TaskForm';
+import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
   checkIsCurrent,
@@ -84,4 +83,4 @@ export const PatchTaskForm = connect<
       dispatch(change(PROJECT_EDIT_TASK_FORM_NAME, 'id', taskId));
     }
   },
-})(TaskForm) as any);
+})(TaskFormJsx) as any);

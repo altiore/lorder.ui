@@ -6,8 +6,7 @@ import { onSubmitForm } from '@store/@common/helpers';
 import { closeDialog } from '@store/dialog';
 import { postProjectTask, PROJECT_TASK_FORM_NAME, projectTasksIsLoading } from '@store/projects';
 import { routeProjectId } from '@store/router';
-import { TaskForm } from './StyledTaskForm';
-import { ITaskFormData, ITaskFormProps } from './TaskForm';
+import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
   projectId: routeProjectId,
@@ -28,4 +27,4 @@ export const AddTaskForm = connect<any, any, { buttonText?: string }>(
   onSubmitSuccess: (res, dispatch, { closeDialog }) => {
     closeDialog();
   },
-})(TaskForm) as any);
+})(TaskFormJsx) as any);
