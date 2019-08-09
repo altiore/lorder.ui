@@ -1,3 +1,4 @@
+import get from 'lodash/get';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
@@ -29,7 +30,11 @@ export const sortedByFilterTasks = createSelector(
 
 export const sortedByFilterTasksWithActive = createSelector(
   [sortedByFilterTasks, currentTask],
-  (tasks = [], curTask): Array<ITask | 'filter' | undefined> => [curTask, 'filter', ...tasks]
+  (tasks = [], curTask): Array<ITask | 'filter' | undefined> => [
+    curTask,
+    'filter',
+    ...tasks.filter(t => t.id !== get(curTask, 'id')),
+  ]
 );
 
 export const checkIsCurrent = createSelector(
