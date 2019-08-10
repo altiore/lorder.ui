@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 
-import Center from 'decor/Center';
+import Center from '../../../.storybook/decor/Center';
 import TaskStatus from '.';
 
 storiesOf('TaskStatus', module)

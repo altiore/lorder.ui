@@ -1,56 +1,55 @@
+import React, { memo, useCallback, useState } from 'react';
+
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import React from 'react';
 import Popover from 'react-popover';
 
 import { ShortChart } from '@domains/@common/ShortChart';
+import { Project } from '@store/projects';
+
+import { useStyles } from './styles';
+
 export interface IProjectButtonProps {
-  classes?: any;
-  id?: number;
   inProgress: boolean;
-  uuid?: string;
-  time?: string;
-  title?: string;
-  percent?: number | string;
   onOpenInNew: any;
   selectProject: any;
+
+  selectedProject: Project;
 }
 
-export interface IProjectButtonState {
-  isOpen: boolean;
-}
+export const ProjectButtonTsx: React.FC<IProjectButtonProps> = memo(
+  ({ inProgress, onOpenInNew, selectProject, selectedProject }) => {
+    const classes = useStyles();
 
-export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProjectButtonState> {
-  state = {
-    isOpen: false,
-  };
+    const [isOpen, setIsOpen] = useState(false);
 
-  render() {
-    const { isOpen } = this.state;
-    const { classes, inProgress, onOpenInNew, selectProject, time, title, percent } = this.props;
+    const onClosePopover = useCallback(() => setIsOpen(false), [setIsOpen]);
+
+    const onMouseEnterHandler = useCallback(() => setIsOpen(true), [setIsOpen]);
+
     return (
       <Popover
         className={classes.projectPopover}
         tipSize={4}
         place="below"
         isOpen={isOpen}
-        onOuterAction={this.onClosePopover}
-        body={<ShortChart project={{ time, title, percent }} />}
+        onOuterAction={onClosePopover}
+        body={<ShortChart project={selectedProject} />}
       >
         <Button
           className={classes.button}
           component="div"
           onClick={selectProject}
-          onMouseEnter={this.onMouseEnterHandler}
-          onMouseLeave={this.onClosePopover}
-          onMouseOver={this.onMouseEnterHandler}
+          onMouseEnter={onMouseEnterHandler}
+          onMouseLeave={onClosePopover}
+          onMouseOver={onMouseEnterHandler}
           variant={'outlined'}
           color={'secondary'}
         >
           <Typography variant="body1" noWrap className={classes.text}>
-            {title}
+            {selectedProject.title}
           </Typography>
           <IconButton
             color="secondary"
@@ -65,8 +64,4 @@ export class ProjectButtonTsx extends React.Component<IProjectButtonProps, IProj
       </Popover>
     );
   }
-
-  private onClosePopover = () => this.setState({ isOpen: false });
-
-  private onMouseEnterHandler = () => this.setState({ isOpen: true });
-}
+);

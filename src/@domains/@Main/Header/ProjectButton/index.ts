@@ -1,6 +1,1 @@
-import { withStyles } from '@material-ui/core/styles';
-
-import { ProjectButtonTsx } from './ProjectButton';
-import { styles } from './styles';
-
-export const ProjectButton = withStyles(styles)(ProjectButtonTsx);
+export { ProjectButtonTsx as default } from './ProjectButton';

@@ -1,17 +1,15 @@
-import { Theme } from '@material-ui/core/styles';
-import createStyles from '@material-ui/core/styles/createStyles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme) =>
-  createStyles({
-    item: {
-      backgroundColor: theme.palette.primary.light,
-      display: 'flex',
-      flexFlow: 'row nowrap',
-      justifyContent: 'space-between',
-    },
-    row: {
-      alignItems: 'center',
-      display: 'flex',
-      flexFlow: 'row nowrap',
-    },
-  });
+export const useStyles = makeStyles((theme: Theme) => ({
+  item: {
+    backgroundColor: theme.palette.primary.light,
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'space-between',
+  },
+  row: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+  },
+}));

@@ -15,6 +15,11 @@ type IMatchIdentifier = IMatch<{
 
 const baseState = (state: IState) => state.router;
 
+export const prevLocation = createSelector(
+  baseState,
+  s => s.prevLocation
+);
+
 export const availableRoutes = createSelector(
   [baseState, userRole],
   (s, role) => {
