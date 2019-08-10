@@ -1,3 +1,5 @@
+const { resolve } = require('path');
+
 module.exports = ({ config, mode }) => {
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
@@ -7,5 +9,7 @@ module.exports = ({ config, mode }) => {
     },
   });
   config.resolve.extensions.push('.ts', '.tsx');
+
+  config.resolve.alias['decor'] = resolve(__dirname, './decor');
   return config;
 };

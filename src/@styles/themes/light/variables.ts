@@ -8,6 +8,8 @@ export const SECONDARY_DARKEN = darken(SECONDARY_DARK, 0.8);
 export const SECONDARY_MAIN = '#FFF0B5';
 export const SECONDARY_LIGHT = lighten(SECONDARY_MAIN, 0.2);
 
+export const CONFIRM_COLOR = '#63BA3B';
+
 export const prettyScroll1 = (theme: Theme) => ({
   '&::-webkit-scrollbar': {
     width: theme.spacing(),
