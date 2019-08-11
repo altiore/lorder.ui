@@ -8,6 +8,7 @@ import StartStopBtn from './StartStopBtn';
 import { useStyles } from './styles';
 
 interface ITaskStatus {
+  assignees: Array<{ id: number; userName: string; avatar?: string }>;
   isMine?: boolean;
   onChangeAssignee: (userId: number) => void;
 }
@@ -19,12 +20,10 @@ enum POPPER_TYPE {
 
 type IPopperType = POPPER_TYPE | null;
 
-const options = ['Create a merge commit', 'Squash and merge', 'Rebase and merge'];
-
 let lastPopperType: IPopperType = null;
 let nextPopperType: IPopperType = null;
 
-export const TaskStatus: React.FC<ITaskStatus> = React.memo(({ isMine, onChangeAssignee }) => {
+export const TaskStatus: React.FC<ITaskStatus> = React.memo(({ assignees, isMine, onChangeAssignee }) => {
   const classes = useStyles();
 
   const anchorRef = React.useRef(null);
@@ -86,7 +85,7 @@ export const TaskStatus: React.FC<ITaskStatus> = React.memo(({ isMine, onChangeA
           >
             <Avatar className={classes.avatar}>TC</Avatar>
           </ButtonBase>
-          <Popper open={open} anchorEl={anchorRef.current} transition disablePortal>
+          <Popper open={open} anchorEl={anchorRef.current} transition style={{ zIndex: 1303 }}>
             {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}
@@ -96,7 +95,7 @@ export const TaskStatus: React.FC<ITaskStatus> = React.memo(({ isMine, onChangeA
               >
                 <div id="menu-list-grow">
                   {popperType === POPPER_TYPE.ASSIGNEE_LIST && (
-                    <AssigneeList options={options} onItemClick={handleMenuItemClick} />
+                    <AssigneeList assignees={assignees} onItemClick={handleMenuItemClick} />
                   )}
                   {popperType === POPPER_TYPE.CHANGE_STATUS && <ChangeStatus />}
                 </div>

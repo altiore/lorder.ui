@@ -10,13 +10,12 @@ import { useStyles } from './styles';
 import { IUser } from '@types';
 
 export interface IPerformerFieldProps extends WrappedFieldProps {
-  patchProjectTask: any;
   taskId: number;
   projectMembers: IUser[];
   children?: (count: number, onClick: () => void) => React.ReactNode;
 }
 
-export default function PerformerFieldTsx({ children, input, patchProjectTask, projectMembers }) {
+export default function PerformerFieldTsx({ children, input, projectMembers }) {
   const [isOpen, setIsOpen] = useState(false);
   const handleOnClick = useCallback(() => setIsOpen(open => !open), [setIsOpen]);
 

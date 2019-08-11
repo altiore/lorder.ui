@@ -21,5 +21,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     display: 'flex',
     flexFlow: 'row nowrap',
+    zIndex: 10,
   },
 }));

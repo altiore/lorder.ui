@@ -10,7 +10,7 @@ import { DownloadList } from '@store/@common/entities';
 import { combineActions } from '@store/@common/helpers';
 import { deleteProjectTask, patchProjectTask } from '@store/projects/tasks/actions';
 import { patchUserWork } from '@store/user-works/actions';
-import { archiveTask, fetchTaskDetails, getAllTasks, replaceTasks } from './actions';
+import { archiveTask, fetchTaskDetailsA, getAllTasks, replaceTasks } from './actions';
 import { Task } from './Task';
 import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork, UserWork, userWorks } from './user-works';
 
@@ -279,9 +279,9 @@ export const tasks = handleActions<S, any, any>(
     [archiveTask.success]: deleteProjectTaskSuccessHandler,
     [archiveTask.fail]: deleteProjectTaskFailHandler,
 
-    [fetchTaskDetails.toString()]: fetchTaskDetailsHandler,
-    [fetchTaskDetails.success]: fetchTaskDetailsSuccessHandler,
-    [fetchTaskDetails.fail]: fetchTaskDetailsFailHandler,
+    [fetchTaskDetailsA.toString()]: fetchTaskDetailsHandler,
+    [fetchTaskDetailsA.success]: fetchTaskDetailsSuccessHandler,
+    [fetchTaskDetailsA.fail]: fetchTaskDetailsFailHandler,
 
     [PURGE]: logOutHandler,
   },

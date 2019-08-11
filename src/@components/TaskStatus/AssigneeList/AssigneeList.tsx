@@ -5,25 +5,25 @@ import { MenuItem, MenuList, Paper } from '@material-ui/core';
 // import { useStyles } from './styles';
 
 interface ITaskStatus {
-  options: any[];
+  assignees: Array<{ id: number; userName: string; avatar?: string }>;
   onItemClick: (event: any) => any;
 }
 
-export const AssigneeList: React.FC<ITaskStatus> = ({ options, onItemClick }) => {
+export const AssigneeList: React.FC<ITaskStatus> = ({ assignees, onItemClick }) => {
   // const classes = useStyles();
 
   return (
     <Paper>
       <MenuList>
-        {options.map((option, index) => (
+        {assignees.map((assignee, index) => (
           <MenuItem
             key={index}
-            value={index}
+            value={assignee.id}
             // disabled={index === 2}
-            selected={index === 1}
+            // selected={index === 1}
             onClick={onItemClick}
           >
-            {option}
+            {assignee.userName}
           </MenuItem>
         ))}
       </MenuList>

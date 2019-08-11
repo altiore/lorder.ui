@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
-import { Button, ButtonGroup, Grow, Paper, Popper, Typography } from '@material-ui/core';
+import { Button, ButtonGroup, Grow, Paper, Popper } from '@material-ui/core';
 import { Forward, ReplyAll } from '@material-ui/icons';
 
 import { useStyles } from './styles';
@@ -43,7 +43,7 @@ export const ChangeStatus: React.FC<ITaskStatus> = () => {
 
   return (
     <div onMouseLeave={handleClose}>
-      <ButtonGroup variant="outlined" aria-label="small outlined button group">
+      <ButtonGroup variant="contained" aria-label="small outlined button group">
         <Button className={classes.replay} onMouseEnter={handleReplayOver}>
           <ReplyAll color="inherit" className={classes.leftIcon} />
           Вернуть

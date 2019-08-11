@@ -1,31 +1,28 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Badge, Button, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
+import { Button, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Field, FieldArray, InjectedFormProps } from 'redux-form';
+import { Field, InjectedFormProps } from 'redux-form';
 import { length, required } from 'redux-form-validators';
 
 import { INotification } from '@types';
 
+import InputField from '@components/InputField';
 import { TextField } from '@components/TextField';
 import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
-import Avatar from '@components/Avatar';
-import { SelectMenuField } from '@components/SelectMenuField';
 import { StartStopBtn } from '@components/StartStopBtn';
+import StatusField from './StatusField';
 
 import { parseNumber } from '@store/@common/helpers';
-import { STATUS_NAMES } from '@store/projects';
+// import { STATUS_NAMES } from '@store/projects';
 
-import { PerformerField } from './PerformerField';
-import { MembersField } from './MembersField';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
 import { useStyles } from './styles';
 
@@ -72,7 +69,6 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   dirty,
   fetchTaskDetails,
   handleSubmit,
-  hasOwnProperty,
   initialValues,
   isCurrent,
   location,
@@ -107,10 +103,10 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   }, [invisible, setInvisible, taskId]);
 
   useEffect(() => {
-    if (taskId && !initialValues.isDetailsLoaded) {
-      fetchTaskDetails();
+    if (taskId) {
+      fetchTaskDetails(taskId);
     }
-  }, [fetchTaskDetails, initialValues, taskId]);
+  }, [fetchTaskDetails, taskId]);
 
   /** show copy block */
   const [isShownCopy, setIsShowCopy] = useState(false);
@@ -205,10 +201,12 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
     if (handleClose) {
       handleClose();
     }
-    archiveTask();
-  }, [archiveTask, handleClose]);
+    archiveTask({ taskId, projectId });
+  }, [archiveTask, handleClose, projectId, taskId]);
 
-  const nullComponent = useCallback(() => null, []);
+  const handleStartTask = useCallback(() => {
+    startUserWork({ taskId, projectId });
+  }, [startUserWork, taskId, projectId]);
 
   const copyText = 'Скопировать ссылку на задачу';
 
@@ -272,36 +270,11 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
             />
           </div>
           <div className={classes.cardSecond}>
-            <Field
-              name="status"
-              component={SelectMenuField}
-              IconComponent={nullComponent}
-              fullWidth
-              label="Status"
-              type="number"
-            >
-              {STATUS_NAMES.map((status, i) => (
-                <MenuItem key={i} value={i}>
-                  {status}
-                </MenuItem>
-              ))}
-            </Field>
-            <div>
-              <Field name="performer" component={PerformerField} taskId={taskId}>
-                {(count: number, onClick: () => void) => <Avatar onClick={onClick}>{count}</Avatar>}
-              </Field>
-              <FieldArray name="users" component={MembersField} taskId={taskId}>
-                {(count: number, onClick: () => void) => (
-                  <IconButton aria-label={`${count} members`} className={classes.margin} onClick={onClick}>
-                    <Badge badgeContent={count} color="secondary" invisible={invisible[0]}>
-                      <GroupAddIcon fontSize="small" />
-                    </Badge>
-                  </IconButton>
-                )}
-              </FieldArray>
-            </div>
+            <StatusField isMine />
 
-            <Field name="value" component={TextField} parse={parseNumber} label="Оценка задачи" type="number" />
+            <div className={classes.valueWrap}>
+              <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />
+            </div>
           </div>
           <button style={{ display: 'none' }} type="submit">
             Эта кнопка нужна, чтоб работало сохранение с клавиатуры
@@ -310,7 +283,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
       </DialogContent>
       <DialogActions key={'actions'} className={classes.actions}>
         {isCurrent !== undefined && (
-          <StartStopBtn isStarted={isCurrent} onStart={startUserWork} onStop={stopUserWork} />
+          <StartStopBtn isStarted={isCurrent} onStart={handleStartTask} onStop={stopUserWork} />
         )}
         <div className={classes.grow} />
         <Button color="primary" variant="contained" onClick={handleSave()} disabled={submitting || pristine}>

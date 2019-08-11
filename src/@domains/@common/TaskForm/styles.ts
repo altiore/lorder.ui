@@ -53,4 +53,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexFlow: 'row nowrap',
   },
+  valueWrap: {
+    marginTop: theme.spacing(2),
+  },
 }));
