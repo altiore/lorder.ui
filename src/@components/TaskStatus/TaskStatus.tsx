@@ -1,9 +1,11 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react';
+import { Field } from 'redux-form';
 
-import { Avatar, Button, ButtonBase, ClickAwayListener, Grow, Popper } from '@material-ui/core';
+import { Button, ClickAwayListener, Grow, Popper } from '@material-ui/core';
 
 import AssigneeList from './AssigneeList';
 import ChangeStatus from './ChangeStatus';
+import PerformerField from './PerformerField';
 import StartStopBtn from './StartStopBtn';
 import { useStyles } from './styles';
 
@@ -86,14 +88,13 @@ export const TaskStatus: React.FC<ITaskStatus> = React.memo(
             >
               В процессе
             </Button>
-            <ButtonBase
-              className={classes.avatarWrapper}
-              aria-owns={open ? 'menu-list-grow' : undefined}
-              aria-haspopup="true"
-              onClick={assigneeListToggle}
-            >
-              <Avatar className={classes.avatar}>TC</Avatar>
-            </ButtonBase>
+            <Field
+              name="performerId"
+              component={PerformerField}
+              assigneeListToggle={assigneeListToggle}
+              open={open}
+              assignees={assignees}
+            />
             <Popper open={open} anchorEl={anchorRef.current} transition style={{ zIndex: 1303 }}>
               {({ TransitionProps, placement }) => (
                 <Grow

@@ -9,14 +9,7 @@ import { changeSettings } from '@store/dialog';
 import { showSuccess } from '@store/notifications';
 import { patchProjectTask, postProjectTask, PROJECT_EDIT_TASK_FORM_NAME, projectTasksIsLoading } from '@store/projects';
 import { routeProjectId, routeTaskId } from '@store/router';
-import {
-  archiveTask,
-  checkIsCurrent,
-  fetchTaskDetails,
-  getEditTaskInitialValues,
-  startUserWork,
-  stopUserWork,
-} from '@store/tasks';
+import { archiveTask, checkIsCurrent, fetchTaskDetails, getEditTaskInitialValues, startUserWork } from '@store/tasks';
 import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
@@ -35,7 +28,6 @@ const mapDispatchToProps = {
   replace,
   showSuccess,
   startUserWork,
-  stopUserWork,
 };
 
 const mergeProps = (

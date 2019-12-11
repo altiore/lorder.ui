@@ -27,4 +27,8 @@ export class User implements IUser {
   get userName() {
     return this.email;
   }
+
+  get shortName() {
+    return this.email.substring(0, 2).toUpperCase();
+  }
 }

@@ -78,7 +78,6 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   replace,
   showSuccess,
   startUserWork,
-  stopUserWork,
   submitting,
   taskId,
   valid,
@@ -266,7 +265,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
             />
           </div>
           <div className={classes.cardSecond}>
-            <StatusField isMine onStart={handleStartTask} onStop={stopUserWork} isCurrent={isCurrent} />
+            <StatusField isMine onStart={handleStartTask} isCurrent={isCurrent} />
 
             <div className={classes.valueWrap}>
               <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />

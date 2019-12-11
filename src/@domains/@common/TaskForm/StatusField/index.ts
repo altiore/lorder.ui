@@ -6,6 +6,7 @@ import { IState } from '@types';
 
 import TaskStatus from '@components/TaskStatus';
 import { PROJECT_EDIT_TASK_FORM_NAME, projectMembersAsUsers } from '@store/projects';
+import { stopUserWork } from '@store/tasks';
 
 interface IStatusFieldState {
   assignees: any[];
@@ -19,6 +20,7 @@ const onChangeAssignee = value => change(PROJECT_EDIT_TASK_FORM_NAME, 'performer
 
 const mapDispatch = {
   onChangeAssignee,
+  onStop: stopUserWork,
 };
 
 export default connect<any, any, any, any>(

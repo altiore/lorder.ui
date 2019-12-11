@@ -63,7 +63,6 @@ export const patchProjectTask = requestActions<IPatchProjectTaskData>(
     title,
     projectId,
     id,
-    users,
     userWorks,
     value,
     performerId,
@@ -78,9 +77,6 @@ export const patchProjectTask = requestActions<IPatchProjectTaskData>(
       title,
       value,
     };
-    if (users && users[0]) {
-      data.users = users.map(el => (el as any).value);
-    }
     return {
       form: PROJECT_EDIT_TASK_FORM_NAME,
       projectId,
@@ -94,7 +90,6 @@ export const patchProjectTask = requestActions<IPatchProjectTaskData>(
         title: 'Успех!',
       },
       taskId: id,
-      users,
     };
   }
 );
