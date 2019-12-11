@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import cloneDeep from 'lodash/cloneDeep';
 import get from 'lodash/get';
 import { Action, ActionMeta, combineActions as combineActionsRedux, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
@@ -46,7 +47,12 @@ const getOwnProjectsHandler = (state: S): S => {
 };
 
 const getOwnProjectsSuccessHandler = (state: S, { payload }: Action<AxiosResponse>): S => {
-  return state.finishLoading(payload);
+  const preparedPayload = cloneDeep(payload);
+  preparedPayload.data = preparedPayload.data.map(el => ({
+    ...el,
+    ...el.project,
+  }));
+  return state.finishLoading(preparedPayload);
 };
 
 const getOwnProjectsFailHandler = (state: S): S => {
