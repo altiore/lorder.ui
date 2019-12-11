@@ -6,6 +6,7 @@ import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import { WrappedFieldProps } from 'redux-form';
 
+import { Project } from '@store/projects';
 import { ITask } from '@types';
 import Suggestion from './Suggestion';
 
@@ -15,6 +16,7 @@ export interface IAutoTaskFieldProps extends WrappedFieldProps {
   onSelect: (task: Partial<ITask>) => any;
   label: string;
   projectId: number;
+  projects: Project[];
   suggestions: ITask[];
 }
 
@@ -118,18 +120,12 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
     return true;
   }
 
-  private handleSuggestSelected = async (
-    e: React.SyntheticEvent,
-    data: Autosuggest.SuggestionSelectedEventData<ITask>
-  ) => {
+  private handleSuggestSelected = async (e: React.FormEvent, data: Autosuggest.SuggestionSelectedEventData<ITask>) => {
     await this.props.onSelect(data.suggestion);
   };
 
   private renderSuggestion = (suggestion: ITask, { query, isHighlighted }: any) => {
     const project = this.props.getProjectById(suggestion.projectId);
-    if (!project || !project.id) {
-      throw new Error('Проект не найден для задачи ' + suggestion.id);
-    }
     return <Suggestion task={suggestion} selected={isHighlighted} query={query} project={project} />;
   };
 
@@ -192,12 +188,14 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
 
             return keep;
           });
-    const suggested: Partial<ITask> = {
-      id: 0,
-      projectId: this.props.projectId,
-      title: value,
-    };
-    suggestions.unshift(suggested as ITask);
+    this.props.projects.forEach(project => {
+      const suggested: Partial<ITask> = {
+        id: 0,
+        projectId: project.id,
+        title: value,
+      };
+      suggestions.unshift(suggested as ITask);
+    });
     return suggestions;
   };
 }

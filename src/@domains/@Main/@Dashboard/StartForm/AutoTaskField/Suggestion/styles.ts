@@ -3,6 +3,14 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) =>
   createStyles({
+    new: {
+      color: theme.palette.error.main,
+      fontWeight: 'bold',
+      position: 'absolute',
+      right: 12,
+      top: 2,
+      transform: 'rotate(-20deg)',
+    },
     project: {
       alignItems: 'center',
       display: 'flex',

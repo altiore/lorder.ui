@@ -178,13 +178,10 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
       if (isPage) {
         copyToClipboard();
       } else {
-        // this.props.changeSettings({ fullScreen: true });
-        replace({
-          pathname: getLink(false),
-        });
+        window.open(getLink(true), '_blank');
       }
     },
-    [copyToClipboard, getLink, isPage, replace]
+    [copyToClipboard, getLink, isPage]
   );
 
   const [anchorEl, setAnchorEl] = useState<any>(null);
@@ -269,7 +266,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
             />
           </div>
           <div className={classes.cardSecond}>
-            <StatusField isMine onStart={handleStartTask} />
+            <StatusField isMine onStart={handleStartTask} onStop={stopUserWork} isCurrent={isCurrent} />
 
             <div className={classes.valueWrap}>
               <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />

@@ -21,6 +21,19 @@ const assignees = [
 storiesOf('TaskStatus', module)
   .addDecorator(Center)
   .add('assigned to me', () => (
-    <TaskStatus assignees={assignees} isMine onChangeAssignee={action('Assignee changed:')} />
+    <TaskStatus
+      assignees={assignees}
+      isMine
+      onChangeAssignee={action('Assignee changed:')}
+      onStart={action('Start task')}
+      onStop={action('Stop task')}
+    />
   ))
-  .add('assigned to other', () => <TaskStatus assignees={assignees} onChangeAssignee={action('Assignee changed:')} />);
+  .add('assigned to other', () => (
+    <TaskStatus
+      assignees={assignees}
+      onChangeAssignee={action('Assignee changed:')}
+      onStart={action('Start task')}
+      onStop={action('Stop task')}
+    />
+  ));

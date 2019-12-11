@@ -5,25 +5,20 @@ import React from 'react';
 
 import { ITask } from '@types';
 import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
+import { Project } from '@store/projects';
 
 const match = require('autosuggest-highlight/match');
 const parse = require('autosuggest-highlight/parse');
 
 export interface ISuggestionProps {
   classes: any;
-  project: any;
+  project: Project;
   selected: boolean;
   task: ITask;
   query: any;
 }
 
-export const SuggestionTsx: React.FunctionComponent<ISuggestionProps> = ({
-  classes,
-  project,
-  task,
-  selected,
-  query,
-}) => {
+export const SuggestionTsx: React.FC<ISuggestionProps> = ({ classes, project, task, selected, query }) => {
   const matches = match(task.title, query);
   const parts = parse(task.title, matches);
 
@@ -45,6 +40,7 @@ export const SuggestionTsx: React.FunctionComponent<ISuggestionProps> = ({
             )
           )}
         </span>
+        {task.id === 0 && <span className={classes.new}>New</span>}
       </div>
       <div className={classes.runButton}>
         <PlayArrowRounded fontSize="small" className={classes.runButtonIcon} />

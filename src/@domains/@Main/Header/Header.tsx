@@ -21,9 +21,6 @@ import { RightMenu } from './RightMenu';
 
 import { useStyles } from './styles';
 
-type ProjectType = Partial<Project> & { percent: string | number; time: string };
-type ProjectsArrayType = ProjectType[];
-
 export interface IHeaderProps {
   openDialog: any;
   openTaskModal: any;
@@ -38,7 +35,7 @@ export interface IHeaderState {
   expanded: boolean;
 }
 
-let timer: any = null;
+const timer: any = null;
 
 export const HeaderTsx: React.FC<IHeaderProps> = memo(
   ({ openDialog, openTaskModal, push, selectedProject, showWarning, startUserWork }) => {
@@ -52,26 +49,11 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
       };
     }, []);
 
-    const [expanded, setExpanded] = useState(false);
-
     const handleClearTimeout = useCallback(() => {
       if (timer) {
         clearTimeout(timer);
       }
     }, []);
-
-    const toggleExpandProjects = useCallback(() => {
-      setExpanded(expanded => {
-        if (!expanded) {
-          timer = setTimeout(() => {
-            toggleExpandProjects();
-          }, 15000);
-        } else {
-          handleClearTimeout();
-        }
-        return !expanded;
-      });
-    }, [handleClearTimeout]);
 
     const openCreateProject = useCallback(() => {
       openDialog(CreateProjectPopup, { scroll: 'body' });
@@ -92,7 +74,6 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
       (project: Project) => async () => {
         const projectId = project.id as number;
         handleClearTimeout();
-        setExpanded(false);
         setAnchorEl(null);
         if (selectedProject && selectedProject.id !== projectId) {
           showWarning({
@@ -118,14 +99,13 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
         }
         push('/');
       },
-      [handleClearTimeout, openTaskModal, push, selectedProject, showWarning, startUserWork, setAnchorEl, setExpanded]
+      [handleClearTimeout, openTaskModal, push, selectedProject, showWarning, startUserWork, setAnchorEl]
     );
 
     const handleOpenInNew = useCallback(
       (project: Project) => async (e: React.SyntheticEvent) => {
         e.stopPropagation();
         handleClearTimeout();
-        setExpanded(false);
         setAnchorEl(null);
         if (!selectedProject || selectedProject.id !== project.id) {
           const taskTitle = 'Обзор';
@@ -176,11 +156,6 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
                 inProgress
               />
             )}
-            {expanded && (
-              <IconButton color="secondary" onClick={openCreateProject} className={classes.expandButton}>
-                <AddIcon />
-              </IconButton>
-            )}
             <IconButton color="secondary" onClick={menuOpen} className={classes.expandButton}>
               <MoreHorizIcon />
             </IconButton>
@@ -189,6 +164,9 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
                 <ProjectField onClick={selectProject} onOpenInNew={handleOpenInNew} />
               </div>
             </Menu>
+            <IconButton color="secondary" onClick={openCreateProject} className={classes.expandButton}>
+              <AddIcon />
+            </IconButton>
           </div>
           <div className={classes.grow}>
             <Switch>

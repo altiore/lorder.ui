@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { ITask } from '@types';
 import { showError } from '@store/notifications';
-import { getProjectById } from '@store/projects';
+import { getProjectById, ownProjectList } from '@store/projects';
 import { allTaskListWithoutDefProject, CREATE_USER_WORK_FORM_NAME, startUserWork } from '@store/tasks';
 import { currentProjectId } from '@store/timer';
 import { AutoTaskFieldTsx } from './AutoTaskField';
@@ -15,6 +15,7 @@ const mapState = createStructuredSelector({
   getProjectById,
   isValid: isValid(CREATE_USER_WORK_FORM_NAME),
   projectId: currentProjectId,
+  projects: ownProjectList,
   suggestions: allTaskListWithoutDefProject,
 } as any);
 
