@@ -33,6 +33,12 @@ export default createMuiTheme({
         padding: '0 16px 16px',
       },
     },
+    MuiIconButton: {
+      root: {
+        borderRadius: defaultTheme.shape.borderRadius,
+        padding: defaultTheme.typography.pxToRem(7),
+      },
+    },
     MuiToolbar: {
       gutters: {
         paddingLeft: 6,

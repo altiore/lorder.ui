@@ -4,6 +4,7 @@ import { IDownloadList } from '@types';
 import { AxiosResponse } from 'axios';
 
 export class DownloadList<T = any> implements IDownloadList<T> {
+  expiredIn: number = 0;
   isLoaded: boolean = false;
   isLoading: boolean = false;
   list: T[] = [];

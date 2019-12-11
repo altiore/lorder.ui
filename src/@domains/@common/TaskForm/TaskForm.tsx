@@ -17,7 +17,6 @@ import { INotification } from '@types';
 import InputField from '@components/InputField';
 import { TextField } from '@components/TextField';
 import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
-import { StartStopBtn } from '@components/StartStopBtn';
 import StatusField from './StatusField';
 
 import { parseNumber } from '@store/@common/helpers';
@@ -270,7 +269,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
             />
           </div>
           <div className={classes.cardSecond}>
-            <StatusField isMine />
+            <StatusField isMine onStart={handleStartTask} />
 
             <div className={classes.valueWrap}>
               <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />
@@ -282,9 +281,6 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
         </form>
       </DialogContent>
       <DialogActions key={'actions'} className={classes.actions}>
-        {isCurrent !== undefined && (
-          <StartStopBtn isStarted={isCurrent} onStart={handleStartTask} onStop={stopUserWork} />
-        )}
         <div className={classes.grow} />
         <Button color="primary" variant="contained" onClick={handleSave()} disabled={submitting || pristine}>
           {buttonText}

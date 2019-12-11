@@ -7,6 +7,8 @@ export default function(theme: Theme): Partial<Overrides> {
   return {
     MuiDialogActions: {
       root: {
+        height: theme.typography.pxToRem(56),
+        padding: `0 ${theme.typography.pxToRem(22)}`,
         [theme.breakpoints.down('sm')]: {
           bottom: 0,
           margin: 0,
@@ -18,17 +20,20 @@ export default function(theme: Theme): Partial<Overrides> {
       },
     },
     MuiDialogContent: {
-      root: prettyScroll1(theme),
+      root: {
+        padding: `0 ${theme.typography.pxToRem(22)}`,
+        ...prettyScroll1(theme),
+      },
     },
     MuiDialogTitle: {
       root: {
         alignItems: 'center',
-        borderRadius: theme.spacing(0.5),
+        borderRadius: theme.shape.borderRadius,
         display: 'flex',
         flexFlow: 'row nowrap',
-        height: 60,
+        height: theme.typography.pxToRem(56),
         justifyContent: 'space-between',
-        padding: `0 ${theme.spacing(1)}px`,
+        padding: `0 ${theme.typography.pxToRem(11)}`,
       },
     },
   };

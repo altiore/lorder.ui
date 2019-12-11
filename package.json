@@ -85,7 +85,7 @@
     "react-responsive": "7.0.0",
     "react-router": "5.0.0",
     "react-router-dom": "5.0.0",
-    "react-scripts": "3.0.1",
+    "react-scripts": "^3.3.0",
     "react-select": "2.4.3",
     "react-swipeable-views": "0.13.3",
     "react-textarea-autosize": "7.1.0",
