@@ -55,6 +55,11 @@ export const projectMembersAsUsers = createSelector(
   }
 );
 
+export const getProjectMemberById = createSelector(
+  [projectMembersAsUsers],
+  members => userId => members && members.find(el => el.id === userId)
+);
+
 export const projectTaskTypes = createSelector(
   openedProject as any,
   (project: Project) => project && project.taskTypes

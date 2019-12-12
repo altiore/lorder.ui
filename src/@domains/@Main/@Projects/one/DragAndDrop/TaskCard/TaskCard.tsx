@@ -1,8 +1,10 @@
+import React, { useMemo } from 'react';
+
 import grey from '@material-ui/core/colors/grey';
 import Typography from '@material-ui/core/Typography';
 import BugReportIcon from '@material-ui/icons/BugReport';
 import ExtensionIcon from '@material-ui/icons/Extension';
-import React from 'react';
+import get from 'lodash/get';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 
 import Avatar from '@components/Avatar';
@@ -10,6 +12,7 @@ import { ProjectTask } from '@store/projects';
 
 export interface ITaskCard extends Partial<ProjectTask> {
   classes: any;
+  getProjectMemberById: (_: any) => void;
   provided: DraggableProvided;
   snapshot: DraggableStateSnapshot;
   onClick: any;
@@ -24,16 +27,21 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   cursor: 'pointer',
 });
 
-export const TaskCardTsx: React.FunctionComponent<ITaskCard> = ({
+export const TaskCardTsx: React.FC<ITaskCard> = ({
   classes,
+  getProjectMemberById,
   onClick,
   title,
   typeId,
   value,
-  performer,
+  performerId,
   provided,
   snapshot,
 }) => {
+  const taskPerformer = useMemo(() => {
+    return getProjectMemberById(performerId);
+  }, [getProjectMemberById, performerId]);
+
   return (
     <div
       {...provided.draggableProps}
@@ -61,8 +69,8 @@ export const TaskCardTsx: React.FunctionComponent<ITaskCard> = ({
             </Typography>
           </div>
         </div>
-        <Avatar size="sm" src={performer && performer.avatar}>
-          {performer && performer.email}
+        <Avatar size="sm" src={get(taskPerformer, ['avatar', 'url'])}>
+          {get(taskPerformer, ['email'], '--')}
         </Avatar>
       </div>
     </div>
