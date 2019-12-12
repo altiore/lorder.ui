@@ -9,6 +9,7 @@ import FilterIcon from '@material-ui/icons/FilterList';
 import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 import cn from 'classnames';
+import get from 'lodash/get';
 import React from 'react';
 
 import { IUser } from '@types';
@@ -44,7 +45,7 @@ export class FiltersTsx extends React.Component<IFiltersProps, {}> {
                     <Avatar
                       isSelected={isSelected}
                       onClick={this.handleToggleMember(member.id as number)}
-                      src={member.avatar}
+                      src={get(member, ['avatar', 'url'])}
                     >
                       {member.email}
                     </Avatar>

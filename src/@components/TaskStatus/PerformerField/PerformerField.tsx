@@ -27,7 +27,7 @@ export const PerformerField: React.FC<IPerformerField> = ({ assigneeListToggle, 
       aria-haspopup="true"
       onClick={assigneeListToggle}
     >
-      <Avatar className={classes.avatar} src={get(currentUser, 'avatar')}>
+      <Avatar className={classes.avatar} src={get(currentUser, ['avatar', 'url'])}>
         {get(currentUser, 'shortName', '--')}
       </Avatar>
     </ButtonBase>
