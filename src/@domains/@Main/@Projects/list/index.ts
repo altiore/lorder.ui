@@ -10,8 +10,8 @@ import { defaultProjectId, hasRole, userRole } from '@store/identity';
 import {
   acceptInvitation,
   allProjectList,
+  fetchAllParticipantProjects,
   getAllProjects,
-  getOwnProjects,
   ownProjectList,
   removeProject,
   removeProjectByAdmin,
@@ -33,7 +33,7 @@ const mapToState = (ownOnly: boolean = true) =>
 const mapToProps = (ownOnly: boolean = true) => ({
   acceptInvitation,
   closeDialog,
-  getProjects: ownOnly ? getOwnProjects : getAllProjects,
+  getProjects: ownOnly ? fetchAllParticipantProjects : getAllProjects,
   goToPage: push,
   openDialog,
   removeProject,

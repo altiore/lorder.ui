@@ -13,11 +13,11 @@ import {
   deleteProjectMember,
   deleteProjectTask,
   deleteTaskTypeFromProject,
+  fetchAllParticipantProjectsAction,
   fetchProjectDetails,
   getAllProjects,
   getAllProjectTasks,
   getAllProjectTaskTypes,
-  getOwnProjects,
   moveProjectTask,
   patchProjectTask,
   postProject,
@@ -190,9 +190,18 @@ const logOutHandler = () => {
 export const projects = handleActions<S, any, any>(
   {
     [postProject.success]: postProjectSuccessHandler,
-    [combineActionsRedux(getOwnProjects.toString(), getAllProjects.toString()).toString()]: getOwnProjectsHandler,
-    [combineActionsRedux(getOwnProjects.success, getAllProjects.success).toString()]: getOwnProjectsSuccessHandler,
-    [combineActionsRedux(getOwnProjects.fail, getAllProjects.fail).toString()]: getOwnProjectsFailHandler,
+    [combineActionsRedux(
+      fetchAllParticipantProjectsAction.toString(),
+      getAllProjects.toString()
+    ).toString()]: getOwnProjectsHandler,
+    [combineActionsRedux(
+      fetchAllParticipantProjectsAction.success,
+      getAllProjects.success
+    ).toString()]: getOwnProjectsSuccessHandler,
+    [combineActionsRedux(
+      fetchAllParticipantProjectsAction.fail,
+      getAllProjects.fail
+    ).toString()]: getOwnProjectsFailHandler,
     [addTaskTypeToProject.toString()]: addTaskTypeToProjectHandler,
     [combineActionsRedux(removeProject.success, removeProjectByAdmin.success).toString()]: removeProjectSuccessHandler,
     [fetchProjectDetails.success]: fetchProjectDetailsSuccessHandler,

@@ -21,6 +21,7 @@ export const ROUTES_BY_PATH = {
   '/task-types': lazy(() => import('@domains/@Main/@routes/task-types')),
   '/users': lazy(() => import('@domains/@Main/@routes/users')),
   '/profile': lazy(() => import('@domains/@Main/@Profile')),
+  '/sockets': lazy(() => import('@domains/Sockets')),
 };
 
 export interface IMainProps {

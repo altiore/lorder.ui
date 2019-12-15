@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 
 import { ROLE } from '@types';
 import { loadInitialData } from '@store/identity';
+import { initSockets } from '@store/sockets';
 import { rootSaga } from './rootSaga';
 
 import { clientsMiddleware } from './@common/middlewares';
@@ -42,6 +43,7 @@ export async function createStore(initialState?: any) {
   }
 
   const persistor = persistStore(store, undefined, async () => {
+    await store.dispatch(initSockets() as any);
     await store.dispatch(loadInitialData() as any);
   });
 

@@ -16,6 +16,7 @@ import { Project } from './projects';
 import { publicAltiore } from './publicAltiore/reducer';
 import { publicProject } from './publicProject';
 import { routerReducer } from './router/reducer';
+import { socketsReducer } from './sockets/reducer';
 import { statistics } from './statistics/reducer';
 import { TaskType } from './task-types';
 import { Task, UserWork } from './tasks';
@@ -93,6 +94,7 @@ export async function createRootReducer(history: History, role: ROLE = ROLE.GUES
       publicAltiore,
       publicProject,
       router: routerReducer(history),
+      sockets: socketsReducer,
       statistics,
       ui: uiReducer,
       versionHistory,

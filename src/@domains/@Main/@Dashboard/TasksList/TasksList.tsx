@@ -1,4 +1,6 @@
 import React from 'react';
+
+import get from 'lodash/get';
 import FlipMove from 'react-flip-move';
 
 import { ITask } from '@types';
@@ -47,10 +49,10 @@ export class TasksListJsx extends React.Component<ITasksListProps, ITaskListStat
       if (i === 1 || !newTs[i]) {
         continue;
       }
-      if ((newTs[i] as ITask).id !== (oldTs[i] as ITask).id) {
+      if (!get(newTs, [i, 'id']) || !get(oldTs, [i, 'id']) || get(newTs, [i, 'id']) !== get(oldTs, [i, 'id'])) {
         return false;
       }
-      if ((newTs[i] as ITask).title !== (oldTs[i] as ITask).title) {
+      if (get(newTs, [i, 'title']) !== get(oldTs, [i, 'title'])) {
         return true;
       }
     }

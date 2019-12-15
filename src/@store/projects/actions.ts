@@ -30,7 +30,7 @@ export const postProject = requestActions<IPostProjectData>(
   })
 );
 
-export const getOwnProjects = requestActions('PROJECTS/GET_ALL_OWN', () => ({
+export const fetchAllParticipantProjectsAction = requestActions('PROJECTS/GET_ALL_PARTICIPANT_PROJECTS', () => ({
   request: {
     url: '/projects',
   },

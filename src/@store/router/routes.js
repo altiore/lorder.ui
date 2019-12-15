@@ -23,6 +23,10 @@ export const routes = [
       },
       {
         access: [ROLES.USERS],
+        path: '/sockets',
+      },
+      {
+        access: [ROLES.USERS],
         path: '/profile',
         title: 'Настройки пользователя',
       },

@@ -1,5 +1,4 @@
 import { createAction } from 'redux-actions';
-import { PURGE } from 'redux-persist';
 
 import { requestActions } from '@store/@common/requestActions';
 import { LOGIN_FORM_NAME, MAGIC_FORM_NAME } from './consts';
@@ -48,11 +47,6 @@ export const logInPatch = requestActions('USER/LOGIN', (data: { username: string
     title: 'Успех!',
   },
 }));
-
-export const logOut = () => ({
-  result: Function.prototype,
-  type: PURGE,
-});
 
 export const setIsLoading = createAction('IDENTITY/SET_IS_LOADING');
 

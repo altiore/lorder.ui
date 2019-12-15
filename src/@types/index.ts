@@ -3,6 +3,7 @@ export * from './IRoute';
 export * from './IMeta';
 export * from './INotification';
 export * from './IProjectMember';
+export * from './ISockets';
 export * from './IState';
 export * from './IStatistics';
 export * from './ITask';

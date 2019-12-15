@@ -16,6 +16,7 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
   componentDidMount(): void {
     const { fetchProjectDetails, openedProject } = this.props;
     if (openedProject && openedProject.id) {
+      console.log('get project details from Project.tsx');
       fetchProjectDetails(openedProject.id);
     }
   }
@@ -26,6 +27,7 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
       nextProps.openedProject &&
       this.props.openedProject.id !== nextProps.openedProject.id
     ) {
+      console.log('get project details from Project.tsx (componentWillReceiveProps)');
       this.props.fetchProjectDetails(nextProps.openedProject.id);
     }
   }
