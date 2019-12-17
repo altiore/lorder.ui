@@ -1,6 +1,11 @@
-import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
-import { ShortChartTsx } from './ShortChart';
-import { styles } from './styles';
+import { selectedProjectWithStatistic } from '@store/projects';
+import ShortChart from '@domains/@common/ShortChart';
 
-export const ShortChart = withStyles(styles, { withTheme: true })(ShortChartTsx);
+const mapState = createStructuredSelector({
+  project: selectedProjectWithStatistic,
+} as any);
+
+export default connect(mapState)(ShortChart);

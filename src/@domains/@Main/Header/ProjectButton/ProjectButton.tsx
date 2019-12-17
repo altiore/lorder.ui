@@ -6,9 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import Popover from 'react-popover';
 
-import { ShortChart } from '@domains/@common/ShortChart';
 import { Project } from '@store/projects';
 
+import ShortChart from './ShortChart';
 import { useStyles } from './styles';
 
 export interface IProjectButtonProps {
@@ -36,7 +36,7 @@ export const ProjectButtonTsx: React.FC<IProjectButtonProps> = memo(
         place="below"
         isOpen={isOpen}
         onOuterAction={onClosePopover}
-        body={<ShortChart project={selectedProject} />}
+        body={<ShortChart />}
       >
         <Button
           className={classes.button}

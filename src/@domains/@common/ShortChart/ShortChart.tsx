@@ -5,17 +5,22 @@ import React from 'react';
 
 import { Project } from '@store/projects';
 
+import { useStyles } from './styles';
+
 export interface IShortChartProps {
-  classes?: any;
   dense?: boolean;
-  project?: Partial<Project & { percent: string | number; time: string }>;
+  project?: Partial<Project> & { percent: string | number; time: string };
 }
 
-export const ShortChartTsx: React.FunctionComponent<IShortChartProps> = ({ classes, dense, project }) => {
+export const ShortChartTsx: React.FunctionComponent<IShortChartProps> = ({ dense, project }) => {
+  const classes = useStyles();
+
   if (!project) {
     return null;
   }
+
   const { percent, time } = project;
+
   return (
     <List className={classes.list} dense={dense}>
       <ListItem>

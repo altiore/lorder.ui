@@ -26,7 +26,7 @@ export const ProjectFieldJsx: React.FC<IProjectFieldProps> = memo(
           const value = (getValue as any)(item);
           const label = (getLabel as any)(item);
           return (
-            <MenuItem key={item.id} value={value} onClick={onClick(value)} className={classes.item}>
+            <MenuItem key={item.id} value={value} onClick={onClick(item)} className={classes.item}>
               <span className={classes.row}>
                 <IconButton color="secondary">
                   <DoneIcon />

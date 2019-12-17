@@ -149,12 +149,7 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
           </LinkIconButton>
           <div className={classes.buttonBlock}>
             {Boolean(selectedProject) && (
-              <ProjectButton
-                selectProject={selectProject}
-                onOpenInNew={handleOpenInNew}
-                selectedProject={selectedProject}
-                inProgress
-              />
+              <ProjectButton selectProject={selectProject} onOpenInNew={handleOpenInNew} inProgress />
             )}
             <IconButton color="secondary" onClick={menuOpen} className={classes.expandButton}>
               <MoreHorizIcon />
