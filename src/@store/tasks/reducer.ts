@@ -10,7 +10,7 @@ import { DownloadList } from '@store/@common/entities';
 import { combineActions } from '@store/@common/helpers';
 import { deleteProjectTask, patchProjectTask } from '@store/projects/tasks/actions';
 import { patchUserWork } from '@store/user-works/actions';
-import { archiveTask, fetchTaskDetailsA, getAllTasks, replaceTasks } from './actions';
+import { archiveTask, fetchTaskDetailsA, getAllTasks, replaceTasks, updateTask } from './actions';
 import { Task } from './Task';
 import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork, UserWork, userWorks } from './user-works';
 
@@ -205,9 +205,16 @@ const patchProjectTaskSuccessHandler = (state: S) => {
   return state.stopLoading();
 };
 
-const patchProjectTaskFailHandler = (state: S) => {
-  // TODO: implement revert back to previous state
-  return state.stopLoading();
+const patchProjectTaskFailHandler = (state: S, action) => {
+  const task = get(action, ['error', 'response', 'data', 'task']);
+  if (!task) {
+    return state.stopLoading();
+  }
+  const taskIndex = state.list.findIndex(el => get(task, 'id') === el.id);
+  if (!~taskIndex) {
+    return state;
+  }
+  return state.stopLoading().updateItem(taskIndex, task);
 };
 
 const deleteProjectTaskHandler = (state: S, { payload }: Action<P>) => {
@@ -249,6 +256,14 @@ const logOutHandler = () => {
   return new DownloadList(Task);
 };
 
+const updateTaskHandler = (state, { payload: task }) => {
+  const taskIndex = state.list.findIndex(el => get(task, 'id') === el.id);
+  if (!~taskIndex) {
+    return state;
+  }
+  return state.updateItem(taskIndex, task);
+};
+
 export const tasks = handleActions<S, any, any>(
   {
     [getAllTasks.toString()]: getAllTasksHandler,
@@ -284,6 +299,8 @@ export const tasks = handleActions<S, any, any>(
     [fetchTaskDetailsA.fail]: fetchTaskDetailsFailHandler,
 
     [PURGE]: logOutHandler,
+
+    [updateTask.toString()]: updateTaskHandler,
   },
   new DownloadList(Task)
 );

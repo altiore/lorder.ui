@@ -7,7 +7,7 @@ import { DownloadList } from '@store/@common/entities';
 import { IRequestAction } from '@store/@common/requestActions';
 import { archiveTask } from '@store/tasks/actions';
 import { User } from '@store/users';
-import { deleteProjectTask, moveProjectTask, patchProjectTask, postProjectTask } from './actions';
+import { deleteProjectTask, moveProjectTask, patchProjectTask, postProjectTask, updateProjectTask } from './actions';
 import { ProjectTask } from './ProjectTask';
 
 type S = DownloadList<ProjectTask>;
@@ -52,8 +52,16 @@ const patchProjectTaskSuccessHandler = (state: S) => {
   return state.stopLoading();
 };
 
-const patchProjectTaskFailHandler = (state: S) => {
-  return state.stopLoading();
+const patchProjectTaskFailHandler = (state: S, action) => {
+  const task = get(action, ['error', 'response', 'data', 'task']);
+  if (!task) {
+    return state.stopLoading();
+  }
+  const taskIndex = state.list.findIndex(el => get(task, 'id') === el.id);
+  if (!~taskIndex) {
+    return state;
+  }
+  return state.stopLoading().updateItem(taskIndex, task);
 };
 
 const deleteProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>) => {
@@ -94,6 +102,17 @@ const moveProjectTaskFailHandler = (
   });
 };
 
+const updateProjectTaskHandler = (state, { payload: task }) => {
+  if (!task) {
+    throw new Error('updateProjectTaskHandler Error: payload is required and MUST be task entity');
+  }
+  const taskIndex = state.list.findIndex(el => get(task, 'id') === el.id);
+  if (!~taskIndex) {
+    return state;
+  }
+  return state.updateItem(taskIndex, task);
+};
+
 export const projectTasks = handleActions<S, any, any>(
   {
     [postProjectTask.toString()]: postProjectTaskHandler,
@@ -115,6 +134,8 @@ export const projectTasks = handleActions<S, any, any>(
     [moveProjectTask.toString()]: moveProjectTaskHandler,
     [moveProjectTask.success]: moveProjectTaskSuccessHandler,
     [moveProjectTask.fail]: moveProjectTaskFailHandler,
+
+    [updateProjectTask.toString()]: updateProjectTaskHandler,
   },
   new DownloadList(ProjectTask)
 );

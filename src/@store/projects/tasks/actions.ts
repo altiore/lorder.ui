@@ -1,6 +1,7 @@
 import { requestActions } from '@store/@common/requestActions';
 import { PROJECT_EDIT_TASK_FORM_NAME, PROJECT_TASK_FORM_NAME } from '@store/projects';
 import { User } from '@store/users';
+import { createAction } from 'redux-actions';
 
 export interface IProjectTaskData {
   description?: string;
@@ -129,3 +130,5 @@ export const moveProjectTask = requestActions<IProjectTaskData>(
     taskId,
   })
 );
+
+export const updateProjectTask = createAction('PROJECT_TASK/UPDATE_FROM_SOCKET');

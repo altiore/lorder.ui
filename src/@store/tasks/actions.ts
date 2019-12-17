@@ -28,3 +28,5 @@ export const archiveTask = requestActions(
 );
 
 export const replaceTasks = createAction('TASKS/REPLACE_BY_IDS');
+
+export const updateTask = createAction('TASKS/UPDATE_FROM_SOCKET');

@@ -58,6 +58,7 @@ export const PatchTaskForm = connect<
   mapDispatchToProps,
   mergeProps
 )(reduxForm<ITaskFormData, ITaskFormProps>({
+  enableReinitialize: true,
   form: PROJECT_EDIT_TASK_FORM_NAME,
   onSubmit: async (values, dispatch, { projectId }: any) => {
     const val = { ...values, projectId };

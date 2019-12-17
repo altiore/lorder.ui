@@ -12,7 +12,6 @@ const initSocketsHandler = (state: ISockets) => {
 };
 
 const updateTaskHandler = (state: ISockets, { payload }) => {
-  console.log('updateTaskHandler', payload);
   return new Sockets({
     ...state,
     messages: [...state.messages, payload],
