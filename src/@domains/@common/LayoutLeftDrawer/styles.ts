@@ -85,11 +85,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   userRole: {
     bottom: 0,
     color: theme.palette.divider,
+    left: theme.spacing(3),
     overflow: 'hidden',
-    paddingBottom: theme.spacing(1),
-    paddingRight: theme.spacing(48),
+    pointerEvents: 'none',
     position: 'absolute',
-    right: 0,
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
   },
