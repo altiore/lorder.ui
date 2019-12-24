@@ -96,7 +96,7 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
   );
 
   return (
-    <div className={classes.root}>
+    <>
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -174,14 +174,14 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
           )}
         </List>
       </Drawer>
+      <ButtonBase onClick={handleDrawerToggle} className={classes.toggleButton}>
+        <ChevronRightIcon />
+      </ButtonBase>
       <section
         className={cn(classes.content, {
           [classes.contentShift]: isLeftBarOpen,
         })}
       >
-        <ButtonBase onClick={handleDrawerToggle} className={classes.toggleButton}>
-          <ChevronRightIcon />
-        </ButtonBase>
         {children}
         <Switch>
           {redirect}
@@ -191,6 +191,6 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
             ))}
         </Switch>
       </section>
-    </div>
+    </>
   );
 };

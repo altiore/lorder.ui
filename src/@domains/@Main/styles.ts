@@ -18,7 +18,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexFlow: 'column nowrap',
     flexGrow: 1,
-    minHeight: 'calc(100vh - 56px)',
+    height: 'calc(100vh - 56px)',
     zIndex: 1,
   },
   root: {

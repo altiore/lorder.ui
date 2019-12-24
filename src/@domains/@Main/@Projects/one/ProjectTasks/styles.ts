@@ -5,7 +5,7 @@ export const styles = (theme: Theme) =>
   createStyles({
     root: {
       minHeight: '600px',
-      padding: '0 5px',
+      padding: theme.spacing(3),
     },
     row: {
       '&:nth-of-type(odd)': {

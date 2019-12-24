@@ -18,16 +18,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: `calc(100vw - ${drawerWidth}px)`,
   },
   content: {
-    alignItems: 'flex-start',
-    display: 'flex',
     flexGrow: 1,
     height: `calc(100vh - ${theme.spacing(7)}px)`,
-    justifyContent: 'center',
     marginLeft: 0,
     overflowX: 'auto',
-    padding: theme.spacing(3),
+    position: 'relative',
     width: '100vw',
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create(['margin', 'width'], {
       duration: theme.transitions.duration.leavingScreen,
       easing: theme.transitions.easing.sharp,
     }),
@@ -39,11 +36,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   contentShift: {
     marginLeft: drawerWidth,
-    paddingLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'padding'], {
-      duration: theme.transitions.duration.enteringScreen,
-      easing: theme.transitions.easing.easeOut,
-    }),
+    width: `calc(100vw - ${drawerWidth}px)`,
   },
   drawer: {
     flexShrink: 0,
@@ -76,12 +69,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     paddingLeft: theme.spacing(2),
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-  },
-  root: {
-    display: 'flex',
-    flexGrow: 1,
-    height: '100%',
-    position: 'relative',
   },
   toggleButton: {
     '&:hover': {
