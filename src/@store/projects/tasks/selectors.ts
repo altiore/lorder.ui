@@ -1,4 +1,4 @@
-import intersection from 'lodash/intersection';
+import includes from 'lodash/includes';
 import { createSelector } from 'reselect';
 
 import { filteredMembers, searchTerm } from '@store/tasksFilter/selectors';
@@ -21,7 +21,7 @@ export const filteredProjectTasks = createSelector(
     return list && list.list.length
       ? list.list
           .filter(el => ~el.title.toLowerCase().indexOf(sTerm.trim().toLowerCase()))
-          .filter(el => (members.length ? !!intersection(members, el.users.map(el => el.id)).length : true))
+          .filter(el => (members.length ? includes(members, el.performerId) : true))
       : [];
   }
 );
