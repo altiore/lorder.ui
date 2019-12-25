@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import DoneG from './DoneG';
 import { useStyles } from './styles';
 import ActivityG from './ActivityG';
 import PeopleG from './PeopleG';

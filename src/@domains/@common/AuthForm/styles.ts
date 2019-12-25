@@ -10,14 +10,19 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexFlow: 'column nowrap',
     justifyContent: 'center',
-    padding: theme.spacing(2),
     width: 'fit-content',
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(2),
+    },
   },
   header: {
     backgroundColor: 'transparent',
     boxShadow: 'none',
     marginBottom: theme.spacing(2),
     width: theme.spacing(40),
+    [theme.breakpoints.down('sm')]: {
+      width: theme.spacing(30),
+    },
   },
   toggleButton: {
     width: '100%',

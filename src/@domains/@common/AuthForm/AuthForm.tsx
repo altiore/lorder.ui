@@ -1,9 +1,12 @@
-import Button from '@material-ui/core/Button';
 import React, { useCallback, useMemo, useState } from 'react';
+
+import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 import SwipeableViews from 'react-swipeable-views';
 
 import { LoginForm } from './LoginForm';
@@ -19,6 +22,8 @@ export interface ILoginProps {
 export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, isMagicLoginForm, toggleUiSetting }) => {
   const classes = useStyles();
   const theme = useTheme();
+
+  const isFullWidth = useMediaQuery(theme.breakpoints.up('sm'));
 
   const [formTypeIndex, setFormType] = useState(0);
   const isLogin = useMemo(() => formTypeIndex === 0, [formTypeIndex]);
@@ -54,7 +59,7 @@ export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, isMagicLoginForm, t
         </Tabs>
       </AppBar>
       <SwipeableViews
-        style={{ width: 320 }}
+        style={{ width: isFullWidth ? 320 : 240 }}
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={isMagicLoginForm ? 2 : formTypeIndex}
         onChangeIndex={handleChangeIndex}

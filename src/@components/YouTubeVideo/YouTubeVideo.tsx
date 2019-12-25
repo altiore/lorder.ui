@@ -90,10 +90,12 @@ export const YouTubeVideoTsx: React.FC<IYouTubeVideoProps> = ({
   );
 
   return (
-    <div>
-      <div style={wrapperStyle as any}>
-        <div className={classes.video} style={videoStyle as any}>
-          <YouTube videoId={videoId} opts={preparedOpts as any} onStateChange={onStateChange} />
+    <div className={classes.mainWrapper} style={{ width: `calc(100vw - ${globalWidth - scrollWidth}px)` }}>
+      <div>
+        <div style={wrapperStyle as any}>
+          <div className={classes.video} style={videoStyle as any}>
+            <YouTube videoId={videoId} opts={preparedOpts as any} onStateChange={onStateChange} />
+          </div>
         </div>
       </div>
     </div>

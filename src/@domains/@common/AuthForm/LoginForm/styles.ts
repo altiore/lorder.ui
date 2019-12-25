@@ -13,5 +13,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'center',
     width: theme.spacing(40),
+    [theme.breakpoints.down('sm')]: {
+      width: theme.spacing(30),
+    },
   },
 }));

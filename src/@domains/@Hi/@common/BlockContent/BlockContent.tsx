@@ -15,11 +15,11 @@ export const BlockContent: React.FC<BlockContentI> = ({ children, className, bla
 
   return (
     <>
-      <Grid item md={1} xs={false} />
-      <Grid item md={10} xs={12} className={cn(classes.content, { [classes.contentBlack]: black }, className)}>
+      <Grid item md={1} sm={false} xs={false} />
+      <Grid item md={10} sm={12} xs={12} className={cn(classes.content, { [classes.contentBlack]: black }, className)}>
         {children}
       </Grid>
-      <Grid item md={1} xs={false} />
+      <Grid item md={1} sm={false} xs={false} />
     </>
   );
 };

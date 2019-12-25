@@ -26,7 +26,7 @@ const Screen3: React.FC<Screen3I> = ({ texts }) => {
     <Block className={classes.content}>
       <ScreenTitle>Что позволяет наш сервис?</ScreenTitle>
       <Grid item md={1} xs={false} />
-      <Grid item className={classes.block} md={5} xs={12}>
+      <Grid item className={classes.svgIconBlock} md={5} xs={12}>
         <AltioreSvg />
       </Grid>
       <Grid item className={classes.blockTexts} md={5} xs={12}>

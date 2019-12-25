@@ -3,11 +3,6 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme: Theme) => ({
   content: {
     backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    flexGrow: 1,
-    padding: theme.spacing(2),
-    zIndex: 1,
   },
   description: {},
   descriptionWrapper: {
@@ -33,5 +28,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
   loginTitle: {
     textAlign: 'center',
     width: 260,
+  },
+  loginWrap: {
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+    },
   },
 }));

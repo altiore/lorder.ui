@@ -7,6 +7,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexFlow: 'column wrap',
     justifyContent: 'center',
     marginBottom: theme.spacing(2),
-    paddingLeft: theme.spacing(12),
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: theme.spacing(12),
+    },
   },
 }));

@@ -1,14 +1,6 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
-  block: {
-    alignItems: 'center',
-    color: 'white',
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    justifyContent: 'center',
-    minHeight: `calc(100vh - ${theme.mixins.toolbar.height}px)`,
-  },
   blockTexts: {
     alignItems: 'justify',
     color: 'white',
@@ -21,11 +13,15 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   content: {
     backgroundColor: theme.palette.primary.main,
+  },
+  svgIconBlock: {
+    alignItems: 'center',
+    color: 'white',
     display: 'flex',
     flexFlow: 'column nowrap',
-    flexGrow: 1,
-    padding: theme.spacing(2),
-    zIndex: 1,
+    overflow: 'hidden',
+    justifyContent: 'flex-start',
+    maxWidth: `calc(100vw - ${theme.spacing(6)}px)`,
   },
   title: {
     alignItems: 'center',

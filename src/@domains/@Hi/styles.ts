@@ -10,7 +10,6 @@ export const styles = (theme: Theme): any => ({
     flexFlow: 'column',
     height: 80,
     justifyContent: 'center',
-    paddingLeft: 80,
     [theme.breakpoints.up('md')]: {
       alignItems: 'center',
       display: 'flex',

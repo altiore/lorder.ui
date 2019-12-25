@@ -69,12 +69,8 @@ const Screen2: React.FC<Screen1I> = ({ services }) => {
     <Block alignItems="flex-start" className={classes.content}>
       <ScreenTitle black>Мы поможем</ScreenTitle>
       <SubTitle black>
-        <Typography noWrap variant="subtitle2">
-          WEB сервис для регистрации потраченного на работу времени.
-        </Typography>
-        <Typography noWrap variant="subtitle2">
-          Управление задачами IT проекта
-        </Typography>
+        <Typography variant="subtitle2">WEB сервис для регистрации потраченного на работу времени.</Typography>
+        <Typography variant="subtitle2">Управление задачами IT проекта</Typography>
       </SubTitle>
       <BlockContent className={classes.hoveredItems}>
         <Grid container spacing={4}>
