@@ -7,7 +7,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AddIcon from '@material-ui/icons/Add';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import TimerIcon from '@material-ui/icons/Timer';
+
 import { Route, Switch } from 'react-router-dom';
+import moment from 'moment';
 
 import { INotification } from '@types';
 import { CreateProjectPopup } from '@domains/@common/CreateProjectPopup';
@@ -107,8 +109,9 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
         e.stopPropagation();
         handleClearTimeout();
         setAnchorEl(null);
+        push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
         if (!selectedProject || selectedProject.id !== project.id) {
-          const taskTitle = 'Обзор';
+          const taskTitle = `Обзор проекта "${project.title}" ` + moment().format('DD-MM-YYYY');
           showWarning({
             action: {
               // callback: this.props.openTaskModal,
@@ -117,23 +120,20 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
                   projectId: project.id as number,
                   title: taskTitle,
                 });
-                push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
                 showWarning({
                   action: {
                     callback: openTaskModal,
                     label: 'Редактировать',
                   },
-                  message: `Редактировать задачу "${taskTitle}"?`,
+                  message: `Хотите ее отредактировать?`,
                   title: `Задача для проекта "${project.title}" успешно создана!`,
                 });
               },
-              label: 'Создать и перейти',
+              label: 'Создать задачу',
             },
-            message: `Для него будет создана задача "${taskTitle}"`,
-            title: `Вы собираетесь перейти к проекту "${project.title}"`,
+            message: `Хотите создать задачу для него?`,
+            title: `Вы перешли к проекту "${project.title}"`,
           });
-        } else {
-          push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
         }
       },
       [handleClearTimeout, openTaskModal, selectedProject, showWarning, startUserWork, push]

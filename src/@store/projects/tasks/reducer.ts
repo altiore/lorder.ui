@@ -1,11 +1,13 @@
 import { AxiosResponse } from 'axios';
 import get from 'lodash/get';
+import moment from 'moment';
 import { Action, ActionMeta, handleActions } from 'redux-actions';
 import uniqid from 'uniqid';
 
 import { DownloadList } from '@store/@common/entities';
 import { IRequestAction } from '@store/@common/requestActions';
-import { archiveTask } from '@store/tasks/actions';
+import { archiveTask, Task } from '@store/tasks';
+import { postAndStartUserWork, UserWork, userWorks } from '@store/tasks/user-works';
 import { User } from '@store/users';
 import { deleteProjectTask, moveProjectTask, patchProjectTask, postProjectTask, updateProjectTask } from './actions';
 import { ProjectTask } from './ProjectTask';
@@ -113,6 +115,86 @@ const updateProjectTaskHandler = (state, { payload: task }) => {
   return state.updateItem(taskIndex, task);
 };
 
+const postAndStartUserWorkHandler = (state: S, action: ActionMeta<any, any>) => {
+  let taskId: number;
+  if (action.meta) {
+    taskId = get(action.meta, 'previousAction.payload.taskId');
+  } else {
+    taskId = get(action.payload, 'taskId');
+  }
+  const index = state.list.findIndex(el => taskId === el.id);
+  if (~index) {
+    return state.updateItem(index, {
+      userWorks: userWorks(state.list[index].userWorks, action),
+    });
+  }
+  const data: Partial<Task> = get(action, 'payload.request.data');
+  return state.startLoading().addItem({
+    description: data.description,
+    id: uniqid('Task'),
+    performerId: get(action, 'payload.userId'),
+    projectId: data.projectId,
+    status: 2,
+    title: data.title,
+    userWorks: new DownloadList<UserWork>(
+      UserWork,
+      [
+        {
+          description: data.description,
+          id: uniqid('UserWork'),
+          projectId: data.projectId,
+          startAt: moment(),
+        },
+      ],
+      true
+    ),
+  });
+};
+
+const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, any>) => {
+  let taskId: number;
+  // if meta exists get taskId from meta
+  if (action.meta) {
+    taskId = get(action.meta, 'previousAction.payload.taskId');
+  } else {
+    taskId = get(action.payload, 'taskId');
+  }
+  const index = state.list.findIndex(el => taskId === el.id);
+  if (~index) {
+    return state.stopLoading().updateItem(index, {
+      userWorks: userWorks(state.list[index].userWorks, action),
+    });
+  }
+  const userWork: Partial<UserWork> = get(action, 'payload.data.started');
+  const task: Partial<Task> = get(action, 'payload.data.started.task');
+  return state.stopLoading().updateItem(0, {
+    description: task.description,
+    id: task.id,
+    performerId: task.performerId,
+    projectId: userWork.projectId,
+    status: task.status,
+    title: task.title,
+    userWorks: new DownloadList<UserWork>(UserWork, [userWork], true),
+  });
+};
+
+const postAndStartUserWorkFailHandler = (state: S, action: ActionMeta<any, any>) => {
+  let taskId: number;
+  // if meta exists get taskId from meta
+  if (action.meta) {
+    taskId = get(action.meta, 'previousAction.payload.taskId');
+  } else {
+    taskId = get(action.payload, 'taskId');
+  }
+  const index = state.list.findIndex(el => taskId === el.id);
+  if (~index) {
+    return state.stopLoading().updateItem(index, {
+      userWorks: userWorks(state.list[index].userWorks, action),
+    });
+  }
+  return state.stopLoading().removeItem(0);
+};
+
 export const projectTasks = handleActions<S, any, any>(
   {
     [postProjectTask.toString()]: postProjectTaskHandler,
@@ -136,6 +218,10 @@ export const projectTasks = handleActions<S, any, any>(
     [moveProjectTask.fail]: moveProjectTaskFailHandler,
 
     [updateProjectTask.toString()]: updateProjectTaskHandler,
+
+    [postAndStartUserWork.toString()]: postAndStartUserWorkHandler,
+    [postAndStartUserWork.success]: postAndStartUserWorkSuccessHandler,
+    [postAndStartUserWork.fail]: postAndStartUserWorkFailHandler,
   },
   new DownloadList(ProjectTask)
 );

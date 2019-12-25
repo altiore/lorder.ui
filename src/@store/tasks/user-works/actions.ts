@@ -12,6 +12,7 @@ export interface IUserWorkData {
 export interface IPostData {
   project: Project;
   userWork: IUserWorkData;
+  userId?: number;
 }
 
 export interface IUpdateUserWork {
@@ -32,7 +33,9 @@ export const postAndStartUserWork = requestActions<IPostData>(
   'USER_WORK/POST_AND_START',
   ({ project, userWork }: IPostData): any => ({
     form: CREATE_USER_WORK_FORM_NAME,
-    projectId: userWork.projectId,
+    project,
+    // projectId required here because of nested reducers!!!
+    projectId: project.id,
     request: {
       data: userWork,
       method: 'POST',

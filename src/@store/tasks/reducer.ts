@@ -65,6 +65,7 @@ const postAndStartUserWorkHandler = (state: S, action: ActionMeta<any, any>) => 
     description: data.description,
     id: uniqid('Task'),
     projectId: data.projectId,
+    status: 2,
     title: data.title,
     userWorks: new DownloadList<UserWork>(
       UserWork,
@@ -100,7 +101,9 @@ const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
   return state.stopLoading().updateItem(0, {
     description: task.description,
     id: task.id,
+    performerId: task.performerId,
     projectId: userWork.projectId,
+    status: task.status,
     title: task.title,
     userWorks: new DownloadList<UserWork>(UserWork, [userWork], true),
   });

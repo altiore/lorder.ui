@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Button from '@material-ui/core/Button';
 import { DialogProps } from '@material-ui/core/Dialog';
 import ListItem from '@material-ui/core/ListItem';
@@ -5,14 +7,14 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
+
+import moment from 'moment';
 import Popover from 'react-popover';
 import MediaQuery from 'react-responsive';
 
 import { ITask } from '@types';
 import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
 import { StartStopBtn } from '@components/StartStopBtn';
-import { LinkButton } from '@domains/@common/LinkButton';
 import { Project } from '@store/projects';
 import { TimerListItemText } from './TimerListItemText';
 import { UserWorkTable } from './UserWorkTable';
@@ -26,6 +28,8 @@ export interface ITaskComponentProps {
   task: ITask;
   timerComponent?: React.ReactNode;
   openDialog: (c: React.ReactNode, d?: Partial<DialogProps>) => any;
+  openTaskModal: any;
+  showWarning: any;
   startUserWork: any;
   stopUserWork: any;
 }
@@ -50,9 +54,14 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
         <MediaQuery minWidth={theme.breakpoints.values.sm}>
           <Tooltip title="Открыть доску проекта" placement="bottom">
             <div>
-              <LinkButton className={classes.projectButton} to={isShown ? `/projects/${project.id}` : '#'}>
+              <Button
+                component="a"
+                href={isShown ? `/projects/${project.id}` : '#'}
+                className={classes.projectButton}
+                onClick={this.goToProjectAskCreateTask}
+              >
                 <Typography className={classes.projectText}>{isShown ? project.title : '...'}</Typography>
-              </LinkButton>
+              </Button>
             </div>
           </Tooltip>
         </MediaQuery>
@@ -133,6 +142,39 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
     this.props.startUserWork({
       projectId,
       taskId: id,
+    });
+  };
+
+  private goToProjectAskCreateTask = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const { openTaskModal, project, push, showWarning, startUserWork } = this.props;
+
+    push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
+
+    const taskTitle = `Обзор проекта "${project.title}" ` + moment().format('DD-MM-YYYY');
+    showWarning({
+      action: {
+        // callback: this.props.openTaskModal,
+        callback: async () => {
+          await startUserWork({
+            projectId: project.id as number,
+            title: taskTitle,
+          });
+          showWarning({
+            action: {
+              callback: openTaskModal,
+              label: 'Редактировать',
+            },
+            message: `Хотите ее отредактировать?`,
+            title: `Задача для обзора проекта "${project.title}" успешно создана!`,
+          });
+        },
+        label: 'Создать задачу',
+      },
+      message: `Хотите создать новую задачу для обзора?`,
+      title: `Вы перешли к обзору проекта "${project.title}"`,
     });
   };
 

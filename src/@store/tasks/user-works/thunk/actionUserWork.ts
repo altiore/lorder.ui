@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import moment from 'moment';
 import { change } from 'redux-form';
 
 import { IState } from '@types';
@@ -40,7 +41,7 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
     if (preparedData.description) {
       preparedData.title = preparedData.description;
     } else {
-      preparedData.title = `Задача для проекта ${project.title}`;
+      preparedData.title = `Набота над "${project.title}" ` + moment().format('DD-MM-YYYY');
     }
   }
   const members = projectMembers(getState());
