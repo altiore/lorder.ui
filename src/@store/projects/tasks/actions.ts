@@ -31,7 +31,7 @@ export const getAllProjectTasks = requestActions('PROJECT_TASK/GET_ALL', (projec
   projectId,
   request: {
     params: {
-      count: 1000,
+      count: 100,
       order: 'desc',
       orderBy: 'id',
       skip: 0,

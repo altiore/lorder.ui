@@ -16,7 +16,6 @@ function* getUserWorksSuccessHandler({ payload }: any) {
       yield put(startTimer(currentUserWork, project) as any);
       const members = yield select(projectMembers);
       if (!members || !members.length) {
-        console.log('get project details from getUserWorkSuccess.js');
         yield put(fetchProjectDetails(project.id));
       }
     } else {
