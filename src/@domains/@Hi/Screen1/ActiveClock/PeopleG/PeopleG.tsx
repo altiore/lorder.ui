@@ -19,7 +19,7 @@ const PeopleG: React.FC<IPeopleG> = ({ count = '0' }) => {
         </linearGradient>
         <linearGradient id="text" x1="196.67" y1="396.57" x2="207.1" y2="396.57" xlinkHref="#a" />
       </defs>
-      <g transform="translate(300,50)">
+      <g transform="translate(286,50)">
         <text className={classes.title}>
           <tspan textAnchor="middle">всего активных пользователей</tspan>
         </text>

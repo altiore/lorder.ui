@@ -355,7 +355,7 @@ const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ donePercent = 12 }) => {
           <stop offset="0.55" style={{ stopColor: '#F9EDAD' }} />
           <stop offset="1" style={{ stopColor: '#BFA759' }} />
         </linearGradient>
-        <polyline className={classes.st16} points="379.8,67.1 370.5,53.7 302.1,53.7 	" />
+        <polyline className={classes.st16} points="379.8,67.1 370.5,53.7 202,53.7 	" />
 
         <linearGradient
           id="SVGID_18_"
@@ -370,7 +370,7 @@ const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ donePercent = 12 }) => {
           <stop offset="0.55" style={{ stopColor: '#F9EDAD' }} />
           <stop offset="1" style={{ stopColor: '#BFA759' }} />
         </linearGradient>
-        <polyline className={classes.st17} points="107.1,399.3 116.4,386 161.7,386 	" />
+        <polyline className={classes.st17} points="107.1,399.3 116.4,386 165.7,386 	" />
         <g>
           <linearGradient
             id="SVGID_19_"
@@ -385,7 +385,7 @@ const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ donePercent = 12 }) => {
             <stop offset="0.55" style={{ stopColor: '#F9EDAD' }} />
             <stop offset="1" style={{ stopColor: '#BFA759' }} />
           </linearGradient>
-          <polyline className={classes.st18} points="176.7,413.3 167.4,426.6 122.1,426.6 		" />
+          <polyline className={classes.st18} points="176.7,413.3 167.4,426.6 106.1,426.6 		" />
         </g>
 
         <linearGradient
