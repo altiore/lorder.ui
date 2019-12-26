@@ -34,6 +34,8 @@ pipelines:
             - cp -r ../build ./build
             - git init
             - git add .
+            - git config user.email "razvanlomov@gmail.com"
+            - git config user.name "bitbucket-pipelines"
             - git commit -m 'dynamic version'
             - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git -f HEAD:master
     master:
