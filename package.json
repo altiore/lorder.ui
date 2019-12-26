@@ -2,7 +2,7 @@
   "name": "altiore_contrib.ui",
   "version": "0.2.0",
   "private": true,
-  "main": "index.js",
+  "main": "build/index.js",
   "license": "UNLICENSED",
   "engines": {
     "node": "8.11.3"
