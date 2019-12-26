@@ -53,6 +53,7 @@ const getOwnProjectsSuccessHandler = (state: S, { payload }: Action<AxiosRespons
   preparedPayload.data = preparedPayload.data.map(el => ({
     ...el,
     ...el.project,
+    uuid: get(el, ['project', 'pub', 'uuid']),
   }));
   return state.finishLoading(preparedPayload);
 };
