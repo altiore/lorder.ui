@@ -27,6 +27,8 @@ pipelines:
           deployment: staging
           script:
             - cd heroku
+            - rm -rf ./build
+            - rm -rf .git
             - cp -r ../build ./build
             - git init
             - git add .
