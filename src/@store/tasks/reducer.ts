@@ -8,7 +8,7 @@ import uniqid from 'uniqid';
 
 import { DownloadList } from '@store/@common/entities';
 import { combineActions } from '@store/@common/helpers';
-import { deleteProjectTask, patchProjectTask } from '@store/projects/tasks/actions';
+import { deleteProjectTask, moveProjectTask, patchProjectTask } from '@store/projects/tasks/actions';
 import { patchUserWork } from '@store/user-works/actions';
 import { archiveTask, fetchTaskDetailsA, getAllTasks, replaceTasks, updateTask } from './actions';
 import { Task } from './Task';
@@ -220,6 +220,25 @@ const patchProjectTaskFailHandler = (state: S, action) => {
   return state.stopLoading().updateItem(taskIndex, task);
 };
 
+const moveProjectTaskHandler = (state: S, { payload }: Action<P>) => {
+  const taskIndex = state.list.findIndex(el => get(payload, 'taskId') === el.id);
+  const status = get(payload, 'request.data.status');
+  return state.startLoading().updateItem(taskIndex, {
+    status,
+  });
+};
+
+const moveProjectTaskSuccessHandler = (state: S) => {
+  return state.stopLoading();
+};
+
+const moveProjectTaskFailHandler = (state: S, { payload, meta }: ActionMeta<any, { previousAction: { payload } }>) => {
+  const taskIndex = state.list.findIndex(el => meta.previousAction.payload.taskId === el.id);
+  return state.stopLoading().updateItem(taskIndex, {
+    status: meta.previousAction.payload.prevStatus,
+  });
+};
+
 const deleteProjectTaskHandler = (state: S, { payload }: Action<P>) => {
   const index = state.list.findIndex(el => el.id === get(payload, 'taskId'));
   if (!~index) {
@@ -288,6 +307,10 @@ export const tasks = handleActions<S, any, any>(
     [patchProjectTask.toString()]: patchProjectTaskHandler,
     [patchProjectTask.success]: patchProjectTaskSuccessHandler,
     [patchProjectTask.fail]: patchProjectTaskFailHandler,
+
+    [moveProjectTask.toString()]: moveProjectTaskHandler,
+    [moveProjectTask.success]: moveProjectTaskSuccessHandler,
+    [moveProjectTask.fail]: moveProjectTaskFailHandler,
 
     [deleteProjectTask.toString()]: deleteProjectTaskHandler,
     [deleteProjectTask.success]: deleteProjectTaskSuccessHandler,
