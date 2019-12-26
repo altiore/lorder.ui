@@ -5,9 +5,12 @@
   "main": "index.js",
   "license": "UNLICENSED",
   "engines": {
-    "node": "8.11.3"
+    "node": "8.11.3",
+    "npm": "6.13.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "express": "4.17.1"
+  },
   "scripts": {},
   "eslintConfig": {
     "extends": "react-app"
