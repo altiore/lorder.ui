@@ -2,14 +2,16 @@ import React from 'react';
 
 import { useStyles } from './styles';
 import ActivityG from './ActivityG';
+import ClockHands from './ClockHands';
 import PeopleG from './PeopleG';
 import ProjectsG from './ProjectsG';
 
 interface IActiveClockIcon {
+  slowTimeSpeed: number;
   donePercent?: number;
 }
 
-const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ donePercent = 12 }) => {
+const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ donePercent = 12, slowTimeSpeed }) => {
   const classes = useStyles();
 
   return (
@@ -1037,62 +1039,6 @@ const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ donePercent = 12 }) => {
           </linearGradient>
           <polygon className={classes.st57} points="178.2,362.4 189.2,343.5 187.4,342.5 176.5,361.4 178.2,362.4 		" />
 
-          <linearGradient
-            id="SVGID_59_"
-            gradientUnits="userSpaceOnUse"
-            x1="243.89"
-            y1="261.9947"
-            x2="255.84"
-            y2="261.9947"
-            gradientTransform="matrix(1 0 0 -1 0 502)"
-          >
-            <stop offset="0" style={{ stopColor: '#D1BF73' }} />
-            <stop offset="0.55" style={{ stopColor: '#F9EDAD' }} />
-            <stop offset="1" style={{ stopColor: '#BFA759' }} />
-          </linearGradient>
-          <path
-            className={classes.st58}
-            d="M255.8,240c0,3.3-2.7,5.9-6,5.9c0,0,0,0,0,0c-3.2,0-5.9-2.5-5.9-5.8c0-0.1,0-0.1,0-0.2
-			c0-3.3,2.7-5.9,5.9-5.9C253.1,234.1,255.8,236.7,255.8,240z"
-          />
-
-          <linearGradient
-            id="SVGID_60_"
-            gradientUnits="userSpaceOnUse"
-            x1="160.9972"
-            y1="243.5813"
-            x2="272.3004"
-            y2="243.5813"
-            gradientTransform="matrix(1 0 0 -1 0 502)"
-          >
-            <stop offset="0" style={{ stopColor: '#D1BF73' }} />
-            <stop offset="0.55" style={{ stopColor: '#F9EDAD' }} />
-            <stop offset="1" style={{ stopColor: '#BFA759' }} />
-          </linearGradient>
-          <path
-            className={classes.st59}
-            d="M164.4,289c-1.1,0.5-2.5,0-3.1-1.1l0,0c-0.6-1.2-0.2-2.6,0.9-3.3l106.6-56.8c1.2-0.6,2.6,0,3.2,1.1l0,0
-			c0.6,1.1,0.3,2.5-0.8,3.2L164.4,289z"
-          />
-
-          <linearGradient
-            id="SVGID_61_"
-            gradientUnits="userSpaceOnUse"
-            x1="195.0165"
-            y1="290.2657"
-            x2="266.4018"
-            y2="290.2657"
-            gradientTransform="matrix(1 0 0 -1 0 502)"
-          >
-            <stop offset="0" style={{ stopColor: '#D1BF73' }} />
-            <stop offset="0.55" style={{ stopColor: '#F9EDAD' }} />
-            <stop offset="1" style={{ stopColor: '#BFA759' }} />
-          </linearGradient>
-          <path
-            className={classes.st60}
-            d="M195.6,162.4c-0.6-0.9-0.8-2.1-0.1-2.4l0,0c0.4-0.4,1.5,0.2,2.1,1.2l68.3,99.8c0.7,1,0.8,2.1,0.2,2.5l0,0
-			c-0.5,0.3-1.5-0.1-2.2-1.2L195.6,162.4z"
-          />
           <g>
             <g>
               <linearGradient
@@ -1209,6 +1155,11 @@ const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ donePercent = 12 }) => {
           </g>
         </g>
       </g>
+      {slowTimeSpeed ? (
+        <ClockHands key={`notCrazySpeed${slowTimeSpeed}`} crazy={false} />
+      ) : (
+        <ClockHands key="crazySpeed" crazy={true} />
+      )}
     </svg>
   );
 };
