@@ -27,7 +27,7 @@ export const styles = (theme: Theme): any => ({
     display: 'flex',
     flexFlow: 'column nowrap',
     flexGrow: 1,
-    padding: 15,
+    padding: theme.spacing(2),
   },
   overlay: {
     display: 'flex',
@@ -49,6 +49,7 @@ export const styles = (theme: Theme): any => ({
     display: 'flex',
     flexFlow: 'column nowrap',
     flexGrow: 1,
+    minWidth: 0,
   },
   sectionDesktop: {
     display: 'flex',

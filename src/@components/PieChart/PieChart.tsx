@@ -40,7 +40,14 @@ class PieChartTsx extends React.Component<IPieChartProps, {}> {
       <HighchartsChart>
         {title && <Title>{title}</Title>}
 
-        <Chart plotBackgroundColor={null} plotBorderWidth={null} plotShadow={null} type="pie" height={height} />
+        <Chart
+          plotBackgroundColor={null}
+          plotBorderWidth={null}
+          plotShadow={null}
+          type="pie"
+          height={height}
+          backgroundColor="transparent"
+        />
 
         <Tooltip pointFormat={'{series.name}: <b>{point.percentage:.1f}%</b>'} />
 

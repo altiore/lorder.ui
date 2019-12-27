@@ -2,12 +2,13 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
+import Person from '@components/Person';
+
 import Block from '@domains/@Hi/@common/Block';
 import BlockContent from '@domains/@Hi/@common/BlockContent';
 import ScreenTitle from '@domains/@Hi/@common/ScreenTitle';
 import SubTitle from '@domains/@Hi/@common/SubTitle';
 import { IProjectMember } from '@types';
-import Person from './Person';
 import { useStyles } from './styles';
 import ProjectsAch from './ProjectsAch';
 import PublicProjectsAch from './PublicProjectsAch';

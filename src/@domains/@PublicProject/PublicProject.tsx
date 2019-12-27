@@ -11,8 +11,8 @@ import { Link } from 'react-router-dom';
 import { TelegramIco } from '@components/@icons/Telegram';
 import { Block } from '@components/Block';
 import LoadingPage from '@components/LoadingPage';
-import { MemberCard } from '@components/MemberCard';
 import { NoMatch } from '@components/NoMatch';
+import Person from '@components/Person';
 import PieChart from '@domains/@common/PieChart';
 import { PublicProject } from '@store/publicProject';
 import { LinkButton } from '@domains/@common/LinkButton';
@@ -65,23 +65,19 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
     }
     return (
       <div className={classes.root}>
-        {!isAuth && (
-          <AppBar key={'top'} position="static" className={classes.appBar}>
-            <Toolbar>
-              <Link to="/">
-                <Typography variant="h6" className={classes.title}>
-                  Altiore
-                </Typography>
-              </Link>
-            </Toolbar>
-          </AppBar>
-        )}
+        <AppBar key={'top'} position="static" className={classes.appBar}>
+          <Toolbar>
+            <Link to="/">
+              <Typography variant="h6" className={classes.title}>
+                Altiore
+              </Typography>
+            </Link>
+          </Toolbar>
+        </AppBar>
 
         <Grid container className={classes.content}>
           <Block>
-            <Grid item>
-              <Typography variant={'h1'}>{title}</Typography>
-            </Grid>
+            <Typography variant={'h1'}>{title}</Typography>
           </Block>
           <Block>
             <Grid item className={classes.profile}>
@@ -121,7 +117,7 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
               statistic.members &&
               Object.keys(statistic.members).map((member, index) => (
                 <Grid item key={index}>
-                  <MemberCard
+                  <Person
                     avatar={statistic.members[member].avatar}
                     name={statistic.members[member].email.replace(/@.*$/, '')}
                   />

@@ -1,8 +1,10 @@
+import React from 'react';
+
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
 
+import manImg from '../MemberCard/d-avatar.png';
 import { useStyles } from './styles';
 
 interface PersonI {
@@ -16,7 +18,7 @@ export const Person: React.FC<PersonI> = ({ avatar, name }) => {
   return (
     <Grid item className={classes.item}>
       <div className={classes.avatarWrapper}>
-        <Avatar alt={name} src={avatar} className={classes.avatar} />
+        <Avatar alt={name} src={avatar || manImg} className={classes.avatar} />
       </div>
       <Typography noWrap align="center" color="textPrimary" variant="h5">
         {name}
