@@ -44,9 +44,11 @@ const Screen5: React.FC<Screen5I> = ({ team }) => {
           </Typography>
         </SubTitle>
         <BlockContent>
-          <Grid container justify="space-evenly" alignItems="center" spacing={4}>
+          <Grid container justify="space-evenly" spacing={10}>
             {team.map(({ avatar, email }) => (
-              <Person key={email} avatar={avatar} name={email.replace(/@.*$/, '')} />
+              <Grid item key={email}>
+                <Person avatar={avatar} name={email.replace(/@.*$/, '')} />
+              </Grid>
             ))}
           </Grid>
         </BlockContent>
