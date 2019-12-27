@@ -27,7 +27,7 @@ export const ClockHands: React.FC<IClockHands> = ({ crazy = false }) => {
   const minutes = date.getMinutes();
   const hours = date.getHours();
   const minutesTr = 60 * minutes + seconds;
-  const hoursTr = 3600 * (hours > 12 ? hours - 12 : hours) + minutes;
+  const hoursTr = 3600 * (hours > 12 ? hours - 12 : hours) + minutesTr;
 
   return (
     <>
