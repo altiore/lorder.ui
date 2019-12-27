@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Avatar from '@material-ui/core/Avatar';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -17,9 +18,9 @@ export const Person: React.FC<PersonI> = ({ avatar, name }) => {
 
   return (
     <Grid item className={classes.item}>
-      <div className={classes.avatarWrapper}>
+      <ButtonBase className={classes.avatarWrapper}>
         <Avatar alt={name} src={avatar || manImg} className={classes.avatar} />
-      </div>
+      </ButtonBase>
       <Typography noWrap align="center" color="textPrimary" variant="h5">
         {name}
       </Typography>
