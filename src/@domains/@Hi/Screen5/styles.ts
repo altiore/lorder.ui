@@ -15,6 +15,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   achievementBlock: {
     alignItems: 'flex-start',
   },
+  personsBlock: {
+    margin: 0,
+    width: '100%',
+  },
   team: {
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
