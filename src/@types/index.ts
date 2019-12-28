@@ -1,5 +1,6 @@
 export * from './IEvent';
 export * from './IRoute';
+export * from './IListDto';
 export * from './IMeta';
 export * from './INotification';
 export * from './IProjectMember';
@@ -7,6 +8,8 @@ export * from './ISockets';
 export * from './IState';
 export * from './IStatistics';
 export * from './ITask';
+export * from './ITaskActive';
+export * from './ITaskLog';
 export * from './ITasksFilter';
 export * from './IUser';
 export * from './IUserRole';

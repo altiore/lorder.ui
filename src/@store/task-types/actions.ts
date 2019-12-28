@@ -10,7 +10,7 @@ export const getAllTaskTypes = requestActions('TASK_TYPES/GET_ALL', () => ({
   },
 }));
 
-export const postTaskType = requestActions<IPostTaskTypeData>('TASK_TYPES/POST', ({ title }: IPostTaskTypeData) => ({
+export const postTaskType = requestActions<IPostTaskTypeData>('TASK_TYPES/POST', ({ title }) => ({
   error: {
     message: 'Не удалось сохранить тип задачи',
     title: 'Неудача',

@@ -40,7 +40,17 @@ const VARIANT_ENTITY: any = {
 };
 
 const persistConfig: PersistConfig = {
-  blacklist: ['dialog', 'form', 'highcharts', 'router', 'timer', 'notifications', 'publicProject', 'versionHistory'],
+  blacklist: [
+    'dialog',
+    'form',
+    'highcharts',
+    'router',
+    'taskActive',
+    'timer',
+    'notifications',
+    'publicProject',
+    'versionHistory',
+  ],
   key: 'altiore',
   storage: localForage,
   transforms: [

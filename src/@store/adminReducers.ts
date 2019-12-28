@@ -1,6 +1,7 @@
 import { feedback } from './feedback/reducer';
 import { project } from './project';
 import { projects } from './projects';
+import { taskActive } from './task-active/reducer';
 import { taskTypes } from './task-types';
 import { tasks } from './tasks';
 import { tasksFilter } from './tasksFilter/reducer';
@@ -12,6 +13,7 @@ export const adminReducers = {
   feedback,
   project,
   projects,
+  taskActive,
   taskTypes,
   tasks,
   tasksFilter,

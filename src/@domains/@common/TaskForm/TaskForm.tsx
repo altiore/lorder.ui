@@ -22,6 +22,7 @@ import StatusField from './StatusField';
 import { parseNumber } from '@store/@common/helpers';
 // import { STATUS_NAMES } from '@store/projects';
 
+import TaskHistory from './TaskHistory';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
 import { useStyles } from './styles';
 
@@ -263,6 +264,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
               component={TextAreaMarkdown}
               onSave={handleSave(false)}
             />
+            <TaskHistory />
           </div>
           <div className={classes.cardSecond}>
             <StatusField isMine onStart={handleStartTask} isCurrent={isCurrent} />
