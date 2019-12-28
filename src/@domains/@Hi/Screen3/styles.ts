@@ -7,12 +7,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexFlow: 'column nowrap',
     justifyContent: 'flex-start',
-    minHeight: `calc(100vh - ${theme.mixins.toolbar.height}px)`,
-    paddingBottom: theme.spacing(8),
-    paddingLeft: theme.spacing(2),
+    padding: theme.spacing(0, 2, 8),
   },
   content: {
     backgroundColor: theme.palette.primary.main,
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(2, 0),
+      '& div:nth-child(2)': {
+        padding: theme.spacing(0, 0, 0, 2),
+      },
+    },
   },
   svgIconBlock: {
     alignItems: 'center',
@@ -21,7 +25,14 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexFlow: 'column nowrap',
     overflow: 'hidden',
     justifyContent: 'flex-start',
-    maxWidth: `calc(100vw - ${theme.spacing(6)}px)`,
+    maxWidth: `100vw`,
+    '& svg': {
+      width: '100vw',
+      [theme.breakpoints.up('sm')]: {
+        width: '536.61',
+        height: '500',
+      },
+    },
   },
   title: {
     alignItems: 'center',

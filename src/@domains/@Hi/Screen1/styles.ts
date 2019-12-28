@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   button: {
-    marginTop: 20,
+    margin: theme.spacing(2, 0, 3.5),
     fontSize: theme.typography.pxToRem(24),
   },
   content: {

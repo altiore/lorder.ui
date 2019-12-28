@@ -1,9 +1,12 @@
+import React, { useEffect } from 'react';
+
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import React, { useEffect } from 'react';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 import { TelegramIco } from '@components/@icons/Telegram';
 import YouTubeVideo from '@components/YouTubeVideo';
@@ -37,15 +40,20 @@ export const HiTsx: React.FC<IHiProps> = ({
     fetchAltiore();
   }, [fetchAltiore, fetchStatistics]);
 
+  const theme = useTheme();
+  const isDesctop = useMediaQuery(theme.breakpoints.up('sm'));
+
   return (
     <Grid container direction="column">
-      <YouTubeVideo
-        videoId="PT8urv0CtUw"
-        opts={{ start: 14, end: 280 }}
-        height={height}
-        scrollWidth={scrollWidth}
-        width={width}
-      />
+      {isDesctop ? (
+        <YouTubeVideo
+          videoId="PT8urv0CtUw"
+          opts={{ start: 14, end: 280 }}
+          height={height}
+          scrollWidth={scrollWidth}
+          width={width}
+        />
+      ) : null}
 
       <AppBar key={'top'} position="static" className={classes.appBar}>
         <Toolbar>

@@ -13,6 +13,9 @@ export const styles = (theme: Theme) =>
       flexFlow: 'row nowrap',
       marginBottom: theme.spacing(1),
       width: '100%',
+      [theme.breakpoints.down('sm')]: {
+        marginBottom: 0,
+      },
     },
     play: {
       alignItems: 'center',

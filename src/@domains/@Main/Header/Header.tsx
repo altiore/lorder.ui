@@ -143,7 +143,7 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
 
     return (
       <AppBar position="static" color="primary">
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <LinkIconButton to="/" color="secondary">
             <TimerIcon fontSize="large" color="inherit" className={classes.timerIco} />
           </LinkIconButton>

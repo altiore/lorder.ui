@@ -59,7 +59,7 @@ export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, isMagicLoginForm, t
         </Tabs>
       </AppBar>
       <SwipeableViews
-        style={{ width: isFullWidth ? 320 : 240 }}
+        style={{ width: isFullWidth ? 320 : 'calc(100vw - 64px)' }}
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={isMagicLoginForm ? 2 : formTypeIndex}
         onChangeIndex={handleChangeIndex}

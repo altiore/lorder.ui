@@ -10,6 +10,7 @@ export const styles = (theme: Theme) =>
       padding: theme.spacing(2),
       [theme.breakpoints.down('sm')]: {
         margin: 0,
+        overflowX: 'hidden',
         padding: theme.spacing(1),
       },
       [theme.breakpoints.up('lg')]: {

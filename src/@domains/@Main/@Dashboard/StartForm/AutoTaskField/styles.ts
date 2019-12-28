@@ -36,6 +36,7 @@ export const styles = (theme: Theme) =>
       maxHeight: 536,
       overflowY: 'auto',
       [theme.breakpoints.down('sm')]: {
+        marginLeft: 2,
         maxHeight: 200,
       },
     },

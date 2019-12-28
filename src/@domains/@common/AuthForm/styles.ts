@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(2),
     width: theme.spacing(40),
     [theme.breakpoints.down('sm')]: {
-      width: theme.spacing(30),
+      width: 'calc(100vw - 64px)',
     },
   },
   toggleButton: {

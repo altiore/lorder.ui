@@ -6,27 +6,27 @@ export const styles = (theme: Theme) =>
     new: {
       color: theme.palette.error.main,
       fontWeight: 'bold',
+      marginLeft: '100%',
       position: 'absolute',
-      right: 12,
-      top: 2,
-      transform: 'rotate(-20deg)',
+      transform: 'rotate(-10deg)',
     },
     project: {
-      alignItems: 'center',
-      display: 'flex',
-      flexBasis: '16%',
-      justifyContent: 'center',
       opacity: 0.2,
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+      width: '20%',
+      position: 'absolute',
     },
     projectSelected: {
       opacity: 1,
     },
     root: {
-      alignItems: 'center',
       border: `1px solid transparent`,
-      display: 'flex',
-      flexFlow: 'row nowrap',
-      justifyContent: 'space-between',
+      position: 'relative',
+      [theme.breakpoints.down('sm')]: {
+        padding: '0 0.3rem',
+      },
     },
     rootSelected: {
       backgroundColor: `${theme.palette.background.default}!important`,
@@ -35,10 +35,10 @@ export const styles = (theme: Theme) =>
     runButton: {
       alignItems: 'center',
       display: 'flex',
-      flexBasis: '20.5%',
       flexFlow: 'row nowrap',
       justifyContent: 'flex-end',
-      paddingRight: theme.spacing(5),
+      marginLeft: '90%',
+      position: 'absolute',
     },
     runButtonIcon: {
       color: '#4BC800',
@@ -46,10 +46,11 @@ export const styles = (theme: Theme) =>
     task: {
       alignItems: 'center',
       display: 'flex',
-      flexBasis: '63.5%',
       flexFlow: 'row nowrap',
       justifyContent: 'flex-start',
-      maxWidth: 400,
+      marginLeft: '20%',
+      position: 'absolute',
+      width: '70%',
     },
     taskIcon: {
       marginRight: theme.spacing(1 / 2),

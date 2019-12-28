@@ -5,11 +5,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginLeft: 4,
     minHeight: 42,
     minWidth: 140,
-    padding: `0 0 0 ${theme.spacing(2)}px`,
+    padding: theme.spacing(0, 0, 0, 2),
     position: 'relative',
     textTransform: 'none',
     [theme.breakpoints.down('sm')]: {
-      maxWidth: 160,
+      marginLeft: 0,
+      maxWidth: 158,
+      padding: 0,
+      '& button': {
+        display: 'none',
+      },
     },
   },
   inProgress: {

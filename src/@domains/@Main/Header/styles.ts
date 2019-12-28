@@ -2,6 +2,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   buttonBlock: {
+    display: 'flex',
     transition: theme.transitions.create('width', {
       duration: theme.transitions.duration.enteringScreen,
       easing: theme.transitions.easing.easeOut,
@@ -18,5 +19,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   timerIco: {
     color: theme.palette.secondary.main,
+  },
+  toolbar: {
+    [theme.breakpoints.down('sm')]: {
+      paddingRight: 0,
+      paddingLeft: 0,
+    },
   },
 }));
