@@ -1,8 +1,12 @@
 html {
-  /*font-size: 2vmin;*/
+  min-height: 100vh;
+}
+
+body {
+  min-height: 100vh;
 }
 
 #root {
   flex-grow: 1;
-  /*height: 100vh;*/
+  min-height: 100vh;
 }

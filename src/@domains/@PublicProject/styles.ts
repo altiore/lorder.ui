@@ -49,6 +49,7 @@ export const styles = (theme: Theme): any => ({
     display: 'flex',
     flexFlow: 'column nowrap',
     flexGrow: 1,
+    minHeight: '100vh',
     minWidth: 0,
   },
   sectionDesktop: {

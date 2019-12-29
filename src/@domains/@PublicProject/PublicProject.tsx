@@ -1,12 +1,14 @@
+import * as React from 'react';
+
+import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
+
 import AppBar from '@material-ui/core/AppBar';
-import Divider from '@material-ui/core/Divider/Divider';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
 
 import { TelegramIco } from '@components/@icons/Telegram';
 import { Block } from '@components/Block';
@@ -77,7 +79,9 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
 
         <Grid container className={classes.content}>
           <Block>
-            <Typography variant={'h1'}>{title}</Typography>
+            <Grid item>
+              <Typography variant={'h1'}>{title}</Typography>
+            </Grid>
           </Block>
           <Block>
             <Grid item className={classes.profile}>
@@ -103,12 +107,16 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
 
           <Divider />
           <Block>
-            <PieChart key={1} data={chartData} title="Статистика по времени" unit="h" />
-            <PieChart key={2} data={chartValueData} title="Статистика по ценности" />
+            <Grid item lg={6} md={12} sm={12}>
+              <PieChart key={1} data={chartData} title="Статистика по времени" unit="h" />
+            </Grid>
+            <Grid item lg={6} md={12} sm={12}>
+              <PieChart key={2} data={chartValueData} title="Статистика по ценности" />
+            </Grid>
           </Block>
 
           <Divider />
-          <Block>
+          <Block spacing={10}>
             <Grid item className={classes.profile} xs={12}>
               <Typography variant="h4">Команда проекта</Typography>
               <Typography>Мы дарим людям мир и красоту, но только если это будет добром!</Typography>
