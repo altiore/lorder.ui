@@ -4,6 +4,7 @@ import React from 'react';
 
 export interface IDimensions {
   height: number;
+  isHorizontalScroll: boolean;
   isWidthLg: boolean;
   isWidthMd: boolean;
   isWidthSm: boolean;
@@ -84,8 +85,13 @@ export const withResize = <P>(
           scrollWidth = (e && e.clientWidth) || g.clientWidth;
         }
         const { theme } = this.props;
+        console.log('withResize', {
+          scrollWidth,
+          width,
+        });
         return {
           height,
+          isHorizontalScroll: Boolean(scrollWidth - width),
           isWidthLg: width <= theme.breakpoints.values.lg && width > theme.breakpoints.values.md,
           isWidthMd: width <= theme.breakpoints.values.md && width > theme.breakpoints.values.sm,
           isWidthSm: width <= theme.breakpoints.values.sm,

@@ -1,11 +1,12 @@
+import React, { useCallback, useEffect, useState } from 'react';
+
+import cn from 'classnames';
+
 import ButtonBase from '@material-ui/core/ButtonBase';
 import amber from '@material-ui/core/colors/amber';
-import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
-import cn from 'classnames';
-import React, { useCallback, useEffect, useState } from 'react';
 import {
   DragDropContext,
   Draggable,
@@ -30,27 +31,25 @@ const getListStyle = (isDraggingOver: boolean, height: number) => ({
 });
 
 export interface IDragAndDropProps {
-  items: ProjectTask[];
   getAllProjectTasks: any;
+  height: number;
+  items: ProjectTask[];
   moveProjectTask: any;
-  statuses: number[];
   openDialog: any;
   projectId: number;
   push: any;
-  theme: Theme;
-  height: number;
+  statuses: number[];
 }
 
 export const DragAndDrop: React.FC<IDragAndDropProps> = ({
-  items,
-  height,
   getAllProjectTasks,
+  height,
+  items,
   moveProjectTask,
-  projectId,
-  statuses,
-  theme,
-  push,
   openDialog,
+  projectId,
+  push,
+  statuses,
 }) => {
   const classes = useStyles();
 

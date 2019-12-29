@@ -73,7 +73,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'flex-start',
     display: 'flex',
     justifyContent: 'space-around',
+    minWidth: 'fit-content',
     padding: theme.spacing(3, 1),
-    width: 'fit-content',
   },
 }));
