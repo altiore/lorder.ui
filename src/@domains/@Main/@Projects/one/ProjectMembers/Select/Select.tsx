@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,6 +10,7 @@ export interface ISelectProps {
     label: string;
     value: ACCESS_LEVEL;
   }>;
+  memberId: number;
   onChange: any;
   value: ACCESS_LEVEL;
 }
@@ -23,33 +24,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const SelectTsx: React.FC<ISelectProps> = ({ items, value, onChange }) => {
+export const SelectTsx: React.FC<ISelectProps> = ({ items, memberId, value, onChange }) => {
   const classes = useStyles();
 
-  const inputLabel = useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
-  React.useEffect(() => {
-    setLabelWidth((inputLabel as any).current.offsetWidth);
-  }, []);
-
   const handleChange = event => {
-    onChange(event.target.value);
+    onChange(event.target.value, memberId);
   };
 
   const PreparedSelect: any = Select;
 
   return (
     <FormControl variant="outlined" className={classes.formControl}>
-      <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
-        Уровень доступа
-      </InputLabel>
-      <PreparedSelect
-        labelId="demo-simple-select-outlined-label"
-        id="demo-simple-select-outlined"
-        value={value}
-        onChange={handleChange}
-        labelWidth={labelWidth}
-      >
+      <InputLabel id="demo-simple-select-outlined-label">Уровень доступа</InputLabel>
+      <PreparedSelect id="demo-simple-select-outlined" value={value} onChange={handleChange}>
         {items.map(item => (
           <MenuItem key={item.value} value={item.value}>
             {item.label}

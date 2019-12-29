@@ -102,7 +102,7 @@ export const ProjectMembersJsx: React.FC<RouteComponentProps<{}> & IProjectMembe
                     </TableCell>
                     <TableCell>{accessLevel ? 'Да' : 'Нет'}</TableCell>
                     <TableCell align="right">
-                      <Select value={accessLevel} />
+                      <Select value={accessLevel} memberId={id} />
                     </TableCell>
                     <TableCell align="right">
                       <IconButton onClick={handleRemoveClick(id)}>

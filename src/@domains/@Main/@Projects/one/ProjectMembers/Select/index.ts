@@ -4,7 +4,6 @@ import { createStructuredSelector } from 'reselect';
 import { mapEnum } from '@store/@common/helpers';
 import { ACCESS_LEVEL } from '@store/projects';
 import { updateMemberLevel } from '@store/projects/members';
-import { routeProjectId } from '@store/router';
 
 import { SelectTsx } from './Select';
 
@@ -17,7 +16,6 @@ const getAccessLevels = () =>
 
 const mapState = createStructuredSelector({
   items: getAccessLevels,
-  projectId: routeProjectId,
 } as any);
 
 const mapDispatch = {
