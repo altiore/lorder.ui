@@ -1,16 +1,14 @@
-import { Theme } from '@material-ui/core/styles';
-import createStyles from '@material-ui/core/styles/createStyles';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme) =>
-  createStyles({
-    root: {
-      minHeight: '600px',
-      padding: theme.spacing(3),
+export const useStyles = makeStyles(theme => ({
+  root: {
+    minHeight: '600px',
+    padding: theme.spacing(3),
+  },
+  row: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default,
     },
-    row: {
-      '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.background.default,
-      },
-      cursor: 'pointer',
-    },
-  });
+    cursor: 'pointer',
+  },
+}));
