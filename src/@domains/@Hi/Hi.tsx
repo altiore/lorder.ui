@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
+import { Helmet } from 'react-helmet';
+
 import { TelegramIco } from '@components/@icons/Telegram';
 import YouTubeVideo from '@components/YouTubeVideo';
 import Screen1 from './Screen1';
@@ -45,6 +47,9 @@ export const HiTsx: React.FC<IHiProps> = ({
 
   return (
     <Grid container direction="column">
+      <Helmet>
+        <body className={classes.hiBody} />
+      </Helmet>
       {isDesctop ? (
         <YouTubeVideo
           videoId="PT8urv0CtUw"

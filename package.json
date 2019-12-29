@@ -76,6 +76,7 @@
     "react-dom": "16.8.6",
     "react-dropzone": "10.1.7",
     "react-flip-move": "3.0.3",
+    "react-helmet": "5.2.1",
     "react-icons": "3.6.1",
     "react-jsx-highcharts": "3.6.0",
     "react-markdown": "4.0.8",
@@ -159,6 +160,7 @@
     "@storybook/addon-storysource": "5.1.11",
     "@storybook/addon-viewport": "5.1.11",
     "@storybook/react": "5.1.11",
+    "@types/react-helmet": "5.0.14",
     "@types/storybook__addon-actions": "3.4.3",
     "@types/storybook__react": "4.0.2",
     "storybook-addon-material-ui": "0.9.0-alpha.20"

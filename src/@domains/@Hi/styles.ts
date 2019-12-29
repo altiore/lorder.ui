@@ -26,6 +26,9 @@ export const styles = (theme: Theme): any => ({
     flexGrow: 1,
     padding: 15,
   },
+  hiBody: {
+    overflowX: 'hidden',
+  },
   overlay: {
     display: 'flex',
     zIndex: 1,
