@@ -85,10 +85,6 @@ export const withResize = <P>(
           scrollWidth = (e && e.clientWidth) || g.clientWidth;
         }
         const { theme } = this.props;
-        console.log('withResize', {
-          scrollWidth,
-          width,
-        });
         return {
           height,
           isHorizontalScroll: Boolean(scrollWidth - width),

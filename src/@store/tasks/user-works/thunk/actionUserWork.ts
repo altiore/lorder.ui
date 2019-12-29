@@ -46,7 +46,6 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
   }
   const members = projectMembers(getState());
   if (!members || !members.length) {
-    console.log('get project details from actionUserWork.js');
     dispatch(fetchProjectDetails(data.projectId));
   }
   dispatch(selectProject(data.projectId));

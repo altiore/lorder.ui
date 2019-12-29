@@ -41,10 +41,6 @@ export default function MembersFieldTsx({ children, fields, projectMembers }) {
 
   const length = fields.length;
 
-  console.log('redner members', {
-    options,
-    fields: fields.getAll(),
-  });
   return (
     <Select value={fields.getAll()} multiple onChange={handleChange}>
       {options.map(option => (
