@@ -29,8 +29,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     '& svg': {
       width: '100vw',
       [theme.breakpoints.up('sm')]: {
-        width: '536.61',
-        height: '500',
+        width: 536.61,
+        height: 500,
       },
     },
   },
