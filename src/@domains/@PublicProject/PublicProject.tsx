@@ -69,10 +69,8 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
       <div className={classes.root}>
         <AppBar key={'top'} position="static" className={classes.appBar}>
           <Toolbar>
-            <Link to="/">
-              <Typography variant="h6" className={classes.title}>
-                Altiore
-              </Typography>
+            <Link to="/" className={classes.title}>
+              <Typography variant="h6">Altiore</Typography>
             </Link>
           </Toolbar>
         </AppBar>
@@ -80,7 +78,9 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
         <Grid container className={classes.content}>
           <Block>
             <Grid item>
-              <Typography variant={'h1'}>{title}</Typography>
+              <Typography variant={'h1'} className={classes.projectTitle}>
+                {title}
+              </Typography>
             </Grid>
           </Block>
           <Block>

@@ -45,6 +45,9 @@ export const styles = (theme: Theme): any => ({
     flexFlow: 'column nowrap',
     justifyContent: 'center',
   },
+  projectTitle: {
+    color: theme.palette.secondary.dark,
+  },
   root: {
     display: 'flex',
     flexFlow: 'column nowrap',
