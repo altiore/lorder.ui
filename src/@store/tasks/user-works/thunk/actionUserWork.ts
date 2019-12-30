@@ -41,7 +41,7 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
     if (preparedData.description) {
       preparedData.title = preparedData.description;
     } else {
-      preparedData.title = `Набота над "${project.title}" ` + moment().format('DD-MM-YYYY');
+      preparedData.title = `Работа над "${project.title}" ` + moment().format('DD-MM-YYYY');
     }
   }
   const members = projectMembers(getState());
