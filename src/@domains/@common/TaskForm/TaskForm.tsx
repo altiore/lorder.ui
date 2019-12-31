@@ -54,7 +54,6 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
   showSuccess: (args: INotification) => any;
   startUserWork?: any;
   stopUserWork: any;
-  taskId?: number;
 }
 
 const timers: any[] = [];
@@ -81,7 +80,6 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   showSuccess,
   startUserWork,
   submitting,
-  taskId,
   valid,
 }) => {
   const classes = useStyles();
@@ -195,15 +193,15 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   const moreMenuClose = useCallback(() => setAnchorEl(null), [setAnchorEl]);
 
   const onArchiveTask = useCallback(() => {
+    archiveTask({ sequenceNumber, projectId });
     if (handleClose) {
       handleClose();
     }
-    archiveTask({ taskId, projectId });
-  }, [archiveTask, handleClose, projectId, taskId]);
+  }, [archiveTask, handleClose, projectId, sequenceNumber]);
 
   const handleStartTask = useCallback(() => {
-    startUserWork({ taskId, projectId });
-  }, [startUserWork, taskId, projectId]);
+    startUserWork({ sequenceNumber, projectId });
+  }, [startUserWork, sequenceNumber, projectId]);
 
   const copyText = 'Скопировать ссылку на задачу';
 

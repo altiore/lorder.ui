@@ -6,7 +6,7 @@ import uniqid from 'uniqid';
 
 import { DownloadList } from '@store/@common/entities';
 import { IRequestAction } from '@store/@common/requestActions';
-import { archiveTask, Task } from '@store/tasks';
+import { archiveTaskA, Task } from '@store/tasks';
 import { postAndStartUserWork, UserWork, userWorks } from '@store/tasks/user-works';
 import { User } from '@store/users';
 import { deleteProjectTask, moveProjectTask, patchProjectTask, postProjectTask, updateProjectTask } from './actions';
@@ -161,9 +161,7 @@ const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
   }
   const index = state.list.findIndex(el => taskId === el.id);
   if (~index) {
-    return state.stopLoading().updateItem(index, {
-      userWorks: userWorks(state.list[index].userWorks, action),
-    });
+    return state.stopLoading();
   }
   const userWork: Partial<UserWork> = get(action, 'payload.data.started');
   const task: Partial<Task> = get(action, 'payload.data.started.task');
@@ -172,6 +170,7 @@ const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
     id: task.id,
     performerId: task.performerId,
     projectId: userWork.projectId,
+    sequenceNumber: task.sequenceNumber,
     status: task.status,
     title: task.title,
     userWorks: new DownloadList<UserWork>(UserWork, [userWork], true),
@@ -209,9 +208,9 @@ export const projectTasks = handleActions<S, any, any>(
     [deleteProjectTask.success]: deleteProjectTaskSuccessHandler,
     [deleteProjectTask.fail]: deleteProjectTaskFailHandler,
 
-    [archiveTask.toString()]: deleteProjectTaskHandler,
-    [archiveTask.success]: deleteProjectTaskSuccessHandler,
-    [archiveTask.fail]: deleteProjectTaskFailHandler,
+    [archiveTaskA.toString()]: deleteProjectTaskHandler,
+    [archiveTaskA.success]: deleteProjectTaskSuccessHandler,
+    [archiveTaskA.fail]: deleteProjectTaskFailHandler,
 
     [moveProjectTask.toString()]: moveProjectTaskHandler,
     [moveProjectTask.success]: moveProjectTaskSuccessHandler,

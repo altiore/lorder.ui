@@ -5,7 +5,7 @@ import { Action, ActionMeta, combineActions as combineActionsRedux, handleAction
 import { PURGE } from 'redux-persist';
 
 import { IMeta } from '@types';
-import { archiveTask } from '@store/tasks/actions';
+import { archiveTaskA } from '@store/tasks/actions';
 import { postAndStartUserWork } from '@store/tasks/user-works/actions';
 import { DownloadList } from '../@common/entities';
 import { combineActions } from '../@common/helpers';
@@ -221,7 +221,7 @@ export const projects = handleActions<S, any, any>(
       postProjectTask,
       patchProjectTask,
       deleteProjectTask,
-      archiveTask,
+      archiveTaskA,
       updateProjectTask,
       postAndStartUserWork
     )]: projectTaskHandler,

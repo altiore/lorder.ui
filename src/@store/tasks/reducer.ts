@@ -10,7 +10,7 @@ import { DownloadList } from '@store/@common/entities';
 import { combineActions } from '@store/@common/helpers';
 import { deleteProjectTask, moveProjectTask, patchProjectTask } from '@store/projects/tasks/actions';
 import { patchUserWork } from '@store/user-works/actions';
-import { archiveTask, fetchTaskDetailsA, getAllTasks, replaceTasks, updateTask } from './actions';
+import { archiveTaskA, fetchTaskDetailsA, getAllTasks, replaceTasks, updateTask } from './actions';
 import { Task } from './Task';
 import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork, UserWork, userWorks } from './user-works';
 
@@ -105,6 +105,7 @@ const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
     projectId: userWork.projectId,
     status: task.status,
     title: task.title,
+    sequenceNumber: task.sequenceNumber,
     userWorks: new DownloadList<UserWork>(UserWork, [userWork], true),
   });
 };
@@ -316,9 +317,9 @@ export const tasks = handleActions<S, any, any>(
     [deleteProjectTask.success]: deleteProjectTaskSuccessHandler,
     [deleteProjectTask.fail]: deleteProjectTaskFailHandler,
 
-    [archiveTask.toString()]: deleteProjectTaskHandler,
-    [archiveTask.success]: deleteProjectTaskSuccessHandler,
-    [archiveTask.fail]: deleteProjectTaskFailHandler,
+    [archiveTaskA.toString()]: deleteProjectTaskHandler,
+    [archiveTaskA.success]: deleteProjectTaskSuccessHandler,
+    [archiveTaskA.fail]: deleteProjectTaskFailHandler,
 
     [fetchTaskDetailsA.toString()]: fetchTaskDetailsHandler,
     [fetchTaskDetailsA.success]: fetchTaskDetailsSuccessHandler,

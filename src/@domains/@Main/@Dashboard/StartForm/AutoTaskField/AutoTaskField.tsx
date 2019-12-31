@@ -190,7 +190,7 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
           });
     this.props.projects.forEach(project => {
       const suggested: Partial<ITask> = {
-        id: 0,
+        sequenceNumber: 0,
         projectId: project.id,
         title: value,
       };
