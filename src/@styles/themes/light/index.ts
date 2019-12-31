@@ -1,16 +1,10 @@
 import { createMuiTheme, Theme } from '@material-ui/core/styles';
 
 import MuiDialog from './MuiDialog';
+import MuiInput from './MuiInput';
 import MuiTextField from './MuiTextField';
-import {
-  BACKGROUND_DARK,
-  BACKGROUND_DEFAULT,
-  prettyScroll1,
-  SECONDARY_DARK,
-  SECONDARY_DARKEN,
-  SECONDARY_LIGHT,
-  SECONDARY_MAIN,
-} from './variables';
+import { background, /*error,*/ primary, secondary } from './palette';
+import { prettyScroll1, SECONDARY_DARKEN } from './variables';
 
 const defaultTheme: Theme = createMuiTheme({});
 
@@ -27,6 +21,7 @@ export default createMuiTheme({
   },
   overrides: {
     ...MuiDialog(defaultTheme),
+    ...MuiInput(defaultTheme),
     ...MuiTextField(defaultTheme),
     MuiExpansionPanelDetails: {
       root: {
@@ -54,33 +49,20 @@ export default createMuiTheme({
     },
   },
   palette: {
-    background: {
-      default: BACKGROUND_DEFAULT,
-      paper: '#fff',
-    },
-    primary: {
-      contrastText: '#ffffff',
-      dark: '#000000',
-      light: '#404448',
-      main: BACKGROUND_DARK,
-    },
-    secondary: {
-      contrastText: '#24292E',
-      dark: SECONDARY_DARK,
-      light: SECONDARY_LIGHT,
-      main: SECONDARY_MAIN,
-    },
+    background,
+    primary,
+    secondary,
   },
   textGradient: [
     {
       '-webkit-background-clip': 'text',
       background: `linear-gradient(60deg,
      ${SECONDARY_DARKEN} 0%,
-      ${SECONDARY_DARK} 10%,
-      ${SECONDARY_DARK} 40%,
-       ${SECONDARY_LIGHT} 55%,
-        ${SECONDARY_DARK} 70%,
-         ${SECONDARY_DARK} 100%
+      ${secondary.dark} 10%,
+      ${secondary.dark} 40%,
+       ${secondary.light} 55%,
+        ${secondary.dark} 70%,
+         ${secondary.dark} 100%
          )`,
       backgroundClip: 'text',
       textFillColor: 'transparent',
