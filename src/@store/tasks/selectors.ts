@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 
 import { IState } from '@types';
 import { defaultProjectId } from '@store/identity/selectors';
-import { routeTaskId } from '@store/router/selectors';
+import { routeProjectId, routeTaskSequenceNumber } from '@store/router/selectors';
 import { Task } from './Task';
 
 export const allTasks = (state: IState) => state.tasks;
@@ -26,11 +26,12 @@ export const filteredTaskList = createSelector(
 
 export const getEditTaskInitialValues = createSelector(
   [allTaskList],
-  (allTaskList: Task[]) => (taskId: number) => {
+  (allTaskList: Task[]) => (projectId: number, sequenceNumber: number) => {
     return (
-      pick<any>(allTaskList.find((el: Task) => el.id === taskId), [
+      pick<any>(allTaskList.find((el: Task) => el.projectId === projectId && el.sequenceNumber === sequenceNumber), [
         'description',
         'id',
+        'sequenceNumber',
         'isDetailsLoaded',
         'source',
         'title',
@@ -54,9 +55,9 @@ export const getUserWorksById = createSelector(
 );
 
 export const currentTaskDetails = createSelector(
-  [allTaskList, routeTaskId],
-  (list, taskId) => {
-    return list.find(el => el.id === taskId);
+  [allTaskList, routeProjectId, routeTaskSequenceNumber],
+  (list, projectId, sequenceNumber) => {
+    return list.find(el => el.sequenceNumber === sequenceNumber && el.projectId === projectId);
   }
 );
 

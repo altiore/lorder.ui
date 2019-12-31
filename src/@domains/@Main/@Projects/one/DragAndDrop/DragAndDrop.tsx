@@ -62,13 +62,13 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   // const getList = useCallback((id: string) => items.filter(el => el.status === parseInt(id, 0)), [items]);
 
   const handleTaskClick = useCallback(
-    (taskId: number | string) => () => {
+    (sequenceNumber: number | string) => () => {
       push({
-        pathname: `/projects/${projectId}/tasks/${taskId}`,
+        pathname: `/projects/${projectId}/tasks/${sequenceNumber}`,
         state: {
           modal: true,
           projectId,
-          taskId,
+          sequenceNumber,
         },
       });
     },
@@ -92,7 +92,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
       } else {
         moveProjectTask({
           projectId,
-          taskId: parseInt(draggableId, 0),
+          sequenceNumber: parseInt(draggableId, 0),
           status: parseInt(destination.droppableId, 0),
           prevStatus: parseInt(source.droppableId, 0),
         });
@@ -144,13 +144,18 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                   >
                     {columns[status] && filteredItemsLength ? (
                       filteredItems.map((item: ProjectTask, index) => (
-                        <Draggable key={item.id} draggableId={item.id.toString()} index={index} type={'div'}>
+                        <Draggable
+                          key={item.sequenceNumber}
+                          draggableId={item.sequenceNumber.toString()}
+                          index={index}
+                          type={'div'}
+                        >
                           {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
                             <TaskCard
                               provided={provided}
                               snapshot={snapshot}
                               {...item}
-                              onClick={handleTaskClick(item.id)}
+                              onClick={handleTaskClick(item.sequenceNumber)}
                             />
                           )}
                         </Draggable>

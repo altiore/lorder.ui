@@ -70,8 +70,8 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
             component="a"
             classes={{ label: classes.buttonTitleLabel }}
             className={classes.buttonTitle}
-            href={isShown ? `/projects/${project.id}/tasks/${task.id}` : '#'}
-            onClick={isShown ? this.openEditTaskForm(task.id, project.id as number) : undefined}
+            href={isShown ? `/projects/${project.id}/tasks/${task.sequenceNumber}` : '#'}
+            onClick={isShown ? this.openEditTaskForm(task.sequenceNumber, project.id as number) : undefined}
           >
             {isShown ? <TaskTypeIcon typeId={task.typeId} className={classes.taskIcon} /> : ''}
             {isShown ? task.title : '...'}
@@ -119,14 +119,16 @@ export class TaskComponentTsx extends React.PureComponent<ITaskComponentProps, I
     );
   }
 
-  private openEditTaskForm = (id: number | string, projectId: number | string) => (e: React.SyntheticEvent) => {
+  private openEditTaskForm = (sequenceNumber: number | string, projectId: number | string) => (
+    e: React.SyntheticEvent
+  ) => {
     e.preventDefault();
     this.props.push({
-      pathname: `/projects/${projectId}/tasks/${id}`,
+      pathname: `/projects/${projectId}/tasks/${sequenceNumber}`,
       state: {
         modal: true,
         projectId,
-        taskId: id,
+        sequenceNumber,
       },
     });
   };

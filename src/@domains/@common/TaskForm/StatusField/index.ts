@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { IState } from '@types';
 
 import TaskStatus from '@components/TaskStatus';
-import { PROJECT_EDIT_TASK_FORM_NAME, projectMembersAsUsers } from '@store/projects';
+import { PROJECT_EDIT_TASK_FORM, projectMembersAsUsers } from '@store/projects';
 import { stopUserWork } from '@store/tasks';
 
 interface IStatusFieldState {
@@ -16,7 +16,7 @@ const mapState = createStructuredSelector<IState, IStatusFieldState>({
   assignees: projectMembersAsUsers,
 });
 
-const onChangeAssignee = value => change(PROJECT_EDIT_TASK_FORM_NAME, 'performerId', value);
+const onChangeAssignee = value => change(PROJECT_EDIT_TASK_FORM, 'performerId', value);
 
 const mapDispatch = {
   onChangeAssignee,

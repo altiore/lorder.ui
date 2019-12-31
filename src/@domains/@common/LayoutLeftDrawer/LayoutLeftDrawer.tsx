@@ -53,7 +53,7 @@ export const ROUTES_BY_PATH = {
   '/projects/:projectId/settings': lazy(() => import('@domains/@Main/@Projects/one/Settings')),
   '/projects/:projectId/task-types': lazy(() => import('@domains/@Main/@Projects/one/ProjectTaskTypes')),
   '/projects/:projectId/tasks': lazy(() => import('@domains/@Main/@Projects/one/ProjectTasks')),
-  '/projects/:projectId/tasks/:taskId': lazy(() => import('@domains/@Main/@routes/task')),
+  '/projects/:projectId/tasks/:sequenceNumber': lazy(() => import('@domains/@Main/@routes/task')),
 };
 
 export const ICONS_MAP = {

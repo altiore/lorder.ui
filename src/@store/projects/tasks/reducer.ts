@@ -14,7 +14,7 @@ import { ProjectTask } from './ProjectTask';
 
 type S = DownloadList<ProjectTask>;
 interface IProjectRequest extends IRequestAction<Partial<ProjectTask>> {
-  taskId: number;
+  sequenceNumber: number;
   projectId: number;
   prevStatus?: number;
   users: User[];
@@ -43,7 +43,7 @@ const patchProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>)
   if (preparedData.users) {
     preparedData.users = [...payload.users];
   }
-  const taskIndex = state.list.findIndex(el => get(payload, 'taskId') === el.id);
+  const taskIndex = state.list.findIndex(el => get(payload, 'sequenceNumber') === el.sequenceNumber);
   if (!~taskIndex) {
     return state.startLoading();
   }
@@ -67,7 +67,7 @@ const patchProjectTaskFailHandler = (state: S, action) => {
 };
 
 const deleteProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>) => {
-  const taskIndex = state.list.findIndex(el => get(payload, 'taskId') === el.id);
+  const taskIndex = state.list.findIndex(el => get(payload, 'sequenceNumber') === el.sequenceNumber);
   if (!~taskIndex) {
     return state.startLoading();
   }
@@ -83,7 +83,7 @@ const deleteProjectTaskFailHandler = (state: S) => {
 };
 
 const moveProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>) => {
-  const taskIndex = state.list.findIndex(el => get(payload, 'taskId') === el.id);
+  const taskIndex = state.list.findIndex(el => get(payload, 'sequenceNumber') === el.sequenceNumber);
   const status = get(payload, 'request.data.status');
   return state.startLoading().updateItem(taskIndex, {
     status,
@@ -98,7 +98,7 @@ const moveProjectTaskFailHandler = (
   state: S,
   { payload, meta }: ActionMeta<any, { previousAction: { payload: IProjectRequest } }>
 ) => {
-  const taskIndex = state.list.findIndex(el => meta.previousAction.payload.taskId === el.id);
+  const taskIndex = state.list.findIndex(el => meta.previousAction.payload.sequenceNumber === el.sequenceNumber);
   return state.stopLoading().updateItem(taskIndex, {
     status: meta.previousAction.payload.prevStatus,
   });
@@ -116,13 +116,13 @@ const updateProjectTaskHandler = (state, { payload: task }) => {
 };
 
 const postAndStartUserWorkHandler = (state: S, action: ActionMeta<any, any>) => {
-  let taskId: number;
+  let sequenceNumber: number;
   if (action.meta) {
-    taskId = get(action.meta, 'previousAction.payload.taskId');
+    sequenceNumber = get(action.meta, 'previousAction.payload.sequenceNumber');
   } else {
-    taskId = get(action.payload, 'taskId');
+    sequenceNumber = get(action.payload, 'sequenceNumber');
   }
-  const index = state.list.findIndex(el => taskId === el.id);
+  const index = state.list.findIndex(el => sequenceNumber === el.sequenceNumber);
   if (~index) {
     return state.updateItem(index, {
       userWorks: userWorks(state.list[index].userWorks, action),

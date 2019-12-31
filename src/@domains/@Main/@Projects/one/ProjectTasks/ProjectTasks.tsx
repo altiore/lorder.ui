@@ -15,13 +15,13 @@ import { DownloadList } from '@store/@common/entities';
 import { ProjectTask } from '@store/projects';
 import { PerformersCell } from './PerformersCell';
 
-import { PROJECT_EDIT_TASK_FORM_NAME } from '@store/projects';
+import { PROJECT_EDIT_TASK_FORM } from '@store/projects';
 
 export interface IProjectTasksProps {
   isFormMount: boolean;
   classes: any;
   closeDialog: any;
-  deleteProjectTask: ({ projectId, taskId }: { projectId: number; taskId: number }) => void;
+  deleteProjectTask: ({ projectId, sequenceNumber }: { projectId: number; sequenceNumber: number }) => void;
   destroy: (formName: string) => any;
   getAllProjectTasks: (p: number) => void;
   openDialog: any;
@@ -55,7 +55,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
 
   componentWillUnmount() {
     if (this.props.isFormMount) {
-      this.props.destroy(PROJECT_EDIT_TASK_FORM_NAME);
+      this.props.destroy(PROJECT_EDIT_TASK_FORM);
     }
   }
 
@@ -90,21 +90,36 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     );
   }
 
-  private renderItem = ({ id, title, description, source, status, value, users, duration, projectId }: ProjectTask) => {
+  private renderItem = ({
+    sequenceNumber,
+    title,
+    description,
+    source,
+    status,
+    value,
+    users,
+    duration,
+    projectId,
+  }: ProjectTask) => {
     const { classes } = this.props;
     return (
-      <TableRow key={id} className={classes.row} hover onClick={this.handleRowClick(id, projectId)}>
+      <TableRow
+        key={sequenceNumber}
+        className={classes.row}
+        hover
+        onClick={this.handleRowClick(sequenceNumber, projectId)}
+      >
         <TableCell>{title}</TableCell>
         <TableCell>
-          <span ref={this.setPerformersCellRef(id)}>
-            <PerformersCell input={{ value: users }} taskId={id} />
+          <span ref={this.setPerformersCellRef(sequenceNumber)}>
+            <PerformersCell input={{ value: users }} sequenceNumber={sequenceNumber} />
           </span>
         </TableCell>
         <TableCell align="right">{value}</TableCell>
         <TableCell align="right">{duration}</TableCell>
         <TableCell align="right">{status}</TableCell>
         <TableCell align="right">
-          <IconButton onClick={this.handleRemoveClick(id)}>
+          <IconButton onClick={this.handleRemoveClick(sequenceNumber)}>
             <ClearIcon />
           </IconButton>
         </TableCell>
@@ -112,9 +127,9 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     );
   };
 
-  private setPerformersCellRef = (id: number | string): any => (node: HTMLElement) => {
+  private setPerformersCellRef = (sequenceNumber: number | string): any => (node: HTMLElement) => {
     if (node) {
-      this.performersCellRef[id] = node;
+      this.performersCellRef[sequenceNumber] = node;
     }
   };
 
@@ -122,7 +137,9 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     this.props.openDialog(<PatchTaskForm projectId={projectId} />, { maxWidth: 'lg' });
   };
 
-  private handleRowClick = (id: number | string, projectId: number | string) => (event: React.MouseEvent) => {
+  private handleRowClick = (sequenceNumber: number | string, projectId: number | string) => (
+    event: React.MouseEvent
+  ) => {
     let isInside = false;
     if (this.performersCellRef.length) {
       this.performersCellRef.forEach((cell: HTMLElement) => {
@@ -131,22 +148,22 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
         }
       });
     }
-    if (!isInside && id) {
+    if (!isInside && sequenceNumber) {
       this.props.push({
-        pathname: `/projects/${projectId}/tasks/${id}`,
+        pathname: `/projects/${projectId}/tasks/${sequenceNumber}`,
         state: {
           modal: true,
           projectId,
-          taskId: id,
+          sequenceNumber,
         },
       });
     }
   };
 
-  private handleRemoveClick = (taskId: number | string) => (e: any) => {
-    if (typeof taskId === 'number') {
+  private handleRemoveClick = (sequenceNumber: number | string) => (e: any) => {
+    if (typeof sequenceNumber === 'number') {
       e.stopPropagation();
-      this.props.deleteProjectTask({ projectId: this.props.projectId, taskId });
+      this.props.deleteProjectTask({ projectId: this.props.projectId, sequenceNumber });
     }
   };
 }

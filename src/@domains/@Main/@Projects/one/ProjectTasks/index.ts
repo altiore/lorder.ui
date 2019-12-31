@@ -6,14 +6,14 @@ import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from '@store/dialog';
 import { isFormMount } from '@store/form';
-import { deleteProjectTask, getAllProjectTasks, PROJECT_EDIT_TASK_FORM_NAME, projectTasks } from '@store/projects';
+import { deleteProjectTask, getAllProjectTasks, PROJECT_EDIT_TASK_FORM, projectTasks } from '@store/projects';
 import { routeProjectId } from '@store/router';
 import { ProjectTasksJsx } from './ProjectTasks';
 import { styles } from './styles';
 import { IState } from '@types';
 
 const mapState = createStructuredSelector<IState, any>({
-  isFormMount: isFormMount(PROJECT_EDIT_TASK_FORM_NAME),
+  isFormMount: isFormMount(PROJECT_EDIT_TASK_FORM),
   projectId: routeProjectId,
   projectTasks,
 });

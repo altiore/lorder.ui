@@ -34,6 +34,7 @@ export interface ITaskFormData {
   typeId?: number;
   projectId: number;
   value: number;
+  sequenceNumber: number;
   status: number;
 }
 
@@ -49,7 +50,7 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
   projectId: number;
   projectTasksIsLoading: boolean;
   push: any;
-  replace: any;
+  sequenceNumber: number;
   showSuccess: (args: INotification) => any;
   startUserWork?: any;
   stopUserWork: any;
@@ -76,7 +77,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   pristine,
   projectId,
   push,
-  replace,
+  sequenceNumber,
   showSuccess,
   startUserWork,
   submitting,
@@ -99,13 +100,13 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
         clearTimeout(timer);
       });
     };
-  }, [invisible, setInvisible, taskId]);
+  }, [invisible, setInvisible]);
 
   useEffect(() => {
-    if (taskId) {
-      fetchTaskDetails(taskId);
+    if (sequenceNumber) {
+      fetchTaskDetails({ projectId, sequenceNumber });
     }
-  }, [fetchTaskDetails, taskId]);
+  }, [fetchTaskDetails, projectId, sequenceNumber]);
 
   /** show copy block */
   const [isShownCopy, setIsShowCopy] = useState(false);
@@ -144,13 +145,13 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
 
   const getLink = useCallback(
     (absolute: boolean = false) => {
-      const path = `/projects/${projectId}/tasks/${taskId}`;
+      const path = `/projects/${projectId}/tasks/${sequenceNumber}`;
       if (absolute) {
         return window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + path;
       }
       return path;
     },
-    [projectId, taskId]
+    [projectId, sequenceNumber]
   );
 
   const copyToClipboard = useCallback(
@@ -213,11 +214,11 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
           <IconButton>
             <TaskTypeIcon typeId={initialValues.typeId} />
           </IconButton>
-          {taskId && (
+          {sequenceNumber && (
             <div onMouseLeave={hideCopy}>
               <Tooltip title={isPage ? copyText : 'Открыть в отдельном окне'} placement="bottom">
                 <Button variant="text" href={isPage ? undefined : '#'} onClick={goToTask()} onMouseOver={showCopy}>
-                  #{taskId}
+                  #{sequenceNumber}
                 </Button>
               </Tooltip>
               {!isPage && isShownCopy && (
@@ -233,7 +234,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
           )}
         </div>
         <div>
-          {taskId && (
+          {sequenceNumber && (
             <>
               <IconButton aria-label="more" className={classes.margin} onClick={moreMenuOpen}>
                 <MoreHorizIcon fontSize="small" />

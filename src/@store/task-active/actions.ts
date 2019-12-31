@@ -5,12 +5,12 @@ const BASE_ACTION = 'ACTIVE_TASK/TASK_LOGS';
 
 export interface ITaskLogsListDto extends IListDto {
   projectId: number;
-  taskId: number;
+  sequenceNumber: number;
 }
 
 export const fetchTaskLogsAction = requestActions<ITaskLogsListDto>(
   `${BASE_ACTION}/FETCH_ALL`,
-  ({ projectId, taskId, ...listDto }) => ({
+  ({ projectId, sequenceNumber, ...listDto }) => ({
     request: {
       params: {
         count: 10,
@@ -18,7 +18,7 @@ export const fetchTaskLogsAction = requestActions<ITaskLogsListDto>(
         orderBy: 'createdAt',
         ...listDto,
       },
-      url: `/projects/${projectId}/tasks/${taskId}/task-logs`,
+      url: `/projects/${projectId}/tasks/${sequenceNumber}/task-logs`,
     },
   })
 );

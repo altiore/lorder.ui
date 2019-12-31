@@ -1,11 +1,12 @@
 import { requestActions } from '@store/@common/requestActions';
-import { PROJECT_EDIT_TASK_FORM_NAME, PROJECT_TASK_FORM_NAME } from '@store/projects';
+import { PROJECT_EDIT_TASK_FORM, PROJECT_TASK_FORM_NAME } from '@store/projects';
 import { User } from '@store/users';
 import { createAction } from 'redux-actions';
 
 export interface IProjectTaskData {
   description?: string;
   projectId: number;
+  sequenceNumber?: number;
   status?: number;
   prevStatus?: number;
   taskId?: number;
@@ -21,6 +22,7 @@ export interface IPatchProjectTaskData {
   title?: string;
   source?: string;
   status?: number;
+  sequenceNumber?: number;
   value?: number;
   users?: User[];
   userWorks?: any;
@@ -63,12 +65,11 @@ export const patchProjectTask = requestActions<IPatchProjectTaskData>(
     description,
     title,
     projectId,
-    id,
-    userWorks,
     value,
     performerId,
     source,
     status,
+    sequenceNumber,
   }: IPatchProjectTaskData): any => {
     const data: any = {
       description,
@@ -79,41 +80,41 @@ export const patchProjectTask = requestActions<IPatchProjectTaskData>(
       value,
     };
     return {
-      form: PROJECT_EDIT_TASK_FORM_NAME,
+      form: PROJECT_EDIT_TASK_FORM,
       projectId,
       request: {
         data,
         method: 'PATCH',
-        url: `/projects/${projectId}/tasks/${id}`,
+        url: `/projects/${projectId}/tasks/${sequenceNumber}`,
       },
       success: {
         message: 'Задача успешно обновлена',
         title: 'Успех!',
       },
-      taskId: id,
+      sequenceNumber,
     };
   }
 );
 
 export const deleteProjectTask = requestActions<IProjectTaskData>(
   'PROJECT_TASK/DELETE',
-  ({ projectId, taskId }: IProjectTaskData) => ({
+  ({ projectId, sequenceNumber }: IProjectTaskData) => ({
     form: PROJECT_TASK_FORM_NAME,
     projectId,
     request: {
       method: 'DELETE',
-      url: `/projects/${projectId}/tasks/${taskId}`,
+      url: `/projects/${projectId}/tasks/${sequenceNumber}`,
     },
     success: {
       message: `Задача удалена из проекта`,
     },
-    taskId,
+    sequenceNumber,
   })
 );
 
 export const moveProjectTask = requestActions<IProjectTaskData>(
   'PROJECT_TASK/MOVE',
-  ({ projectId, taskId, status, prevStatus }: IProjectTaskData) => ({
+  ({ projectId, sequenceNumber, status, prevStatus }: IProjectTaskData) => ({
     error: {
       message: 'Не удалось переместить задачу',
       title: 'Упс...',
@@ -125,9 +126,9 @@ export const moveProjectTask = requestActions<IProjectTaskData>(
         status,
       },
       method: 'PATCH',
-      url: `/projects/${projectId}/tasks/${taskId}/move`,
+      url: `/projects/${projectId}/tasks/${sequenceNumber}/move`,
     },
-    taskId,
+    sequenceNumber,
   })
 );
 

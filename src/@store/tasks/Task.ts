@@ -13,6 +13,7 @@ export class Task implements ITask {
   performerId?: number;
   performer?: IUser;
   projectId: number;
+  sequenceNumber: number;
   source?: string;
   status: number;
   value: number;

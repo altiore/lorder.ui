@@ -12,7 +12,7 @@ interface IPerformersState {
 export interface IPerformersCellProps extends WrappedFieldProps {
   classes: any;
   patchProjectTask: any;
-  taskId: number;
+  sequenceNumber: number;
   projectId: number;
   projectMembers: IUser[];
 }
@@ -36,7 +36,7 @@ export class PerformersCellJsx extends React.Component<IPerformersCellProps, IPe
   private handleOnClick = () => this.setState(({ isOpen }) => ({ isOpen: !isOpen }));
 
   private handleChange = (users: any) => {
-    this.props.patchProjectTask({ users, projectId: this.props.projectId, taskId: this.props.taskId });
+    this.props.patchProjectTask({ users, projectId: this.props.projectId, sequenceNumber: this.props.sequenceNumber });
   };
 
   private filterItem(filterKw: string, item: any) {

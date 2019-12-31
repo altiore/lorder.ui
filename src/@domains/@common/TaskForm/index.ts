@@ -7,8 +7,8 @@ import { createStructuredSelector } from 'reselect';
 import { onSubmitFail } from '@store/@common/helpers';
 import { changeSettings } from '@store/dialog';
 import { showSuccess } from '@store/notifications';
-import { patchProjectTask, postProjectTask, PROJECT_EDIT_TASK_FORM_NAME, projectTasksIsLoading } from '@store/projects';
-import { routeProjectId, routeTaskId } from '@store/router';
+import { patchProjectTask, postProjectTask, PROJECT_EDIT_TASK_FORM, projectTasksIsLoading } from '@store/projects';
+import { routeProjectId, routeTaskSequenceNumber } from '@store/router';
 import { archiveTask, checkIsCurrent, fetchTaskDetails, getEditTaskInitialValues, startUserWork } from '@store/tasks';
 import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
@@ -17,7 +17,7 @@ const mapStateToProps = createStructuredSelector({
   getEditTaskInitialValues,
   projectTasksIsLoading,
   routeProjectId,
-  routeTaskId,
+  routeTaskSequenceNumber,
 } as any);
 
 const mapDispatchToProps = {
@@ -31,19 +31,20 @@ const mapDispatchToProps = {
 };
 
 const mergeProps = (
-  { checkIsCurrent, getEditTaskInitialValues, routeProjectId, routeTaskId, ...restState }: any,
+  { checkIsCurrent, getEditTaskInitialValues, routeProjectId, routeTaskSequenceNumber, ...restState }: any,
   { ...restDispatch }: any,
-  { taskId, projectId, initialValues, ...restOwn }: any
+  { sequenceNumber, projectId, initialValues, ...restOwn }: any
 ) => {
-  const localTaskId = taskId || routeTaskId;
+  const localSequenceNumber = sequenceNumber || routeTaskSequenceNumber;
   const localProjectId = projectId || routeProjectId;
-  const preparedInitialValues = initialValues || (localTaskId ? getEditTaskInitialValues(localTaskId) : {});
+  const preparedInitialValues =
+    initialValues || (localSequenceNumber ? getEditTaskInitialValues(localProjectId, localSequenceNumber) : {});
   return {
     ...restState,
     initialValues: preparedInitialValues,
-    isCurrent: checkIsCurrent(localTaskId),
+    isCurrent: checkIsCurrent(localSequenceNumber),
     projectId: localProjectId,
-    taskId: localTaskId,
+    sequenceNumber: localSequenceNumber,
     ...restDispatch,
     ...restOwn,
   };
@@ -59,7 +60,7 @@ export const PatchTaskForm = connect<
   mergeProps
 )(reduxForm<ITaskFormData, ITaskFormProps>({
   enableReinitialize: true,
-  form: PROJECT_EDIT_TASK_FORM_NAME,
+  form: PROJECT_EDIT_TASK_FORM,
   onSubmit: async (values, dispatch, { projectId }: any) => {
     const val = { ...values, projectId };
     return val.id ? dispatch(patchProjectTask(val)) : dispatch(postProjectTask(val));
@@ -69,7 +70,7 @@ export const PatchTaskForm = connect<
     const actionType = get(result, 'meta.previousAction.type');
     const taskId = get(result, 'payload.data.id');
     if (actionType === postProjectTask.toString()) {
-      dispatch(change(PROJECT_EDIT_TASK_FORM_NAME, 'id', taskId));
+      dispatch(change(PROJECT_EDIT_TASK_FORM, 'id', taskId));
     }
   },
 })(TaskFormJsx) as any);

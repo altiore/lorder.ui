@@ -8,11 +8,14 @@ export const getAllTasks = requestActions('TASKS/GET_ALL', (): any => ({
   },
 }));
 
-export const fetchTaskDetailsA = requestActions('TASKS/FETCH_DETAILS', (taskId: number): any => ({
+/**
+ * TODO: should be moved to projects/tasks directory
+ */
+export const fetchTaskDetailsA = requestActions('TASKS/FETCH_DETAILS', ({ projectId, sequenceNumber }): any => ({
   request: {
-    url: `/tasks/${taskId}`,
+    url: `/projects/${projectId}/tasks/${sequenceNumber}`,
   },
-  taskId,
+  sequenceNumber,
 }));
 
 export const archiveTask = requestActions(

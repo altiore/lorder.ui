@@ -57,7 +57,7 @@ export const routeProjectId = createSelector(
   (state): number | undefined => get(state, 'params.projectId') && parseInt(get(state, 'params.projectId'), 0)
 );
 
-export const routeTaskId = createSelector(
-  match('/projects/:projectId/tasks/:taskId'),
-  (state): number | undefined => get(state, 'params.taskId') && parseInt(get(state, 'params.taskId'), 0)
+export const routeTaskSequenceNumber = createSelector(
+  match('/projects/:projectId/tasks/:sequenceNumber'),
+  (state): number | undefined => get(state, 'params.sequenceNumber') && parseInt(get(state, 'params.sequenceNumber'), 0)
 );
