@@ -45,15 +45,15 @@ serviceWorker.register({
       registration,
     });
     await registration.update();
-    window.location.reload();
+    // window.location.reload();
     console.log('new web PWA application was successfully ');
   },
   onUpdate: async registration => {
     console.log('PWA onUpdate', {
       registration,
     });
-    await registration.update();
+    // await registration.update();
     window.location.reload();
-    console.log('new web PWA application was successfully ');
+    console.log('new web PWA application was successfully updated');
   },
 });
