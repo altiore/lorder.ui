@@ -40,10 +40,20 @@ createStore().then(({ store, persistor, history }) => {
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.register({
-  onSuccess: registration => {
+  onSuccess: async registration => {
+    console.log('PWA onSuccess', {
+      registration,
+    });
+    await registration.update();
     window.location.reload();
+    console.log('new web PWA application was successfully ');
   },
-  onUpdate: registration => {
+  onUpdate: async registration => {
+    console.log('PWA onUpdate', {
+      registration,
+    });
+    await registration.update();
     window.location.reload();
+    console.log('new web PWA application was successfully ');
   },
 });
