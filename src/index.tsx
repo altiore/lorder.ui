@@ -6,6 +6,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import get from 'lodash/get';
 
 import Boundary from '@components/Boundary';
 import Dialog from '@domains/@common/Dialog';
@@ -41,19 +42,21 @@ createStore().then(({ store, persistor, history }) => {
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.register({
   onSuccess: async registration => {
-    console.log('PWA onSuccess', {
+    console.log('ON SUCCESS', {
       registration,
     });
-    // await registration.update();
-    // window.location.reload();
-    console.log('new web PWA application was successfully ');
   },
   onUpdate: async registration => {
-    console.log('PWA onUpdate', {
-      registration,
-    });
-    // await registration.update();
-    // window.location.reload();
-    console.log('new web PWA application was successfully updated');
+    const waitingServiceWorker = registration.waiting;
+
+    console.log('ON UPDATE');
+    if (waitingServiceWorker) {
+      waitingServiceWorker.addEventListener('statechange', event => {
+        if (get(event, ['target', 'state']) === 'activated') {
+          window.location.reload();
+        }
+      });
+      waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' });
+    }
   },
 });
