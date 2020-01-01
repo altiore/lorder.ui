@@ -46,31 +46,16 @@ serviceWorker.register({
       registration,
     });
   },
-  onUpdate: async (registration, installingWorker) => {
+  onUpdate: async registration => {
     const waitingServiceWorker = registration.waiting;
-    const installingServiceWorker = registration.installing;
 
-    console.log('ON UPDATE', {
-      serviceWorkerFromPropsIsEqualFromRegistration: installingWorker === installingServiceWorker,
-      waitingServiceWorkerState: get(waitingServiceWorker, 'state'),
-      installingState: get(installingWorker, 'state'),
-      installingServiceWorkerState: get(installingServiceWorker, 'state'),
-    });
     if (waitingServiceWorker) {
       waitingServiceWorker.addEventListener('statechange', event => {
-        console.log('state was changed and new state is', {
-          type: get(event, ['target, type']),
-          state: get(event, ['target, state']),
-          action: get(event, ['target, action']),
-          target: get(event, 'target'),
-        });
         if (get(event, ['target', 'state']) === 'activated') {
           window.location.reload();
         }
       });
       waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' });
     }
-
-    installingWorker.postMessage({ action: 'skipWaiting' });
   },
 });
