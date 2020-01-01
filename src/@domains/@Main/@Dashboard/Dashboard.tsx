@@ -32,7 +32,7 @@ export const DashboardJsx: React.FC<IDashboardProps> = memo(({ getAllTasks }) =>
       </div>
       <PageCenter className={classes.root}>
         <Grid item lg={9} md={8} sm={12} className={classes.content}>
-          test 9
+          test 10
           <StartForm />
           <TasksList />
         </Grid>

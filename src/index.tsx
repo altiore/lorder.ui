@@ -35,27 +35,29 @@ createStore().then(({ store, persistor, history }) => {
     </Boundary>,
     document.getElementById('root') as HTMLElement
   );
-});
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.register({
-  onSuccess: async registration => {
-    console.log('ON SUCCESS', {
-      registration,
-    });
-  },
-  onUpdate: async registration => {
-    const waitingServiceWorker = registration.waiting;
-
-    if (waitingServiceWorker) {
-      waitingServiceWorker.addEventListener('statechange', event => {
-        if (get(event, ['target', 'state']) === 'activated') {
-          window.location.reload();
-        }
+  console.log('before registre serviceWorker');
+  // If you want your app to work offline and load faster, you can change
+  // unregister() to register() below. Note this comes with some pitfalls.
+  // Learn more about service workers: https://bit.ly/CRA-PWA
+  serviceWorker.register({
+    store,
+    onSuccess: async registration => {
+      console.log('ON SUCCESS', {
+        registration,
       });
-      waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' });
-    }
-  },
+    },
+    onUpdate: async registration => {
+      const waitingServiceWorker = registration.waiting;
+
+      if (waitingServiceWorker) {
+        waitingServiceWorker.addEventListener('statechange', event => {
+          if (get(event, ['target', 'state']) === 'activated') {
+            window.location.reload();
+          }
+        });
+        waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' });
+      }
+    },
+  });
 });
