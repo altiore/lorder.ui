@@ -13,7 +13,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.text.primary,
     display: 'inline-block',
 
-    minHeight: 400,
     padding: '10px 25px 15px 8px',
     position: 'relative',
     textAlign: 'left',
