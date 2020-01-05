@@ -143,23 +143,26 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                     className={classes.columnContent}
                   >
                     {columns[status] && filteredItemsLength ? (
-                      filteredItems.map((item: ProjectTask, index) => (
-                        <Draggable
-                          key={item.sequenceNumber}
-                          draggableId={item.sequenceNumber.toString()}
-                          index={index}
-                          type={'div'}
-                        >
-                          {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
-                            <TaskCard
-                              provided={provided}
-                              snapshot={snapshot}
-                              {...item}
-                              onClick={handleTaskClick(item.sequenceNumber)}
-                            />
-                          )}
-                        </Draggable>
-                      ))
+                      filteredItems.map((item: ProjectTask, index) => {
+                        console.log('item', item);
+                        return (
+                          <Draggable
+                            key={item.sequenceNumber}
+                            draggableId={item.sequenceNumber ? item.sequenceNumber.toString() : '0'}
+                            index={index}
+                            type={'div'}
+                          >
+                            {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
+                              <TaskCard
+                                provided={provided}
+                                snapshot={snapshot}
+                                {...item}
+                                onClick={handleTaskClick(item.sequenceNumber)}
+                              />
+                            )}
+                          </Draggable>
+                        );
+                      })
                     ) : (
                       <div
                         className={cn(classes.placeholderCard, { [classes.pointer]: !!filteredItemsLength })}

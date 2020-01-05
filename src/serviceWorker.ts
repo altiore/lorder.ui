@@ -29,6 +29,7 @@ interface Config {
 const listenerServiceWorkerRelatedChanges = config => () => {
   const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
+  console.log('state changed', { swUrl });
   if (isLocalhost) {
     // This is running on localhost. Let's check if a service worker still exists or not.
     checkValidServiceWorker(swUrl, config);
