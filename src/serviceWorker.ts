@@ -66,7 +66,9 @@ function registerValidSW(swUrl: string, config?: Config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
-      console.log('after registration');
+      console.log('after registration', {
+        registrationProps: Object.getOwnPropertyNames(registration),
+      });
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         console.log('onupdatefound is executed', {
