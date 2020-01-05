@@ -49,6 +49,9 @@ createStore().then(({ store, persistor, history }) => {
     onUpdate: async registration => {
       const waitingServiceWorker = registration.waiting;
 
+      console.log('onUpdate', {
+        isWaitingServiceWorker: !!waitingServiceWorker,
+      });
       if (waitingServiceWorker) {
         waitingServiceWorker.addEventListener('statechange', event => {
           if (get(event, ['target', 'state']) === 'activated') {
