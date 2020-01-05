@@ -3,7 +3,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { selectedProject } from '@store/projects';
 import { currentTask } from '@store/timer';
-import { TaskComponent } from './TaskComponent';
+import { TaskComponent } from './TasksList/TaskComponent';
 
 const mapStateToProps = createStructuredSelector({
   isCurrent: () => true,

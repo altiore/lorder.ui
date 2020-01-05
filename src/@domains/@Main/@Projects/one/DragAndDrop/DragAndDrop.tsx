@@ -144,10 +144,9 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                   >
                     {columns[status] && filteredItemsLength ? (
                       filteredItems.map((item: ProjectTask, index) => {
-                        console.log('item', item);
                         return (
                           <Draggable
-                            key={item.sequenceNumber}
+                            key={item.id}
                             draggableId={item.sequenceNumber ? item.sequenceNumber.toString() : '0'}
                             index={index}
                             type={'div'}

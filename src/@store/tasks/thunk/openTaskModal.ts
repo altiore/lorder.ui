@@ -12,11 +12,12 @@ export const openTaskModal = (task?: ITask, count = 0) => async (
   if (task) {
     dispatch(
       push({
-        pathname: `/projects/${task.projectId}/tasks/${task.id}`,
+        pathname: `/projects/${task.projectId}/tasks/${task.sequenceNumber}`,
         state: {
           modal: true,
           projectId: task.projectId,
           taskId: task.id,
+          sequenceNumber: task.sequenceNumber,
         },
       })
     );
@@ -26,11 +27,12 @@ export const openTaskModal = (task?: ITask, count = 0) => async (
       if (openedTask) {
         dispatch(
           push({
-            pathname: `/projects/${openedTask.projectId}/tasks/${openedTask.id}`,
+            pathname: `/projects/${openedTask.projectId}/tasks/${openedTask.sequenceNumber}`,
             state: {
               modal: true,
               projectId: openedTask.projectId,
               taskId: openedTask.id,
+              sequenceNumber: openedTask.sequenceNumber,
             },
           })
         );
