@@ -41,7 +41,7 @@ export const sortedByFilterTasksWithActive = createSelector(
 
 export const checkIsCurrent = createSelector(
   [currentTaskId],
-  cTaskId => (taskId: number) => cTaskId === taskId
+  cTaskId => (sequenceNumber: number) => cTaskId === sequenceNumber
 );
 
 export const events = createSelector(

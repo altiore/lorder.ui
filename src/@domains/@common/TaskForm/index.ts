@@ -49,7 +49,7 @@ const mergeProps = (
   return {
     ...restState,
     initialValues: preparedInitialValues,
-    isCurrent: checkIsCurrent(localSequenceNumber),
+    isCurrent: checkIsCurrent(get(preparedInitialValues, 'id')),
     projectId: localProjectId,
     sequenceNumber: localSequenceNumber,
     ...restDispatch,
@@ -66,7 +66,6 @@ export const PatchTaskForm = connect<
   mapDispatchToProps,
   mergeProps
 )(reduxForm<ITaskFormData, ITaskFormProps>({
-  enableReinitialize: true,
   form: EDIT_TASK_FORM,
   onSubmit: async (values, dispatch, { projectId }: any) => {
     const val = { ...values, projectId };

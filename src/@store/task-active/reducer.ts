@@ -1,9 +1,9 @@
 import { AxiosResponse } from 'axios';
-import { Action, handleActions } from 'redux-actions';
+import { Action, combineActions, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
 import { DownloadList } from '../@common/entities';
-import { fetchTaskLogsAction } from './actions';
+import { clearTaskLogs, fetchTaskLogsAction } from './actions';
 import { ActiveTask } from './ActiveTask';
 import { TaskLog } from './TaskLog';
 
@@ -32,7 +32,7 @@ const fetchTaskLogsFailHandler = (state: S): S => {
   });
 };
 
-const logOutHandler = () => {
+const clearTaskLogsHandler = () => {
   return new ActiveTask({
     taskLogs: new DownloadList(TaskLog),
   });
@@ -44,7 +44,7 @@ export const taskActive = handleActions<S, P>(
     [fetchTaskLogsAction.success]: fetchTaskLogsSuccessHandler,
     [fetchTaskLogsAction.fail]: fetchTaskLogsFailHandler,
 
-    [PURGE]: logOutHandler,
+    [combineActions(clearTaskLogs.toString(), PURGE) as any]: clearTaskLogsHandler,
   },
   new ActiveTask()
 );

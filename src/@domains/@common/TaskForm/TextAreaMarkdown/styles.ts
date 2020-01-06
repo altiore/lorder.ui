@@ -62,6 +62,7 @@ export const styles = (theme: Theme) =>
       flexGrow: 1,
       marginBottom: theme.spacing(1),
       marginRight: theme.spacing(2),
+      minHeight: theme.spacing(40),
     },
     saveButton: {
       marginTop: theme.spacing(1),

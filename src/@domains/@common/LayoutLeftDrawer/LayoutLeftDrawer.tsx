@@ -40,7 +40,7 @@ export interface ILayoutLeftDrawerProps {
   isWidthSm: boolean;
   match: match<any>;
   routes?: IRoute[];
-  selectedProject: Project;
+  openedProject?: Project;
   toggleUiSetting: any;
   theme: Theme;
   userRole: ROLE;
@@ -72,7 +72,7 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
   match,
   redirect,
   routes,
-  selectedProject,
+  openedProject,
   theme,
   toggleUiSetting,
   userRole,
@@ -107,12 +107,11 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
         }}
       >
         <div className={classes.drawerHeader}>
-          {selectedProject && (
-            <LinkButton to={`/projects/${selectedProject.id}`} className={classes.projectTitle}>
-              {selectedProject.title}
+          {openedProject && (
+            <LinkButton to={`/projects/${openedProject.id}`} className={classes.projectTitle}>
+              {openedProject.title}
             </LinkButton>
           )}
-          {userRole !== ROLE.USER && <Typography className={classes.userRole}>{upperFirst(userRole)}</Typography>}
           <div className={classes.grow} />
           <IconButton onClick={handleDrawerToggle}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

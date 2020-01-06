@@ -1,5 +1,6 @@
 import { requestActions } from '@store/@common/requestActions';
 import { IListDto } from '@types';
+import { createAction } from 'redux-actions';
 
 const BASE_ACTION = 'ACTIVE_TASK/TASK_LOGS';
 
@@ -22,3 +23,5 @@ export const fetchTaskLogsAction = requestActions<ITaskLogsListDto>(
     },
   })
 );
+
+export const clearTaskLogs = createAction(`${BASE_ACTION}/CLEAR`);
