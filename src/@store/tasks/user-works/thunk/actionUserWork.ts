@@ -6,7 +6,7 @@ import { IState } from '@types';
 // import { changeIco } from '@store/@common/helpers';
 import { selectProject } from '@store/project';
 import { fetchProjectDetails, getProjectById, Project, projectMembers } from '@store/projects';
-import { CREATE_USER_WORK_FORM_NAME, replaceTasks } from '@store/tasks';
+import { CREATE_USER_WORK_FORM_NAME, getTaskBySequenceNumber, replaceTasks } from '@store/tasks';
 import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from '@store/timer';
 import { IUserWorkData, IUserWorkDelete, patchAndStopUserWork, postAndStartUserWork } from '../actions';
 import { UserWork } from '../UserWork';
@@ -36,6 +36,14 @@ export const startTimer = (userWork: Partial<UserWork>, project: Project) => asy
 
 export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getState: () => IState) => {
   const preparedData = { ...data };
+  // Если есть sequenceNumber, то его нужно поменять на taskId
+  if (data.sequenceNumber) {
+    preparedData.taskId = get(getTaskBySequenceNumber(getState())(data.sequenceNumber, data.projectId), 'id');
+    if (!preparedData.taskId) {
+      throw new Error('Задача имеет порядковый номер, но ее не удалось найти в списке задач');
+    }
+    delete preparedData.sequenceNumber;
+  }
   const project: Project = getProjectById(getState())(preparedData.projectId);
   if (!preparedData.title) {
     if (preparedData.description) {

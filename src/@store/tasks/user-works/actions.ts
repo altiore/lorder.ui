@@ -6,6 +6,7 @@ export interface IUserWorkData {
   description?: string;
   projectId: number;
   taskId?: number | string;
+  sequenceNumber?: number | string;
   title?: string;
 }
 

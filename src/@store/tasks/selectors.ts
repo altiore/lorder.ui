@@ -65,3 +65,9 @@ export const isCurrentTaskDetailsLoaded = createSelector(
   [currentTaskDetails],
   s => get(s, 'isDetailsLoaded', false)
 );
+
+export const getTaskBySequenceNumber = createSelector(
+  [allTaskList],
+  list => (sequenceNumber, projectId) =>
+    list.find(el => el.sequenceNumber === sequenceNumber && el.projectId === projectId)
+);
