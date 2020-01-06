@@ -178,11 +178,11 @@ const projectTaskTypeHandler = (state: S, action: ActionMeta<any, any>) => {
 };
 
 const getAllProjectTasksHandler = (state: S, { meta, payload }: ActionMeta<AxiosResponse, any>) => {
-  const data = get(payload, 'data');
+  const tasks = get(payload, ['data', 'list']);
   const projectId = get(meta, 'previousAction.payload.projectId');
   const index = state.list.findIndex(el => el.id === projectId);
   return state.updateItem(index, {
-    tasks: data,
+    tasks,
   });
 };
 
