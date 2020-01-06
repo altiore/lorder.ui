@@ -128,17 +128,14 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
     }
   }, [isPage, onClose, push]);
 
-  const handleSave = useCallback(
-    (isClose: boolean = true) => (e: React.SyntheticEvent) => {
-      if (dirty && valid) {
-        handleSubmit(e);
-      }
-      if (isClose && handleClose && valid) {
-        handleClose();
-      }
-    },
-    [dirty, handleSubmit, handleClose, valid]
-  );
+  const handleSave = (isClose: boolean = true) => (e: React.SyntheticEvent) => {
+    if (dirty && valid) {
+      handleSubmit(e);
+    }
+    if (isClose && handleClose && valid) {
+      handleClose();
+    }
+  };
 
   const getLink = useCallback(
     (absolute: boolean = false) => {
@@ -247,7 +244,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
         </div>
       </DialogTitle>
       <DialogContent className={classes.card}>
-        <form onSubmit={handleSave()} className={classes.cardForm}>
+        <form onSubmit={handleSave(false)} className={classes.cardForm}>
           <div className={classes.cardFirst}>
             <Field
               name="title"

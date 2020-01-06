@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -45,16 +45,16 @@ export const TextAreaMarkdownTsx: React.FC<ITextAreaMarkdownProps> = ({
     setActiveTab('editor');
   }, [setActive, setActiveTab]);
 
-  const handleSave = useCallback((e: React.SyntheticEvent) => {
-    e.stopPropagation();
-    setActive(false);
-  }, []);
-
-  useEffect(() => {
-    if (!active && typeof onSave === 'function') {
-      onSave();
-    }
-  }, [active, onSave]);
+  const handleSave = useCallback(
+    (e: React.SyntheticEvent) => {
+      e.stopPropagation();
+      setActive(false);
+      if (typeof onSave === 'function') {
+        onSave();
+      }
+    },
+    [onSave]
+  );
 
   if (!input.value && !active) {
     return (

@@ -22,6 +22,7 @@ storiesOf('TaskStatus', module)
   .addDecorator(Center)
   .add('assigned to me', () => (
     <TaskStatus
+      statuses={[]}
       assignees={assignees}
       isMine
       onChangeAssignee={action('Assignee changed:')}
@@ -31,6 +32,7 @@ storiesOf('TaskStatus', module)
   ))
   .add('assigned to other', () => (
     <TaskStatus
+      statuses={[]}
       assignees={assignees}
       onChangeAssignee={action('Assignee changed:')}
       onStart={action('Start task')}

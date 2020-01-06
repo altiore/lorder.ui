@@ -1,3 +1,5 @@
+import React, { lazy, useCallback } from 'react';
+
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -6,9 +8,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Theme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 
+import { Theme } from '@material-ui/core/styles';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import BallotIcon from '@material-ui/icons/Ballot';
@@ -21,8 +22,6 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
 import cn from 'classnames';
-import upperFirst from 'lodash/upperFirst';
-import React, { lazy, useCallback } from 'react';
 import { match, RouteComponentProps, Switch } from 'react-router';
 
 import { IRoute, ROLE } from '@types';
@@ -52,8 +51,8 @@ export const ROUTES_BY_PATH = {
   '/projects/:projectId/members': lazy(() => import('@domains/@Main/@Projects/one/ProjectMembers')),
   '/projects/:projectId/settings': lazy(() => import('@domains/@Main/@Projects/one/Settings')),
   '/projects/:projectId/task-types': lazy(() => import('@domains/@Main/@Projects/one/ProjectTaskTypes')),
-  '/projects/:projectId/tasks': lazy(() => import('@domains/@Main/@Projects/one/ProjectTasks')),
   '/projects/:projectId/tasks/:sequenceNumber': lazy(() => import('@domains/@Main/@routes/task')),
+  '/projects/:projectId/tasks': lazy(() => import('@domains/@Main/@Projects/one/ProjectTasks')),
 };
 
 export const ICONS_MAP = {

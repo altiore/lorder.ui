@@ -90,3 +90,5 @@ export const getSelectedProjectTaskById = createSelector(
 );
 
 export const STATUS_NAMES = ['Резерв', 'Сделать', 'В процессе', 'Обзор', 'Готово'];
+
+export const allStatuses = () => STATUS_NAMES;

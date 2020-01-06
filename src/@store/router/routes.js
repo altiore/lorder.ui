@@ -85,7 +85,7 @@ export const routes = [
           },
           {
             access: [ROLES.USERS, ACCESS_LEVEL.RED],
-            path: '/projects/:projectId/tasks/:taskId',
+            path: '/projects/:projectId/tasks/:sequenceNumber',
           },
         ],
       },
