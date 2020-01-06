@@ -14,6 +14,6 @@ export const fetchProjectTasks = (projectId, skip = 0) => async (dispatch, getSt
       );
       return;
     }
-    await dispatch(fetchProjectTasks(projectId, (skip + 1) * PER_PAGE_COUNT));
+    await dispatch(fetchProjectTasks(projectId, skip + PER_PAGE_COUNT));
   }
 };
