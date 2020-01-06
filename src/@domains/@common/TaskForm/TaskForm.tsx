@@ -141,7 +141,9 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
     (absolute: boolean = false) => {
       const path = `/projects/${projectId}/tasks/${sequenceNumber}`;
       if (absolute) {
-        const port = includes(['443', '80'], window.location.port) ? window.location.port : ':' + window.location.port;
+        const port = includes(['443', '80', ''], window.location.port)
+          ? window.location.port
+          : ':' + window.location.port;
         return window.location.protocol + '//' + window.location.hostname + port + path;
       }
       return path;
