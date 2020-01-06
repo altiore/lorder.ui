@@ -14,6 +14,11 @@ export const allTaskList = createSelector(
   a => a.list
 );
 
+export const isTasksLoading = createSelector(
+  allTasks,
+  a => a.isLoading
+);
+
 export const allTaskListWithoutDefProject = createSelector(
   [allTaskList, defaultProjectId],
   (list, defProjectId) => list.filter(el => el.projectId !== defProjectId)

@@ -12,10 +12,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Table } from '@components/Table';
 import { PatchTaskForm } from '@domains/@common/TaskForm';
 import { DownloadList } from '@store/@common/entities';
-import { ProjectTask } from '@store/projects';
 import { PerformersCell } from './PerformersCell';
 
-import { PROJECT_EDIT_TASK_FORM } from '@store/projects';
+import { EDIT_TASK_FORM, Task } from '@store/tasks';
 
 export interface IProjectTasksProps {
   isFormMount: boolean;
@@ -23,10 +22,10 @@ export interface IProjectTasksProps {
   closeDialog: any;
   deleteProjectTask: ({ projectId, sequenceNumber }: { projectId: number; sequenceNumber: number }) => void;
   destroy: (formName: string) => any;
-  getAllProjectTasks: (p: number) => void;
+  fetchProjectTasks: (p: number) => void;
   openDialog: any;
   projectId: number;
-  projectTasks: DownloadList<ProjectTask>;
+  projectTasks: DownloadList<Task>;
   push: any;
 }
 
@@ -44,18 +43,18 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
   private performersCellRef: HTMLElement[] = [];
 
   componentDidMount() {
-    this.props.getAllProjectTasks(this.props.projectId);
+    this.props.fetchProjectTasks(this.props.projectId);
   }
 
   componentWillReceiveProps(nextProps: IProjectTasksProps) {
     if (nextProps.projectId !== this.props.projectId) {
-      nextProps.getAllProjectTasks(this.props.projectId);
+      nextProps.fetchProjectTasks(this.props.projectId);
     }
   }
 
   componentWillUnmount() {
     if (this.props.isFormMount) {
-      this.props.destroy(PROJECT_EDIT_TASK_FORM);
+      this.props.destroy(EDIT_TASK_FORM);
     }
   }
 
@@ -100,7 +99,7 @@ export class ProjectTasksJsx extends React.Component<RouteComponentProps<{}> & I
     users,
     duration,
     projectId,
-  }: ProjectTask) => {
+  }: Task) => {
     const { classes } = this.props;
     return (
       <TableRow

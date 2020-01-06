@@ -17,7 +17,7 @@ import {
 } from 'react-beautiful-dnd';
 
 import { PatchTaskForm } from '@domains/@common/TaskForm';
-import { ProjectTask, STATUS_NAMES } from '@store/projects';
+import { STATUS_NAMES, Task } from '@store/tasks';
 import { TaskCard } from './TaskCard';
 import { useStyles } from './styles';
 
@@ -31,9 +31,9 @@ const getListStyle = (isDraggingOver: boolean, height: number) => ({
 });
 
 export interface IDragAndDropProps {
-  getAllProjectTasks: any;
+  fetchProjectTasks: any;
   height: number;
-  items: ProjectTask[];
+  items: Task[];
   moveProjectTask: any;
   openDialog: any;
   projectId: number;
@@ -42,7 +42,7 @@ export interface IDragAndDropProps {
 }
 
 export const DragAndDrop: React.FC<IDragAndDropProps> = ({
-  getAllProjectTasks,
+  fetchProjectTasks,
   height,
   items,
   moveProjectTask,
@@ -54,8 +54,8 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   const classes = useStyles();
 
   useEffect(() => {
-    getAllProjectTasks(projectId);
-  }, [getAllProjectTasks, projectId]);
+    fetchProjectTasks(projectId);
+  }, [fetchProjectTasks, projectId]);
 
   const [columns, setColumns] = useState([false, true, true, true, false]);
 
@@ -143,7 +143,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                     className={classes.columnContent}
                   >
                     {columns[status] && filteredItemsLength ? (
-                      filteredItems.map((item: ProjectTask, index) => {
+                      filteredItems.map((item: Task, index) => {
                         return (
                           <Draggable
                             key={item.id}

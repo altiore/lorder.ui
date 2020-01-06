@@ -7,15 +7,22 @@ import { createStructuredSelector } from 'reselect';
 import { onSubmitFail } from '@store/@common/helpers';
 import { changeSettings } from '@store/dialog';
 import { showSuccess } from '@store/notifications';
-import { patchProjectTask, postProjectTask, PROJECT_EDIT_TASK_FORM, projectTasksIsLoading } from '@store/projects';
 import { routeProjectId, routeTaskSequenceNumber } from '@store/router';
-import { archiveTask, checkIsCurrent, fetchTaskDetails, getEditTaskInitialValues, startUserWork } from '@store/tasks';
+import {
+  archiveTask,
+  checkIsCurrent,
+  EDIT_TASK_FORM,
+  fetchTaskDetails,
+  getEditTaskInitialValues,
+  patchProjectTask,
+  postProjectTask,
+  startUserWork,
+} from '@store/tasks';
 import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
   checkIsCurrent,
   getEditTaskInitialValues,
-  projectTasksIsLoading,
   routeProjectId,
   routeTaskSequenceNumber,
 } as any);
@@ -60,7 +67,7 @@ export const PatchTaskForm = connect<
   mergeProps
 )(reduxForm<ITaskFormData, ITaskFormProps>({
   enableReinitialize: true,
-  form: PROJECT_EDIT_TASK_FORM,
+  form: EDIT_TASK_FORM,
   onSubmit: async (values, dispatch, { projectId }: any) => {
     const val = { ...values, projectId };
     return val.id ? dispatch(patchProjectTask(val)) : dispatch(postProjectTask(val));
@@ -70,7 +77,7 @@ export const PatchTaskForm = connect<
     const actionType = get(result, 'meta.previousAction.type');
     const taskId = get(result, 'payload.data.id');
     if (actionType === postProjectTask.toString()) {
-      dispatch(change(PROJECT_EDIT_TASK_FORM, 'id', taskId));
+      dispatch(change(EDIT_TASK_FORM, 'id', taskId));
     }
   },
 })(TaskFormJsx) as any);

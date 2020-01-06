@@ -111,5 +111,4 @@ export const updateStatistic = requestActions<number>('PROJECT/STATISTIC/UPDATE'
 }));
 
 export * from './members/actions';
-export * from './tasks/actions';
 export * from './taskTypes/actions';

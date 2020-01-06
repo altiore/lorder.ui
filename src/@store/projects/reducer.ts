@@ -5,34 +5,25 @@ import { Action, ActionMeta, combineActions as combineActionsRedux, handleAction
 import { PURGE } from 'redux-persist';
 
 import { IMeta } from '@types';
-import { archiveTaskA } from '@store/tasks/actions';
-import { postAndStartUserWork } from '@store/tasks/user-works/actions';
 import { DownloadList } from '../@common/entities';
 import { combineActions } from '../@common/helpers';
 import {
   addTaskTypeToProject,
   deleteProjectMember,
-  deleteProjectTask,
   deleteTaskTypeFromProject,
   fetchAllParticipantProjectsAction,
   fetchProjectDetails,
   getAllProjects,
-  getAllProjectTasks,
   getAllProjectTaskTypes,
-  moveProjectTask,
-  patchProjectTask,
   postProject,
   postProjectMember,
-  postProjectTask,
   postTaskTypeToProject,
   removeProject,
   removeProjectByAdmin,
   updateProjectMemberAccessLevel,
-  updateProjectTask,
 } from './actions';
 import { Member } from './members/Member';
 import { Project } from './Project';
-import { projectTasks } from './tasks/reducer';
 import { projectTaskTypes } from './taskTypes/reducer';
 
 type S = DownloadList<Project>;
@@ -146,23 +137,6 @@ const deleteProjectMemberHandler = (state: S, { payload }: Action<P>) => {
   });
 };
 
-const projectTaskHandler = (state: S, action: ActionMeta<any, any>) => {
-  let index: number;
-  // if meta exists get projectId from meta
-  if (action.meta) {
-    index = state.list.findIndex(el => get(action.meta, 'previousAction.payload.projectId') === el.id);
-  } else {
-    index = state.list.findIndex(el => get(action.payload, 'projectId') === el.id);
-  }
-  if (!~index) {
-    return state;
-  }
-
-  return state.updateItem(index, {
-    tasks: projectTasks(state.list[index].tasks, action),
-  });
-};
-
 const projectTaskTypeHandler = (state: S, action: ActionMeta<any, any>) => {
   let index: number;
   // if meta exists get projectId from meta
@@ -174,15 +148,6 @@ const projectTaskTypeHandler = (state: S, action: ActionMeta<any, any>) => {
 
   return state.updateItem(index, {
     taskTypes: projectTaskTypes(state.list[index].taskTypes, action),
-  });
-};
-
-const getAllProjectTasksHandler = (state: S, { meta, payload }: ActionMeta<AxiosResponse, any>) => {
-  const tasks = get(payload, ['data', 'list']);
-  const projectId = get(meta, 'previousAction.payload.projectId');
-  const index = state.list.findIndex(el => el.id === projectId);
-  return state.updateItem(index, {
-    tasks,
   });
 };
 
@@ -213,20 +178,8 @@ export const projects = handleActions<S, any, any>(
     [postProjectMember.success]: postProjectMemberSuccessHandler,
     [postProjectMember.fail]: postProjectMemberFailHandler,
     [updateProjectMemberAccessLevel.toString()]: updateProjectMemberAccessLevelHandler,
-    // [updateProjectMemberAccessLevel.success]: updateProjectMemberAccessLevelSuccessHandler,
-    // [updateProjectMemberAccessLevel.fail]: updateProjectMemberAccessLevelFailHandler,
     [deleteProjectMember.toString()]: deleteProjectMemberHandler,
-    [combineActions(
-      moveProjectTask,
-      postProjectTask,
-      patchProjectTask,
-      deleteProjectTask,
-      archiveTaskA,
-      updateProjectTask,
-      postAndStartUserWork
-    )]: projectTaskHandler,
     [combineActions(getAllProjectTaskTypes, postTaskTypeToProject)]: projectTaskTypeHandler,
-    [getAllProjectTasks.success]: getAllProjectTasksHandler,
     [PURGE]: logOutHandler,
   },
   new DownloadList(Project)

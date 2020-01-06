@@ -1,7 +1,10 @@
 /* tslint:disable */
 /* eslint:disable */
-import { IDownloadList } from '@types';
 import { AxiosResponse } from 'axios';
+import get from 'lodash/get';
+import uniqBy from 'lodash/uniqBy';
+
+import { IDownloadList } from '@types';
 
 export class DownloadList<T = any> implements IDownloadList<T> {
   expiredIn: number = 0;
@@ -65,17 +68,23 @@ export class DownloadList<T = any> implements IDownloadList<T> {
     });
   }
 
-  finishLoading(payload?: AxiosResponse<T[]>): DownloadList<T> {
-    const data = payload && payload.data;
+  finishLoading(payload?: AxiosResponse<T[]>, uniqueBy: string = 'id'): DownloadList<T> {
+    const list = get(payload, ['data', 'list'], get(payload, 'data'));
     return new DownloadList<T>(this.Entity, {
-      isLoaded: !!data,
+      isLoaded: Boolean(Array.isArray(list) || this.list.length),
       isLoading: false,
-      list: (data || []).map(
-        (el: any) =>
-          new this.Entity({
-            ...(this.list.find(e => (e as any).id === el.id) || {}),
-            ...el,
-          })
+      list: uniqBy(
+        [
+          ...this.list,
+          ...(list || []).map(
+            (el: any) =>
+              new this.Entity({
+                ...(this.list.find(e => (e as any).id === el.id) || {}),
+                ...el,
+              })
+          ),
+        ],
+        uniqueBy
       ),
     });
   }

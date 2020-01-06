@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import includes from 'lodash/includes';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
@@ -6,8 +7,9 @@ import { IEvent, ITask } from '@types';
 import { DownloadList } from '@store/@common/entities';
 import { defaultProjectId } from '@store/identity/selectors';
 import { selectedProjectId } from '@store/project';
-import { allTasks, UserWork } from '@store/tasks';
-import { tasksFilter } from '@store/tasksFilter';
+import { routeProjectId } from '@store/router';
+import { allTasks, Task, UserWork } from '@store/tasks';
+import { filteredMembers, searchTerm, tasksFilter } from '@store/tasksFilter';
 import { currentTask, currentTaskId } from '@store/timer';
 import { lastUserWorks } from '@store/user-works/selectors';
 
@@ -57,3 +59,34 @@ export const events = createSelector(
       }));
   }
 );
+
+export const projectTasks = createSelector(
+  [allTasks, routeProjectId],
+  (list, projectId: number | undefined): Task[] => (projectId ? list.list.filter(el => el.projectId === projectId) : [])
+);
+
+export const filteredProjectTasks = createSelector(
+  [projectTasks, searchTerm, filteredMembers],
+  (list, sTerm = '', members = []) => {
+    if (!sTerm && !members.length) {
+      return list ? list : [];
+    }
+    return list && list.length
+      ? list
+          .filter(el => ~el.title.toLowerCase().indexOf(sTerm.trim().toLowerCase()))
+          .filter(el => (members.length ? includes(members, el.performerId) : true))
+      : [];
+  }
+);
+
+export const selectedProjectTasks = createSelector(
+  [allTasks, selectedProjectId],
+  (list, projectId): Task[] => (projectId ? list.list.filter(el => el.projectId === projectId) : [])
+);
+
+export const getSelectedProjectTaskById = createSelector(
+  selectedProjectTasks,
+  (tasks: Task[]) => (id: number) => tasks.find(el => el.id === id)
+);
+
+export const STATUS_NAMES = ['Резерв', 'Сделать', 'В процессе', 'Обзор', 'Готово'];

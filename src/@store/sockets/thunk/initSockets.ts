@@ -2,8 +2,7 @@ import openSocket from 'socket.io-client';
 
 import { ITask } from '@types';
 
-import { updateProjectTask } from '@store/projects';
-import { updateTask } from '@store/tasks';
+import { updateProjectTask } from '@store/tasks';
 import { initSocketsAction, updateTaskAction } from '../actions';
 
 export const socketTasks = openSocket(`${process.env.REACT_APP_API_BASE_URL}/projects/tasks`);
@@ -16,7 +15,6 @@ export const initSockets = () => dispatch => {
   socketTasks.on('taskUpdated', function(task: ITask) {
     dispatch(updateTaskAction(task.title));
     dispatch(updateProjectTask(task));
-    dispatch(updateTask(task));
   });
   socketTasks.on('joinParticipantProjectRoom', function(projectId) {
     if (process.env.NODE_ENV === 'development') {

@@ -48,7 +48,6 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
   location: any;
   onClose: any;
   projectId: number;
-  projectTasksIsLoading: boolean;
   push: any;
   sequenceNumber: number;
   showSuccess: (args: INotification) => any;

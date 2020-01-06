@@ -8,11 +8,30 @@ import uniqid from 'uniqid';
 
 import { DownloadList } from '@store/@common/entities';
 import { combineActions } from '@store/@common/helpers';
-import { deleteProjectTask, moveProjectTask, patchProjectTask } from '@store/projects/tasks/actions';
 import { patchUserWork } from '@store/user-works/actions';
-import { archiveTaskA, fetchTaskDetailsA, getAllTasks, replaceTasks, updateTask } from './actions';
+import {
+  archiveTaskA,
+  deleteProjectTask,
+  fetchProjectTasksA,
+  fetchTaskDetailsA,
+  getAllTasks,
+  moveProjectTask,
+  patchProjectTask,
+  postProjectTask,
+  replaceTasks,
+  updateProjectTask,
+} from './actions';
 import { Task } from './Task';
 import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork, UserWork, userWorks } from './user-works';
+import { IRequestAction } from '../@common/requestActions';
+import { User } from '../users';
+
+interface IProjectRequest extends IRequestAction<Partial<Task>> {
+  sequenceNumber: number;
+  projectId: number;
+  prevStatus?: number;
+  users: User[];
+}
 
 type S = DownloadList<Task>;
 type P<T = any> = AxiosResponse<T> | Array<Partial<Task>>;
@@ -124,6 +143,20 @@ const postAndStartUserWorkFailHandler = (state: S, action: ActionMeta<any, any>)
       userWorks: userWorks(state.list[index].userWorks, action),
     });
   }
+  return state.stopLoading().removeItem(0);
+};
+
+const postProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>) => {
+  const data = payload && payload.request.data;
+  return state.startLoading().addItem(new Task({ id: uniqid(), ...data }));
+};
+
+const postProjectTaskSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
+  // TODO: find index before updateItem, because we can change logic for showing data
+  return state.stopLoading().updateItem(0, payload && payload.data);
+};
+
+const postProjectTaskFailHandler = (state: S) => {
   return state.stopLoading().removeItem(0);
 };
 
@@ -279,7 +312,10 @@ const logOutHandler = () => {
   return new DownloadList(Task);
 };
 
-const updateTaskHandler = (state, { payload: task }) => {
+const updateProjectTaskHandler = (state, { payload: task }) => {
+  if (!task) {
+    throw new Error('updateProjectTaskHandler Error: payload is required and MUST be task entity');
+  }
   const taskIndex = state.list.findIndex(el => get(task, 'id') === el.id);
   if (!~taskIndex) {
     return state;
@@ -289,13 +325,17 @@ const updateTaskHandler = (state, { payload: task }) => {
 
 export const tasks = handleActions<S, any, any>(
   {
-    [getAllTasks.toString()]: getAllTasksHandler,
-    [getAllTasks.success]: getAllTasksSuccessHandler,
-    [getAllTasks.fail]: getAllTasksFailHandler,
+    [combineActions(getAllTasks.toString(), fetchProjectTasksA.toString())]: getAllTasksHandler,
+    [combineActions(getAllTasks.success, fetchProjectTasksA.success)]: getAllTasksSuccessHandler,
+    [combineActions(getAllTasks.fail, fetchProjectTasksA.fail)]: getAllTasksFailHandler,
 
     [postAndStartUserWork.toString()]: postAndStartUserWorkHandler,
     [postAndStartUserWork.success]: postAndStartUserWorkSuccessHandler,
     [postAndStartUserWork.fail]: postAndStartUserWorkFailHandler,
+
+    [postProjectTask.toString()]: postProjectTaskHandler,
+    [postProjectTask.success]: postProjectTaskSuccessHandler,
+    [postProjectTask.fail]: postProjectTaskFailHandler,
 
     [patchAndStopUserWork.toString()]: patchAndStopUserWorkHandler,
     [patchAndStopUserWork.success]: patchAndStopUserWorkSuccessHandler,
@@ -327,7 +367,7 @@ export const tasks = handleActions<S, any, any>(
 
     [PURGE]: logOutHandler,
 
-    [updateTask.toString()]: updateTaskHandler,
+    [updateProjectTask.toString()]: updateProjectTaskHandler,
   },
   new DownloadList(Task)
 );

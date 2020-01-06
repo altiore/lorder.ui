@@ -20,11 +20,6 @@ export const ownProjectList = createSelector(
   (state: DownloadList<Project>): Project[] => state.list.filter(el => typeof el.accessLevel === 'number')
 );
 
-// export const ownProjectListWithoutDefault = createSelector(
-//   [ownProjectList, defaultProjectId],
-//   (state: Project[], defProjectId): Project[] => state.filter(el => el.id !== defProjectId)
-// );
-
 export const selectedProject: any = createSelector(
   [ownProjectList, currentProjectId],
   (projects, id) => id && projects.find(el => el.id === id)

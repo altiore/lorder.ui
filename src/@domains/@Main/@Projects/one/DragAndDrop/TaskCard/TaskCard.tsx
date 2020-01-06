@@ -8,9 +8,9 @@ import get from 'lodash/get';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 
 import Avatar from '@components/Avatar';
-import { ProjectTask } from '@store/projects';
+import { Task } from '@store/tasks';
 
-export interface ITaskCard extends Partial<ProjectTask> {
+export interface ITaskCard extends Partial<Task> {
   classes: any;
   getProjectMemberById: (_: any) => void;
   provided: DraggableProvided;

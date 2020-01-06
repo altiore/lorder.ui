@@ -19,6 +19,7 @@ export class Task implements ITask {
   value: number;
   typeId?: number;
   userWorks: DownloadList<UserWork> = new DownloadList(UserWork);
+  users?: any;
 
   constructor(initial?: any) {
     map(initial, (val: any, key: string) => {

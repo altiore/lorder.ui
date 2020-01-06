@@ -1,10 +1,10 @@
 import map from 'lodash/map';
 
 import { convertSecondsToDurationWithLocal } from '@store/@common/helpers';
+import { Task } from '@store/tasks';
 import { DownloadList } from '../@common/entities';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';
-import { ProjectTask } from './tasks/ProjectTask';
 
 export enum ACCESS_LEVEL {
   WHITE = 0,
@@ -27,7 +27,7 @@ export class Project {
   ownerId?: number;
   phases?: any[];
   members: DownloadList<Member> = new DownloadList(Member);
-  tasks: DownloadList<ProjectTask> = new DownloadList(ProjectTask);
+  tasks: DownloadList<Task> = new DownloadList(Task);
   taskTypes: DownloadList<TaskType> = new DownloadList(TaskType);
   /** время в секундах, потраченное всеми пользователями на этот проект */
   timeSum?: number;
@@ -37,7 +37,7 @@ export class Project {
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
       if (key === 'tasks') {
-        this[key] = new DownloadList(ProjectTask, val, Array.isArray(val));
+        this[key] = new DownloadList(Task, val, Array.isArray(val));
         return;
       }
       if (key === 'taskTypes') {

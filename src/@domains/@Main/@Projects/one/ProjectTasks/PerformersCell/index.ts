@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import PerformerFieldRaw from '@domains/@common/PerformerField';
-import { patchProjectTask, projectMembersAsUsers } from '@store/projects';
+import { projectMembersAsUsers } from '@store/projects';
+import { patchProjectTask } from '@store/tasks';
 import { routeProjectId } from '@store/router';
 import { IState } from '@types';
 

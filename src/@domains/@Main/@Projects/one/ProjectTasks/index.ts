@@ -6,14 +6,14 @@ import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from '@store/dialog';
 import { isFormMount } from '@store/form';
-import { deleteProjectTask, getAllProjectTasks, PROJECT_EDIT_TASK_FORM, projectTasks } from '@store/projects';
+import { deleteProjectTask, EDIT_TASK_FORM, fetchProjectTasks, projectTasks } from '@store/tasks';
 import { routeProjectId } from '@store/router';
 import { ProjectTasksJsx } from './ProjectTasks';
 import { styles } from './styles';
 import { IState } from '@types';
 
 const mapState = createStructuredSelector<IState, any>({
-  isFormMount: isFormMount(PROJECT_EDIT_TASK_FORM),
+  isFormMount: isFormMount(EDIT_TASK_FORM),
   projectId: routeProjectId,
   projectTasks,
 });
@@ -22,7 +22,7 @@ const mapDispatch = {
   closeDialog,
   deleteProjectTask,
   destroy,
-  getAllProjectTasks,
+  fetchProjectTasks,
   openDialog,
   push,
 };
