@@ -4,6 +4,7 @@ import { ITask, IUser } from '@types';
 import { DownloadList } from '@store/@common/entities';
 import { convertSecondsToDuration } from '@store/@common/helpers';
 import { UserWork } from '@store/tasks';
+import { User } from '@store/users';
 
 export class Task implements ITask {
   isDetailsLoaded: boolean;
@@ -19,7 +20,7 @@ export class Task implements ITask {
   value: number;
   typeId?: number;
   userWorks: DownloadList<UserWork> = new DownloadList(UserWork);
-  users?: any;
+  users?: User[] = [];
 
   constructor(initial?: any) {
     map(initial, (val: any, key: string) => {

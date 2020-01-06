@@ -16,7 +16,7 @@ export interface ITask {
   value: number;
   typeId?: number;
   userWorks?: IDownloadList<IUserWork>;
-  users?: any;
+  users?: IUser[];
 
   duration: string;
 }
