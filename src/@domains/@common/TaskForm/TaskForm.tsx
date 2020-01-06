@@ -8,6 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import includes from 'lodash/includes';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Field, InjectedFormProps } from 'redux-form';
 import { length, required } from 'redux-form-validators';
@@ -20,7 +21,6 @@ import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
 import StatusField from './StatusField';
 
 import { parseNumber } from '@store/@common/helpers';
-// import { STATUS_NAMES } from '@store/projects';
 
 import TaskHistory from './TaskHistory';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
@@ -141,7 +141,8 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
     (absolute: boolean = false) => {
       const path = `/projects/${projectId}/tasks/${sequenceNumber}`;
       if (absolute) {
-        return window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + path;
+        const port = includes(['443', '80'], window.location.port) ? window.location.port : ':' + window.location.port;
+        return window.location.protocol + '//' + window.location.hostname + port + path;
       }
       return path;
     },
@@ -149,37 +150,20 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   );
 
   const copyToClipboard = useCallback(
-    (e?: React.SyntheticEvent | string) => {
-      if (e) {
-        if (typeof e === 'string') {
-          showSuccess({
-            message: 'Ссылка на задачу скопирована в буфер обмена!',
-            title: e,
-          });
-        }
-      } else {
-        showSuccess({
-          message: 'Ссылка на задачу скопирована в буфер обмена!',
-          title: getLink(true),
-        });
-      }
+    (link: string) => {
+      showSuccess({
+        message: 'Ссылка на задачу скопирована в буфер обмена!',
+        title: link,
+      });
     },
-    [getLink, showSuccess]
+    [showSuccess]
   );
 
-  const goToTask = useCallback(
-    () => (e: React.SyntheticEvent) => {
-      e.preventDefault();
-      if (isPage) {
-        copyToClipboard();
-      } else {
-        window.open(getLink(true), '_blank');
-      }
-    },
-    [copyToClipboard, getLink, isPage]
-  );
+  const goToTask = useCallback((link: string) => {
+    window.open(link, '_blank');
+  }, []);
 
-  const [anchorEl, setAnchorEl] = useState<any>(null);
+  const [anchorEl, setAnchorEl] = useState<null | Element>(null);
   const moreMenuOpen = useCallback(
     (event: React.SyntheticEvent) => {
       setAnchorEl(event.currentTarget);
@@ -209,16 +193,16 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
             <TaskTypeIcon typeId={initialValues.typeId} />
           </IconButton>
           {sequenceNumber && (
-            <div onMouseLeave={hideCopy}>
+            <div onMouseLeave={hideCopy} onMouseOver={isPage ? undefined : showCopy}>
               <Tooltip title={isPage ? copyText : 'Открыть в отдельном окне'} placement="bottom">
-                <Button variant="text" href={isPage ? undefined : '#'} onClick={goToTask()} onMouseOver={showCopy}>
-                  #{sequenceNumber}
-                </Button>
+                <CopyToClipboard text={getLink(true)} onCopy={isPage ? copyToClipboard : goToTask}>
+                  <Button variant="text">#{sequenceNumber}</Button>
+                </CopyToClipboard>
               </Tooltip>
               {!isPage && isShownCopy && (
                 <Tooltip title={copyText} placement="right">
                   <CopyToClipboard text={getLink(true)} onCopy={copyToClipboard}>
-                    <IconButton onClick={copyToClipboard}>
+                    <IconButton>
                       <FileCopyIcon fontSize="small" />
                     </IconButton>
                   </CopyToClipboard>
