@@ -68,7 +68,7 @@ export class DownloadList<T = any> implements IDownloadList<T> {
     });
   }
 
-  finishLoading(payload?: AxiosResponse<T[]>, uniqueBy: string = 'id'): DownloadList<T> {
+  finishLoading(payload?: AxiosResponse<T[]> | any, uniqueBy: string = 'id'): DownloadList<T> {
     let list = get(payload, ['data', 'list'], get(payload, 'data'));
     if (!Array.isArray(list)) {
       console.error(

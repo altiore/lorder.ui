@@ -8,7 +8,7 @@ import uniqid from 'uniqid';
 
 import { DownloadList } from '@store/@common/entities';
 import { combineActions } from '@store/@common/helpers';
-import { patchUserWork } from '@store/user-works/actions';
+import { getUserWorks, patchUserWork } from '@store/user-works/actions';
 import {
   archiveTaskA,
   deleteProjectTask,
@@ -323,6 +323,13 @@ const updateProjectTaskHandler = (state, { payload: task }) => {
   return state.updateItem(taskIndex, task);
 };
 
+const getUserWorksSuccess = (state, { payload }) => {
+  const preparedData = {
+    data: get(payload, 'data', []).map(el => el.task),
+  };
+  return state.finishLoading(preparedData);
+};
+
 export const tasks = handleActions<S, any, any>(
   {
     [combineActions(getAllTasks.toString(), fetchProjectTasksA.toString())]: getAllTasksHandler,
@@ -368,6 +375,8 @@ export const tasks = handleActions<S, any, any>(
     [PURGE]: logOutHandler,
 
     [updateProjectTask.toString()]: updateProjectTaskHandler,
+
+    [getUserWorks.success]: getUserWorksSuccess,
   },
   new DownloadList(Task)
 );
