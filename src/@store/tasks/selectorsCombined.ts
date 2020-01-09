@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 
 import { IEvent, ITask } from '@types';
 import { DownloadList } from '@store/@common/entities';
-import { defaultProjectId } from '@store/identity/selectors';
+import { defaultProjectId, userId } from '@store/identity/selectors';
 import { selectedProjectId } from '@store/project';
 import { routeProjectId } from '@store/router';
 import { allTasks, Task, UserWork } from '@store/tasks';
@@ -13,10 +13,10 @@ import { filteredMembers, searchTerm, tasksFilter } from '@store/tasksFilter';
 import { currentTask, currentTaskId } from '@store/timer';
 import { lastUserWorks } from '@store/user-works/selectors';
 
-export const filteredByProjectTasks = createSelector(
-  [allTasks, selectedProjectId, currentTaskId],
-  (tasks, projectId, taskId) =>
-    projectId ? tasks.list.filter(el => el.projectId === projectId && el.id !== taskId) : tasks.list
+export const filteredByPerformerTasks = createSelector(
+  [allTasks, userId, currentTaskId],
+  (tasks, currentUserId, taskId) =>
+    currentUserId ? tasks.list.filter(el => el.performerId === currentUserId && el.id !== taskId) : []
 );
 
 const filteredFunction = {
@@ -26,7 +26,7 @@ const filteredFunction = {
 };
 
 export const sortedByFilterTasks = createSelector(
-  [filteredByProjectTasks, tasksFilter],
+  [filteredByPerformerTasks, tasksFilter],
   (tasks = [], filter = 'smart') => [...tasks].sort(filteredFunction[filter])
 );
 
