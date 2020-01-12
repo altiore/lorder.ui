@@ -2,6 +2,7 @@ export * from './IEvent';
 export * from './IRoute';
 export * from './IListDto';
 export * from './IMeta';
+export * from './IOther';
 export * from './INotification';
 export * from './IProjectMember';
 export * from './ISockets';

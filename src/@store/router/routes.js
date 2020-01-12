@@ -102,6 +102,12 @@ export const routes = [
         title: 'Обратная связь',
       },
       {
+        access: [ROLES.SUPER_ADMINS],
+        icon: 'settings',
+        path: '/other',
+        title: 'Другие функции',
+      },
+      {
         componentName: 'TaskTypes',
         icon: 'account-circle',
         path: '/task-types',

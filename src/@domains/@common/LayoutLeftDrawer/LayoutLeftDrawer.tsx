@@ -168,6 +168,12 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
                 </ListItemIcon>
                 <ListItemText primary={'Обратная связь'} />
               </ListItem>
+              <ListItem button onClick={goToPage('/other')}>
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Другие функции'} />
+              </ListItem>
             </>
           )}
         </List>

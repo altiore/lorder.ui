@@ -14,7 +14,7 @@ import { Task, UserWork } from '@store/tasks';
 import { Timer } from '@store/timer';
 import { IUiState } from '@store/ui';
 import { VersionHistory } from '@store/versionHistory';
-import { ISockets, ITaskActive } from '@types';
+import { IOther, ISockets, ITaskActive } from '@types';
 import { IRouteState } from './IRouteState';
 import { ITasksFilter } from './ITasksFilter';
 import { IUser } from './IUser';
@@ -26,6 +26,7 @@ export interface IState {
   identity: IIdentityState;
   info: IInfo;
   notifications: NotificationsState;
+  other: IOther;
   project: { selected?: number };
   projects: DownloadList<Project>;
   publicAltiore: PublicProject;
