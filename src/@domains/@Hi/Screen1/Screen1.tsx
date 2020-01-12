@@ -48,6 +48,7 @@ const Screen1: React.FC<Screen1I> = ({ btnText2, text2 }) => {
           color="secondary"
           className={classes.button}
           to={'/login'}
+          id="main-big-btn"
         >
           Управлять временем
         </LinkButton>
