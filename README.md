@@ -1,29 +1,27 @@
-# Altiore Contribution UI
+# Altiore UI
 
-## Description
+## Трекер задач и времени
 
-Caclulate contribution of users
+### Установка
 
-## Installation
-
-```bash
-$ yarn install
-```
-
-## Running the app
+#### 1. Скопируй файл .env.example -> .env
 
 ```bash
-# development
-$ yarn start
-
-# production mode
-$ yarn build
+$ cp .env.example .env
 ```
 
-## Test
+#### 2. Для локальной работы необходимо установить [пакетный менеджер npm](https://www.npmjs.com/get-npm) и [node.js server](https://nodejs.org/en/) (обычно устанавливаются вместе)
+
+#### 3. Установите локальные зависимости при помощи пакетного менеджера npm
 
 ```bash
-# unit tests
-$ yarn test
+$ npm install
 ```
 
+#### 4. Запустите проект локально при помощи пакетного менеджера npm
+
+```bash
+$ npm start
+```
+
+#### 5. Приложение дожно автоматически открыться в браузере и автоматически обновляться при любом изменении кода
