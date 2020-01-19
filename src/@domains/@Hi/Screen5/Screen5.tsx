@@ -1,6 +1,8 @@
+import React from 'react';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
 
 import Person from '@components/Person';
 
@@ -15,10 +17,12 @@ import PublicProjectsAch from './PublicProjectsAch';
 import UsersAch from './UsersAch';
 
 interface Screen5I {
+  isPublicAltioreLoaded: boolean;
+  isPublicAltioreLoading: boolean;
   team: IProjectMember[];
 }
 
-const Screen5: React.FC<Screen5I> = ({ team }) => {
+const Screen5: React.FC<Screen5I> = ({ isPublicAltioreLoaded, isPublicAltioreLoading, team }) => {
   const classes = useStyles();
 
   return (
@@ -44,13 +48,17 @@ const Screen5: React.FC<Screen5I> = ({ team }) => {
           </Typography>
         </SubTitle>
         <BlockContent>
-          <Grid className={classes.personsBlock} container justify="space-evenly" spacing={10}>
-            {team.map(({ avatar, email }) => (
-              <Grid item key={email}>
-                <Person avatar={avatar} name={email.replace(/@.*$/, '')} />
-              </Grid>
-            ))}
-          </Grid>
+          {isPublicAltioreLoading || true ? (
+            <CircularProgress size={100} color="secondary" />
+          ) : (
+            <Grid className={classes.personsBlock} container justify="space-evenly" spacing={10}>
+              {team.map(({ avatar, email }) => (
+                <Grid item key={email}>
+                  <Person avatar={avatar} name={email.replace(/@.*$/, '')} />
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </BlockContent>
       </Block>
     </>

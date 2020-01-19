@@ -2,10 +2,18 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { IProjectMember, IState } from '@types';
-import { altioreMembers } from '@store/publicAltiore';
+import { altioreMembers, isPublicAltioreLoaded, isPublicAltioreLoading } from '@store/publicAltiore';
 import Screen5 from './Screen5';
 
-const mapState = createStructuredSelector<IState, { team: IProjectMember[] }>({
+interface IMappedProps {
+  isPublicAltioreLoaded: boolean;
+  isPublicAltioreLoading: boolean;
+  team: IProjectMember[];
+}
+
+const mapState = createStructuredSelector<IState, IMappedProps>({
+  isPublicAltioreLoaded,
+  isPublicAltioreLoading,
   team: altioreMembers,
 });
 

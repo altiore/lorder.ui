@@ -6,6 +6,16 @@ import { PublicProject } from '@store/publicProject';
 
 export const publicAltioreData = (state: IState): PublicProject => state.publicAltiore;
 
+export const isPublicAltioreLoaded = createSelector(
+  publicAltioreData,
+  s => s.isLoaded
+);
+
+export const isPublicAltioreLoading = createSelector(
+  publicAltioreData,
+  s => s.isLoading
+);
+
 export const altioreStatistic = createSelector(
   publicAltioreData,
   s => s.statistic
