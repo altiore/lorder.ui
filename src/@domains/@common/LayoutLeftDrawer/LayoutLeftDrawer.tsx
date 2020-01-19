@@ -47,12 +47,14 @@ export interface ILayoutLeftDrawerProps {
 
 // TODO: move to correct place in route paths
 export const ROUTES_BY_PATH = {
-  '/projects/:projectId/board': lazy(() => import('@domains/@Main/@Projects/one/DragAndDrop')),
-  '/projects/:projectId/members': lazy(() => import('@domains/@Main/@Projects/one/ProjectMembers')),
-  '/projects/:projectId/settings': lazy(() => import('@domains/@Main/@Projects/one/Settings')),
-  '/projects/:projectId/task-types': lazy(() => import('@domains/@Main/@Projects/one/ProjectTaskTypes')),
-  '/projects/:projectId/tasks/:sequenceNumber': lazy(() => import('@domains/@Main/@routes/task')),
-  '/projects/:projectId/tasks': lazy(() => import('@domains/@Main/@Projects/one/ProjectTasks')),
+  '/projects/:projectId/board': lazy(() => import('@domains/##/#projects/#:projectId/DragAndDrop')),
+  '/projects/:projectId/members': lazy(() => import('@domains/##/#projects/#:projectId/ProjectMembers')),
+  '/projects/:projectId/settings': lazy(() => import('@domains/##/#projects/#:projectId/Settings')),
+  '/projects/:projectId/task-types': lazy(() => import('@domains/##/#projects/#:projectId/ProjectTaskTypes')),
+  '/projects/:projectId/tasks/:sequenceNumber': lazy(() =>
+    import('@domains/##/#projects/#:projectId/#tasks/#:sequenceNumber')
+  ),
+  '/projects/:projectId/tasks': lazy(() => import('@domains/##/#projects/#:projectId/ProjectTasks')),
 };
 
 export const ICONS_MAP = {

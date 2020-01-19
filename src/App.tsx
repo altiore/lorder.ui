@@ -6,15 +6,15 @@ import { IRoute } from '@types';
 
 import LoadingPage from '@components/LoadingPage';
 import { RouteWithSubRoutes } from '@domains/@common/RouteWithSubRoutes';
-import NotFound from '@domains/NotFound';
+import NotFound from '@domains/@common/NotFoundPage';
 import { availableRoutes } from '@store/router';
 
 export const ROUTES_BY_PATH = {
-  '/': lazy(() => import('@domains/@Main')),
-  '/hi': lazy(() => import('@domains/@Hi')),
-  '/login': lazy(() => import('@domains/@Login')),
-  '/p/:projectId': lazy(() => import('@domains/@PublicProject')),
-  '/start/:identifier': lazy(() => import('@domains/@Start')),
+  '/': lazy(() => import('@domains/##')),
+  '/hi': lazy(() => import('@domains/#hi')),
+  '/login': lazy(() => import('@domains/#login')),
+  '/p/:projectId': lazy(() => import('@domains/#p/#:projectId')),
+  '/start/:identifier': lazy(() => import('@domains/#start/#:identifier')),
 };
 
 const App: React.FC = memo(() => {

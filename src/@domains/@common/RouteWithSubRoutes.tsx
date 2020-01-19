@@ -4,7 +4,7 @@ import { Redirect, Route, RouteComponentProps } from 'react-router';
 
 import { IRoute } from '@types';
 
-import NotFound from '@domains/NotFound';
+import NotFound from '@domains/@common/NotFoundPage';
 
 export const RouteWithSubRoutes = memo(
   ({ component: RouteComponent, exact, path, redirect, routes, location }: IRoute & { location?: any }) => {
