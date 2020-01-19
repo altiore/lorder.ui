@@ -60,3 +60,16 @@ export const uploadAvatar = requestActions('USER/UPLOAD_AVATAR', file => ({
     data: { file },
   },
 }));
+
+export const updateProfile = requestActions('ME/UPDATE', (newUserData: { displayName: string; tel: string }) => ({
+  request: {
+    data: newUserData,
+    method: 'patch',
+    url: `/me`,
+  },
+  form: 'ProfileForm',
+  success: {
+    message: 'Данные успешна обновлены',
+    title: 'Успех!',
+  },
+}));

@@ -1,8 +1,9 @@
 import get from 'lodash/get';
+import pick from 'lodash/pick';
 import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { getAuthActivate, logInPatch, setIsLoading } from './actions';
+import { getAuthActivate, logInPatch, setIsLoading, updateProfile } from './actions';
 import { Identity, IIdentityState } from './Identity';
 
 const getAuthActivateHandler = (state: IIdentityState) => {
@@ -54,7 +55,29 @@ const logOutHandler = (state: IIdentityState): IIdentityState => {
   });
 };
 
-export const identity = handleActions<IIdentityState, any, any>(
+const updateProfileHandler = (state: IIdentityState) => {
+  return new Identity({
+    ...state,
+    isLoading: true,
+  });
+};
+
+const updateProfileSuccess = (state: IIdentityState, { payload }) => {
+  return new Identity({
+    ...state,
+    isLoading: false,
+    ...pick(payload.data, ['displayName', 'tel']),
+  });
+};
+
+const updateProfileFail = (state: IIdentityState, { payload }) => {
+  return new Identity({
+    ...state,
+    isLoading: false,
+  });
+};
+
+export const identity = handleActions<IIdentityState>(
   {
     [getAuthActivate.toString()]: getAuthActivateHandler,
     [getAuthActivate.success]: getAuthActivateSuccessHandler,
@@ -62,6 +85,10 @@ export const identity = handleActions<IIdentityState, any, any>(
     [logInPatch.toString()]: handleLogIn,
     [logInPatch.success]: logInPatchSuccessHandler,
     [logInPatch.fail]: logInPatchFailHandler,
+
+    [updateProfile.toString()]: updateProfileHandler,
+    [updateProfile.success]: updateProfileSuccess,
+    [updateProfile.fail]: updateProfileFail,
 
     [setIsLoading.toString()]: setIsLoadingHandler,
 

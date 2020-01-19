@@ -55,3 +55,11 @@ export const hasRole = createSelector(
     return false;
   }
 );
+
+export const initialProfileFormData = createSelector(
+  [baseState],
+  state => ({
+    tel: state.tel,
+    displayName: state.displayName,
+  })
+);

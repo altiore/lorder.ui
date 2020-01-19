@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ProfileForm from './ProfileForm';
 
 import { ROLE } from '@types';
 
@@ -38,6 +39,7 @@ export const Profile: React.FC<IProfile> = ({ userAvatar, userEmail, userRole })
                   </ListItemAvatar>
                   <ListItemText primary={userEmail} />
                 </ListItem>
+                <ProfileForm />
                 <ListItem button>
                   <ListItemText inset primary={userRole} />
                 </ListItem>

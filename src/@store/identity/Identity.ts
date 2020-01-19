@@ -11,6 +11,8 @@ export interface IIdentityState {
   role?: ROLE;
   bearerKey?: string;
   defaultProjectId?: number;
+  displayName?: string;
+  tel?: string;
 }
 
 export class Identity implements IIdentityState {
