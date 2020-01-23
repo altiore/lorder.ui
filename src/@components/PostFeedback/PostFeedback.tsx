@@ -10,7 +10,7 @@ import { Field, InjectedFormProps } from 'redux-form';
 import { email, length, required } from 'redux-form-validators';
 
 import { TextField } from '@components/TextField';
-import { TextAreaMarkdown } from '@domains/@common/TaskForm/TextAreaMarkdown';
+import { TextAreaMarkdown } from '#/@common/TaskForm/TextAreaMarkdown';
 
 export interface IPostFeedbackData {
   email: string;

@@ -5,6 +5,7 @@ export * from './IMeta';
 export * from './IOther';
 export * from './INotification';
 export * from './IProjectMember';
+export * from './IPublicProject';
 export * from './ISockets';
 export * from './IState';
 export * from './IStatistics';

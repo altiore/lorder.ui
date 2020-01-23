@@ -8,13 +8,13 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import get from 'lodash/get';
 
+import App from '#';
+import Dialog from '#/@common/Dialog';
+import Notification from '#/@common/Notification';
+import { createStore } from '#/@store/createStore';
 import Boundary from '@components/Boundary';
-import Dialog from '@domains/@common/Dialog';
-import Notification from '@domains/@common/Notification';
-import { createStore } from '@store/createStore';
-import lightTheme from '@styles/themes/light';
 import '@styles/base.css';
-import App from './App';
+import lightTheme from '@styles/themes/light';
 import * as serviceWorker from './serviceWorker';
 
 createStore().then(({ store, persistor, history }) => {
@@ -36,16 +36,10 @@ createStore().then(({ store, persistor, history }) => {
     document.getElementById('root') as HTMLElement
   );
 
-  // If you want your app to work offline and load faster, you can change
-  // unregister() to register() below. Note this comes with some pitfalls.
   // Learn more about service workers: https://bit.ly/CRA-PWA
   serviceWorker.register({
     store,
-    onSuccess: async registration => {
-      console.log('ON SUCCESS', {
-        registration,
-      });
-    },
+    // onSuccess: async registration => {},
     onUpdate: async registration => {
       const waitingServiceWorker = registration.waiting;
 
