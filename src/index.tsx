@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Sentry from '@sentry/browser';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -16,6 +17,13 @@ import Boundary from '@components/Boundary';
 import '@styles/base.css';
 import lightTheme from '@styles/themes/light';
 import * as serviceWorker from './serviceWorker';
+
+if (process.env.REACT_APP_SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_DSN,
+    environment: process.env.NODE_ENV,
+  });
+}
 
 createStore().then(({ store, persistor, history }) => {
   ReactDOM.render(
