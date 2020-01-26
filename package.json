@@ -134,11 +134,12 @@
     "prettier-lint": "prettier --write \"src/**/*.{ts,tsx}\" --print-width 120 --single-quote --parser typescript --trailing-comma es5",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "release": "release-it --ci"
+    "release": "release-it"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && CI=\"true\" npm run test"
+      "pre-commit": "lint-staged && CI=\"true\" npm run test",
+      "post-commit": "npm run release"
     }
   },
   "lint-staged": {
@@ -149,8 +150,7 @@
     "*.{ts,tsx}": [
       "tslint --fix -t verbose",
       "prettier --write --print-width 120 --single-quote --parser typescript --trailing-comma es5",
-      "git add",
-      "release-it --ci"
+      "git add"
     ]
   },
   "eslintConfig": {
