@@ -1,4 +1,4 @@
-import React, { lazy, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
@@ -22,17 +22,15 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
 import cn from 'classnames';
-import { match, RouteComponentProps, Switch } from 'react-router';
+import { match, RouteComponentProps } from 'react-router';
 
 import { IRoute, ROLE } from '@types';
 import { LinkButton } from '#/@common/LinkButton';
-import NestedRoute from '#/@common/#NestedRoute';
 import { Project } from '#/@store/projects';
 import { useStyles } from './styles';
 
 export interface ILayoutLeftDrawerProps {
   children?: React.ReactNode;
-  redirect?: React.ReactNode;
   classes: any;
   goTo: any;
   isLeftBarOpen: boolean;
@@ -44,16 +42,6 @@ export interface ILayoutLeftDrawerProps {
   theme: Theme;
   userRole: ROLE;
 }
-
-// TODO: move to correct place in route paths
-export const ROUTES_BY_PATH = {
-  '/projects/:projectId/board': lazy(() => import('#/#/#projects/#:projectId/DragAndDrop')),
-  '/projects/:projectId/members': lazy(() => import('#/#/#projects/#:projectId/ProjectMembers')),
-  '/projects/:projectId/settings': lazy(() => import('#/#/#projects/#:projectId/Settings')),
-  '/projects/:projectId/task-types': lazy(() => import('#/#/#projects/#:projectId/ProjectTaskTypes')),
-  '/projects/:projectId/tasks/:sequenceNumber': lazy(() => import('#/#/#projects/#:projectId/#tasks/#:sequenceNumber')),
-  '/projects/:projectId/tasks': lazy(() => import('#/#/#projects/#:projectId/ProjectTasks')),
-};
 
 export const ICONS_MAP = {
   ballot: BallotIcon,
@@ -69,7 +57,6 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
   isLeftBarOpen,
   isWidthSm,
   match,
-  redirect,
   routes,
   openedProject,
   theme,
@@ -187,13 +174,6 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
         })}
       >
         {children}
-        <Switch>
-          {redirect}
-          {routes &&
-            routes.map((route: IRoute) => (
-              <NestedRoute component={ROUTES_BY_PATH[route.path]} key={route.path} {...route} />
-            ))}
-        </Switch>
       </section>
     </>
   );

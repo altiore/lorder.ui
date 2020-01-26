@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Redirect } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
+import { Switch } from 'react-router';
 
 import { IRoute } from '@types';
 import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
 import { Project } from '#/@store/projects';
+
+import NestedRoute from '#/@common/#NestedRoute';
+
+export const ROUTES_BY_PATH = {
+  '/projects/:projectId/board': lazy(() => import('./#board')),
+  '/projects/:projectId/members': lazy(() => import('./#members')),
+  '/projects/:projectId/settings': lazy(() => import('./#settings')),
+  '/projects/:projectId/task-types': lazy(() => import('./#task-types')),
+  '/projects/:projectId/tasks/:sequenceNumber': lazy(() => import('./#tasks/#:sequenceNumber')),
+  '/projects/:projectId/tasks': lazy(() => import('./#tasks')),
+};
 
 export interface IProjectProps {
   fetchProjectDetails: any;
@@ -43,10 +55,15 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
     );
 
     return (
-      <LayoutLeftDrawer
-        routes={availableRoutes}
-        redirect={<Redirect from="/projects/:projectId" to="/projects/:projectId/board" exact />}
-      />
+      <LayoutLeftDrawer routes={availableRoutes}>
+        <Switch>
+          <Redirect from="/projects/:projectId" to="/projects/:projectId/board" exact />
+          {routes &&
+            routes.map((route: IRoute) => (
+              <NestedRoute component={ROUTES_BY_PATH[route.path]} key={route.path} {...route} />
+            ))}
+        </Switch>
+      </LayoutLeftDrawer>
     );
   }
 }
