@@ -12,6 +12,7 @@ import { rootSaga } from './rootSaga';
 
 import { clientsMiddleware } from './@common/middlewares';
 import { createRootReducer } from './createRootReducer';
+import { initExternalLibraries } from './externalLibraries/thunk';
 
 const composeEnhancers =
   process.env.NODE_ENV === 'development' &&
@@ -24,7 +25,6 @@ const composeEnhancers =
 
 export const history = createBrowserHistory();
 export let store;
-export let persistor;
 
 export async function createStore(initialState?: any) {
   // Create a history of your choosing (we're using a browser history in this case)
@@ -45,19 +45,22 @@ export async function createStore(initialState?: any) {
     });
   }
 
-  persistor = persistStore(store, undefined, async () => {
+  store.persistor = persistStore(store, undefined, async () => {
+    await store.dispatch(initExternalLibraries() as any);
     await store.dispatch(initSockets() as any);
     await store.dispatch(loadInitialData() as any);
   });
 
-  return { store, history, persistor };
+  return { store, history };
 }
 
 export function injectAsyncReducers(asyncReducers) {
   store.asyncReducers = { ...store.asyncReducers, ...asyncReducers };
   return createRootReducer(history, store.asyncReducers).then(newReducer => {
     store.replaceReducer(newReducer);
-    persistor = persistStore(store);
+    if (store.persistor) {
+      store.persistor.persist();
+    }
   });
 }
 

@@ -12,13 +12,14 @@ import { Task, UserWork } from '#/@store/tasks';
 import { Timer } from '#/@store/timer';
 import { IUiState } from '#/@store/ui';
 import { VersionHistory } from '#/@store/versionHistory';
-import { IOther, IPublicProject, ISockets, ITaskActive } from '@types';
+import { IExternalLibraries, IOther, IPublicProject, ISockets, ITaskActive } from '@types';
 import { IRouteState } from './IRouteState';
 import { ITasksFilter } from './ITasksFilter';
 import { IUser } from './IUser';
 
 export interface IState {
   dialog: IDialogState;
+  externalLibraries: IExternalLibraries;
   feedback: DownloadList<Feedback>;
   form: FormStateMap;
   highcharts: any;

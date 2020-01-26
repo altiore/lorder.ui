@@ -1,6 +1,9 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
+  appBarRoot: {
+    zIndex: 999,
+  },
   buttonBlock: {
     display: 'flex',
     transition: theme.transitions.create('width', {

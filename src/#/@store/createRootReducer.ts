@@ -22,6 +22,7 @@ import { Task, UserWork } from './tasks';
 import { uiReducer } from './ui';
 import { versionHistory } from './versionHistory';
 
+import { externalLibraries } from './externalLibraries/reducer';
 import { feedback } from './feedback/reducer';
 import { other } from './other/reducer';
 import { project } from './project';
@@ -50,6 +51,7 @@ const VARIANT_ENTITY: any = {
 const persistConfig: PersistConfig = {
   blacklist: [
     'dialog',
+    'externalLibraries',
     'form',
     'highcharts',
     'router',
@@ -89,6 +91,7 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
     combineReducers<Partial<IState>>({
       /** common reducers */
       dialog,
+      externalLibraries,
       form,
       highcharts,
       identity,

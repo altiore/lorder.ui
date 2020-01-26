@@ -72,10 +72,6 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
     location,
   ]);
 
-  const methodTrowAnError = () => {
-    throw new Error('test 1 error');
-  };
-
   return (
     <div className={classes.root}>
       <Header />
@@ -99,7 +95,6 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
             })}
           </Switch>
         )}
-        <button onClick={methodTrowAnError}>Break the world</button>
       </main>
     </div>
   );

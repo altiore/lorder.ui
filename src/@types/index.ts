@@ -1,4 +1,5 @@
 export * from './IEvent';
+export * from './IExternalLibraries';
 export * from './IRoute';
 export * from './IListDto';
 export * from './IMeta';
