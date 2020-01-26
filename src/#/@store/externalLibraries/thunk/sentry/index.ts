@@ -21,6 +21,7 @@ export default function() {
       debug: process.env.NODE_ENV === 'development' && process.env.REACT_APP_SENTRY_DEBUG === 'true',
       dsn: process.env.REACT_APP_SENTRY_DSN,
       environment: getEnv(),
+      release: 'altiore.ui@' + process.env.npm_package_version,
       beforeSend(event, hint) {
         if (event.exception) {
           Sentry.showReportDialog({
