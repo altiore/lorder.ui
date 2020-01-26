@@ -127,9 +127,9 @@
   "scripts": {
     "analyze": "source-map-explorer build/static/js/vendors.*",
     "postinstall": "npm run build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "REACT_APP_VERSION=$npm_package_version react-scripts start",
+    "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
+    "test": "REACT_APP_VERSION=$npm_package_version react-scripts test",
     "tslint-lint": "tslint -t verbose \"src/**/*.{ts,tsx}\" --fix",
     "prettier-lint": "prettier --write \"src/**/*.{ts,tsx}\" --print-width 120 --single-quote --parser typescript --trailing-comma es5",
     "storybook": "start-storybook -p 6006",

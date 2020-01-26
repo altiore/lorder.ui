@@ -15,13 +15,12 @@ function getEnv() {
 
 export default function() {
   if (process.env.REACT_APP_SENTRY_DSN) {
-    console.log('init sentry');
     // @see https://docs.sentry.io/
     Sentry.init({
       debug: process.env.NODE_ENV === 'development' && process.env.REACT_APP_SENTRY_DEBUG === 'true',
       dsn: process.env.REACT_APP_SENTRY_DSN,
       environment: getEnv(),
-      release: 'altiore.ui@' + process.env.npm_package_version,
+      release: 'altiore.ui@' + process.env.REACT_APP_VERSION,
       beforeSend(event, hint) {
         if (event.exception) {
           Sentry.showReportDialog({
