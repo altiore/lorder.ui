@@ -48,9 +48,11 @@ const Screen5: React.FC<Screen5I> = ({ isPublicAltioreLoaded, isPublicAltioreLoa
           </Typography>
         </SubTitle>
         <BlockContent>
-          {isPublicAltioreLoading || true ? (
-            <CircularProgress size={100} color="secondary" />
-          ) : (
+          {isPublicAltioreLoading ? (
+            <div className={classes.loader}>
+              <CircularProgress size={100} color="secondary" />
+            </div>
+          ) : isPublicAltioreLoaded ? (
             <Grid className={classes.personsBlock} container justify="space-evenly" spacing={10}>
               {team.map(({ avatar, email }) => (
                 <Grid item key={email}>
@@ -58,6 +60,8 @@ const Screen5: React.FC<Screen5I> = ({ isPublicAltioreLoaded, isPublicAltioreLoa
                 </Grid>
               ))}
             </Grid>
+          ) : (
+            <div className={classes.loader}>- - - - - - - - - - - - - - - - - -</div>
           )}
         </BlockContent>
       </Block>
