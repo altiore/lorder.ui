@@ -12,6 +12,7 @@ import NestedRoute from '#/@common/#NestedRoute';
 export const ROUTES_BY_PATH = {
   '/projects/:projectId/board': lazy(() => import('./#board')),
   '/projects/:projectId/members': lazy(() => import('./#members')),
+  '/projects/:projectId/roles': lazy(() => import('./#roles')),
   '/projects/:projectId/settings': lazy(() => import('./#settings')),
   '/projects/:projectId/task-types': lazy(() => import('./#task-types')),
   '/projects/:projectId/tasks/:sequenceNumber': lazy(() => import('./#tasks/#:sequenceNumber')),

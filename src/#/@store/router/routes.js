@@ -38,11 +38,18 @@ export const routes = [
         title: 'Мои Проекты',
       },
       {
-        access: [ROLES.USERS],
+        access: [ROLES.SUPER_ADMINS],
         exact: true,
         icon: 'assignments',
         path: '/all-projects',
         title: 'Все Проекты',
+      },
+      {
+        access: [ROLES.SUPER_ADMINS],
+        exact: true,
+        icon: 'assignments',
+        path: '/roles',
+        title: 'Роли в проекте',
       },
       {
         access: [ROLES.USERS],
@@ -68,6 +75,13 @@ export const routes = [
             icon: 'ballot',
             path: '/projects/:projectId/task-types',
             title: 'Типы Задач',
+          },
+          {
+            access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+            exact: true,
+            icon: 'people',
+            path: '/projects/:projectId/roles',
+            title: 'Роли проекта',
           },
           {
             access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],

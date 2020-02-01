@@ -14,6 +14,7 @@ import { info } from './info/reducer';
 import { Project } from './projects';
 import { publicAltiore } from './publicAltiore/reducer';
 import { publicProject } from './publicProject';
+import { roles } from './roles/reducer';
 import { routerReducer } from './router/reducer';
 import { socketsReducer } from './sockets/reducer';
 import { statistics } from './statistics/reducer';
@@ -22,6 +23,7 @@ import { Task, UserWork } from './tasks';
 import { uiReducer } from './ui';
 import { versionHistory } from './versionHistory';
 
+import { asyncReducersReducer } from './asyncReducers/reducer';
 import { externalLibraries } from './externalLibraries/reducer';
 import { feedback } from './feedback/reducer';
 import { other } from './other/reducer';
@@ -33,6 +35,7 @@ import { tasks } from './tasks/reducer';
 import { tasksFilter } from './tasksFilter/reducer';
 import { timer } from './timer';
 import { userWorks } from './user-works';
+import { UserRole } from './roles/UserRole';
 
 localForage.config({
   description: 'Altiore contribution version 1.0',
@@ -43,6 +46,7 @@ localForage.config({
 
 const VARIANT_ENTITY: any = {
   projects: Project,
+  roles: UserRole,
   taskTypes: TaskType,
   tasks: Task,
   userWorks: UserWork,
@@ -50,6 +54,7 @@ const VARIANT_ENTITY: any = {
 
 const persistConfig: PersistConfig = {
   blacklist: [
+    'asyncReducers',
     'dialog',
     'externalLibraries',
     'form',
@@ -79,7 +84,7 @@ const persistConfig: PersistConfig = {
         return new DownloadList(entity, outboundState);
       },
       // define which reducers this transform gets called for.
-      { whitelist: ['projects', 'taskTypes', 'tasks', 'userWorks', 'users'] }
+      { whitelist: ['projects', 'roles', 'taskTypes', 'tasks', 'userWorks', 'users'] }
     ),
   ],
 };
@@ -90,6 +95,7 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
     persistConfig,
     combineReducers<Partial<IState>>({
       /** common reducers */
+      asyncReducers: asyncReducersReducer,
       dialog,
       externalLibraries,
       form,
@@ -99,6 +105,7 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
       notifications,
       publicAltiore,
       publicProject,
+      roles,
       router: routerReducer(history),
       sockets: socketsReducer,
       statistics,

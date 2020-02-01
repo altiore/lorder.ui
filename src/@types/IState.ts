@@ -12,12 +12,22 @@ import { Task, UserWork } from '#/@store/tasks';
 import { Timer } from '#/@store/timer';
 import { IUiState } from '#/@store/ui';
 import { VersionHistory } from '#/@store/versionHistory';
-import { IExternalLibraries, IOther, IPublicProject, ISockets, ITaskActive } from '@types';
+import {
+  IDownloadList,
+  IExternalLibraries,
+  IOther,
+  IPublicProject,
+  ISelectedProject,
+  ISockets,
+  ITaskActive,
+  IUserRole,
+} from '@types';
 import { IRouteState } from './IRouteState';
 import { ITasksFilter } from './ITasksFilter';
 import { IUser } from './IUser';
 
 export interface IState {
+  asyncReducers: { list: string[] };
   dialog: IDialogState;
   externalLibraries: IExternalLibraries;
   feedback: DownloadList<Feedback>;
@@ -27,10 +37,11 @@ export interface IState {
   info: IInfo;
   notifications: any;
   other: IOther;
-  project: { selected?: number };
+  project: ISelectedProject;
   projects: DownloadList<Project>;
   publicAltiore: IPublicProject;
   publicProject: IPublicProject;
+  roles: IDownloadList<IUserRole>;
   sockets: ISockets;
   statistics: Statistics;
   taskActive: ITaskActive;

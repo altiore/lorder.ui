@@ -1,6 +1,7 @@
 export * from './IEvent';
 export * from './IExternalLibraries';
 export * from './IRoute';
+export * from './ISelectedProject';
 export * from './IListDto';
 export * from './IMeta';
 export * from './IOther';

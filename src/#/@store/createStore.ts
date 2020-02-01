@@ -4,8 +4,10 @@ import { applyMiddleware, compose, createStore as createReduxStore } from 'redux
 import { persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import thunk from 'redux-thunk';
+import omit from 'lodash/omit';
 
 import { ROLE } from '@types';
+import { replaceReducers } from '#/@store/asyncReducers';
 import { loadInitialData } from '#/@store/identity';
 import { initSockets } from '#/@store/sockets';
 import { rootSaga } from './rootSaga';
@@ -41,11 +43,12 @@ export async function createStore(initialState?: any) {
 
   if (module.hot) {
     module.hot.accept('./createRootReducer', () => {
-      createRootReducer(history).then((newReducer: any) => store.replaceReducer(newReducer(history)));
+      createRootReducer(history).then((newReducer: any) => store.replaceReducer(newReducer));
     });
   }
 
   store.persistor = persistStore(store, undefined, async () => {
+    store.dispatch(replaceReducers(Object.getOwnPropertyNames(rootReducer)));
     await store.dispatch(initExternalLibraries() as any);
     await store.dispatch(initSockets() as any);
     await store.dispatch(loadInitialData() as any);
@@ -58,16 +61,20 @@ export function injectAsyncReducers(asyncReducers) {
   store.asyncReducers = { ...store.asyncReducers, ...asyncReducers };
   return createRootReducer(history, store.asyncReducers).then(newReducer => {
     store.replaceReducer(newReducer);
+    store.dispatch(replaceReducers(store.asyncReducers));
     if (store.persistor) {
       store.persistor.persist();
     }
   });
 }
 
-// export function removeAsyncReducers(asyncReducers) {
-//   store.asyncReducers = omit(store.asyncReducers, Object.keys(asyncReducers));
-//   return createRootReducer(history, store.asyncReducers).then(newReducer => {
-//     store.replaceReducer(newReducer);
-//     persistor = persistStore(store);
-//   });
-// }
+export function removeAsyncReducers(asyncReducers) {
+  store.asyncReducers = omit(store.asyncReducers, Object.keys(asyncReducers));
+  return createRootReducer(history, store.asyncReducers).then(newReducer => {
+    store.replaceReducer(newReducer);
+    store.dispatch(replaceReducers(store.asyncReducers));
+    if (store.persistor) {
+      store.persistor.persist();
+    }
+  });
+}

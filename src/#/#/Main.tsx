@@ -18,6 +18,7 @@ export const ROUTES_BY_PATH = {
   '/feedback': lazy(() => import('./#feedback')),
   '/other': lazy(() => import('./#other')),
   '/projects': lazy(() => import('./#projects')),
+  '/roles': lazy(() => import('./#roles')),
   '/projects/:projectId': lazy(() => import('./#projects/#:projectId')),
   '/task-types': lazy(() => import('./#task-types')),
   '/users': lazy(() => import('./#users')),

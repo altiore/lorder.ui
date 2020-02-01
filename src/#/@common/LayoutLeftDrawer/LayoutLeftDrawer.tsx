@@ -143,6 +143,12 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
                 </ListItemIcon>
                 <ListItemText primary={'Пользователи'} />
               </ListItem>
+              <ListItem button onClick={goToPage('/roles')}>
+                <ListItemIcon>
+                  <FormatSizeIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Роли пользователей'} />
+              </ListItem>
               <ListItem button onClick={goToPage('/task-types')}>
                 <ListItemIcon>
                   <FormatSizeIcon />

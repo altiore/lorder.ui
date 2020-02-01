@@ -4,12 +4,12 @@ import { Redirect, Route, RouteComponentProps } from 'react-router';
 
 import { IRoute } from '@types';
 
-import { injectAsyncReducers /*, removeAsyncReducers*/ } from '#/@store/createStore';
+import { injectAsyncReducers, removeAsyncReducers } from '#/@store/createStore';
 import NotFound from '#/@common/NotFoundPage';
 import LoadingPage from '@components/LoadingPage';
 
 interface INestedRoute {
-  isReducerExists?: (r: any) => boolean;
+  asyncReducersList?: string[];
   location?: any;
   getReducers?: Promise<any>;
 }
@@ -17,7 +17,7 @@ interface INestedRoute {
 export const NestedRoute = memo(
   ({
     component: RouteComponent,
-    isReducerExists,
+    asyncReducersList,
     exact,
     path,
     redirect,
@@ -30,7 +30,7 @@ export const NestedRoute = memo(
     useEffect(() => {
       if (getReducers) {
         getReducers.then(reducers => {
-          if (isReducerExists && !isReducerExists(Object.keys(reducers)[0])) {
+          if (asyncReducersList && !asyncReducersList[Object.keys(reducers)[0]]) {
             injectAsyncReducers(reducers);
           }
           setIsRouteLoaded(true);
@@ -38,16 +38,16 @@ export const NestedRoute = memo(
       } else {
         setIsRouteLoaded(true);
       }
-      // return () => {
-      //   if (getReducers) {
-      //     getReducers.then(reducers => {
-      //       if (isReducerExists && isReducerExists(Object.keys(reducers)[0])) {
-      //         removeAsyncReducers(reducers);
-      //       }
-      //     });
-      //   }
-      // };
-    }, [isReducerExists, getReducers]);
+      return () => {
+        if (getReducers) {
+          getReducers.then(reducers => {
+            if (asyncReducersList && asyncReducersList[Object.keys(reducers)[0]]) {
+              removeAsyncReducers(reducers);
+            }
+          });
+        }
+      };
+    }, [asyncReducersList, getReducers]);
 
     const renderRoute = useCallback(
       (props: RouteComponentProps<any>) => {
