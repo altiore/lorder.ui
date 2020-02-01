@@ -24,10 +24,13 @@ export const deleteRole = requestActions('ROLES/DELETE', (roleId: number) => ({
   roleId,
 }));
 
-export const deleteManyRoles = requestActions('ROLES/DELETE', (roleIds: number[]) => ({
+export const deleteManyRoles = requestActions('ROLES/DELETE_MANY', (roleIds: number[]) => ({
   request: {
     method: 'DELETE',
     url: '/roles/bulk',
+    data: {
+      ids: roleIds,
+    },
   },
   roleIds,
 }));

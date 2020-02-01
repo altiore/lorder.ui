@@ -238,6 +238,7 @@ export const CrudJsx: React.FC<ICrudProps> = ({
         />
         <TableContainer>
           <Table
+            stickyHeader
             className={classes.table}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}

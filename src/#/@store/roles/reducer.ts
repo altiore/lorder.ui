@@ -52,9 +52,9 @@ const deleteRoleFailHandler = s => {
 const deleteManyRolesHandler = (s, { payload }) => {
   let res = s;
   payload.roleIds.forEach(roleId => {
-    const index = s.list.findIndex(el => el.id === roleId);
+    const index = res.list.findIndex(el => el.id === roleId);
     if (index !== -1) {
-      res = s.removeItem(index);
+      res = res.removeItem(index);
     }
   });
   return res;
