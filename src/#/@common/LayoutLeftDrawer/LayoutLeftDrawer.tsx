@@ -21,6 +21,7 @@ import LaptopIcon from '@material-ui/icons/Laptop';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import cn from 'classnames';
 import { match, RouteComponentProps } from 'react-router';
 
@@ -145,7 +146,7 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
               </ListItem>
               <ListItem button onClick={goToPage('/roles')}>
                 <ListItemIcon>
-                  <FormatSizeIcon />
+                  <SupervisorAccountIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Роли пользователей'} />
               </ListItem>

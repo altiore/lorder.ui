@@ -3,6 +3,7 @@ import { TextField } from '@components/TextField';
 import React from 'react';
 import { Field, InjectedFormProps } from 'redux-form';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 // import { email, required } from 'redux-form-validators';
 
 export interface ICreateFormProps {
@@ -31,6 +32,9 @@ export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, IC
 
   return (
     <form onSubmit={handleSubmit} className={classes.root}>
+      <Typography color="inherit" variant="subtitle1">
+        Создать
+      </Typography>
       {rows.map(({ name, path, isNumber }) => (
         <Field
           key={name || path}

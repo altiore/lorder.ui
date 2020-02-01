@@ -7,6 +7,7 @@ interface IOwnProps {
   entityName: string;
   createItem?: any;
   deleteItem?: (id: number) => void;
+  deleteBulk?: (ids: Array<number | string>) => any;
   items: any[];
   rows: Array<{ title: string; path: any; name?: string; isNumber?: boolean }>;
   getId?: (item: any) => number | string;

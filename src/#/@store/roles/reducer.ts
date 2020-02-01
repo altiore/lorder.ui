@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions';
 import get from 'lodash/get';
 
 import { IDownloadList, IMeta, IUserRole } from '@types';
-import { createRole, deleteRole, fetchRoles } from './actions';
+import { createRole, deleteManyRoles, deleteRole, fetchRoles } from './actions';
 import { DownloadList } from '../@common/entities';
 import { UserRole } from './UserRole';
 
@@ -34,7 +34,6 @@ const createRoleFailHandler = s => {
 };
 
 const deleteRoleHandler = (s, { payload }) => {
-  console.log('deleteRoleHandler', payload);
   const index = s.list.findIndex(el => el.id === payload.roleId);
   if (index !== -1) {
     return s.removeItem(index);
@@ -47,6 +46,25 @@ const deleteRoleSuccessHandler = (s, { payload }) => {
 };
 
 const deleteRoleFailHandler = s => {
+  return s.stopLoading();
+};
+
+const deleteManyRolesHandler = (s, { payload }) => {
+  let res = s;
+  payload.roleIds.forEach(roleId => {
+    const index = s.list.findIndex(el => el.id === roleId);
+    if (index !== -1) {
+      res = s.removeItem(index);
+    }
+  });
+  return res;
+};
+
+const deleteManyRolesSuccessHandler = (s, { payload }) => {
+  return s.stopLoading();
+};
+
+const deleteManyRolesFailHandler = s => {
   return s.stopLoading();
 };
 
@@ -63,6 +81,10 @@ export const roles = handleActions<S, any, M>(
     [deleteRole.toString()]: deleteRoleHandler,
     [deleteRole.success]: deleteRoleSuccessHandler,
     [deleteRole.fail]: deleteRoleFailHandler,
+
+    [deleteManyRoles.toString()]: deleteManyRolesHandler,
+    [deleteManyRoles.success]: deleteManyRolesSuccessHandler,
+    [deleteManyRoles.fail]: deleteManyRolesFailHandler,
   },
   new DownloadList(UserRole)
 );

@@ -9,11 +9,12 @@ import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
 export interface IRolesProps extends RouteComponentProps {
   createRole: any;
   deleteRole: any;
+  deleteManyRoles: any;
   fetchRoles: any;
   rolesList: any[];
 }
 
-export const Roles: React.FC<IRolesProps> = ({ createRole, deleteRole, fetchRoles, rolesList }) => {
+export const Roles: React.FC<IRolesProps> = ({ createRole, deleteRole, deleteManyRoles, fetchRoles, rolesList }) => {
   useEffect(() => {
     fetchRoles();
   }, [fetchRoles]);
@@ -22,9 +23,10 @@ export const Roles: React.FC<IRolesProps> = ({ createRole, deleteRole, fetchRole
     <LayoutLeftDrawer>
       <Page>
         <Crud
-          entityName="UserRoles"
+          entityName="Роль"
           createItem={createRole}
           deleteItem={deleteRole}
+          deleteBulk={deleteManyRoles}
           items={rolesList}
           rows={[{ title: 'Id', path: 'id', isNumber: true }, { title: 'Name', path: 'name' }]}
         />

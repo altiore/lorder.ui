@@ -4,6 +4,7 @@ export const useStyles = makeStyles(theme => ({
   actions: {
     backgroundColor: '#ffffff',
     justifyContent: 'center',
+    paddingBottom: theme.spacing(2),
   },
   buttons: {
     alignItems: 'center',
@@ -21,7 +22,7 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexFlow: 'column nowrap',
     justifyContent: 'center',
-    padding: theme.spacing(0, 4),
+    padding: theme.spacing(0, 8, 2),
   },
   dialogTitle: {
     alignItems: 'flex-end',
