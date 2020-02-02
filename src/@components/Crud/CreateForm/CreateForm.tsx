@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 export interface ICreateFormProps {
   buttonText?: string;
-  rows: Array<{ name?: string; title: string; path: any; isNumber?: boolean }>;
+  columns: Array<{ name?: string; title: string; path: any; isNumber?: boolean }>;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -26,7 +26,7 @@ export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, IC
   pristine,
   submitting,
   invalid,
-  rows,
+  columns,
 }) => {
   const classes = useStyles();
 
@@ -35,7 +35,7 @@ export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, IC
       <Typography color="inherit" variant="subtitle1">
         Создать
       </Typography>
-      {rows.map(({ name, path, isNumber }) => (
+      {columns.map(({ name, path, isNumber }) => (
         <Field
           key={name || path}
           name={name || path}
