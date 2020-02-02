@@ -98,8 +98,8 @@ export interface ICrudProps {
   deleteBulk?: (ids: Array<number | string>) => any;
   openDialog: any;
   closeDialog: any;
-  items: any[];
-  rows: Array<{ title: string; path: any; name?: string; isNumber?: boolean; disablePadding?: boolean }>;
+  rows: any[];
+  columns: Array<{ title: string; path: any; name?: string; isNumber?: boolean; disablePadding?: boolean }>;
   getId?: (item) => number | string;
 }
 
@@ -112,9 +112,9 @@ export const CrudJsx: React.FC<ICrudProps> = ({
   deleteBulk,
   entityName,
   getId = defGetId,
-  items,
-  openDialog,
   rows,
+  openDialog,
+  columns,
 }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
@@ -132,7 +132,7 @@ export const CrudJsx: React.FC<ICrudProps> = ({
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = items.map(getId);
+      const newSelecteds = rows.map(getId);
       setSelected(newSelecteds);
       return;
     }
@@ -171,7 +171,7 @@ export const CrudJsx: React.FC<ICrudProps> = ({
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, items.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   const labelDisplayedRows = useCallback(({ from, to, count }: any) => {
     return ''
@@ -222,10 +222,15 @@ export const CrudJsx: React.FC<ICrudProps> = ({
 
   const handleOpenCreate = useCallback(() => {
     openDialog(
-      <CreateForm form={`create${entityName}Form`} onSubmit={createItem} rows={rows} onSubmitSuccess={closeDialog} />,
+      <CreateForm
+        form={`create${entityName}Form`}
+        onSubmit={createItem}
+        columns={columns}
+        onSubmitSuccess={closeDialog}
+      />,
       { maxWidth: 'lg' }
     );
-  }, [closeDialog, createItem, entityName, rows, openDialog]);
+  }, [closeDialog, createItem, entityName, columns, openDialog]);
 
   return (
     <div className={classes.root}>
@@ -251,11 +256,11 @@ export const CrudJsx: React.FC<ICrudProps> = ({
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={items.length}
-              rows={rows}
+              rowCount={rows.length}
+              columns={columns}
             />
             <TableBody>
-              {stableSort(items, getSorting(order, orderBy))
+              {stableSort(rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((item, index) => {
                   const elId = getId(item);
@@ -281,7 +286,7 @@ export const CrudJsx: React.FC<ICrudProps> = ({
                           color="primary"
                         />
                       </TableCell>
-                      {rows.map(({ path, name, isNumber }) => (
+                      {columns.map(({ path, name, isNumber }) => (
                         <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
                           {get(item, path)}
                         </TableCell>
@@ -296,7 +301,7 @@ export const CrudJsx: React.FC<ICrudProps> = ({
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={rows.length + 2} />
+                  <TableCell colSpan={columns.length + 2} />
                 </TableRow>
               )}
             </TableBody>
@@ -305,7 +310,7 @@ export const CrudJsx: React.FC<ICrudProps> = ({
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={items.length}
+          count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

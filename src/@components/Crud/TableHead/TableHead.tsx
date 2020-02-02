@@ -31,7 +31,7 @@ interface EnhancedTableProps {
   order: Order;
   orderBy: string;
   rowCount: number;
-  rows: Array<{ title: string; path: any; name?: string; isNumber?: boolean; disablePadding?: boolean }>;
+  columns: Array<{ title: string; path: any; name?: string; isNumber?: boolean; disablePadding?: boolean }>;
 }
 
 export const EnhancedTableHead: React.FC<EnhancedTableProps> = ({
@@ -42,7 +42,7 @@ export const EnhancedTableHead: React.FC<EnhancedTableProps> = ({
   numSelected,
   rowCount,
   onRequestSort,
-  rows,
+  columns,
 }) => {
   const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
@@ -59,7 +59,7 @@ export const EnhancedTableHead: React.FC<EnhancedTableProps> = ({
             inputProps={{ 'aria-label': 'select all desserts' }}
           />
         </TableCell>
-        {rows.map(headCell => {
+        {columns.map(headCell => {
           const elId = headCell.name || headCell.path;
           return (
             <TableCell

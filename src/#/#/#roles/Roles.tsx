@@ -27,8 +27,8 @@ export const Roles: React.FC<IRolesProps> = ({ createRole, deleteRole, deleteMan
           createItem={createRole}
           deleteItem={deleteRole}
           deleteBulk={deleteManyRoles}
-          items={rolesList}
-          rows={[{ title: 'Id', path: 'id', isNumber: true }, { title: 'Name', path: 'name' }]}
+          columns={[{ title: 'Id', path: 'id', isNumber: true }, { title: 'Name', path: 'name' }]}
+          rows={rolesList}
         />
       </Page>
     </LayoutLeftDrawer>
