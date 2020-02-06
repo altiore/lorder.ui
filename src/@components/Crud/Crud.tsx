@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import get from 'lodash/get';
 
@@ -117,18 +117,35 @@ export const CrudJsx: React.FC<ICrudProps> = ({
   columns,
 }) => {
   const classes = useStyles();
+
   const [order, setOrder] = React.useState<Order>('asc');
+
   const [orderBy, setOrderBy] = React.useState<any>('calories');
+
   const [selected, setSelected] = React.useState<Array<string | number>>([]);
+
   const [page, setPage] = React.useState(0);
+
   const [dense, setDense] = React.useState(false);
+
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: any) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+  const rowsLength = useMemo(() => {
+    return get(rows, 'length', 0);
+  }, [rows]);
+
+  const emptyRows = useMemo(() => {
+    return rowsPerPage - Math.min(rowsPerPage, rowsLength - page * rowsPerPage);
+  }, [page, rowsPerPage, rowsLength]);
+
+  const handleRequestSort = useCallback(
+    (event: React.MouseEvent<unknown>, property: any) => {
+      const isAsc = orderBy === property && order === 'asc';
+      setOrder(isAsc ? 'desc' : 'asc');
+      setOrderBy(property);
+    },
+    [setOrder, setOrderBy, orderBy, order]
+  );
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -170,8 +187,6 @@ export const CrudJsx: React.FC<ICrudProps> = ({
   };
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   const labelDisplayedRows = useCallback(({ from, to, count }: any) => {
     return ''
@@ -232,6 +247,10 @@ export const CrudJsx: React.FC<ICrudProps> = ({
     );
   }, [closeDialog, createItem, entityName, columns, openDialog]);
 
+  if (!Array.isArray(rows)) {
+    return null;
+  }
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -256,7 +275,7 @@ export const CrudJsx: React.FC<ICrudProps> = ({
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={rowsLength}
               columns={columns}
             />
             <TableBody>
@@ -308,9 +327,9 @@ export const CrudJsx: React.FC<ICrudProps> = ({
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 20]}
           component="div"
-          count={rows.length}
+          count={rowsLength}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
