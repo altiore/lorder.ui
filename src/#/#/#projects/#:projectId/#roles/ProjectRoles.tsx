@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,27 +15,41 @@ import { CreateForm } from './CreateForm';
 import { useStyles } from './styles';
 
 export interface IProjectRolesProps {
-  deleteItem: any;
-  getAllItems: () => any;
+  deleteProjectRole: any;
+  fetchProjectRoles: () => any;
   fetchRoles: () => any;
   getAllProjectTaskTypes: () => any;
-  items: DownloadList<any>;
+  rolesList: DownloadList<any>;
+  projectRoles: DownloadList<any>;
 }
 
-export const ProjectRolesJsx: React.FC<IProjectRolesProps> = ({ deleteItem, fetchRoles, getAllItems, items }) => {
+export const ProjectRolesJsx: React.FC<IProjectRolesProps> = ({
+  deleteProjectRole,
+  fetchRoles,
+  fetchProjectRoles,
+  projectRoles,
+  rolesList,
+}) => {
   const classes = useStyles();
 
   useEffect(() => {
     fetchRoles();
-    getAllItems();
-  }, [fetchRoles, getAllItems]);
+    fetchProjectRoles();
+  }, [fetchRoles, fetchProjectRoles]);
+
+  const preparedProjectRoles = useMemo(() => {
+    return projectRoles.map(item => ({
+      ...item,
+      role: rolesList.find(el => el.id === item.role),
+    }));
+  }, [projectRoles, rolesList]);
 
   const handleRemoveClick = useCallback(
     (role: any) => (e: any) => {
       e.stopPropagation();
-      deleteItem(role.id);
+      deleteProjectRole(role.id);
     },
-    [deleteItem]
+    [deleteProjectRole]
   );
 
   const renderItem = useCallback(
@@ -56,11 +70,10 @@ export const ProjectRolesJsx: React.FC<IProjectRolesProps> = ({ deleteItem, fetc
     [classes, handleRemoveClick]
   );
 
-  console.log('items', items);
   return (
     <div className={classes.root}>
-      {items && items.length ? (
-        <Table items={items} renderItem={renderItem}>
+      {preparedProjectRoles && preparedProjectRoles.length ? (
+        <Table items={preparedProjectRoles} renderItem={renderItem}>
           <TableHead>
             <TableRow>
               <TableCell>Роль</TableCell>

@@ -92,29 +92,31 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export interface ICrudProps {
-  entityName: string;
-  createItem: any;
-  deleteItem: (id: number) => void;
-  deleteBulk?: (ids: Array<number | string>) => any;
-  openDialog: any;
   closeDialog: any;
-  rows: any[];
   columns: Array<{ title: string; path: any; name?: string; isNumber?: boolean; disablePadding?: boolean }>;
+  createItem: any;
+  deleteBulk?: (ids: Array<number | string>) => any;
+  deleteItem: (id: number) => void;
+  entityName: string;
+  formName: string;
   getId?: (item) => number | string;
+  openDialog: any;
+  rows: any[];
 }
 
 const defGetId = i => i.id;
 
 export const CrudJsx: React.FC<ICrudProps> = ({
   closeDialog,
+  columns,
   createItem,
   deleteItem,
   deleteBulk,
   entityName,
+  formName,
   getId = defGetId,
-  rows,
   openDialog,
-  columns,
+  rows,
 }) => {
   const classes = useStyles();
 
@@ -236,16 +238,10 @@ export const CrudJsx: React.FC<ICrudProps> = ({
   );
 
   const handleOpenCreate = useCallback(() => {
-    openDialog(
-      <CreateForm
-        form={`create${entityName}Form`}
-        onSubmit={createItem}
-        columns={columns}
-        onSubmitSuccess={closeDialog}
-      />,
-      { maxWidth: 'lg' }
-    );
-  }, [closeDialog, createItem, entityName, columns, openDialog]);
+    openDialog(<CreateForm form={formName} onSubmit={createItem} columns={columns} onSubmitSuccess={closeDialog} />, {
+      maxWidth: 'lg',
+    });
+  }, [closeDialog, createItem, formName, columns, openDialog]);
 
   if (!Array.isArray(rows)) {
     return null;

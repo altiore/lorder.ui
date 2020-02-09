@@ -15,8 +15,13 @@ const mapStateToProps = createStructuredSelector({
   selectedProject,
 } as any);
 
+const dispatchStateToProps = {};
+
 const StartForm = withStyles(styles, { withTheme: true })(
-  connect(mapStateToProps)(
+  connect(
+    mapStateToProps,
+    dispatchStateToProps
+  )(
     reduxForm<any, IStartFormProps>({
       enableReinitialize: true,
       form: CREATE_USER_WORK_FORM_NAME,

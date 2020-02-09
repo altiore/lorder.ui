@@ -38,8 +38,7 @@ pipelines:
             - git config user.name "bitbucket-pipelines"
             - git commit -m 'dynamic version'
             - git status
-            - git remote add origin https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git
-            - git push origin master --force
+            - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git -f HEAD:master
     master:
       - step:
           name: Tests one more time before publish to PRODUCTION

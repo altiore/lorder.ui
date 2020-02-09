@@ -1,17 +1,15 @@
 import React from 'react';
 import Select from 'react-select';
 
-import { TaskType } from '#/@store/task-types';
 import { IUserRole } from '@types';
 
 export class ICreateFormProps {
   addItem: any;
-  postTaskTypeToProject: any;
   title?: string;
   items: IUserRole[];
 }
 
-export class ITaskTypesFormState {
+export class ICreateFormState {
   value?: string;
 }
 
@@ -22,15 +20,15 @@ const customStyles = {
   }),
 };
 
-export class CreateFormJsx extends React.Component<ICreateFormProps, ITaskTypesFormState> {
+export class CreateFormJsx extends React.Component<ICreateFormProps, ICreateFormState> {
   state = {
     value: undefined,
   };
 
   render() {
     const { items } = this.props;
-    const getOptionValue = (option: TaskType) => option.id.toString();
-    const getOptionLabel = (option: TaskType) => option.title;
+    const getOptionValue = (option: IUserRole) => option.id.toString();
+    const getOptionLabel = (option: IUserRole) => option.name;
     const options = this.state.value ? [...items, { id: 0, title: `Создать: ${this.state.value}` }] : items;
     return (
       <Select
@@ -50,11 +48,9 @@ export class CreateFormJsx extends React.Component<ICreateFormProps, ITaskTypesF
     this.setState({ value });
   };
 
-  private handleChange = (selectedTaskType: TaskType) => {
-    if (selectedTaskType.id) {
-      this.props.addItem(selectedTaskType.id);
-    } else {
-      this.props.postTaskTypeToProject(this.state.value);
+  private handleChange = (selectedItem: IUserRole) => {
+    if (selectedItem.id) {
+      this.props.addItem(selectedItem.id);
     }
   };
 }

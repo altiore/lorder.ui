@@ -28,6 +28,7 @@ import { IUser } from './IUser';
 
 export interface IState {
   asyncReducers: { list: string[] };
+  counter: any;
   dialog: IDialogState;
   externalLibraries: IExternalLibraries;
   feedback: DownloadList<Feedback>;

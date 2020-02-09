@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { postTaskTypeToProject } from '#/@store/projects';
 import { routeProjectId } from '#/@store/router';
-import { createRole, rolesList } from '#/@store/roles';
+import { createProjectRole } from '#/@store/project';
+import { rolesList } from '#/@store/roles';
 import { CreateFormJsx, ICreateFormProps } from './CreateForm';
 
 const mapState = createStructuredSelector({
@@ -12,8 +12,7 @@ const mapState = createStructuredSelector({
 } as any);
 
 const mapDispatch = {
-  addItem: createRole,
-  postTaskTypeToProject,
+  addItem: createProjectRole,
 };
 
 const CreateForm = connect<any, any, any>(

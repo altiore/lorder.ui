@@ -7,6 +7,7 @@ import { createTransform, PersistConfig, persistReducer } from 'redux-persist';
 
 import { IState } from '@types';
 import { DownloadList } from './@common/entities';
+import counterReducer from './counter/reducer';
 import { dialog } from './dialog';
 import { highcharts } from './highcharts/reducer';
 import { identity } from './identity';
@@ -96,6 +97,7 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
     combineReducers<Partial<IState>>({
       /** common reducers */
       asyncReducers: asyncReducersReducer,
+      counter: counterReducer,
       dialog,
       externalLibraries,
       form,

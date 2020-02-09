@@ -2,7 +2,8 @@ import { LOCATION_CHANGE } from 'connected-react-router';
 import { Action, handleActions } from 'redux-actions';
 
 import { ISelectedProject } from '@types';
-import { fetchProjectRolesAct, selectProject } from './actions';
+import { createProjectRoleAct, deleteProjectRoleAct, fetchProjectRolesAct, selectProject } from './actions';
+import { SelectedProject } from './SelectedProject';
 
 type IS = ISelectedProject;
 interface IChangePayload {
@@ -17,6 +18,7 @@ const locationChangeHandler = (state: IS, { payload }: Action<IChangePayload>) =
   }
   const matches = payload && payload.pathname && payload.pathname.match(/^\/projects\/(\d+)/);
   if (matches && matches[1]) {
+    console.log('selectedProject changed to', parseInt(matches[1], 0));
     return { ...state, selected: parseInt(matches[1], 0) };
   }
   return state;
@@ -39,6 +41,32 @@ const fetchProjectRolesFailHandler = (state: IS, { payload }) => {
   return state;
 };
 
+const createProjectRoleHandler = (state: IS, { payload }) => {
+  return state;
+};
+const createProjectRoleSuccessHandler = (state: IS, { payload }) => {
+  return {
+    ...state,
+    roles: [...state.roles, payload.data],
+  };
+};
+const createProjectRoleFailHandler = (state: IS, { payload }) => {
+  return state;
+};
+
+const deleteProjectRoleHandler = (state: IS, { payload }) => {
+  return state;
+};
+const deleteProjectRoleSuccessHandler = (state: IS, { payload }) => {
+  return {
+    ...state,
+    roles: [...state.roles, payload.data],
+  };
+};
+const deleteProjectRoleFailHandler = (state: IS, { payload }) => {
+  return state;
+};
+
 export const project = handleActions<IS, any>(
   {
     [LOCATION_CHANGE]: locationChangeHandler,
@@ -47,9 +75,14 @@ export const project = handleActions<IS, any>(
     [fetchProjectRolesAct.toString()]: fetchProjectRolesHandler,
     [fetchProjectRolesAct.success]: fetchProjectRolesSuccessHandler,
     [fetchProjectRolesAct.fail]: fetchProjectRolesFailHandler,
+
+    [createProjectRoleAct.toString()]: createProjectRoleHandler,
+    [createProjectRoleAct.success]: createProjectRoleSuccessHandler,
+    [createProjectRoleAct.fail]: createProjectRoleFailHandler,
+
+    [deleteProjectRoleAct.toString()]: deleteProjectRoleHandler,
+    [deleteProjectRoleAct.success]: deleteProjectRoleSuccessHandler,
+    [deleteProjectRoleAct.fail]: deleteProjectRoleFailHandler,
   },
-  {
-    selected: undefined,
-    roles: [],
-  }
+  new SelectedProject()
 );

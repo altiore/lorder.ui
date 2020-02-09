@@ -9,9 +9,17 @@ export const fetchProjectRolesAct = requestActions('CURRENT_PROJECT/FETCH_ROLES'
   },
 }));
 
-export const deleteProjectRoleAct = requestActions<any, number, number>(
+export const createProjectRoleAct = requestActions('CURRENT_PROJECT/ADD_ROLE', (projectId: number, roleId: string) => ({
+  request: {
+    method: 'POST',
+    url: `/projects/${projectId}/roles`,
+    data: { roleId },
+  },
+}));
+
+export const deleteProjectRoleAct = requestActions(
   'CURRENT_PROJECT/DELETE_ROLE',
-  (projectId, roleId) => ({
+  (projectId: number, roleId: string) => ({
     request: {
       method: 'DELETE',
       url: `/projects/${projectId}/roles/${roleId}`,

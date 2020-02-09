@@ -22,5 +22,5 @@ export const createUserTaskFormInitials = createSelector(
 
 export const projectRoles = createSelector(
   baseState,
-  s => s.roles
+  s => s.roles || []
 );

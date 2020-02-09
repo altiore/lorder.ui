@@ -7,3 +7,5 @@ export const ROLES = {
   SUPER_ADMINS: [ROLE.SUPER_ADMIN],
   USERS: [ROLE.USER, ROLE.ADMIN, ROLE.SUPER_ADMIN],
 };
+
+export const CREATE_ROLE_FORM = 'CreateRoleForm';

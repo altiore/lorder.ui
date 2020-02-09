@@ -69,6 +69,7 @@
     "@material-ui/icons": "4.5.1",
     "@material-ui/lab": "4.0.0-alpha.22",
     "@sentry/browser": "5.11.1",
+    "aglos": "0.0.2",
     "autosuggest-highlight": "3.1.1",
     "axios": "0.19.0",
     "classnames": "2.2.6",
@@ -105,7 +106,7 @@
     "react-responsive": "7.0.0",
     "react-router": "5.0.0",
     "react-router-dom": "5.0.0",
-    "react-scripts": "^3.3.0",
+    "react-scripts": "^3.3.1",
     "react-select": "2.4.3",
     "react-swipeable-views": "0.13.3",
     "react-textarea-autosize": "7.1.0",
@@ -134,7 +135,8 @@
     "prettier-lint": "prettier --write \"src/**/*.{ts,tsx}\" --print-width 120 --single-quote --parser typescript --trailing-comma es5",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "release": "release-it patch commit"
+    "release": "release-it patch commit",
+    "ln:aglos": "rm -rf node_modules/aglos && ln -s $PWD/../../aglos $PWD/node_modules/aglos"
   },
   "husky": {
     "hooks": {

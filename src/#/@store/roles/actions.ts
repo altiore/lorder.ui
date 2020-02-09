@@ -1,5 +1,6 @@
 import { requestActions } from '../@common/requestActions';
 import { UserRole } from './UserRole';
+import { CREATE_ROLE_FORM } from './consts';
 
 export const fetchRoles = requestActions('ROLES/FETCH_ALL', () => ({
   request: {
@@ -13,7 +14,7 @@ export const createRole = requestActions('ROLES/CREATE_NEW', (data: Partial<User
     url: '/roles',
     data,
   },
-  form: 'createUserRolesForm',
+  form: CREATE_ROLE_FORM,
 }));
 
 export const deleteRole = requestActions('ROLES/DELETE', (roleId: number) => ({
