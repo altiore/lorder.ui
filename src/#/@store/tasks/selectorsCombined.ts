@@ -31,11 +31,11 @@ export const sortedByFilterTasks = createSelector(
 );
 
 export const sortedByFilterTasksWithActive = createSelector(
-  [sortedByFilterTasks, currentTask],
-  (tasks = [], curTask): Array<ITask | 'filter' | undefined> => [
+  [sortedByFilterTasks, currentTask, defaultProjectId],
+  (tasks = [], curTask, defProdjId): Array<ITask | 'filter' | undefined> => [
     curTask,
     'filter',
-    ...tasks.filter(t => t.id !== get(curTask, 'id') && includes([1, 2, 3], t.status)),
+    ...tasks.filter(t => t.id !== get(curTask, 'id') && t.projectId !== defProdjId && includes([1, 2, 3], t.status)),
   ]
 );
 
