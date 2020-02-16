@@ -35,7 +35,7 @@ export const sortedByFilterTasksWithActive = createSelector(
   (tasks = [], curTask): Array<ITask | 'filter' | undefined> => [
     curTask,
     'filter',
-    ...tasks.filter(t => t.id !== get(curTask, 'id')),
+    ...tasks.filter(t => t.id !== get(curTask, 'id') && includes([1, 2, 3], t.status)),
   ]
 );
 
