@@ -110,5 +110,21 @@ export const updateStatistic = requestActions<number>('PROJECT/STATISTIC/UPDATE'
   },
 }));
 
+export const updateProjectAct = requestActions<number, any>(
+  'PROJECT/UPDATE',
+  (projectId: number, data: { title: string; monthlyBudget: number }) => ({
+    request: {
+      method: 'PATCH',
+      url: `/projects/${projectId}`,
+      data,
+    },
+    form: 'UpdateProjectForm',
+    success: {
+      message: 'Ничего не бойся я с тобой',
+      title: 'Проект обновлен',
+    },
+  })
+);
+
 export * from './members/actions';
 export * from './taskTypes/actions';

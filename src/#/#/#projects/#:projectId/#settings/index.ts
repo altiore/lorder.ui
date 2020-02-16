@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { publishProject, updateStatistic } from '#/@store/projects';
+import { openedProject, Project, publishProject, updateStatistic } from '#/@store/projects';
 import { routeProjectId } from '#/@store/router';
 import { SettingsTsx } from './Settings';
 import { IState } from '@types';
 
-const mapState = createStructuredSelector<IState, { projectId?: number }>({
+const mapState = createStructuredSelector<IState, { openedProject?: Project; projectId?: number }>({
+  openedProject,
   projectId: routeProjectId,
 });
 

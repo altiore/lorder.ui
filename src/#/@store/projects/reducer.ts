@@ -20,6 +20,7 @@ import {
   postTaskTypeToProject,
   removeProject,
   removeProjectByAdmin,
+  updateProjectAct,
   updateProjectMemberAccessLevel,
 } from './actions';
 import { Member } from './members/Member';
@@ -151,6 +152,15 @@ const projectTaskTypeHandler = (state: S, action: ActionMeta<any, any>) => {
   });
 };
 
+const updateProjectHandler = (state: S, { payload }) => {
+  const index = state.list.findIndex(el => el.id === get(payload, ['data', 'id']));
+  if (index !== -1) {
+    return state.updateItem(index, get(payload, 'data'));
+  }
+
+  return state;
+};
+
 const logOutHandler = () => {
   return new DownloadList(Project);
 };
@@ -180,6 +190,8 @@ export const projects = handleActions<S, any, any>(
     [updateProjectMemberAccessLevel.toString()]: updateProjectMemberAccessLevelHandler,
     [deleteProjectMember.toString()]: deleteProjectMemberHandler,
     [combineActions(getAllProjectTaskTypes, postTaskTypeToProject)]: projectTaskTypeHandler,
+
+    [updateProjectAct.success]: updateProjectHandler,
     [PURGE]: logOutHandler,
   },
   new DownloadList(Project)

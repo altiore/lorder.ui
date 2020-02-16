@@ -36,6 +36,15 @@ export const openedProject = createSelector(
   }
 );
 
+export const initialUpdateProject = createSelector(
+  openedProject,
+  p =>
+    p && {
+      title: p.title,
+      monthlyBudget: p.monthlyBudget,
+    }
+);
+
 export const projectMembers = createSelector(
   [openedProject, selectedProject],
   (opened: Project, selected: Project) => {

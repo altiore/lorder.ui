@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const doNothing = i => i;
 const parseNumber = i => parseFloat(i);
-const formatNumber = i => (i ? i.toString() : '');
+const formatNumber = i => (typeof i === 'number' ? i.toString() : '');
 
 export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, ICreateFormProps>> = ({
   handleSubmit,
