@@ -20,6 +20,8 @@ import {
   ISelectedProject,
   ISockets,
   ITaskActive,
+  ITaskStatus,
+  ITaskStatusMove,
   IUserRole,
 } from '@types';
 import { IRouteState } from './IRouteState';
@@ -46,6 +48,8 @@ export interface IState {
   sockets: ISockets;
   statistics: Statistics;
   taskActive: ITaskActive;
+  taskStatuses: IDownloadList<ITaskStatus>;
+  taskStatusMoves: IDownloadList<ITaskStatusMove>;
   taskTypes: DownloadList<TaskType>;
   tasks: DownloadList<Task>;
   tasksFilter: ITasksFilter;

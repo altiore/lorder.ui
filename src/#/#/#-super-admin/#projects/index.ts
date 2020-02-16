@@ -8,13 +8,13 @@ import { closeDialog, openDialog } from '#/@store/dialog';
 import { defaultProjectId, hasRole, userRole } from '#/@store/identity';
 import {
   acceptInvitation,
-  fetchAllParticipantProjects,
-  ownProjectList,
+  allProjectList,
+  getAllProjects,
   removeProject,
   removeProjectByAdmin,
 } from '#/@store/projects';
 import { findUserById } from '#/#/@store/users';
-import { Projects as ProjectsJsx } from './Projects';
+import { Projects as ProjectsJsx } from '../../#projects/Projects';
 
 const mapToState = (ownOnly: boolean = true) =>
   createStructuredSelector({
@@ -22,14 +22,14 @@ const mapToState = (ownOnly: boolean = true) =>
     findUserById,
     hasRole,
     ownOnly: () => ownOnly,
-    projectList: ownProjectList,
+    projectList: allProjectList,
     userRole,
   } as any);
 
 const mapToProps = (ownOnly: boolean = true) => ({
   acceptInvitation,
   closeDialog,
-  getProjects: fetchAllParticipantProjects,
+  getProjects: getAllProjects,
   goToPage: push,
   openDialog,
   removeProject,
@@ -45,7 +45,7 @@ const mergeProps = (state: any, { goToPage, ...restDispatch }: any, { match, ...
 });
 
 export default connect(
-  mapToState(true),
-  mapToProps(true),
+  mapToState(false),
+  mapToProps(false),
   mergeProps
 )(withResize(ProjectsJsx));

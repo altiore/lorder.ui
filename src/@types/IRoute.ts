@@ -12,4 +12,5 @@ export interface IRoute {
   routes?: IRoute[];
   title?: string;
   redirect?: string;
+  getReducers?: any;
 }

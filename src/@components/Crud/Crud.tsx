@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export interface ICrudProps {
   closeDialog: any;
   columns: Array<{ title: string; path: any; name?: string; isNumber?: boolean; disablePadding?: boolean }>;
-  createItem: any;
+  createItem?: any;
   deleteBulk?: (ids: Array<number | string>) => any;
   deleteItem: (id: number) => void;
   entityName: string;

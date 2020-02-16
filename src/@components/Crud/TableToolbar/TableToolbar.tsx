@@ -70,7 +70,7 @@ export const TableToolbarTsx: React.FC<TableToolbarProps> = ({ numSelected, enti
           )}
         </div>
       )}
-      {numSelected > 0 ? (
+      {numSelected > 0 && Boolean(deleteBulk) ? (
         <Tooltip title="Delete">
           <IconButton aria-label="delete" onClick={deleteBulk}>
             <DeleteIcon />

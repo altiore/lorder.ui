@@ -4,7 +4,6 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { Page } from '@components/Page';
 import Crud from '#/@common/Crud';
-import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
 import { CREATE_ROLE_FORM } from '#/@store/roles';
 
 export interface IRolesProps extends RouteComponentProps {
@@ -21,18 +20,16 @@ export const Roles: React.FC<IRolesProps> = ({ createRole, deleteRole, deleteMan
   }, [fetchRoles]);
 
   return (
-    <LayoutLeftDrawer>
-      <Page>
-        <Crud
-          formName={CREATE_ROLE_FORM}
-          entityName="Роль"
-          createItem={createRole}
-          deleteItem={deleteRole}
-          deleteBulk={deleteManyRoles}
-          columns={[{ title: 'Id', path: 'id' }, { title: 'Name', path: 'name' }]}
-          rows={rolesList}
-        />
-      </Page>
-    </LayoutLeftDrawer>
+    <Page>
+      <Crud
+        formName={CREATE_ROLE_FORM}
+        entityName="Роль"
+        createItem={createRole}
+        deleteItem={deleteRole}
+        deleteBulk={deleteManyRoles}
+        columns={[{ title: 'Id', path: 'id' }, { title: 'Name', path: 'name' }]}
+        rows={rolesList}
+      />
+    </Page>
   );
 };

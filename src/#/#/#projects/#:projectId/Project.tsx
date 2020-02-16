@@ -5,19 +5,66 @@ import { Switch } from 'react-router';
 
 import { IRoute } from '@types';
 import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
-import { Project } from '#/@store/projects';
+import { ACCESS_LEVEL, Project } from '#/@store/projects';
 
 import NestedRoute from '#/@common/#NestedRoute';
+import { ROLES } from '../../../@store/roles';
 
-export const ROUTES_BY_PATH = {
-  '/projects/:projectId/board': lazy(() => import('./#board')),
-  '/projects/:projectId/members': lazy(() => import('./#members')),
-  '/projects/:projectId/roles': lazy(() => import('./#roles')),
-  '/projects/:projectId/settings': lazy(() => import('./#settings')),
-  '/projects/:projectId/task-types': lazy(() => import('./#task-types')),
-  '/projects/:projectId/tasks/:sequenceNumber': lazy(() => import('./#tasks/#:sequenceNumber')),
-  '/projects/:projectId/tasks': lazy(() => import('./#tasks')),
-};
+export const PROJECT_ROUTES = [
+  {
+    access: [ROLES.USERS, ACCESS_LEVEL.RED],
+    exact: true,
+    icon: 'import-export',
+    path: '/projects/:projectId/board',
+    title: 'Доска',
+    component: lazy(() => import('./#board')),
+  },
+  {
+    access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+    exact: true,
+    icon: 'list-alt',
+    path: '/projects/:projectId/tasks',
+    title: 'Задачи',
+    component: lazy(() => import('./#tasks')),
+  },
+  {
+    access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+    exact: true,
+    icon: 'ballot',
+    path: '/projects/:projectId/task-types',
+    title: 'Типы Задач',
+    component: lazy(() => import('./#task-types')),
+  },
+  {
+    access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+    exact: true,
+    icon: 'people',
+    path: '/projects/:projectId/roles',
+    title: 'Роли проекта',
+    component: lazy(() => import('./#roles')),
+  },
+  {
+    access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+    exact: true,
+    icon: 'people',
+    path: '/projects/:projectId/members',
+    title: 'Участники',
+    component: lazy(() => import('./#members')),
+  },
+  {
+    access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+    exact: true,
+    icon: 'settings',
+    path: '/projects/:projectId/settings',
+    title: 'Другие Настройки',
+    component: lazy(() => import('./#settings')),
+  },
+  {
+    access: [ROLES.USERS, ACCESS_LEVEL.RED],
+    path: '/projects/:projectId/tasks/:sequenceNumber',
+    component: lazy(() => import('./#tasks/#:sequenceNumber')),
+  },
+];
 
 export interface IProjectProps {
   fetchProjectDetails: any;
@@ -44,13 +91,13 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
   }
 
   render() {
-    const { openedProject, routes } = this.props;
+    const { openedProject } = this.props;
 
     if (!openedProject || !openedProject.title) {
       return null;
     }
 
-    const availableRoutes = routes.filter(
+    const availableRoutes = PROJECT_ROUTES.filter(
       (route: IRoute) =>
         !route.accessLevel || !openedProject.accessLevel || route.accessLevel <= openedProject.accessLevel
     );
@@ -59,10 +106,7 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
       <LayoutLeftDrawer routes={availableRoutes}>
         <Switch>
           <Redirect from="/projects/:projectId" to="/projects/:projectId/board" exact />
-          {routes &&
-            routes.map((route: IRoute) => (
-              <NestedRoute component={ROUTES_BY_PATH[route.path]} key={route.path} {...route} />
-            ))}
+          {PROJECT_ROUTES && PROJECT_ROUTES.map((route: IRoute) => <NestedRoute key={route.path} {...route} />)}
         </Switch>
       </LayoutLeftDrawer>
     );

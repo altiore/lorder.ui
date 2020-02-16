@@ -11,6 +11,7 @@ import Popper from '@material-ui/core/Popper';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { useStyles } from './styles';
+import { ROLE } from '../../../../@types';
 
 export interface IRightMenuProps {
   logOut: any;
@@ -52,6 +53,14 @@ export const RightMenuTsx: React.FC<IRightMenuProps> = ({ logOut, push, userAvat
     [handleClose, push]
   );
 
+  const goToAdminPanel = useCallback(
+    (event: React.SyntheticEvent) => {
+      handleClose(event);
+      push('/users');
+    },
+    [handleClose, push]
+  );
+
   const elId = 'header-right-menu';
   return (
     <div className={classes.root}>
@@ -76,6 +85,11 @@ export const RightMenuTsx: React.FC<IRightMenuProps> = ({ logOut, push, userAvat
                   <MenuItem onClick={goToProfile} className={classes.item}>
                     Профиль
                   </MenuItem>
+                  {userRole === ROLE.SUPER_ADMIN && (
+                    <MenuItem onClick={goToAdminPanel} className={classes.item}>
+                      Админ Панель
+                    </MenuItem>
+                  )}
                   <Tooltip
                     title={
                       <div>

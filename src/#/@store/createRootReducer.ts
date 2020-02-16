@@ -31,12 +31,16 @@ import { other } from './other/reducer';
 import { project } from './project';
 import { projects } from './projects';
 import { taskActive } from './task-active/reducer';
+import { taskStatuses } from './task-statuses/reducer';
+import { taskStatusMoves } from './task-status-moves/reducer';
 import { taskTypes } from './task-types';
 import { tasks } from './tasks/reducer';
 import { tasksFilter } from './tasksFilter/reducer';
 import { timer } from './timer';
 import { userWorks } from './user-works';
 import { UserRole } from './roles/UserRole';
+import { TaskStatus } from './task-statuses/TaskStatus';
+import { TaskStatusMove } from './task-status-moves/TaskStatusMove';
 
 localForage.config({
   description: 'Altiore contribution version 1.0',
@@ -48,6 +52,8 @@ localForage.config({
 const VARIANT_ENTITY: any = {
   projects: Project,
   roles: UserRole,
+  taskStatuses: TaskStatus,
+  taskStatusMoves: TaskStatusMove,
   taskTypes: TaskType,
   tasks: Task,
   userWorks: UserWork,
@@ -85,7 +91,9 @@ const persistConfig: PersistConfig = {
         return new DownloadList(entity, outboundState);
       },
       // define which reducers this transform gets called for.
-      { whitelist: ['projects', 'roles', 'taskTypes', 'tasks', 'userWorks', 'users'] }
+      {
+        whitelist: ['projects', 'roles', 'taskStatuses', 'taskStatusMoves', 'taskTypes', 'tasks', 'userWorks', 'users'],
+      }
     ),
   ],
 };
@@ -120,6 +128,8 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
       project,
       projects,
       taskActive,
+      taskStatuses,
+      taskStatusMoves,
       taskTypes,
       tasks,
       tasksFilter,

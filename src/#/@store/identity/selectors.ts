@@ -10,9 +10,9 @@ export const isAuth = createSelector(
   state => state.isAuth
 );
 
-export const userRole = createSelector<any, any, undefined | ROLE>(
+export const userRole = createSelector<any, any, ROLE>(
   [baseState],
-  state => state.role
+  (state): ROLE => state.role
 );
 
 export const userId = createSelector(

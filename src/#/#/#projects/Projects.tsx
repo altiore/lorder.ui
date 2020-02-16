@@ -1,7 +1,6 @@
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
-import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
 import React from 'react';
@@ -13,12 +12,10 @@ import { Confirmation } from '@components/Dialogs/Confirmation';
 import { Page } from '@components/Page';
 import TableVirtualized, { ColumnType } from '@components/TableVirtualized';
 import { CreateProjectPopup } from '#/@common/CreateProjectPopup';
-import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
 import { ACCESS_LEVEL, Project } from '#/@store/projects';
 
 export interface IProjectsProps {
   acceptInvitation: (projectId: number) => any;
-  classes: any;
   closeDialog: any;
   defaultProjectId: number;
   findUserById: (id: number) => IUser | undefined;
@@ -34,7 +31,6 @@ export interface IProjectsProps {
   userRole: ROLE;
   height: number;
   isWidthSm: boolean;
-  theme: Theme;
 }
 
 export interface IProjectsState {
@@ -53,7 +49,8 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   }
 
   render() {
-    const { classes, hasRole, ownOnly, projectList, height: pHeight, isWidthSm, theme } = this.props;
+    const { hasRole, ownOnly, projectList, height: pHeight, isWidthSm } = this.props;
+
     let columns: ColumnType[] = [
       { label: `Название (${projectList.length})`, order: 1, isShown: true, dataKey: 'title' },
       { label: '', order: 20, isShown: true, dataKey: 'id', width: 100, component: this.renderRemove },
@@ -83,30 +80,35 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     }
     const rows = projectList.sort(this.sortState());
     const { sortBy, sortDirection } = this.state;
-    const height = pHeight - 69.6 - (isWidthSm ? 0 : theme.spacing(4)) - (ownOnly ? 37 : 0);
+    const height = pHeight - 69.6 - (isWidthSm ? 0 : 32) - (ownOnly ? 37 : 0);
     return (
-      <LayoutLeftDrawer>
-        <Page>
-          <TableVirtualized
-            columns={columns}
-            rows={rows}
-            height={height}
-            sortBy={sortBy}
-            sortDirection={sortDirection}
-            sort={this.sortTable}
-            onRowClick={ownOnly ? this.handleRowClick : undefined}
-          />
-          <div className={classes.row}>
-            {ownOnly && (
-              <Button size="large" variant="outlined" color="primary" onClick={this.createProject}>
-                <Typography variant="caption" noWrap>
-                  {'Создать проект'}
-                </Typography>
-              </Button>
-            )}
-          </div>
-        </Page>
-      </LayoutLeftDrawer>
+      <Page>
+        <TableVirtualized
+          columns={columns}
+          rows={rows}
+          height={height}
+          sortBy={sortBy}
+          sortDirection={sortDirection}
+          sort={this.sortTable}
+          onRowClick={ownOnly ? this.handleRowClick : undefined}
+        />
+        <div
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            flexFlow: 'row wrap',
+            justifyContent: 'center',
+          }}
+        >
+          {ownOnly && (
+            <Button size="large" variant="outlined" color="primary" onClick={this.createProject}>
+              <Typography variant="caption" noWrap>
+                {'Создать проект'}
+              </Typography>
+            </Button>
+          )}
+        </div>
+      </Page>
     );
   }
 

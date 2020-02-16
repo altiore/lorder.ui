@@ -2,28 +2,61 @@ import React, { lazy, useCallback, useEffect, useMemo } from 'react';
 
 import { Location } from 'history';
 import get from 'lodash/get';
+import includes from 'lodash/includes';
 import { RouteComponentProps, Switch } from 'react-router-dom';
 
-import { IRoute } from '@types';
+import { IRoute, ROLE } from '@types';
 
 import NestedRoute from '#/@common/#NestedRoute';
 import { PatchTaskForm } from '#/@common/TaskForm';
+import { ROLES } from '#/@store/roles';
 
 import { Header } from './Header';
 import { useStyles } from './styles';
 
-export const ROUTES_BY_PATH = {
-  '/': lazy(() => import('./#')),
-  '/all-projects': lazy(() => import('./#projects/all')),
-  '/feedback': lazy(() => import('./#feedback')),
-  '/other': lazy(() => import('./#other')),
-  '/projects': lazy(() => import('./#projects')),
-  '/roles': lazy(() => import('./#roles')),
-  '/projects/:projectId': lazy(() => import('./#projects/#:projectId')),
-  '/task-types': lazy(() => import('./#task-types')),
-  '/users': lazy(() => import('./#users')),
-  '/profile': lazy(() => import('./#profile')),
-};
+export const MAIN_USER_ROUTES = [
+  {
+    access: ROLES.ALL,
+    icon: 'feedback',
+    path: '/feedback',
+    title: 'Обратная связь',
+    component: lazy(() => import('./#feedback')),
+  },
+
+  {
+    access: ROLES.USERS,
+    exact: true,
+    icon: 'assignment',
+    path: '/projects',
+    title: 'Мои Проекты',
+    component: lazy(() => import('./#projects')),
+  },
+  {
+    access: ROLES.USERS,
+    path: '/projects/:projectId',
+    component: lazy(() => import('./#projects/#:projectId')),
+  },
+  {
+    access: ROLES.USERS,
+    path: '/profile',
+    title: 'Настройки пользователя',
+    component: lazy(() => import('./#profile')),
+  },
+  {
+    access: ROLES.USERS,
+    exact: true,
+    icon: 'home',
+    path: '/',
+    title: 'Дом',
+    component: lazy(() => import('./#')),
+  },
+
+  {
+    access: ROLES.SUPER_ADMINS,
+    path: '/',
+    component: lazy(() => import('./#-super-admin')),
+  },
+];
 
 export interface IMainProps {
   closeDialog: () => any;
@@ -32,6 +65,7 @@ export interface IMainProps {
   prevLocation?: Location;
   push: (path: string | any) => any;
   routes: IRoute[];
+  userRole: ROLE;
 }
 
 export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
@@ -41,9 +75,13 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
   openDialog,
   prevLocation,
   push,
-  routes,
+  userRole,
 }) => {
   const classes = useStyles();
+
+  const preparedRoutes = useMemo(() => {
+    return MAIN_USER_ROUTES.filter(r => includes(r.access, userRole));
+  }, [userRole]);
 
   const isModal = useMemo(() => get(location, ['state', 'modal']), [location]);
 
@@ -79,20 +117,10 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
       <div className={classes.background} />
       <div className={classes.background2} />
       <main className={classes.main}>
-        {Boolean(routes) && (
+        {Boolean(preparedRoutes) && (
           <Switch location={pageLocation}>
-            {routes.map(({ exact, path, redirect, routes }: IRoute) => {
-              return (
-                <NestedRoute
-                  key={path}
-                  component={ROUTES_BY_PATH[path]}
-                  exact={exact}
-                  path={path}
-                  redirect={redirect}
-                  routes={routes}
-                  location={pageLocation}
-                />
-              );
+            {preparedRoutes.map((route: IRoute) => {
+              return <NestedRoute key={route.path} {...route} routes={MAIN_USER_ROUTES} location={pageLocation} />;
             })}
           </Switch>
         )}

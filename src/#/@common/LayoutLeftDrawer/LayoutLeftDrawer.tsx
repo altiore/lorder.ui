@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
@@ -11,17 +11,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { Theme } from '@material-ui/core/styles';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import BallotIcon from '@material-ui/icons/Ballot';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import FormatSizeIcon from '@material-ui/icons/FormatSize';
 import LaptopIcon from '@material-ui/icons/Laptop';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import cn from 'classnames';
 import { match, RouteComponentProps } from 'react-router';
 
@@ -38,7 +34,9 @@ export interface ILayoutLeftDrawerProps {
   isWidthSm: boolean;
   match: match<any>;
   routes?: IRoute[];
+  superAdminRoutes?: IRoute[];
   openedProject?: Project;
+  selectProject?: Project;
   toggleUiSetting: any;
   theme: Theme;
   userRole: ROLE;
@@ -60,11 +58,17 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
   match,
   routes,
   openedProject,
+  selectProject,
   theme,
   toggleUiSetting,
   userRole,
+  superAdminRoutes,
 }) => {
   const classes = useStyles();
+
+  const project = useMemo(() => {
+    return openedProject || selectProject;
+  }, [openedProject, selectProject]);
 
   const handleDrawerToggle = useCallback(() => {
     toggleUiSetting('isLeftBarOpen');
@@ -94,9 +98,9 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
         }}
       >
         <div className={classes.drawerHeader}>
-          {openedProject && (
-            <LinkButton to={`/projects/${openedProject.id}`} className={classes.projectTitle}>
-              {openedProject.title}
+          {project && project.id && project.title && (
+            <LinkButton to={`/projects/${project.id}`} className={classes.projectTitle}>
+              {project.title}
             </LinkButton>
           )}
           <div className={classes.grow} />
@@ -130,44 +134,14 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
             </ListItemIcon>
             <ListItemText primary={'Проекты'} />
           </ListItem>
-          {userRole === ROLE.SUPER_ADMIN && (
+          {userRole === ROLE.SUPER_ADMIN && Boolean(superAdminRoutes && superAdminRoutes.length) && (
             <>
-              <ListItem button onClick={goToPage('/all-projects')}>
-                <ListItemIcon>
-                  <AssignmentIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Все Проекты'} />
-              </ListItem>
-              <ListItem button onClick={goToPage('/users')}>
-                <ListItemIcon>
-                  <PeopleOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Пользователи'} />
-              </ListItem>
-              <ListItem button onClick={goToPage('/roles')}>
-                <ListItemIcon>
-                  <SupervisorAccountIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Роли пользователей'} />
-              </ListItem>
-              <ListItem button onClick={goToPage('/task-types')}>
-                <ListItemIcon>
-                  <FormatSizeIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Типы Задач'} />
-              </ListItem>
-              <ListItem button onClick={goToPage('/feedback')}>
-                <ListItemIcon>
-                  <FeedbackIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Обратная связь'} />
-              </ListItem>
-              <ListItem button onClick={goToPage('/other')}>
-                <ListItemIcon>
-                  <SettingsIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Другие функции'} />
-              </ListItem>
+              {(superAdminRoutes as IRoute[]).map(route => (
+                <ListItem key={route.path} button onClick={goToPage(route.path)}>
+                  <ListItemIcon>{route.icon}</ListItemIcon>
+                  <ListItemText primary={route.title} />
+                </ListItem>
+              ))}
             </>
           )}
         </List>

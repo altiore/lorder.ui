@@ -1,6 +1,6 @@
 import map from 'lodash/map';
 
-import { IUser } from '@types';
+import { IUser, ROLE } from '@types';
 
 export class User implements IUser {
   readonly id?: number;
@@ -11,7 +11,7 @@ export class User implements IUser {
   paymentMethod: number;
   readonly createdAt: string;
   readonly updatedAt: string;
-  role: 'admin' | 'super-admin' | 'user' = 'user';
+  role: ROLE = ROLE.USER;
   projectsCount: number;
 
   constructor(initial?: object) {

@@ -1,3 +1,5 @@
+import { ROLE } from './ROLE';
+
 export interface IUser {
   avatar?: string;
   readonly id?: number;
@@ -7,6 +9,6 @@ export interface IUser {
   paymentMethod: number;
   readonly createdAt: string;
   readonly updatedAt: string;
-  role: string;
+  role: ROLE;
   projectsCount: number;
 }

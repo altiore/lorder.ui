@@ -15,6 +15,8 @@ export * from './ITask';
 export * from './ITaskActive';
 export * from './ITaskLog';
 export * from './ITasksFilter';
+export * from './ITaskStatus';
+export * from './ITaskStatusMove';
 export * from './IUser';
 export * from './IUserRole';
 export * from './ROLE';
