@@ -30,13 +30,10 @@ export const styles = (theme: Theme) =>
       borderBottomRightRadius: theme.shape.borderRadius,
       boxShadow: theme.shadows[5],
       boxSizing: 'border-box',
-      marginLeft: theme.spacing(2) + 2,
-      marginRight: 2,
       marginTop: -2,
       maxHeight: 536,
       overflowY: 'auto',
       [theme.breakpoints.down('sm')]: {
-        marginLeft: 2,
         maxHeight: 200,
       },
     },

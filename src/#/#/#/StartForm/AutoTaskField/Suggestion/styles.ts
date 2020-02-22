@@ -24,6 +24,7 @@ export const styles = (theme: Theme) =>
     root: {
       border: `1px solid transparent`,
       position: 'relative',
+      minHeight: theme.spacing(5),
       [theme.breakpoints.down('sm')]: {
         padding: '0 0.3rem',
       },

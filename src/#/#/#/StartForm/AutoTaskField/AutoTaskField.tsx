@@ -1,6 +1,7 @@
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import TextField from '@material-ui/core/TextField';
+
 import deburr from 'lodash-es/deburr';
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
@@ -71,7 +72,6 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
             InputLabelProps: {
               shrink: true,
             },
-            classes,
             inputRef: (node: HTMLElement) => {
               this.popperNode = node;
             },
@@ -130,7 +130,7 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
   };
 
   private renderInputComponent = (inputProps: any) => {
-    const { classes, inputRef = Function.prototype, ref, ...other } = inputProps;
+    const { inputRef = Function.prototype, ref, ...other } = inputProps;
     const {
       classes: globalClasses,
       meta: { error, touched },
@@ -144,16 +144,12 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
         error={touched && !!error}
         helperText={touched && error}
         InputProps={{
-          classes: {
-            input: classes.input,
-          },
           inputRef: node => {
             ref(node);
             inputRef(node);
           },
           style: {
             backgroundColor: isOpen ? '#fff' : 'transparent',
-            borderRadius: 4,
             zIndex: isOpen ? 1305 : 'auto',
           },
         }}
