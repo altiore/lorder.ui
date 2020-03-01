@@ -16,7 +16,7 @@ const resetGlobalCacheSuccess = () => {
   });
 };
 
-export const other = handleActions<S, P, M>(
+export const other: any = handleActions<S, P, M>(
   {
     [resetGlobalCache.success]: resetGlobalCacheSuccess,
   },

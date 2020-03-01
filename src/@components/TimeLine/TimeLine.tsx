@@ -216,7 +216,7 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
     }
   };
 
-  private getPosition(el?: moment.Moment) {
+  private getPosition(el?: moment.Moment | null) {
     const { startAt, finishAt } = this.state;
     const svgWidth = this.getSvgWidth();
     const res = ((this.getHours(el) - startAt) * svgWidth) / (finishAt - startAt);
@@ -316,7 +316,7 @@ export class TimeLineTsx extends React.PureComponent<IDailyRoutineProps, IDailyR
     }
   };
 
-  private getHours = (el?: moment.Moment) => {
+  private getHours = (el?: moment.Moment | null) => {
     const current = moment();
     return el
       ? el.day() === current.day()

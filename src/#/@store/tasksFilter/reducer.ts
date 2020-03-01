@@ -45,7 +45,7 @@ const toggleMemberHandler = (state: ITasksFilter, { payload }: IP2) => {
   });
 };
 
-export const tasksFilter = handleActions<any, any, any>(
+export const tasksFilter: any = handleActions<any, any, any>(
   {
     [changeFilter.toString()]: changeFilterHandler,
     [changeTasksFilter.toString()]: changeTasksFilterHandler,

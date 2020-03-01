@@ -11,7 +11,7 @@ const initExtLibrariesHandler = (state: IExternalLibraries) => {
   });
 };
 
-export const externalLibraries = handleActions<IExternalLibraries>(
+export const externalLibraries: any = handleActions<IExternalLibraries>(
   {
     [initExtLibrariesAction.toString()]: initExtLibrariesHandler,
   } as any,

@@ -330,7 +330,7 @@ const getUserWorksSuccess = (state, { payload }) => {
   return state.finishLoading(preparedData);
 };
 
-export const tasks = handleActions<S, any, any>(
+export const tasks: any = handleActions<S, any, any>(
   {
     [combineActions(getAllTasks.toString(), fetchProjectTasksA.toString())]: getAllTasksHandler,
     [combineActions(getAllTasks.success, fetchProjectTasksA.success)]: getAllTasksSuccessHandler,

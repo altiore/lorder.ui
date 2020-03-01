@@ -33,7 +33,7 @@ export class HoverInfoTsx extends React.Component<IHoverInfoProps, {}> {
     );
   }
 
-  private getHoursWithMinutes = (el?: moment.Moment) => {
+  private getHoursWithMinutes = (el?: moment.Moment | null) => {
     const current = moment();
     if (el) {
       if (el.day() === current.day()) {

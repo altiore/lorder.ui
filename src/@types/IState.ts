@@ -8,7 +8,7 @@ import { IInfo } from '#/@store/info';
 import { Project } from '#/@store/projects';
 import { Statistics } from '#/@store/statistics';
 import { TaskType } from '#/@store/task-types';
-import { Task, UserWork } from '#/@store/tasks';
+import { Task } from '#/@store/tasks';
 import { Timer } from '#/@store/timer';
 import { IUiState } from '#/@store/ui';
 import { VersionHistory } from '#/@store/versionHistory';
@@ -23,6 +23,7 @@ import {
   ITaskStatus,
   ITaskStatusMove,
   IUserRole,
+  IUserWork,
 } from '@types';
 import { IRouteState } from './IRouteState';
 import { ITasksFilter } from './ITasksFilter';
@@ -56,7 +57,7 @@ export interface IState {
   timer: Timer;
   router: IRouteState;
   ui: IUiState;
-  userWorks: DownloadList<UserWork>;
+  userWorks: IDownloadList<IUserWork>;
   versionHistory: VersionHistory;
 
   authorized: {

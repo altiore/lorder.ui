@@ -3,12 +3,11 @@ import includes from 'lodash/includes';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
-import { IEvent, ITask } from '@types';
-import { DownloadList } from '#/@store/@common/entities';
+import { IDownloadList, IEvent, ITask, IUserWork } from '@types';
 import { defaultProjectId, userId } from '#/@store/identity/selectors';
 import { selectedProjectId } from '#/@store/project';
 import { routeProjectId } from '#/@store/router';
-import { allTasks, Task, UserWork } from '#/@store/tasks/index';
+import { allTasks, Task } from '#/@store/tasks/index';
 import { filteredMembers, searchTerm, tasksFilter } from '#/@store/tasksFilter';
 import { currentTask, currentTaskId } from '#/@store/timer';
 import { lastUserWorks } from '#/@store/user-works/selectors';
@@ -46,7 +45,7 @@ export const checkIsCurrent = createSelector(
 
 export const events = createSelector(
   [lastUserWorks, defaultProjectId],
-  (userWorks: DownloadList<UserWork>, defPrId: number | undefined): IEvent[] => {
+  (userWorks: IDownloadList<IUserWork>, defPrId: number | undefined): IEvent[] => {
     return userWorks.list
       .filter(uw => moment().diff(uw.startAt, 'hours') <= 24)
       .sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1))
@@ -54,7 +53,7 @@ export const events = createSelector(
         data: userWork,
         finishAt: userWork.finishAt,
         isActive: userWork.projectId !== defPrId,
-        name: (userWork.task as ITask).title || userWork.taskId.toString(),
+        name: get(userWork, ['task', 'title'], userWork.taskId.toString()),
         startAt: userWork.startAt,
       }));
   }

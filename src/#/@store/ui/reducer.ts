@@ -10,7 +10,7 @@ const toggleUiSettingHandler = (state: IUiState, { payload }: { payload: IUiProp
   });
 };
 
-export const uiReducer = handleActions(
+export const uiReducer: any = handleActions(
   {
     [toggleUiSetting.toString()]: toggleUiSettingHandler,
   } as any,

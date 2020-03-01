@@ -165,7 +165,7 @@ const logOutHandler = () => {
   return new DownloadList(Project);
 };
 
-export const projects = handleActions<S, any, any>(
+export const projects: any = handleActions<S, any, any>(
   {
     [postProject.success]: postProjectSuccessHandler,
     [combineActionsRedux(

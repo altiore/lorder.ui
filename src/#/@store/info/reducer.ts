@@ -12,7 +12,7 @@ const logOutHandler = () => {
   return new Info();
 };
 
-export const info = handleActions<S, P, M>(
+export const info: any = handleActions<S, P, M>(
   {
     [PURGE]: logOutHandler,
   },

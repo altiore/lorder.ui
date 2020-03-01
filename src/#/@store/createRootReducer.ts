@@ -59,7 +59,7 @@ const VARIANT_ENTITY: any = {
   userWorks: UserWork,
 };
 
-const persistConfig: PersistConfig = {
+const persistConfig: PersistConfig<Partial<IState>> = {
   blacklist: [
     'asyncReducers',
     'dialog',
@@ -86,7 +86,7 @@ const persistConfig: PersistConfig = {
       (outboundState, key) => {
         const entity = VARIANT_ENTITY[key];
         if (!entity) {
-          throw new Error(`Could not find entity class name for reducer: '${key}'!`);
+          throw new Error(`Could not find entity class name for reducer: '${key.toString()}'!`);
         }
         return new DownloadList(entity, outboundState);
       },
@@ -102,7 +102,7 @@ const persistConfig: PersistConfig = {
 export async function createRootReducer(history: History, asyncReducers = {}) {
   return persistReducer(
     persistConfig,
-    combineReducers<Partial<IState>>({
+    combineReducers({
       /** common reducers */
       asyncReducers: asyncReducersReducer,
       counter: counterReducer,

@@ -6,11 +6,12 @@ import uniqid from 'uniqid';
 import { DownloadList } from '#/@store/@common/entities';
 import { IRequestAction } from '#/@store/@common/requestActions';
 import { patchUserWork } from '#/@store/user-works/actions';
+import { IDownloadList, IUserWork } from '@types';
 import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork } from './actions';
 import { UserWork } from './UserWork';
 
-type S = DownloadList<UserWork>;
-type StartUserWorkReq = IRequestAction<Partial<UserWork>>;
+type S = IDownloadList<IUserWork>;
+type StartUserWorkReq = IRequestAction<Partial<IUserWork>>;
 interface IDeleteUserWork {
   taskId: number;
 }

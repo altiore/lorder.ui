@@ -9,9 +9,9 @@ import { Task } from '../Task';
 export class UserWork implements IUserWork {
   id?: number | string;
   description?: string;
-  finishAt?: moment.Moment;
+  finishAt?: moment.Moment | null;
   projectId: number;
-  source?: string;
+  source?: string | null;
   startAt: moment.Moment;
   task?: ITask;
   taskId: number;

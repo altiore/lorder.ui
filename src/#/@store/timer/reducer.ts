@@ -27,7 +27,7 @@ const logOutHandler = (state: Timer) => {
   return new Timer();
 };
 
-export const timer = handleActions<Timer, P>(
+export const timer: any = handleActions<Timer, P>(
   {
     [tickUserWorkTimer.toString()]: tickUserWorkTimerHandler,
     [setCurrentUserWorkId.toString()]: setCurrentUserWorkIdHandler,

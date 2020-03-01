@@ -67,7 +67,7 @@ const deleteProjectRoleFailHandler = (state: IS, { payload }) => {
   return state;
 };
 
-export const project = handleActions<IS, any>(
+export const project: any = handleActions<IS, any>(
   {
     [LOCATION_CHANGE]: locationChangeHandler,
     [selectProject.toString()]: selectProjectHandler,

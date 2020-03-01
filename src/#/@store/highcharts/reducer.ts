@@ -25,7 +25,7 @@ const setUpHighchartsHandler = (state: any) => {
   return { isLoaded: true };
 };
 
-export const highcharts = handleActions(
+export const highcharts: any = handleActions(
   {
     [setUpHighcharts.toString()]: setUpHighchartsHandler,
   },

@@ -35,7 +35,7 @@ const logOutHandler = () => {
   return new DownloadList(Feedback);
 };
 
-export const feedback = handleActions<S, P, M>(
+export const feedback: any = handleActions<S, P, M>(
   {
     [fetchFeedbackList.toString()]: fetchFeedbackListHandler,
     [fetchFeedbackList.success]: fetchFeedbackListSuccessHandler,

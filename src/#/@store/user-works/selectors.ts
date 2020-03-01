@@ -5,7 +5,7 @@ import { IState } from '@types';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { UserWork } from '#/@store/tasks';
 
-export const lastUserWorks = (state: IState) => state.userWorks;
+export const lastUserWorks = (state: IState): any => state.userWorks;
 
 export const totalTimeSpentTodayInSeconds = createSelector(
   lastUserWorks,

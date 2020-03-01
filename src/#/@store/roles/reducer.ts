@@ -68,7 +68,7 @@ const deleteManyRolesFailHandler = s => {
   return s.stopLoading();
 };
 
-export const roles = handleActions<S, any, M>(
+export const roles: any = handleActions<S, any, M>(
   {
     [fetchRoles.toString()]: fetchRolesHandler,
     [fetchRoles.success]: fetchRolesSuccessHandler,

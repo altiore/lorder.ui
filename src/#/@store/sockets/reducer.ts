@@ -18,7 +18,7 @@ const updateTaskHandler = (state: ISockets, { payload }) => {
   });
 };
 
-export const socketsReducer = handleActions<ISockets>(
+export const socketsReducer: any = handleActions<ISockets>(
   {
     [initSocketsAction.toString()]: initSocketsHandler,
     [updateTaskAction.toString()]: updateTaskHandler,

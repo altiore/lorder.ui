@@ -101,7 +101,7 @@ const postAndStartUserWorkFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
-export const userWorks = handleActions<S, P>(
+export const userWorks: any = handleActions<S, P>(
   {
     [getUserWorks.toString()]: getUserWorksHandler,
     [getUserWorks.success]: getUserWorksSuccessHandler,

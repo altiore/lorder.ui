@@ -18,7 +18,7 @@ const fetchStatisticsFailHandler = (state: Statistics) => {
   return state;
 };
 
-export const statistics = handleActions(
+export const statistics: any = handleActions(
   {
     [fetchStatistics.toString()]: fetchStatisticsHandler,
     [fetchStatistics.success.toString()]: fetchStatisticsSuccessHandler,

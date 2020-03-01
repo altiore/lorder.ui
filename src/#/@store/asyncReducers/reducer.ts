@@ -1,3 +1,4 @@
+import { Reducer } from 'redux';
 import { handleActions } from 'redux-actions';
 
 import { IMeta } from '@types';
@@ -12,7 +13,7 @@ const replaceReducersHandler = (s, { payload }) => {
   return { list: payload };
 };
 
-export const asyncReducersReducer = handleActions<S>(
+export const asyncReducersReducer: Reducer<S, any> = handleActions(
   {
     [replaceReducers.toString()]: replaceReducersHandler,
   },

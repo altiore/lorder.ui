@@ -22,7 +22,7 @@ const fetchPublicProjectFailHandler = () => {
   return new PublicProject({ isLoaded: false, isLoading: false });
 };
 
-export const publicProject = handleActions<S, P>(
+export const publicProject: any = handleActions<S, P>(
   {
     [fetchPublicProject.toString()]: fetchPublicProjectHandler,
     [fetchPublicProject.success]: fetchPublicProjectSuccessHandler,

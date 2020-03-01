@@ -11,7 +11,7 @@ const locationChangeHandler = (state: any, { payload }: any) => {
     : { ...state, location, action, prevLocation: state.location };
 };
 
-export const routerReducer = (history: History) =>
+export const routerReducer = (history: History): any =>
   handleActions<any, any>(
     {
       [LOCATION_CHANGE]: locationChangeHandler,

@@ -38,7 +38,7 @@ const logOutHandler = () => {
   return new DownloadList(TaskType);
 };
 
-export const taskTypes = handleActions<S, P>(
+export const taskTypes: any = handleActions<S, P>(
   {
     [getAllTaskTypes.toString()]: getAllTaskTypesHandler,
     [getAllTaskTypes.success]: getAllTaskTypesSuccessHandler,

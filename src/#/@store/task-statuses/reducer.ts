@@ -68,7 +68,7 @@ const deleteManyTaskStatusesFailHandler = s => {
   return s.stopLoading();
 };
 
-export const taskStatuses = handleActions<S, any, M>(
+export const taskStatuses: any = handleActions<S, any, M>(
   {
     [fetchTaskStatuses.toString()]: fetchTaskStatusesHandler,
     [fetchTaskStatuses.success]: fetchTaskStatusesSuccessHandler,

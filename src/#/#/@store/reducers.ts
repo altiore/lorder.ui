@@ -13,7 +13,7 @@ const VARIANT_ENTITY: any = {
   users: User,
 };
 
-const authorizedConfig: PersistConfig = {
+const authorizedConfig: PersistConfig<any> = {
   key: 'authorized',
   stateReconciler,
   storage: localforage,
@@ -28,7 +28,7 @@ const authorizedConfig: PersistConfig = {
       (outboundState, key) => {
         const entity = VARIANT_ENTITY[key];
         if (!entity) {
-          throw new Error(`Could not find entity class name for reducer: '${key}'!`);
+          throw new Error(`Could not find entity class name for reducer: '${key.toString()}'!`);
         }
         return new DownloadList(entity, outboundState);
       },

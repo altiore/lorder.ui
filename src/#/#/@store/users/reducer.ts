@@ -2,12 +2,12 @@ import { AxiosResponse } from 'axios';
 import { Action, ActionMeta, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { IMeta, IUser } from '@types';
+import { IDownloadList, IMeta, IUser } from '@types';
 import { DownloadList } from '#/@store/@common/entities';
 import { deleteUser, fetchUsers, patchUser } from './actions';
 import { User } from './User';
 
-type S = DownloadList<IUser>;
+type S = IDownloadList<IUser>;
 interface IU {
   user: IUser;
   role: string;

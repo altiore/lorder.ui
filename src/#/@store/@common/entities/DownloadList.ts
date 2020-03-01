@@ -12,9 +12,9 @@ export class DownloadList<T = any> implements IDownloadList<T> {
   isLoading: boolean = false;
   list: T[] = [];
 
-  private readonly Entity: any;
+  public readonly Entity: any;
 
-  constructor(Entity: any, initial?: Partial<DownloadList> | Array<Partial<T>> | T[], fromArray: boolean = false) {
+  constructor(Entity: any, initial?: Partial<IDownloadList<T>> | Array<Partial<T>> | T[], fromArray: boolean = false) {
     this.Entity = Entity;
     if (!initial) {
       return;
@@ -60,7 +60,7 @@ export class DownloadList<T = any> implements IDownloadList<T> {
     return this.list.map(callbackfn, thisArg);
   }
 
-  startLoading(): DownloadList<T> {
+  startLoading(): IDownloadList<T> {
     return new DownloadList<T>(this.Entity, {
       isLoaded: this.isLoaded,
       isLoading: true,

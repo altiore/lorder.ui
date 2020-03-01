@@ -38,7 +38,7 @@ const clearTaskLogsHandler = () => {
   });
 };
 
-export const taskActive = handleActions<S, P>(
+export const taskActive: any = handleActions<S, P>(
   {
     [fetchTaskLogsAction.toString()]: fetchTaskLogsHandler,
     [fetchTaskLogsAction.success]: fetchTaskLogsSuccessHandler,

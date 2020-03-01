@@ -22,7 +22,7 @@ const fetchAltioreFailHandler = () => {
   return new PublicProject({ isLoaded: false, isLoading: false });
 };
 
-export const publicAltiore = handleActions<S, P>(
+export const publicAltiore: any = handleActions<S, P>(
   {
     [fetchAltiore.toString()]: fetchAltioreHandler,
     [fetchAltiore.success]: fetchAltioreSuccessHandler,
