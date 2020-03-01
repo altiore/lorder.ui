@@ -4,6 +4,7 @@ import { ISelectedProject } from '@types';
 
 export class SelectedProject implements ISelectedProject {
   roles: any[];
+  members: any[];
   selected?: number;
 
   constructor(initial?: object) {

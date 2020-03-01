@@ -39,7 +39,7 @@ export const postProjectMember = requestActions<IProjectMemberData>(
   })
 );
 
-export const deleteProjectMember = requestActions<IProjectMemberData>(
+export const deleteProjectMemberAct = requestActions<IProjectMemberData>(
   'PROJECT_MEMBER/DELETE',
   ({ memberId, projectId }: IProjectMemberData) => ({
     form: PROJECT_MEMBER_FORM_NAME,

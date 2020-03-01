@@ -2,8 +2,8 @@ import React, { lazy } from 'react';
 
 import FaceIcon from '@material-ui/icons/Face';
 import FormatSizeIcon from '@material-ui/icons/FormatSize';
+import LaptopIcon from '@material-ui/icons/Laptop';
 import SettingsIcon from '@material-ui/icons/Settings';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent';
 import SyncAltIcon from '@material-ui/icons/SyncAlt';
@@ -20,7 +20,7 @@ export const MAIN_SUPER_ADMIN_ROUTES = [
   {
     access: ROLES.SUPER_ADMINS,
     exact: true,
-    icon: <SupervisorAccountIcon />,
+    icon: <LaptopIcon />,
     path: '/all-projects',
     title: 'Все Проекты',
     component: lazy(() => import('./#projects')),

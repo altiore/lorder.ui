@@ -10,7 +10,7 @@ interface IOwnProps {
   deleteItem?: (id: number) => void;
   deleteBulk?: (ids: Array<number | string>) => any;
   rows: any[];
-  columns: Array<{ title: string; path: any; name?: string; isNumber?: boolean }>;
+  columns: Array<{ title: string; path: any; name?: string; isNumber?: boolean; allowed?: object }>;
   getId?: (item: any) => number | string;
 }
 

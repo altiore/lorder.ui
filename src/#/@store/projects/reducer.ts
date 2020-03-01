@@ -9,7 +9,7 @@ import { DownloadList } from '../@common/entities';
 import { combineActions } from '../@common/helpers';
 import {
   addTaskTypeToProject,
-  deleteProjectMember,
+  deleteProjectMemberAct,
   deleteTaskTypeFromProject,
   fetchAllParticipantProjectsAction,
   fetchProjectDetails,
@@ -188,7 +188,7 @@ export const projects: any = handleActions<S, any, any>(
     [postProjectMember.success]: postProjectMemberSuccessHandler,
     [postProjectMember.fail]: postProjectMemberFailHandler,
     [updateProjectMemberAccessLevel.toString()]: updateProjectMemberAccessLevelHandler,
-    [deleteProjectMember.toString()]: deleteProjectMemberHandler,
+    [deleteProjectMemberAct.toString()]: deleteProjectMemberHandler,
     [combineActions(getAllProjectTaskTypes, postTaskTypeToProject)]: projectTaskTypeHandler,
 
     [updateProjectAct.success]: updateProjectHandler,

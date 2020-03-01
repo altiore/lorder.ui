@@ -128,12 +128,14 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
           </>
         )}
         <List>
-          <ListItem button onClick={goToPage('/projects')}>
-            <ListItemIcon>
-              <LaptopIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Проекты'} />
-          </ListItem>
+          {!Boolean(superAdminRoutes && superAdminRoutes.length) && (
+            <ListItem button onClick={goToPage('/projects')}>
+              <ListItemIcon>
+                <LaptopIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Все Проекты'} />
+            </ListItem>
+          )}
           {userRole === ROLE.SUPER_ADMIN && Boolean(superAdminRoutes && superAdminRoutes.length) && (
             <>
               {(superAdminRoutes as IRoute[]).map(route => (

@@ -93,7 +93,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface ICrudProps {
   closeDialog: any;
-  columns: Array<{ title: string; path: any; name?: string; isNumber?: boolean; disablePadding?: boolean }>;
+  columns: Array<{
+    title: string;
+    path: any;
+    name?: string;
+    isNumber?: boolean;
+    disablePadding?: boolean;
+    allowed?: object;
+  }>;
   createItem?: any;
   deleteBulk?: (ids: Array<number | string>) => any;
   deleteItem: (id: number) => void;
@@ -128,7 +135,7 @@ export const CrudJsx: React.FC<ICrudProps> = ({
 
   const [page, setPage] = React.useState(0);
 
-  const [dense, setDense] = React.useState(false);
+  const [dense, setDense] = React.useState(true);
 
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -301,11 +308,15 @@ export const CrudJsx: React.FC<ICrudProps> = ({
                           color="primary"
                         />
                       </TableCell>
-                      {columns.map(({ path, name, isNumber }) => (
-                        <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
-                          {get(item, path)}
-                        </TableCell>
-                      ))}
+                      {columns.map(({ allowed, path, name, isNumber }) => {
+                        let value = get(item, path);
+                        value = allowed ? allowed[value] : value;
+                        return (
+                          <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
+                            {value}
+                          </TableCell>
+                        );
+                      })}
                       <TableCell padding="checkbox">
                         <IconButton onClick={handleRemoveClick(item)}>
                           <DeleteIcon />

@@ -8,7 +8,7 @@ import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
 import { ACCESS_LEVEL, Project } from '#/@store/projects';
 
 import NestedRoute from '#/@common/#NestedRoute';
-import { ROLES } from '../../../@store/roles';
+import { ROLES } from '#/@store/roles';
 
 export const PROJECT_ROUTES = [
   {
@@ -16,33 +16,33 @@ export const PROJECT_ROUTES = [
     exact: true,
     icon: 'import-export',
     path: '/projects/:projectId/board',
-    title: 'Доска',
+    title: 'Доска Проекта',
     component: lazy(() => import('./#board')),
   },
-  {
-    access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
-    exact: true,
-    icon: 'list-alt',
-    path: '/projects/:projectId/tasks',
-    title: 'Задачи',
-    component: lazy(() => import('./#tasks')),
-  },
-  {
-    access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
-    exact: true,
-    icon: 'ballot',
-    path: '/projects/:projectId/task-types',
-    title: 'Типы Задач',
-    component: lazy(() => import('./#task-types')),
-  },
-  {
-    access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
-    exact: true,
-    icon: 'people',
-    path: '/projects/:projectId/roles',
-    title: 'Роли проекта',
-    component: lazy(() => import('./#roles')),
-  },
+  // {
+  //   access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+  //   exact: true,
+  //   icon: 'list-alt',
+  //   path: '/projects/:projectId/tasks',
+  //   title: 'Задачи',
+  //   component: lazy(() => import('./#tasks')),
+  // },
+  // {
+  //   access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+  //   exact: true,
+  //   icon: 'ballot',
+  //   path: '/projects/:projectId/task-types',
+  //   title: 'Типы Задач',
+  //   component: lazy(() => import('./#task-types')),
+  // },
+  // {
+  //   access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+  //   exact: true,
+  //   icon: 'people',
+  //   path: '/projects/:projectId/roles',
+  //   title: 'Роли проекта',
+  //   component: lazy(() => import('./#roles')),
+  // },
   {
     access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
     exact: true,
