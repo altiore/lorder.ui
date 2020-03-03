@@ -15,7 +15,7 @@ export interface IGetAuthActivateData {
 export const postAuthMagic = requestActions<IPostAuthMagicData>('USER/SEND_MAGIC_LINK', (data: IPostAuthMagicData) => ({
   form: MAGIC_FORM_NAME,
   request: {
-    data,
+    data: { email: data.email },
     method: 'POST',
     url: '/auth/magic',
   },

@@ -63,7 +63,7 @@ const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProp
           type="password"
         />
         <Button color="secondary" disabled={submitting} fullWidth type="submit" variant="outlined">
-          <span>{isLogin ? 'Войти' : 'Регистрироваться'}</span>
+          <span>{isLogin ? 'Войти' : 'Зарегистрироваться'}</span>
         </Button>
       </form>
     </div>
