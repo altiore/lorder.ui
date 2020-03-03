@@ -18,7 +18,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     fontSize: theme.typography.pxToRem(24),
   },
   content: {
-    backgroundColor: 'rgba(37, 36, 38, 0.6)',
+    backgroundColor: '#242426',
     display: 'flex',
     flexFlow: 'column nowrap',
     flexGrow: 1,
