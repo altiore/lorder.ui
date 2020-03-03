@@ -50,7 +50,7 @@ const Screen1: React.FC<Screen1I> = ({ btnText2, text2 }) => {
           to={'/login'}
           id="main-big-btn"
         >
-          Управлять временем
+          Начать
         </LinkButton>
       </Grid>
       <Grid item md={1} xs={false} />
