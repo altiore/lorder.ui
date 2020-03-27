@@ -49,7 +49,7 @@ const Screen1: React.FC<Screen1I> = ({ btnText2, text2 }) => {
           А ты управляешь своим временем?
         </Typography>
         <Divider className={classes.divider} />
-        <Typography className={classes.motto} variant="h5">
+        <Typography className={classes.motto} variant="h4">
           <span className={classes.title}>ALTIORE</span> - From people to generations
         </Typography>
         <LinkButton

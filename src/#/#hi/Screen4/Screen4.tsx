@@ -55,7 +55,7 @@ const Screen4: React.FC<Screen4I> = ({ services }) => {
             </Grid>
             <Grid item className={classes.loginWrap} lg={5} md={5} sm={12} xs={12}>
               <Paper className={classes.loginBlock}>
-                <Typography gutterBottom color="secondary" className={classes.loginTitle} variant="h5">
+                <Typography gutterBottom color="secondary" className={classes.loginTitle} variant="h4">
                   Присоединитесь к нашей команде просто сейчас
                 </Typography>
                 <AuthForm />

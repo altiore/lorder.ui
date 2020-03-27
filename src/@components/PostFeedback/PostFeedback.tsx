@@ -26,7 +26,7 @@ export interface IPostFeedbackProps extends InjectedFormProps<IPostFeedbackData,
 export const PostFeedbackTsx: React.FunctionComponent<IPostFeedbackProps> = ({ classes, onClose, handleSubmit }) => (
   <form onSubmit={handleSubmit}>
     <DialogTitle className={classes.title} disableTypography>
-      <Typography variant="h5">Оставить Отзыв</Typography>
+      <Typography variant="h4">Оставить Отзыв</Typography>
       <IconButton onClick={onClose}>
         <CloseIcon fontSize="small" />
       </IconButton>

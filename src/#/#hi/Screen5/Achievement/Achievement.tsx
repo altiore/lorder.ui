@@ -15,7 +15,7 @@ export const Achievement: React.FC<AchievementI> = ({ title, value }) => {
   return (
     <Grid item className={classes.item}>
       <div className={classes.value}>{value}</div>
-      <Typography align="center" variant="h5">
+      <Typography align="center" variant="h4">
         {title}
       </Typography>
     </Grid>

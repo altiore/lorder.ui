@@ -21,7 +21,7 @@ export const Person: React.FC<PersonI> = ({ avatar, name }) => {
       <ButtonBase className={classes.avatarWrapper}>
         <Avatar alt={name} src={avatar || manImg} className={classes.avatar} />
       </ButtonBase>
-      <Typography noWrap align="center" color="textPrimary" variant="h5">
+      <Typography noWrap align="center" color="textPrimary" variant="h4">
         {name}
       </Typography>
     </Grid>

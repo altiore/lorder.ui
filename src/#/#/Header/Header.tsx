@@ -19,7 +19,8 @@ import { IUserWorkData } from '#/@store/tasks/user-works';
 import Filters from './Filters';
 import ProjectButton from './ProjectButton';
 import { ProjectField } from './ProjectField';
-import { RightMenu } from './RightMenu';
+// import { RightMenu } from './RightMenu';
+import { AccountMenu } from './account-menu';
 
 import { useStyles } from './styles';
 
@@ -170,7 +171,8 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
             </Switch>
           </div>
           <div>
-            <RightMenu />
+            <AccountMenu />
+            {/*<RightMenu />*/}
           </div>
         </Toolbar>
       </AppBar>

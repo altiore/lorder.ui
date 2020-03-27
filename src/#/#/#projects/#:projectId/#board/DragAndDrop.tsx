@@ -127,7 +127,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
           const filteredItemsLength = filteredItems.length;
           return (
             <div className={classes.column} key={status}>
-              <Typography variant="h2" className={classes.columnTitle}>
+              <Typography variant="h6" className={classes.columnTitle}>
                 <span>{STATUS_NAMES[status]}</span>
                 {!!filteredItemsLength && (
                   <ButtonBase className={classes.arrowWrap} onClick={toggleCollapse(status)}>

@@ -47,7 +47,7 @@ export const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <div className={classes.textBlock}>
-          <Typography variant="h5" align="center" className={classes.textTitle}>
+          <Typography variant="h4" align="center" className={classes.textTitle}>
             {titleText}
           </Typography>
           <Typography align="center" className={classes.textSure}>

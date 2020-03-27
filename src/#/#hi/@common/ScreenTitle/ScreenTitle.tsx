@@ -18,7 +18,7 @@ const ScreenTitle: React.FC<ScreenTitleI> = ({ children, black }) => {
       <Grid item md={1} xs={false} />
       <Grid item className={cn(classes.title, { [classes.titleBlack]: black })} md={11} xs={12}>
         <div className={classes.line} />
-        <Typography variant="h5">{children}</Typography>
+        <Typography variant="h4">{children}</Typography>
       </Grid>
     </>
   );

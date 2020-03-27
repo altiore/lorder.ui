@@ -71,7 +71,7 @@ export const TextAreaMarkdownTsx: React.FC<ITextAreaMarkdownProps> = ({
       <div className={classes.header}>
         {!!icon && icon}
         {!!title && (
-          <Typography variant="h5" className={classes.headerTitle}>
+          <Typography variant="h4" className={classes.headerTitle}>
             {title}
           </Typography>
         )}

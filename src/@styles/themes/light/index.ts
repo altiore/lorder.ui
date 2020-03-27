@@ -72,16 +72,44 @@ export default createMuiTheme({
     },
   ],
   typography: {
+    body1: {
+      fontSize: defaultTheme.typography.pxToRem(14),
+    },
+    body2: {
+      fontSize: defaultTheme.typography.pxToRem(13),
+    },
     button: {
       textTransform: 'none',
     },
+    caption: {
+      fontSize: defaultTheme.typography.pxToRem(34),
+    },
+    h1: {
+      fontSize: defaultTheme.typography.pxToRem(26),
+    },
     h2: {
-      fontSize: defaultTheme.typography.pxToRem(14),
-      fontWeight: 700,
+      fontSize: defaultTheme.typography.pxToRem(22),
+    },
+    h3: {
+      fontSize: defaultTheme.typography.pxToRem(20),
+    },
+    h4: {
+      fontSize: defaultTheme.typography.pxToRem(17),
+      fontWeight: 500,
     },
     h5: {
       fontSize: defaultTheme.typography.pxToRem(18),
       fontWeight: 500,
+    },
+    h6: {
+      fontSize: defaultTheme.typography.pxToRem(13),
+      fontWeight: 700,
+    },
+    subtitle1: {
+      fontSize: defaultTheme.typography.pxToRem(11),
+    },
+    subtitle2: {
+      fontSize: defaultTheme.typography.pxToRem(10),
     },
   },
 });
