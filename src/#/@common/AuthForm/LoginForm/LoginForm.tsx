@@ -45,7 +45,6 @@ const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProp
         <Field
           autoComplete="username"
           autoFocus={autoFocus}
-          className={classes.field}
           component={InputField}
           icon={<UserIco />}
           name="email"
@@ -55,7 +54,6 @@ const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProp
         />
         <Field
           autoComplete="current-password"
-          className={classes.field}
           component={InputField}
           icon={<PassIco />}
           name="password"

@@ -31,8 +31,9 @@ export default function(theme: Theme): Partial<Overrides> {
         paddingLeft: 0,
       },
       input: {
+        backgroundColor: '#fff',
         boxSizing: 'border-box',
-        fontSize: theme.typography.pxToRem(14),
+        fontSize: theme.typography.pxToRem(16),
         height: theme.typography.pxToRem(36),
         minWidth: theme.typography.pxToRem(theme.spacing(20)),
         padding: theme.typography.pxToRem(theme.spacing(1)),
