@@ -26,6 +26,11 @@ export default function(theme: Theme): Partial<Overrides> {
         borderRadius: theme.typography.pxToRem(4),
       },
     },
+    MuiInputLabel: {
+      outlined: {
+        transform: 'translate(14px, 11px) scale(1)',
+      },
+    },
     MuiOutlinedInput: {
       adornedStart: {
         paddingLeft: 0,

@@ -6,7 +6,6 @@ import TextFieldBase from '@material-ui/core/TextField';
 const Input = ({ className, icon, InputProps = {}, ...rest }) => {
   return (
     <TextFieldBase
-      variant="outlined"
       InputProps={{
         startAdornment: icon ? <InputAdornment position="start">{icon}</InputAdornment> : undefined,
         className,

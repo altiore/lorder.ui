@@ -1,7 +1,6 @@
 import { createMuiTheme, Theme } from '@material-ui/core/styles';
 
 import MuiDialog from './MuiDialog';
-import MuiInput from './MuiInput';
 import MuiTextField from './MuiTextField';
 import { background, /*error,*/ primary, secondary } from './palette';
 import { prettyScroll1, SECONDARY_DARKEN } from './variables';
@@ -21,7 +20,6 @@ export default createMuiTheme({
   },
   overrides: {
     ...MuiDialog(defaultTheme),
-    ...MuiInput(defaultTheme),
     ...MuiTextField(defaultTheme),
     MuiExpansionPanelDetails: {
       root: {
@@ -52,6 +50,11 @@ export default createMuiTheme({
     background,
     primary,
     secondary,
+  },
+  props: {
+    MuiTextField: {
+      variant: 'outlined',
+    },
   },
   textGradient: [
     {
