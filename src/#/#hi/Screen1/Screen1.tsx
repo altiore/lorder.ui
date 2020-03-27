@@ -17,20 +17,31 @@ interface Screen1I {
 const Screen1: React.FC<Screen1I> = ({ btnText2, text2 }) => {
   const classes = useStyles();
 
-  const [counter, setCounter] = useState(0);
-  const [slowTimeSpeed, setSlowTimeSpeed] = useState(counter);
-  const handleHoverButton = useCallback(() => {
+  const [counter, setCounter] = useState(1);
+
+  const [slowTimeSpeed, setSlowTimeSpeed] = useState(0);
+
+  const startSlowSpeed = useCallback(() => {
     setCounter(state => state + 1);
     setSlowTimeSpeed(counter);
   }, [counter, setSlowTimeSpeed]);
-  const handleLeaveButton = useCallback(() => {
+
+  const stopSlowSpeed = useCallback(() => {
     setSlowTimeSpeed(0);
   }, [setSlowTimeSpeed]);
+
+  const toggleSpeed = useCallback(() => {
+    if (slowTimeSpeed === 0) {
+      startSlowSpeed();
+    } else {
+      stopSlowSpeed();
+    }
+  }, [slowTimeSpeed, startSlowSpeed, stopSlowSpeed]);
 
   return (
     <Block className={classes.content} direction="row-reverse">
       <Grid item md={1} xs={false} />
-      <Grid item className={classes.block} md={5} xs={12}>
+      <Grid item className={classes.block} md={5} xs={12} onClick={toggleSpeed}>
         <ActiveClock slowTimeSpeed={slowTimeSpeed} />
       </Grid>
       <Grid item className={classes.block} md={5} xs={12}>
@@ -42,8 +53,8 @@ const Screen1: React.FC<Screen1I> = ({ btnText2, text2 }) => {
           <span className={classes.title}>ALTIORE</span> - From people to generations
         </Typography>
         <LinkButton
-          onMouseOver={handleHoverButton}
-          onMouseLeave={handleLeaveButton}
+          onMouseOver={startSlowSpeed}
+          onMouseLeave={stopSlowSpeed}
           variant="outlined"
           color="secondary"
           className={classes.button}

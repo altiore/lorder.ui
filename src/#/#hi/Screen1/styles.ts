@@ -18,13 +18,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
     fontSize: theme.typography.pxToRem(24),
   },
   content: {
-    backgroundColor: '#242426',
+    backgroundColor: 'rgba(37, 36, 38, 0.6)',
     display: 'flex',
     flexFlow: 'column nowrap',
     flexGrow: 1,
     minHeight: MIN_HEIGHT,
     padding: theme.spacing(2),
     zIndex: 1,
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: '#242426',
+    },
   },
   divider: {
     backgroundColor: theme.palette.secondary.dark,

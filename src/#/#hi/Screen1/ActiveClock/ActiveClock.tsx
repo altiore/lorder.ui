@@ -1156,9 +1156,9 @@ const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ donePercent = 12, slowTim
         </g>
       </g>
       {slowTimeSpeed ? (
-        <ClockHands key={`notCrazySpeed${slowTimeSpeed}`} crazy={false} />
+        <ClockHands key={`notCrazySpeed${slowTimeSpeed}`} slowTimeSpeed={slowTimeSpeed} />
       ) : (
-        <ClockHands key="crazySpeed" crazy={true} />
+        <ClockHands key={`crazySpeed${slowTimeSpeed}`} slowTimeSpeed={slowTimeSpeed} />
       )}
     </svg>
   );
