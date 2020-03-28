@@ -62,7 +62,7 @@ export const HiTsx: React.FC<IHiProps> = ({
 
       <AppBar key={'top'} position="static" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" color="inherit">
+          <Typography variant="h5" color="inherit">
             {brandName}
           </Typography>
         </Toolbar>
@@ -80,7 +80,7 @@ export const HiTsx: React.FC<IHiProps> = ({
 
       <AppBar key={'bottom'} position="static" component={'footer'}>
         <Toolbar className={classes.bottomBar}>
-          <Typography variant="h6" color="inherit">
+          <Typography variant="h5" color="inherit">
             Copyright &copy; {brandName}
           </Typography>
           <div className={classes.sectionDesktop}>

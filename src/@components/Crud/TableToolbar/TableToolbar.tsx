@@ -54,7 +54,7 @@ export const TableToolbarTsx: React.FC<TableToolbarProps> = ({ numSelected, enti
       })}
     >
       {numSelected > 0 ? (
-        <Typography className={classes.title} color="inherit" variant="subtitle1">
+        <Typography className={classes.title} color="inherit" variant="body1">
           {numSelected} выбрано
         </Typography>
       ) : (

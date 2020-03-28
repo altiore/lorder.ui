@@ -42,12 +42,8 @@ const Screen5: React.FC<Screen5I> = ({ isPublicAltioreLoaded, isPublicAltioreLoa
       <Block className={classes.team}>
         <ScreenTitle black>Команда проекта Altiore</ScreenTitle>
         <SubTitle black>
-          <Typography noWrap variant="subtitle2">
-            В безумном мире хаоса мы помогаем тебе
-          </Typography>
-          <Typography noWrap variant="subtitle2">
-            навести порядок!
-          </Typography>
+          <Typography noWrap>В безумном мире хаоса мы помогаем тебе</Typography>
+          <Typography noWrap>навести порядок!</Typography>
         </SubTitle>
         <BlockContent>
           {isPublicAltioreLoading ? (

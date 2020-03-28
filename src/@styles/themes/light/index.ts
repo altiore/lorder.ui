@@ -74,10 +74,10 @@ export default createMuiTheme({
   ],
   typography: {
     body1: {
-      fontSize: defaultTheme.typography.pxToRem(14),
+      fontSize: defaultTheme.typography.pxToRem(15),
     },
     body2: {
-      fontSize: defaultTheme.typography.pxToRem(13),
+      fontSize: defaultTheme.typography.pxToRem(14),
     },
     button: {
       textTransform: 'none',

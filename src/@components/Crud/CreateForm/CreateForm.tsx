@@ -35,7 +35,7 @@ export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, IC
 
   return (
     <form onSubmit={handleSubmit} className={classes.root}>
-      <Typography color="inherit" variant="subtitle1">
+      <Typography color="inherit" variant="body1">
         Создать
       </Typography>
       {columns.map(({ name, path, isNumber }) => (
