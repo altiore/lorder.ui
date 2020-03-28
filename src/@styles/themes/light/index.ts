@@ -83,7 +83,8 @@ export default createMuiTheme({
       textTransform: 'none',
     },
     caption: {
-      fontSize: defaultTheme.typography.pxToRem(34),
+      fontSize: defaultTheme.typography.pxToRem(12),
+      lineHeight: defaultTheme.typography.pxToRem(12),
     },
     h1: {
       fontSize: defaultTheme.typography.pxToRem(26),

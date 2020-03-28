@@ -38,9 +38,6 @@ export const styles = (theme: Theme): any => ({
     justifyContent: 'center',
     minWidth: 20,
     padding: '0 4px',
-    // position: 'absolute',
-    // right: theme.spacing(1/2),
-    // top: theme.spacing(1/2),
   },
   valueText: {
     color: valueColor[700],
