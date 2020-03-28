@@ -1,9 +1,11 @@
+import React from 'react';
+import Scrollbars from 'react-custom-scrollbars';
+
+import cn from 'classnames';
+
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { Theme } from '@material-ui/core/styles';
-import cn from 'classnames';
-import React from 'react';
-import Scrollbars from 'react-custom-scrollbars';
 
 export interface IPageProps {
   className?: string;

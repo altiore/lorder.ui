@@ -1,8 +1,10 @@
-import { DialogProps } from '@material-ui/core/Dialog';
+import { ReactNode } from 'react';
+
 import { LOCATION_CHANGE } from 'connected-react-router';
 import get from 'lodash/get';
-import { ReactNode } from 'react';
 import { ActionMeta, handleActions } from 'redux-actions';
+
+import { DialogProps } from '@material-ui/core/Dialog';
 
 import { changeSettings, closeDialog, openDialog } from './actions';
 import { Dialog, IDialogState } from './Dialog';

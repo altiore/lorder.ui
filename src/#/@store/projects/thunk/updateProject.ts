@@ -1,6 +1,6 @@
 import { updateProjectAct } from '../actions';
-import { openedProject } from '../selectors';
 import { Project } from '../Project';
+import { openedProject } from '../selectors';
 
 export const updateProject = (data: Partial<Project>) => async (dispatch, getState) => {
   const project = openedProject(getState());

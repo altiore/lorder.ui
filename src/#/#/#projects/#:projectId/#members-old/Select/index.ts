@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
 import { mapEnum } from '#/@store/@common/helpers';

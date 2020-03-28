@@ -2,25 +2,24 @@ import React, { useCallback, useMemo } from 'react';
 
 import get from 'lodash/get';
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import TableHead from './TableHead';
-import TableToolbar from './TableToolbar';
 import ConfirmationModal from '../ConfirmationModal';
 import CreateForm from './CreateForm';
+import TableHead from './TableHead';
+import TableToolbar from './TableToolbar';
 
 function desc<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -55,6 +54,10 @@ function getSorting<K extends keyof any>(
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    paper: {
+      marginBottom: theme.spacing(2),
+      width: '100%',
+    },
     root: {
       width: '100%',
     },
@@ -63,17 +66,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     rowRoot: {
       '&$rowSelected': {
-        backgroundColor: theme.palette.secondary.main,
         '&:hover': {
           backgroundColor: theme.palette.secondary.main,
         },
+        backgroundColor: theme.palette.secondary.main,
       },
     },
     rowSelected: {},
-    paper: {
-      width: '100%',
-      marginBottom: theme.spacing(2),
-    },
     table: {
       minWidth: 750,
     },

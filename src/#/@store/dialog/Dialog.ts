@@ -1,5 +1,6 @@
-import { DialogProps } from '@material-ui/core/Dialog';
 import map from 'lodash/map';
+
+import { DialogProps } from '@material-ui/core/Dialog';
 
 export interface IDialogState {
   isOpened: boolean;

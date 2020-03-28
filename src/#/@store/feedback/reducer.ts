@@ -1,11 +1,13 @@
-import { AxiosResponse } from 'axios';
 import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { IMeta } from '@types';
+import { AxiosResponse } from 'axios';
+
 import { DownloadList } from '../@common/entities';
 import { fetchFeedbackList } from './actions';
 import { Feedback } from './Feedback';
+
+import { IMeta } from '@types';
 
 type S = DownloadList<Feedback>;
 type P = AxiosResponse<any>;

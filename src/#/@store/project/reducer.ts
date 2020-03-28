@@ -1,9 +1,10 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { Action, handleActions } from 'redux-actions';
 
-import { ISelectedProject } from '@types';
 import { createProjectRoleAct, deleteProjectRoleAct, fetchProjectRolesAct, selectProject } from './actions';
 import { SelectedProject } from './SelectedProject';
+
+import { ISelectedProject } from '@types';
 
 type IS = ISelectedProject;
 interface IChangePayload {

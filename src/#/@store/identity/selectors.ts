@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { IState, ROLE } from '@types';
 import { IIdentityState } from './Identity';
+
+import { IState, ROLE } from '@types';
 
 const baseState = (state: IState): IIdentityState => state.identity;
 
@@ -59,7 +60,7 @@ export const hasRole = createSelector(
 export const initialProfileFormData = createSelector(
   [baseState],
   state => ({
-    tel: state.tel,
     displayName: state.displayName,
+    tel: state.tel,
   })
 );

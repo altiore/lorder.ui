@@ -1,12 +1,15 @@
 import { connect } from 'react-redux';
-import { change } from 'redux-form';
+
 import { createStructuredSelector } from 'reselect';
 
-import { IState } from '@types';
-
 import TaskStatus from '@components/TaskStatus';
+
 import { projectMembersAsUsers } from '#/@store/projects';
 import { allStatuses, EDIT_TASK_FORM, stopUserWork } from '#/@store/tasks';
+
+import { change } from 'redux-form';
+
+import { IState } from '@types';
 
 interface IStatusFieldState {
   assignees: any[];

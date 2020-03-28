@@ -1,8 +1,9 @@
 import { createAction } from 'redux-actions';
 
+import { User } from '#/#/@store/users';
 import { requestActions } from '#/@store/@common/requestActions';
 import { PROJECT_TASK_FORM_NAME } from '#/@store/projects';
-import { User } from '#/#/@store/users';
+
 import { EDIT_TASK_FORM } from './consts';
 
 export interface IProjectTaskData {
@@ -109,9 +110,9 @@ export const patchProjectTask = requestActions<IPatchProjectTaskData>(
   }: IPatchProjectTaskData): any => {
     const data: any = {
       description,
+      performerId,
       source,
       status,
-      performerId,
       title,
       value,
     };
@@ -123,11 +124,11 @@ export const patchProjectTask = requestActions<IPatchProjectTaskData>(
         method: 'PATCH',
         url: `/projects/${projectId}/tasks/${sequenceNumber}`,
       },
+      sequenceNumber,
       success: {
         message: 'Задача успешно обновлена',
         title: 'Успех!',
       },
-      sequenceNumber,
     };
   }
 );
@@ -141,10 +142,10 @@ export const deleteProjectTask = requestActions<IProjectTaskData>(
       method: 'DELETE',
       url: `/projects/${projectId}/tasks/${sequenceNumber}`,
     },
+    sequenceNumber,
     success: {
       message: `Задача удалена из проекта`,
     },
-    sequenceNumber,
   })
 );
 

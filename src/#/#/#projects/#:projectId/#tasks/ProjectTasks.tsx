@@ -1,3 +1,6 @@
+import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -6,15 +9,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
-import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 
 import { Table } from '@components/Table';
+
 import { PatchTaskForm } from '#/@common/TaskForm';
 import { DownloadList } from '#/@store/@common/entities';
-import { PerformersCell } from './PerformersCell';
-
 import { EDIT_TASK_FORM, Task } from '#/@store/tasks';
+
+import { PerformersCell } from './PerformersCell';
 
 export interface IProjectTasksProps {
   isFormMount: boolean;

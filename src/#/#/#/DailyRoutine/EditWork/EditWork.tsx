@@ -1,10 +1,13 @@
-import Button from '@material-ui/core/Button';
-import cn from 'classnames';
-import moment from 'moment';
 import React from 'react';
-import { Field, InjectedFormProps } from 'redux-form';
+
+import cn from 'classnames';
+
+import Button from '@material-ui/core/Button';
 
 import TimeField from '@components/TimeField';
+
+import moment from 'moment';
+import { Field, InjectedFormProps } from 'redux-form';
 
 export interface IEditWorkData {
   finishAt: moment.Moment;

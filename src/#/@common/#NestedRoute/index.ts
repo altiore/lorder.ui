@@ -1,14 +1,15 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
-import { isAuth } from '#/@store/identity';
 import { asyncReducersList } from '#/@store/asyncReducers';
+import { isAuth } from '#/@store/identity';
 
 import { NestedRoute } from './NestedRoute';
 
 const mapState = createStructuredSelector({
-  isAuth,
   asyncReducersList,
+  isAuth,
 } as any);
 
 const mapDispatch = {

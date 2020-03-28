@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions';
 
 import { requestActions } from '#/@store/@common/requestActions';
+
 import { LOGIN_FORM_NAME, MAGIC_FORM_NAME } from './consts';
 
 export interface IPostAuthMagicData {
@@ -52,22 +53,22 @@ export const setIsLoading = createAction('IDENTITY/SET_IS_LOADING');
 
 export const uploadAvatar = requestActions('USER/UPLOAD_AVATAR', file => ({
   request: {
-    method: 'POST',
-    url: '/users/avatar/update',
+    data: { file },
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-    data: { file },
+    method: 'POST',
+    url: '/users/avatar/update',
   },
 }));
 
 export const updateProfile = requestActions('ME/UPDATE', (newUserData: { displayName: string; tel: string }) => ({
+  form: 'ProfileForm',
   request: {
     data: newUserData,
     method: 'patch',
     url: `/me`,
   },
-  form: 'ProfileForm',
   success: {
     message: 'Данные успешна обновлены',
     title: 'Успех!',

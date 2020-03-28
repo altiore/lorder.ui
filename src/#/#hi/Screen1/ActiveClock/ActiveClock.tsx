@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { useStyles } from './styles';
 import ActivityG from './ActivityG';
 import ClockHands from './ClockHands';
 import PeopleG from './PeopleG';
 import ProjectsG from './ProjectsG';
+import { useStyles } from './styles';
 
 interface IActiveClockIcon {
   slowTimeSpeed: number;

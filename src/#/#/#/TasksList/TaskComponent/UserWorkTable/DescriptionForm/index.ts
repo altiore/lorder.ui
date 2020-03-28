@@ -1,10 +1,13 @@
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+
+import { withStyles } from '@material-ui/core/styles';
 
 import { onSubmitForm } from '#/@store/@common/helpers';
 import { IUpdateUserWork } from '#/@store/tasks';
 import { EDIT_USER_WORK_DESCRIPTION_FORM, patchUserWork } from '#/@store/user-works';
+
+import { reduxForm } from 'redux-form';
+
 import { DescriptionFormTsx } from './DescriptionForm';
 import { styles } from './styles';
 

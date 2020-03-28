@@ -1,5 +1,6 @@
-import * as H from 'highcharts';
 import { handleActions } from 'redux-actions';
+
+import * as H from 'highcharts';
 
 import { setUpHighcharts } from './actions';
 

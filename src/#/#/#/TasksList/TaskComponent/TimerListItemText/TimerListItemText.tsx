@@ -1,6 +1,7 @@
+import React from 'react';
+
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
-import React from 'react';
 
 export interface ITimerListItemTextProps {
   time: string;

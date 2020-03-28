@@ -1,9 +1,10 @@
+import React from 'react';
+
 import Fab from '@material-ui/core/Fab';
 import { Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
 import StopIcon from '@material-ui/icons/StopRounded';
-import React from 'react';
 
 export interface IStartStopBtnProps {
   className?: string;

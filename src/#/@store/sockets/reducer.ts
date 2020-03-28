@@ -1,9 +1,9 @@
 import { handleActions } from 'redux-actions';
 
-import { ISockets } from '@types';
+import { initSocketsAction, updateTaskAction } from './actions';
 import { Sockets } from './Sockets';
 
-import { initSocketsAction, updateTaskAction } from './actions';
+import { ISockets } from '@types';
 
 const initSocketsHandler = (state: ISockets) => {
   return new Sockets({

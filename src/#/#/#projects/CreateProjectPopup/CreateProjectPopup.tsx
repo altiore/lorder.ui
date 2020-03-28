@@ -1,13 +1,15 @@
+import React from 'react';
+
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import { TextField } from '@components/TextField';
-import React from 'react';
-import { Field, InjectedFormProps } from 'redux-form';
-import { required } from 'redux-form-validators';
 
 import { MoneyIco } from '@components/@icons/Money';
 import { ProjectIco } from '@components/@icons/Project';
+import { TextField } from '@components/TextField';
+
+import { Field, InjectedFormProps } from 'redux-form';
+import { required } from 'redux-form-validators';
 
 export class IProjectFormProps {
   goToPage: any;

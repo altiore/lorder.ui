@@ -1,6 +1,3 @@
-import TableCell from '@material-ui/core/TableCell';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import classNames from 'classnames';
 import React from 'react';
 import {
   AutoSizer,
@@ -11,6 +8,11 @@ import {
   TableHeaderProps,
   TableProps,
 } from 'react-virtualized';
+
+import classNames from 'classnames';
+
+import TableCell from '@material-ui/core/TableCell';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 
 export interface ColumnType {
   component?: any;

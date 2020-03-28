@@ -56,9 +56,9 @@ export const ClockHands: React.FC<IClockHands> = ({ slowTimeSpeed }) => {
     const minutesTr = 60 * minutes + seconds;
     const hoursTr = 3600 * (hours > 12 ? hours - 12 : hours) + minutesTr;
     return {
-      seconds,
-      minutes: minutesTr,
       hours: hoursTr,
+      minutes: minutesTr,
+      seconds,
     };
     // NOTE: must be related on slowTimeSpeed value due to restart animation work
   }, [slowTimeSpeed]);

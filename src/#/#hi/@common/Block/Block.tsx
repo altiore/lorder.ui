@@ -1,6 +1,8 @@
-import Grid from '@material-ui/core/Grid';
-import cn from 'classnames';
 import React from 'react';
+
+import cn from 'classnames';
+
+import Grid from '@material-ui/core/Grid';
 
 import { useStyles } from './styles';
 

@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-
 import { RouteComponentProps } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
@@ -14,7 +13,9 @@ import TableRow from '@material-ui/core/TableRow';
 import ClearIcon from '@material-ui/icons/Clear';
 
 import ConfirmationModal from '@components/ConfirmationModal';
+
 import { Member } from '#/@store/projects/members/Member';
+
 import { AddMemberForm } from './AddMemberForm';
 import Select from './Select';
 import { useStyles } from './styles';

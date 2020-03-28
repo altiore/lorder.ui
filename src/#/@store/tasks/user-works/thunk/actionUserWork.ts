@@ -1,15 +1,19 @@
 import get from 'lodash/get';
-import moment from 'moment';
-import { change } from 'redux-form';
 
-import { IState } from '@types';
-// import { changeIco } from '#/@store/@common/helpers';
 import { selectProject } from '#/@store/project';
 import { fetchProjectDetails, getProjectById, Project, projectMembers } from '#/@store/projects';
 import { CREATE_USER_WORK_FORM_NAME, getTaskBySequenceNumber, replaceTasks } from '#/@store/tasks/index';
 import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from '#/@store/timer';
+
+import moment from 'moment';
+import { change } from 'redux-form';
+
 import { IUserWorkData, IUserWorkDelete, patchAndStopUserWork, postAndStartUserWork } from '../actions';
 import { UserWork } from '../UserWork';
+
+import { IState } from '@types';
+
+// import { changeIco } from '#/@store/@common/helpers';
 
 export let timer: any;
 

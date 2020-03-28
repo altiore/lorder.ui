@@ -1,9 +1,10 @@
-import { push } from 'connected-react-router';
 import { error } from 'react-notification-system-redux';
 import { connect } from 'react-redux';
+
+import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
-import { withResize } from '@hooks/withResize';
+import { findUserById } from '#/#/@store/users';
 import { closeDialog, openDialog } from '#/@store/dialog';
 import { defaultProjectId, hasRole, userRole } from '#/@store/identity';
 import {
@@ -13,8 +14,10 @@ import {
   removeProject,
   removeProjectByAdmin,
 } from '#/@store/projects';
-import { findUserById } from '#/#/@store/users';
+
 import { Projects as ProjectsJsx } from '../../#projects/Projects';
+
+import { withResize } from '@hooks/withResize';
 
 const mapToState = (ownOnly: boolean = true) =>
   createStructuredSelector({

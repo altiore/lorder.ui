@@ -1,60 +1,61 @@
 import React, { lazy, useCallback, useEffect, useMemo } from 'react';
-
-import { Location } from 'history';
-import get from 'lodash/get';
-import includes from 'lodash/includes';
 import { RouteComponentProps, Switch } from 'react-router-dom';
 
-import { IRoute, ROLE } from '@types';
+import get from 'lodash/get';
+import includes from 'lodash/includes';
 
 import NestedRoute from '#/@common/#NestedRoute';
 import { PatchTaskForm } from '#/@common/TaskForm';
 import { ROLES } from '#/@store/roles';
 
+import { Location } from 'history';
+
 import { Header } from './Header';
 import { useStyles } from './styles';
+
+import { IRoute, ROLE } from '@types';
 
 export const MAIN_USER_ROUTES = [
   {
     access: ROLES.ALL,
+    component: lazy(() => import('./#feedback')),
     icon: 'feedback',
     path: '/feedback',
     title: 'Обратная связь',
-    component: lazy(() => import('./#feedback')),
   },
 
   {
     access: ROLES.USERS,
+    component: lazy(() => import('./#projects')),
     exact: true,
     icon: 'assignment',
     path: '/projects',
     title: 'Мои Проекты',
-    component: lazy(() => import('./#projects')),
   },
   {
     access: ROLES.USERS,
-    path: '/projects/:projectId',
     component: lazy(() => import('./#projects/#:projectId')),
+    path: '/projects/:projectId',
   },
   {
     access: ROLES.USERS,
+    component: lazy(() => import('./#profile')),
     path: '/profile',
     title: 'Настройки пользователя',
-    component: lazy(() => import('./#profile')),
   },
   {
     access: ROLES.USERS,
+    component: lazy(() => import('./#')),
     exact: true,
     icon: 'home',
     path: '/',
     title: 'Дом',
-    component: lazy(() => import('./#')),
   },
 
   {
     access: ROLES.SUPER_ADMINS,
-    path: '/',
     component: lazy(() => import('./#-super-admin')),
+    path: '/',
   },
 ];
 

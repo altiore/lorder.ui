@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
 import PerformerFieldRaw from '#/@common/PerformerField';
 import { projectMembersAsUsers } from '#/@store/projects';
-import { patchProjectTask } from '#/@store/tasks';
 import { routeProjectId } from '#/@store/router';
+import { patchProjectTask } from '#/@store/tasks';
+
 import { IState } from '@types';
 
 const mapStateToProps = createStructuredSelector<IState, { projectId?: number; projectMembers: any[] }>({

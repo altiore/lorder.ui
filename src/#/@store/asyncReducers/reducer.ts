@@ -1,8 +1,10 @@
-import { Reducer } from 'redux';
 import { handleActions } from 'redux-actions';
 
-import { IMeta } from '@types';
+import { Reducer } from 'redux';
+
 import { replaceReducers } from './actions';
+
+import { IMeta } from '@types';
 
 interface S {
   list: string[];

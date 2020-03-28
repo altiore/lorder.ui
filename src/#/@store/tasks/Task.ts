@@ -1,10 +1,11 @@
 import map from 'lodash/map';
 
-import { IDownloadList, ITask, IUser, IUserWork } from '@types';
+import { User } from '#/#/@store/users';
 import { DownloadList } from '#/@store/@common/entities';
 import { convertSecondsToDuration } from '#/@store/@common/helpers';
 import { UserWork } from '#/@store/tasks/index';
-import { User } from '#/#/@store/users';
+
+import { IDownloadList, ITask, IUser, IUserWork } from '@types';
 
 export class Task implements ITask {
   isDetailsLoaded: boolean;

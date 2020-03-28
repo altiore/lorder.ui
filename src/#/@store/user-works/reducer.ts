@@ -1,10 +1,12 @@
-import { AxiosResponse } from 'axios';
 import get from 'lodash/get';
 import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
 import { DownloadList } from '#/@store/@common/entities';
 import { patchAndStopUserWork, postAndStartUserWork, UserWork } from '#/@store/tasks';
+
+import { AxiosResponse } from 'axios';
+
 import { getUserWorks, patchUserWork } from './actions';
 
 type S = DownloadList<UserWork>;

@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
-
-import { Helmet } from 'react-helmet';
 
 import { TelegramIco } from '@components/@icons/Telegram';
 import YouTubeVideo from '@components/YouTubeVideo';
+
 import Screen1 from './Screen1';
 import Screen2 from './Screen2';
 import Screen3 from './Screen3';

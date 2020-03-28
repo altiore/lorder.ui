@@ -1,11 +1,14 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
-import { IState } from '@types';
 import { SelectReactField } from '@components/SelectReactField';
+
 import { selectedProjectId } from '#/@store/project';
 import { getProjectById, Project } from '#/@store/projects';
 import { allTaskList, startUserWork, Task } from '#/@store/tasks';
+
+import { IState } from '@types';
 
 // TODO: move to selector Performance Issue
 function getLabel(state: IState) {

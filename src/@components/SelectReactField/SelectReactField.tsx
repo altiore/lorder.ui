@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+
 import { WrappedFieldInputProps, WrappedFieldMetaProps, WrappedFieldProps } from 'redux-form';
 
 export interface ISelectOptionType {

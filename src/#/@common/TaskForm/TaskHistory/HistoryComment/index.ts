@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
-import { getProjectMemberById } from '#/@store/projects';
-import { IUser } from '@types';
-
 import Comment from '@components/Comment';
+
+import { getProjectMemberById } from '#/@store/projects';
+
+import { IUser } from '@types';
 
 const mapState = createStructuredSelector({
   getProjectMemberById,

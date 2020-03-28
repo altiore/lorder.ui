@@ -1,10 +1,13 @@
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
+
+import { withStyles } from '@material-ui/core/styles';
 
 import { projectMembersAsUsers } from '#/@store/projects';
 import { changeFilter, filteredMembers, searchTerm, toggleMember } from '#/@store/tasksFilter';
 import { isBoardFilterOpened, toggleUiSetting } from '#/@store/ui';
+
 import { FiltersTsx } from './Filters';
 import { styles } from './styles';
 

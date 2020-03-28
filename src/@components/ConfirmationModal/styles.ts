@@ -7,14 +7,14 @@ export const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(2),
   },
   buttons: {
+    '& button': {
+      margin: theme.spacing(0, 1),
+    },
     alignItems: 'center',
     boxShadow: 'none',
     display: 'flex',
     justifyContent: 'space-around',
     margin: 0,
-    '& button': {
-      margin: theme.spacing(0, 1),
-    },
   },
   closeIcon: {},
   dialogContent: {
@@ -51,14 +51,14 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 600,
     lineHeight: 1.5,
   },
-  textTitle: {
-    color: '#000',
-    maxWidth: 435,
-  },
   textSure: {
     color: '#4A5B61',
     fontSize: '16px',
     marginTop: theme.spacing(1),
+    maxWidth: 435,
+  },
+  textTitle: {
+    color: '#000',
     maxWidth: 435,
   },
   warningText: {

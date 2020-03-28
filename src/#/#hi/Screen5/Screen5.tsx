@@ -10,11 +10,13 @@ import Block from '#/#hi/@common/Block';
 import BlockContent from '#/#hi/@common/BlockContent';
 import ScreenTitle from '#/#hi/@common/ScreenTitle';
 import SubTitle from '#/#hi/@common/SubTitle';
-import { IProjectMember } from '@types';
-import { useStyles } from './styles';
+
 import ProjectsAch from './ProjectsAch';
 import PublicProjectsAch from './PublicProjectsAch';
+import { useStyles } from './styles';
 import UsersAch from './UsersAch';
+
+import { IProjectMember } from '@types';
 
 interface Screen5I {
   isPublicAltioreLoaded: boolean;

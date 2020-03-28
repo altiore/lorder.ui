@@ -1,7 +1,8 @@
 import get from 'lodash/get';
 
-import { fetchAllParticipantProjectsAction } from '../actions';
 import { socketTasks } from '#/@store/sockets';
+
+import { fetchAllParticipantProjectsAction } from '../actions';
 
 export const fetchAllParticipantProjects = () => async dispatch => {
   const res = await dispatch(fetchAllParticipantProjectsAction({}));

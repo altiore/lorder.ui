@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
 import { deleteUserWork, getUserWorksById, startTimer, stopUserWork } from '#/@store/tasks';
 import { currentUserWorkId } from '#/@store/timer';
+
 import { UserWorkTableJsx } from './UserWorkTable';
 
 const mapStateToProps = createStructuredSelector({

@@ -1,9 +1,10 @@
 import groupBy from 'lodash/groupBy';
 import { createSelector } from 'reselect';
 
-import { IState } from '@types';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { UserWork } from '#/@store/tasks';
+
+import { IState } from '@types';
 
 export const lastUserWorks = (state: IState): any => state.userWorks;
 

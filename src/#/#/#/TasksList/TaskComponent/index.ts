@@ -1,5 +1,6 @@
-import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
+
+import { push } from 'connected-react-router';
 
 import { openDialog } from '#/@store/dialog';
 import { showWarning } from '#/@store/notifications';

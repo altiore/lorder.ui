@@ -9,12 +9,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
     position: 'relative',
     textTransform: 'none',
     [theme.breakpoints.down('sm')]: {
-      marginLeft: 0,
-      maxWidth: 158,
-      padding: 0,
       '& button': {
         display: 'none',
       },
+      marginLeft: 0,
+      maxWidth: 158,
+      padding: 0,
     },
   },
   inProgress: {

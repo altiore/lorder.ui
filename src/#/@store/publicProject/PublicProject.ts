@@ -1,8 +1,9 @@
 import get from 'lodash/get';
 import map from 'lodash/map';
 
-import { IProjectMember, IProjectStatistic, IPublicProject } from '@types';
 import { convertSecondsToDurationWithLocal, millisecondsToHours } from '#/@store/@common/helpers';
+
+import { IProjectMember, IProjectStatistic, IPublicProject } from '@types';
 
 export class Statistic implements IProjectStatistic {
   members: IProjectMember[];

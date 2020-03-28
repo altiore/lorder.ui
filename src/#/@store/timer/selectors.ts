@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect';
 
-import { IState, IUserWork } from '@types';
 import { convertSecondsToDuration, convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { filteredTaskList } from '#/@store/tasks/selectors';
 import { IUserWorkDelete } from '#/@store/tasks/user-works/actions';
+
+import { IState, IUserWork } from '@types';
 
 const baseState = (state: IState) => state.timer;
 

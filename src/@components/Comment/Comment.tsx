@@ -1,9 +1,10 @@
 import React from 'react';
 
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+
 import moment from 'moment';
 
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import { IUser, TASK_CHANGE_TYPE } from '../../@types';
 
 export interface IComment {

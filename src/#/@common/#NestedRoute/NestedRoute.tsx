@@ -1,12 +1,12 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
-
 import { Redirect, Route, RouteComponentProps } from 'react-router';
 
-import { IRoute } from '@types';
-
-import { injectAsyncReducers, removeAsyncReducers } from '#/@store/createStore';
-import NotFound from '#/@common/NotFoundPage';
 import LoadingPage from '@components/LoadingPage';
+
+import NotFound from '#/@common/NotFoundPage';
+import { injectAsyncReducers, removeAsyncReducers } from '#/@store/createStore';
+
+import { IRoute } from '@types';
 
 interface INestedRoute {
   asyncReducersList?: string[];

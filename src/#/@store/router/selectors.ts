@@ -1,10 +1,12 @@
-import get from 'lodash/get';
 import { match as IMatch } from 'react-router';
+
+import get from 'lodash/get';
 import { createSelector } from 'reselect';
 
-import { IState } from '@types';
 import { getQueryParam } from '#/@store/@common/helpers';
 import { userRole } from '#/@store/identity/selectors';
+
+import { IState } from '@types';
 
 const { createMatchSelector } = require('connected-react-router');
 

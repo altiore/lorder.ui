@@ -1,14 +1,17 @@
-import { AxiosResponse } from 'axios';
 import get from 'lodash/get';
 import { Action, combineActions, handleActions } from 'redux-actions';
-import uniqid from 'uniqid';
 
 import { DownloadList } from '#/@store/@common/entities';
 import { IRequestAction } from '#/@store/@common/requestActions';
 import { patchUserWork } from '#/@store/user-works/actions';
-import { IDownloadList, IUserWork } from '@types';
+
+import { AxiosResponse } from 'axios';
+import uniqid from 'uniqid';
+
 import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork } from './actions';
 import { UserWork } from './UserWork';
+
+import { IDownloadList, IUserWork } from '@types';
 
 type S = IDownloadList<IUserWork>;
 type StartUserWorkReq = IRequestAction<Partial<IUserWork>>;

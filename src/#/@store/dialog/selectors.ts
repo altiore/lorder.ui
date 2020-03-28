@@ -1,8 +1,10 @@
-import { DialogProps } from '@material-ui/core/Dialog';
 import { createSelector } from 'reselect';
 
-import { IState } from '@types';
+import { DialogProps } from '@material-ui/core/Dialog';
+
 import { IDialogState } from './Dialog';
+
+import { IState } from '@types';
 
 const baseState = (state: IState) => state.dialog;
 

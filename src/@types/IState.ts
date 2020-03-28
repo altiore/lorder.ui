@@ -1,5 +1,3 @@
-import { FormStateMap } from 'redux-form';
-
 import { DownloadList } from '#/@store/@common/entities';
 import { IDialogState } from '#/@store/dialog';
 import { Feedback } from '#/@store/feedback';
@@ -12,6 +10,13 @@ import { Task } from '#/@store/tasks';
 import { Timer } from '#/@store/timer';
 import { IUiState } from '#/@store/ui';
 import { VersionHistory } from '#/@store/versionHistory';
+
+import { FormStateMap } from 'redux-form';
+
+import { IRouteState } from './IRouteState';
+import { ITasksFilter } from './ITasksFilter';
+import { IUser } from './IUser';
+
 import {
   IDownloadList,
   IExternalLibraries,
@@ -25,9 +30,6 @@ import {
   IUserRole,
   IUserWork,
 } from '@types';
-import { IRouteState } from './IRouteState';
-import { ITasksFilter } from './ITasksFilter';
-import { IUser } from './IUser';
 
 export interface IState {
   asyncReducers: { list: string[] };

@@ -1,11 +1,15 @@
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
-import { withResize } from '@hooks/withResize';
+import { withStyles } from '@material-ui/core/styles';
+
 import { feedbackList, fetchFeedbackList } from '#/@store/feedback';
+
 import { Feedback as FeedbackJsx } from './Feedback';
 import { styles } from './styles';
+
+import { withResize } from '@hooks/withResize';
 
 export default connect(
   createStructuredSelector({

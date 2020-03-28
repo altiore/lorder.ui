@@ -9,6 +9,7 @@ const defaultTheme: Theme = createMuiTheme({});
 
 export default createMuiTheme({
   themeName: 'LIGHT',
+
   mainContent: {
     scroll: prettyScroll1,
     width: 1012,
@@ -116,21 +117,21 @@ export default createMuiTheme({
 
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
-    themeName?: string;
     mainContent: {
       scroll: object;
       width: number;
     };
     textGradient: object[];
+    themeName?: string;
   }
 
   // allow configuration using `createMuiTheme`
   interface ThemeOptions {
-    themeName?: string;
     mainContent?: {
       scroll?: object;
       width?: number;
     };
     textGradient?: object[];
+    themeName?: string;
   }
 }

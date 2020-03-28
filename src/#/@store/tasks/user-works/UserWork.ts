@@ -1,10 +1,13 @@
 import includes from 'lodash/includes';
 import map from 'lodash/map';
+
+import { convertSecondsToDuration } from '#/@store/@common/helpers';
+
 import moment from 'moment';
 
-import { ITask, IUserWork } from '@types';
-import { convertSecondsToDuration } from '#/@store/@common/helpers';
 import { Task } from '../Task';
+
+import { ITask, IUserWork } from '@types';
 
 export class UserWork implements IUserWork {
   id?: number | string;

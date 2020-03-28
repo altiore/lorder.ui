@@ -1,11 +1,15 @@
-import MenuItem from '@material-ui/core/MenuItem';
-import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
-import cn from 'classnames';
 import React from 'react';
 
-import { ITask } from '@types';
+import cn from 'classnames';
+
+import MenuItem from '@material-ui/core/MenuItem';
+import PlayArrowRounded from '@material-ui/icons/PlayArrowRounded';
+
 import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
+
 import { Project } from '#/@store/projects';
+
+import { ITask } from '@types';
 
 const match = require('autosuggest-highlight/match');
 const parse = require('autosuggest-highlight/parse');

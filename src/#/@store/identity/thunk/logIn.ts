@@ -1,14 +1,17 @@
 import { push } from 'connected-react-router';
 import get from 'lodash/get';
+
+import { showSuccess } from '#/@store/notifications';
+
 import { Dispatch } from 'redux';
 import { clearAsyncError } from 'redux-form';
 
-import { showSuccess } from '#/@store/notifications';
+import { logInPatch } from '../actions';
+import { loadInitialData } from './loadInitialData';
+
 import { INotification } from '@types';
 import getMailClientLinkByEmail from '@utils/getMailClientLinkByEmail';
 import openUrlInNewTab from '@utils/openUrlInNewTab';
-import { logInPatch } from '../actions';
-import { loadInitialData } from './loadInitialData';
 
 export const logIn = async (data: { username: string; password: string }, dispatch: Dispatch<any>, { isLogin }) => {
   try {

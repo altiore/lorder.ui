@@ -1,7 +1,7 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "linterOptions": {
-    "exclude": ["config/**/*.js", "node_modules/*.ts", "node_modules/**/*.ts"]
+    "exclude": ["node_modules/*.ts", "node_modules/**/*.ts"]
   },
   "rules": {
     "only-arrow-functions": false,
@@ -13,12 +13,64 @@
     "max-classes-per-file": false,
     "member-access": [true, "no-public"],
     "interface-name": false,
-    "object-literal-sort-keys": false,
+    "object-literal-sort-keys": [true, "ignore-case"],
     "ordered-imports": [
       true,
       {
-        "import-sources-order": "any",
-        "named-imports-order": "case-insensitive"
+        "named-imports-order": "case-insensitive",
+        "grouped-imports": true,
+        "groups": [
+          {
+            "name": "react",
+            "match": "^react",
+            "order": 10
+          },
+          {
+            "name": "testing",
+            "match": "^@testing-library",
+            "order": 11
+          },
+          {
+            "name": "external libraries",
+            "match": "^lodash|classnames|^connected-react-router.*|^redux-persist.*|^reselect.*|^redux-actions.*",
+            "order": 20
+          },
+          {
+            "name": "@material-ui",
+            "match": "^@material-ui.*",
+            "order": 30
+          },
+          {
+            "name": "@components",
+            "match": "^@components.*",
+            "order": 40
+          },
+          {
+            "name": "specific routes/components",
+            "match": "^#.*",
+            "order": 41
+          },
+          {
+            "name": "@store",
+            "match": "^.*@store.*",
+            "order": 50
+          },
+          {
+            "name": "@styles",
+            "match": "^@styles.*",
+            "order": 51
+          },
+          {
+            "name": "should be moved to other group!!!",
+            "match": "^\\w",
+            "order": 52
+          },
+          {
+            "name": "relative modules",
+            "match": "^\\.",
+            "order": 60
+          }
+        ]
       }
     ]
   }

@@ -1,10 +1,14 @@
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
-import { ThunkDispatch } from 'redux-thunk';
+
 import { createStructuredSelector } from 'reselect';
 
+import { withStyles } from '@material-ui/core/styles';
+
 import { patchUserWork } from '#/@store/user-works';
+
+import { reduxForm } from 'redux-form';
+import { ThunkDispatch } from 'redux-thunk';
+
 import { EditWorkTsx, IEditWorkData } from './EditWork';
 import { styles } from './styles';
 

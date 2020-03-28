@@ -1,10 +1,13 @@
-import get from 'lodash-es/get';
 import { connect } from 'react-redux';
+
 import { push } from 'connected-react-router';
-import { reduxForm } from 'redux-form';
+import get from 'lodash-es/get';
 
 import { onSubmitForm } from '#/@store/@common/helpers';
 import { IPostProjectData, postProject } from '#/@store/projects';
+
+import { reduxForm } from 'redux-form';
+
 import { CreateProjectPopupJsx, IProjectFormProps } from './CreateProjectPopup';
 
 const CreateProjectPopup = connect(

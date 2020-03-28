@@ -1,13 +1,14 @@
-import localforage from 'localforage';
-import { combineReducers } from 'redux';
 import { createTransform, persistReducer } from 'redux-persist';
 import { PersistConfig } from 'redux-persist/es/types';
-
 import stateReconciler from 'redux-persist/lib/stateReconciler/autoMergeLevel1';
 
 import { DownloadList } from '#/@store/@common/entities';
-import { users } from './users/reducer';
+
+import localforage from 'localforage';
+import { combineReducers } from 'redux';
+
 import { User } from './users';
+import { users } from './users/reducer';
 
 const VARIANT_ENTITY: any = {
   users: User,

@@ -1,16 +1,20 @@
+import React from 'react';
+import Popover from 'react-popover';
+
+import get from 'lodash/get';
+import minBy from 'lodash/minBy';
+
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
 import Paper from '@material-ui/core/Paper';
 import { Theme } from '@material-ui/core/styles';
-import get from 'lodash/get';
-import minBy from 'lodash/minBy';
+
 import moment from 'moment';
-import React from 'react';
-import Popover from 'react-popover';
+
+import { HoverInfo } from './HoverInfo';
 
 import { IEvent } from '@types';
-import { HoverInfo } from './HoverInfo';
 
 export interface IDailyRoutineProps {
   classes: any;

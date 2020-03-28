@@ -1,9 +1,12 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
-import { IProjectMember, IState } from '@types';
 import { altioreMembers, isPublicAltioreLoaded, isPublicAltioreLoading } from '#/@store/publicAltiore';
+
 import Screen5 from './Screen5';
+
+import { IProjectMember, IState } from '@types';
 
 interface IMappedProps {
   isPublicAltioreLoaded: boolean;

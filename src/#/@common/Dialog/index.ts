@@ -1,11 +1,15 @@
-import { DialogProps } from '@material-ui/core/Dialog';
-import { withTheme } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
-import { withResize } from '@hooks/withResize';
+import { DialogProps } from '@material-ui/core/Dialog';
+import { withTheme } from '@material-ui/core/styles';
+
 import { closeDialog, dialogProps, isDialogOpened, restProps } from '#/@store/dialog';
+
 import { DialogTsx } from './DialogTsx';
+
+import { withResize } from '@hooks/withResize';
 
 interface IMappedState {
   component: any;

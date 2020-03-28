@@ -1,11 +1,13 @@
+import React from 'react';
+
+import debounce from 'lodash/debounce';
+
 import green from '@material-ui/core/colors/green';
 import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
-import debounce from 'lodash/debounce';
+
 import moment from 'moment';
 import { createSliderWithTooltip, Range } from 'rc-slider';
-import React from 'react';
-
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 

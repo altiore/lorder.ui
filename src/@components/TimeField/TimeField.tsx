@@ -1,8 +1,8 @@
-import moment from 'moment';
 import React from 'react';
-import { WrappedFieldProps } from 'redux-form';
 
+import moment from 'moment';
 import 'rc-time-picker/assets/index.css';
+import { WrappedFieldProps } from 'redux-form';
 const TimePicker = require('rc-time-picker').DoneG;
 
 export interface ITimeFieldProps extends WrappedFieldProps {

@@ -1,19 +1,21 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
 import { deleteProjectRole, fetchProjectRoles, projectRoles } from '#/@store/project';
 import { fetchRoles, rolesList } from '#/@store/roles';
+
 import { ProjectRolesJsx } from './ProjectRoles';
 
 const mapState = createStructuredSelector({
-  rolesList,
   projectRoles,
+  rolesList,
 } as any);
 
 const mapDispatch = {
+  deleteProjectRole,
   fetchProjectRoles,
   fetchRoles,
-  deleteProjectRole,
 };
 
 export default connect(

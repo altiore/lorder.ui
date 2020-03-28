@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { WrappedFieldProps } from 'redux-form';
-
 import Button from '@material-ui/core/Button';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+
+import { WrappedFieldProps } from 'redux-form';
 
 interface IStatusField extends WrappedFieldProps {
   changeStatusToggle?: any;
@@ -12,8 +12,8 @@ interface IStatusField extends WrappedFieldProps {
 
 export const useStyles = makeStyles((theme: Theme) => ({
   button: {
-    paddingRight: 26,
     minWidth: theme.spacing(16),
+    paddingRight: 26,
   },
 }));
 

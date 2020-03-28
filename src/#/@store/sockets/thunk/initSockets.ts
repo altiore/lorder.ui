@@ -1,9 +1,10 @@
+import { updateProjectTask } from '#/@store/tasks';
+
 import openSocket from 'socket.io-client';
 
-import { ITask } from '@types';
-
-import { updateProjectTask } from '#/@store/tasks';
 import { initSocketsAction, updateTaskAction } from '../actions';
+
+import { ITask } from '@types';
 
 export const socketTasks = openSocket(`${process.env.REACT_APP_API_BASE_URL}/projects/tasks`);
 

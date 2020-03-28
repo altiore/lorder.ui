@@ -1,6 +1,7 @@
 import map from 'lodash/map';
 
 import { User } from '#/#/@store/users';
+
 import { IUser } from '@types';
 
 export interface IMember {

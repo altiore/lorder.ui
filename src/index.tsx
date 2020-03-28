@@ -1,17 +1,19 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+
+import { ConnectedRouter } from 'connected-react-router';
+import get from 'lodash/get';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { ConnectedRouter } from 'connected-react-router';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import get from 'lodash/get';
 
 import App from '#';
 import Dialog from '#/@common/Dialog';
 import Notification from '#/@common/Notification';
 import { createStore } from '#/@store/createStore';
+
 import '@styles/base.css';
 import lightTheme from '@styles/themes/light';
 
@@ -36,7 +38,6 @@ createStore().then(({ store, history }) => {
 
   // Learn more about service workers: https://bit.ly/CRA-PWA
   serviceWorker.register({
-    store,
     // onSuccess: async registration => {},
     onUpdate: async registration => {
       const waitingServiceWorker = registration.waiting;
@@ -50,5 +51,6 @@ createStore().then(({ store, history }) => {
         waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' });
       }
     },
+    store,
   });
 });

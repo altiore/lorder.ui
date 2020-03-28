@@ -1,13 +1,15 @@
 import React, { useMemo } from 'react';
+import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
+
+import get from 'lodash/get';
 
 import grey from '@material-ui/core/colors/grey';
 import Typography from '@material-ui/core/Typography';
 import BugReportIcon from '@material-ui/icons/BugReport';
 import ExtensionIcon from '@material-ui/icons/Extension';
-import get from 'lodash/get';
-import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 
 import Avatar from '@components/Avatar';
+
 import { Task } from '#/@store/tasks';
 
 export interface ITaskCard extends Partial<Task> {

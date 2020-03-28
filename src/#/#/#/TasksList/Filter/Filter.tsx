@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
+import get from 'lodash-es/get';
+
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import Grow from '@material-ui/core/Grow';
@@ -9,7 +11,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DoneIcon from '@material-ui/icons/Done';
-import get from 'lodash-es/get';
 
 type FilterType = 'smart' | 'recent' | 'new';
 

@@ -1,9 +1,7 @@
 import get from 'lodash/get';
 import includes from 'lodash/includes';
-import moment from 'moment';
 import { createSelector } from 'reselect';
 
-import { IDownloadList, IEvent, ITask, IUserWork } from '@types';
 import { defaultProjectId, userId } from '#/@store/identity/selectors';
 import { selectedProjectId } from '#/@store/project';
 import { routeProjectId } from '#/@store/router';
@@ -11,6 +9,10 @@ import { allTasks, Task } from '#/@store/tasks/index';
 import { filteredMembers, searchTerm, tasksFilter } from '#/@store/tasksFilter';
 import { currentTask, currentTaskId } from '#/@store/timer';
 import { lastUserWorks } from '#/@store/user-works/selectors';
+
+import moment from 'moment';
+
+import { IDownloadList, IEvent, ITask, IUserWork } from '@types';
 
 export const filteredByPerformerTasks = createSelector(
   [allTasks, userId, currentTaskId],

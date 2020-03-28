@@ -4,8 +4,9 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { LinkButton } from '#/@common/LinkButton';
 import Block from '#/#hi/@common/Block';
+import { LinkButton } from '#/@common/LinkButton';
+
 import ActiveClock from './ActiveClock';
 import { useStyles } from './styles';
 

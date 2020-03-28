@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
 import { createRole, deleteManyRoles, deleteRole, fetchRoles, rolesList } from '#/@store/roles';
+
 import { Roles } from './Roles';
 
 const mapState = createStructuredSelector({
@@ -10,8 +12,8 @@ const mapState = createStructuredSelector({
 
 const dispatchState = {
   createRole,
-  deleteRole,
   deleteManyRoles,
+  deleteRole,
   fetchRoles,
 };
 

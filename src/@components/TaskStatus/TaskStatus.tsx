@@ -1,7 +1,8 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react';
-import { Field } from 'redux-form';
 
 import { ClickAwayListener, Grow, Popper } from '@material-ui/core';
+
+import { Field } from 'redux-form';
 
 import AssigneeList from './AssigneeList';
 import ChangeStatus from './ChangeStatus';

@@ -1,46 +1,48 @@
-import { History } from 'history';
-import * as localForage from 'localforage';
 import { reducer as notifications } from 'react-notification-system-redux';
-import { combineReducers } from 'redux';
-import { reducer as form } from 'redux-form';
+
 import { createTransform, PersistConfig, persistReducer } from 'redux-persist';
 
-import { IState } from '@types';
+import { History } from 'history';
+import * as localForage from 'localforage';
+import { combineReducers } from 'redux';
+import { reducer as form } from 'redux-form';
+
 import { DownloadList } from './@common/entities';
+import { asyncReducersReducer } from './asyncReducers/reducer';
 import counterReducer from './counter/reducer';
 import { dialog } from './dialog';
+import { externalLibraries } from './externalLibraries/reducer';
+import { feedback } from './feedback/reducer';
 import { highcharts } from './highcharts/reducer';
 import { identity } from './identity';
 import { info } from './info/reducer';
+import { other } from './other/reducer';
+import { project } from './project';
 import { Project } from './projects';
+import { projects } from './projects';
 import { publicAltiore } from './publicAltiore/reducer';
 import { publicProject } from './publicProject';
 import { roles } from './roles/reducer';
+import { UserRole } from './roles/UserRole';
 import { routerReducer } from './router/reducer';
 import { socketsReducer } from './sockets/reducer';
 import { statistics } from './statistics/reducer';
-import { TaskType } from './task-types';
-import { Task, UserWork } from './tasks';
-import { uiReducer } from './ui';
-import { versionHistory } from './versionHistory';
-
-import { asyncReducersReducer } from './asyncReducers/reducer';
-import { externalLibraries } from './externalLibraries/reducer';
-import { feedback } from './feedback/reducer';
-import { other } from './other/reducer';
-import { project } from './project';
-import { projects } from './projects';
 import { taskActive } from './task-active/reducer';
-import { taskStatuses } from './task-statuses/reducer';
 import { taskStatusMoves } from './task-status-moves/reducer';
+import { TaskStatusMove } from './task-status-moves/TaskStatusMove';
+import { taskStatuses } from './task-statuses/reducer';
+import { TaskStatus } from './task-statuses/TaskStatus';
+import { TaskType } from './task-types';
 import { taskTypes } from './task-types';
+import { Task, UserWork } from './tasks';
 import { tasks } from './tasks/reducer';
 import { tasksFilter } from './tasksFilter/reducer';
 import { timer } from './timer';
+import { uiReducer } from './ui';
 import { userWorks } from './user-works';
-import { UserRole } from './roles/UserRole';
-import { TaskStatus } from './task-statuses/TaskStatus';
-import { TaskStatusMove } from './task-status-moves/TaskStatusMove';
+import { versionHistory } from './versionHistory';
+
+import { IState } from '@types';
 
 localForage.config({
   description: 'Altiore contribution version 1.0',
@@ -52,10 +54,10 @@ localForage.config({
 const VARIANT_ENTITY: any = {
   projects: Project,
   roles: UserRole,
+  tasks: Task,
   taskStatuses: TaskStatus,
   taskStatusMoves: TaskStatusMove,
   taskTypes: TaskType,
-  tasks: Task,
   userWorks: UserWork,
 };
 
@@ -128,11 +130,11 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
       project,
       projects,
       taskActive,
+      tasks,
+      tasksFilter,
       taskStatuses,
       taskStatusMoves,
       taskTypes,
-      tasks,
-      tasksFilter,
       timer,
       userWorks,
 

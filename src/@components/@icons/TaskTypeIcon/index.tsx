@@ -1,7 +1,8 @@
+import React from 'react';
+
 import { SvgIconProps } from '@material-ui/core/SvgIcon';
 import BugReportIcon from '@material-ui/icons/BugReport';
 import ExtensionIcon from '@material-ui/icons/Extension';
-import React from 'react';
 
 export interface ITaskTypeProps extends SvgIconProps {
   typeId?: string | number;

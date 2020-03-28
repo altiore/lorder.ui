@@ -8,7 +8,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   avatarWrapper: {
     borderRadius: '50%',
     position: 'absolute',
-    top: -2,
     right: -14.5,
+    top: -2,
   },
 }));

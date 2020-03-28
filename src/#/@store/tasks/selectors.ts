@@ -2,10 +2,12 @@ import get from 'lodash/get';
 import pick from 'lodash/pick';
 import { createSelector } from 'reselect';
 
-import { IState } from '@types';
 import { defaultProjectId } from '#/@store/identity/selectors';
 import { routeProjectId, routeTaskSequenceNumber } from '#/@store/router/selectors';
+
 import { Task } from './Task';
+
+import { IState } from '@types';
 
 export const allTasks = (state: IState) => state.tasks;
 

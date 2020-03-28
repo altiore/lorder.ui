@@ -1,7 +1,7 @@
+import { connect } from 'react-redux';
+
 import { push, replace } from 'connected-react-router';
 import get from 'lodash/get';
-import { connect } from 'react-redux';
-import { change, reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { onSubmitFail } from '#/@store/@common/helpers';
@@ -18,6 +18,9 @@ import {
   postProjectTask,
   startUserWork,
 } from '#/@store/tasks';
+
+import { change, reduxForm } from 'redux-form';
+
 import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({

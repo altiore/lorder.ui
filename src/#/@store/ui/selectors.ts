@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { IState } from '@types';
 import { IUiState } from './Ui';
+
+import { IState } from '@types';
 
 const baseState = (state: IState): IUiState => state.ui;
 

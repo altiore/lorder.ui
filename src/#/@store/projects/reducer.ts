@@ -1,10 +1,10 @@
-import { AxiosResponse } from 'axios';
 import cloneDeep from 'lodash/cloneDeep';
 import get from 'lodash/get';
 import { Action, ActionMeta, combineActions as combineActionsRedux, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { IMeta } from '@types';
+import { AxiosResponse } from 'axios';
+
 import { DownloadList } from '../@common/entities';
 import { combineActions } from '../@common/helpers';
 import {
@@ -26,6 +26,8 @@ import {
 import { Member } from './members/Member';
 import { Project } from './Project';
 import { projectTaskTypes } from './taskTypes/reducer';
+
+import { IMeta } from '@types';
 
 type S = DownloadList<Project>;
 interface IM {

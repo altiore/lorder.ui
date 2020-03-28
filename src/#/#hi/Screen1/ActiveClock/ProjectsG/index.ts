@@ -1,9 +1,12 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
 import { activeProjectsCount } from '#/@store/statistics';
-import { IState } from '@types';
+
 import ProjectsG, { IProjectsG } from './ProjectsG';
+
+import { IState } from '@types';
 
 const mapState = createStructuredSelector<IState, IProjectsG>({
   count: activeProjectsCount,

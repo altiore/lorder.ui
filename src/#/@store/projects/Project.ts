@@ -2,6 +2,7 @@ import map from 'lodash/map';
 
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { Task } from '#/@store/tasks';
+
 import { DownloadList } from '../@common/entities';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';

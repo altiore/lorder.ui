@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
 import Screen3 from './Screen3';

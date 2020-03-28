@@ -1,5 +1,7 @@
 import React, { FC, KeyboardEvent, MouseEvent, SyntheticEvent, useCallback, useState } from 'react';
 
+import Avatar from '@material-ui/core/Avatar';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Divider from '@material-ui/core/Divider';
 import Grow from '@material-ui/core/Grow';
@@ -10,17 +12,21 @@ import Popper from '@material-ui/core/Popper';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 // import SupportIcon from '@material-ui/icons/ContactSupport';
+import ExitIcon from '@material-ui/icons/ExitToApp';
 // import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import SecurityIcon from '@material-ui/icons/Lock';
 // import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import PersonIcon from '@material-ui/icons/Person';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Avatar from '@material-ui/core/Avatar';
-import Tooltip from '@material-ui/core/Tooltip';
 
 import { ROLE } from '@types';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  avatar: {
+    margin: '10px',
+  },
+  avatarButton: {
+    borderRadius: '50%',
+  },
   email: {
     fontWeight: 'bold',
     textTransform: 'uppercase',
@@ -37,6 +43,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   icon: {
     color: theme.palette.primary.light,
   },
+  item: {
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'space-between',
+  },
+  menu: {
+    zIndex: 1301,
+  },
   menuItem: {
     '& svg': {
       marginRight: theme.spacing(1),
@@ -46,29 +60,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: 40,
     paddingLeft: theme.spacing(1.5),
   },
-  popper: {
-    zIndex: 1201,
-  },
+  menuPaper: {},
   paper: {
     overflow: 'hidden',
     width: 220,
   },
-
-  avatar: {
-    margin: '10px',
+  popper: {
+    zIndex: 1201,
   },
-  avatarButton: {
-    borderRadius: '50%',
-  },
-  item: {
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    justifyContent: 'space-between',
-  },
-  menu: {
-    zIndex: 1301,
-  },
-  menuPaper: {},
   root: {
     display: 'flex',
   },
@@ -172,12 +171,12 @@ export const AccountMenuTsx: FC<IAccountMenuTsx> = ({
               <ClickAwayListener onClickAway={clickAway}>
                 <div>
                   {/* раскомментировать, если будет в дизайне */}
-                  {/*<div className={classes.header}>*/}
-                  {/*  <Typography className={classes.email} variant="h4" noWrap>*/}
-                  {/*    {userEmail}*/}
-                  {/*  </Typography>*/}
-                  {/*  <Typography variant="subtitle2">{userRole}</Typography>*/}
-                  {/*</div>*/}
+                  <div className={classes.header}>
+                    <Typography className={classes.email} variant="h4" noWrap>
+                      {userEmail}
+                    </Typography>
+                    <Typography variant="subtitle2">{userRole}</Typography>
+                  </div>
                   <MenuList autoFocusItem={open} onKeyDown={handleListKeyDown}>
                     <MenuItem className={classes.menuItem} onClick={goToProfile}>
                       <PersonIcon className={classes.icon} />
@@ -192,7 +191,10 @@ export const AccountMenuTsx: FC<IAccountMenuTsx> = ({
                   </MenuList>
                   <Divider />
                   <MenuList autoFocusItem={open} onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={logOut}>Выйти</MenuItem>
+                    <MenuItem className={classes.menuItem} onClick={logOut}>
+                      <ExitIcon className={classes.icon} />
+                      <Typography variant="h6">Выйти</Typography>
+                    </MenuItem>
                   </MenuList>
                 </div>
               </ClickAwayListener>

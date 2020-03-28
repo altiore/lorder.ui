@@ -1,4 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+import includes from 'lodash/includes';
 
 import { Button, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,23 +11,22 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import includes from 'lodash/includes';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Field, InjectedFormProps } from 'redux-form';
-import { length, required } from 'redux-form-validators';
 
-import { INotification } from '@types';
-
+import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
 import InputField from '@components/InputField';
 import { TextField } from '@components/TextField';
-import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
-import StatusField from './StatusField';
 
 import { parseNumber } from '#/@store/@common/helpers';
 
+import { Field, InjectedFormProps } from 'redux-form';
+import { length, required } from 'redux-form-validators';
+
+import StatusField from './StatusField';
+import { useStyles } from './styles';
 import TaskHistory from './TaskHistory';
 import { TextAreaMarkdown } from './TextAreaMarkdown';
-import { useStyles } from './styles';
+
+import { INotification } from '@types';
 
 export interface ITaskFormData {
   isDetailsLoaded: boolean;

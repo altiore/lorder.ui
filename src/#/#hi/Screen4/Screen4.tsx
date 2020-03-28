@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
+import VisibilitySensor from 'react-visibility-sensor';
 
 import Collapse from '@material-ui/core/Collapse';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import VisibilitySensor from 'react-visibility-sensor';
-
-import AuthForm from '#/@common/AuthForm';
 import Block from '#/#hi/@common/Block';
 import BlockContent from '#/#hi/@common/BlockContent';
 import ScreenTitle from '#/#hi/@common/ScreenTitle';
+import AuthForm from '#/@common/AuthForm';
+
 import StarItem from './StarItem';
 import { useStyles } from './styles';
 

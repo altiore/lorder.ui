@@ -1,6 +1,6 @@
 import { requestActions } from '../@common/requestActions';
-import { UserRole } from './UserRole';
 import { CREATE_ROLE_FORM } from './consts';
+import { UserRole } from './UserRole';
 
 export const fetchRoles = requestActions('ROLES/FETCH_ALL', () => ({
   request: {
@@ -9,12 +9,12 @@ export const fetchRoles = requestActions('ROLES/FETCH_ALL', () => ({
 }));
 
 export const createRole = requestActions('ROLES/CREATE_NEW', (data: Partial<UserRole>) => ({
+  form: CREATE_ROLE_FORM,
   request: {
+    data,
     method: 'POST',
     url: '/roles',
-    data,
   },
-  form: CREATE_ROLE_FORM,
 }));
 
 export const deleteRole = requestActions('ROLES/DELETE', (roleId: number) => ({
@@ -27,11 +27,11 @@ export const deleteRole = requestActions('ROLES/DELETE', (roleId: number) => ({
 
 export const deleteManyRoles = requestActions('ROLES/DELETE_MANY', (roleIds: number[]) => ({
   request: {
-    method: 'DELETE',
-    url: '/roles/bulk',
     data: {
       ids: roleIds,
     },
+    method: 'DELETE',
+    url: '/roles/bulk',
   },
   roleIds,
 }));

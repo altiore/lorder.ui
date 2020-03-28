@@ -1,12 +1,14 @@
 import { createSelector } from 'reselect';
 
-import { IState, ITask, IUser } from '@types';
 import { DownloadList } from '#/@store/@common/entities';
 import { routeProjectId } from '#/@store/router';
 import { currentProjectId } from '#/@store/timer';
 import { timePercentByProjectId, timeSpentByProjectId } from '#/@store/user-works';
+
 import { Member } from './members/Member';
 import { Project } from './Project';
+
+import { IState, ITask, IUser } from '@types';
 
 const baseState = (state: IState) => state.projects;
 
@@ -40,8 +42,8 @@ export const initialUpdateProject = createSelector(
   openedProject,
   p =>
     p && {
-      title: p.title,
       monthlyBudget: p.monthlyBudget,
+      title: p.title,
     }
 );
 

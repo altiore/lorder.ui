@@ -2,9 +2,11 @@ import identity from 'lodash/identity';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 
-import { IUserWork } from '@types';
 import { requestActions } from '#/@store/@common/requestActions';
+
 import { EDIT_USER_WORK_DESCRIPTION_FORM } from './consts';
+
+import { IUserWork } from '@types';
 
 export const getUserWorks = requestActions(
   'USER_WORK/GET_MANY',

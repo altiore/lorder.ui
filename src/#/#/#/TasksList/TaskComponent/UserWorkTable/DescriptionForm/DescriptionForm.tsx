@@ -1,9 +1,11 @@
 import React from 'react';
+
+import { TextField } from '@components/TextField';
+
 import { Field, InjectedFormProps } from 'redux-form';
 import { length } from 'redux-form-validators';
 
 // import { TitleInput } from 'liw-components/TitleInput';
-import { TextField } from '@components/TextField';
 
 export interface IDescriptionFormData {
   description?: string;

@@ -1,7 +1,6 @@
 import { requestActions } from '../@common/requestActions';
-
-import { TaskStatus } from './TaskStatus';
 import { CREATE_TASK_STATUS_FORM } from './consts';
+import { TaskStatus } from './TaskStatus';
 
 export const fetchTaskStatuses = requestActions('TASK_STATUSES/FETCH_ALL', () => ({
   request: {
@@ -10,29 +9,29 @@ export const fetchTaskStatuses = requestActions('TASK_STATUSES/FETCH_ALL', () =>
 }));
 
 export const createTaskStatus = requestActions('TASK_STATUSES/CREATE_NEW', (data: Partial<TaskStatus>) => ({
+  form: CREATE_TASK_STATUS_FORM,
   request: {
+    data,
     method: 'POST',
     url: '/task-statuses',
-    data,
   },
-  form: CREATE_TASK_STATUS_FORM,
 }));
 
 export const deleteTaskStatus = requestActions('TASK_STATUSES/DELETE', (id: number) => ({
+  id,
   request: {
     method: 'DELETE',
     url: `/task-statuses/${id}`,
   },
-  id,
 }));
 
 export const deleteManyTaskStatuses = requestActions('TASK_STATUSES/DELETE_MANY', (ids: number[]) => ({
+  ids,
   request: {
-    method: 'DELETE',
-    url: '/task-statuses/bulk',
     data: {
       ids,
     },
+    method: 'DELETE',
+    url: '/task-statuses/bulk',
   },
-  ids,
 }));

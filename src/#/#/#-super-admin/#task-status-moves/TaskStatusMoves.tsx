@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Page } from '@components/Page';
+
 import Crud from '#/@common/Crud';
 import { CREATE_TASK_STATUS_MOVE_FORM } from '#/@store/task-status-moves';
 

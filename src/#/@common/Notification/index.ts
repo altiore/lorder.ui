@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 
-import { IState } from '@types';
 import { Notification } from './Notification';
+
+import { IState } from '@types';
 
 const { hide } = require('react-notification-system-redux');
 

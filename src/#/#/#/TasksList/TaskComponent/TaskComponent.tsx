@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from 'react';
+import Popover from 'react-popover';
+import MediaQuery from 'react-responsive';
 
 import Button from '@material-ui/core/Button';
 import { DialogProps } from '@material-ui/core/Dialog';
@@ -8,17 +10,18 @@ import { useTheme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
-import moment from 'moment';
-import Popover from 'react-popover';
-import MediaQuery from 'react-responsive';
-
-import { ITask } from '@types';
 import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
 import { StartStopBtn } from '@components/StartStopBtn';
+
 import { Project } from '#/@store/projects';
+
+import moment from 'moment';
+
+import { useStyles } from './styles';
 import { TimerListItemText } from './TimerListItemText';
 import { UserWorkTable } from './UserWorkTable';
-import { useStyles } from './styles';
+
+import { ITask } from '@types';
 
 export interface ITaskComponentProps {
   isCurrent: boolean;

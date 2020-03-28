@@ -1,8 +1,9 @@
+import React from 'react';
+import Popover from 'react-popover';
+
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CheckIcon from '@material-ui/icons/Check';
-import React from 'react';
-import Popover from 'react-popover';
 
 export interface IDurationFieldProps {
   classes: any;

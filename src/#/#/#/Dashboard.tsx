@@ -1,16 +1,17 @@
 import React, { memo, useEffect } from 'react';
-
-import Grid from '@material-ui/core/Grid';
-import { useTheme } from '@material-ui/core/styles';
 import MediaQuery from 'react-responsive';
 import { RouteComponentProps } from 'react-router-dom';
 
+import Grid from '@material-ui/core/Grid';
+import { useTheme } from '@material-ui/core/styles';
+
 import { PageCenter } from '@components/PageCenter';
+
 import { DailyRoutine } from './DailyRoutine';
 import { LastEvents } from './LastEvents';
 import { StartForm } from './StartForm';
-import { TasksList } from './TasksList';
 import { useStyles } from './styles';
+import { TasksList } from './TasksList';
 
 export interface IDashboardProps extends RouteComponentProps<{}> {
   getAllTasks: any;

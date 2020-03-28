@@ -1,7 +1,8 @@
-import { storiesOf } from '@storybook/react';
 import React from 'react';
 
 import { PieChart } from './PieChart';
+
+import { storiesOf } from '@storybook/react';
 
 const pieData = [
   { name: 'Jane', y: 13 },

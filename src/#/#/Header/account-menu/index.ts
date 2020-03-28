@@ -1,10 +1,13 @@
-import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
+
+import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
 import { logOut, userAvatar, userEmail, userRole } from '#/@store/identity';
-import { IState } from '@types';
+
 import { AccountMenuTsx } from './account-menu';
+
+import { IState } from '@types';
 
 const mapStateToProps = createStructuredSelector<IState, any>({
   userAvatar,

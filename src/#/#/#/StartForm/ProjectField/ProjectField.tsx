@@ -1,8 +1,10 @@
-import MenuItem from '@material-ui/core/MenuItem';
 import React from 'react';
-import { WrappedFieldProps } from 'redux-form';
+
+import MenuItem from '@material-ui/core/MenuItem';
 
 import { SelectField } from '@components/SelectField';
+
+import { WrappedFieldProps } from 'redux-form';
 
 export interface IProjectFieldProps extends WrappedFieldProps {
   className?: string;

@@ -1,10 +1,11 @@
-import { handleActions } from 'redux-actions';
 import get from 'lodash/get';
+import { handleActions } from 'redux-actions';
+
+import { DownloadList } from '../@common/entities';
+import { createRole, deleteManyRoles, deleteRole, fetchRoles } from './actions';
+import { UserRole } from './UserRole';
 
 import { IDownloadList, IMeta, IUserRole } from '@types';
-import { createRole, deleteManyRoles, deleteRole, fetchRoles } from './actions';
-import { DownloadList } from '../@common/entities';
-import { UserRole } from './UserRole';
 
 type S = IDownloadList<IUserRole>;
 type M = IMeta<any>;

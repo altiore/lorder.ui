@@ -1,6 +1,7 @@
+import React from 'react';
+
 import Button from '@material-ui/core/Button';
 import TableCell from '@material-ui/core/TableCell';
-import React from 'react';
 
 export interface ITimerCellProps {
   currentTimeHumanize: string;

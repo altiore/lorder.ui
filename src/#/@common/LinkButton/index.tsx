@@ -1,7 +1,9 @@
-import Button, { ButtonProps } from '@material-ui/core/Button';
-import { push } from 'connected-react-router';
 import React from 'react';
 import { connect } from 'react-redux';
+
+import { push } from 'connected-react-router';
+
+import Button, { ButtonProps } from '@material-ui/core/Button';
 
 const mapDispatchToProps = {
   push,

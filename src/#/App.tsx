@@ -3,12 +3,14 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import includes from 'lodash/includes';
 
-import { IRoute, ROLE } from '@types';
-
 import LoadingPage from '@components/LoadingPage';
+
 import NestedRoute from '#/@common/#NestedRoute';
 import NotFound from '#/@common/NotFoundPage';
+
 import { ROLES } from './@store/roles';
+
+import { IRoute, ROLE } from '@types';
 
 interface IAppProps {
   userRole: ROLE;
@@ -17,29 +19,29 @@ interface IAppProps {
 export const APP_MAIN_ROUTES: IRoute[] = [
   {
     access: ROLES.ALL,
-    path: '/p/:projectId',
     component: lazy(() => import('./#p/#:projectId')),
+    path: '/p/:projectId',
   },
   {
     access: ROLES.ALL,
-    path: '/start/:identifier',
     component: lazy(() => import('./#start/#:identifier')),
+    path: '/start/:identifier',
   },
   {
     access: ROLES.ALL,
-    path: '/hi',
     component: lazy(() => import('./#hi')),
+    path: '/hi',
   },
   {
     access: ROLES.GUESTS,
-    path: '/login',
     component: lazy(() => import('./#login')),
+    path: '/login',
   },
   {
     access: ROLES.USERS,
-    path: '/',
     component: lazy(() => import('./#')),
     getReducers: import('./#/@store/reducers'),
+    path: '/',
   },
 ];
 

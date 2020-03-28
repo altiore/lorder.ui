@@ -1,15 +1,18 @@
-import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+
+import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
-import { withResize } from '@hooks/withResize';
 import { closeDialog, openDialog } from '#/@store/dialog';
 import { userRole } from '#/@store/identity';
 import { selectProject } from '#/@store/project';
 import { openedProject } from '#/@store/projects';
 import { isLeftBarOpen, toggleUiSetting } from '#/@store/ui';
+
 import { LayoutLeftDrawerTsx } from './LayoutLeftDrawer';
+
+import { withResize } from '@hooks/withResize';
 
 const mapState = createStructuredSelector({
   isLeftBarOpen,

@@ -1,7 +1,9 @@
-import IconButton, { IconButtonProps } from '@material-ui/core/IconButton';
-import { push } from 'connected-react-router';
 import React from 'react';
 import { connect } from 'react-redux';
+
+import { push } from 'connected-react-router';
+
+import IconButton, { IconButtonProps } from '@material-ui/core/IconButton';
 
 const mapDispatchToProps = {
   push,

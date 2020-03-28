@@ -6,6 +6,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: theme.spacing(20),
   },
   edit: {
+    '& p': {
+      marginTop: theme.spacing(1),
+    },
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, .6)',
     borderBottomLeftRadius: theme.spacing(20),
@@ -17,9 +20,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'flex-start',
     position: 'absolute',
     width: '100%',
-    '& p': {
-      marginTop: theme.spacing(1),
-    },
   },
   wrapper: {
     borderRadius: '50%',

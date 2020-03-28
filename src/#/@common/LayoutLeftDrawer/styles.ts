@@ -23,11 +23,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginLeft: 0,
     overflowX: 'auto',
     position: 'relative',
-    width: '100vw',
     transition: theme.transitions.create(['margin', 'width'], {
       duration: theme.transitions.duration.leavingScreen,
       easing: theme.transitions.easing.sharp,
     }),
+    width: '100vw',
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'flex-start',
       overflowX: 'auto',

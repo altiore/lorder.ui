@@ -1,10 +1,11 @@
-import { handleActions } from 'redux-actions';
 import get from 'lodash/get';
+import { handleActions } from 'redux-actions';
+
+import { DownloadList } from '../@common/entities';
+import { createTaskStatusMove, deleteManyTaskStatusMoves, deleteTaskStatusMove, fetchTaskStatusMoves } from './actions';
+import { TaskStatusMove } from './TaskStatusMove';
 
 import { IDownloadList, IMeta, ITaskStatusMove } from '@types';
-import { createTaskStatusMove, deleteManyTaskStatusMoves, deleteTaskStatusMove, fetchTaskStatusMoves } from './actions';
-import { DownloadList } from '../@common/entities';
-import { TaskStatusMove } from './TaskStatusMove';
 
 type S = IDownloadList<ITaskStatusMove>;
 type M = IMeta<any>;

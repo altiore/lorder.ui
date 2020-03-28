@@ -1,15 +1,19 @@
+import React from 'react';
+import Autosuggest from 'react-autosuggest';
+
+import deburr from 'lodash-es/deburr';
+
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import TextField from '@material-ui/core/TextField';
 
-import deburr from 'lodash-es/deburr';
-import React from 'react';
-import Autosuggest from 'react-autosuggest';
+import { Project } from '#/@store/projects';
+
 import { WrappedFieldProps } from 'redux-form';
 
-import { Project } from '#/@store/projects';
-import { ITask } from '@types';
 import Suggestion from './Suggestion';
+
+import { ITask } from '@types';
 
 export interface IAutoTaskFieldProps extends WrappedFieldProps {
   classes: any;
@@ -186,8 +190,8 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
           });
     this.props.projects.forEach(project => {
       const suggested: Partial<ITask> = {
-        sequenceNumber: 0,
         projectId: project.id,
+        sequenceNumber: 0,
         title: value,
       };
       suggestions.unshift(suggested as ITask);

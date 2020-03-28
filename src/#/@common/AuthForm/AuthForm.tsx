@@ -1,13 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
-
-import Button from '@material-ui/core/Button';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-
 import SwipeableViews from 'react-swipeable-views';
+
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import { useTheme } from '@material-ui/core/styles';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { LoginForm } from './LoginForm';
 import { MagicForm } from './MagicForm';

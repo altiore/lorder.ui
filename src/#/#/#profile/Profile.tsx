@@ -2,17 +2,17 @@ import React from 'react';
 
 import MuiAvatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ProfileForm from './ProfileForm';
-
-import { ROLE } from '@types';
+import ListItemText from '@material-ui/core/ListItemText';
+import Paper from '@material-ui/core/Paper';
 
 import Avatar from './Avatar';
+import ProfileForm from './ProfileForm';
 import { useStyles } from './styles';
+
+import { ROLE } from '@types';
 
 interface IProfile {
   userAvatar?: string;

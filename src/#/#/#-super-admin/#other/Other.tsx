@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { RouteComponentProps } from 'react-router';
 
 import Button from '@material-ui/core/Button';

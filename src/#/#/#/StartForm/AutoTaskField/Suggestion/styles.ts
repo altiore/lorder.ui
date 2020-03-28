@@ -12,19 +12,19 @@ export const styles = (theme: Theme) =>
     },
     project: {
       opacity: 0.2,
-      textOverflow: 'ellipsis',
       overflow: 'hidden',
+      position: 'absolute',
+      textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
       width: '20%',
-      position: 'absolute',
     },
     projectSelected: {
       opacity: 1,
     },
     root: {
       border: `1px solid transparent`,
-      position: 'relative',
       minHeight: theme.spacing(5),
+      position: 'relative',
       [theme.breakpoints.down('sm')]: {
         padding: '0 0.3rem',
       },

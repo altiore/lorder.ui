@@ -1,6 +1,8 @@
-import { DialogProps } from '@material-ui/core/Dialog';
 import { ReactNode } from 'react';
+
 import { createAction } from 'redux-actions';
+
+import { DialogProps } from '@material-ui/core/Dialog';
 
 export let CurrentDialog: ReactNode = null;
 

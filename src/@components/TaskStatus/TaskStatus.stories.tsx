@@ -1,20 +1,21 @@
-import { action } from '@storybook/addon-actions';
-import { storiesOf } from '@storybook/react';
 import React from 'react';
 
-import Center from '../../../.storybook/decor/Center';
 import TaskStatus from '.';
+import Center from '../../../.storybook/decor/Center';
+
+import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react';
 
 const assignees = [
   {
+    avatar: '',
     id: 1,
     userName: 'razvanlomov@gmail.com',
-    avatar: '',
   },
   {
+    avatar: '',
     id: 2,
     userName: 'other@gmail.com',
-    avatar: '',
   },
 ];
 

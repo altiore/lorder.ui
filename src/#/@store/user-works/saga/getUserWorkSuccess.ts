@@ -1,8 +1,9 @@
-import { put, select, takeLatest } from 'redux-saga/effects';
-
 import { fetchProjectDetails, getProjectById, projectMembers } from '#/@store/projects';
 import { startTimer, stopUserWork, UserWork } from '#/@store/tasks';
 import { isTimerStarted } from '#/@store/timer';
+
+import { put, select, takeLatest } from 'redux-saga/effects';
+
 import { getUserWorks } from '../actions';
 
 function* getUserWorksSuccessHandler({ payload }: any) {

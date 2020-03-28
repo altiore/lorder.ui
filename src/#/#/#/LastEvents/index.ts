@@ -1,8 +1,11 @@
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
+import { withStyles } from '@material-ui/core/styles';
+
 import { events } from '#/@store/tasks';
+
 import { LastEventsTsx } from './LastEvents';
 import { styles } from './styles';
 

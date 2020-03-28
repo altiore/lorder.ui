@@ -1,8 +1,11 @@
-import { AxiosResponse } from 'axios';
 import { handleActions } from 'redux-actions';
 
-import { fetchAltiore } from './actions';
 import { PublicProject } from '#/@store/publicProject/PublicProject';
+
+import { AxiosResponse } from 'axios';
+
+import { fetchAltiore } from './actions';
+
 import { IPublicProject } from '@types';
 
 type S = IPublicProject;

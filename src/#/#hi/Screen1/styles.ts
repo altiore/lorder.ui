@@ -14,8 +14,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   button: {
-    margin: theme.spacing(2, 0, 3.5),
     fontSize: theme.typography.pxToRem(24),
+    margin: theme.spacing(2, 0, 3.5),
   },
   content: {
     backgroundColor: 'rgba(37, 36, 38, 0.6)',

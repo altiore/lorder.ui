@@ -1,8 +1,11 @@
+import React from 'react';
+
+import get from 'lodash/get';
+
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import get from 'lodash/get';
+
 import moment from 'moment';
-import React from 'react';
 
 import { IEvent } from '@types';
 

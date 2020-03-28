@@ -1,3 +1,5 @@
+import React from 'react';
+
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -8,10 +10,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FolderIcon from '@material-ui/icons/Folder';
-import React from 'react';
+
+import { Statistic } from './Statistic';
 
 import { IEvent } from '@types';
-import { Statistic } from './Statistic';
 
 export interface ILastEventsProps {
   events: IEvent[];

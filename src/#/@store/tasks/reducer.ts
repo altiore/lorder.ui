@@ -1,14 +1,18 @@
-import { AxiosResponse } from 'axios';
 import get from 'lodash/get';
 import omit from 'lodash/omit';
-import moment from 'moment';
 import { Action, ActionMeta, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
-import uniqid from 'uniqid';
 
+import { User } from '#/#/@store/users';
 import { DownloadList } from '#/@store/@common/entities';
 import { combineActions } from '#/@store/@common/helpers';
 import { getUserWorks, patchUserWork } from '#/@store/user-works/actions';
+
+import { AxiosResponse } from 'axios';
+import moment from 'moment';
+import uniqid from 'uniqid';
+
+import { IRequestAction } from '../@common/requestActions';
 import {
   archiveTaskA,
   deleteProjectTask,
@@ -23,8 +27,6 @@ import {
 } from './actions';
 import { Task } from './Task';
 import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork, UserWork, userWorks } from './user-works';
-import { IRequestAction } from '../@common/requestActions';
-import { User } from '#/#/@store/users';
 
 interface IProjectRequest extends IRequestAction<Partial<Task>> {
   sequenceNumber: number;
@@ -122,9 +124,9 @@ const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
     id: task.id,
     performerId: task.performerId,
     projectId: userWork.projectId,
+    sequenceNumber: task.sequenceNumber,
     status: task.status,
     title: task.title,
-    sequenceNumber: task.sequenceNumber,
     userWorks: new DownloadList<UserWork>(UserWork, [userWork], true),
   });
 };

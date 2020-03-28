@@ -1,3 +1,8 @@
+import React from 'react';
+
+import cn from 'classnames';
+import get from 'lodash/get';
+
 import Badge from '@material-ui/core/Badge';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,12 +13,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import FilterIcon from '@material-ui/icons/FilterList';
 import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
-import cn from 'classnames';
-import get from 'lodash/get';
-import React from 'react';
+
+import Avatar from '@components/Avatar';
 
 import { IUser } from '@types';
-import Avatar from '@components/Avatar';
 
 export interface IFiltersProps {
   changeFilter: any;

@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Button from '@material-ui/core/Button';
+import HistoryComment from './HistoryComment';
 
 import { ITaskLog } from '@types';
-import HistoryComment from './HistoryComment';
 
 export interface ITaskHistoryProps {
   fetchTaskLogs: any;

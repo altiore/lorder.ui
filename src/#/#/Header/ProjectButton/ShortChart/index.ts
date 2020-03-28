@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
-import { selectedProjectWithStatistic } from '#/@store/projects';
 import ShortChart from '#/@common/ShortChart';
+import { selectedProjectWithStatistic } from '#/@store/projects';
 
 const mapState = createStructuredSelector({
   project: selectedProjectWithStatistic,

@@ -1,6 +1,7 @@
-import { AxiosResponse } from 'axios';
 import { Action, combineActions, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
+
+import { AxiosResponse } from 'axios';
 
 import { DownloadList } from '../@common/entities';
 import { clearTaskLogs, fetchTaskLogsAction } from './actions';

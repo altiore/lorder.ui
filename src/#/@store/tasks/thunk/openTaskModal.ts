@@ -1,9 +1,11 @@
 import { push } from 'connected-react-router';
+
+import { showError } from '#/@store/notifications';
+import { currentTask } from '#/@store/timer';
+
 import { ThunkDispatch } from 'redux-thunk';
 
 import { IState, ITask } from '@types';
-import { showError } from '#/@store/notifications';
-import { currentTask } from '#/@store/timer';
 
 export const openTaskModal = (task?: ITask, count = 0) => async (
   dispatch: ThunkDispatch<any, any, any>,
@@ -16,8 +18,8 @@ export const openTaskModal = (task?: ITask, count = 0) => async (
         state: {
           modal: true,
           projectId: task.projectId,
-          taskId: task.id,
           sequenceNumber: task.sequenceNumber,
+          taskId: task.id,
         },
       })
     );
@@ -31,8 +33,8 @@ export const openTaskModal = (task?: ITask, count = 0) => async (
             state: {
               modal: true,
               projectId: openedTask.projectId,
-              taskId: openedTask.id,
               sequenceNumber: openedTask.sequenceNumber,
+              taskId: openedTask.id,
             },
           })
         );

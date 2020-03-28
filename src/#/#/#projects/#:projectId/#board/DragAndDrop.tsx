@@ -1,12 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-
-import cn from 'classnames';
-
-import ButtonBase from '@material-ui/core/ButtonBase';
-import amber from '@material-ui/core/colors/amber';
-import Typography from '@material-ui/core/Typography';
-import AddIcon from '@material-ui/icons/Add';
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import {
   DragDropContext,
   Draggable,
@@ -16,10 +8,19 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 
+import cn from 'classnames';
+
+import ButtonBase from '@material-ui/core/ButtonBase';
+import amber from '@material-ui/core/colors/amber';
+import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
+
 import { PatchTaskForm } from '#/@common/TaskForm';
 import { STATUS_NAMES, Task } from '#/@store/tasks';
-import { TaskCard } from './TaskCard';
+
 import { useStyles } from './styles';
+import { TaskCard } from './TaskCard';
 
 const CARD_WIDTH = 296;
 
@@ -91,10 +92,10 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
         });
       } else {
         moveProjectTask({
+          prevStatus: parseInt(source.droppableId, 0),
           projectId,
           sequenceNumber: parseInt(draggableId, 0),
           status: parseInt(destination.droppableId, 0),
-          prevStatus: parseInt(source.droppableId, 0),
         });
       }
     },

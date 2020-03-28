@@ -1,9 +1,12 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
 import { TimeLine } from '@components/TimeLine';
+
 import { openDialog } from '#/@store/dialog';
 import { events } from '#/@store/tasks';
+
 import EditWork from './EditWork';
 
 const mapStateToProps = createStructuredSelector({

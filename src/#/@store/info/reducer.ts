@@ -1,8 +1,9 @@
 import { handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { IMeta } from '@types';
 import { IInfo, Info } from './Info';
+
+import { IMeta } from '@types';
 
 type S = IInfo;
 type P = any;

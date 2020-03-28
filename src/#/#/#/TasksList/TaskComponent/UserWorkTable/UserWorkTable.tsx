@@ -1,3 +1,6 @@
+import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
@@ -5,16 +8,16 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 // import ClearIcon from '@material-ui/icons/Clear';
 import CloseIcon from '@material-ui/icons/Close';
-import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 
-import { IDownloadList, IUserWork } from '@types';
 import { StartStopBtn } from '@components/StartStopBtn';
 import { Table } from '@components/Table';
+
 import { DescriptionForm } from './DescriptionForm';
 import { DurationField } from './DurationField';
 import { styles } from './styles';
 import { TimerCell } from './TimerCell';
+
+import { IDownloadList, IUserWork } from '@types';
 
 export interface IUserWorkTableProps extends RouteComponentProps<{}> {
   userWorks: IDownloadList<IUserWork>;

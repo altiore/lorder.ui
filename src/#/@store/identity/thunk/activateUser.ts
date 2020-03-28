@@ -1,12 +1,15 @@
 import { push } from 'connected-react-router';
+
+import { identifier, projectIdSearchParam } from '#/@store/router';
+
 import { Dispatch } from 'redux';
 
-import { IState } from '@types';
-import { identifier, projectIdSearchParam } from '#/@store/router';
-import { loadInitialData } from './loadInitialData';
 import { getAuthActivate, IGetAuthActivateData, setIsLoading } from '../actions';
-import { logOut } from './logOut';
 import { userBearerKey } from '../selectors';
+import { loadInitialData } from './loadInitialData';
+import { logOut } from './logOut';
+
+import { IState } from '@types';
 
 export const activateUser = () => async (dispatch: Dispatch<any>, getState: () => IState) => {
   try {

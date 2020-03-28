@@ -1,8 +1,9 @@
 import { handleActions } from 'redux-actions';
 
-import { ITasksFilter } from '@types';
 import { changeFilter, changeTasksFilter, IChangeFilterP, toggleMember } from './actions';
 import { TasksFilter } from './TasksFilter';
+
+import { ITasksFilter } from '@types';
 
 interface IP {
   payload?: IChangeFilterP;

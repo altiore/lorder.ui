@@ -1,6 +1,7 @@
-import * as H from 'highcharts';
 import React from 'react';
 import { Chart, HighchartsChart, Legend, PieSeries, Title, Tooltip, withHighcharts } from 'react-jsx-highcharts';
+
+import * as H from 'highcharts';
 
 export interface IPieChartProps {
   data: any;

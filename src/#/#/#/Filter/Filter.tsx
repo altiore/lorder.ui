@@ -1,7 +1,8 @@
+import React from 'react';
+
 import ListItem from '@material-ui/core/ListItem';
 import Radio from '@material-ui/core/Radio';
 import Tooltip from '@material-ui/core/Tooltip';
-import React from 'react';
 
 export interface IFilterProps {
   classes?: any;

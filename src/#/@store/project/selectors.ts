@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { IState } from '@types';
 import { Task } from '../tasks';
+
+import { IState } from '@types';
 
 const baseState = (state: IState) => state.project;
 

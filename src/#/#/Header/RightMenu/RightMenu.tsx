@@ -10,8 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { useStyles } from './styles';
 import { ROLE } from '../../../../@types';
+import { useStyles } from './styles';
 
 export interface IRightMenuProps {
   logOut: any;

@@ -1,15 +1,20 @@
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { isValid } from 'redux-form';
+
 import { createStructuredSelector } from 'reselect';
 
-import { ITask } from '@types';
+import { withStyles } from '@material-ui/core/styles';
+
 import { showError } from '#/@store/notifications';
 import { getProjectById, ownProjectList } from '#/@store/projects';
 import { allTaskListWithoutDefProject, CREATE_USER_WORK_FORM_NAME, startUserWork } from '#/@store/tasks';
 import { currentProjectId } from '#/@store/timer';
+
+import { isValid } from 'redux-form';
+
 import { AutoTaskFieldTsx } from './AutoTaskField';
 import { styles } from './styles';
+
+import { ITask } from '@types';
 
 const mapState = createStructuredSelector({
   getProjectById,

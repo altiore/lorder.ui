@@ -1,31 +1,31 @@
 import React, { lazy } from 'react';
 import { Redirect } from 'react-router';
-import { RouteComponentProps } from 'react-router-dom';
 import { Switch } from 'react-router';
-
-import { IRoute } from '@types';
-import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
-import { ACCESS_LEVEL, Project } from '#/@store/projects';
+import { RouteComponentProps } from 'react-router-dom';
 
 import NestedRoute from '#/@common/#NestedRoute';
+import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
+import { ACCESS_LEVEL, Project } from '#/@store/projects';
 import { ROLES } from '#/@store/roles';
+
+import { IRoute } from '@types';
 
 export const PROJECT_ROUTES = [
   {
     access: [ROLES.USERS, ACCESS_LEVEL.RED],
+    component: lazy(() => import('./#board')),
     exact: true,
     icon: 'import-export',
     path: '/projects/:projectId/board',
     title: 'Доска Проекта',
-    component: lazy(() => import('./#board')),
   },
   // {
   //   access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+  //   component: lazy(() => import('./#tasks')),
   //   exact: true,
   //   icon: 'list-alt',
   //   path: '/projects/:projectId/tasks',
   //   title: 'Задачи',
-  //   component: lazy(() => import('./#tasks')),
   // },
   // {
   //   access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
@@ -45,24 +45,24 @@ export const PROJECT_ROUTES = [
   // },
   {
     access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+    component: lazy(() => import('./#members')),
     exact: true,
     icon: 'people',
     path: '/projects/:projectId/members',
     title: 'Участники',
-    component: lazy(() => import('./#members')),
   },
   {
     access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+    component: lazy(() => import('./#settings')),
     exact: true,
     icon: 'settings',
     path: '/projects/:projectId/settings',
     title: 'Другие Настройки',
-    component: lazy(() => import('./#settings')),
   },
   {
     access: [ROLES.USERS, ACCESS_LEVEL.RED],
-    path: '/projects/:projectId/tasks/:sequenceNumber',
     component: lazy(() => import('./#tasks/#:sequenceNumber')),
+    path: '/projects/:projectId/tasks/:sequenceNumber',
   },
 ];
 

@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
 import {
@@ -8,6 +9,7 @@ import {
   fetchTaskStatusMoves,
   taskStatusMoves,
 } from '#/@store/task-status-moves';
+
 import { TaskStatusMovesJsx } from './TaskStatusMoves';
 
 const mapStateToProps = createStructuredSelector({
@@ -16,8 +18,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   createItem: createTaskStatusMove,
-  deleteItem: deleteTaskStatusMove,
   deleteBulk: deleteManyTaskStatusMoves,
+  deleteItem: deleteTaskStatusMove,
   fetchItems: fetchTaskStatusMoves,
 };
 

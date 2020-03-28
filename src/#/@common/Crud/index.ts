@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 
-import { closeDialog, openDialog } from '#/@store/dialog';
 import Crud from '@components/Crud';
+
+import { closeDialog, openDialog } from '#/@store/dialog';
 
 interface IOwnProps {
   formName: string;

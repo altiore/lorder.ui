@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 
@@ -15,9 +14,10 @@ import { Block } from '@components/Block';
 import LoadingPage from '@components/LoadingPage';
 import { NoMatch } from '@components/NoMatch';
 import Person from '@components/Person';
+
+import { LinkButton } from '#/@common/LinkButton';
 import PieChart from '#/@common/PieChart';
 import { PublicProject } from '#/@store/publicProject';
-import { LinkButton } from '#/@common/LinkButton';
 
 export interface IPublicProjectProps extends RouteComponentProps<{ projectId: string }> {
   classes: any;

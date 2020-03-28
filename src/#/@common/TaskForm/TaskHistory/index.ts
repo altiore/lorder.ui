@@ -1,9 +1,12 @@
 import { connect } from 'react-redux';
+
 import { createStructuredSelector } from 'reselect';
 
 import { fetchTaskLogs, taskLogs } from '#/@store/task-active';
-import { IState } from '@types';
+
 import { ITaskHistoryProps, TaskHistoryTsx } from './TaskHistory';
+
+import { IState } from '@types';
 
 const mapState = createStructuredSelector<IState, Partial<ITaskHistoryProps>>({
   taskLogs,

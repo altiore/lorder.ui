@@ -1,7 +1,6 @@
 import { requestActions } from '../@common/requestActions';
-
-import { TaskStatusMove } from './TaskStatusMove';
 import { CREATE_TASK_STATUS_MOVE_FORM } from './consts';
+import { TaskStatusMove } from './TaskStatusMove';
 
 export const fetchTaskStatusMoves = requestActions('TASK_STATUS_MOVES/FETCH_ALL', () => ({
   request: {
@@ -10,29 +9,29 @@ export const fetchTaskStatusMoves = requestActions('TASK_STATUS_MOVES/FETCH_ALL'
 }));
 
 export const createTaskStatusMove = requestActions('TASK_STATUS_MOVES/CREATE_NEW', (data: Partial<TaskStatusMove>) => ({
+  form: CREATE_TASK_STATUS_MOVE_FORM,
   request: {
+    data,
     method: 'POST',
     url: '/task-status-moves',
-    data,
   },
-  form: CREATE_TASK_STATUS_MOVE_FORM,
 }));
 
 export const deleteTaskStatusMove = requestActions('TASK_STATUS_MOVES/DELETE', (id: number) => ({
+  id,
   request: {
     method: 'DELETE',
     url: `/task-status-moves/${id}`,
   },
-  id,
 }));
 
 export const deleteManyTaskStatusMoves = requestActions('TASK_STATUS_MOVES/DELETE_MANY', (ids: number[]) => ({
+  ids,
   request: {
-    method: 'DELETE',
-    url: '/task-status-moves/bulk',
     data: {
       ids,
     },
+    method: 'DELETE',
+    url: '/task-status-moves/bulk',
   },
-  ids,
 }));

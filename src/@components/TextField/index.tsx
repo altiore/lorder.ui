@@ -1,5 +1,6 @@
-import MaterialTextField from '@material-ui/core/TextField';
 import React from 'react';
+
+import MaterialTextField from '@material-ui/core/TextField';
 
 export const TextField = (props: any) => {
   const {

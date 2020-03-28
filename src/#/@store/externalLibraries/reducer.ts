@@ -1,9 +1,9 @@
 import { handleActions } from 'redux-actions';
 
-import { IExternalLibraries } from '@types';
+import { initExtLibrariesAction } from './actions';
 import { ExternalLibraries } from './ExternalLibraries';
 
-import { initExtLibrariesAction } from './actions';
+import { IExternalLibraries } from '@types';
 
 const initExtLibrariesHandler = (state: IExternalLibraries) => {
   return new ExternalLibraries({

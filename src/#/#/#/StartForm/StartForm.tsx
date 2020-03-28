@@ -1,8 +1,10 @@
+import React from 'react';
+
 import Fab from '@material-ui/core/Fab';
 import { Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
-import React from 'react';
+
 import { Field, InjectedFormProps } from 'redux-form';
 import { length } from 'redux-form-validators';
 

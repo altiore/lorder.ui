@@ -1,15 +1,20 @@
-import { withStyles } from '@material-ui/core/styles';
-import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import { destroy } from 'redux-form';
+
+import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
+
+import { withStyles } from '@material-ui/core/styles';
 
 import { closeDialog, openDialog } from '#/@store/dialog';
 import { isFormMount } from '#/@store/form';
-import { deleteProjectTask, EDIT_TASK_FORM, fetchProjectTasks, projectTasks } from '#/@store/tasks';
 import { routeProjectId } from '#/@store/router';
+import { deleteProjectTask, EDIT_TASK_FORM, fetchProjectTasks, projectTasks } from '#/@store/tasks';
+
+import { destroy } from 'redux-form';
+
 import { ProjectTasksJsx } from './ProjectTasks';
 import { styles } from './styles';
+
 import { IState } from '@types';
 
 const mapState = createStructuredSelector<IState, any>({

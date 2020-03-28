@@ -1,9 +1,12 @@
-import Button from '@material-ui/core/Button';
-import { TextField } from '@components/TextField';
 import React from 'react';
-import { Field, InjectedFormProps } from 'redux-form';
+
+import Button from '@material-ui/core/Button';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+
+import { TextField } from '@components/TextField';
+
+import { Field, InjectedFormProps } from 'redux-form';
 // import { email, required } from 'redux-form-validators';
 
 export interface ICreateFormProps {

@@ -1,18 +1,21 @@
+import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import { TableCellProps } from 'react-virtualized';
+
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import ClearIcon from '@material-ui/icons/Clear';
-import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
-import { TableCellProps } from 'react-virtualized';
 
-import { IUser, ROLE } from '@types';
 import { Confirmation } from '@components/Dialogs/Confirmation';
 import { Page } from '@components/Page';
 import TableVirtualized, { ColumnType } from '@components/TableVirtualized';
+
 import { CreateProjectPopup } from '#/@common/CreateProjectPopup';
 import { ACCESS_LEVEL, Project } from '#/@store/projects';
+
+import { IUser, ROLE } from '@types';
 
 export interface IProjectsProps {
   acceptInvitation: (projectId: number) => any;

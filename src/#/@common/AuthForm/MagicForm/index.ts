@@ -1,7 +1,8 @@
-import { reduxForm } from 'redux-form';
-
 import { onSubmitForm } from '#/@store/@common/helpers';
 import { LOGIN_FORM_NAME, postAuthMagic } from '#/@store/identity';
+
+import { reduxForm } from 'redux-form';
+
 import MagicFormJsx, { IMagicFormProps } from './MagicForm';
 
 const MagicForm = reduxForm<any, IMagicFormProps>({

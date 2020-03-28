@@ -1,7 +1,9 @@
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
+import { withStyles } from '@material-ui/core/styles';
+
 import { patchUserWork } from '#/@store/user-works';
+
 import { DurationFieldTsx } from './DurationField';
 import { styles } from './styles';
 

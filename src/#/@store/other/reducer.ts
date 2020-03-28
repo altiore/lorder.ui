@@ -1,10 +1,11 @@
-import moment from 'moment';
 import { handleActions } from 'redux-actions';
 
-import { IMeta } from '@types';
+import moment from 'moment';
 
 import { resetGlobalCache } from './actions';
 import { Other } from './Other';
+
+import { IMeta } from '@types';
 
 type S = Other;
 type P = any;

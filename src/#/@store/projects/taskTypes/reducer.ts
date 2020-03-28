@@ -1,8 +1,10 @@
-import { AxiosResponse } from 'axios';
 import { Action, handleActions } from 'redux-actions';
 
 import { DownloadList } from '#/@store/@common/entities';
 import { TaskType } from '#/@store/task-types';
+
+import { AxiosResponse } from 'axios';
+
 import { getAllProjectTaskTypes, postTaskTypeToProject } from './actions';
 
 type S = DownloadList<TaskType>;

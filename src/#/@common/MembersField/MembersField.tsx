@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import Popover from 'react-popover';
 
 import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import Popover from 'react-popover';
+
 import { WrappedFieldArrayProps } from 'redux-form';
 
 import { useStyles } from './styles';

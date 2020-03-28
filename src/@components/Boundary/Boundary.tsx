@@ -1,5 +1,6 @@
-import * as Sentry from '@sentry/browser';
 import React from 'react';
+
+import * as Sentry from '@sentry/browser';
 
 export interface IBoundaryProps {
   children: React.ReactNode;

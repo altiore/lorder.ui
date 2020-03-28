@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 
 import MuiAvatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grow from '@material-ui/core/Grow';
 import Typography from '@material-ui/core/Typography';
-import { useDropzone } from 'react-dropzone';
 
 import { useStyles } from './styles';
 

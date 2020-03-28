@@ -1,7 +1,9 @@
+import React from 'react';
+
+import omit from 'lodash/omit';
+
 import Dialog, { DialogProps } from '@material-ui/core/Dialog';
 import { Theme } from '@material-ui/core/styles';
-import omit from 'lodash/omit';
-import React from 'react';
 
 import { CurrentDialog } from '#/@store/dialog/actions';
 

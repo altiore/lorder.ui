@@ -1,10 +1,12 @@
-import Button from '@material-ui/core/Button';
-import { TextField } from '@components/TextField';
 import React from 'react';
-import { Field, InjectedFormProps } from 'redux-form';
-import { email, required } from 'redux-form-validators';
+
+import Button from '@material-ui/core/Button';
 
 import { UserIco } from '@components/@icons/User';
+import { TextField } from '@components/TextField';
+
+import { Field, InjectedFormProps } from 'redux-form';
+import { email, required } from 'redux-form-validators';
 
 export interface IAddMemberFormProps {
   buttonText?: string;

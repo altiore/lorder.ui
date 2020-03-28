@@ -1,13 +1,16 @@
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import React, { useCallback, useState } from 'react';
 import Popover from 'react-popover';
+
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+
 import { WrappedFieldProps } from 'redux-form';
 
-// import { ListBox } from 'liw-components/ListBox';
 import { useStyles } from './styles';
 
 import { IUser } from '@types';
+
+// import { ListBox } from 'liw-components/ListBox';
 
 export interface IPerformerFieldProps extends WrappedFieldProps {
   taskId: number;

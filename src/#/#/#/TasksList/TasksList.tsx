@@ -1,12 +1,14 @@
 import React from 'react';
-
-import get from 'lodash/get';
 import FlipMove from 'react-flip-move';
 
-import { ITask } from '@types';
+import get from 'lodash/get';
+
 import { Project } from '#/@store/projects';
+
 import { Filter } from './Filter';
 import { TaskComponent } from './TaskComponent';
+
+import { ITask } from '@types';
 
 export interface ITaskListState {
   page: number;

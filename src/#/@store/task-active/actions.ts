@@ -1,6 +1,8 @@
-import { requestActions } from '#/@store/@common/requestActions';
-import { IListDto } from '@types';
 import { createAction } from 'redux-actions';
+
+import { requestActions } from '#/@store/@common/requestActions';
+
+import { IListDto } from '@types';
 
 const BASE_ACTION = 'ACTIVE_TASK/TASK_LOGS';
 

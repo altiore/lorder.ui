@@ -1,4 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,21 +9,22 @@ import AddIcon from '@material-ui/icons/Add';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import TimerIcon from '@material-ui/icons/Timer';
 
-import { Route, Switch } from 'react-router-dom';
-import moment from 'moment';
-
-import { INotification } from '@types';
 import { CreateProjectPopup } from '#/@common/CreateProjectPopup';
 import { LinkIconButton } from '#/@common/LinkIconButton';
 import { Project } from '#/@store/projects';
 import { IUserWorkData } from '#/@store/tasks/user-works';
+
+import moment from 'moment';
+
+import { AccountMenu } from './account-menu';
 import Filters from './Filters';
 import ProjectButton from './ProjectButton';
 import { ProjectField } from './ProjectField';
-// import { RightMenu } from './RightMenu';
-import { AccountMenu } from './account-menu';
-
 import { useStyles } from './styles';
+
+import { INotification } from '@types';
+
+// import { RightMenu } from './RightMenu';
 
 export interface IHeaderProps {
   openDialog: any;

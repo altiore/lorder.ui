@@ -25,8 +25,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   toolbar: {
     [theme.breakpoints.down('sm')]: {
-      paddingRight: 0,
       paddingLeft: 0,
+      paddingRight: 0,
     },
   },
 }));

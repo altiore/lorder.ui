@@ -1,39 +1,38 @@
 import React from 'react';
 
 import cn from 'classnames';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme: Theme) => ({
   create: {
     marginLeft: theme.spacing(2),
   },
+  highlight:
+    theme.palette.type === 'light'
+      ? {
+          backgroundColor: theme.palette.secondary.main,
+          color: theme.palette.primary.main,
+        }
+      : {
+          backgroundColor: theme.palette.secondary.dark,
+          color: theme.palette.text.primary,
+        },
   root: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
   },
-  highlight:
-    theme.palette.type === 'light'
-      ? {
-          color: theme.palette.primary.main,
-          backgroundColor: theme.palette.secondary.main,
-        }
-      : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
   title: {
     alignItems: 'center',
-    flex: '1 1 100%',
     display: 'flex',
+    flex: '1 1 100%',
     flexFlow: 'row nowrap',
   },
 }));

@@ -1,8 +1,9 @@
 import get from 'lodash/get';
 import { createSelector } from 'reselect';
 
-import { IState, IUser } from '@types';
 import { DownloadList } from '#/@store/@common/entities';
+
+import { IState, IUser } from '@types';
 
 const baseState = (state: IState): DownloadList<IUser> => get(state, ['authorized', 'users']);
 

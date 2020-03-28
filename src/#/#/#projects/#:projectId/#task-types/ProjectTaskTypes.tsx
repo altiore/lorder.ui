@@ -1,16 +1,20 @@
+import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+
+import get from 'lodash-es/get';
+
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ClearIcon from '@material-ui/icons/Clear';
-import get from 'lodash-es/get';
-import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 
 import { Table } from '@components/Table';
+
 import { DownloadList } from '#/@store/@common/entities';
 import { TaskType } from '#/@store/task-types';
+
 import { TaskTypesForm } from './TaskTypesForm';
 
 export interface IProjectTaskTypesProps {
