@@ -84,7 +84,7 @@ export const HiTsx: React.FC<IHiProps> = ({
             Copyright &copy; {brandName}
           </Typography>
           <div className={classes.sectionDesktop}>
-            <IconButton color="inherit" href={'https://t.me/joinchat/BmXj_kK5vnoAWdQF7tTc1g'} target={'_blank'}>
+            <IconButton color="inherit" href="https://t.me/razzwan_altiore" target="_blank">
               <TelegramIco />
             </IconButton>
           </div>
