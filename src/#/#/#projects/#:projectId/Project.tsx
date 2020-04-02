@@ -1,7 +1,5 @@
 import React, { lazy } from 'react';
-import { Redirect } from 'react-router';
-import { Switch } from 'react-router';
-import { RouteComponentProps } from 'react-router-dom';
+import { Redirect, RouteComponentProps, Switch } from 'react-router-dom';
 
 import NestedRoute from '#/@common/#NestedRoute';
 import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';

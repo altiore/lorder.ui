@@ -2,19 +2,25 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { projectMembers } from '#/@store/projects';
-import { deleteProjectMember } from '#/@store/projects/members';
-import { routeProjectId } from '#/@store/router';
+import { userId } from '#/@store/identity';
+import { openedAccessLevel, projectMembers } from '#/@store/projects';
+import { addProjectMember, deleteProjectMember, updateMemberLevel } from '#/@store/projects/members';
+import { fetchRoles, rolesList } from '#/@store/roles';
 
-import { ProjectMembersJsx } from './ProjectMembers';
+import { ProjectMembersJsx } from './project.members';
 
 const mapStateToProps = createStructuredSelector({
   list: projectMembers,
-  projectId: routeProjectId,
+  openedAccessLevel,
+  rolesList,
+  userId,
 } as any);
 
 const mapDispatchToProps = {
+  createItem: addProjectMember,
   deleteItem: deleteProjectMember,
+  fetchRoles,
+  updateMemberLevel,
 };
 
 export default connect(

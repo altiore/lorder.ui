@@ -3,9 +3,12 @@ import React, { useCallback, useMemo } from 'react';
 import get from 'lodash/get';
 
 import Checkbox from '@material-ui/core/Checkbox';
+import { DialogProps } from '@material-ui/core/Dialog';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
+import Select from '@material-ui/core/Select';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import Table from '@material-ui/core/Table';
@@ -52,6 +55,10 @@ function getSorting<K extends keyof any>(
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
+function filterEnum(t: any) {
+  return !isNaN(parseInt(t, 0));
+}
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
@@ -90,261 +97,312 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export interface ICrudProps {
+export interface ICrudColumn {
+  title: string;
+  path: any;
+  name?: string;
+  isNumber?: boolean;
+  disablePadding?: boolean;
+  allowed?: object;
+  multiple?: boolean;
+  editable?: boolean;
+  skip?: (item) => boolean;
+}
+
+export interface ICrudProps<IItem = {}> {
   closeDialog: any;
-  columns: Array<{
-    title: string;
-    path: any;
-    name?: string;
-    isNumber?: boolean;
-    disablePadding?: boolean;
-    allowed?: object;
-  }>;
+  columns: ICrudColumn[];
   createItem?: any;
   deleteBulk?: (ids: Array<number | string>) => any;
   deleteItem: (id: number) => void;
+  editItem?: (itemId, item: Partial<IItem>) => any;
   entityName: string;
   formName: string;
-  getId?: (item) => number | string;
-  openDialog: any;
+  getId?: (item: IItem) => number | string;
+  openDialog: (el: JSX.Element, props?: Partial<DialogProps>) => void;
   rows: any[];
+  createTitle?: string;
 }
 
 const defGetId = i => i.id;
 
-export const CrudJsx: React.FC<ICrudProps> = ({
-  closeDialog,
-  columns,
-  createItem,
-  deleteItem,
-  deleteBulk,
-  entityName,
-  formName,
-  getId = defGetId,
-  openDialog,
-  rows,
-}) => {
-  const classes = useStyles();
+export const CrudJsx: React.FC<ICrudProps> = React.memo(
+  ({
+    closeDialog,
+    columns,
+    createItem,
+    createTitle = 'Создать',
+    deleteItem,
+    deleteBulk,
+    editItem,
+    entityName,
+    formName,
+    getId = defGetId,
+    openDialog,
+    rows,
+  }) => {
+    const classes = useStyles();
 
-  const [order, setOrder] = React.useState<Order>('asc');
+    const [order, setOrder] = React.useState<Order>('asc');
 
-  const [orderBy, setOrderBy] = React.useState<any>('calories');
+    const [orderBy, setOrderBy] = React.useState<any>('calories');
 
-  const [selected, setSelected] = React.useState<Array<string | number>>([]);
+    const [selected, setSelected] = React.useState<Array<string | number>>([]);
 
-  const [page, setPage] = React.useState(0);
+    const [page, setPage] = React.useState(0);
 
-  const [dense, setDense] = React.useState(true);
+    const [dense, setDense] = React.useState(true);
 
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const rowsLength = useMemo(() => {
-    return get(rows, 'length', 0);
-  }, [rows]);
+    const rowsLength = useMemo(() => {
+      return get(rows, 'length', 0);
+    }, [rows]);
 
-  const emptyRows = useMemo(() => {
-    return rowsPerPage - Math.min(rowsPerPage, rowsLength - page * rowsPerPage);
-  }, [page, rowsPerPage, rowsLength]);
+    const emptyRows = useMemo(() => {
+      return rowsPerPage - Math.min(rowsPerPage, rowsLength - page * rowsPerPage);
+    }, [page, rowsPerPage, rowsLength]);
 
-  const handleRequestSort = useCallback(
-    (event: React.MouseEvent<unknown>, property: any) => {
-      const isAsc = orderBy === property && order === 'asc';
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(property);
-    },
-    [setOrder, setOrderBy, orderBy, order]
-  );
+    const handleRequestSort = useCallback(
+      (event: React.MouseEvent<unknown>, property: any) => {
+        const isAsc = orderBy === property && order === 'asc';
+        setOrder(isAsc ? 'desc' : 'asc');
+        setOrderBy(property);
+      },
+      [setOrder, setOrderBy, orderBy, order]
+    );
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map(getId);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (id: number | string) => (event: React.MouseEvent<unknown>) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: Array<number | string> = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-    }
-
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 0));
-    setPage(0);
-  };
-
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
-  };
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
-  const labelDisplayedRows = useCallback(({ from, to, count }: any) => {
-    return ''
-      .concat(from, '-')
-      .concat(to, ' из ')
-      .concat(count);
-  }, []);
-
-  const handleRemoveClick = useCallback(
-    (item: any) => (e: any) => {
-      if (item) {
-        e.stopPropagation();
-
-        const handleConfirm = () => deleteItem(getId(item));
-        openDialog(
-          <ConfirmationModal
-            onConfirm={handleConfirm}
-            titleText={`Удалить ${entityName} "${item.name || item.title || getId(item)}" из проетка?`}
-            confirmText="Удалить"
-            cancelText="Отмена"
-          />,
-          { maxWidth: 'lg' }
-        );
+    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.checked) {
+        const newSelecteds = rows.map(getId);
+        setSelected(newSelecteds);
+        return;
       }
-    },
-    [entityName, getId, deleteItem, openDialog]
-  );
+      setSelected([]);
+    };
 
-  const handleDeleteBulk = useCallback(
-    (e: any) => {
-      if (deleteBulk) {
-        e.stopPropagation();
+    const handleClick = (id: number | string) => (event: React.MouseEvent<unknown>) => {
+      const selectedIndex = selected.indexOf(id);
+      let newSelected: Array<number | string> = [];
 
-        const handleConfirm = () => deleteBulk(selected);
-        openDialog(
-          <ConfirmationModal
-            onConfirm={handleConfirm}
-            titleText={`Удалить ${selected.length} ${entityName} из проетка?`}
-            confirmText="Удалить"
-            cancelText="Отмена"
-          />,
-          { maxWidth: 'lg' }
-        );
+      if (selectedIndex === -1) {
+        newSelected = newSelected.concat(selected, id);
+      } else if (selectedIndex === 0) {
+        newSelected = newSelected.concat(selected.slice(1));
+      } else if (selectedIndex === selected.length - 1) {
+        newSelected = newSelected.concat(selected.slice(0, -1));
+      } else if (selectedIndex > 0) {
+        newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
       }
-    },
-    [entityName, deleteBulk, openDialog, selected]
-  );
 
-  const handleOpenCreate = useCallback(() => {
-    openDialog(<CreateForm form={formName} onSubmit={createItem} columns={columns} onSubmitSuccess={closeDialog} />, {
-      maxWidth: 'lg',
-    });
-  }, [closeDialog, createItem, formName, columns, openDialog]);
+      setSelected(newSelected);
+    };
 
-  if (!Array.isArray(rows)) {
-    return null;
+    const handleChangePage = (event: unknown, newPage: number) => {
+      setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setRowsPerPage(parseInt(event.target.value, 0));
+      setPage(0);
+    };
+
+    const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setDense(event.target.checked);
+    };
+
+    const isSelected = (name: string) => selected.indexOf(name) !== -1;
+
+    const labelDisplayedRows = useCallback(({ from, to, count }: any) => {
+      return ''
+        .concat(from, '-')
+        .concat(to, ' из ')
+        .concat(count);
+    }, []);
+
+    const handleRemoveClick = useCallback(
+      (item: any) => (e: any) => {
+        if (item) {
+          e.stopPropagation();
+
+          const handleConfirm = () => deleteItem(getId(item));
+          openDialog(
+            <ConfirmationModal
+              onConfirm={handleConfirm}
+              titleText={`Удалить ${entityName} "${item.name || item.title || getId(item)}" из проетка?`}
+              confirmText="Удалить"
+              cancelText="Отмена"
+            />,
+            { maxWidth: 'lg' }
+          );
+        }
+      },
+      [entityName, getId, deleteItem, openDialog]
+    );
+
+    const handleDeleteBulk = useCallback(
+      (e: any) => {
+        if (deleteBulk) {
+          e.stopPropagation();
+
+          const handleConfirm = () => deleteBulk(selected);
+          openDialog(
+            <ConfirmationModal
+              onConfirm={handleConfirm}
+              titleText={`Удалить ${selected.length} ${entityName} из проетка?`}
+              confirmText="Удалить"
+              cancelText="Отмена"
+            />,
+            { maxWidth: 'lg' }
+          );
+        }
+      },
+      [entityName, deleteBulk, openDialog, selected]
+    );
+
+    const handleOpenCreate = useCallback(() => {
+      openDialog(
+        <CreateForm
+          form={formName}
+          onSubmit={createItem}
+          columns={columns}
+          onSubmitSuccess={closeDialog}
+          createTitle={createTitle}
+        />,
+        {
+          maxWidth: 'md',
+        }
+      );
+    }, [closeDialog, createItem, createTitle, formName, columns, openDialog]);
+
+    const handleChangeField = (itemId, field) => (event: any) => {
+      event.stopPropagation();
+      if (editItem) {
+        editItem(itemId, {
+          [field]: event.target.value,
+        });
+      }
+    };
+
+    const handleCloseSelect = useCallback((event: any) => {
+      event.stopPropagation();
+    }, []);
+
+    if (!Array.isArray(rows)) {
+      return null;
+    }
+
+    return (
+      <div className={classes.root}>
+        <Paper className={classes.paper}>
+          <TableToolbar
+            createItem={createItem ? handleOpenCreate : undefined}
+            createTitle={createTitle}
+            entityName={entityName}
+            numSelected={selected.length}
+            deleteBulk={handleDeleteBulk}
+          />
+          <TableContainer>
+            <Table
+              stickyHeader
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size={dense ? 'small' : 'medium'}
+              aria-label="enhanced table"
+            >
+              <TableHead
+                classes={classes as any}
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rowsLength}
+                columns={columns}
+              />
+              <TableBody>
+                {stableSort(rows, getSorting(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((item, index) => {
+                    const elId = getId(item);
+                    const isItemSelected = isSelected(elId);
+                    const labelId = `enhanced-table-checkbox-${elId}`;
+
+                    return (
+                      <TableRow
+                        hover
+                        onClick={handleClick(elId)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={elId}
+                        selected={isItemSelected}
+                        className={classes.row}
+                        classes={{ root: classes.rowRoot, selected: classes.rowSelected }}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                            color="primary"
+                          />
+                        </TableCell>
+                        {columns.map(({ allowed, editable, name, path, isNumber, multiple, skip }) => {
+                          const value = get(item, path);
+                          const labelValue = allowed ? allowed[value] : value;
+                          return (
+                            <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
+                              {allowed && editItem && editable && (!skip || !skip(item)) ? (
+                                <Select
+                                  value={multiple ? [value] : value}
+                                  multiple={multiple}
+                                  onChange={handleChangeField(elId, name || path)}
+                                  onClose={handleCloseSelect}
+                                >
+                                  {Object.keys(allowed)
+                                    .filter(filterEnum)
+                                    .map(key => (
+                                      <MenuItem data-item={elId} key={key} value={key}>
+                                        {allowed[key]}
+                                      </MenuItem>
+                                    ))}
+                                </Select>
+                              ) : (
+                                labelValue
+                              )}
+                            </TableCell>
+                          );
+                        })}
+                        <TableCell padding="checkbox">
+                          <IconButton onClick={handleRemoveClick(item)}>
+                            <DeleteIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                    <TableCell colSpan={columns.length + 2} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 20]}
+            component="div"
+            count={rowsLength}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+            labelRowsPerPage={'Элементов на странице'}
+            labelDisplayedRows={labelDisplayedRows}
+          />
+        </Paper>
+        <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Плотно" />
+      </div>
+    );
   }
-
-  return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <TableToolbar
-          createItem={createItem ? handleOpenCreate : undefined}
-          entityName={entityName}
-          numSelected={selected.length}
-          deleteBulk={handleDeleteBulk}
-        />
-        <TableContainer>
-          <Table
-            stickyHeader
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-            aria-label="enhanced table"
-          >
-            <TableHead
-              classes={classes as any}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rowsLength}
-              columns={columns}
-            />
-            <TableBody>
-              {stableSort(rows, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((item, index) => {
-                  const elId = getId(item);
-                  const isItemSelected = isSelected(elId);
-                  const labelId = `enhanced-table-checkbox-${elId}`;
-
-                  return (
-                    <TableRow
-                      hover
-                      onClick={handleClick(elId)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={elId}
-                      selected={isItemSelected}
-                      className={classes.row}
-                      classes={{ root: classes.rowRoot, selected: classes.rowSelected }}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                          color="primary"
-                        />
-                      </TableCell>
-                      {columns.map(({ allowed, path, name, isNumber }) => {
-                        let value = get(item, path);
-                        value = allowed ? allowed[value] : value;
-                        return (
-                          <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
-                            {value}
-                          </TableCell>
-                        );
-                      })}
-                      <TableCell padding="checkbox">
-                        <IconButton onClick={handleRemoveClick(item)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={columns.length + 2} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={rowsLength}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-          labelRowsPerPage={'Элементов на странице'}
-          labelDisplayedRows={labelDisplayedRows}
-        />
-      </Paper>
-      <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Плотно" />
-    </div>
-  );
-};
+);

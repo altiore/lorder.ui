@@ -41,10 +41,17 @@ interface TableToolbarProps {
   numSelected: number;
   entityName: string;
   createItem: any;
+  createTitle: string;
   deleteBulk?: any;
 }
 
-export const TableToolbarTsx: React.FC<TableToolbarProps> = ({ numSelected, entityName, createItem, deleteBulk }) => {
+export const TableToolbarTsx: React.FC<TableToolbarProps> = ({
+  createItem,
+  createTitle = 'Создать',
+  deleteBulk,
+  entityName,
+  numSelected,
+}) => {
   const classes = useStyles();
 
   return (
@@ -64,7 +71,7 @@ export const TableToolbarTsx: React.FC<TableToolbarProps> = ({ numSelected, enti
           </Typography>
           {createItem && (
             <Button className={classes.create} variant="outlined" color="primary" onClick={createItem}>
-              Создать
+              {createTitle}
             </Button>
           )}
         </div>

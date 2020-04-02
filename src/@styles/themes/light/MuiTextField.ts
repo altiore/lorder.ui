@@ -54,6 +54,7 @@ export default function(theme: Theme): Partial<Overrides> {
         backgroundColor: 'transparent',
         borderRadius: theme.typography.pxToRem(theme.shape.borderRadius),
         height: theme.typography.pxToRem(36),
+        minWidth: 120,
       },
     },
     MuiTextField: {

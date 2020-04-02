@@ -17,6 +17,7 @@ export const TextField = (props: any) => {
     margin: 'normal',
     placeholder: custom.placeholder || label,
     ...input,
+    value: typeof input.value === 'undefined' ? '' : input.value,
     ...custom,
   });
 };

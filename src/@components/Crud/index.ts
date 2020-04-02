@@ -1,1 +1,1 @@
-export { CrudJsx as default } from './Crud';
+export * from './Crud';

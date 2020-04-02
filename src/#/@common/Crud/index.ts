@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Crud from '@components/Crud';
+import { CrudJsx, ICrudColumn } from '@components/Crud';
 
 import { closeDialog, openDialog } from '#/@store/dialog';
 
@@ -10,8 +10,9 @@ interface IOwnProps {
   createItem?: any;
   deleteItem?: (id: number) => void;
   deleteBulk?: (ids: Array<number | string>) => any;
+  editItem?: (itemId, itemValue) => any;
   rows: any[];
-  columns: Array<{ title: string; path: any; name?: string; isNumber?: boolean; allowed?: object }>;
+  columns: ICrudColumn[];
   getId?: (item: any) => number | string;
 }
 
@@ -23,4 +24,4 @@ const mapDispatch = {
 export default connect<any, { openDialog: any; closeDialog: any }, IOwnProps>(
   undefined,
   mapDispatch
-)(Crud);
+)(CrudJsx);

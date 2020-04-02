@@ -13,4 +13,5 @@ export interface IRoute {
   title?: string;
   redirect?: string;
   getReducers?: any;
+  computedMatch?: any;
 }

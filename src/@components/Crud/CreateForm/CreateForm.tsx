@@ -7,15 +7,18 @@ import Typography from '@material-ui/core/Typography';
 import { TextField } from '@components/TextField';
 
 import { Field, InjectedFormProps } from 'redux-form';
-// import { email, required } from 'redux-form-validators';
+
+import { ICrudColumn } from '../Crud';
 
 export interface ICreateFormProps {
   buttonText?: string;
-  columns: Array<{ name?: string; title: string; path: any; isNumber?: boolean }>;
+  columns: ICrudColumn[];
+  createTitle: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
+    minWidth: 240,
     padding: theme.spacing(2),
   },
 }));
@@ -25,6 +28,7 @@ const parseNumber = i => parseFloat(i);
 const formatNumber = i => (typeof i === 'number' ? i.toString() : '');
 
 export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, ICreateFormProps>> = ({
+  createTitle,
   handleSubmit,
   pristine,
   submitting,
@@ -36,19 +40,22 @@ export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, IC
   return (
     <form onSubmit={handleSubmit} className={classes.root}>
       <Typography color="inherit" variant="body1">
-        Создать
+        {createTitle}
       </Typography>
-      {columns.map(({ name, path, isNumber }) => (
-        <Field
-          key={name || path}
-          name={name || path}
-          component={TextField}
-          parse={isNumber ? parseNumber : doNothing}
-          format={isNumber ? formatNumber : doNothing}
-        />
-      ))}
+      {columns
+        .filter(el => el.name)
+        .map(({ name, path, isNumber, allowed }) => (
+          <Field
+            key={name || path}
+            name={name || path}
+            component={TextField}
+            parse={isNumber ? parseNumber : doNothing}
+            format={isNumber ? formatNumber : doNothing}
+            items={allowed}
+          />
+        ))}
       <Button type="submit" disabled={pristine || submitting || invalid} color="primary" variant="contained" fullWidth>
-        <span>Создать</span>
+        <span>{createTitle}</span>
       </Button>
     </form>
   );

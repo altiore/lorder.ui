@@ -38,6 +38,11 @@ export const openedProject = createSelector(
   }
 );
 
+export const openedAccessLevel = createSelector(
+  [openedProject],
+  p => p && p.accessLevel
+);
+
 export const initialUpdateProject = createSelector(
   openedProject,
   p =>

@@ -53,6 +53,9 @@ export default createMuiTheme({
     secondary,
   },
   props: {
+    MuiSelect: {
+      variant: 'outlined',
+    },
     MuiTextField: {
       variant: 'outlined',
     },

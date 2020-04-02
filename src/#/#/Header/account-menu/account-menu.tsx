@@ -170,7 +170,6 @@ export const AccountMenuTsx: FC<IAccountMenuTsx> = ({
             <Paper id={menuId} className={classes.paper}>
               <ClickAwayListener onClickAway={clickAway}>
                 <div>
-                  {/* раскомментировать, если будет в дизайне */}
                   <div className={classes.header}>
                     <Typography className={classes.email} variant="h4" noWrap>
                       {userEmail}

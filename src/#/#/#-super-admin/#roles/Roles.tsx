@@ -14,22 +14,26 @@ export interface IRolesProps extends RouteComponentProps {
   rolesList: any[];
 }
 
-export const Roles: React.FC<IRolesProps> = ({ createRole, deleteRole, deleteManyRoles, fetchRoles, rolesList }) => {
-  useEffect(() => {
-    fetchRoles();
-  }, [fetchRoles]);
+const COLUMNS = [{ title: 'Id', path: 'id' }, { title: 'Name', path: 'name' }];
 
-  return (
-    <Page>
-      <Crud
-        formName={CREATE_ROLE_FORM}
-        entityName="Роль"
-        createItem={createRole}
-        deleteItem={deleteRole}
-        deleteBulk={deleteManyRoles}
-        columns={[{ title: 'Id', path: 'id' }, { title: 'Name', path: 'name' }]}
-        rows={rolesList}
-      />
-    </Page>
-  );
-};
+export const Roles: React.FC<IRolesProps> = React.memo(
+  ({ createRole, deleteRole, deleteManyRoles, fetchRoles, rolesList }) => {
+    useEffect(() => {
+      fetchRoles();
+    }, [fetchRoles]);
+
+    return (
+      <Page>
+        <Crud
+          formName={CREATE_ROLE_FORM}
+          entityName="Роль"
+          createItem={createRole}
+          deleteItem={deleteRole}
+          deleteBulk={deleteManyRoles}
+          columns={COLUMNS}
+          rows={rolesList}
+        />
+      </Page>
+    );
+  }
+);

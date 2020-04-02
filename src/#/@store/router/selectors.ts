@@ -1,4 +1,4 @@
-import { match as IMatch } from 'react-router';
+import { match as IMatch } from 'react-router-dom';
 
 import get from 'lodash/get';
 import { createSelector } from 'reselect';

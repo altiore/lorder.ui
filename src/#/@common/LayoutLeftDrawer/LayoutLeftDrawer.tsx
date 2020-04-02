@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { match, RouteComponentProps } from 'react-router';
+import { match, RouteComponentProps } from 'react-router-dom';
 
 import cn from 'classnames';
 
