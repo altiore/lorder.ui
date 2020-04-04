@@ -1,26 +1,15 @@
 import get from 'lodash/get';
-import { createSelector } from 'reselect';
+
+import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 
 import { IPublicProject, IState } from '@types';
 
 export const publicAltioreData = (state: IState): IPublicProject => state.publicAltiore;
 
-export const isPublicAltioreLoaded = createSelector(
-  publicAltioreData,
-  s => s.isLoaded
-);
+export const isPublicAltioreLoaded = createDeepEqualSelector(publicAltioreData, s => s.isLoaded);
 
-export const isPublicAltioreLoading = createSelector(
-  publicAltioreData,
-  s => s.isLoading
-);
+export const isPublicAltioreLoading = createDeepEqualSelector(publicAltioreData, s => s.isLoading);
 
-export const altioreStatistic = createSelector(
-  publicAltioreData,
-  s => s.statistic
-);
+export const altioreStatistic = createDeepEqualSelector(publicAltioreData, s => s.statistic);
 
-export const altioreMembers = createSelector(
-  altioreStatistic,
-  s => get(s, 'members', [])
-);
+export const altioreMembers = createDeepEqualSelector(altioreStatistic, s => get(s, 'members', []));

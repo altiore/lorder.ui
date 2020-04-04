@@ -1,10 +1,9 @@
-import { createSelector } from 'reselect';
-
+import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { defaultProjectId } from '#/@store/identity/selectors';
 
 import { ownProjectList } from './selectors';
 
-export const ownProjectListNoProjectFirst = createSelector(
+export const ownProjectListNoProjectFirst = createDeepEqualSelector(
   [ownProjectList, defaultProjectId],
   (list, projectId) => {
     const defaultProject = list.find(el => el && el.id === projectId);

@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 import includes from 'lodash/includes';
-import { createSelector } from 'reselect';
 
+import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { defaultProjectId, userId } from '#/@store/identity/selectors';
 import { selectedProjectId } from '#/@store/project';
 import { routeProjectId } from '#/@store/router';
@@ -14,7 +14,7 @@ import moment from 'moment';
 
 import { IDownloadList, IEvent, ITask, IUserWork } from '@types';
 
-export const filteredByPerformerTasks = createSelector(
+export const filteredByPerformerTasks = createDeepEqualSelector(
   [allTasks, userId, currentTaskId],
   (tasks, currentUserId, taskId) =>
     currentUserId ? tasks.list.filter(el => el.performerId === currentUserId && el.id !== taskId) : []
@@ -26,12 +26,12 @@ const filteredFunction = {
   smart: (a: ITask, b: ITask) => (a.value > b.value ? -1 : 1),
 };
 
-export const sortedByFilterTasks = createSelector(
+export const sortedByFilterTasks = createDeepEqualSelector(
   [filteredByPerformerTasks, tasksFilter],
   (tasks = [], filter = 'smart') => [...tasks].sort(filteredFunction[filter])
 );
 
-export const sortedByFilterTasksWithActive = createSelector(
+export const sortedByFilterTasksWithActive = createDeepEqualSelector(
   [sortedByFilterTasks, currentTask, defaultProjectId],
   (tasks = [], curTask, defProdjId): Array<ITask | 'filter' | undefined> => [
     curTask,
@@ -40,12 +40,11 @@ export const sortedByFilterTasksWithActive = createSelector(
   ]
 );
 
-export const checkIsCurrent = createSelector(
-  [currentTaskId],
-  cTaskId => (sequenceNumber: number) => cTaskId === sequenceNumber
+export const checkIsCurrent = createDeepEqualSelector([currentTaskId], cTaskId => (sequenceNumber: number) =>
+  cTaskId === sequenceNumber
 );
 
-export const events = createSelector(
+export const events = createDeepEqualSelector(
   [lastUserWorks, defaultProjectId],
   (userWorks: IDownloadList<IUserWork>, defPrId: number | undefined): IEvent[] => {
     return userWorks.list
@@ -61,12 +60,12 @@ export const events = createSelector(
   }
 );
 
-export const projectTasks = createSelector(
+export const projectTasks = createDeepEqualSelector(
   [allTasks, routeProjectId],
   (list, projectId: number | undefined): Task[] => (projectId ? list.list.filter(el => el.projectId === projectId) : [])
 );
 
-export const filteredProjectTasks = createSelector(
+export const filteredProjectTasks = createDeepEqualSelector(
   [projectTasks, searchTerm, filteredMembers],
   (list, sTerm = '', members = []) => {
     if (!sTerm && !members.length) {
@@ -80,12 +79,11 @@ export const filteredProjectTasks = createSelector(
   }
 );
 
-export const selectedProjectTasks = createSelector(
-  [allTasks, selectedProjectId],
-  (list, projectId): Task[] => (projectId ? list.list.filter(el => el.projectId === projectId) : [])
+export const selectedProjectTasks = createDeepEqualSelector([allTasks, selectedProjectId], (list, projectId): Task[] =>
+  projectId ? list.list.filter(el => el.projectId === projectId) : []
 );
 
-export const getSelectedProjectTaskById = createSelector(
+export const getSelectedProjectTaskById = createDeepEqualSelector(
   selectedProjectTasks,
   (tasks: Task[]) => (id: number) => tasks.find(el => el.id === id)
 );

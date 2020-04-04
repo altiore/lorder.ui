@@ -15,8 +15,8 @@ export interface ITaskTypesProps extends RouteComponentProps {
 
 const COLUMNS = [
   { title: 'Id', path: 'id' },
-  { title: 'Тип', path: 'title' },
-  { title: 'Публичный', path: 'isPublic', type: 'bool' },
+  { title: 'Тип', path: 'title', name: 'title' },
+  { title: 'Публичный', path: 'isPublic', type: 'bool', name: 'isPublic' },
 ];
 
 export const TaskTypesJsx: React.FC<ITaskTypesProps> = ({ postTaskType, deleteTaskType, getAllTaskTypes, list }) => {

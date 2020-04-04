@@ -1,3 +1,4 @@
+export * from './ACCESS_LEVEL';
 export * from './IEvent';
 export * from './IExternalLibraries';
 export * from './IRoute';
@@ -19,6 +20,6 @@ export * from './ITaskStatus';
 export * from './ITaskStatusMove';
 export * from './IUser';
 export * from './IUserRole';
-export * from './ROLE';
 export * from './IUserWork';
 export * from './IDownloadList';
+export * from './ROLE';

@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+import { SelectField } from '@components/SelectField';
 import { TextField } from '@components/TextField';
 
 import { Field, InjectedFormProps } from 'redux-form';
@@ -44,11 +45,11 @@ export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, IC
       </Typography>
       {columns
         .filter(el => el.name)
-        .map(({ name, path, isNumber, allowed }) => (
+        .map(({ name, isNumber, allowed }) => (
           <Field
-            key={name || path}
-            name={name || path}
-            component={TextField}
+            key={name}
+            name={name}
+            component={allowed ? SelectField : TextField}
             parse={isNumber ? parseNumber : doNothing}
             format={isNumber ? formatNumber : doNothing}
             items={allowed}

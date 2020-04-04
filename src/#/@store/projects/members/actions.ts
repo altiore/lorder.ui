@@ -8,7 +8,7 @@ export interface IProjectMemberData {
   accessLevel?: number;
 }
 
-export const acceptInvitation = requestActions<number>('PROJECT_MEMBER/ACCEPT_INVITATION', projectId => ({
+export const acceptInvitationAct = requestActions<number>('PROJECT_MEMBER/ACCEPT_INVITATION', projectId => ({
   projectId,
   request: {
     method: 'PATCH',

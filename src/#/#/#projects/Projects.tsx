@@ -13,12 +13,11 @@ import { Page } from '@components/Page';
 import TableVirtualized, { ColumnType } from '@components/TableVirtualized';
 
 import { CreateProjectPopup } from '#/@common/CreateProjectPopup';
-import { ACCESS_LEVEL, Project } from '#/@store/projects';
+import { Project } from '#/@store/projects';
 
-import { IUser, ROLE } from '@types';
+import { ACCESS_LEVEL, IUser, ROLE } from '@types';
 
 export interface IProjectsProps {
-  acceptInvitation: (projectId: number) => any;
   closeDialog: any;
   defaultProjectId: number;
   findUserById: (id: number) => IUser | undefined;
@@ -156,7 +155,6 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   private handleRowClick = async ({ rowData, event }: any) => {
     event.stopPropagation();
     if (rowData.accessLevel === ACCESS_LEVEL.WHITE && typeof rowData.id === 'number') {
-      await this.props.acceptInvitation(rowData.id);
       this.props.goToProject(rowData.id);
     } else {
       this.props.goToProject(rowData.id);

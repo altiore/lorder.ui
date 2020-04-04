@@ -1,7 +1,5 @@
-import React, { lazy, Suspense, useMemo } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-
-import includes from 'lodash/includes';
 
 import LoadingPage from '@components/LoadingPage';
 
@@ -9,6 +7,8 @@ import NestedRoute from '#/@common/#NestedRoute';
 import NotFound from '#/@common/NotFoundPage';
 
 import { ROLES } from './@store/roles';
+
+import { useAllowedRoutes } from '../@utils/useAllowedRoutes';
 
 import { IRoute, ROLE } from '@types';
 
@@ -18,27 +18,27 @@ interface IAppProps {
 
 export const APP_MAIN_ROUTES: IRoute[] = [
   {
-    access: ROLES.ALL,
+    access: [ROLES.ALL],
     component: lazy(() => import('./#p/#:projectId')),
     path: '/p/:projectId',
   },
   {
-    access: ROLES.ALL,
+    access: [ROLES.ALL],
     component: lazy(() => import('./#start/#:identifier')),
     path: '/start/:identifier',
   },
   {
-    access: ROLES.ALL,
+    access: [ROLES.ALL],
     component: lazy(() => import('./#hi')),
     path: '/hi',
   },
   {
-    access: ROLES.GUESTS,
+    access: [ROLES.GUESTS],
     component: lazy(() => import('./#login')),
     path: '/login',
   },
   {
-    access: ROLES.USERS,
+    access: [ROLES.USERS],
     component: lazy(() => import('./#')),
     getReducers: import('./#/@store/reducers'),
     path: '/',
@@ -46,9 +46,7 @@ export const APP_MAIN_ROUTES: IRoute[] = [
 ];
 
 export const AppJsx: React.FC<IAppProps> = ({ userRole }) => {
-  const preparedRoutes = useMemo(() => {
-    return APP_MAIN_ROUTES.filter(r => includes(r.access, userRole));
-  }, [userRole]);
+  const preparedRoutes = useAllowedRoutes(APP_MAIN_ROUTES, userRole);
 
   return (
     <Suspense fallback={<LoadingPage />}>

@@ -16,6 +16,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ExtensionIcon from '@material-ui/icons/Extension';
 import LaptopIcon from '@material-ui/icons/Laptop';
+import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
 
@@ -42,7 +43,8 @@ export interface ILayoutLeftDrawerProps {
 
 export const ICONS_MAP = {
   '/projects/:projectId/board': ExtensionIcon,
-  '/projects/:projectId/members': PeopleOutlinedIcon,
+  '/projects/:projectId/members': PeopleOutlineIcon,
+  '/projects/:projectId/roles': PeopleOutlinedIcon,
   '/projects/:projectId/settings': SettingsIcon,
 };
 
@@ -109,10 +111,10 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
             {routes
               .filter((el: any) => el.title)
               .map((route: IRoute) => {
-                const CurIcon = ICONS_MAP[route.path];
+                const CurIcon = ICONS_MAP[route.path] || ICONS_MAP['/projects/:projectId/board'];
                 return (
                   <ListItem key={route.path} button onClick={goToPage(route.path)}>
-                    <ListItemIcon>{CurIcon ? <CurIcon /> : route.icon}</ListItemIcon>
+                    <ListItemIcon>{route.icon || <CurIcon />}</ListItemIcon>
                     <ListItemText primary={route.title} />
                   </ListItem>
                 );

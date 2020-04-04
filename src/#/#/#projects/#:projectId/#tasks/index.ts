@@ -3,31 +3,23 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
-import { withStyles } from '@material-ui/core/styles';
-
-import { closeDialog, openDialog } from '#/@store/dialog';
-import { isFormMount } from '#/@store/form';
+import { openDialog } from '#/@store/dialog';
 import { routeProjectId } from '#/@store/router';
-import { deleteProjectTask, EDIT_TASK_FORM, fetchProjectTasks, projectTasks } from '#/@store/tasks';
+import { fetchProjectTasks, filteredProjectTasks, moveProjectTask } from '#/@store/tasks';
 
-import { destroy } from 'redux-form';
+import { DragAndDrop } from './DragAndDrop';
 
-import { ProjectTasksJsx } from './ProjectTasks';
-import { styles } from './styles';
-
+import { withResize } from '@hooks/withResize';
 import { IState } from '@types';
 
-const mapState = createStructuredSelector<IState, any>({
-  isFormMount: isFormMount(EDIT_TASK_FORM),
+const mapState = createStructuredSelector<IState, { items: any[]; projectId?: number }>({
+  items: filteredProjectTasks,
   projectId: routeProjectId,
-  projectTasks,
 });
 
 const mapDispatch = {
-  closeDialog,
-  deleteProjectTask,
-  destroy,
   fetchProjectTasks,
+  moveProjectTask,
   openDialog,
   push,
 };
@@ -35,4 +27,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withStyles(styles)(ProjectTasksJsx));
+)(withResize(DragAndDrop));

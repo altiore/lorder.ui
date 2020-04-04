@@ -7,13 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { findUserById } from '#/#/@store/users';
 import { closeDialog, openDialog } from '#/@store/dialog';
 import { defaultProjectId, hasRole, userRole } from '#/@store/identity';
-import {
-  acceptInvitation,
-  allProjectList,
-  getAllProjects,
-  removeProject,
-  removeProjectByAdmin,
-} from '#/@store/projects';
+import { allProjectList, getAllProjects, removeProject, removeProjectByAdmin } from '#/@store/projects';
 
 import { Projects as ProjectsJsx } from '../../#projects/Projects';
 
@@ -30,7 +24,6 @@ const mapToState = (ownOnly: boolean = true) =>
   } as any);
 
 const mapToProps = (ownOnly: boolean = true) => ({
-  acceptInvitation,
   closeDialog,
   getProjects: getAllProjects,
   goToPage: push,

@@ -11,13 +11,11 @@ import SyncAltIcon from '@material-ui/icons/SyncAlt';
 
 import NestedRoute from '#/@common/#NestedRoute';
 import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
-import { ROLES } from '#/@store/roles';
 
 import { IRoute } from '@types';
 
-export const MAIN_SUPER_ADMIN_ROUTES = [
+export const MAIN_SUPER_ADMIN_ROUTES: IRoute[] = [
   {
-    access: ROLES.SUPER_ADMINS,
     component: lazy(() => import('./#projects')),
     exact: true,
     icon: <LaptopIcon />,
@@ -25,49 +23,42 @@ export const MAIN_SUPER_ADMIN_ROUTES = [
     title: 'Все Проекты',
   },
   {
-    access: ROLES.SUPER_ADMINS,
     component: lazy(() => import('./#users')),
     icon: <FaceIcon />,
     path: '/users',
     title: 'Пользователи',
   },
   {
-    access: ROLES.SUPER_ADMINS,
     component: lazy(() => import('./#roles')),
     icon: <PeopleOutlinedIcon />,
     path: '/roles',
     title: 'Допустимые роли',
   },
   {
-    access: ROLES.SUPER_ADMINS,
     component: lazy(() => import('./#task-types')),
     icon: <FormatSizeIcon />,
     path: '/task-types',
     title: 'Типы Задач',
   },
   {
-    access: ROLES.SUPER_ADMINS,
     component: lazy(() => import('./#task-statuses')),
     icon: <SettingsInputComponentIcon />,
     path: '/task-statuses',
     title: 'Статусы задачи',
   },
   {
-    access: ROLES.SUPER_ADMINS,
     component: lazy(() => import('./#task-status-moves')),
     icon: <SyncAltIcon />,
     path: '/task-status-moves',
     title: 'Разрешенные перемещения',
   },
   {
-    access: ROLES.ALL,
     component: lazy(() => import('./#feedback')),
     icon: <SyncAltIcon />,
     path: '/feedback',
     title: 'Обратная связь',
   },
   {
-    access: ROLES.SUPER_ADMINS,
     component: lazy(() => import('./#other')),
     icon: <SettingsIcon />,
     path: '/other',

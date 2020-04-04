@@ -1,20 +1,11 @@
-import { createSelector } from 'reselect';
+import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 
 import { IState } from '@types';
 
 const baseState = (state: IState) => state.info;
 
-export const infoActivity = createSelector(
-  baseState,
-  s => s.activity
-);
+export const infoActivity = createDeepEqualSelector(baseState, s => s.activity);
 
-export const infoPeople = createSelector(
-  baseState,
-  s => s.people
-);
+export const infoPeople = createDeepEqualSelector(baseState, s => s.people);
 
-export const infoProjects = createSelector(
-  baseState,
-  s => s.projects
-);
+export const infoProjects = createDeepEqualSelector(baseState, s => s.projects);

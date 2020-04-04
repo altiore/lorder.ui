@@ -1,5 +1,4 @@
-import { createSelector } from 'reselect';
-
+import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { convertSecondsToDuration, convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { filteredTaskList } from '#/@store/tasks/selectors';
 import { IUserWorkDelete } from '#/@store/tasks/user-works/actions';
@@ -8,27 +7,15 @@ import { IState, IUserWork } from '@types';
 
 const baseState = (state: IState) => state.timer;
 
-export const currentTimerTime = createSelector(
-  baseState,
-  state => state.time
-);
+export const currentTimerTime = createDeepEqualSelector(baseState, state => state.time);
 
-export const currentProjectId = createSelector(
-  baseState,
-  state => state.projectId
-);
+export const currentProjectId = createDeepEqualSelector(baseState, state => state.projectId);
 
-export const currentTaskId = createSelector(
-  baseState,
-  state => state.taskId
-);
+export const currentTaskId = createDeepEqualSelector(baseState, state => state.taskId);
 
-export const currentUserWorkId = createSelector(
-  baseState,
-  state => state.userWorkId
-);
+export const currentUserWorkId = createDeepEqualSelector(baseState, state => state.userWorkId);
 
-export const currentUserWorkData = createSelector(
+export const currentUserWorkData = createDeepEqualSelector(
   baseState,
   (state): IUserWorkDelete => ({
     projectId: state.projectId as number,
@@ -37,45 +24,33 @@ export const currentUserWorkData = createSelector(
   })
 );
 
-export const isTimerStarted = createSelector(
-  baseState,
-  state => !!state.timer
+export const isTimerStarted = createDeepEqualSelector(baseState, state => !!state.timer);
+
+export const currentTask = createDeepEqualSelector([filteredTaskList, currentTaskId], (tasks, taskId): any =>
+  tasks.find(el => el.id === taskId)
 );
 
-export const currentTask = createSelector(
-  [filteredTaskList, currentTaskId],
-  (tasks, taskId): any => tasks.find(el => el.id === taskId)
-);
-
-export const currentUserWork = createSelector(
+export const currentUserWork = createDeepEqualSelector(
   [currentTask, currentUserWorkId],
   (task, userWorkId) =>
     task && task.userWorks && task.userWorks.find && task.userWorks.find((el: IUserWork) => el.id === userWorkId)
 );
 
-export const currentTime = createSelector(
-  [currentTimerTime, currentUserWork],
-  (time, userWork) => (userWork ? userWork.durationInSeconds : time)
+export const currentTime = createDeepEqualSelector([currentTimerTime, currentUserWork], (time, userWork) =>
+  userWork ? userWork.durationInSeconds : time
 );
 
-export const currentTimeHumanize = createSelector(
-  currentTime,
-  time => convertSecondsToDuration(time)
-);
+export const currentTimeHumanize = createDeepEqualSelector(currentTime, time => convertSecondsToDuration(time));
 
-export const currentTaskTime = createSelector(
+export const currentTaskTime = createDeepEqualSelector(
   [currentTime, currentTask, currentUserWork],
   (time, task, userWork) => (task && userWork ? task.durationInSeconds : time)
 );
 
-export const currentTimeToString = createSelector(
-  [currentTime],
-  seconds => {
-    return convertSecondsToDuration(seconds);
-  }
-);
+export const currentTimeToString = createDeepEqualSelector([currentTime], seconds => {
+  return convertSecondsToDuration(seconds);
+});
 
-export const currentTimeWithLocal = createSelector(
-  [currentTime],
-  seconds => convertSecondsToDurationWithLocal(seconds)
+export const currentTimeWithLocal = createDeepEqualSelector([currentTime], seconds =>
+  convertSecondsToDurationWithLocal(seconds)
 );

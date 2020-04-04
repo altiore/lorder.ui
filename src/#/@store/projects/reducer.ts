@@ -23,6 +23,7 @@ import {
   updateProjectAct,
   updateProjectMemberAccessLevel,
 } from './actions';
+import { acceptInvitationAct } from './members/actions';
 import { Member } from './members/Member';
 import { Project } from './Project';
 import { projectTaskTypes } from './taskTypes/reducer';
@@ -167,6 +168,14 @@ const logOutHandler = () => {
   return new DownloadList(Project);
 };
 
+const acceptInvitationHandler = (state: S, { payload }: any) => {
+  const index = state.list.findIndex(el => get(payload, ['data', 'project', 'id']) === el.id);
+
+  return state.updateItem(index, {
+    accessLevel: get(payload, ['data', 'accessLevel']),
+  });
+};
+
 export const projects: any = handleActions<S, any, any>(
   {
     [postProject.success]: postProjectSuccessHandler,
@@ -195,6 +204,8 @@ export const projects: any = handleActions<S, any, any>(
 
     [updateProjectAct.success]: updateProjectHandler,
     [PURGE]: logOutHandler,
+
+    [acceptInvitationAct.success]: acceptInvitationHandler,
   },
   new DownloadList(Project)
 );

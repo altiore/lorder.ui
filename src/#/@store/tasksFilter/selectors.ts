@@ -1,20 +1,11 @@
-import { createSelector } from 'reselect';
+import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 
 import { IState } from '@types';
 
 const baseState = (state: IState) => state.tasksFilter;
 
-export const tasksFilter = createSelector(
-  baseState,
-  state => state.filter
-);
+export const tasksFilter = createDeepEqualSelector(baseState, state => state.filter);
 
-export const searchTerm = createSelector(
-  baseState,
-  s => s.search
-);
+export const searchTerm = createDeepEqualSelector(baseState, s => s.search);
 
-export const filteredMembers = createSelector(
-  baseState,
-  s => s.members
-);
+export const filteredMembers = createDeepEqualSelector(baseState, s => s.members);

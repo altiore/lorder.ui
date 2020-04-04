@@ -10,13 +10,19 @@ export const fetchProjectRolesAct = requestActions('CURRENT_PROJECT/FETCH_ROLES'
   },
 }));
 
-export const createProjectRoleAct = requestActions('CURRENT_PROJECT/ADD_ROLE', (projectId: number, roleId: string) => ({
-  request: {
-    data: { roleId },
-    method: 'POST',
-    url: `/projects/${projectId}/roles`,
-  },
-}));
+export const createProjectRoleAct = requestActions(
+  'CURRENT_PROJECT/ADD_ROLE',
+  (projectId: number, data: { roleId: string; allowedMoveIds: number[]; name?: string }) => ({
+    request: {
+      data: {
+        allowedMoveIds: [],
+        ...data,
+      },
+      method: 'POST',
+      url: `/projects/${projectId}/roles`,
+    },
+  })
+);
 
 export const deleteProjectRoleAct = requestActions(
   'CURRENT_PROJECT/DELETE_ROLE',

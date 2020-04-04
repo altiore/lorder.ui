@@ -1,8 +1,8 @@
 import { match as IMatch } from 'react-router-dom';
 
 import get from 'lodash/get';
-import { createSelector } from 'reselect';
 
+import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { getQueryParam } from '#/@store/@common/helpers';
 import { userRole } from '#/@store/identity/selectors';
 
@@ -17,42 +17,31 @@ type IMatchIdentifier = IMatch<{
 
 const baseState = (state: IState) => state.router;
 
-export const prevLocation = createSelector(
-  baseState,
-  s => s.prevLocation
-);
+export const prevLocation = createDeepEqualSelector(baseState, s => s.prevLocation);
 
-export const availableRoutes = createSelector(
-  [baseState, userRole],
-  (s, role) => {
-    return s.routes.filter(r => r.access[0].includes(role));
-  }
-);
+export const availableRoutes = createDeepEqualSelector([baseState, userRole], (s, role) => {
+  return s.routes.filter(r => r.access[0].includes(role));
+});
 
 const match = (path: string) => (state: IState): IMatchIdentifier =>
   createMatchSelector(path)(state) as IMatchIdentifier;
 
-const routerSearch = createSelector(
-  baseState,
-  (router: any) => router.location && router.location.search
+const routerSearch = createDeepEqualSelector(baseState, (router: any) => router.location && router.location.search);
+
+export const identifier = createDeepEqualSelector(match('/start/:identifier'), (state: IMatchIdentifier) =>
+  get(state, 'params.identifier')
 );
 
-export const identifier = createSelector(
-  match('/start/:identifier'),
-  (state: IMatchIdentifier) => get(state, 'params.identifier')
+export const projectIdSearchParam = createDeepEqualSelector(routerSearch, (search: string) =>
+  getQueryParam(search, 'project')
 );
 
-export const projectIdSearchParam = createSelector(
-  routerSearch,
-  (search: string) => getQueryParam(search, 'project')
-);
-
-export const routeProjectId = createSelector(
+export const routeProjectId = createDeepEqualSelector(
   match('/projects/:projectId'),
   (state): number | undefined => get(state, 'params.projectId') && parseInt(get(state, 'params.projectId'), 0)
 );
 
-export const routeTaskSequenceNumber = createSelector(
+export const routeTaskSequenceNumber = createDeepEqualSelector(
   match('/projects/:projectId/tasks/:sequenceNumber'),
   (state): number | undefined => get(state, 'params.sequenceNumber') && parseInt(get(state, 'params.sequenceNumber'), 0)
 );

@@ -1,10 +1,7 @@
-import { createSelector } from 'reselect';
+import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 
 import { IState } from '@types';
 
 const baseState = (state: IState) => state.taskStatuses;
 
-export const taskStatusesList = createSelector(
-  baseState,
-  s => s.list
-);
+export const taskStatusesList = createDeepEqualSelector(baseState, s => s.list);

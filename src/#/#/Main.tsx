@@ -2,7 +2,6 @@ import React, { lazy, useCallback, useEffect, useMemo } from 'react';
 import { RouteComponentProps, Switch } from 'react-router-dom';
 
 import get from 'lodash/get';
-import includes from 'lodash/includes';
 
 import NestedRoute from '#/@common/#NestedRoute';
 import { PatchTaskForm } from '#/@common/TaskForm';
@@ -14,10 +13,11 @@ import { Header } from './Header';
 import { useStyles } from './styles';
 
 import { IRoute, ROLE } from '@types';
+import { useAllowedRoutes } from '@utils/useAllowedRoutes';
 
-export const MAIN_USER_ROUTES = [
+export const MAIN_USER_ROUTES: IRoute[] = [
   {
-    access: ROLES.USERS,
+    access: [ROLES.USERS],
     component: lazy(() => import('./#projects')),
     exact: true,
     icon: 'assignment',
@@ -25,18 +25,18 @@ export const MAIN_USER_ROUTES = [
     title: 'Мои Проекты',
   },
   {
-    access: ROLES.USERS,
+    access: [ROLES.USERS],
     component: lazy(() => import('./#projects/#:projectId')),
     path: '/projects/:projectId',
   },
   {
-    access: ROLES.USERS,
+    access: [ROLES.USERS],
     component: lazy(() => import('./#profile')),
     path: '/profile',
     title: 'Настройки пользователя',
   },
   {
-    access: ROLES.USERS,
+    access: [ROLES.USERS],
     component: lazy(() => import('./#')),
     exact: true,
     icon: 'home',
@@ -45,7 +45,7 @@ export const MAIN_USER_ROUTES = [
   },
 
   {
-    access: ROLES.SUPER_ADMINS,
+    access: [ROLES.SUPER_ADMINS],
     component: lazy(() => import('./#-super-admin')),
     path: '/',
   },
@@ -70,9 +70,7 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
 }) => {
   const classes = useStyles();
 
-  const preparedRoutes = useMemo(() => {
-    return MAIN_USER_ROUTES.filter(r => includes(r.access, userRole));
-  }, [userRole]);
+  const preparedRoutes = useAllowedRoutes(MAIN_USER_ROUTES, userRole);
 
   const isModal = useMemo(() => get(location, ['state', 'modal']), [location]);
 

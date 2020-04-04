@@ -7,7 +7,8 @@ import { ICrudColumn } from '@components/Crud';
 import { Page } from '@components/Page';
 
 import Crud from '#/@common/Crud';
-import { ACCESS_LEVEL } from '#/@store/projects';
+
+import { ACCESS_LEVEL } from '@types';
 
 export interface IProjectMembersProps extends RouteComponentProps {
   createItem: any;
@@ -49,7 +50,6 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
     rolesList,
     updateMemberLevel,
     userId,
-    ...rest
   }) => {
     useEffect(() => {
       if (fetchItems) {
