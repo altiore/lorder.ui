@@ -11,6 +11,7 @@ export interface IMember {
 
 export class Member implements IMember {
   accessLevel: number;
+  roles: string[];
   member: IUser;
 
   constructor(initial?: object) {

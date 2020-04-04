@@ -126,9 +126,39 @@ const postProjectMemberFailHandler = (state: S, { meta }: ActionMeta<P, M>) => {
 const updateProjectMemberAccessLevelHandler = (state: S, { payload }: Action<P>) => {
   const projectIndex = state.list.findIndex(el => get(payload, 'projectId') === el.id);
   const memberIndex = state.list[projectIndex].members.list.findIndex(el => get(payload, 'memberId') === el.member.id);
+  let preparedRoles = get(payload, 'request.data.roles');
+  preparedRoles = preparedRoles
+    ? preparedRoles.map(el => ({
+        role: {
+          id: el,
+        },
+      }))
+    : undefined;
   return state.updateItem(projectIndex, {
     members: state.list[projectIndex].members.updateItem(memberIndex, {
-      accessLevel: get(payload, 'request.data.accessLevel'),
+      accessLevel: get(
+        payload,
+        'request.data.accessLevel',
+        state.list[projectIndex].members.list[memberIndex].accessLevel
+      ),
+      roles: preparedRoles || state.list[projectIndex].members.list[memberIndex].roles,
+    }),
+  });
+};
+
+const updateProjectMemberAccessLevelSuccessHandler = (state: S, { payload, meta }: any) => {
+  const projectIndex = state.list.findIndex(el => get(meta, ['previousAction', 'payload', 'projectId']) === el.id);
+  const memberIndex = state.list[projectIndex].members.list.findIndex(
+    el => get(meta, ['previousAction', 'payload', 'memberId']) === el.member.id
+  );
+  return state.updateItem(projectIndex, {
+    members: state.list[projectIndex].members.updateItem(memberIndex, {
+      accessLevel: get(
+        payload,
+        ['data', 'accessLevel'],
+        state.list[projectIndex].members.list[memberIndex].accessLevel
+      ),
+      roles: get(payload, ['data', 'roles'], state.list[projectIndex].members.list[memberIndex].roles),
     }),
   });
 };
@@ -198,7 +228,10 @@ export const projects: any = handleActions<S, any, any>(
     [postProjectMember.toString()]: postProjectMemberHandler,
     [postProjectMember.success]: postProjectMemberSuccessHandler,
     [postProjectMember.fail]: postProjectMemberFailHandler,
+
     [updateProjectMemberAccessLevel.toString()]: updateProjectMemberAccessLevelHandler,
+    [updateProjectMemberAccessLevel.success]: updateProjectMemberAccessLevelSuccessHandler,
+
     [deleteProjectMemberAct.toString()]: deleteProjectMemberHandler,
     [combineActions(getAllProjectTaskTypes, postTaskTypeToProject)]: projectTaskTypeHandler,
 

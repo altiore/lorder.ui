@@ -2,7 +2,7 @@ import { routeProjectId } from '#/@store/router';
 
 import { updateProjectMemberAccessLevel } from '../actions';
 
-export const updateMemberLevel = (accessLevel, memberId) => async (dispatch, getState) => {
+export const updateMemberLevel = (memberId, data) => async (dispatch, getState) => {
   const projectId = routeProjectId(getState());
 
   if (!projectId || !memberId) {
@@ -10,7 +10,7 @@ export const updateMemberLevel = (accessLevel, memberId) => async (dispatch, get
   }
   await dispatch(
     updateProjectMemberAccessLevel({
-      accessLevel,
+      data,
       memberId,
       projectId,
     })

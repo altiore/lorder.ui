@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import get from 'lodash/get';
@@ -15,11 +15,10 @@ export interface IProjectMembersProps extends RouteComponentProps {
   deleteItem: any;
   deleteManyItems: any;
   fetchItems?: any;
-  fetchRoles: () => void;
   openedAccessLevel: any;
+  projectRoles: any[];
   list: any[];
-  rolesList: any[];
-  updateMemberLevel: (level: ACCESS_LEVEL, memberId: number) => any;
+  updateMemberLevel: (id, value) => any;
   userId: number;
 }
 
@@ -34,7 +33,7 @@ const COLUMNS: ICrudColumn[] = [
   { title: 'Имя', path: 'member.displayName' },
   { title: 'E-mail', path: 'member.email', name: 'email' },
   { title: 'Активен', path: 'member.status', allowed: STATUS },
-  { title: 'Роли', path: 'member.id', multiple: true },
+  { title: 'Роли', path: 'roles', multiple: true },
   { title: 'Уровень доступа', path: 'accessLevel', allowed: ACCESS_LEVEL },
 ];
 
@@ -44,10 +43,9 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
     deleteItem,
     deleteManyItems,
     fetchItems,
-    fetchRoles,
     openedAccessLevel,
+    projectRoles,
     list,
-    rolesList,
     updateMemberLevel,
     userId,
   }) => {
@@ -57,28 +55,17 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
       }
     }, [fetchItems]);
 
-    useEffect(() => {
-      if (fetchRoles) {
-        fetchRoles();
-      }
-    }, [fetchRoles]);
-
     const preparedList = useMemo(() => {
-      return get(list, 'list');
+      return get(list, 'list', []).map(el => ({
+        ...el,
+        roles: el.roles.map(r => r.role.id),
+      }));
     }, [list]);
 
-    const handleEditItem = useCallback(
-      (itemId, newValue) => {
-        if (typeof newValue.accessLevel !== 'undefined') {
-          updateMemberLevel(parseInt(newValue.accessLevel, 0), itemId);
-        }
-      },
-      [updateMemberLevel]
-    );
-
     const preparedColumns = useMemo(() => {
-      COLUMNS[3].allowed = rolesList.reduce((res, cur) => {
-        res[cur.id] = cur.name;
+      COLUMNS[3].editable = openedAccessLevel >= ACCESS_LEVEL.VIOLET;
+      COLUMNS[3].allowed = projectRoles.reduce((res, cur) => {
+        res[cur.name || cur.role.name] = cur.role.id;
         return res;
       }, {});
       // только человек с максимальным уровнем доступа к проекту может редактировать accessLevel Других пользовтаелей
@@ -86,7 +73,7 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
       // нельзя редактировать свой уровень доступа или уровень доступа человека, у которого максимальный уровень доступа
       COLUMNS[4].skip = item => item.accessLevel === ACCESS_LEVEL.VIOLET || item.member.id === userId;
       return COLUMNS;
-    }, [openedAccessLevel, rolesList, userId]);
+    }, [openedAccessLevel, projectRoles, userId]);
 
     return (
       <Page>
@@ -97,7 +84,7 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
           createItem={createItem}
           deleteItem={deleteItem}
           deleteBulk={deleteManyItems}
-          editItem={handleEditItem}
+          editItem={updateMemberLevel}
           getId={getUserId}
           columns={preparedColumns}
           rows={preparedList}

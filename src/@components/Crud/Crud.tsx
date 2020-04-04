@@ -1,11 +1,13 @@
 import React, { useCallback, useMemo } from 'react';
 
 import get from 'lodash/get';
+import invert from 'lodash/invert';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import { DialogProps } from '@material-ui/core/Dialog';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
+import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
@@ -56,8 +58,10 @@ function getSorting<K extends keyof any>(
 }
 
 function filterEnum(t: any) {
-  return !isNaN(parseInt(t, 0));
+  return isNaN(parseInt(t, 0));
 }
+
+const defSelected = [];
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,6 +84,9 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     rowSelected: {},
+    select: {
+      width: '100%',
+    },
     table: {
       minWidth: 750,
     },
@@ -275,11 +282,11 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
       );
     }, [closeDialog, createItem, createTitle, formName, columns, openDialog]);
 
-    const handleChangeField = (itemId, field) => (event: any) => {
+    const handleChangeField = (event: any, child) => {
       event.stopPropagation();
       if (editItem) {
-        editItem(itemId, {
-          [field]: event.target.value,
+        editItem(child.props['data-id'], {
+          [event.target.name]: event.target.value,
         });
       }
     };
@@ -354,18 +361,38 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
                             <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
                               {allowed && editItem && editable && (!skip || !skip(item)) ? (
                                 <Select
-                                  value={multiple ? [value] : value}
+                                  className={classes.select}
+                                  name={name || path}
+                                  value={value}
                                   multiple={multiple}
-                                  onChange={handleChangeField(elId, name || path)}
+                                  onChange={handleChangeField}
                                   onClose={handleCloseSelect}
+                                  // tslint:disable
+                                  renderValue={s =>
+                                    multiple
+                                      ? ((s as any) || defSelected).map(e => invert(allowed)[e as any]).join(', ')
+                                      : allowed[s as string]
+                                  }
+                                  // tslint:enable
                                 >
                                   {Object.keys(allowed)
                                     .filter(filterEnum)
-                                    .map(key => (
-                                      <MenuItem data-item={elId} key={key} value={key}>
-                                        {allowed[key]}
-                                      </MenuItem>
-                                    ))}
+                                    .map(key => {
+                                      const selected = multiple
+                                        ? ((value as any) || []).includes(allowed[key])
+                                        : value === allowed[key];
+                                      return (
+                                        <MenuItem
+                                          data-id={elId}
+                                          selected={selected}
+                                          key={allowed[key]}
+                                          value={allowed[key]}
+                                        >
+                                          {multiple && <Checkbox checked={selected} size="small" color="primary" />}
+                                          <ListItemText primary={key} />
+                                        </MenuItem>
+                                      );
+                                    })}
                                 </Select>
                               ) : (
                                 labelValue
