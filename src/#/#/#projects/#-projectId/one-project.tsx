@@ -42,7 +42,7 @@ export const PROJECT_ROUTES: IRoute[] = [
   },
   {
     access: [ROLES.USERS, ACCESS_LEVEL.RED],
-    component: lazy(() => import('./#tasks/#:sequenceNumber')),
+    component: lazy(() => import('./#tasks/#-sequenceNumber')),
     path: '/projects/:projectId/tasks/:sequenceNumber',
   },
 ];

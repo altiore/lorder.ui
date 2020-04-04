@@ -19,12 +19,12 @@ interface IAppProps {
 export const APP_MAIN_ROUTES: IRoute[] = [
   {
     access: [ROLES.ALL],
-    component: lazy(() => import('./#p/#:projectId')),
+    component: lazy(() => import('./#p/#-projectId')),
     path: '/p/:projectId',
   },
   {
     access: [ROLES.ALL],
-    component: lazy(() => import('./#start/#:identifier')),
+    component: lazy(() => import('./#start/#-identifier')),
     path: '/start/:identifier',
   },
   {

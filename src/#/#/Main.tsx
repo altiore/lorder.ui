@@ -26,7 +26,7 @@ export const MAIN_USER_ROUTES: IRoute[] = [
   },
   {
     access: [ROLES.USERS],
-    component: lazy(() => import('./#projects/#:projectId')),
+    component: lazy(() => import('./#projects/#-projectId')),
     path: '/projects/:projectId',
   },
   {
