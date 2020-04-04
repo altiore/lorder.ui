@@ -12,12 +12,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Theme } from '@material-ui/core/styles';
-import AllInboxIcon from '@material-ui/icons/AllInbox';
-import BallotIcon from '@material-ui/icons/Ballot';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ExtensionIcon from '@material-ui/icons/Extension';
 import LaptopIcon from '@material-ui/icons/Laptop';
-import ListAltIcon from '@material-ui/icons/ListAlt';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
 
@@ -26,30 +24,26 @@ import { Project } from '#/@store/projects';
 
 import { useStyles } from './styles';
 
-import { IRoute, ROLE } from '@types';
+import { IRoute } from '@types';
 
 export interface ILayoutLeftDrawerProps {
   children?: React.ReactNode;
-  classes: any;
   goTo: any;
   isLeftBarOpen: boolean;
   isWidthSm: boolean;
   match: match<any>;
   routes?: IRoute[];
-  superAdminRoutes?: IRoute[];
   openedProject?: Project;
   selectProject?: Project;
-  toggleUiSetting: any;
+  showFooter?: boolean;
   theme: Theme;
-  userRole: ROLE;
+  toggleUiSetting: any;
 }
 
 export const ICONS_MAP = {
-  ballot: BallotIcon,
-  'import-export': AllInboxIcon,
-  'list-alt': ListAltIcon,
-  people: PeopleOutlinedIcon,
-  settings: SettingsIcon,
+  '/projects/:projectId/board': ExtensionIcon,
+  '/projects/:projectId/members': PeopleOutlinedIcon,
+  '/projects/:projectId/settings': SettingsIcon,
 };
 
 export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteComponentProps<any>> = ({
@@ -61,10 +55,9 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
   routes,
   openedProject,
   selectProject,
+  showFooter,
   theme,
   toggleUiSetting,
-  userRole,
-  superAdminRoutes,
 }) => {
   const classes = useStyles();
 
@@ -112,43 +105,33 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
         </div>
         <Divider />
         {routes && routes.length && (
+          <List>
+            {routes
+              .filter((el: any) => el.title)
+              .map((route: IRoute) => {
+                const CurIcon = ICONS_MAP[route.path];
+                return (
+                  <ListItem key={route.path} button onClick={goToPage(route.path)}>
+                    <ListItemIcon>{CurIcon ? <CurIcon /> : route.icon}</ListItemIcon>
+                    <ListItemText primary={route.title} />
+                  </ListItem>
+                );
+              })}
+          </List>
+        )}
+        {showFooter && (
           <>
-            <List>
-              {routes
-                .filter((el: any) => el.icon)
-                .map((route: IRoute) => {
-                  const CurIcon = ICONS_MAP[route.icon];
-                  return (
-                    <ListItem key={route.path} button onClick={goToPage(route.path)}>
-                      <ListItemIcon>{CurIcon ? <CurIcon /> : route.icon}</ListItemIcon>
-                      <ListItemText primary={route.title} />
-                    </ListItem>
-                  );
-                })}
-            </List>
             <Divider />
+            <List>
+              <ListItem button onClick={goToPage('/projects')}>
+                <ListItemIcon>
+                  <LaptopIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Все Проекты'} />
+              </ListItem>
+            </List>
           </>
         )}
-        <List>
-          {!Boolean(superAdminRoutes && superAdminRoutes.length) && (
-            <ListItem button onClick={goToPage('/projects')}>
-              <ListItemIcon>
-                <LaptopIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Все Проекты'} />
-            </ListItem>
-          )}
-          {userRole === ROLE.SUPER_ADMIN && Boolean(superAdminRoutes && superAdminRoutes.length) && (
-            <>
-              {(superAdminRoutes as IRoute[]).map(route => (
-                <ListItem key={route.path} button onClick={goToPage(route.path)}>
-                  <ListItemIcon>{route.icon}</ListItemIcon>
-                  <ListItemText primary={route.title} />
-                </ListItem>
-              ))}
-            </>
-          )}
-        </List>
       </Drawer>
       <ButtonBase onClick={handleDrawerToggle} className={classes.toggleButton}>
         <ChevronRightIcon />

@@ -17,14 +17,6 @@ import { IRoute, ROLE } from '@types';
 
 export const MAIN_USER_ROUTES = [
   {
-    access: ROLES.ALL,
-    component: lazy(() => import('./#feedback')),
-    icon: 'feedback',
-    path: '/feedback',
-    title: 'Обратная связь',
-  },
-
-  {
     access: ROLES.USERS,
     component: lazy(() => import('./#projects')),
     exact: true,
@@ -61,7 +53,6 @@ export const MAIN_USER_ROUTES = [
 
 export interface IMainProps {
   closeDialog: () => any;
-  goBack: () => any;
   openDialog: (comp: any, props: any, location: any) => any;
   prevLocation?: Location;
   push: (path: string | any) => any;
@@ -71,7 +62,6 @@ export interface IMainProps {
 
 export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
   closeDialog,
-  goBack,
   location,
   openDialog,
   prevLocation,

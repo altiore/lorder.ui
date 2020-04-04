@@ -88,10 +88,6 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
       return COLUMNS;
     }, [openedAccessLevel, rolesList, userId]);
 
-    console.log('render ProjectMembers', {
-      openedAccessLevel,
-      preparedColumns,
-    });
     return (
       <Page>
         <Crud

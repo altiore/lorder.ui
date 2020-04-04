@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { goBack, push } from 'connected-react-router';
+import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from '#/@store/dialog';
@@ -18,7 +18,6 @@ const mapState = createStructuredSelector<IState, any>({
 
 const mapDispatchToProps = {
   closeDialog,
-  goBack,
   openDialog,
   push,
 };

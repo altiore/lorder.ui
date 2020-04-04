@@ -13,39 +13,13 @@ export const PROJECT_ROUTES = [
     access: [ROLES.USERS, ACCESS_LEVEL.RED],
     component: lazy(() => import('./#board')),
     exact: true,
-    icon: 'import-export',
     path: '/projects/:projectId/board',
-    title: 'Доска Проекта',
+    title: 'Задачи',
   },
-  // {
-  //   access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
-  //   component: lazy(() => import('./#tasks')),
-  //   exact: true,
-  //   icon: 'list-alt',
-  //   path: '/projects/:projectId/tasks',
-  //   title: 'Задачи',
-  // },
-  // {
-  //   access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
-  //   exact: true,
-  //   icon: 'ballot',
-  //   path: '/projects/:projectId/task-types',
-  //   title: 'Типы Задач',
-  //   component: lazy(() => import('./#task-types')),
-  // },
-  // {
-  //   access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
-  //   exact: true,
-  //   icon: 'people',
-  //   path: '/projects/:projectId/roles',
-  //   title: 'Роли проекта',
-  //   component: lazy(() => import('./#roles')),
-  // },
   {
     access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
     component: lazy(() => import('./#members')),
     exact: true,
-    icon: 'people',
     path: '/projects/:projectId/members',
     title: 'Участники',
   },
@@ -53,9 +27,8 @@ export const PROJECT_ROUTES = [
     access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
     component: lazy(() => import('./#settings')),
     exact: true,
-    icon: 'settings',
     path: '/projects/:projectId/settings',
-    title: 'Другие Настройки',
+    title: 'Настройки',
   },
   {
     access: [ROLES.USERS, ACCESS_LEVEL.RED],
@@ -101,7 +74,7 @@ export class ProjectTsx extends React.Component<IProjectProps & RouteComponentPr
     );
 
     return (
-      <LayoutLeftDrawer routes={availableRoutes}>
+      <LayoutLeftDrawer routes={availableRoutes} showFooter>
         <Switch>
           <Redirect from="/projects/:projectId" to="/projects/:projectId/board" exact />
           {PROJECT_ROUTES && PROJECT_ROUTES.map((route: IRoute) => <NestedRoute key={route.path} {...route} />)}

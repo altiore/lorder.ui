@@ -24,8 +24,6 @@ import { useStyles } from './styles';
 
 import { INotification } from '@types';
 
-// import { RightMenu } from './RightMenu';
-
 export interface IHeaderProps {
   openDialog: any;
   openTaskModal: any;

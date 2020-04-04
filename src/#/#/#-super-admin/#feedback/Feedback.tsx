@@ -8,8 +8,6 @@ import { Theme } from '@material-ui/core/styles';
 import { Page } from '@components/Page';
 import TableVirtualized, { ColumnType } from '@components/TableVirtualized';
 
-import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
-
 import { IUser } from '@types';
 
 export interface IFeedbackProps {
@@ -58,18 +56,16 @@ export class Feedback extends React.Component<RouteComponentProps<{}> & IFeedbac
     const rows = feedbackList.sort(this.sortState());
     const { sortBy, sortDirection } = this.state;
     return (
-      <LayoutLeftDrawer>
-        <Page innerRef={getRef}>
-          <TableVirtualized
-            columns={columns}
-            rows={rows}
-            height={'calc(100% - 40px)'}
-            sort={this.sortTable}
-            sortBy={sortBy}
-            sortDirection={sortDirection}
-          />
-        </Page>
-      </LayoutLeftDrawer>
+      <Page innerRef={getRef}>
+        <TableVirtualized
+          columns={columns}
+          rows={rows}
+          height={'calc(100% - 40px)'}
+          sort={this.sortTable}
+          sortBy={sortBy}
+          sortDirection={sortDirection}
+        />
+      </Page>
     );
   }
 

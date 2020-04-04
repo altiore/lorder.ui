@@ -60,6 +60,13 @@ export const MAIN_SUPER_ADMIN_ROUTES = [
     title: 'Разрешенные перемещения',
   },
   {
+    access: ROLES.ALL,
+    component: lazy(() => import('./#feedback')),
+    icon: <SyncAltIcon />,
+    path: '/feedback',
+    title: 'Обратная связь',
+  },
+  {
     access: ROLES.SUPER_ADMINS,
     component: lazy(() => import('./#other')),
     icon: <SettingsIcon />,
@@ -70,7 +77,7 @@ export const MAIN_SUPER_ADMIN_ROUTES = [
 
 export const SuperAdminLayoutJsx: React.FC<RouteComponentProps> = () => {
   return (
-    <LayoutLeftDrawer superAdminRoutes={MAIN_SUPER_ADMIN_ROUTES}>
+    <LayoutLeftDrawer routes={MAIN_SUPER_ADMIN_ROUTES}>
       <Switch>
         {MAIN_SUPER_ADMIN_ROUTES.map((route: IRoute) => {
           return <NestedRoute key={route.path} {...route} />;

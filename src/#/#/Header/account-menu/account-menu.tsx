@@ -13,10 +13,10 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 // import SupportIcon from '@material-ui/icons/ContactSupport';
 import ExitIcon from '@material-ui/icons/ExitToApp';
-// import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import SecurityIcon from '@material-ui/icons/Lock';
 // import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import PersonIcon from '@material-ui/icons/Person';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 
 import { ROLE } from '@types';
 
@@ -122,6 +122,14 @@ export const AccountMenuTsx: FC<IAccountMenuTsx> = ({
     [anchorEl, setOpen]
   );
 
+  const goToMain = useCallback(
+    (event: React.SyntheticEvent) => {
+      handleClose(event);
+      push('/');
+    },
+    [handleClose, push]
+  );
+
   const goToProfile = useCallback(
     (event: React.SyntheticEvent) => {
       handleClose(event);
@@ -177,6 +185,10 @@ export const AccountMenuTsx: FC<IAccountMenuTsx> = ({
                     <Typography variant="subtitle2">{userRole}</Typography>
                   </div>
                   <MenuList autoFocusItem={open} onKeyDown={handleListKeyDown}>
+                    <MenuItem className={classes.menuItem} onClick={goToMain}>
+                      <ScheduleIcon className={classes.icon} />
+                      <Typography variant="h6">Главная</Typography>
+                    </MenuItem>
                     <MenuItem className={classes.menuItem} onClick={goToProfile}>
                       <PersonIcon className={classes.icon} />
                       <Typography variant="h6">Профиль</Typography>
