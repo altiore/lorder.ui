@@ -101,6 +101,7 @@ const postProjectMemberHandler = (state: S, { payload }: Action<P>) => {
       new Member({
         accessLevel: ACCESS_LEVEL.WHITE,
         member: { email: (payload as IM).email },
+        roles: [],
       })
     ),
   });
@@ -112,7 +113,13 @@ const postProjectMemberSuccessHandler = (state: S, { payload, meta }: ActionMeta
     el => meta.previousAction.payload.email === el.member.email
   );
   return state.updateItem(projectIndex, {
-    members: state.list[projectIndex].members.updateItem(memberIndex, new Member((payload as AxiosResponse).data)),
+    members: state.list[projectIndex].members.updateItem(
+      memberIndex,
+      new Member({
+        roles: [],
+        ...(payload as AxiosResponse).data,
+      })
+    ),
   });
 };
 
