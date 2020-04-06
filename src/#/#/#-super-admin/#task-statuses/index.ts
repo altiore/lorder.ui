@@ -10,7 +10,7 @@ import {
   taskStatusesList,
 } from '#/@store/task-statuses';
 
-import { TaskStatuses } from './TaskStatuses';
+import { TaskStatuses } from './task.statuses';
 
 const mapState = createStructuredSelector({
   list: taskStatusesList,

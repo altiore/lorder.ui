@@ -14,7 +14,7 @@ export interface ITaskStatusesProps extends RouteComponentProps {
   list: any[];
 }
 
-const COLUMNS = [{ title: 'Id', path: 'id' }, { title: 'Name', path: 'name' }];
+const COLUMNS = [{ title: 'Id', path: 'id', name: 'id' }, { title: 'Name', path: 'name', name: 'name' }];
 
 export const TaskStatuses: React.FC<ITaskStatusesProps> = ({
   createItem,
