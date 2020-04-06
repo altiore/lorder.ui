@@ -6,6 +6,8 @@ import { Page } from '@components/Page';
 import Crud from '#/@common/Crud';
 import { CREATE_TASK_STATUS_FORM } from '#/@store/task-statuses';
 
+import { ICrudColumn } from '../../../../@components/Crud';
+
 export interface ITaskStatusesProps extends RouteComponentProps {
   createItem: any;
   deleteItem: any;
@@ -14,7 +16,10 @@ export interface ITaskStatusesProps extends RouteComponentProps {
   list: any[];
 }
 
-const COLUMNS = [{ title: 'Id', path: 'id', name: 'id' }, { title: 'Name', path: 'name', name: 'name' }];
+const COLUMNS: ICrudColumn[] = [
+  { title: 'Id', path: 'id', name: 'id', isNumber: true },
+  { title: 'Name', path: 'name', name: 'name' },
+];
 
 export const TaskStatuses: React.FC<ITaskStatusesProps> = ({
   createItem,
