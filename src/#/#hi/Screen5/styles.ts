@@ -9,7 +9,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexFlow: 'column nowrap',
     flexGrow: 1,
     minHeight: MIN_HEIGHT,
-    padding: theme.spacing(2),
+    // padding: theme.spacing(2),
     zIndex: 1,
   },
   achievementBlock: {
@@ -33,7 +33,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexFlow: 'column nowrap',
     flexGrow: 1,
     minHeight: MIN_HEIGHT,
-    padding: theme.spacing(2),
+    // padding: theme.spacing(2),
     zIndex: 1,
   },
 }));

@@ -179,7 +179,7 @@ export const AccountMenuTsx: FC<IAccountMenuTsx> = ({
               <ClickAwayListener onClickAway={clickAway}>
                 <div>
                   <div className={classes.header}>
-                    <Typography className={classes.email} variant="h4" noWrap>
+                    <Typography className={classes.email} variant="h6" noWrap>
                       {userEmail}
                     </Typography>
                     <Typography variant="subtitle2">{userRole}</Typography>

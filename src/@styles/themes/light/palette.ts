@@ -1,16 +1,14 @@
-import { lighten } from '@material-ui/core/styles';
-
 export const primary = {
   contrastText: '#ffffff',
   dark: '#000000',
   light: '#404448',
-  main: '#242426',
+  main: '#29292b',
 };
 
 export const secondary = {
-  contrastText: '#24292E',
+  contrastText: '#29292b',
   dark: '#FFB200',
-  light: lighten('#FFF0B5', 0.2),
+  light: '#f7e8ab',
   main: '#FFF0B5',
 };
 

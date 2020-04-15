@@ -16,6 +16,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   button: {
     fontSize: theme.typography.pxToRem(24),
     margin: theme.spacing(2, 0, 3.5),
+    padding: theme.spacing(0.625, 3),
   },
   content: {
     backgroundColor: 'rgba(37, 36, 38, 0.6)',
@@ -39,12 +40,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
     textAlign: 'center',
   },
   question: {
-    fontSize: theme.typography.pxToRem(34),
     marginBottom: theme.spacing(2),
-    maxWidth: 300,
     textAlign: 'center',
+    [theme.breakpoints.down('md')]: {
+      maxWidth: 300,
+    },
   },
   title: {
     color: theme.palette.secondary.dark,
+  },
+  toggleSpeed: {
+    cursor: 'pointer',
   },
 }));

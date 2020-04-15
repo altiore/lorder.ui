@@ -46,12 +46,12 @@ const Screen1: React.FC<Screen1I> = ({ btnText2, text2 }) => {
         <ActiveClock slowTimeSpeed={slowTimeSpeed} />
       </Grid>
       <Grid item className={classes.block} md={5} xs={12}>
-        <Typography className={classes.question} variant="h4">
+        <Typography className={classes.question} variant="h1">
           А ты управляешь своим временем?
         </Typography>
         <Divider className={classes.divider} />
         <Typography className={classes.motto} variant="h4">
-          <span className={classes.title}>ALTIORE</span> - From people to generations
+          <span className={classes.title}>ALTIORE</span> - from people to generations
         </Typography>
         <LinkButton
           onMouseOver={startSlowSpeed}

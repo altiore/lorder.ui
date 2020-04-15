@@ -9,11 +9,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   title: {
     alignItems: 'center',
-    color: 'white',
+    color: '#676767',
     display: 'flex',
     height: theme.mixins.toolbar.height,
+    marginBottom: theme.spacing(2),
   },
   titleBlack: {
-    color: theme.palette.primary.dark,
+    color: theme.palette.secondary.contrastText,
   },
 }));

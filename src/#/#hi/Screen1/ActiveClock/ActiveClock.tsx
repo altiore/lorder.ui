@@ -8,10 +8,9 @@ import { useStyles } from './styles';
 
 interface IActiveClockIcon {
   slowTimeSpeed: number;
-  donePercent?: number;
 }
 
-const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ donePercent = 12, slowTimeSpeed }) => {
+const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ slowTimeSpeed }) => {
   const classes = useStyles();
 
   return (
@@ -23,7 +22,7 @@ const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ donePercent = 12, slowTim
       x="0px"
       y="0px"
       viewBox="0 0 500 500"
-      style={{ enableBackground: 'new 0 0 500 500' } as any}
+      className={classes.root}
       xmlSpace="preserve"
     >
       <title>Altiore Clock</title>

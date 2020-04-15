@@ -7,7 +7,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexFlow: 'column nowrap',
     justifyContent: 'flex-start',
-    padding: theme.spacing(0, 2, 8),
+    padding: theme.spacing(6, 2),
   },
   content: {
     backgroundColor: theme.palette.primary.main,

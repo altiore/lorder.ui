@@ -1,6 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
+  root: {
+    cursor: 'pointer',
+    enableBackground: 'new 0 0 500 500',
+  },
   st0: { fill: 'url(#SVGID_1_)' },
   st1: { fill: 'url(#SVGID_2_)' },
   st2: { fill: 'url(#SVGID_3_)' },

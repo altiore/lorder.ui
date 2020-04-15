@@ -27,10 +27,15 @@ const HoveredItem: React.FC<ItemI> = ({ description, icon, index, title }) => {
       <Grow in={isVisible} timeout={1500 + index * 500}>
         <Grid item xl={4} lg={4} md={6} sm={6} xs={12}>
           <Card className={classes.item}>
-            <CardHeader avatar={<Avatar className={classes.icon}>{icon}</Avatar>} title={title} />
+            <CardHeader
+              avatar={<Avatar className={classes.icon}>{icon}</Avatar>}
+              title={title}
+              classes={{ title: classes.title }}
+            />
             <CardContent>
-              <Typography>{description}</Typography>
+              <Typography className={classes.desc}>{description}</Typography>
             </CardContent>
+            <div className={classes.svgWrap} />
           </Card>
         </Grid>
       </Grow>

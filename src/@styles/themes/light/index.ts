@@ -77,7 +77,7 @@ export default createMuiTheme({
   ],
   typography: {
     body1: {
-      fontSize: defaultTheme.typography.pxToRem(15),
+      fontSize: defaultTheme.typography.pxToRem(16),
     },
     body2: {
       fontSize: defaultTheme.typography.pxToRem(14),
@@ -90,16 +90,24 @@ export default createMuiTheme({
       lineHeight: defaultTheme.typography.pxToRem(12),
     },
     h1: {
-      fontSize: defaultTheme.typography.pxToRem(26),
+      fontSize: defaultTheme.typography.pxToRem(55),
+      fontWeight: 'bold',
+      [defaultTheme.breakpoints.down('md')]: {
+        fontSize: defaultTheme.typography.pxToRem(34),
+      },
     },
     h2: {
-      fontSize: defaultTheme.typography.pxToRem(22),
+      fontSize: defaultTheme.typography.pxToRem(50),
+      fontWeight: 'bold',
+      [defaultTheme.breakpoints.down('md')]: {
+        fontSize: defaultTheme.typography.pxToRem(32),
+      },
     },
     h3: {
-      fontSize: defaultTheme.typography.pxToRem(20),
+      fontSize: defaultTheme.typography.pxToRem(30),
     },
     h4: {
-      fontSize: defaultTheme.typography.pxToRem(17),
+      fontSize: defaultTheme.typography.pxToRem(24),
       fontWeight: 500,
     },
     h5: {
@@ -111,7 +119,11 @@ export default createMuiTheme({
       fontWeight: 700,
     },
     subtitle1: {
-      fontSize: defaultTheme.typography.pxToRem(11),
+      fontSize: defaultTheme.typography.pxToRem(22),
+      fontWeight: 200,
+      [defaultTheme.breakpoints.down('md')]: {
+        fontSize: defaultTheme.typography.pxToRem(20),
+      },
     },
     subtitle2: {
       fontSize: defaultTheme.typography.pxToRem(10),
