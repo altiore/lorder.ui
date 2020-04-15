@@ -1,7 +1,7 @@
 import { requestActions } from '#/@store/@common/requestActions';
 
 export interface IPostTaskTypeData {
-  title: string;
+  name: string;
 }
 
 export const getAllTaskTypes = requestActions('TASK_TYPES/GET_ALL', () => ({
@@ -10,16 +10,14 @@ export const getAllTaskTypes = requestActions('TASK_TYPES/GET_ALL', () => ({
   },
 }));
 
-export const postTaskType = requestActions<IPostTaskTypeData>('TASK_TYPES/POST', ({ title }) => ({
+export const postTaskType = requestActions<IPostTaskTypeData>('TASK_TYPES/POST', (data: IPostTaskTypeData) => ({
   error: {
     message: 'Не удалось сохранить тип задачи',
     title: 'Неудача',
   },
   form: 'TaskTypeForm',
   request: {
-    data: {
-      title,
-    },
+    data,
     method: 'POST',
     url: '/task-types',
   },

@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { deleteTaskType, getAllTaskTypes, postTaskType, taskTypeList } from '#/@store/task-types';
 
-import { TaskTypesJsx } from './TaskTypes';
+import { TaskTypesJsx } from './task.types';
 
 const mapState = createStructuredSelector({
   list: taskTypeList,

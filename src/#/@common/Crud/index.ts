@@ -14,6 +14,7 @@ interface IOwnProps {
   rows: any[];
   columns: ICrudColumn[];
   getId?: (item: any) => number | string;
+  useId?: boolean;
 }
 
 const mapDispatch = {

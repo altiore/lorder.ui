@@ -129,6 +129,7 @@ export interface ICrudProps<IItem = {}> {
   openDialog: (el: JSX.Element, props?: Partial<DialogProps>) => void;
   rows: any[];
   createTitle?: string;
+  useId?: boolean;
 }
 
 const defGetId = i => i.id;
@@ -147,6 +148,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
     getId = defGetId,
     openDialog,
     rows,
+    useId = true,
   }) => {
     const classes = useStyles();
 
@@ -232,7 +234,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
         if (item) {
           e.stopPropagation();
 
-          const handleConfirm = () => deleteItem(getId(item));
+          const handleConfirm = () => deleteItem(useId ? getId(item) : item);
           openDialog(
             <ConfirmationModal
               onConfirm={handleConfirm}
@@ -244,7 +246,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
           );
         }
       },
-      [entityName, getId, deleteItem, openDialog]
+      [entityName, getId, deleteItem, openDialog, useId]
     );
 
     const handleDeleteBulk = useCallback(

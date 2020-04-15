@@ -4,8 +4,7 @@ import { PURGE } from 'redux-persist';
 import { AxiosResponse } from 'axios';
 
 import { DownloadList } from '../@common/entities';
-import { postTaskTypeToProject } from '../projects/actions';
-import { getAllTaskTypes } from './actions';
+import { getAllTaskTypes, postTaskType } from './actions';
 import { TaskType } from './task-type';
 
 type S = DownloadList<TaskType>;
@@ -23,15 +22,15 @@ const getAllTaskTypesFailHandler = (state: S): S => {
   return state.stopLoading();
 };
 
-const postTaskTypeToProjectHandler = (state: S): S => {
+const postTaskTypeHandler = (state: S): S => {
   return state.startLoading();
 };
 
-const postTaskTypeToProjectSuccessHandler = (state: S, { payload }: Action<AxiosResponse>): S => {
+const postTaskTypeHandlerSuccessHandler = (state: S, { payload }: Action<AxiosResponse>): S => {
   return state.addItem((payload as any).data).stopLoading();
 };
 
-const postTaskTypeToProjectFailHandler = (state: S): S => {
+const postTaskTypeHandlerFailHandler = (state: S): S => {
   return state.stopLoading();
 };
 
@@ -45,9 +44,9 @@ export const taskTypes: any = handleActions<S, P>(
     [getAllTaskTypes.success]: getAllTaskTypesSuccessHandler,
     [getAllTaskTypes.fail]: getAllTaskTypesFailHandler,
 
-    [postTaskTypeToProject.toString()]: postTaskTypeToProjectHandler,
-    [postTaskTypeToProject.success]: postTaskTypeToProjectSuccessHandler,
-    [postTaskTypeToProject.fail]: postTaskTypeToProjectFailHandler,
+    [postTaskType.toString()]: postTaskTypeHandler,
+    [postTaskType.success]: postTaskTypeHandlerSuccessHandler,
+    [postTaskType.fail]: postTaskTypeHandlerFailHandler,
 
     [PURGE]: logOutHandler,
   },

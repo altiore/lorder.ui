@@ -13,11 +13,7 @@ export interface ITaskTypesProps extends RouteComponentProps {
   list: any[];
 }
 
-const COLUMNS = [
-  { title: 'Id', path: 'id' },
-  { title: 'Тип', path: 'title', name: 'title' },
-  { title: 'Публичный', path: 'isPublic', type: 'bool', name: 'isPublic' },
-];
+const COLUMNS = [{ title: 'Id', path: 'id' }, { title: 'Тип', path: 'name', name: 'name' }];
 
 export const TaskTypesJsx: React.FC<ITaskTypesProps> = ({ postTaskType, deleteTaskType, getAllTaskTypes, list }) => {
   useEffect(() => {
@@ -31,7 +27,6 @@ export const TaskTypesJsx: React.FC<ITaskTypesProps> = ({ postTaskType, deleteTa
         entityName="Тыпы задач"
         createItem={postTaskType}
         deleteItem={deleteTaskType}
-        // deleteBulk={deleteManyRoles}
         columns={COLUMNS}
         rows={list}
       />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Page } from '@components/Page';
@@ -17,9 +17,13 @@ export interface ITaskStatusesProps extends RouteComponentProps {
 }
 
 const COLUMNS: ICrudColumn[] = [
-  { title: 'Id', path: 'id', name: 'id', isNumber: true },
+  { title: 'Id', path: 'id', isNumber: true },
   { title: 'Name', path: 'name', name: 'name' },
+  { title: 'From', path: 'statusFrom', isNumber: true, name: 'statusFrom' },
+  { title: 'To', path: 'statusTo', isNumber: true, name: 'statusTo' },
 ];
+
+const getId = i => i.name;
 
 export const TaskStatuses: React.FC<ITaskStatusesProps> = ({
   createItem,
@@ -32,16 +36,29 @@ export const TaskStatuses: React.FC<ITaskStatusesProps> = ({
     fetchItems();
   }, [fetchItems]);
 
+  const handleDeleteItem = useCallback(
+    item => {
+      if (typeof item.id === 'number') {
+        deleteItem(item.id);
+      } else {
+        console.error('Item.id MUST be number!');
+      }
+    },
+    [deleteItem]
+  );
+
   return (
     <Page>
       <Crud
         formName={CREATE_TASK_STATUS_FORM}
         entityName="Статусы задач"
         createItem={createItem}
-        deleteItem={deleteItem}
+        deleteItem={handleDeleteItem}
         deleteBulk={deleteBulk}
         columns={COLUMNS}
         rows={list}
+        getId={getId}
+        useId={false}
       />
     </Page>
   );

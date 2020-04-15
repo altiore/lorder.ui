@@ -27,6 +27,10 @@ const createTaskStatusHandler = (s, { payload }) => {
 };
 
 const createTaskStatusSuccessHandler = (s, { payload }) => {
+  const index = s.list.findIndex(el => el.name === get(payload, ['data', 'name']));
+  if (index !== -1) {
+    return s.updateItem(index, get(payload, 'data')).stopLoading();
+  }
   return s.stopLoading();
 };
 
