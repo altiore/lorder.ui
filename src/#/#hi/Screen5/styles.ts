@@ -9,6 +9,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexFlow: 'column nowrap',
     flexGrow: 1,
     minHeight: MIN_HEIGHT,
+    overflow: 'hidden',
     position: 'relative',
     zIndex: 1,
   },
@@ -20,9 +21,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     color: '#242327',
     fontSize: theme.typography.pxToRem(300),
     fontWeight: 'bold',
-    left: 'auto',
+    left: `calc(50% - 588px);`,
     position: 'absolute',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
   },

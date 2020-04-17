@@ -6,9 +6,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     color: '#242327',
     fontSize: theme.typography.pxToRem(360),
     fontWeight: 'bold',
-    left: 'auto',
+    left: 'calc(50% - 705px);',
     position: 'absolute',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
   },
@@ -23,6 +23,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   content: {
     backgroundColor: theme.palette.primary.main,
+    overflow: 'hidden',
     position: 'relative',
     [theme.breakpoints.down('sm')]: {
       '& div:nth-child(2)': {
