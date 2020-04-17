@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Block from '#/#hi/@common/Block';
 import ScreenTitle from '#/#hi/@common/ScreenTitle';
 
+import BlockContent from '../@common/BlockContent';
 import { ReactComponent as AltioreSvg } from './Altiore_2.svg';
 import Item from './Item';
 import { useStyles } from './styles';
@@ -41,6 +42,7 @@ const Screen3: React.FC<Screen3I> = ({ texts }) => {
         <Item key={7}>{texts.adv7}</Item>
       </Grid>
       <Grid item md={1} xs={false} />
+      <div className={classes.backTitle}>ALTIORE</div>
     </Block>
   );
 };

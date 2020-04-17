@@ -9,7 +9,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { TelegramIco } from '@components/@icons/Telegram';
+import TelegramIco from '@components/@icons/Telegram';
 import YouTubeVideo from '@components/YouTubeVideo';
 
 import Screen1 from './Screen1';

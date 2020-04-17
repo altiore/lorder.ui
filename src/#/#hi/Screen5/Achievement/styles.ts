@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   value: {
     ...theme.textGradient[0],
-    color: theme.palette.secondary.dark,
+    color: theme.palette.secondary.main,
     fontSize: theme.typography.pxToRem(86),
     textAlign: 'center',
   },

@@ -16,7 +16,7 @@ const StarItem: React.FC<ItemI> = ({ children }) => {
   const classes = useStyles();
 
   return (
-    <ListItem alignItems="flex-start" button>
+    <ListItem alignItems="flex-start" button className={classes.root}>
       <ListItemIcon>
         <StarIcon className={classes.star} />
       </ListItemIcon>
