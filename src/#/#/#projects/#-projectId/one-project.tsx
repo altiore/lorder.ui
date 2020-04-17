@@ -19,6 +19,7 @@ export const PROJECT_ROUTES: IRoute[] = [
   {
     access: [ROLES.USERS, ACCESS_LEVEL.RED],
     component: lazy(() => import('./#tasks')),
+    exact: true,
     path: '/projects/:projectId/tasks',
     title: 'Задачи',
   },
