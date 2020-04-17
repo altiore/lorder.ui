@@ -1,7 +1,7 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 // import { ReactComponent as Clock1Svg } from './clock_1.svg';
-import Clock1Svg from './clock_1.svg';
+import Clock1Png from './clock_1.png';
 
 /* tslint:disable */
 export const useStyles = makeStyles((theme: Theme) => ({
@@ -34,7 +34,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   svgWrap: {
-    backgroundImage: `url("${Clock1Svg}")`,
+    backgroundImage: `url("${Clock1Png}")`,
+    backgroundSize: 'contain',
     display: 'none',
     opacity: 0.5,
     position: 'absolute',

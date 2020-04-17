@@ -8,7 +8,7 @@ export const primary = {
 export const secondary = {
   contrastText: '#29292b',
   dark: '#FFB200',
-  light: '#f7e8ab',
+  light: '#f9edad',
   main: '#FFF0B5',
 };
 

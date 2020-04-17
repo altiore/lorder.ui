@@ -1,6 +1,17 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
+  backTitle: {
+    bottom: theme.typography.pxToRem(-160),
+    color: '#242327',
+    fontSize: theme.typography.pxToRem(360),
+    fontWeight: 'bold',
+    left: 'auto',
+    position: 'absolute',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  },
   blockTexts: {
     alignItems: 'justify',
     color: 'white',
@@ -8,14 +19,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexFlow: 'column nowrap',
     justifyContent: 'flex-start',
     padding: theme.spacing(6, 2),
+    zIndex: 1,
   },
   content: {
     backgroundColor: theme.palette.primary.main,
+    position: 'relative',
     [theme.breakpoints.down('sm')]: {
       '& div:nth-child(2)': {
         padding: theme.spacing(0, 0, 0, 2),
       },
-      padding: theme.spacing(2, 0),
+      padding: theme.spacing(3, 0),
     },
   },
   svgIconBlock: {
@@ -33,6 +46,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'flex-start',
     maxWidth: `100vw`,
     overflow: 'hidden',
+    zIndex: 1,
   },
   title: {
     alignItems: 'center',

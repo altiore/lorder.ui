@@ -14,6 +14,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
   hoveredItems: {
     marginTop: theme.spacing(2),
   },
+  list: {
+    marginTop: theme.spacing(6),
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(0),
+    },
+  },
   loginBlock: {
     alignItems: 'center',
     backgroundColor: theme.palette.primary.light,
@@ -31,8 +37,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   loginWrap: {
     display: 'flex',
-    [theme.breakpoints.down('sm')]: {
+    marginTop: theme.spacing(8),
+    [theme.breakpoints.down('md')]: {
       justifyContent: 'center',
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(1),
     },
   },
 }));

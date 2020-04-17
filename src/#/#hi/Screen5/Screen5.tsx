@@ -32,7 +32,8 @@ const Screen5: React.FC<Screen5I> = ({ isPublicAltioreLoaded, isPublicAltioreLoa
       <Block alignItems="flex-start" grow className={classes.achievement}>
         <ScreenTitle>Достижения</ScreenTitle>
         <BlockContent>
-          <Grid container justify="space-evenly" alignItems="center" spacing={4}>
+          <div className={classes.backTitle}>ALTIORE</div>
+          <Grid className={classes.numbers} container justify="space-evenly" alignItems="center" spacing={4}>
             <UsersAch title="Пользователей" />
             <ProjectsAch title="Проектов" />
             <PublicProjectsAch title="Публичных проектов" />
@@ -45,7 +46,7 @@ const Screen5: React.FC<Screen5I> = ({ isPublicAltioreLoaded, isPublicAltioreLoa
           <Typography noWrap>В безумном мире хаоса мы помогаем тебе</Typography>
           <Typography noWrap>навести порядок!</Typography>
         </SubTitle>
-        <BlockContent>
+        <BlockContent className={classes.members}>
           {isPublicAltioreLoading ? (
             <div className={classes.loader}>
               <CircularProgress size={100} color="secondary" />

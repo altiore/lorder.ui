@@ -9,7 +9,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   title: {
     alignItems: 'center',
-    color: '#676767',
+    color: '#eeeeee',
     display: 'flex',
     height: theme.mixins.toolbar.height,
     marginBottom: theme.spacing(2),

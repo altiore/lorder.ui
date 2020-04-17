@@ -9,11 +9,22 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexFlow: 'column nowrap',
     flexGrow: 1,
     minHeight: MIN_HEIGHT,
-    // padding: theme.spacing(2),
+    position: 'relative',
     zIndex: 1,
   },
   achievementBlock: {
     alignItems: 'flex-start',
+  },
+  backTitle: {
+    bottom: theme.typography.pxToRem(-130),
+    color: '#242327',
+    fontSize: theme.typography.pxToRem(300),
+    fontWeight: 'bold',
+    left: 'auto',
+    position: 'absolute',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
   },
   loader: {
     alignItems: 'center',
@@ -22,6 +33,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
     justifyContent: 'center',
     paddingBottom: theme.spacing(4),
+  },
+  members: {
+    marginTop: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 0,
+    },
+  },
+  numbers: {
+    marginTop: theme.spacing(2),
+    zIndex: 1,
   },
   personsBlock: {
     margin: 0,

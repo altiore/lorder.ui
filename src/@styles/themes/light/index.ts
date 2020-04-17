@@ -63,13 +63,10 @@ export default createMuiTheme({
   textGradient: [
     {
       '-webkit-background-clip': 'text',
-      background: `linear-gradient(60deg,
-     ${SECONDARY_DARKEN} 0%,
-      ${secondary.dark} 10%,
-      ${secondary.dark} 40%,
-       ${secondary.light} 55%,
-        ${secondary.dark} 70%,
-         ${secondary.dark} 100%
+      background: `linear-gradient(45deg,
+      ${SECONDARY_DARKEN} 35%,
+       ${secondary.light} 50%,
+        ${SECONDARY_DARKEN} 65%
          )`,
       backgroundClip: 'text',
       textFillColor: 'transparent',

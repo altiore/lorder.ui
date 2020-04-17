@@ -5,6 +5,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   hoveredItems: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(6),
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(0),
+    },
   },
 }));

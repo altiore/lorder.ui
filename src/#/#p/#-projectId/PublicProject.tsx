@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import { TelegramIco } from '@components/@icons/Telegram';
+import TelegramIco from '@components/@icons/Telegram';
 import { Block } from '@components/Block';
 import LoadingPage from '@components/LoadingPage';
 import { NoMatch } from '@components/NoMatch';
