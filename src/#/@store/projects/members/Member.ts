@@ -13,6 +13,8 @@ export class Member implements IMember {
   accessLevel: number;
   roles: string[];
   member: IUser;
+  timeSum: number;
+  valueSum: number;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

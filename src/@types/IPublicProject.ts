@@ -1,9 +1,4 @@
-import { IProjectMember } from './IProjectMember';
-
-export interface IProjectStatistic {
-  members: IProjectMember[];
-  data: { [key in any]: { time: number; value: number } };
-}
+import { Project } from '../#/@store/projects';
 
 export interface IPublicProject {
   uuid: string;
@@ -16,5 +11,5 @@ export interface IPublicProject {
   timeSum?: number;
   /** ценность всех задач в этом проекте */
   valueSum?: number;
-  statistic?: IProjectStatistic;
+  project?: Project;
 }

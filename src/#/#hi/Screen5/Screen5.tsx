@@ -10,18 +10,17 @@ import Block from '#/#hi/@common/Block';
 import BlockContent from '#/#hi/@common/BlockContent';
 import ScreenTitle from '#/#hi/@common/ScreenTitle';
 import SubTitle from '#/#hi/@common/SubTitle';
+import { IMember } from '#/@store/projects/members/Member';
 
 import ProjectsAch from './ProjectsAch';
 import PublicProjectsAch from './PublicProjectsAch';
 import { useStyles } from './styles';
 import UsersAch from './UsersAch';
 
-import { IProjectMember } from '@types';
-
 interface Screen5I {
   isPublicAltioreLoaded: boolean;
   isPublicAltioreLoading: boolean;
-  team: IProjectMember[];
+  team: IMember[];
 }
 
 const Screen5: React.FC<Screen5I> = ({ isPublicAltioreLoaded, isPublicAltioreLoading, team }) => {
@@ -53,9 +52,9 @@ const Screen5: React.FC<Screen5I> = ({ isPublicAltioreLoaded, isPublicAltioreLoa
             </div>
           ) : isPublicAltioreLoaded ? (
             <Grid className={classes.personsBlock} container justify="space-evenly" spacing={10}>
-              {team.map(({ avatar, email }) => (
+              {team.map(({ member: { email, avatar, displayName } }) => (
                 <Grid item key={email}>
-                  <Person avatar={avatar} name={email.replace(/@.*$/, '')} />
+                  <Person avatar={(avatar && avatar.url) || ''} name={displayName || email.replace(/@.*$/, '')} />
                 </Grid>
               ))}
             </Grid>

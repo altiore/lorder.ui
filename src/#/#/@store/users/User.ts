@@ -4,7 +4,9 @@ import { IUser, ROLE } from '@types';
 
 export class User implements IUser {
   readonly id?: number;
-  avatar?: string;
+  avatar: {
+    url: string;
+  };
   readonly email: string;
   tel: string;
   readonly status: number = 1;
@@ -13,6 +15,7 @@ export class User implements IUser {
   readonly updatedAt: string;
   role: ROLE = ROLE.USER;
   projectsCount: number;
+  displayName?: string;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

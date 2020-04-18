@@ -10,6 +10,6 @@ export const isPublicAltioreLoaded = createDeepEqualSelector(publicAltioreData, 
 
 export const isPublicAltioreLoading = createDeepEqualSelector(publicAltioreData, s => s.isLoading);
 
-export const altioreStatistic = createDeepEqualSelector(publicAltioreData, s => s.statistic);
+export const altioreProject = createDeepEqualSelector(publicAltioreData, s => s.project);
 
-export const altioreMembers = createDeepEqualSelector(altioreStatistic, s => get(s, 'members', []));
+export const altioreMembers = createDeepEqualSelector(altioreProject, s => get(s, 'members', []));

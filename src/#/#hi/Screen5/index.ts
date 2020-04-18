@@ -6,18 +6,18 @@ import { altioreMembers, isPublicAltioreLoaded, isPublicAltioreLoading } from '#
 
 import Screen5 from './Screen5';
 
-import { IProjectMember, IState } from '@types';
+import { IState } from '@types';
 
 interface IMappedProps {
   isPublicAltioreLoaded: boolean;
   isPublicAltioreLoading: boolean;
-  team: IProjectMember[];
+  team: any[];
 }
 
 const mapState = createStructuredSelector<IState, IMappedProps>({
   isPublicAltioreLoaded,
   isPublicAltioreLoading,
   team: altioreMembers,
-});
+} as any);
 
 export default connect(mapState)(Screen5);

@@ -1,14 +1,10 @@
-import get from 'lodash/get';
 import map from 'lodash/map';
 
-import { convertSecondsToDurationWithLocal, millisecondsToHours } from '#/@store/@common/helpers';
+import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 
-import { IProjectMember, IProjectStatistic, IPublicProject } from '@types';
+import { Project } from '../projects';
 
-export class Statistic implements IProjectStatistic {
-  members: IProjectMember[];
-  data: { [key in any]: { time: number; value: number } };
-}
+import { IPublicProject } from '@types';
 
 export class PublicProject implements IPublicProject {
   uuid: string;
@@ -21,7 +17,7 @@ export class PublicProject implements IPublicProject {
   timeSum?: number;
   /** ценность всех задач в этом проекте */
   valueSum?: number;
-  statistic?: Statistic;
+  project: Project;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
@@ -31,33 +27,5 @@ export class PublicProject implements IPublicProject {
 
   get fullProjectTimeHumanize() {
     return convertSecondsToDurationWithLocal(this.timeSum || 0);
-  }
-
-  get chartData() {
-    if (!this.statistic) {
-      return [];
-    }
-    const { members, data } = this.statistic;
-    if (!data || !members) {
-      return [];
-    }
-    return Object.keys(data).map(el => ({
-      name: get(members.find(m => m.id.toString() === el), 'email', '').replace(/@.*$/, ''),
-      y: millisecondsToHours(data[el].time),
-    }));
-  }
-
-  get chartValueData() {
-    if (!this.statistic) {
-      return [];
-    }
-    const { members, data } = this.statistic;
-    if (!data || !members) {
-      return [];
-    }
-    return Object.keys(data).map(el => ({
-      name: get(members.find(m => m.id.toString() === el), 'email', '').replace(/@.*$/, ''),
-      y: data[el].value || 1,
-    }));
   }
 }

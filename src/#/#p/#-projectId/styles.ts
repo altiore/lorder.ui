@@ -1,6 +1,6 @@
-import { Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme): any => ({
+export const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     opacity: 0.5,
   },
@@ -69,4 +69,4 @@ export const styles = (theme: Theme): any => ({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-});
+}));

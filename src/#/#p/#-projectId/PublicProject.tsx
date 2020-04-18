@@ -1,6 +1,8 @@
-import * as React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+
+import get from 'lodash/get';
 
 import AppBar from '@material-ui/core/AppBar';
 import Divider from '@material-ui/core/Divider';
@@ -17,10 +19,12 @@ import Person from '@components/Person';
 
 import { LinkButton } from '#/@common/LinkButton';
 import PieChart from '#/@common/PieChart';
+import { millisecondsToHours } from '#/@store/@common/helpers';
 import { PublicProject } from '#/@store/publicProject';
 
+import { useStyles } from './styles';
+
 export interface IPublicProjectProps extends RouteComponentProps<{ projectId: string }> {
-  classes: any;
   isAuth: boolean;
   fetchPublicProject: any;
   publicProjectData: PublicProject;
@@ -35,36 +39,67 @@ export interface IState {
   width: number;
 }
 
-export class PublicProjectTsx extends React.Component<IPublicProjectProps, IState> {
-  componentDidMount() {
-    this.props.fetchPublicProject(this.props.match.params.projectId);
-  }
+export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
+  ({ fetchPublicProject, publicProjectData, isAuth, location, match }) => {
+    const project = useMemo(() => {
+      return publicProjectData.project;
+    }, [publicProjectData]);
 
-  componentDidUpdate(prevProps: IPublicProjectProps) {
-    if (prevProps.match.params.projectId !== this.props.match.params.projectId) {
-      this.props.fetchPublicProject(this.props.match.params.projectId);
-    }
-  }
+    const title = useMemo(() => {
+      return publicProjectData.title;
+    }, [publicProjectData]);
 
-  render() {
-    const {
-      publicProjectData: { isLoading, isLoaded, title, statistic, chartData, chartValueData, projectId },
-      classes,
-      isAuth,
-    } = this.props;
-    if (isLoading && !isLoaded) {
+    const uuid = useMemo(() => {
+      return publicProjectData.uuid;
+    }, [publicProjectData]);
+
+    const isLoading = useMemo(() => {
+      return publicProjectData.isLoading;
+    }, [publicProjectData]);
+
+    const isLoaded = useMemo(() => {
+      return publicProjectData.isLoaded;
+    }, [publicProjectData]);
+
+    const matchProjectUuid = useMemo(() => {
+      return match.params.projectId;
+    }, [match]);
+
+    useEffect(() => {
+      if (fetchPublicProject && matchProjectUuid && !uuid) {
+        fetchPublicProject(matchProjectUuid);
+      }
+    }, [fetchPublicProject, matchProjectUuid, uuid]);
+
+    const classes = useStyles();
+
+    const chartData = useMemo(() => {
+      if (!get(project, ['members', 'length'])) {
+        return null;
+      }
+      return project.members.map(el => ({
+        name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
+        y: millisecondsToHours(el.timeSum) || 0.1,
+      }));
+    }, [project]);
+
+    const chartValueData = useMemo(() => {
+      if (!get(project, ['members', 'length'])) {
+        return null;
+      }
+      return project.members.map(el => ({
+        name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
+        y: el.valueSum || 0.1,
+      }));
+    }, [project]);
+
+    if (isLoading || !isLoaded || !chartData || !chartValueData) {
       return <LoadingPage />;
     }
     if (!title) {
-      return (
-        <NoMatch
-          location={this.props.location}
-          match={this.props.match}
-          history={this.props.history}
-          staticContext={this.props.staticContext}
-        />
-      );
+      return <NoMatch location={location} />;
     }
+
     return (
       <div className={classes.root}>
         <AppBar key={'top'} position="static" className={classes.appBar}>
@@ -90,7 +125,7 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
                   variant={'contained'}
                   color={'primary'}
                   className={classes.button}
-                  to={`/projects/${projectId}`}
+                  to={`/projects/${project.id}`}
                 >
                   Настройки проекта
                 </LinkButton>
@@ -121,13 +156,13 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
               <Typography variant="h4">Команда проекта</Typography>
               <Typography>Мы дарим людям мир и красоту, но только если это будет добром!</Typography>
             </Grid>
-            {statistic &&
-              statistic.members &&
-              Object.keys(statistic.members).map((member, index) => (
-                <Grid item key={index}>
+            {project &&
+              project.members &&
+              project.members.map(member => (
+                <Grid item key={member.member.email}>
                   <Person
-                    avatar={statistic.members[member].avatar}
-                    name={statistic.members[member].email.replace(/@.*$/, '')}
+                    avatar={get(member, 'member.avatar.url', '')}
+                    name={get(member, 'member.email', '').replace(/@.*$/, '')}
                   />
                 </Grid>
               ))}
@@ -149,4 +184,4 @@ export class PublicProjectTsx extends React.Component<IPublicProjectProps, IStat
       </div>
     );
   }
-}
+);

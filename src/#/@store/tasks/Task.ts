@@ -1,6 +1,5 @@
 import map from 'lodash/map';
 
-import { User } from '#/#/@store/users';
 import { DownloadList } from '#/@store/@common/entities';
 import { convertSecondsToDuration } from '#/@store/@common/helpers';
 import { UserWork } from '#/@store/tasks/index';
@@ -21,7 +20,7 @@ export class Task implements ITask {
   value: number;
   typeId?: number;
   userWorks: IDownloadList<IUserWork> = new DownloadList(UserWork);
-  users?: User[] = [];
+  userTasks?: any[] = [];
 
   constructor(initial?: any) {
     map(initial, (val: any, key: string) => {

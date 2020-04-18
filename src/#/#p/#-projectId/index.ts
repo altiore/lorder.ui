@@ -2,13 +2,10 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { withStyles } from '@material-ui/core/styles';
-
 import { isAuth } from '#/@store/identity';
 import { fetchPublicProject, publicProjectData } from '#/@store/publicProject';
 
 import { PublicProjectTsx } from './PublicProject';
-import { styles } from './styles';
 
 const masStateToProps = createStructuredSelector<any, any>({
   isAuth,
@@ -22,4 +19,4 @@ const mapDispatch = {
 export default connect(
   masStateToProps,
   mapDispatch
-)(withStyles(styles)(PublicProjectTsx));
+)(PublicProjectTsx);
