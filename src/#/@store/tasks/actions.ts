@@ -3,6 +3,7 @@ import { createAction } from 'redux-actions';
 import { User } from '#/#/@store/users';
 import { requestActions } from '#/@store/@common/requestActions';
 import { PROJECT_TASK_FORM_NAME } from '#/@store/projects';
+import { TASKS_ROUTE } from '#/@store/router';
 
 import { EDIT_TASK_FORM } from './consts';
 
@@ -49,7 +50,7 @@ export const fetchProjectTasksA = requestActions(
         orderBy: 'id',
         skip,
       },
-      url: `/projects/${projectId}/tasks`,
+      url: TASKS_ROUTE(projectId),
     },
   })
 );
@@ -59,7 +60,7 @@ export const fetchProjectTasksA = requestActions(
  */
 export const fetchTaskDetailsA = requestActions('TASKS/FETCH_DETAILS', ({ projectId, sequenceNumber }): any => ({
   request: {
-    url: `/projects/${projectId}/tasks/${sequenceNumber}`,
+    url: `${TASKS_ROUTE(projectId)}/${sequenceNumber}`,
   },
   sequenceNumber,
 }));
@@ -87,7 +88,7 @@ export const postProjectTask = requestActions<IProjectTaskData>(
     request: {
       data,
       method: 'POST',
-      url: `/projects/${projectId}/tasks`,
+      url: TASKS_ROUTE(projectId),
     },
     success: {
       message: `Новая задача добавлена в проект`,
@@ -122,7 +123,7 @@ export const patchProjectTask = requestActions<IPatchProjectTaskData>(
       request: {
         data,
         method: 'PATCH',
-        url: `/projects/${projectId}/tasks/${sequenceNumber}`,
+        url: `${TASKS_ROUTE(projectId)}/${sequenceNumber}`,
       },
       sequenceNumber,
       success: {
@@ -140,7 +141,7 @@ export const deleteProjectTask = requestActions<IProjectTaskData>(
     projectId,
     request: {
       method: 'DELETE',
-      url: `/projects/${projectId}/tasks/${sequenceNumber}`,
+      url: `${TASKS_ROUTE(projectId)}/${sequenceNumber}`,
     },
     sequenceNumber,
     success: {
@@ -163,7 +164,7 @@ export const moveProjectTask = requestActions<IProjectTaskData>(
         status,
       },
       method: 'PATCH',
-      url: `/projects/${projectId}/tasks/${sequenceNumber}/move`,
+      url: `${TASKS_ROUTE(projectId)}/${sequenceNumber}/move`,
     },
     sequenceNumber,
   })

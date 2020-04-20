@@ -17,6 +17,7 @@ import InputField from '@components/InputField';
 import { TextField } from '@components/TextField';
 
 import { parseNumber } from '#/@store/@common/helpers';
+import { TASKS_ROUTE } from '#/@store/router';
 
 import { Field, InjectedFormProps } from 'redux-form';
 import { length, required } from 'redux-form-validators';
@@ -141,7 +142,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
 
   const getLink = useCallback(
     (absolute: boolean = false) => {
-      const path = `/projects/${projectId}/tasks/${sequenceNumber}`;
+      const path = `${TASKS_ROUTE(projectId)}/${sequenceNumber}`;
       if (absolute) {
         const port = includes(['443', '80', ''], window.location.port)
           ? window.location.port

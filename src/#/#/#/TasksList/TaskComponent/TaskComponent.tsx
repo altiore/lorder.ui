@@ -14,6 +14,7 @@ import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
 import { StartStopBtn } from '@components/StartStopBtn';
 
 import { Project } from '#/@store/projects';
+import { TASKS_ROUTE } from '#/@store/router';
 
 import moment from 'moment';
 
@@ -55,7 +56,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
     (sequenceNumber: number | string, projectId: number | string) => (e: React.SyntheticEvent) => {
       e.preventDefault();
       push({
-        pathname: `/projects/${projectId}/tasks/${sequenceNumber}`,
+        pathname: `${TASKS_ROUTE(projectId)}/${sequenceNumber}`,
         state: {
           modal: true,
           projectId,
@@ -149,7 +150,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
           component="a"
           classes={{ label: classes.buttonTitleLabel }}
           className={classes.buttonTitle}
-          href={isShown ? `/projects/${project.id}/tasks/${task.sequenceNumber}` : '#'}
+          href={isShown ? `${TASKS_ROUTE(project.id)}/${task.sequenceNumber}` : '#'}
           onClick={isShown ? openEditTaskForm(task.sequenceNumber, project.id as number) : undefined}
         >
           {isShown ? <TaskTypeIcon typeId={task.typeId} className={classes.taskIcon} /> : ''}

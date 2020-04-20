@@ -1,6 +1,7 @@
 import { push } from 'connected-react-router';
 
 import { showError } from '#/@store/notifications';
+import { TASKS_ROUTE } from '#/@store/router';
 import { currentTask } from '#/@store/timer';
 
 import { ThunkDispatch } from 'redux-thunk';
@@ -14,7 +15,7 @@ export const openTaskModal = (task?: ITask, count = 0) => async (
   if (task) {
     dispatch(
       push({
-        pathname: `/projects/${task.projectId}/tasks/${task.sequenceNumber}`,
+        pathname: `${TASKS_ROUTE(task.projectId)}/${task.sequenceNumber}`,
         state: {
           modal: true,
           projectId: task.projectId,
@@ -29,7 +30,7 @@ export const openTaskModal = (task?: ITask, count = 0) => async (
       if (openedTask) {
         dispatch(
           push({
-            pathname: `/projects/${openedTask.projectId}/tasks/${openedTask.sequenceNumber}`,
+            pathname: `${TASKS_ROUTE(openedTask.projectId)}/${openedTask.sequenceNumber}`,
             state: {
               modal: true,
               projectId: openedTask.projectId,

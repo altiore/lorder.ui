@@ -17,6 +17,7 @@ import AddIcon from '@material-ui/icons/Add';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 
 import { PatchTaskForm } from '#/@common/TaskForm';
+import { TASKS_ROUTE } from '#/@store/router';
 import { STATUS_NAMES, Task } from '#/@store/tasks';
 
 import { useStyles } from './styles';
@@ -65,7 +66,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   const handleTaskClick = useCallback(
     (sequenceNumber: number | string) => () => {
       push({
-        pathname: `/projects/${projectId}/tasks/${sequenceNumber}`,
+        pathname: `${TASKS_ROUTE(projectId)}/${sequenceNumber}`,
         state: {
           modal: true,
           projectId,

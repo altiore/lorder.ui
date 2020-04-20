@@ -5,6 +5,7 @@ import NestedRoute from '#/@common/#NestedRoute';
 import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
 import { Project } from '#/@store/projects';
 import { ROLES } from '#/@store/roles';
+import { TASKS_ROUTE } from '#/@store/router';
 
 import { ACCESS_LEVEL, IRoute, ROLE } from '@types';
 import { useAllowedRoutes } from '@utils/useAllowedRoutes';
@@ -20,7 +21,7 @@ export const PROJECT_ROUTES: IRoute[] = [
     access: [ROLES.USERS, ACCESS_LEVEL.RED],
     component: lazy(() => import('./#tasks')),
     exact: true,
-    path: '/projects/:projectId/tasks',
+    path: TASKS_ROUTE(),
     title: 'Задачи',
   },
   {
@@ -44,7 +45,7 @@ export const PROJECT_ROUTES: IRoute[] = [
   {
     access: [ROLES.USERS, ACCESS_LEVEL.RED],
     component: lazy(() => import('./#tasks/#-sequenceNumber')),
-    path: '/projects/:projectId/tasks/:sequenceNumber',
+    path: `${TASKS_ROUTE()}/:sequenceNumber`,
   },
 ];
 
@@ -80,7 +81,7 @@ export const ProjectTsx: React.FC<IProjectProps> = ({
     }
 
     if (openedProject.accessLevel > ACCESS_LEVEL.WHITE) {
-      return '/projects/:projectId/tasks';
+      return TASKS_ROUTE();
     }
 
     if (openedProject.accessLevel === ACCESS_LEVEL.WHITE) {
@@ -101,7 +102,7 @@ export const ProjectTsx: React.FC<IProjectProps> = ({
         {availableRoutes.map((route: IRoute) => (
           <NestedRoute key={route.path} {...route} />
         ))}
-        <Redirect from="/projects/:projectId/invite" to="/projects/:projectId/tasks" exact />
+        <Redirect from="/projects/:projectId/invite" to={TASKS_ROUTE()} exact />
       </Switch>
     </LayoutLeftDrawer>
   );

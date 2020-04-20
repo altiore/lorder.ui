@@ -12,6 +12,7 @@ import TimerIcon from '@material-ui/icons/Timer';
 import { CreateProjectPopup } from '#/@common/CreateProjectPopup';
 import { LinkIconButton } from '#/@common/LinkIconButton';
 import { Project } from '#/@store/projects';
+import { TASKS_ROUTE } from '#/@store/router';
 import { IUserWorkData } from '#/@store/tasks/user-works';
 
 import moment from 'moment';
@@ -31,11 +32,6 @@ export interface IHeaderProps {
   selectedProject: Project;
   showWarning: (ev: INotification) => any;
   startUserWork: (data: IUserWorkData) => any;
-}
-
-export interface IHeaderState {
-  anchorEl: EventTarget;
-  expanded: boolean;
 }
 
 const timer: any = null;
@@ -166,13 +162,12 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
           </div>
           <div className={classes.grow}>
             <Switch>
-              <Route path="/projects/:projectId/board" component={Filters} />
+              <Route path={TASKS_ROUTE()} component={Filters} />
               <Route component={nullComponent} />
             </Switch>
           </div>
           <div>
             <AccountMenu />
-            {/*<RightMenu />*/}
           </div>
         </Toolbar>
       </AppBar>

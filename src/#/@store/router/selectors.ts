@@ -1,14 +1,15 @@
 import { match as IMatch } from 'react-router-dom';
 
+import { createMatchSelector } from 'connected-react-router';
 import get from 'lodash/get';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { getQueryParam } from '#/@store/@common/helpers';
 import { userRole } from '#/@store/identity/selectors';
 
-import { IState } from '@types';
+import { TASKS_ROUTE } from './consts';
 
-const { createMatchSelector } = require('connected-react-router');
+import { IState } from '@types';
 
 type IMatchIdentifier = IMatch<{
   identifier?: string;
@@ -42,6 +43,6 @@ export const routeProjectId = createDeepEqualSelector(
 );
 
 export const routeTaskSequenceNumber = createDeepEqualSelector(
-  match('/projects/:projectId/tasks/:sequenceNumber'),
+  match(`${TASKS_ROUTE()}/:sequenceNumber`),
   (state): number | undefined => get(state, 'params.sequenceNumber') && parseInt(get(state, 'params.sequenceNumber'), 0)
 );

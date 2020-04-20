@@ -60,7 +60,7 @@ export const HiTsx: React.FC<IHiProps> = ({
         />
       ) : null}
 
-      <AppBar key={'top'} position="static" className={classes.appBar}>
+      <AppBar key={'top'} position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h5" color="inherit">
             {brandName}
