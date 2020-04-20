@@ -85,11 +85,11 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
 
   const handleSetActive = useCallback(
     (to: string) => {
-      if (value !== to) {
+      if (value !== to && !isScroll) {
         setValue(to);
       }
     },
-    [value]
+    [isScroll, value]
   );
 
   return (
@@ -99,7 +99,6 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
           <Toolbar className={classes.firstToolbar}>
             <Typography variant="h4" color="secondary">
               {brandName}
-              {isScroll && '...'}
             </Typography>
             {showTabs && (
               <Tabs
