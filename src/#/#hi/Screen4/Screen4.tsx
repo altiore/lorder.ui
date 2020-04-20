@@ -18,7 +18,7 @@ import StarItem from './StarItem';
 import { useStyles } from './styles';
 
 interface Screen4I {
-  services?: any[];
+  name: string;
 }
 
 const LIST = [
@@ -30,7 +30,7 @@ const LIST = [
   'Главная цель - сделать мир более организованным и справедливым для умных людей, создающих блага, целеустремленных, заинтересованных в успехе',
 ];
 
-const Screen4: React.FC<Screen4I> = ({ services }) => {
+const Screen4: React.FC<Screen4I> = ({ name }) => {
   const classes = useStyles();
 
   const [isVisible, setIsVisible] = useState(false);
@@ -39,7 +39,7 @@ const Screen4: React.FC<Screen4I> = ({ services }) => {
   const isFullWidth = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <Block className={classes.content}>
+    <Block name={name} className={classes.content}>
       <ScreenTitle black>Преимущества нашего сервиса:</ScreenTitle>
       <VisibilitySensor onChange={setIsVisible} partialVisibility>
         <BlockContent black>

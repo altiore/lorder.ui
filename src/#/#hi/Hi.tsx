@@ -12,6 +12,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import TelegramIco from '@components/@icons/Telegram';
 import YouTubeVideo from '@components/YouTubeVideo';
 
+import HiHeader from './HiHeader';
 import Screen1 from './Screen1';
 import Screen2 from './Screen2';
 import Screen3 from './Screen3';
@@ -27,6 +28,38 @@ export interface IHiProps {
   scrollWidth: number;
   width: number;
 }
+
+const BLOCKS = {
+  start: {
+    name: 'start',
+    title: 'Главная',
+  },
+
+  help: {
+    name: 'help',
+    title: 'Помощь',
+  },
+
+  services: {
+    name: 'services',
+    title: 'Услуги',
+  },
+
+  advantages: {
+    name: 'advantages',
+    title: 'Преимущества',
+  },
+
+  progress: {
+    name: 'progress',
+    title: 'Достижения',
+  },
+
+  team: {
+    name: 'team',
+    title: 'Наша Команда',
+  },
+};
 
 export const HiTsx: React.FC<IHiProps> = ({
   brandName,
@@ -60,23 +93,17 @@ export const HiTsx: React.FC<IHiProps> = ({
         />
       ) : null}
 
-      <AppBar key={'top'} position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h5" color="inherit">
-            {brandName}
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <HiHeader blocks={BLOCKS} />
 
-      <Screen1 />
+      <Screen1 name={BLOCKS.start.name} />
 
-      <Screen2 />
+      <Screen2 name={BLOCKS.help.name} />
 
-      <Screen3 />
+      <Screen3 name={BLOCKS.services.name} />
 
-      <Screen4 />
+      <Screen4 name={BLOCKS.advantages.name} />
 
-      <Screen5 />
+      <Screen5 nameProgress={BLOCKS.progress.name} nameTeam={BLOCKS.team.name} />
 
       <AppBar key={'bottom'} position="static" component={'footer'}>
         <Toolbar className={classes.bottomBar}>

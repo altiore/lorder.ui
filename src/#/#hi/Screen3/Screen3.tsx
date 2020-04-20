@@ -10,6 +10,7 @@ import Item from './Item';
 import { useStyles } from './styles';
 
 interface Screen3I {
+  name: string;
   texts: {
     adv1: string;
     adv2: string;
@@ -21,11 +22,11 @@ interface Screen3I {
   };
 }
 
-const Screen3: React.FC<Screen3I> = ({ texts }) => {
+const Screen3: React.FC<Screen3I> = ({ name, texts }) => {
   const classes = useStyles();
 
   return (
-    <Block className={classes.content}>
+    <Block name={name} className={classes.content}>
       <ScreenTitle>Что позволяет наш сервис?</ScreenTitle>
       <Grid item md={1} xs={false} />
       <Grid item className={classes.svgIconBlock} md={5} xs={12}>

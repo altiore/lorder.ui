@@ -20,15 +20,23 @@ import UsersAch from './UsersAch';
 interface Screen5I {
   isPublicAltioreLoaded: boolean;
   isPublicAltioreLoading: boolean;
+  nameProgress: string;
+  nameTeam: string;
   team: IMember[];
 }
 
-const Screen5: React.FC<Screen5I> = ({ isPublicAltioreLoaded, isPublicAltioreLoading, team }) => {
+const Screen5: React.FC<Screen5I> = ({
+  isPublicAltioreLoaded,
+  isPublicAltioreLoading,
+  nameProgress,
+  nameTeam,
+  team,
+}) => {
   const classes = useStyles();
 
   return (
     <>
-      <Block alignItems="flex-start" grow className={classes.achievement}>
+      <Block name={nameProgress} alignItems="flex-start" grow className={classes.achievement}>
         <ScreenTitle>Достижения</ScreenTitle>
         <BlockContent>
           <div className={classes.backTitle}>ALTIORE</div>
@@ -39,7 +47,7 @@ const Screen5: React.FC<Screen5I> = ({ isPublicAltioreLoaded, isPublicAltioreLoa
           </Grid>
         </BlockContent>
       </Block>
-      <Block className={classes.team}>
+      <Block name={nameTeam} className={classes.team}>
         <ScreenTitle black>Команда проекта Altiore</ScreenTitle>
         <SubTitle black>
           <Typography noWrap>В безумном мире хаоса мы помогаем тебе</Typography>

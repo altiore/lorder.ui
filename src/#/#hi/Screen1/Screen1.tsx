@@ -11,11 +11,10 @@ import ActiveClock from './ActiveClock';
 import { useStyles } from './styles';
 
 interface Screen1I {
-  btnText2?: string;
-  text2?: string;
+  name: string;
 }
 
-const Screen1: React.FC<Screen1I> = ({ btnText2, text2 }) => {
+const Screen1: React.FC<Screen1I> = ({ name }) => {
   const classes = useStyles();
 
   const [counter, setCounter] = useState(1);
@@ -40,7 +39,7 @@ const Screen1: React.FC<Screen1I> = ({ btnText2, text2 }) => {
   }, [slowTimeSpeed, startSlowSpeed, stopSlowSpeed]);
 
   return (
-    <Block className={classes.content} direction="row-reverse">
+    <Block name={name} className={classes.content} direction="row-reverse">
       <Grid item md={1} xs={false} />
       <Grid item className={classes.block} md={5} xs={12} onClick={toggleSpeed}>
         <ActiveClock slowTimeSpeed={slowTimeSpeed} />

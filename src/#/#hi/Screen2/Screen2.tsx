@@ -19,7 +19,7 @@ import HoveredItem from './HoveredItem';
 import { useStyles } from './styles';
 
 interface Screen1I {
-  services?: any[];
+  name: string;
 }
 
 const INFO_LIST = [
@@ -59,11 +59,11 @@ const INFO_LIST = [
   },
 ];
 
-const Screen2: React.FC<Screen1I> = () => {
+const Screen2: React.FC<Screen1I> = ({ name }) => {
   const classes = useStyles();
 
   return (
-    <Block alignItems="flex-start" className={classes.content}>
+    <Block name={name} alignItems="flex-start" className={classes.content}>
       <ScreenTitle black>Мы поможем</ScreenTitle>
       <SubTitle black>
         <Typography variant="subtitle1">

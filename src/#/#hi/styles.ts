@@ -1,9 +1,6 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme): any => ({
-  appBar: {
-    opacity: 1,
-  },
   bottomBar: {
     alignItems: 'center',
     display: 'flex',
