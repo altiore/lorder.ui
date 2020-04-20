@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 export interface IHiHeaderProps {
@@ -55,6 +56,7 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
   const [isScroll, setIsScroll] = useState(false);
 
   const theme = useTheme();
+  const showTabs = useMediaQuery(theme.breakpoints.up('md'));
 
   useEffect(() => {
     Events.scrollEvent.register('begin', function(/*to, element*/) {
@@ -99,7 +101,7 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
               {brandName}
               {isScroll && '...'}
             </Typography>
-            {theme.breakpoints.up('md') && (
+            {showTabs && (
               <Tabs
                 TabIndicatorProps={{ children: <div /> }}
                 onChange={handleChange}
