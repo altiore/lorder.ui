@@ -46,7 +46,8 @@ const Screen1: React.FC<Screen1I> = ({ name }) => {
       </Grid>
       <Grid item className={classes.block} md={5} xs={12}>
         <Typography className={classes.question} variant="h1">
-          А ты управляешь своим временем?
+          А ты управляешь
+          <br /> своим временем?
         </Typography>
         <Divider className={classes.divider} />
         <Typography className={classes.motto} variant="h4">

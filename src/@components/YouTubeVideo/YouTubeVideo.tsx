@@ -14,6 +14,8 @@ export interface IYouTubeVideoProps {
   width: number;
 }
 
+// нужно, чтоб не было видно ссылок от YouTube
+const HEIGHT_OFFSET = 56;
 const VIDEO_WIDTH = 1280;
 const VIDEO_HEIGHT = 720;
 
@@ -47,21 +49,22 @@ export const YouTubeVideoTsx: React.FC<IYouTubeVideoProps> = ({
     },
     [opts, videoId]
   );
-  const isWidth = useMemo(() => VIDEO_HEIGHT / VIDEO_WIDTH > height / width, [height, width]);
-  const wrapperStyle = useMemo(
-    () => ({
-      left: isWidth ? 0 : -((height * VIDEO_WIDTH) / VIDEO_HEIGHT - width) / 2,
+  const heightWithOffset = useMemo(() => height + HEIGHT_OFFSET, [height]);
+  const isWidth = useMemo(() => VIDEO_HEIGHT / VIDEO_WIDTH > heightWithOffset / width, [heightWithOffset, width]);
+  const wrapperStyle = useMemo(() => {
+    const topOffset = isWidth ? -((width * VIDEO_HEIGHT) / VIDEO_WIDTH - heightWithOffset) / 2 : 0;
+    return {
+      left: isWidth ? 0 : -((heightWithOffset * VIDEO_WIDTH) / VIDEO_HEIGHT - width) / 2,
       position: 'absolute',
-      top: isWidth ? -((width * VIDEO_HEIGHT) / VIDEO_WIDTH - height) / 2 : 0,
-    }),
-    [isWidth, height, width]
-  );
+      top: topOffset > -HEIGHT_OFFSET ? -HEIGHT_OFFSET : topOffset,
+    };
+  }, [isWidth, heightWithOffset, width]);
   const videoStyle = useMemo(() => {
     return {
-      height: isWidth ? `${(width * VIDEO_HEIGHT) / VIDEO_WIDTH}px` : `${height}px`,
-      width: isWidth ? `${width}px` : `${(height * VIDEO_WIDTH) / VIDEO_HEIGHT}px`,
+      height: isWidth ? `${(width * VIDEO_HEIGHT) / VIDEO_WIDTH}px` : `${heightWithOffset}px`,
+      width: isWidth ? `${width}px` : `${(heightWithOffset * VIDEO_WIDTH) / VIDEO_HEIGHT}px`,
     };
-  }, [height, isWidth, width]);
+  }, [heightWithOffset, isWidth, width]);
   const preparedOpts = useMemo(
     () => ({
       height: '100%',

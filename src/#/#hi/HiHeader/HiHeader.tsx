@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Events, Link, scrollSpy } from 'react-scroll';
 
+import cn from 'classnames';
+
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
@@ -17,7 +19,10 @@ export interface IHiHeaderProps {
 
 export const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
-    opacity: 1,
+    transition: theme.transitions.create('background-color'),
+  },
+  appBarOpacity: {
+    backgroundColor: 'rgba(37, 36, 38, 0.6)',
   },
   firstToolbar: {
     justifyContent: 'space-between',
@@ -28,23 +33,18 @@ export const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface ElevationScrollProps {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
   children: React.ReactElement;
+  classes: any;
 }
 
-function ElevationScroll(props: ElevationScrollProps) {
-  const { children, window } = props;
+function ElevationScroll({ children, classes }: ElevationScrollProps) {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    target: window ? window() : undefined,
     threshold: 0,
   });
 
   return React.cloneElement(children, {
+    className: trigger ? classes.appBar : cn(classes.appBar, classes.appBarOpacity),
     elevation: trigger ? 4 : 0,
   });
 }
@@ -94,8 +94,8 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
 
   return (
     <>
-      <ElevationScroll>
-        <AppBar key={'top'} position="fixed" className={classes.appBar}>
+      <ElevationScroll classes={classes}>
+        <AppBar key={'top'} position="fixed">
           <Toolbar className={classes.firstToolbar}>
             <Typography variant="h4" color="secondary">
               {brandName}

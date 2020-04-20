@@ -32,12 +32,12 @@ export interface IHiProps {
 const BLOCKS = {
   start: {
     name: 'start',
-    title: 'Главная',
+    title: 'Начать',
   },
 
   help: {
     name: 'help',
-    title: 'Помощь',
+    title: 'Что это?',
   },
 
   services: {
