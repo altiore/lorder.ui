@@ -28,7 +28,7 @@ import { Member } from './members/Member';
 import { Project } from './Project';
 import { projectTaskTypes } from './taskTypes/reducer';
 
-import { IMeta } from '@types';
+import { ACCESS_LEVEL, IMeta } from '@types';
 
 type S = DownloadList<Project>;
 interface IM {
@@ -63,7 +63,7 @@ const postProjectSuccessHandler = (state: DownloadList, { payload }: Action<Axio
   }
   return state.addItem({
     ...payload.data,
-    accessLevel: 7,
+    accessLevel: ACCESS_LEVEL.VIOLET,
   });
 };
 
@@ -99,7 +99,7 @@ const postProjectMemberHandler = (state: S, { payload }: Action<P>) => {
   return state.updateItem(projectIndex, {
     members: state.list[projectIndex].members.addItem(
       new Member({
-        accessLevel: 0,
+        accessLevel: ACCESS_LEVEL.WHITE,
         member: { email: (payload as IM).email },
       })
     ),
@@ -134,13 +134,14 @@ const updateProjectMemberAccessLevelHandler = (state: S, { payload }: Action<P>)
         },
       }))
     : undefined;
+  const newAccessLevel = get(
+    payload,
+    'request.data.accessLevel',
+    get(state, ['list', projectIndex, 'members', 'list', memberIndex, 'accessLevel'], ACCESS_LEVEL.RED)
+  );
   return state.updateItem(projectIndex, {
     members: state.list[projectIndex].members.updateItem(memberIndex, {
-      accessLevel: get(
-        payload,
-        'request.data.accessLevel',
-        state.list[projectIndex].members.list[memberIndex].accessLevel
-      ),
+      accessLevel: newAccessLevel,
       roles: preparedRoles || state.list[projectIndex].members.list[memberIndex].roles,
     }),
   });
@@ -151,13 +152,14 @@ const updateProjectMemberAccessLevelSuccessHandler = (state: S, { payload, meta 
   const memberIndex = state.list[projectIndex].members.list.findIndex(
     el => get(meta, ['previousAction', 'payload', 'memberId']) === el.member.id
   );
+  const newAccessLevel = get(
+    payload,
+    ['data', 'accessLevel'],
+    get(state, ['list', projectIndex, 'members', 'list', memberIndex, 'accessLevel'], ACCESS_LEVEL.RED)
+  );
   return state.updateItem(projectIndex, {
     members: state.list[projectIndex].members.updateItem(memberIndex, {
-      accessLevel: get(
-        payload,
-        ['data', 'accessLevel'],
-        state.list[projectIndex].members.list[memberIndex].accessLevel
-      ),
+      accessLevel: newAccessLevel,
       roles: get(payload, ['data', 'roles'], state.list[projectIndex].members.list[memberIndex].roles),
     }),
   });
@@ -201,6 +203,7 @@ const logOutHandler = () => {
 const acceptInvitationHandler = (state: S, { payload }: any) => {
   const index = state.list.findIndex(el => get(payload, ['data', 'project', 'id']) === el.id);
 
+  // TODO: check that this logic is correct
   return state.updateItem(index, {
     accessLevel: get(payload, ['data', 'accessLevel']),
   });

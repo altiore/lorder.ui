@@ -154,10 +154,12 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
 
   private handleRowClick = async ({ rowData, event }: any) => {
     event.stopPropagation();
-    if (rowData.accessLevel === ACCESS_LEVEL.WHITE && typeof rowData.id === 'number') {
-      this.props.goToProject(rowData.id);
-    } else {
-      this.props.goToProject(rowData.id);
+    if (rowData) {
+      if (rowData.accessLevel === ACCESS_LEVEL.WHITE && typeof rowData.id === 'number') {
+        this.props.goToProject(rowData.id);
+      } else {
+        this.props.goToProject(rowData.id);
+      }
     }
   };
 
@@ -206,7 +208,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   };
 
   private renderRemove = ({ cellData, rowData }: TableCellProps) => (
-    <Fab size="small" color="primary" onClick={this.handleRemoveClick(cellData, rowData.accessLevel)}>
+    <Fab size="small" color="primary" onClick={this.handleRemoveClick(cellData, rowData && rowData.accessLevel)}>
       <ClearIcon />
     </Fab>
   );

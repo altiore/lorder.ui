@@ -70,7 +70,7 @@ export const updateProjectMemberAccessLevel = requestActions<IUpdateMemberData>(
     projectId,
     request: {
       data:
-        typeof data.accessLevel === 'string'
+        data && typeof data.accessLevel === 'string'
           ? {
               ...data,
               accessLevel: parseInt(data.accessLevel, 0),

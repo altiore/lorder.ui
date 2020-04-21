@@ -73,19 +73,21 @@ export const ProjectTsx: React.FC<IProjectProps> = ({
     }
   }, [fetchProjectDetails, openedProject]);
 
-  const availableRoutes = useAllowedRoutes(PROJECT_ROUTES, userRole, openedProject.accessLevel);
+  const availableRoutes = useAllowedRoutes(PROJECT_ROUTES, userRole, openedProject && openedProject.accessLevel);
 
   const redirectTo = useMemo(() => {
-    if (typeof openedProject.accessLevel === 'undefined') {
-      return '/';
-    }
+    if (openedProject) {
+      if (typeof openedProject.accessLevel === 'undefined') {
+        return '/';
+      }
 
-    if (openedProject.accessLevel > ACCESS_LEVEL.WHITE) {
-      return TASKS_ROUTE();
-    }
+      if (openedProject.accessLevel > ACCESS_LEVEL.WHITE) {
+        return TASKS_ROUTE();
+      }
 
-    if (openedProject.accessLevel === ACCESS_LEVEL.WHITE) {
-      return '/projects/:projectId/invite';
+      if (openedProject.accessLevel === ACCESS_LEVEL.WHITE) {
+        return '/projects/:projectId/invite';
+      }
     }
 
     return '/';

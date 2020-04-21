@@ -71,7 +71,12 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
       // только человек с максимальным уровнем доступа к проекту может редактировать accessLevel Других пользовтаелей
       COLUMNS[4].editable = openedAccessLevel >= ACCESS_LEVEL.VIOLET;
       // нельзя редактировать свой уровень доступа или уровень доступа человека, у которого максимальный уровень доступа
-      COLUMNS[4].skip = item => item.accessLevel === ACCESS_LEVEL.VIOLET || item.member.id === userId;
+      COLUMNS[4].skip = item => {
+        if (item) {
+          return item.accessLevel === ACCESS_LEVEL.VIOLET || item.member.id === userId;
+        }
+        return true;
+      };
       return COLUMNS;
     }, [openedAccessLevel, projectRoles, userId]);
 

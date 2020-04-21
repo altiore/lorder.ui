@@ -17,7 +17,7 @@ export const allProjectList = createDeepEqualSelector(
 );
 
 export const ownProjectList = createDeepEqualSelector([baseState], (state: DownloadList<Project>): Project[] =>
-  state.list.filter(el => typeof el.accessLevel === 'number')
+  state.list.filter(el => el && typeof el.accessLevel === 'number')
 );
 
 export const selectedProject: any = createDeepEqualSelector(
