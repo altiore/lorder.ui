@@ -33,6 +33,8 @@ export const EditWorkTsx: React.FC<InjectedFormProps<IEditWorkData, IEditWorkPro
   event,
   handleSubmit,
   onClose,
+  pristine,
+  submitting,
 }) => {
   const classes = useStyles();
 
@@ -58,7 +60,7 @@ export const EditWorkTsx: React.FC<InjectedFormProps<IEditWorkData, IEditWorkPro
         </div>
         <TimeDiff />
         <div className={classes.grow} />
-        <Button color="primary" variant="contained" type="submit">
+        <Button color="primary" variant="contained" type="submit" disabled={pristine || submitting}>
           Сохранить
         </Button>
       </form>
