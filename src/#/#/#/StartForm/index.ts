@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { onSubmitForm } from '#/@store/@common/helpers';
 import { createUserTaskFormInitials } from '#/@store/project';
 import { selectedProject } from '#/@store/projects';
-import { CREATE_USER_WORK_FORM_NAME, IUserWorkData, startUserWork } from '#/@store/tasks';
+import { CREATE_USER_WORK_FORM_NAME, IUserWorkData, startUserWork } from '#/@store/user-works';
 
 import { change, reduxForm } from 'redux-form';
 

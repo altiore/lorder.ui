@@ -2,10 +2,9 @@ import includes from 'lodash/includes';
 import map from 'lodash/map';
 
 import { convertSecondsToDuration } from '#/@store/@common/helpers';
+import { Task } from '#/@store/tasks/Task';
 
 import moment from 'moment';
-
-import { Task } from '../Task';
 
 import { ITask, IUserWork } from '@types';
 

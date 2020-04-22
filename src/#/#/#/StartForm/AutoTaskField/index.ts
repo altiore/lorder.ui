@@ -6,8 +6,9 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { showError } from '#/@store/notifications';
 import { getProjectById, ownProjectList } from '#/@store/projects';
-import { allTaskListWithoutDefProject, CREATE_USER_WORK_FORM_NAME, startUserWork } from '#/@store/tasks';
+import { allTaskListWithoutDefProject } from '#/@store/tasks';
 import { currentProjectId } from '#/@store/timer';
+import { CREATE_USER_WORK_FORM_NAME, startUserWork } from '#/@store/user-works';
 
 import { isValid } from 'redux-form';
 

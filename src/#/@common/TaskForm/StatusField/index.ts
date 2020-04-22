@@ -5,7 +5,8 @@ import { createStructuredSelector } from 'reselect';
 import TaskStatus from '@components/TaskStatus';
 
 import { projectMembersAsUsers } from '#/@store/projects';
-import { allStatuses, EDIT_TASK_FORM, stopUserWork } from '#/@store/tasks';
+import { allStatuses, EDIT_TASK_FORM } from '#/@store/tasks';
+import { stopUserWork } from '#/@store/user-works';
 
 import { change } from 'redux-form';
 

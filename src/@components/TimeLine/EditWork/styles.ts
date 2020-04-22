@@ -1,7 +1,7 @@
-import { Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import createStyles from '@material-ui/core/styles/createStyles';
 
-export const styles = (theme: Theme) =>
+export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     col: {
       alignItems: 'flex-start',
@@ -20,8 +20,7 @@ export const styles = (theme: Theme) =>
       display: 'flex',
       flexFlow: 'column nowrap',
       justifyContent: 'flex-start',
-      minHeight: 300,
-      minWidth: 500,
+      minWidth: theme.spacing(66),
       padding: theme.spacing(2),
     },
     rowSpaceBetween: {
@@ -31,4 +30,8 @@ export const styles = (theme: Theme) =>
       flexFlow: 'row nowrap',
       justifyContent: 'space-between',
     },
-  });
+    title: {
+      marginBottom: theme.spacing(2),
+    },
+  })
+);

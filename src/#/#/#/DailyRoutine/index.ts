@@ -6,16 +6,15 @@ import { TimeLine } from '@components/TimeLine';
 
 import { openDialog } from '#/@store/dialog';
 import { events } from '#/@store/tasks';
-
-import EditWork from './EditWork';
+import { patchUserWork } from '#/@store/user-works';
 
 const mapStateToProps = createStructuredSelector({
-  EditEvent: () => EditWork,
   events,
 } as any);
 
 const mapDispatch = {
   openDialog,
+  patchUserWork,
 };
 
 const mergeProps = ({ ...restState }: any, { openDialog, saveUserWorks, ...restDispatch }: any, restOwn: any) => ({

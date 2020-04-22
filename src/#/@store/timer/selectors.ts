@@ -1,7 +1,7 @@
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { convertSecondsToDuration, convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { filteredTaskList } from '#/@store/tasks/selectors';
-import { IUserWorkDelete } from '#/@store/tasks/user-works/actions';
+import { IUserWorkDelete } from '#/@store/user-works/actions';
 
 import { IState, IUserWork } from '@types';
 

@@ -3,7 +3,7 @@ import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
 import { DownloadList } from '#/@store/@common/entities';
-import { patchAndStopUserWork, postAndStartUserWork, UserWork } from '#/@store/tasks';
+import { patchAndStopUserWork, postAndStartUserWork, UserWork } from '#/@store/user-works';
 
 import { AxiosResponse } from 'axios';
 
@@ -102,6 +102,11 @@ const postAndStartUserWorkSuccessHandler = (state: S, { payload }: Action<P>) =>
 const postAndStartUserWorkFailHandler = (state: S) => {
   return state.stopLoading();
 };
+
+// const deleteUserWorkHandler = (state: S, { payload }: Action<IDeleteUserWork>) => {
+//   const index = state.list.findIndex(el => el.id === get(payload, 'userWorkId'));
+//   return state.removeItem(index);
+// };
 
 export const userWorks: any = handleActions<S, P>(
   {

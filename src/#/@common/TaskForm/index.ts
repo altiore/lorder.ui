@@ -16,8 +16,8 @@ import {
   getEditTaskInitialValues,
   patchProjectTask,
   postProjectTask,
-  startUserWork,
 } from '#/@store/tasks';
+import { startUserWork } from '#/@store/user-works';
 
 import { change, reduxForm } from 'redux-form';
 

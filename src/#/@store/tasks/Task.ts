@@ -1,10 +1,8 @@
 import map from 'lodash/map';
 
-import { DownloadList } from '#/@store/@common/entities';
 import { convertSecondsToDuration } from '#/@store/@common/helpers';
-import { UserWork } from '#/@store/tasks/index';
 
-import { IDownloadList, ITask, IUser, IUserWork } from '@types';
+import { ITask, IUser } from '@types';
 
 export class Task implements ITask {
   isDetailsLoaded: boolean;
@@ -19,21 +17,17 @@ export class Task implements ITask {
   status: number;
   value: number;
   typeId?: number;
-  userWorks: IDownloadList<IUserWork> = new DownloadList(UserWork);
   userTasks?: any[] = [];
 
   constructor(initial?: any) {
     map(initial, (val: any, key: string) => {
-      if (key === 'userWorks') {
-        this[key] = new DownloadList(UserWork, val, Array.isArray(val));
-        return;
-      }
       this[key] = val;
     });
   }
 
   get durationInSeconds(): number {
-    return this.userWorks.list.reduce((res, current) => res + current.durationInSeconds, 0);
+    // TODO: fix correct duration
+    return 0;
   }
 
   get duration(): string {

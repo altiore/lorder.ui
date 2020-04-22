@@ -4,7 +4,8 @@ import { push } from 'connected-react-router';
 
 import { openDialog } from '#/@store/dialog';
 import { showWarning } from '#/@store/notifications';
-import { openTaskModal, startUserWork, stopUserWork } from '#/@store/tasks';
+import { openTaskModal } from '#/@store/tasks';
+import { startUserWork, stopUserWork } from '#/@store/user-works';
 
 import { TaskComponentTsx } from './TaskComponent';
 

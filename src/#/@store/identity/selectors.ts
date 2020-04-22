@@ -4,23 +4,23 @@ import { IIdentityState } from './Identity';
 
 import { IState, ROLE } from '@types';
 
-const baseState = (state: IState): IIdentityState => state.identity;
+export const baseIdentityState = (state: IState): IIdentityState => state.identity;
 
-export const isAuth = createDeepEqualSelector([baseState], state => state.isAuth);
+export const isAuth = createDeepEqualSelector([baseIdentityState], state => state.isAuth);
 
-export const userRole = createDeepEqualSelector<any, any, ROLE>([baseState], (state): ROLE => state.role);
+export const userRole = createDeepEqualSelector<any, any, ROLE>([baseIdentityState], (state): ROLE => state.role);
 
-export const userId = createDeepEqualSelector([baseState], state => state.id);
+export const userId = createDeepEqualSelector([baseIdentityState], state => state.id);
 
-export const userBearerKey = createDeepEqualSelector([baseState], state => state.bearerKey);
+export const userBearerKey = createDeepEqualSelector([baseIdentityState], state => state.bearerKey);
 
-export const userEmail = createDeepEqualSelector([baseState], state => state.email);
+export const userEmail = createDeepEqualSelector([baseIdentityState], state => state.email);
 
-export const userAvatar = createDeepEqualSelector([baseState], state => state.avatar);
+export const userAvatar = createDeepEqualSelector([baseIdentityState], state => state.avatar);
 
-export const userIsLoading = createDeepEqualSelector([baseState], state => state.isLoading);
+export const userIsLoading = createDeepEqualSelector([baseIdentityState], state => state.isLoading);
 
-export const defaultProjectId = createDeepEqualSelector(baseState, state => state.defaultProjectId);
+export const defaultProjectId = createDeepEqualSelector(baseIdentityState, state => state.defaultProjectId);
 
 export const hasRole = createDeepEqualSelector([userRole], role => (r: ROLE | ROLE[]) => {
   const roles = Array.isArray(r) ? r : [r];
@@ -30,7 +30,7 @@ export const hasRole = createDeepEqualSelector([userRole], role => (r: ROLE | RO
   return false;
 });
 
-export const initialProfileFormData = createDeepEqualSelector([baseState], state => ({
+export const initialProfileFormData = createDeepEqualSelector([baseIdentityState], state => ({
   displayName: state.displayName,
   tel: state.tel,
 }));

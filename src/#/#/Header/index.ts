@@ -6,7 +6,8 @@ import { createStructuredSelector } from 'reselect';
 import { openDialog } from '#/@store/dialog';
 import { showWarning } from '#/@store/notifications';
 import { selectedProject } from '#/@store/projects';
-import { openTaskModal, startUserWork } from '#/@store/tasks';
+import { openTaskModal } from '#/@store/tasks';
+import { startUserWork } from '#/@store/user-works';
 
 import { HeaderTsx } from './Header';
 

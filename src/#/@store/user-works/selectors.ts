@@ -2,7 +2,7 @@ import groupBy from 'lodash/groupBy';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
-import { UserWork } from '#/@store/tasks';
+import { UserWork } from '#/@store/user-works';
 
 import { IState } from '@types';
 

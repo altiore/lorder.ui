@@ -2,8 +2,9 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { deleteUserWork, getUserWorksById, startTimer, stopUserWork } from '#/@store/tasks';
+import { getUserWorksById } from '#/@store/tasks';
 import { currentUserWorkId } from '#/@store/timer';
+import { deleteUserWork, startTimer, stopUserWork } from '#/@store/user-works';
 
 import { UserWorkTableJsx } from './UserWorkTable';
 

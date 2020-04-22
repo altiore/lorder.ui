@@ -34,12 +34,13 @@ import { taskStatuses } from './task-statuses/reducer';
 import { TaskStatus } from './task-statuses/TaskStatus';
 import { TaskType } from './task-types';
 import { taskTypes } from './task-types';
-import { Task, UserWork } from './tasks';
+import { Task } from './tasks';
 import { tasks } from './tasks/reducer';
 import { tasksFilter } from './tasksFilter/reducer';
 import { timer } from './timer';
 import { uiReducer } from './ui';
-import { userWorks } from './user-works';
+import { UserWork } from './user-works';
+import { userWorks } from './user-works/reducer';
 import { versionHistory } from './versionHistory';
 
 import { IState } from '@types';

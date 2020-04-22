@@ -13,7 +13,7 @@ import { CreateProjectPopup } from '#/@common/CreateProjectPopup';
 import { LinkIconButton } from '#/@common/LinkIconButton';
 import { Project } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
-import { IUserWorkData } from '#/@store/tasks/user-works';
+import { IUserWorkData } from '#/@store/user-works';
 
 import moment from 'moment';
 

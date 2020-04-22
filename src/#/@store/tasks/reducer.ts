@@ -1,15 +1,14 @@
 import get from 'lodash/get';
-import omit from 'lodash/omit';
 import { Action, ActionMeta, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
 import { User } from '#/#/@store/users';
 import { DownloadList } from '#/@store/@common/entities';
 import { combineActions } from '#/@store/@common/helpers';
-import { getUserWorks, patchUserWork } from '#/@store/user-works/actions';
+import { getUserWorks, patchAndStopUserWork, postAndStartUserWork } from '#/@store/user-works';
+import { UserWork } from '#/@store/user-works/UserWork';
 
 import { AxiosResponse } from 'axios';
-import moment from 'moment';
 import uniqid from 'uniqid';
 
 import { IRequestAction } from '../@common/requestActions';
@@ -26,7 +25,6 @@ import {
   updateProjectTask,
 } from './actions';
 import { Task } from './Task';
-import { deleteUserWork, patchAndStopUserWork, postAndStartUserWork, UserWork, userWorks } from './user-works';
 
 interface IProjectRequest extends IRequestAction<Partial<Task>> {
   sequenceNumber: number;
@@ -50,24 +48,6 @@ const getAllTasksFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
-const taskUserWorkHandler = (state: S, action: ActionMeta<any, any>) => {
-  let taskId: number;
-  // if meta exists get taskId from meta
-  if (action.meta) {
-    taskId = get(action.meta, 'previousAction.payload.taskId');
-  } else {
-    taskId = get(action.payload, 'taskId');
-  }
-  const index = state.list.findIndex(el => taskId === el.id);
-  if (!~index) {
-    throw new Error(`Не смог найти измененную задачу index= ${index}`);
-  }
-
-  return state.updateItem(index, {
-    userWorks: userWorks(state.list[index].userWorks, action),
-  });
-};
-
 const postAndStartUserWorkHandler = (state: S, action: ActionMeta<any, any>) => {
   let taskId: number;
   if (action.meta) {
@@ -77,9 +57,7 @@ const postAndStartUserWorkHandler = (state: S, action: ActionMeta<any, any>) => 
   }
   const index = state.list.findIndex(el => taskId === el.id);
   if (~index) {
-    return state.updateItem(index, {
-      userWorks: userWorks(state.list[index].userWorks, action),
-    });
+    return state.startLoading();
   }
   const data: Partial<Task> = get(action, 'payload.request.data');
   return state.startLoading().addItem({
@@ -88,18 +66,6 @@ const postAndStartUserWorkHandler = (state: S, action: ActionMeta<any, any>) => 
     projectId: data.projectId,
     status: 2,
     title: data.title,
-    userWorks: new DownloadList<UserWork>(
-      UserWork,
-      [
-        {
-          description: data.description,
-          id: uniqid('UserWork'),
-          projectId: data.projectId,
-          startAt: moment(),
-        },
-      ],
-      true
-    ),
   });
 };
 
@@ -113,9 +79,7 @@ const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
   }
   const index = state.list.findIndex(el => taskId === el.id);
   if (~index) {
-    return state.stopLoading().updateItem(index, {
-      userWorks: userWorks(state.list[index].userWorks, action),
-    });
+    return state.stopLoading();
   }
   const userWork: Partial<UserWork> = get(action, 'payload.data.started');
   const task: Partial<Task> = get(action, 'payload.data.started.task');
@@ -127,7 +91,6 @@ const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
     sequenceNumber: task.sequenceNumber,
     status: task.status,
     title: task.title,
-    userWorks: new DownloadList<UserWork>(UserWork, [userWork], true),
   });
 };
 
@@ -141,9 +104,7 @@ const postAndStartUserWorkFailHandler = (state: S, action: ActionMeta<any, any>)
   }
   const index = state.list.findIndex(el => taskId === el.id);
   if (~index) {
-    return state.stopLoading().updateItem(index, {
-      userWorks: userWorks(state.list[index].userWorks, action),
-    });
+    return state.stopLoading();
   }
   return state.stopLoading().removeItem(0);
 };
@@ -171,9 +132,7 @@ const patchAndStopUserWorkHandler = (state: S, action: ActionMeta<any, any>) => 
   }
   const index = state.list.findIndex(el => taskId === el.id);
   if (~index) {
-    return state.updateItem(index, {
-      userWorks: userWorks(state.list[index].userWorks, action),
-    });
+    return state.startLoading();
   }
   return state.startLoading();
 };
@@ -182,31 +141,21 @@ const patchAndStopUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
   const { next, previous } = get(action, ['payload', 'data']);
   let resState: S = state;
   const nextIndex = resState.list.findIndex(el => next.taskId === el.id);
-  if (~nextIndex) {
-    resState = resState.updateItem(nextIndex, {
-      userWorks: userWorks(resState.list[nextIndex].userWorks, { type: 'update', payload: next, meta: '' }),
-    });
-  } else {
+  if (!~nextIndex) {
     resState = resState.addItem({
       description: next.task.description,
       id: next.task.id,
       projectId: next.projectId,
       title: next.task.title,
-      userWorks: new DownloadList<UserWork>(UserWork, [next], true),
     });
   }
   const prevIndex = resState.list.findIndex(el => previous.taskId === el.id);
-  if (~prevIndex) {
-    resState = resState.updateItem(prevIndex, {
-      userWorks: userWorks(resState.list[prevIndex].userWorks, { type: 'update', payload: previous, meta: '' }),
-    });
-  } else {
+  if (!~prevIndex) {
     resState = resState.addItem({
       description: previous.task.description,
       id: previous.task.id,
       projectId: previous.projectId,
       title: previous.task.title,
-      userWorks: new DownloadList<UserWork>(UserWork, [previous], true),
     });
   }
   return resState.stopLoading();
@@ -225,7 +174,6 @@ const replaceTasksHandler = (state: S, { payload }: Action<Array<Partial<UserWor
     const index = newState.list.findIndex(el => userWorkData.taskId === el.id);
     if (~index) {
       const task = { ...get(userWorkData, 'task') } as any;
-      task.userWorks = [omit(userWorkData, ['task'])];
       newState = newState.updateItem(index, task);
     }
   });
@@ -349,8 +297,6 @@ export const tasks: any = handleActions<S, any, any>(
     [patchAndStopUserWork.toString()]: patchAndStopUserWorkHandler,
     [patchAndStopUserWork.success]: patchAndStopUserWorkSuccessHandler,
     [patchAndStopUserWork.fail]: patchAndStopUserWorkFailHandler,
-
-    [combineActions(patchUserWork, deleteUserWork)]: taskUserWorkHandler,
 
     [replaceTasks.toString()]: replaceTasksHandler,
 

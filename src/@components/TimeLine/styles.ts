@@ -1,7 +1,7 @@
-import { Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import createStyles from '@material-ui/core/styles/createStyles';
 
-export const styles = (theme: Theme) =>
+export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     block: {
       boxSizing: 'border-box',
@@ -57,4 +57,5 @@ export const styles = (theme: Theme) =>
       // fill: theme.palette.primary.main,
       // fill: '#24292E',
     },
-  });
+  })
+);
