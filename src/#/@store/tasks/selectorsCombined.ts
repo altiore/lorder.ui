@@ -5,7 +5,8 @@ import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { defaultProjectId, userId } from '#/@store/identity/selectors';
 import { selectedProjectId } from '#/@store/project';
 import { routeProjectId } from '#/@store/router';
-import { allTasks, Task } from '#/@store/tasks/index';
+import { allTaskList, allTasks } from '#/@store/tasks/selectors';
+import { Task } from '#/@store/tasks/Task';
 import { filteredMembers, searchTerm, tasksFilter } from '#/@store/tasksFilter';
 import { currentTask, currentTaskId } from '#/@store/timer';
 import { lastUserWorks } from '#/@store/user-works/selectors';
@@ -44,19 +45,29 @@ export const checkIsCurrent = createDeepEqualSelector([currentTaskId], cTaskId =
   cTaskId === sequenceNumber
 );
 
+export const getTaskById = createDeepEqualSelector(allTaskList, (tasks: Task[]) => (id: number) =>
+  tasks.find(el => el.id === id)
+);
+
 export const events = createDeepEqualSelector(
-  [lastUserWorks, defaultProjectId],
-  (userWorks: IDownloadList<IUserWork>, defPrId: number | undefined): IEvent[] => {
+  [lastUserWorks, getTaskById, defaultProjectId],
+  (userWorks: IDownloadList<IUserWork>, getTask, defPrId: number | undefined): IEvent[] => {
     return userWorks.list
       .filter(uw => moment().diff(uw.startAt, 'hours') <= 24)
       .sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1))
-      .map(userWork => ({
-        data: userWork,
-        finishAt: userWork.finishAt,
-        isActive: userWork.projectId !== defPrId,
-        name: get(userWork, ['task', 'title'], userWork.taskId.toString()),
-        startAt: userWork.startAt,
-      }));
+      .map(userWork => {
+        const task = getTask(userWork.taskId);
+        return {
+          data: {
+            ...userWork,
+            task,
+          },
+          finishAt: userWork.finishAt,
+          isActive: userWork.projectId !== defPrId,
+          name: get(task, 'title', userWork.taskId.toString()),
+          startAt: userWork.startAt,
+        };
+      });
   }
 );
 
@@ -81,11 +92,6 @@ export const filteredProjectTasks = createDeepEqualSelector(
 
 export const selectedProjectTasks = createDeepEqualSelector([allTasks, selectedProjectId], (list, projectId): Task[] =>
   projectId ? list.list.filter(el => el.projectId === projectId) : []
-);
-
-export const getSelectedProjectTaskById = createDeepEqualSelector(
-  selectedProjectTasks,
-  (tasks: Task[]) => (id: number) => tasks.find(el => el.id === id)
 );
 
 export const STATUS_NAMES = ['Резерв', 'Сделать', 'В процессе', 'Обзор', 'Готово'];

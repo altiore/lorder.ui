@@ -6,7 +6,7 @@ import get from 'lodash/get';
 import { Project } from '#/@store/projects';
 
 import { Filter } from './Filter';
-import { TaskComponent } from './TaskComponent';
+import TaskComponent from './TaskComponent';
 
 import { ITask } from '@types';
 
@@ -88,9 +88,14 @@ export class TasksListJsx extends React.Component<ITasksListProps, ITaskListStat
         </div>
       );
     }
+    const CurrentTaskComponent: any = TaskComponent;
     return (
       <div key={task.id}>
-        <TaskComponent isCurrent={currentTaskId === task.id} task={task} project={getProjectById(task.projectId)} />
+        <CurrentTaskComponent
+          isCurrent={currentTaskId === task.id}
+          taskId={task.id}
+          project={getProjectById(task.projectId)}
+        />
       </div>
     );
   };

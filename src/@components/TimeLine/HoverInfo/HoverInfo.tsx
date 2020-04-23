@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import get from 'lodash/get';
 
@@ -7,45 +7,39 @@ import Typography from '@material-ui/core/Typography';
 
 import moment from 'moment';
 
+import { useStyles } from './styles';
+
 import { IEvent } from '@types';
 
 export interface IHoverInfoProps {
-  classes: any;
   hoveredEvent: IEvent;
   onOver: any;
   onLeave: any;
 }
 
-export class HoverInfoTsx extends React.Component<IHoverInfoProps, {}> {
-  render() {
-    const { classes, hoveredEvent, onOver, onLeave } = this.props;
+export const HoverInfoTsx: React.FC<IHoverInfoProps> = ({ hoveredEvent, onOver, onLeave }) => {
+  const { popoverPaper, time } = useStyles();
 
-    return (
-      <Paper
-        className={classes.popoverPaper}
-        id={`popover-body-${hoveredEvent.data.id}`}
-        onMouseOver={onOver}
-        onMouseLeave={onLeave}
-      >
-        <Typography key="name">{get(hoveredEvent, 'name')}</Typography>
-        <Typography key="date">
-          {this.getHoursWithMinutes(get(hoveredEvent, 'startAt'))} -{' '}
-          {this.getHoursWithMinutes(get(hoveredEvent, 'finishAt'))}
-        </Typography>
-      </Paper>
-    );
-  }
+  const hours = useMemo(() => {
+    return (hoveredEvent.finishAt || moment()).diff(hoveredEvent.startAt, 'hours');
+  }, [hoveredEvent]);
 
-  private getHoursWithMinutes = (el?: moment.Moment | null) => {
-    const current = moment();
-    if (el) {
-      if (el.day() === current.day()) {
-        return el.format('HH:mm');
-      } else {
-        return el.format('DD.MM HH:mm');
-      }
-    } else {
-      return current.format('HH:mm');
-    }
-  };
-}
+  const minutes = useMemo(() => {
+    return (hoveredEvent.finishAt || moment()).diff(hoveredEvent.startAt, 'minutes') % 60;
+  }, [hoveredEvent]);
+
+  return (
+    <Paper
+      className={popoverPaper}
+      id={`popover-body-${hoveredEvent.data.id}`}
+      onMouseOver={onOver}
+      onMouseLeave={onLeave}
+    >
+      <Typography key="name">{get(hoveredEvent, 'name')}</Typography>
+      <div className={time}>
+        <Typography variant="h5">{hours}ч.</Typography>
+        <Typography variant="h5">{minutes}мин.</Typography>
+      </div>
+    </Paper>
+  );
+};

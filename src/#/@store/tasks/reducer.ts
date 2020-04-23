@@ -5,7 +5,7 @@ import { PURGE } from 'redux-persist';
 import { User } from '#/#/@store/users';
 import { DownloadList } from '#/@store/@common/entities';
 import { combineActions } from '#/@store/@common/helpers';
-import { getUserWorks, patchAndStopUserWork, postAndStartUserWork } from '#/@store/user-works';
+import { getUserWorks, patchAndStopUserWork, patchUserWork, postAndStartUserWork } from '#/@store/user-works';
 import { UserWork } from '#/@store/user-works/UserWork';
 
 import { AxiosResponse } from 'axios';
@@ -70,28 +70,27 @@ const postAndStartUserWorkHandler = (state: S, action: ActionMeta<any, any>) => 
 };
 
 const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, any>) => {
+  let resState = state;
   let taskId: number;
   // if meta exists get taskId from meta
   if (action.meta) {
     taskId = get(action.meta, 'previousAction.payload.taskId');
   } else {
-    taskId = get(action.payload, 'taskId');
+    taskId = get(action.payload, ['data', 'started', 'taskId']);
   }
+  const task: Partial<Task> = get(action, 'payload.data.started.task');
+  const finishedTasks = get(action, ['payload', 'data', 'finished'], []);
+  finishedTasks.forEach(finishedUserWork => {
+    const finishedIndex = resState.list.findIndex(el => finishedUserWork.taskId === el.id);
+    if (~finishedIndex) {
+      resState = resState.updateItem(finishedIndex, finishedUserWork.task);
+    }
+  });
   const index = state.list.findIndex(el => taskId === el.id);
   if (~index) {
-    return state.stopLoading();
+    return resState.stopLoading().updateItem(index, task);
   }
-  const userWork: Partial<UserWork> = get(action, 'payload.data.started');
-  const task: Partial<Task> = get(action, 'payload.data.started.task');
-  return state.stopLoading().updateItem(0, {
-    description: task.description,
-    id: task.id,
-    performerId: task.performerId,
-    projectId: userWork.projectId,
-    sequenceNumber: task.sequenceNumber,
-    status: task.status,
-    title: task.title,
-  });
+  return resState.stopLoading().updateItem(0, task);
 };
 
 const postAndStartUserWorkFailHandler = (state: S, action: ActionMeta<any, any>) => {
@@ -252,6 +251,33 @@ const fetchTaskDetailsFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
+const patchUserWorkSuccessHandler = (state: S, { payload }) => {
+  let resState = state;
+  const edited = get(payload, ['data', 'edited']);
+  const editedIndex = resState.list.findIndex(el => el.id === edited.taskId);
+  if (editedIndex !== -1 && edited.task) {
+    resState = resState.updateItem(editedIndex, edited.task);
+  }
+
+  const removed = get(payload, ['data', 'removed'], []);
+  removed.forEach(removedUserWork => {
+    const removedIndex = resState.list.findIndex(el => removedUserWork.taskId === el.id);
+    if (removedIndex !== -1 && removedUserWork.task) {
+      resState = resState.updateItem(removedIndex, removedUserWork.task);
+    }
+  });
+
+  const touched = get(payload, ['data', 'touched'], []);
+  touched.forEach(touchedUserWork => {
+    const touchedIndex = resState.list.findIndex(el => touchedUserWork.taskId === el.id);
+    if (touchedIndex !== -1 && touchedUserWork.task) {
+      resState = resState.updateItem(touchedIndex, touchedUserWork.task);
+    }
+  });
+
+  return resState;
+};
+
 const logOutHandler = () => {
   return new DownloadList(Task);
 };
@@ -313,6 +339,8 @@ export const tasks: any = handleActions<S, any, any>(
     [fetchTaskDetailsA.toString()]: fetchTaskDetailsHandler,
     [fetchTaskDetailsA.success]: fetchTaskDetailsSuccessHandler,
     [fetchTaskDetailsA.fail]: fetchTaskDetailsFailHandler,
+
+    [patchUserWork.success]: patchUserWorkSuccessHandler,
 
     [PURGE]: logOutHandler,
 

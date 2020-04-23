@@ -13,7 +13,7 @@ import { Theme, useTheme } from '@material-ui/core/styles';
 import moment from 'moment';
 
 import EditWork from './EditWork';
-import { HoverInfo } from './HoverInfo';
+import HoverInfo from './HoverInfo';
 import { useStyles } from './styles';
 
 import { IEvent } from '@types';

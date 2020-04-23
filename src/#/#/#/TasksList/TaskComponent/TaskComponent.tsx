@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import Popover from 'react-popover';
 import MediaQuery from 'react-responsive';
 
@@ -25,10 +25,11 @@ import { UserWorkTable } from './UserWorkTable';
 import { ITask } from '@types';
 
 export interface ITaskComponentProps {
+  getTaskById: (id: number | string) => ITask;
   isCurrent: boolean;
   project: Project;
   push: any;
-  task: ITask;
+  taskId: number | string;
   timerComponent?: React.ReactNode;
   openDialog: (c: React.ReactNode, d?: Partial<DialogProps>) => any;
   openTaskModal: any;
@@ -38,6 +39,7 @@ export interface ITaskComponentProps {
 }
 
 export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
+  getTaskById,
   isCurrent,
   openTaskModal,
   project,
@@ -45,10 +47,14 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
   showWarning,
   startUserWork,
   stopUserWork,
-  task,
+  taskId,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
+
+  const task = useMemo(() => {
+    return getTaskById(taskId);
+  }, [getTaskById, taskId]);
 
   const [isWorkTableOpen, setIsWorkTableOpen] = useState(false);
 
