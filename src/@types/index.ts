@@ -20,6 +20,7 @@ export * from './ITaskStatus';
 export * from './ITaskStatusMove';
 export * from './IUser';
 export * from './IUserRole';
+export * from './IUserTask';
 export * from './IUserWork';
 export * from './IDownloadList';
 export * from './ROLE';

@@ -16,6 +16,7 @@ export class User implements IUser {
   role: ROLE = ROLE.USER;
   projectsCount: number;
   displayName?: string;
+  defaultProjectId: number;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

@@ -1,7 +1,7 @@
 import { ROLE } from './ROLE';
 
 export interface IUser {
-  avatar: {
+  avatar?: {
     url?: string;
   };
   readonly id?: number;
@@ -14,4 +14,5 @@ export interface IUser {
   role: ROLE;
   projectsCount: number;
   displayName?: string;
+  defaultProjectId: number;
 }

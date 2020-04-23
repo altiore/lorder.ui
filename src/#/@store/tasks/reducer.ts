@@ -111,7 +111,7 @@ const postAndStartUserWorkFailHandler = (state: S, action: ActionMeta<any, any>)
 
 const postProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>) => {
   const data = payload && payload.request.data;
-  return state.startLoading().addItem(new Task({ id: uniqid(), ...data }));
+  return state.startLoading().addItem(new Task({ id: uniqid(), userTasks: [], ...data }));
 };
 
 const postProjectTaskSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
@@ -142,21 +142,15 @@ const patchAndStopUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
   let resState: S = state;
   const nextIndex = resState.list.findIndex(el => next.taskId === el.id);
   if (!~nextIndex) {
-    resState = resState.addItem({
-      description: next.task.description,
-      id: next.task.id,
-      projectId: next.projectId,
-      title: next.task.title,
-    });
+    resState = resState.addItem(next.task);
+  } else {
+    resState = resState.updateItem(nextIndex, next.task);
   }
   const prevIndex = resState.list.findIndex(el => previous.taskId === el.id);
   if (!~prevIndex) {
-    resState = resState.addItem({
-      description: previous.task.description,
-      id: previous.task.id,
-      projectId: previous.projectId,
-      title: previous.task.title,
-    });
+    resState = resState.addItem(previous.task);
+  } else {
+    resState = resState.updateItem(prevIndex, previous.task);
   }
   return resState.stopLoading();
 };

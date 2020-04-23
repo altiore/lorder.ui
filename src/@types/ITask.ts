@@ -1,5 +1,6 @@
 import { IDownloadList } from './IDownloadList';
 import { IUser } from './IUser';
+import { IUserTask } from './IUserTask';
 import { IUserWork } from './IUserWork';
 
 export interface ITask {
@@ -16,7 +17,7 @@ export interface ITask {
   value: number;
   typeId?: number;
   userWorks?: IDownloadList<IUserWork>;
-  userTasks?: any[];
+  userTasks?: IUserTask[];
 
   duration: string;
 }
