@@ -95,8 +95,10 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
             message: 'Просто создайте новую задачу для этого проекта',
             title: `Чтобы переключиться на проект "${project.title}"`,
           });
+          push(`/`);
+        } else {
+          push(`/projects/${project.id}`);
         }
-        push('/');
       },
       [handleClearTimeout, openTaskModal, push, selectedProject, showWarning, startUserWork, setAnchorEl]
     );

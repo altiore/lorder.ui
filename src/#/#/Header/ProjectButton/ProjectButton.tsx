@@ -41,7 +41,7 @@ export const ProjectButtonTsx: React.FC<IProjectButtonProps> = memo(
         <Button
           className={classes.button}
           component="div"
-          onClick={selectProject}
+          onClick={selectProject(selectedProject)}
           onMouseEnter={onMouseEnterHandler}
           onMouseLeave={onClosePopover}
           onMouseOver={onMouseEnterHandler}
@@ -53,7 +53,7 @@ export const ProjectButtonTsx: React.FC<IProjectButtonProps> = memo(
           </Typography>
           <IconButton
             color="secondary"
-            onClick={onOpenInNew}
+            onClick={onOpenInNew(selectedProject)}
             className={classes.openInNew}
             style={{ visibility: isOpen ? 'visible' : 'hidden' }}
           >
