@@ -1,12 +1,17 @@
+import get from 'lodash/get';
 import groupBy from 'lodash/groupBy';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
-import { userId } from '#/@store/identity';
+import { defaultProjectId, userId } from '#/@store/identity';
+
+import moment from 'moment';
 
 import { UserWork } from './UserWork';
 
 import { IState } from '@types';
+
+const DATE_FORMAT = 'YYYY:MM:DD';
 
 export const lastUserWorks = (state: IState): any => state.userWorks;
 
@@ -14,8 +19,22 @@ export const currentUserWorks = createDeepEqualSelector([lastUserWorks, userId],
   s.list.filter(el => el.userId === currentUserId)
 );
 
-export const totalTimeSpentTodayInSeconds = createDeepEqualSelector(currentUserWorks, state =>
-  state.reduce((res, userWork: UserWork) => res + userWork.durationInSeconds, 0)
+export const totalTimeSpentTodayInSeconds = createDeepEqualSelector(
+  [currentUserWorks, defaultProjectId],
+  (state, defProjectId) =>
+    state
+      .filter(
+        el =>
+          (el.projectId || get(el, ['task', 'projectId'])) !== defProjectId &&
+          (!el.finishAt || moment().format(DATE_FORMAT) === el.finishAt.format(DATE_FORMAT))
+      )
+      .reduce((res, userWork: UserWork) => {
+        if (userWork.startAt.format(DATE_FORMAT) === moment().format(DATE_FORMAT)) {
+          return res + userWork.durationInSeconds;
+        } else {
+          return res + (userWork.finishAt || moment()).diff(moment().startOf('day'), 'second');
+        }
+      }, 0)
 );
 
 export const totalTimeSpentToday = createDeepEqualSelector(totalTimeSpentTodayInSeconds, seconds =>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -11,61 +11,64 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FolderIcon from '@material-ui/icons/Folder';
 
-import { Statistic } from './Statistic';
+import { useStyles } from './styles';
+import Today from './Today';
 
 import { IEvent } from '@types';
 
 export interface ILastEventsProps {
   events: IEvent[];
-  classes?: any;
 }
 
-export class LastEventsTsx extends React.Component<ILastEventsProps, {}> {
-  state = {
-    expanded: 'statistic',
-  };
+export const LastEventsTsx: React.FC<ILastEventsProps> = ({ events }): JSX.Element => {
+  const [expanded, setExpanded] = useState('statistic');
 
-  handleChange = (panel: string) => (event: React.ChangeEvent<any>, expanded: boolean) => {
-    this.setState({
-      expanded: expanded ? panel : false,
-    });
-  };
+  const classes = useStyles();
 
-  render() {
-    const { classes, events } = this.props;
-    const { expanded } = this.state;
+  const toggleStatistic = useCallback(
+    (event: React.ChangeEvent<any>, expanded: boolean) => {
+      setExpanded(expanded ? 'statistic' : '');
+    },
+    [setExpanded]
+  );
 
-    return (
-      <div className={classes.root}>
-        <ExpansionPanel expanded={expanded === 'statistic'} onChange={this.handleChange('statistic')}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Статистика</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails classes={{ root: classes.expanded }}>
-            <Statistic dense />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel expanded={expanded === 'lastEvents'} onChange={this.handleChange('lastEvents')}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Последние действия</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails classes={{ root: classes.details }}>
-            <List dense classes={{ root: classes.list }}>
-              {events.map(event => (
-                <ListItem key={event.data.id} button>
-                  <ListItemIcon>
-                    <FolderIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    secondary={`${event.name}`}
-                    primary={`${event.startAt.fromNow()} (${event.startAt.format('HH:mm')})`}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </div>
-    );
-  }
-}
+  const toggleLastEvents = useCallback(
+    (event: React.ChangeEvent<any>, expanded: boolean) => {
+      setExpanded(expanded ? 'lastEvents' : '');
+    },
+    [setExpanded]
+  );
+
+  return (
+    <div className={classes.root}>
+      <ExpansionPanel expanded={expanded === 'statistic'} onChange={toggleStatistic}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography className={classes.heading}>Статистика</Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails classes={{ root: classes.expanded }}>
+          <Today />
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+      <ExpansionPanel expanded={expanded === 'lastEvents'} onChange={toggleLastEvents}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography className={classes.heading}>Последние действия</Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails classes={{ root: classes.details }}>
+          <List dense classes={{ root: classes.list }}>
+            {events.map(event => (
+              <ListItem key={event.data.id} button>
+                <ListItemIcon>
+                  <FolderIcon />
+                </ListItemIcon>
+                <ListItemText
+                  secondary={`${event.name}`}
+                  primary={`${event.startAt.fromNow()} (${event.startAt.format('HH:mm')})`}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    </div>
+  );
+};
