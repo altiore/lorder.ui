@@ -22,6 +22,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'flex-start',
       minWidth: theme.spacing(66),
       padding: theme.spacing(2),
+      width: theme.spacing(66),
     },
     rowSpaceBetween: {
       alignItems: 'flex-end',

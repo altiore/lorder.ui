@@ -13,8 +13,10 @@ export const TimerListItemTextJsx: React.FunctionComponent<ITimerListItemTextPro
   time = 0,
   isOpen = false,
   onClick,
-}) => (
-  <Tooltip placement={'right'} title={isOpen ? 'Закрыть подробности' : 'Нажмите, чтоб раскрыть подробности'}>
-    <Button onClick={onClick}>{time}</Button>
-  </Tooltip>
-);
+}) => {
+  return (
+    <Tooltip placement={'right'} title={isOpen ? 'Закрыть подробности' : 'Нажмите, чтоб раскрыть подробности'}>
+      <Button onClick={onClick}>{time}</Button>
+    </Tooltip>
+  );
+};

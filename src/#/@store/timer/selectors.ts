@@ -36,21 +36,12 @@ export const currentUserWork = createDeepEqualSelector(
     task && task.userWorks && task.userWorks.find && task.userWorks.find((el: IUserWork) => el.id === userWorkId)
 );
 
-export const currentTime = createDeepEqualSelector([currentTimerTime, currentUserWork], (time, userWork) =>
-  userWork ? userWork.durationInSeconds : time
+export const currentTimeHumanize = createDeepEqualSelector(currentTimerTime, time => convertSecondsToDuration(time));
+
+export const currentTimeToString = createDeepEqualSelector([currentTimerTime], seconds =>
+  convertSecondsToDuration(seconds)
 );
 
-export const currentTimeHumanize = createDeepEqualSelector(currentTime, time => convertSecondsToDuration(time));
-
-export const currentTaskTime = createDeepEqualSelector(
-  [currentTime, currentTask, currentUserWork],
-  (time, task, userWork) => (task && userWork ? task.durationInSeconds : time)
-);
-
-export const currentTimeToString = createDeepEqualSelector([currentTime], seconds => {
-  return convertSecondsToDuration(seconds);
-});
-
-export const currentTimeWithLocal = createDeepEqualSelector([currentTime], seconds =>
+export const currentTimeWithLocal = createDeepEqualSelector([currentTimerTime], seconds =>
   convertSecondsToDurationWithLocal(seconds)
 );

@@ -100,7 +100,7 @@ export const UserWorkTableJsx: React.FC<IUserWorkTableProps> = ({
           <CloseIcon fontSize="small" />
         </IconButton>
       </div>
-      <Table items={userWorks} renderItem={renderItem as any} perPage={7}>
+      <Table items={userWorks} renderItem={renderItem as any} perPage={10}>
         <TableHead>
           <TableRow>
             <TableCell size="small" align="center">

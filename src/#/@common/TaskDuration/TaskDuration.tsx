@@ -51,7 +51,6 @@ export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ currentTaskId, g
 
   const didNotTouched = task.duration === '00:00';
 
-  console.log('render Task Duration', task);
   return (
     <Popover
       tipSize={4}
