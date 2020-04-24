@@ -9,5 +9,5 @@ export function convertSecondsToDurationWithLocal(seconds: number): string {
   if (seconds < 3600) {
     return m.format('mмин sс');
   }
-  return Math.floor(m.unix() / 3600) + ` ч ${m.format('mмин')}`;
+  return Math.floor(m.unix() / 3600) + `ч ${m.format('mмин')}`;
 }

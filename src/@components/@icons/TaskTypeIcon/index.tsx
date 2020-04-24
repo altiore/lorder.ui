@@ -8,7 +8,7 @@ export interface ITaskTypeProps extends SvgIconProps {
   typeId?: string | number;
 }
 
-const icons: any = {
+const icons: { [key: string]: (props: SvgIconProps) => JSX.Element } = {
   bug: BugReportIcon,
   feature: ExtensionIcon,
 };
@@ -23,7 +23,7 @@ const colors: any = {
 };
 
 const TaskTypeIcon: React.FunctionComponent<ITaskTypeProps> = ({ typeId, ...rest }) => {
-  const IconComponent = (typeId && icons[typeId]) || ExtensionIcon;
+  const IconComponent: (props: SvgIconProps) => JSX.Element = (typeId && icons[typeId]) || icons.feature;
   const style = (typeId && colors[typeId]) || colors.feature;
   return <IconComponent style={style} {...rest} />;
 };

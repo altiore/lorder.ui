@@ -4,8 +4,6 @@ import MediaQuery from 'react-responsive';
 
 import Button from '@material-ui/core/Button';
 import { DialogProps } from '@material-ui/core/Dialog';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useTheme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
@@ -55,6 +53,21 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
   const task = useMemo(() => {
     return getTaskById(taskId);
   }, [getTaskById, taskId]);
+
+  const isShown = useMemo(() => task && project && project.id, [task, project]);
+
+  const projectShortName = useMemo(() => {
+    if (!isShown) {
+      return '...';
+    }
+    const title = project.title;
+    const titleParts = title.split(' ');
+    if (titleParts.length > 1) {
+      return titleParts[0][0].toUpperCase() + titleParts[1][0].toUpperCase();
+    } else {
+      return `${title[0]}${title[1]}`.toUpperCase();
+    }
+  }, [isShown, project]);
 
   const [isWorkTableOpen, setIsWorkTableOpen] = useState(false);
 
@@ -132,71 +145,71 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
     [stopUserWork]
   );
 
-  const isShown = task && project && project.id;
   const didNotTouched = task.duration === '00:00';
 
   return (
-    <ListItem className={classes.listItem}>
-      <MediaQuery minWidth={theme.breakpoints.values.sm}>
-        <Tooltip title="Открыть доску проекта" placement="bottom">
-          <div>
+    <div className={classes.listItem}>
+      <div className={classes.title}>
+        <MediaQuery minWidth={theme.breakpoints.values.sm}>
+          <Tooltip title={`Открыть "${(project && project.title) || '...'}"`} placement="bottom">
             <Button
               component="a"
               href={isShown ? `/projects/${project.id}` : '#'}
               className={classes.projectButton}
               onClick={goToProjectAskCreateTask}
             >
-              <Typography className={classes.projectText}>{isShown ? project.title : '...'}</Typography>
-            </Button>
-          </div>
-        </Tooltip>
-      </MediaQuery>
-      <Tooltip title="Редактировать задачу" placement="bottom">
-        <Button
-          component="a"
-          classes={{ label: classes.buttonTitleLabel }}
-          className={classes.buttonTitle}
-          href={isShown ? `${TASKS_ROUTE(project.id)}/${task.sequenceNumber}` : '#'}
-          onClick={isShown ? openEditTaskForm(task.sequenceNumber, project.id as number) : undefined}
-        >
-          {isShown ? <TaskTypeIcon typeId={task.typeId} className={classes.taskIcon} /> : ''}
-          {isShown ? task.title : '...'}
-        </Button>
-      </Tooltip>
-      <Popover
-        tipSize={4}
-        className={classes.userWorkTable}
-        isOpen={isWorkTableOpen}
-        onOuterAction={onToggleOpenWorkTable}
-        body={
-          isShown ? <UserWorkTable taskId={task.id} projectId={project.id} onClose={onToggleOpenWorkTable} /> : <div />
-        }
-      >
-        {isCurrent ? (
-          <TimerListItemText isOpen={isWorkTableOpen} onClick={onToggleOpenWorkTable} />
-        ) : (
-          <Tooltip
-            placement={'right'}
-            title={
-              didNotTouched
-                ? 'Вы пока не работали над этой задачей'
-                : isWorkTableOpen
-                ? 'Закрыть подробности'
-                : 'Нажмите, чтоб раскрыть подробности'
-            }
-          >
-            <Button
-              className={classes.duration}
-              onClick={task.duration === '00:00' ? undefined : onToggleOpenWorkTable}
-            >
-              {task.duration}
+              <Typography className={classes.projectText}>{projectShortName}</Typography>
             </Button>
           </Tooltip>
-        )}
-      </Popover>
-      <ListItemIcon classes={{ root: classes.listItemRoot }}>
+        </MediaQuery>
+        <Tooltip title="Редактировать задачу" placement="bottom">
+          <Button
+            component="a"
+            classes={{ label: classes.buttonTitleLabel }}
+            className={classes.buttonTitle}
+            href={isShown ? `${TASKS_ROUTE(project.id)}/${task.sequenceNumber}` : '#'}
+            onClick={isShown ? openEditTaskForm(task.sequenceNumber, project.id as number) : undefined}
+          >
+            {<TaskTypeIcon typeId={isShown ? task.typeId : 'feature'} className={classes.taskIcon} />}
+            {isShown ? task.title : '...'}
+          </Button>
+        </Tooltip>
+      </div>
+      <div className={classes.actions}>
+        <Popover
+          tipSize={4}
+          className={classes.userWorkTable}
+          isOpen={isWorkTableOpen}
+          onOuterAction={onToggleOpenWorkTable}
+          body={
+            isShown ? (
+              <UserWorkTable taskId={task.id} projectId={project.id} onClose={onToggleOpenWorkTable} />
+            ) : (
+              <div />
+            )
+          }
+        >
+          <div className={classes.duration}>
+            {isCurrent ? (
+              <TimerListItemText isOpen={isWorkTableOpen} onClick={onToggleOpenWorkTable} />
+            ) : (
+              <Tooltip
+                placement={'right'}
+                title={
+                  didNotTouched
+                    ? 'Вы пока не работали над этой задачей'
+                    : isWorkTableOpen
+                    ? 'Закрыть подробности'
+                    : 'Нажмите, чтоб раскрыть подробности'
+                }
+              >
+                <Button onClick={task.duration === '00:00' ? undefined : onToggleOpenWorkTable}>{task.duration}</Button>
+              </Tooltip>
+            )}
+          </div>
+        </Popover>
         <StartStopBtn isStarted={isCurrent} onStart={startUserTask(task)} onStop={handleStopUserWork} />
-      </ListItemIcon>
-    </ListItem>
+      </div>
+    </div>
   );
 };

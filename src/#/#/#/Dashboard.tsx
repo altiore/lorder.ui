@@ -33,7 +33,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.down('sm')]: {
       margin: 0,
       overflowX: 'hidden',
-      padding: theme.spacing(1),
+      padding: theme.spacing(1, 0),
     },
     [theme.breakpoints.up('lg')]: {
       width: theme.mainContent.width,
