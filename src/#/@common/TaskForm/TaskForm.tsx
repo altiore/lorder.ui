@@ -16,6 +16,7 @@ import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
 import InputField from '@components/InputField';
 import { TextField } from '@components/TextField';
 
+import TaskDuration from '#/@common/TaskDuration';
 import { parseNumber } from '#/@store/@common/helpers';
 import { TASKS_ROUTE } from '#/@store/router';
 
@@ -256,6 +257,11 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
             <div className={classes.valueWrap}>
               <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />
             </div>
+            {initialValues.id && (
+              <div>
+                <TaskDuration taskId={initialValues.id} />
+              </div>
+            )}
           </div>
           <button style={{ display: 'none' }} type="submit">
             Эта кнопка нужна, чтоб работало сохранение с клавиатуры

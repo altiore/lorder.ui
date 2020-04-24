@@ -35,7 +35,7 @@
     "@types/react-notification-system": "0.2.39",
     "@types/react-notification-system-redux": "1.1.6",
     "@types/react-popover": "0.5.3",
-    "@types/react-redux": "7.1.0",
+    "@types/react-redux": "^7.1.7",
     "@types/react-responsive": "3.0.3",
     "@types/react-router": "4.4.5",
     "@types/react-router-dom": "4.3.3",

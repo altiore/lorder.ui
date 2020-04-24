@@ -41,15 +41,6 @@ export const getEditTaskInitialValues = createDeepEqualSelector(
   }
 );
 
-export const getUserWorksById = createDeepEqualSelector([allTaskList], tasks => (taskId: number) => {
-  const task = tasks.find(t => t.id === taskId);
-  if (task) {
-    // TODO: get correct user works here
-    return [];
-  }
-  return [];
-});
-
 export const currentTaskDetails = createDeepEqualSelector(
   [allTaskList, routeProjectId, routeTaskSequenceNumber],
   (list, projectId, sequenceNumber) => {

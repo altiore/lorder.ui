@@ -1,5 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import Popover from 'react-popover';
+import React, { useCallback, useMemo } from 'react';
 import MediaQuery from 'react-responsive';
 
 import Button from '@material-ui/core/Button';
@@ -11,14 +10,13 @@ import Typography from '@material-ui/core/Typography';
 import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
 import { StartStopBtn } from '@components/StartStopBtn';
 
+import TaskDuration from '#/@common/TaskDuration';
 import { Project } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
 
 import moment from 'moment';
 
 import { useStyles } from './styles';
-import { TimerListItemText } from './TimerListItemText';
-import { UserWorkTable } from './UserWorkTable';
 
 import { ITask } from '@types';
 
@@ -54,7 +52,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
     return getTaskById(taskId);
   }, [getTaskById, taskId]);
 
-  const isShown = useMemo(() => task && project && project.id, [task, project]);
+  const isShown = useMemo(() => Boolean(task && project && project.id), [task, project]);
 
   const projectShortName = useMemo(() => {
     if (!isShown) {
@@ -68,8 +66,6 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
       return `${title[0]}${title[1]}`.toUpperCase();
     }
   }, [isShown, project]);
-
-  const [isWorkTableOpen, setIsWorkTableOpen] = useState(false);
 
   const openEditTaskForm = useCallback(
     (sequenceNumber: number | string, projectId: number | string) => (e: React.SyntheticEvent) => {
@@ -85,8 +81,6 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
     },
     [push]
   );
-
-  const onToggleOpenWorkTable = useCallback(() => setIsWorkTableOpen(st => !st), [setIsWorkTableOpen]);
 
   const startUserTask = useCallback(
     (task: ITask) => (event: React.SyntheticEvent) => {
@@ -145,8 +139,6 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
     [stopUserWork]
   );
 
-  const didNotTouched = task.duration === '00:00';
-
   return (
     <div className={classes.listItem}>
       <div className={classes.title}>
@@ -176,38 +168,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
         </Tooltip>
       </div>
       <div className={classes.actions}>
-        <Popover
-          tipSize={4}
-          className={classes.userWorkTable}
-          isOpen={isWorkTableOpen}
-          onOuterAction={onToggleOpenWorkTable}
-          body={
-            isShown ? (
-              <UserWorkTable taskId={task.id} projectId={project.id} onClose={onToggleOpenWorkTable} />
-            ) : (
-              <div />
-            )
-          }
-        >
-          <div className={classes.duration}>
-            {isCurrent ? (
-              <TimerListItemText isOpen={isWorkTableOpen} onClick={onToggleOpenWorkTable} />
-            ) : (
-              <Tooltip
-                placement={'right'}
-                title={
-                  didNotTouched
-                    ? 'Вы пока не работали над этой задачей'
-                    : isWorkTableOpen
-                    ? 'Закрыть подробности'
-                    : 'Нажмите, чтоб раскрыть подробности'
-                }
-              >
-                <Button onClick={task.duration === '00:00' ? undefined : onToggleOpenWorkTable}>{task.duration}</Button>
-              </Tooltip>
-            )}
-          </div>
-        </Popover>
+        <TaskDuration taskId={taskId} />
         <StartStopBtn isStarted={isCurrent} onStart={startUserTask(task)} onStop={handleStopUserWork} />
       </div>
     </div>

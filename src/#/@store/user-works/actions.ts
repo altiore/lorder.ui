@@ -113,3 +113,18 @@ export const deleteUserWork = requestActions<IUserWorkDelete>(
     userWorkId,
   })
 );
+
+export const getUserWorksBySequenceNumber = requestActions(
+  'USER_WORK/GET_MANY_BY_TASK_SEQUENCE_NUMBER',
+  (projectId, sequenceNumber, { count = 20, skip = 0, orderBy = 'startAt', order = 'desc' } = {}): any => ({
+    request: {
+      params: {
+        count,
+        order,
+        orderBy,
+        skip,
+      },
+      url: `/user-works/project/${projectId}/task/${sequenceNumber}`,
+    },
+  })
+);

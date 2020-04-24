@@ -1,7 +1,6 @@
-import { Theme } from '@material-ui/core/styles';
-import createStyles from '@material-ui/core/styles/createStyles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme) =>
+export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
       alignItems: 'center',
@@ -11,7 +10,7 @@ export const styles = (theme: Theme) =>
       padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
       position: 'absolute',
       right: 0,
-      top: 0,
+      top: -6,
       width: '100%',
     },
     row: {
@@ -26,4 +25,5 @@ export const styles = (theme: Theme) =>
       borderRadius: theme.spacing(1),
       padding: theme.spacing(1),
     },
-  });
+  })
+);

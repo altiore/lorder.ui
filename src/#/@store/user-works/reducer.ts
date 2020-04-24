@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import { Action, handleActions } from 'redux-actions';
+import { Action, combineActions, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
 import { DownloadList } from '#/@store/@common/entities';
@@ -7,7 +7,7 @@ import { patchAndStopUserWork, postAndStartUserWork, UserWork } from '#/@store/u
 
 import { AxiosResponse } from 'axios';
 
-import { getUserWorks, patchUserWork } from './actions';
+import { getUserWorks, getUserWorksBySequenceNumber, patchUserWork } from './actions';
 
 type S = DownloadList<UserWork>;
 type P<T = any> = AxiosResponse<T>;
@@ -110,9 +110,9 @@ const postAndStartUserWorkFailHandler = (state: S) => {
 
 export const userWorks: any = handleActions<S, P>(
   {
-    [getUserWorks.toString()]: getUserWorksHandler,
-    [getUserWorks.success]: getUserWorksSuccessHandler,
-    [getUserWorks.fail]: getUserWorksFailHandler,
+    [combineActions(getUserWorks.toString(), getUserWorksBySequenceNumber.toString()).toString()]: getUserWorksHandler,
+    [combineActions(getUserWorks.success, getUserWorksBySequenceNumber.success).toString()]: getUserWorksSuccessHandler,
+    [combineActions(getUserWorks.fail, getUserWorksBySequenceNumber.fail).toString()]: getUserWorksFailHandler,
 
     [patchUserWork.toString()]: patchUserWorkHandler,
     [patchUserWork.success]: patchUserWorkSuccessHandler,
