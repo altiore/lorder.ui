@@ -4,6 +4,7 @@ import groupBy from 'lodash/groupBy';
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { defaultProjectId, userId } from '#/@store/identity';
+import { currentTimerTime } from '#/@store/timer';
 
 import moment from 'moment';
 
@@ -20,8 +21,8 @@ export const currentUserWorks = createDeepEqualSelector([lastUserWorks, userId],
 );
 
 export const totalTimeSpentTodayInSeconds = createDeepEqualSelector(
-  [currentUserWorks, defaultProjectId],
-  (state, defProjectId) =>
+  [currentUserWorks, defaultProjectId, currentTimerTime],
+  (state, defProjectId, currentTimerSeconds) =>
     state
       .filter(
         el =>
@@ -32,7 +33,11 @@ export const totalTimeSpentTodayInSeconds = createDeepEqualSelector(
         if (userWork.startAt.format(DATE_FORMAT) === moment().format(DATE_FORMAT)) {
           return res + userWork.durationInSeconds;
         } else {
-          return res + (userWork.finishAt || moment()).diff(moment().startOf('day'), 'second');
+          if (userWork.finishAt) {
+            return res + userWork.finishAt.diff(moment().startOf('day'), 'second');
+          } else {
+            return res + currentTimerSeconds;
+          }
         }
       }, 0)
 );
