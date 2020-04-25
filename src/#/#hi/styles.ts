@@ -42,6 +42,9 @@ export const styles = (theme: Theme): any => ({
     flexFlow: 'column nowrap',
     justifyContent: 'center',
   },
+  root: {
+    backgroundColor: theme.palette.primary.main,
+  },
   sectionDesktop: {
     display: 'flex',
     [theme.breakpoints.up('md')]: {

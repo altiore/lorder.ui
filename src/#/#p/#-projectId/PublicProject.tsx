@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 import get from 'lodash/get';
 
@@ -13,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 import TelegramIco from '@components/@icons/Telegram';
 import { Block } from '@components/Block';
+import HeaderFixed from '@components/HeaderFixed';
 import LoadingPage from '@components/LoadingPage';
 import { NoMatch } from '@components/NoMatch';
 import Person from '@components/Person';
@@ -102,13 +102,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
 
     return (
       <div className={classes.root}>
-        <AppBar key={'top'} position="static" className={classes.appBar}>
-          <Toolbar>
-            <Link to="/" className={classes.title}>
-              <Typography variant="h6">Altiore</Typography>
-            </Link>
-          </Toolbar>
-        </AppBar>
+        <HeaderFixed brandName="Altiore" brandLink="/" />
 
         <Grid container className={classes.content}>
           <Block>

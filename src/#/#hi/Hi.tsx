@@ -79,7 +79,7 @@ export const HiTsx: React.FC<IHiProps> = ({
   const isDesctop = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <Grid container direction="column">
+    <Grid container direction="column" className={classes.root}>
       <Helmet>
         <body className={classes.hiBody} />
       </Helmet>

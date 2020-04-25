@@ -100,6 +100,11 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
               {project.title}
             </LinkButton>
           )}
+          {project && project.uuid && project.title && (
+            <LinkButton to={`/p/${project.uuid}`} className={classes.projectPublic}>
+              Публичный
+            </LinkButton>
+          )}
           <div className={classes.grow} />
           <IconButton onClick={handleDrawerToggle}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

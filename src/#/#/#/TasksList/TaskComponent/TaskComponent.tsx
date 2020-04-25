@@ -102,7 +102,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
       event.preventDefault();
       event.stopPropagation();
 
-      push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
+      push(`/projects/${project.id}`);
 
       const taskTitle = `Обзор проекта "${project.title}" ` + moment().format('DD-MM-YYYY');
       showWarning({

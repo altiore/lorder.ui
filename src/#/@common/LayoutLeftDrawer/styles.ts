@@ -64,9 +64,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginLeft: 12,
     marginRight: 20,
   },
+  projectPublic: {
+    border: '1px solid red',
+    color: 'red',
+    marginLeft: theme.spacing(0.5),
+  },
   projectTitle: {
     overflow: 'hidden',
-    paddingLeft: theme.spacing(2),
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
   },

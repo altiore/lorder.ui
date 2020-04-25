@@ -108,7 +108,7 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
         e.stopPropagation();
         handleClearTimeout();
         setAnchorEl(null);
-        push(project.uuid ? `/p/${project.uuid}` : `/projects/${project.id}`);
+        push(`/projects/${project.id}`);
         if (!selectedProject || selectedProject.id !== project.id) {
           const taskTitle = `Обзор проекта "${project.title}" ` + moment().format('DD-MM-YYYY');
           showWarning({
