@@ -28,8 +28,8 @@ export const startTimer = (userWork: Partial<UserWork>, project: Project) => asy
   dispatch(
     setCurrentUserWorkId({
       projectId: project.id,
+      start: userWork.startAt,
       taskId: userWork.taskId,
-      time: userWork.durationInSeconds,
       timer,
       userWorkId: userWork.id,
     })
@@ -80,16 +80,5 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
 
 export const stopUserWork = () => async (dispatch: any, getState: any) => {
   const data: IUserWorkDelete = currentUserWorkData(getState());
-  clearInterval(timer);
-  dispatch(
-    setCurrentUserWorkId({
-      projectId: undefined,
-      taskId: undefined,
-      timer: undefined,
-      userWorkId: undefined,
-    })
-  );
-  // changeIco();
-  document.title = 'Старт';
   return await dispatch(patchAndStopUserWork(data));
 };
