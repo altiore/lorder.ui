@@ -240,6 +240,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
               name="title"
               placeholder="Заголовок задачи..."
               component={TextField}
+              margin="normal"
               validate={titleValidate}
               onSubmit={handleSave(false)}
             />

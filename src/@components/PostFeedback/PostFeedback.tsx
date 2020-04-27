@@ -42,6 +42,7 @@ export const PostFeedbackTsx: React.FunctionComponent<IPostFeedbackProps> = ({ c
         placeholder="E-mail..."
         component={TextField}
         variant="outlined"
+        margin="normal"
         validate={[
           required({ msg: 'Обязательное поле' }),
           email({ msg: 'Поле должно быть правильным E-mail адресом' }),

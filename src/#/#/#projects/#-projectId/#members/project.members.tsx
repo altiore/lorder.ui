@@ -7,6 +7,7 @@ import { ICrudColumn } from '@components/Crud';
 import { Page } from '@components/Page';
 
 import Crud from '#/@common/Crud';
+import { LinkButton } from '#/@common/LinkButton';
 
 import { ACCESS_LEVEL } from '@types';
 
@@ -16,6 +17,7 @@ export interface IProjectMembersProps extends RouteComponentProps {
   deleteManyItems: any;
   fetchItems?: any;
   openedAccessLevel: any;
+  projectId: number | string;
   projectRoles: any[];
   list: any[];
   updateMemberLevel: (id, value) => any;
@@ -44,6 +46,7 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
     deleteManyItems,
     fetchItems,
     openedAccessLevel,
+    projectId,
     projectRoles,
     list,
     updateMemberLevel,
@@ -68,6 +71,12 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
         res[cur.name || cur.role.name] = cur.role.id;
         return res;
       }, {});
+      COLUMNS[3].emptyElement =
+        openedAccessLevel >= ACCESS_LEVEL.INDIGO ? (
+          <LinkButton to={`/projects/${projectId}/roles`}>Добавить роли в проект</LinkButton>
+        ) : (
+          undefined
+        );
       // только человек с максимальным уровнем доступа к проекту может редактировать accessLevel Других пользовтаелей
       COLUMNS[4].editable = openedAccessLevel >= ACCESS_LEVEL.VIOLET;
       // нельзя редактировать свой уровень доступа или уровень доступа человека, у которого максимальный уровень доступа
@@ -78,7 +87,7 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
         return true;
       };
       return COLUMNS;
-    }, [openedAccessLevel, projectRoles, userId]);
+    }, [openedAccessLevel, projectId, projectRoles, userId]);
 
     return (
       <Page>

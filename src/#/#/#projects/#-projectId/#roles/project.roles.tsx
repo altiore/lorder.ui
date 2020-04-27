@@ -17,9 +17,8 @@ export interface IProjectMembersProps extends RouteComponentProps {
 
 const COLUMNS: ICrudColumn[] = [
   { title: 'ID', path: 'id' },
-  { title: 'Имя', path: 'name', name: 'name' },
   { title: 'Название', path: 'role.id', name: 'roleId' },
-  { title: 'Разрешия', path: 'allowedMoveIds', name: 'allowedMoveIds' },
+  { title: 'Разрешия', path: 'allowedMoveIds' },
 ];
 
 export const ProjectRolesJsx: React.FC<IProjectMembersProps> = React.memo(
@@ -37,7 +36,7 @@ export const ProjectRolesJsx: React.FC<IProjectMembersProps> = React.memo(
     }, [fetchRoles]);
 
     const preparedColumns = useMemo(() => {
-      COLUMNS[2].allowed = rolesList.reduce((res, cur) => {
+      COLUMNS[1].allowed = rolesList.reduce((res, cur) => {
         res[cur.id] = cur.name;
         return res;
       }, {});

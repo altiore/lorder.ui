@@ -41,6 +41,7 @@ export class DescriptionFormTsx extends React.Component<IDescriptionFormProps, {
           icon={null}
           name="description"
           component={TextField}
+          margin="normal"
           validate={[length({ min: 3, if: (vv, v) => !!v })]}
         />
       </form>

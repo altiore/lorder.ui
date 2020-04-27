@@ -19,6 +19,12 @@ export interface ICreateFormProps {
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
+    '& > div': {
+      '&:last-of-type': {
+        marginBottom: theme.spacing(2),
+      },
+      marginTop: theme.spacing(2),
+    },
     minWidth: 240,
     padding: theme.spacing(2),
   },
@@ -40,7 +46,7 @@ export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, IC
 
   return (
     <form onSubmit={handleSubmit} className={classes.root}>
-      <Typography color="inherit" variant="body1">
+      <Typography color="inherit" variant="h5">
         {createTitle}
       </Typography>
       {columns

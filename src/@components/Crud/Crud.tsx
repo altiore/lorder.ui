@@ -114,6 +114,7 @@ export interface ICrudColumn {
   multiple?: boolean;
   editable?: boolean;
   skip?: (item) => boolean;
+  emptyElement?: JSX.Element;
 }
 
 export interface ICrudProps<IItem = {}> {
@@ -356,46 +357,54 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
                             color="primary"
                           />
                         </TableCell>
-                        {columns.map(({ allowed, editable, name, path, isNumber, multiple, skip }) => {
+                        {columns.map(({ allowed, editable, name, path, isNumber, multiple, skip, emptyElement }) => {
                           const value = get(item, path);
-                          const labelValue = allowed ? allowed[value] : value;
+                          const labelValue = allowed
+                            ? Array.isArray(value)
+                              ? value.map(el => invert(allowed)[el]).join(', ')
+                              : allowed[value]
+                            : value;
+                          const editableItems = allowed ? Object.keys(allowed).filter(filterEnum) : [];
                           return (
                             <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
                               {allowed && editItem && editable && (!skip || !skip(item)) ? (
-                                <Select
-                                  className={classes.select}
-                                  name={name || path}
-                                  value={value}
-                                  multiple={multiple}
-                                  onChange={handleChangeField}
-                                  onClose={handleCloseSelect}
-                                  // tslint:disable
-                                  renderValue={s =>
-                                    multiple
-                                      ? ((s as any) || defSelected).map(e => invert(allowed)[e as any]).join(', ')
-                                      : allowed[s as string]
-                                  }
-                                  // tslint:enable
-                                >
-                                  {Object.keys(allowed)
-                                    .filter(filterEnum)
-                                    .map(key => {
-                                      const selected = multiple
-                                        ? ((value as any) || []).includes(allowed[key])
-                                        : value === allowed[key];
-                                      return (
-                                        <MenuItem
-                                          data-id={elId}
-                                          selected={selected}
-                                          key={allowed[key]}
-                                          value={allowed[key]}
-                                        >
-                                          {multiple && <Checkbox checked={selected} size="small" color="primary" />}
-                                          <ListItemText primary={key} />
-                                        </MenuItem>
-                                      );
-                                    })}
-                                </Select>
+                                <>
+                                  {editableItems.length ? (
+                                    <Select
+                                      name={name || path}
+                                      value={value}
+                                      multiple={multiple}
+                                      onChange={handleChangeField}
+                                      onClose={handleCloseSelect}
+                                      // tslint:disable
+                                      renderValue={s =>
+                                        multiple
+                                          ? ((s as any) || defSelected).map(e => invert(allowed)[e as any]).join(', ')
+                                          : allowed[s as string]
+                                      }
+                                      // tslint:enable
+                                    >
+                                      {editableItems.map(key => {
+                                        const selected = multiple
+                                          ? ((value as any) || []).includes(allowed[key])
+                                          : value === allowed[key];
+                                        return (
+                                          <MenuItem
+                                            data-id={elId}
+                                            selected={selected}
+                                            key={allowed[key]}
+                                            value={allowed[key]}
+                                          >
+                                            {multiple && <Checkbox checked={selected} size="small" color="primary" />}
+                                            <ListItemText primary={key} />
+                                          </MenuItem>
+                                        );
+                                      })}
+                                    </Select>
+                                  ) : (
+                                    <>{emptyElement ? emptyElement : <div>[&nbsp;&nbsp;&nbsp;]</div>}</>
+                                  )}
+                                </>
                               ) : (
                                 labelValue
                               )}

@@ -59,7 +59,6 @@ export default function(theme: Theme): Partial<Overrides> {
     },
     MuiTextField: {
       root: {
-        marginBottom: theme.typography.pxToRem(theme.spacing(2)),
         width: '100%',
       },
     },

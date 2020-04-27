@@ -14,7 +14,6 @@ export const TextField = (props: any) => {
     fullWidth: true,
     helperText: touched && error,
     label: label || input.name,
-    margin: 'normal',
     placeholder: custom.placeholder || label,
     ...input,
     value: typeof input.value === 'undefined' ? '' : input.value,

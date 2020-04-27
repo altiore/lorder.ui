@@ -17,7 +17,7 @@ import { highcharts } from './highcharts/reducer';
 import { identity } from './identity';
 import { info } from './info/reducer';
 import { other } from './other/reducer';
-import { project } from './project';
+import { projectReducer } from './project/reducer';
 import { Project } from './projects';
 import { projects } from './projects';
 import { publicAltiore } from './publicAltiore/reducer';
@@ -128,7 +128,7 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
 
       feedback,
       other,
-      project,
+      project: projectReducer,
       projects,
       taskActive,
       tasks,

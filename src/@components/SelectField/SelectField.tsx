@@ -4,7 +4,6 @@ import uniqueId from 'lodash/uniqueId';
 
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -31,15 +30,13 @@ export const SelectField = ({
 }: ISelectFieldProps) => {
   const id = uniqueId();
   return (
-    <FormControl error={touched && error} fullWidth={fullWidth}>
+    <FormControl variant="outlined" error={touched && error} fullWidth={fullWidth}>
       <InputLabel htmlFor={id}>{label}</InputLabel>
       <Select
         {...(input as any)}
         value={input.value || ''}
         error={touched && error}
-        input={<Input name={input.name} id={id} />}
         onChange={onChange(input) as any}
-        variant="outlined"
         {...(custom as any)}
       >
         {(Array.isArray(items) ? items : Object.keys(items).map(key => ({ name: items[key], id: key }))).map(item => (

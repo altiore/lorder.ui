@@ -26,6 +26,7 @@ export const CreateProjectPopupJsx: React.FunctionComponent<
           autoFocus
           name="title"
           component={TextField}
+          margin="normal"
           // icon={<ProjectIco />}
           label="Название проекта"
           validate={[required({ msg: 'Обязательное поле' })]}
