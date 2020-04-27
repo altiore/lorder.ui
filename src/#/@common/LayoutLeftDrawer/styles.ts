@@ -46,6 +46,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
     marginTop: 62,
+    minHeight: theme.spacing(7),
     padding: '0 8px',
     position: 'relative',
     ...theme.mixins.toolbar,

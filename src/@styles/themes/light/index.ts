@@ -33,30 +33,6 @@ export default createMuiTheme({
         padding: defaultTheme.typography.pxToRem(7),
       },
     },
-    MuiTab: {
-      root: {
-        '&:focus': {
-          opacity: 1,
-        },
-        color: '#fff',
-        fontSize: defaultTheme.typography.pxToRem(15),
-        fontWeight: defaultTheme.typography.fontWeightRegular,
-        marginRight: defaultTheme.spacing(1),
-        textTransform: 'none',
-      },
-    },
-    MuiTabs: {
-      indicator: {
-        '& > div': {
-          backgroundColor: secondary.dark,
-          maxWidth: 40,
-          width: '100%',
-        },
-        backgroundColor: 'transparent',
-        display: 'flex',
-        justifyContent: 'center',
-      },
-    },
     MuiToolbar: {
       gutters: {
         paddingLeft: 6,

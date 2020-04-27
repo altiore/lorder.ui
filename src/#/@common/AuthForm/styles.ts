@@ -18,7 +18,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
   header: {
     backgroundColor: 'transparent',
     boxShadow: 'none',
-    marginBottom: theme.spacing(2),
     width: theme.spacing(40),
     [theme.breakpoints.down('sm')]: {
       width: 'calc(100vw - 64px)',
