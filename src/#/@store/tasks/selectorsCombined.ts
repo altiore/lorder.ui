@@ -78,14 +78,17 @@ export const projectTasks = createDeepEqualSelector(
 export const filteredProjectTasks = createDeepEqualSelector(
   [projectTasks, searchTerm, filteredMembers],
   (list, sTerm = '', members = []) => {
-    if (!sTerm && !members.length) {
-      return list ? list : [];
+    if (!list || !list.length) {
+      return [];
     }
-    return list && list.length
-      ? list
-          .filter(el => ~el.title.toLowerCase().indexOf(sTerm.trim().toLowerCase()))
-          .filter(el => (members.length ? includes(members, el.performerId) : true))
-      : [];
+    let res = list;
+    if (sTerm) {
+      res = res.filter(el => ~el.title.toLowerCase().indexOf(sTerm.trim().toLowerCase()));
+    }
+    if (members) {
+      res = res.filter(el => (members.length ? includes(members, el.performerId) : true));
+    }
+    return res;
   }
 );
 

@@ -174,7 +174,9 @@ const replaceTasksHandler = (state: S, { payload }: Action<Array<Partial<UserWor
 };
 
 const patchProjectTaskHandler = (state: S, { payload }: Action<P>) => {
-  const index = state.list.findIndex(el => el.sequenceNumber === get(payload, 'sequenceNumber'));
+  const index = state.list.findIndex(
+    el => el.projectId === get(payload, 'projectId') && el.sequenceNumber === get(payload, 'sequenceNumber')
+  );
   if (!~index) {
     return state.startLoading();
   }
@@ -198,11 +200,18 @@ const patchProjectTaskFailHandler = (state: S, action) => {
 };
 
 const moveProjectTaskHandler = (state: S, { payload }: Action<P>) => {
-  const taskIndex = state.list.findIndex(el => get(payload, 'sequenceNumber') === el.sequenceNumber);
+  const taskIndex = state.list.findIndex(
+    el => get(payload, 'sequenceNumber') === el.sequenceNumber && get(payload, 'projectId') === el.projectId
+  );
   const status = get(payload, 'request.data.status');
-  return state.startLoading().updateItem(taskIndex, {
-    status,
-  });
+  if (taskIndex !== -1) {
+    return state
+      .updateItem(taskIndex, {
+        status: parseInt(status, 0),
+      })
+      .startLoading();
+  }
+  return state.startLoading();
 };
 
 const moveProjectTaskSuccessHandler = (state: S) => {
@@ -210,14 +219,20 @@ const moveProjectTaskSuccessHandler = (state: S) => {
 };
 
 const moveProjectTaskFailHandler = (state: S, { payload, meta }: ActionMeta<any, { previousAction: { payload } }>) => {
-  const taskIndex = state.list.findIndex(el => meta.previousAction.payload.sequenceNumber === el.sequenceNumber);
+  const taskIndex = state.list.findIndex(
+    el =>
+      meta.previousAction.payload.sequenceNumber === el.sequenceNumber &&
+      meta.previousAction.payload.projectId === el.projectId
+  );
   return state.stopLoading().updateItem(taskIndex, {
     status: meta.previousAction.payload.prevStatus,
   });
 };
 
 const deleteProjectTaskHandler = (state: S, { payload }: Action<P>) => {
-  const index = state.list.findIndex(el => el.sequenceNumber === get(payload, 'sequenceNumber'));
+  const index = state.list.findIndex(
+    el => el.projectId === get(payload, 'projectId') && el.sequenceNumber === get(payload, 'sequenceNumber')
+  );
   if (!~index) {
     return state.startLoading();
   }
