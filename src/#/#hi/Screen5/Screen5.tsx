@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
@@ -34,6 +34,13 @@ const Screen5: React.FC<Screen5I> = ({
 }) => {
   const classes = useStyles();
 
+  const preparedTeam = useMemo(() => {
+    if (team) {
+      return team.filter(m => !!m.member.displayName);
+    }
+    return [];
+  }, [team]);
+
   return (
     <>
       <Block name={nameProgress} alignItems="flex-start" grow className={classes.achievement}>
@@ -60,9 +67,9 @@ const Screen5: React.FC<Screen5I> = ({
             </div>
           ) : isPublicAltioreLoaded ? (
             <Grid className={classes.personsBlock} container justify="space-evenly" spacing={10}>
-              {team.map(({ member: { id, avatarUrl, userName } }) => (
+              {preparedTeam.map(({ member: { id, avatar, displayName } }) => (
                 <Grid item key={id}>
-                  <Person avatar={avatarUrl} name={userName} />
+                  <Person avatar={avatar ? avatar.url : undefined} name={displayName} />
                 </Grid>
               ))}
             </Grid>

@@ -10,7 +10,7 @@ import { useStyles } from './styles';
 
 interface PersonI {
   avatar?: string;
-  name: string;
+  name?: string;
 }
 
 export const Person: React.FC<PersonI> = ({ avatar, name }) => {
@@ -19,10 +19,10 @@ export const Person: React.FC<PersonI> = ({ avatar, name }) => {
   return (
     <Grid item className={classes.item}>
       <ButtonBase className={classes.avatarWrapper}>
-        <Avatar alt={name} src={avatar || manImg} className={classes.avatar} />
+        <Avatar alt={name || 'N/A'} src={avatar || manImg} className={classes.avatar} />
       </ButtonBase>
       <Typography noWrap align="center" color="textPrimary" variant="h4">
-        {name}
+        {name || 'N/A'}
       </Typography>
     </Grid>
   );
