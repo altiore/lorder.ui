@@ -6,6 +6,7 @@ export * from './ISelectedProject';
 export * from './IListDto';
 export * from './IMeta';
 export * from './IOther';
+export * from './IProject';
 export * from './INotification';
 export * from './IProjectMember';
 export * from './IPublicProject';

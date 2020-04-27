@@ -7,9 +7,9 @@ import { DownloadList } from '../@common/entities';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';
 
-import { ACCESS_LEVEL } from '@types';
+import { ACCESS_LEVEL, IProject } from '@types';
 
-export class Project {
+export class Project implements IProject {
   id?: number;
   uuid?: string;
   accessLevel?: ACCESS_LEVEL;
@@ -49,6 +49,22 @@ export class Project {
   }
 
   get fullProjectTimeHumanize(): string | undefined {
-    return convertSecondsToDurationWithLocal(this.timeSum || 0);
+    return convertSecondsToDurationWithLocal(this.timeSum ? this.timeSum / 1000 : 0);
+  }
+
+  get shareTime(): string {
+    if (this.timeSum) {
+      return convertSecondsToDurationWithLocal(this.timeSum / 1000);
+    }
+
+    return '0';
+  }
+
+  get shareValue(): number {
+    if (this.valueSum) {
+      return this.valueSum;
+    }
+
+    return 0;
   }
 }

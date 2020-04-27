@@ -1,13 +1,13 @@
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { DownloadList } from '#/@store/@common/entities';
+import { defaultProjectId } from '#/@store/identity';
 import { routeProjectId } from '#/@store/router';
 import { currentProjectId } from '#/@store/timer';
-import { timePercentByProjectId, timeSpentByProjectId } from '#/@store/user-works';
 
 import { Member } from './members/Member';
 import { Project } from './Project';
 
-import { IState, ITask, IUser } from '@types';
+import { IState, IUser } from '@types';
 
 const baseState = (state: IState) => state.projects;
 
@@ -23,6 +23,22 @@ export const ownProjectList = createDeepEqualSelector([baseState], (state: Downl
 export const selectedProject: any = createDeepEqualSelector(
   [ownProjectList, currentProjectId],
   (projects, id) => id && projects.find(el => el.id === id)
+);
+
+export const projectsExceptDefault = createDeepEqualSelector([ownProjectList, defaultProjectId], (list, defProjectId) =>
+  list
+    ? list
+        .filter(el => el.id !== defProjectId)
+        .sort((a, b) => {
+          if (a.shareValue > b.shareValue) {
+            return -1;
+          }
+          if (a.shareValue < b.shareValue) {
+            return 1;
+          }
+          return 0;
+        })
+    : []
 );
 
 export const openedProject = createDeepEqualSelector([ownProjectList, routeProjectId], (projects, id) => {
@@ -69,25 +85,4 @@ export const projectTaskTypes = createDeepEqualSelector(
 
 export const getProjectById = createDeepEqualSelector(allProjectList, (list: Project[]) => (id: number): Project =>
   list.find(e => e.id === id) || new Project()
-);
-
-export const getLabelForSelectField = createDeepEqualSelector([getProjectById], getProject => (task: ITask) => {
-  const project = getProject(task.projectId);
-  const projectInfo = project.title ? ` (${project.title})` : '';
-  return task.title + projectInfo;
-});
-
-export const ownProjectListWithStatistic = createDeepEqualSelector(
-  [ownProjectList, timePercentByProjectId, timeSpentByProjectId],
-  (list: Project[] = [], getPercent, getTime) =>
-    list.map<Partial<Project> & { percent: string | number; time: string }>(project => ({
-      ...project,
-      percent: getPercent(project.id as number),
-      time: getTime(project.id as number),
-    }))
-);
-
-export const selectedProjectWithStatistic = createDeepEqualSelector(
-  [ownProjectListWithStatistic, selectedProject],
-  (list, project) => project && list.find(el => el.id === (project as any).id)
 );

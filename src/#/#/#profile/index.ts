@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { userAvatar, userDisplayName, userRole } from '#/@store/identity';
-// import { ownProjectListWithStatistic } from '#/@store/projects';
+import { projectsExceptDefault } from '#/@store/projects';
 
 import { Profile } from './Profile';
 
 import { IState } from '@types';
 
 const mapState = createStructuredSelector<IState, any>({
-  // projects: ownProjectListWithStatistic,
+  projects: projectsExceptDefault,
   userAvatar,
   userDisplayName,
   userRole,

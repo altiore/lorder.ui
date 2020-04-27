@@ -5,6 +5,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: theme.spacing(20),
     width: theme.spacing(20),
   },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
   paper: {
     alignItems: 'center',
     display: 'flex',

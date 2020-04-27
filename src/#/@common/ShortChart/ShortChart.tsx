@@ -10,7 +10,7 @@ import { useStyles } from './styles';
 
 export interface IShortChartProps {
   dense?: boolean;
-  project?: Partial<Project> & { percent: string | number; time: string };
+  project?: Project;
 }
 
 export const ShortChartTsx: React.FunctionComponent<IShortChartProps> = ({ dense, project }) => {
@@ -20,12 +20,10 @@ export const ShortChartTsx: React.FunctionComponent<IShortChartProps> = ({ dense
     return null;
   }
 
-  const { percent, time } = project;
-
   return (
     <List className={classes.list} dense={dense}>
       <ListItem>
-        <ListItemText primary={`${time}`} secondary={`(${percent}%)`} />
+        <ListItemText primary={`0`} secondary={`(0%)`} />
       </ListItem>
     </List>
   );
