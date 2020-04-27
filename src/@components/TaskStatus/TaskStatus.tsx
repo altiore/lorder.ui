@@ -1,6 +1,8 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react';
 
-import { ClickAwayListener, Grow, Popper } from '@material-ui/core';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Popper from '@material-ui/core/Popper';
 
 import { Field } from 'redux-form';
 
@@ -11,8 +13,10 @@ import StartStopBtn from './StartStopBtn';
 import StatusField from './StatusField';
 import { useStyles } from './styles';
 
+import { IUser } from '@types';
+
 interface ITaskStatus {
-  assignees: Array<{ id: number; userName: string; avatar?: string }>;
+  assignees: IUser[];
   isCurrent?: boolean;
   isMine?: boolean;
   onChangeAssignee: (userId: number) => void;

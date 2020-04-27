@@ -9,7 +9,7 @@ import manImg from '../MemberCard/d-avatar.png';
 import { useStyles } from './styles';
 
 interface PersonI {
-  avatar: string;
+  avatar?: string;
   name: string;
 }
 

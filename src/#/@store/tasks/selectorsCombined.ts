@@ -3,7 +3,6 @@ import includes from 'lodash/includes';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { defaultProjectId, userId } from '#/@store/identity/selectors';
-import { selectedProjectId } from '#/@store/project';
 import { routeProjectId } from '#/@store/router';
 import { allTaskList, allTasks } from '#/@store/tasks/selectors';
 import { Task } from '#/@store/tasks/Task';
@@ -88,10 +87,6 @@ export const filteredProjectTasks = createDeepEqualSelector(
           .filter(el => (members.length ? includes(members, el.performerId) : true))
       : [];
   }
-);
-
-export const selectedProjectTasks = createDeepEqualSelector([allTasks, selectedProjectId], (list, projectId): Task[] =>
-  projectId ? list.list.filter(el => el.projectId === projectId) : []
 );
 
 export const STATUS_NAMES = ['Резерв', 'Сделать', 'В процессе', 'Обзор', 'Готово'];

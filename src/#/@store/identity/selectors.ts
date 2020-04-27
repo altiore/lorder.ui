@@ -30,6 +30,8 @@ export const hasRole = createDeepEqualSelector([userRole], role => (r: ROLE | RO
   return false;
 });
 
+export const userDisplayName = createDeepEqualSelector([baseIdentityState], s => s.displayName);
+
 export const initialProfileFormData = createDeepEqualSelector([baseIdentityState], state => ({
   displayName: state.displayName,
   tel: state.tel,

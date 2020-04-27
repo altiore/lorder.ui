@@ -1,7 +1,7 @@
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
+import { DownloadList } from '#/@store/@common/entities';
+import { projectTaskTypes } from '#/@store/projects/selectors';
 
-import { DownloadList } from '../@common/entities';
-import { projectTaskTypes } from '../projects/selectors';
 import { TaskType } from './task-type';
 
 import { IState } from '@types';

@@ -10,10 +10,10 @@ import { stopUserWork } from '#/@store/user-works';
 
 import { change } from 'redux-form';
 
-import { IState } from '@types';
+import { IState, IUser } from '@types';
 
 interface IStatusFieldState {
-  assignees: any[];
+  assignees: IUser[];
   statuses: string[];
 }
 
@@ -29,7 +29,7 @@ const mapDispatch = {
   onStop: stopUserWork,
 };
 
-export default connect<any, any, any, any>(
+export default connect<IStatusFieldState, any, any, any>(
   mapState,
   mapDispatch
 )(TaskStatus);

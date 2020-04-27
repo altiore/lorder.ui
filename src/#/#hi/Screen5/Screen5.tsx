@@ -60,9 +60,9 @@ const Screen5: React.FC<Screen5I> = ({
             </div>
           ) : isPublicAltioreLoaded ? (
             <Grid className={classes.personsBlock} container justify="space-evenly" spacing={10}>
-              {team.map(({ member: { email, avatar, displayName } }) => (
-                <Grid item key={email}>
-                  <Person avatar={(avatar && avatar.url) || ''} name={displayName || email.replace(/@.*$/, '')} />
+              {team.map(({ member: { id, avatarUrl, userName } }) => (
+                <Grid item key={id}>
+                  <Person avatar={avatarUrl} name={userName} />
                 </Grid>
               ))}
             </Grid>

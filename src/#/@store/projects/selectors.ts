@@ -63,8 +63,8 @@ export const getProjectMemberById = createDeepEqualSelector([projectMembersAsUse
 );
 
 export const projectTaskTypes = createDeepEqualSelector(
-  openedProject as any,
-  (project: Project) => project && project.taskTypes
+  [openedProject],
+  (project: Project | undefined) => project && project.taskTypes
 );
 
 export const getProjectById = createDeepEqualSelector(allProjectList, (list: Project[]) => (id: number): Project =>

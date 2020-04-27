@@ -15,4 +15,9 @@ export interface IUser {
   projectsCount: number;
   displayName?: string;
   defaultProjectId: number;
+
+  // calculated fields
+  readonly userName: string;
+  readonly shortName: string;
+  readonly avatarUrl?: string;
 }

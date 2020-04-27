@@ -15,34 +15,33 @@ import { useStyles } from './styles';
 import { ROLE } from '@types';
 
 interface IProfile {
+  projects?: any[];
   userAvatar?: string;
-  userEmail: string;
+  userDisplayName: string;
   userRole: ROLE;
 }
 
-export const Profile: React.FC<IProfile> = ({ userAvatar, userEmail, userRole }) => {
+export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayName, userRole }) => {
   const classes = useStyles();
 
+  console.log('render Profile', { projects });
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4} lg={3} xl={2}>
-            <Avatar avatar={userAvatar} email={userEmail} />
+            <Avatar avatar={userAvatar} email={userDisplayName} />
           </Grid>
           <Grid item xs={12} md={8} lg={9} xl={10}>
             <Paper>
               <List>
-                <ListItem button>
+                <ListItem>
                   <ListItemAvatar>
-                    <MuiAvatar alt={userEmail} src={userAvatar} />
+                    <MuiAvatar alt={userDisplayName} src={userAvatar} />
                   </ListItemAvatar>
-                  <ListItemText primary={userEmail} />
+                  <ListItemText primary={userDisplayName} secondary={userRole} />
                 </ListItem>
                 <ProfileForm />
-                <ListItem button>
-                  <ListItemText inset primary={userRole} />
-                </ListItem>
               </List>
             </Paper>
           </Grid>

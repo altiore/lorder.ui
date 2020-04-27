@@ -164,7 +164,7 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
           </div>
           <div className={classes.grow}>
             <Switch>
-              <Route path={TASKS_ROUTE()} component={Filters} />
+              <Route path={TASKS_ROUTE()} exact component={Filters} />
               <Route component={nullComponent} />
             </Switch>
           </div>

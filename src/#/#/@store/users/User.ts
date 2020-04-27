@@ -28,11 +28,31 @@ export class User implements IUser {
     });
   }
 
-  get userName() {
-    return this.email;
+  get userName(): string {
+    return this.displayName || (this.email ? this.email.replace(/@.*$/, '') : `[Noname ${this.id}]`);
   }
 
-  get shortName() {
-    return this.email.substring(0, 2).toUpperCase();
+  get shortName(): string {
+    if (this.displayName) {
+      const parts = this.displayName.split(' ');
+      if (parts.length > 1) {
+        return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+      } else {
+        this.displayName.substring(0, 2).toUpperCase();
+      }
+    }
+    if (this.email) {
+      return this.email.substring(0, 2).toUpperCase();
+    }
+
+    return 'N/A';
+  }
+
+  get avatarUrl(): string | undefined {
+    if (this.avatar && this.avatar.url) {
+      return this.avatar.url;
+    }
+
+    return undefined;
   }
 }

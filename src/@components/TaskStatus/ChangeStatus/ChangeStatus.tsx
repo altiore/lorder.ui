@@ -1,7 +1,12 @@
 import React, { useCallback, useState } from 'react';
 
-import { Button, ButtonGroup, Grow, Paper, Popper } from '@material-ui/core';
-import { Forward, ReplyAll } from '@material-ui/icons';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import Forward from '@material-ui/icons/Forward';
+import ReplyAll from '@material-ui/icons/ReplyAll';
 
 import { useStyles } from './styles';
 
