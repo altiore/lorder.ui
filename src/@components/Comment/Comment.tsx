@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import moment from 'moment';
@@ -15,7 +15,7 @@ export interface IComment {
   user: IUser;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   comment: {
     color: 'rgb(23, 43, 77)',
   },
@@ -35,6 +35,10 @@ const DATE_FORMAT = 'DD-MM-YYYY, hh:mm';
 
 export const Comment: React.FC<IComment> = ({ changeType, createdAt, description, id, user }) => {
   const classes = useStyles();
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div key={id} className={classes.root}>
