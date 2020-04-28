@@ -36,7 +36,7 @@ export const TodayTsx: React.FC<IToday> = ({ total, todayUserWorks = [] }): JSX.
 
   const text: string = useMemo(() => {
     if (differentProjectsCount === 'в 0 проектов') {
-      return '[не задач сегодня]';
+      return '[нет начатых задач]';
     }
 
     return differentTasksCount + ' ' + differentProjectsCount;
