@@ -49,12 +49,12 @@ export class Project implements IProject {
   }
 
   get fullProjectTimeHumanize(): string | undefined {
-    return convertSecondsToDurationWithLocal(this.timeSum ? this.timeSum / 1000 : 0);
+    return convertSecondsToDurationWithLocal(this.timeSum ? this.timeSum / 1000 : 0, 8);
   }
 
   get shareTime(): string {
     if (this.timeSum) {
-      return convertSecondsToDurationWithLocal(this.timeSum / 1000);
+      return convertSecondsToDurationWithLocal(this.timeSum / 1000, 8);
     }
 
     return '0';

@@ -26,6 +26,6 @@ export class PublicProject implements IPublicProject {
   }
 
   get fullProjectTimeHumanize() {
-    return convertSecondsToDurationWithLocal(this.timeSum || 0);
+    return convertSecondsToDurationWithLocal(this.timeSum || 0, 8);
   }
 }

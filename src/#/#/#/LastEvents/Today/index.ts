@@ -2,11 +2,12 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { totalTimeSpentToday } from '#/@store/user-works';
+import { todayUserWorksWithoutDefault, totalTimeSpentToday } from '#/@store/user-works';
 
 import { TodayTsx } from './Today';
 
 const mapStateToProps = createStructuredSelector({
+  todayUserWorks: todayUserWorksWithoutDefault,
   total: totalTimeSpentToday,
 } as any);
 

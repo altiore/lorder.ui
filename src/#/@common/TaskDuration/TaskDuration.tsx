@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { TimerListItemText } from './TimerListItemText';
+import CurrentDurationItem from './CurrentDurationItem';
 import { UserWorkTable } from './UserWorkTable';
 
 import { ITask } from '@types';
@@ -61,7 +61,7 @@ export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ currentTaskId, g
     >
       <div className={classes.duration}>
         {isCurrent ? (
-          <TimerListItemText isOpen={isWorkTableOpen} onClick={onToggleOpenWorkTable} />
+          <CurrentDurationItem isOpen={isWorkTableOpen} onClick={onToggleOpenWorkTable} />
         ) : (
           <Tooltip
             placement={'right'}

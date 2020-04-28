@@ -1,17 +1,33 @@
 import moment from 'moment';
 
 // TODO: simplify conversion. No need moment here!
-export function convertSecondsToDurationWithLocal(seconds: number): string {
+/**
+ *
+ * @param seconds
+ * @param hoursPerDay - can be 24 > hoursPerDay > 1, because of working day duration make sense in such interval
+ */
+export function convertSecondsToDurationWithLocal(seconds: number, hoursPerDay: number = 24): string {
+  if (hoursPerDay > 24) {
+    throw new Error(
+      'В расчетном дне не может быть больше 24 часов. Расчетный день не может быть длиннее реального дня'
+    );
+  }
   const m = moment.utc(seconds * 1000);
-  if (seconds < 60) {
+  const secondsInAMinute = 60;
+  if (seconds < secondsInAMinute) {
     return m.format('sс');
   }
-  if (seconds < 3600) {
+  const secondsInAHour = secondsInAMinute * 60;
+  if (seconds < secondsInAHour) {
     return m.format('mмин sс');
   }
   const mUnix = m.unix();
-  if (seconds < 28800) {
+  const secondsInADay = secondsInAHour * hoursPerDay;
+  if (seconds < secondsInADay) {
     return Math.floor(mUnix / 3600) + `ч ${m.format('mмин')}`;
   }
-  return Math.floor(mUnix / 28800) + 'дн ' + Math.floor((mUnix % 28800) / 3600) + `ч ${m.format('mмин')}`;
+
+  return (
+    Math.floor(mUnix / secondsInADay) + 'дн ' + Math.floor((mUnix % secondsInADay) / 3600) + `ч ${m.format('mмин')}`
+  );
 }

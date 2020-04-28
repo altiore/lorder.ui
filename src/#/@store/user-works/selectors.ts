@@ -20,30 +20,34 @@ export const currentUserWorks = createDeepEqualSelector([lastUserWorks, userId],
   s.list.filter(el => el.userId === currentUserId)
 );
 
+export const todayUserWorksWithoutDefault = createDeepEqualSelector(
+  [currentUserWorks, defaultProjectId],
+  (state, defProjectId) =>
+    state.filter(
+      el =>
+        (el.projectId || get(el, ['task', 'projectId'])) !== defProjectId &&
+        (!el.finishAt || moment().format(DATE_FORMAT) === el.finishAt.format(DATE_FORMAT))
+    )
+);
+
 export const totalTimeSpentTodayInSeconds = createDeepEqualSelector(
-  [currentUserWorks, defaultProjectId, currentTimerTime],
-  (state, defProjectId, currentTimerSeconds) =>
-    state
-      .filter(
-        el =>
-          (el.projectId || get(el, ['task', 'projectId'])) !== defProjectId &&
-          (!el.finishAt || moment().format(DATE_FORMAT) === el.finishAt.format(DATE_FORMAT))
-      )
-      .reduce((res, userWork: UserWork) => {
-        if (userWork.startAt.format(DATE_FORMAT) === moment().format(DATE_FORMAT)) {
-          return res + userWork.durationInSeconds;
+  [todayUserWorksWithoutDefault, currentTimerTime],
+  (list, currentTimerSeconds) =>
+    list.reduce((res, userWork: UserWork) => {
+      if (userWork.startAt.format(DATE_FORMAT) === moment().format(DATE_FORMAT)) {
+        return res + userWork.durationInSeconds;
+      } else {
+        if (userWork.finishAt) {
+          return res + userWork.finishAt.diff(moment().startOf('day'), 'second');
         } else {
-          if (userWork.finishAt) {
-            return res + userWork.finishAt.diff(moment().startOf('day'), 'second');
-          } else {
-            return res + currentTimerSeconds;
-          }
+          return res + currentTimerSeconds;
         }
-      }, 0)
+      }
+    }, 0)
 );
 
 export const totalTimeSpentToday = createDeepEqualSelector(totalTimeSpentTodayInSeconds, seconds =>
-  convertSecondsToDurationWithLocal(seconds)
+  convertSecondsToDurationWithLocal(seconds, 24)
 );
 
 export const userWorksGroupedByProject = createDeepEqualSelector(currentUserWorks, state =>
@@ -65,7 +69,7 @@ export const timeSpentByProjectIdInSeconds = createDeepEqualSelector(
 
 export const timeSpentByProjectId = createDeepEqualSelector(
   timeSpentByProjectIdInSeconds,
-  getSeconds => (projectId: number) => convertSecondsToDurationWithLocal(getSeconds(projectId))
+  getSeconds => (projectId: number) => convertSecondsToDurationWithLocal(getSeconds(projectId), 8)
 );
 
 export const timePercentByProjectId = createDeepEqualSelector(
