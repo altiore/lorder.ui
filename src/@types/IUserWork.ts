@@ -13,6 +13,7 @@ export interface IUserWork {
   taskTypeId?: number;
   value?: number;
   duration?: string;
+  prevTaskId?: number;
 
   durationInSeconds: number;
 

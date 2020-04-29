@@ -14,8 +14,9 @@ const tickUserWorkTimerHandler = (state: Timer) => {
 };
 
 const setCurrentUserWorkIdHandler = (state: Timer, { payload }: Action<Partial<Timer>>) => {
-  if (!payload) {
-    throw new Error('Error setCurrentUserWorkIdHandler: payload must not be empty!');
+  if (!payload.projectId || !payload.taskId || !payload.userWorkId || !payload.start || !payload.timer) {
+    console.error('Error', payload);
+    throw new Error('Error setCurrentUserWorkIdHandler: payload must contain all required data!');
   }
   const time = state.start ? moment().diff(state.start, 'second') : 0;
   return { ...state, ...payload, time };

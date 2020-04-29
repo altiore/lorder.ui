@@ -3,7 +3,7 @@ import { convertSecondsToDuration, convertSecondsToDurationWithLocal } from '#/@
 import { filteredTaskList } from '#/@store/tasks/selectors';
 import { IUserWorkDelete } from '#/@store/user-works/actions';
 
-import { IState, IUserWork } from '@types';
+import { IState } from '@types';
 
 const baseState = (state: IState) => state.timer;
 
@@ -28,12 +28,6 @@ export const isTimerStarted = createDeepEqualSelector(baseState, state => !!stat
 
 export const currentTask = createDeepEqualSelector([filteredTaskList, currentTaskId], (tasks, taskId): any =>
   tasks.find(el => el.id === taskId)
-);
-
-export const currentUserWork = createDeepEqualSelector(
-  [currentTask, currentUserWorkId],
-  (task, userWorkId) =>
-    task && task.userWorks && task.userWorks.find && task.userWorks.find((el: IUserWork) => el.id === userWorkId)
 );
 
 export const currentTimeHumanize = createDeepEqualSelector(currentTimerTime, time => convertSecondsToDuration(time));

@@ -66,9 +66,9 @@
   },
   "dependencies": {
     "@babel/core": "7.5.4",
-    "@material-ui/core": "4.9.0",
-    "@material-ui/icons": "4.5.1",
-    "@material-ui/lab": "4.0.0-alpha.22",
+    "@material-ui/core": "4.9.12",
+    "@material-ui/icons": "4.9.1",
+    "@material-ui/lab": "4.0.0-alpha.51",
     "@sentry/browser": "5.11.1",
     "aglos": "0.0.3",
     "autosuggest-highlight": "3.1.1",

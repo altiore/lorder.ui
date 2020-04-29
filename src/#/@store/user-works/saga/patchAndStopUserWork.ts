@@ -1,14 +1,12 @@
-import { getProjectById } from '#/@store/projects';
 import { patchAndStopUserWork, startTimer, UserWork } from '#/@store/user-works';
 
-import { put, select, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 
 function* patchAndStopUserWorkSuccessHandler({ payload }: any) {
   try {
-    const currentUserWork: Partial<UserWork> = payload.data.next;
-    if (currentUserWork) {
-      const project = (yield select(getProjectById))(currentUserWork.projectId);
-      yield put(startTimer(currentUserWork, project) as any);
+    const nextUserWork: Partial<UserWork> = payload.data.next;
+    if (nextUserWork) {
+      yield put(startTimer(nextUserWork) as any);
     }
   } catch (e) {
     throw new Error('patchAndStopUserWorkSuccessHandler.catch Error');

@@ -1,6 +1,8 @@
 import React, { memo, useCallback, useState } from 'react';
 import Popover from 'react-popover';
 
+import cn from 'classnames';
+
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -59,7 +61,7 @@ export const ProjectButtonTsx: React.FC<IProjectButtonProps> = memo(
           >
             <OpenInNewIcon fontSize="small" />
           </IconButton>
-          {inProgress && <span className={classes.inProgress} />}
+          <span className={cn(classes.inProgress, { [classes.inProgressGreen]: inProgress })} />
         </Button>
       </Popover>
     );

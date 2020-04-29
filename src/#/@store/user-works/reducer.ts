@@ -3,7 +3,7 @@ import { Action, combineActions, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
 import { DownloadList } from '#/@store/@common/entities';
-import { patchAndStopUserWork, postAndStartUserWork, UserWork } from '#/@store/user-works';
+import { patchAndStopUserWork, pauseUserWork, postAndStartUserWork, UserWork } from '#/@store/user-works';
 
 import { AxiosResponse } from 'axios';
 
@@ -118,9 +118,12 @@ export const userWorks: any = handleActions<S, P>(
     [patchUserWork.success]: patchUserWorkSuccessHandler,
     [patchUserWork.fail]: patchUserWorkFailHandler,
 
-    [patchAndStopUserWork.toString()]: patchAndStopUserWorkHandler,
-    [patchAndStopUserWork.success]: patchAndStopUserWorkSuccessHandler,
-    [patchAndStopUserWork.fail]: patchAndStopUserWorkFailHandler,
+    [combineActions(patchAndStopUserWork.toString(), pauseUserWork.toString()).toString()]: patchAndStopUserWorkHandler,
+    [combineActions(
+      patchAndStopUserWork.success,
+      pauseUserWork.success
+    ).toString()]: patchAndStopUserWorkSuccessHandler,
+    [combineActions(patchAndStopUserWork.fail, pauseUserWork.fail).toString()]: patchAndStopUserWorkFailHandler,
 
     [postAndStartUserWork.toString()]: postAndStartUserWorkHandler,
     [postAndStartUserWork.success]: postAndStartUserWorkSuccessHandler,

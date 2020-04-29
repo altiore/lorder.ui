@@ -7,7 +7,7 @@ import { openDialog } from '#/@store/dialog';
 import { showWarning } from '#/@store/notifications';
 import { selectedProject } from '#/@store/projects';
 import { openTaskModal } from '#/@store/tasks';
-import { startUserWork } from '#/@store/user-works';
+import { isPaused, startUserWork } from '#/@store/user-works';
 
 import { HeaderTsx } from './Header';
 
@@ -15,6 +15,7 @@ import { withResize } from '@hooks/withResize';
 import { IState } from '@types';
 
 const mapStateToProps = createStructuredSelector<IState, any>({
+  isPaused,
   selectedProject,
 });
 

@@ -5,13 +5,12 @@ import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-// import ClearIcon from '@material-ui/icons/Clear';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { StartStopBtn } from '@components/StartStopBtn';
 import { Table } from '@components/Table';
 
-// import { DescriptionForm } from './DescriptionForm';
+import StartStopBtn from '#/@common/StartStopBtn';
+
 import { DurationField } from './DurationField';
 import { useStyles } from './styles';
 import { TimerCell } from './TimerCell';
@@ -24,7 +23,6 @@ export interface IUserWorkTableProps extends RouteComponentProps<{}> {
   getUserWorksByTaskId: any;
   getUserWorksBySequenceNumber: any;
   onClose: any;
-  stopUserWork: (arg: any) => Promise<any>;
   task: ITask;
 }
 
@@ -33,7 +31,6 @@ export const UserWorkTableJsx: React.FC<IUserWorkTableProps> = ({
   getUserWorksByTaskId,
   getUserWorksBySequenceNumber,
   onClose,
-  stopUserWork,
   task,
 }) => {
   const classes = useStyles();
@@ -48,19 +45,6 @@ export const UserWorkTableJsx: React.FC<IUserWorkTableProps> = ({
     }
     return [];
   }, [getUserWorksByTaskId, task]);
-
-  const handleStopUserWork = useCallback(
-    (userWorkId: number | string | undefined) => async (e: React.SyntheticEvent) => {
-      e.stopPropagation();
-      if (typeof userWorkId === 'number') {
-        await stopUserWork(userWorkId);
-      } else {
-        throw new Error(`deleteUserWork userWorkId type is ${typeof userWorkId}`);
-      }
-      onClose();
-    },
-    [onClose, stopUserWork]
-  );
 
   const renderItem = useCallback(
     ({ id, startAt, finishAt, duration }: IUserWork) => {
@@ -81,12 +65,12 @@ export const UserWorkTableJsx: React.FC<IUserWorkTableProps> = ({
             </TableCell>
           )}
           <TableCell size="small" align="center">
-            {isCurrent ? <StartStopBtn isStarted={isCurrent} onStop={handleStopUserWork(id)} /> : null}
+            {isCurrent ? <StartStopBtn afterStop={onClose} /> : null}
           </TableCell>
         </TableRow>
       );
     },
-    [classes, currentUserWorkId, handleStopUserWork, task]
+    [classes, currentUserWorkId, onClose, task]
   );
 
   if (!userWorks || !userWorks.length) {

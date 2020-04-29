@@ -11,7 +11,7 @@ import { IUserWork } from '@types';
 
 export interface IUserWorkData {
   description?: string;
-  projectId: number;
+  projectId?: number;
   taskId?: number | string;
   sequenceNumber?: number | string;
   title?: string;
@@ -94,6 +94,19 @@ export const patchAndStopUserWork = requestActions<IUserWorkDelete>(
     request: {
       method: 'PATCH',
       url: `/user-works/${userWorkId}/stop`,
+    },
+    taskId,
+    userWorkId,
+  })
+);
+
+export const pauseUserWork = requestActions(
+  'USER_WORK/PAUSE',
+  ({ projectId, taskId, userWorkId }: IUserWorkDelete) => ({
+    projectId,
+    request: {
+      method: 'PATCH',
+      url: `/user-works/${userWorkId}/pause`,
     },
     taskId,
     userWorkId,

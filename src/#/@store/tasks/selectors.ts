@@ -55,3 +55,5 @@ export const isCurrentTaskDetailsLoaded = createDeepEqualSelector([currentTaskDe
 export const getTaskBySequenceNumber = createDeepEqualSelector([allTaskList], list => (sequenceNumber, projectId) =>
   list.find(el => el.sequenceNumber === sequenceNumber && el.projectId === projectId)
 );
+
+export const getTaskById = createDeepEqualSelector([allTaskList], list => taskId => list.find(el => el.id === taskId));

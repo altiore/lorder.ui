@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { openDialog } from '#/@store/dialog';
 import { showWarning } from '#/@store/notifications';
 import { getTaskById, openTaskModal } from '#/@store/tasks';
-import { startUserWork, stopUserWork } from '#/@store/user-works';
+import { startUserWork } from '#/@store/user-works';
 
 import { TaskComponentTsx } from './TaskComponent';
 
@@ -26,7 +26,6 @@ const mapDispatch = {
   push,
   showWarning,
   startUserWork,
-  stopUserWork,
 };
 
 export default connect<any, any, ITaskComponentOwn>(

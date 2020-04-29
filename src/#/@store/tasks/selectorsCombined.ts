@@ -4,13 +4,14 @@ import includes from 'lodash/includes';
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { defaultProjectId, userId } from '#/@store/identity/selectors';
 import { routeProjectId } from '#/@store/router';
-import { allTaskList, allTasks } from '#/@store/tasks/selectors';
 import { Task } from '#/@store/tasks/Task';
 import { filteredMembers, searchTerm, tasksFilter } from '#/@store/tasksFilter';
 import { currentTask, currentTaskId } from '#/@store/timer';
 import { lastUserWorks } from '#/@store/user-works/selectors';
 
 import moment from 'moment';
+
+import { allTasks, getTaskById } from './selectors';
 
 import { IDownloadList, IEvent, ITask, IUserWork } from '@types';
 
@@ -42,10 +43,6 @@ export const sortedByFilterTasksWithActive = createDeepEqualSelector(
 
 export const checkIsCurrent = createDeepEqualSelector([currentTaskId], cTaskId => (sequenceNumber: number) =>
   cTaskId === sequenceNumber
-);
-
-export const getTaskById = createDeepEqualSelector(allTaskList, (tasks: Task[]) => (id: number) =>
-  tasks.find(el => el.id === id)
 );
 
 export const events = createDeepEqualSelector(

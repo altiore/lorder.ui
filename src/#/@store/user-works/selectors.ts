@@ -4,13 +4,13 @@ import groupBy from 'lodash/groupBy';
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { defaultProjectId, userId } from '#/@store/identity';
-import { currentTimerTime } from '#/@store/timer';
+import { currentTaskId, currentTimerTime, currentUserWorkId } from '#/@store/timer';
 
 import moment from 'moment';
 
 import { UserWork } from './UserWork';
 
-import { IState } from '@types';
+import { IState, IUserWork } from '@types';
 
 const DATE_FORMAT = 'YYYY:MM:DD';
 
@@ -80,4 +80,13 @@ export const timePercentByProjectId = createDeepEqualSelector(
 
 export const getUserWorksByTaskId = createDeepEqualSelector([lastUserWorks], s => (taskId: number) =>
   s.list.filter(el => el.taskId === taskId)
+);
+
+export const currentUserWork = createDeepEqualSelector([currentUserWorks, currentUserWorkId], (list, userWorkId) =>
+  list.find((el: IUserWork) => el.id === userWorkId)
+);
+
+export const isPaused = createDeepEqualSelector(
+  [currentUserWork, currentTaskId],
+  (uw, taskId) => uw && uw.taskId !== taskId
 );

@@ -1,4 +1,3 @@
-import { fetchProjectDetails, getProjectById, projectMembers } from '#/@store/projects';
 import { isTimerStarted } from '#/@store/timer';
 import { startTimer, stopUserWork, UserWork } from '#/@store/user-works';
 
@@ -13,12 +12,7 @@ function* getUserWorksSuccessHandler({ payload }: any) {
       (userWork: UserWork) => !userWork.finishAt
     );
     if (currentUserWork) {
-      const project = (yield select(getProjectById))(currentUserWork.projectId);
-      yield put(startTimer(currentUserWork, project) as any);
-      const members = yield select(projectMembers);
-      if (!members || !members.length) {
-        yield put(fetchProjectDetails(project.id));
-      }
+      yield put(startTimer(currentUserWork) as any);
     } else {
       if (yield select(isTimerStarted)) {
         yield put(stopUserWork() as any);

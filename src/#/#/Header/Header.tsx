@@ -26,6 +26,7 @@ import { useStyles } from './styles';
 import { INotification } from '@types';
 
 export interface IHeaderProps {
+  isPaused: boolean;
   openDialog: any;
   openTaskModal: any;
   push: any;
@@ -37,7 +38,7 @@ export interface IHeaderProps {
 const timer: any = null;
 
 export const HeaderTsx: React.FC<IHeaderProps> = memo(
-  ({ openDialog, openTaskModal, push, selectedProject, showWarning, startUserWork }) => {
+  ({ isPaused, openDialog, openTaskModal, push, selectedProject, showWarning, startUserWork }) => {
     const classes = useStyles();
 
     useEffect(() => {
@@ -148,7 +149,7 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
           </LinkIconButton>
           <div className={classes.buttonBlock}>
             {Boolean(selectedProject) && (
-              <ProjectButton selectProject={selectProject} onOpenInNew={handleOpenInNew} inProgress />
+              <ProjectButton selectProject={selectProject} onOpenInNew={handleOpenInNew} inProgress={!isPaused} />
             )}
             <IconButton color="secondary" onClick={menuOpen} className={classes.expandButton}>
               <MoreHorizIcon />

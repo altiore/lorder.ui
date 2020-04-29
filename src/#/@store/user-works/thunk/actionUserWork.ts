@@ -2,43 +2,61 @@ import get from 'lodash/get';
 
 import { selectProject } from '#/@store/project';
 import { fetchProjectDetails, getProjectById, Project, projectMembers } from '#/@store/projects';
-import { getTaskBySequenceNumber, replaceTasks } from '#/@store/tasks';
+import { getTaskById, getTaskBySequenceNumber, replaceTasks } from '#/@store/tasks';
 import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from '#/@store/timer';
-import { CREATE_USER_WORK_FORM_NAME } from '#/@store/user-works';
-import { IUserWorkData, IUserWorkDelete, patchAndStopUserWork, UserWork } from '#/@store/user-works';
+import {
+  CREATE_USER_WORK_FORM_NAME,
+  IUserWorkData,
+  IUserWorkDelete,
+  patchAndStopUserWork,
+  UserWork,
+} from '#/@store/user-works';
 
 import moment from 'moment';
 import { change } from 'redux-form';
 
-import { postAndStartUserWork } from '../actions';
+import { pauseUserWork, postAndStartUserWork } from '../actions';
 
-import { IState } from '@types';
+import { IProject, IState } from '@types';
 
 export let timer: any;
 
-export const startTimer = (userWork: Partial<UserWork>, project: Project) => async (dispatch: any, getState: any) => {
+export const startTimer = (userWork: Partial<UserWork>, projectProp?: IProject) => async (
+  dispatch: any,
+  getState: any
+) => {
   clearInterval(timer);
   if (!userWork.durationInSeconds) {
     userWork = new UserWork(userWork);
   }
+  const taskId = userWork.prevTaskId || userWork.taskId;
+  const startedTask = getTaskById(getState())(taskId);
+  if (!startedTask) {
+    throw new Error('Вы пытаетесь начать неизвестную задачу');
+  }
+  const project = projectProp || getProjectById(getState())(startedTask.projectId);
+  const members = projectMembers(getState());
+  if (!members || !members.length) {
+    dispatch(fetchProjectDetails(startedTask.projectId));
+  }
   timer = setInterval(() => {
-    dispatch(tickUserWorkTimer({ userWork, project }));
+    dispatch(tickUserWorkTimer());
     document.title = `${currentTimeToString(getState())} | ${get(userWork, 'task.title')} (${get(project, 'title')})`;
   }, 1000);
   dispatch(
     setCurrentUserWorkId({
-      projectId: project.id,
+      projectId: startedTask.projectId,
       start: userWork.startAt,
-      taskId: userWork.taskId,
+      taskId,
       timer,
       userWorkId: userWork.id,
     })
   );
-  // changeIco('/stop.ico');
 };
 
 export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getState: () => IState) => {
   const preparedData = { ...data };
+  const startedTask = getTaskById(getState())(preparedData.taskId);
   // Если есть sequenceNumber, то его нужно поменять на taskId
   if (data.sequenceNumber) {
     preparedData.taskId = get(getTaskBySequenceNumber(getState())(data.sequenceNumber, data.projectId), 'id');
@@ -46,6 +64,15 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
       throw new Error('Задача имеет порядковый номер, но ее не удалось найти в списке задач');
     }
     delete preparedData.sequenceNumber;
+  }
+  if (!preparedData.projectId) {
+    preparedData.projectId = get(startedTask, 'projectId') as number;
+    if (!preparedData.projectId) {
+      throw new Error('Неясно в каком проекте начинать новую задачу');
+    }
+  }
+  if (startedTask && startedTask.projectId !== preparedData.projectId) {
+    throw new Error('Проект начинаемой задачи указан неверно!');
   }
   const project: Project = getProjectById(getState())(preparedData.projectId);
   if (!preparedData.title) {
@@ -55,12 +82,8 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
       preparedData.title = `Работа над "${project.title}" ` + moment().format('DD-MM-YYYY');
     }
   }
-  const members = projectMembers(getState());
-  if (!members || !members.length) {
-    dispatch(fetchProjectDetails(data.projectId));
-  }
-  dispatch(selectProject(data.projectId));
-  dispatch(change(CREATE_USER_WORK_FORM_NAME, 'projectId', data.projectId));
+  dispatch(selectProject(preparedData.projectId));
+  dispatch(change(CREATE_USER_WORK_FORM_NAME, 'projectId', preparedData.projectId));
   const res = await dispatch(
     postAndStartUserWork({
       project,
@@ -81,4 +104,9 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
 export const stopUserWork = () => async (dispatch: any, getState: any) => {
   const data: IUserWorkDelete = currentUserWorkData(getState());
   return await dispatch(patchAndStopUserWork(data));
+};
+
+export const pauseWork = () => async (dispatch: any, getState: any) => {
+  const data: IUserWorkDelete = currentUserWorkData(getState());
+  return await dispatch(pauseUserWork(data));
 };

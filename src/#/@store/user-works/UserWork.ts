@@ -19,6 +19,7 @@ export class UserWork implements IUserWork {
   taskId: number;
   taskTypeId?: number;
   value?: number;
+  prevTaskId?: number;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

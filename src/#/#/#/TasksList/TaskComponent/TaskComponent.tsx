@@ -8,8 +8,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
-import { StartStopBtn } from '@components/StartStopBtn';
 
+import StartStopBtn from '#/@common/StartStopBtn';
 import TaskDuration from '#/@common/TaskDuration';
 import { Project } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
@@ -31,7 +31,6 @@ export interface ITaskComponentProps {
   openTaskModal: any;
   showWarning: any;
   startUserWork: any;
-  stopUserWork: any;
 }
 
 export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
@@ -42,7 +41,6 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
   push,
   showWarning,
   startUserWork,
-  stopUserWork,
   taskId,
 }) => {
   const classes = useStyles();
@@ -82,21 +80,6 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
     [push]
   );
 
-  const startUserTask = useCallback(
-    (task: ITask) => (event: React.SyntheticEvent) => {
-      if (!task) {
-        return;
-      }
-      const { id, projectId } = task;
-      event.stopPropagation();
-      startUserWork({
-        projectId,
-        taskId: id,
-      });
-    },
-    [startUserWork]
-  );
-
   const goToProjectAskCreateTask = useCallback(
     (event: React.SyntheticEvent) => {
       event.preventDefault();
@@ -131,14 +114,6 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
     [openTaskModal, project, push, showWarning, startUserWork]
   );
 
-  const handleStopUserWork = useCallback(
-    (event: React.SyntheticEvent) => {
-      event.stopPropagation();
-      stopUserWork();
-    },
-    [stopUserWork]
-  );
-
   return (
     <div className={classes.listItem}>
       <div className={classes.title}>
@@ -169,7 +144,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
       </div>
       <div className={classes.actions}>
         <TaskDuration taskId={taskId} />
-        <StartStopBtn isStarted={isCurrent} onStart={startUserTask(task)} onStop={handleStopUserWork} />
+        <StartStopBtn task={task} />
       </div>
     </div>
   );
