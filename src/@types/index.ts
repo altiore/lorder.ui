@@ -24,4 +24,5 @@ export * from './IUserRole';
 export * from './IUserTask';
 export * from './IUserWork';
 export * from './IDownloadList';
+export * from './PROJECT_TYPE';
 export * from './ROLE';

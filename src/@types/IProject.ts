@@ -1,4 +1,5 @@
 import { ACCESS_LEVEL } from './ACCESS_LEVEL';
+import { PROJECT_TYPE } from './PROJECT_TYPE';
 
 export interface IProject {
   id?: number;
@@ -16,6 +17,7 @@ export interface IProject {
   timeSum?: number;
   /** ценность всех задач в этом проекте */
   valueSum?: number;
+  type: PROJECT_TYPE;
 
   // calculated fields
   fullProjectTimeHumanize: string | undefined;

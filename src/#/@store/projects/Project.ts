@@ -7,7 +7,7 @@ import { DownloadList } from '../@common/entities';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';
 
-import { ACCESS_LEVEL, IProject } from '@types';
+import { ACCESS_LEVEL, IProject, PROJECT_TYPE } from '@types';
 
 export class Project implements IProject {
   id?: number;
@@ -25,6 +25,7 @@ export class Project implements IProject {
   timeSum?: number;
   /** ценность всех задач в этом проекте */
   valueSum?: number;
+  type: PROJECT_TYPE;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

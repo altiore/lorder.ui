@@ -15,7 +15,12 @@ import TableVirtualized, { ColumnType } from '@components/TableVirtualized';
 import { CreateProjectPopup } from '#/@common/CreateProjectPopup';
 import { Project } from '#/@store/projects';
 
-import { ACCESS_LEVEL, IUser, ROLE } from '@types';
+import { ACCESS_LEVEL, IUser, PROJECT_TYPE, ROLE } from '@types';
+
+const GET_PROJECT_TYPE = {
+  [PROJECT_TYPE.SOCIALLY_USEFUL]: 'Социальный',
+  [PROJECT_TYPE.PERSONALLY_USEFUL]: 'Личный',
+};
 
 export interface IProjectsProps {
   closeDialog: any;
@@ -46,10 +51,6 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     sortDirection: 'ASC',
   };
 
-  componentDidMount() {
-    this.props.getProjects();
-  }
-
   render() {
     const { hasRole, ownOnly, projectList, height: pHeight, isWidthSm } = this.props;
 
@@ -69,6 +70,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
           order: 5,
         },
         { label: 'Публичный', order: 8, isShown: true, dataKey: 'uuid', width: 140, component: this.renderPublished },
+        { label: 'Тип', order: 11, isShown: true, dataKey: 'type', width: 140, component: this.renderType },
       ]);
     }
     if (!ownOnly && hasRole(ROLE.SUPER_ADMIN) && !isWidthSm) {
@@ -113,6 +115,10 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
       </Page>
     );
   }
+
+  private renderType = ({ cellData }: TableCellProps) => {
+    return GET_PROJECT_TYPE[cellData] || 'N/A';
+  };
 
   private renderPublished = ({ cellData }: TableCellProps) => {
     return cellData ? 'Да' : 'Нет';
@@ -214,6 +220,6 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
   );
 
   private renderValue = ({ cellData, rowData }: TableCellProps) => (
-    <Chip color="secondary" label={`${(cellData * 20).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}$`} />
+    <Chip color="secondary" label={`${(cellData * 50).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}$`} />
   );
 }
