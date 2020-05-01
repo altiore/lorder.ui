@@ -24,9 +24,9 @@ import {
   IPublicProject,
   ISelectedProject,
   ISockets,
+  IStatusMove,
   ITaskActive,
   ITaskStatus,
-  ITaskStatusMove,
   IUserRole,
   IUserWork,
 } from '@types';
@@ -50,9 +50,9 @@ export interface IState {
   roles: IDownloadList<IUserRole>;
   sockets: ISockets;
   statistics: Statistics;
+  projectStatusMoves: IDownloadList<IStatusMove>;
   taskActive: ITaskActive;
   taskStatuses: IDownloadList<ITaskStatus>;
-  taskStatusMoves: IDownloadList<ITaskStatusMove>;
   taskTypes: DownloadList<TaskType>;
   tasks: DownloadList<Task>;
   tasksFilter: ITasksFilter;

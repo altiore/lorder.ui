@@ -69,7 +69,7 @@ export class DownloadList<T = any> implements IDownloadList<T> {
   }
 
   finishLoading(payload?: AxiosResponse<T[]> | any, uniqueBy: string = 'id'): DownloadList<T> {
-    let list = get(payload, ['data', 'list'], get(payload, 'data'));
+    let list = get(payload, ['data', 'list'], get(payload, ['data', 'data'], get(payload, 'data')));
     if (!Array.isArray(list)) {
       console.error(
         'В ответе нет массива данных для DownloadList. Убедитесь, что ответ сервера соответсвует стандарту DownloadList'

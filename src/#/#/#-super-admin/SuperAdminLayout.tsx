@@ -47,12 +47,6 @@ export const MAIN_SUPER_ADMIN_ROUTES: IRoute[] = [
     title: 'Статусы задачи',
   },
   {
-    component: lazy(() => import('./#task-status-moves')),
-    icon: <SyncAltIcon />,
-    path: '/task-status-moves',
-    title: 'Разрешенные перемещения',
-  },
-  {
     component: lazy(() => import('./#feedback')),
     icon: <SyncAltIcon />,
     path: '/feedback',

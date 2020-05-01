@@ -25,16 +25,22 @@ export const PROJECT_ROUTES: IRoute[] = [
     title: 'Задачи',
   },
   {
+    access: [ROLES.USERS, ACCESS_LEVEL.GREEN],
+    component: lazy(() => import('./#members')),
+    path: '/projects/:projectId/members',
+    title: 'Участники',
+  },
+  {
     access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
     component: lazy(() => import('./#roles')),
     path: '/projects/:projectId/roles',
     title: 'Роли Проекта',
   },
   {
-    access: [ROLES.USERS, ACCESS_LEVEL.GREEN],
-    component: lazy(() => import('./#members')),
-    path: '/projects/:projectId/members',
-    title: 'Участники',
+    access: [ROLES.USERS, ACCESS_LEVEL.VIOLET],
+    component: lazy(() => import('./#status-moves')),
+    path: '/projects/:projectId/status-moves',
+    title: 'Разрешенные перемещения',
   },
   {
     access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],

@@ -19,6 +19,7 @@ import LaptopIcon from '@material-ui/icons/Laptop';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
+import SyncAltIcon from '@material-ui/icons/SyncAlt';
 
 import { LinkButton } from '#/@common/LinkButton';
 import { Project } from '#/@store/projects';
@@ -46,6 +47,7 @@ export const ICONS_MAP = {
   '/projects/:projectId/members': PeopleOutlineIcon,
   '/projects/:projectId/roles': PeopleOutlinedIcon,
   '/projects/:projectId/settings': SettingsIcon,
+  '/projects/:projectId/status-moves': SyncAltIcon,
 };
 
 export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteComponentProps<any>> = ({

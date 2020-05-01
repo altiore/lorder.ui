@@ -17,6 +17,8 @@ import { highcharts } from './highcharts/reducer';
 import { identity } from './identity';
 import { info } from './info/reducer';
 import { other } from './other/reducer';
+import { projectStatusMovesReducer } from './project-status-moves/reducer';
+import { StatusMove } from './project-status-moves/StatusMove';
 import { projectReducer } from './project/reducer';
 import { Project } from './projects';
 import { projects } from './projects';
@@ -28,8 +30,6 @@ import { routerReducer } from './router/reducer';
 import { socketsReducer } from './sockets/reducer';
 import { statistics } from './statistics/reducer';
 import { taskActive } from './task-active/reducer';
-import { taskStatusMoves } from './task-status-moves/reducer';
-import { TaskStatusMove } from './task-status-moves/TaskStatusMove';
 import { taskStatuses } from './task-statuses/reducer';
 import { TaskStatus } from './task-statuses/TaskStatus';
 import { TaskType } from './task-types';
@@ -54,10 +54,10 @@ localForage.config({
 
 const VARIANT_ENTITY: any = {
   projects: Project,
+  projectStatusMoves: StatusMove,
   roles: UserRole,
   tasks: Task,
   taskStatuses: TaskStatus,
-  taskStatusMoves: TaskStatusMove,
   taskTypes: TaskType,
   userWorks: UserWork,
 };
@@ -95,7 +95,16 @@ const persistConfig: PersistConfig<Partial<IState>> = {
       },
       // define which reducers this transform gets called for.
       {
-        whitelist: ['projects', 'roles', 'taskStatuses', 'taskStatusMoves', 'taskTypes', 'tasks', 'userWorks', 'users'],
+        whitelist: [
+          'projects',
+          'roles',
+          'taskStatuses',
+          'projectStatusMoves',
+          'taskTypes',
+          'tasks',
+          'userWorks',
+          'users',
+        ],
       }
     ),
   ],
@@ -130,11 +139,11 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
       other,
       project: projectReducer,
       projects,
+      projectStatusMoves: projectStatusMovesReducer,
       taskActive,
       tasks,
       tasksFilter,
       taskStatuses,
-      taskStatusMoves,
       taskTypes,
       timer,
       userWorks,
