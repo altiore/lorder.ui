@@ -17,7 +17,7 @@ import AuthForm from '#/@common/AuthForm';
 import StarItem from './StarItem';
 import { useStyles } from './styles';
 
-interface Screen4I {
+interface ScreenAdvantagesI {
   name: string;
 }
 
@@ -30,7 +30,7 @@ const LIST = [
   'Главная цель - сделать мир более организованным и справедливым для умных людей, создающих блага, целеустремленных, заинтересованных в успехе',
 ];
 
-const Screen4: React.FC<Screen4I> = ({ name }) => {
+const ScreenAdvantages: React.FC<ScreenAdvantagesI> = ({ name }) => {
   const classes = useStyles();
 
   const [isVisible, setIsVisible] = useState(false);
@@ -68,4 +68,4 @@ const Screen4: React.FC<Screen4I> = ({ name }) => {
   );
 };
 
-export default Screen4;
+export default ScreenAdvantages;

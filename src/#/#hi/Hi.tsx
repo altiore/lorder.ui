@@ -13,11 +13,13 @@ import TelegramIco from '@components/@icons/Telegram';
 import YouTubeVideo from '@components/YouTubeVideo';
 
 import HiHeader from './HiHeader';
-import Screen1 from './Screen1';
-import Screen2 from './Screen2';
-import Screen3 from './Screen3';
-import Screen4 from './Screen4';
-import Screen5 from './Screen5';
+import ScreenAdvantages from './ScreenAdvantages';
+import ScreenHelp from './ScreenHelp';
+import ScreenProgress from './ScreenProgress';
+import ScreenServices from './ScreenServices';
+import ScreenStart from './ScreenStart';
+import ScreenSupport from './ScreenSupport';
+import ScreenTeam from './ScreenTeam';
 
 export interface IHiProps {
   brandName: string;
@@ -31,11 +33,13 @@ export interface IHiProps {
 
 const BLOCKS = {
   start: {
+    menu: true,
     name: 'start',
     title: 'Начать',
   },
 
   help: {
+    menu: true,
     name: 'help',
     title: 'Что это?',
   },
@@ -56,8 +60,15 @@ const BLOCKS = {
   },
 
   team: {
+    menu: true,
     name: 'team',
     title: 'Наша Команда',
+  },
+
+  support: {
+    menu: true,
+    name: 'support',
+    title: 'Поддержать проект',
   },
 };
 
@@ -95,15 +106,21 @@ export const HiTsx: React.FC<IHiProps> = ({
 
       <HiHeader blocks={BLOCKS} />
 
-      <Screen1 name={BLOCKS.start.name} />
+      <ScreenStart name={BLOCKS.start.name} />
 
-      <Screen2 name={BLOCKS.help.name} />
+      <ScreenHelp name={BLOCKS.help.name} />
 
-      <Screen3 name={BLOCKS.services.name} />
+      <ScreenServices name={BLOCKS.services.name} />
 
-      <Screen4 name={BLOCKS.advantages.name} />
+      <ScreenAdvantages name={BLOCKS.advantages.name} />
 
-      <Screen5 nameProgress={BLOCKS.progress.name} nameTeam={BLOCKS.team.name} />
+      <ScreenProgress name={BLOCKS.progress.name} />
+
+      <ScreenTeam name={BLOCKS.team.name} />
+
+      <ScreenProgress name={BLOCKS.progress.name} />
+
+      <ScreenSupport name={BLOCKS.support.name} />
 
       <AppBar key={'bottom'} position="static" component={'footer'}>
         <Toolbar className={classes.bottomBar}>

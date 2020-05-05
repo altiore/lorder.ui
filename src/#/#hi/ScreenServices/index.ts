@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import Screen3 from './Screen3';
+import ScreenServices from './ScreenServices';
 
 const mapState = createStructuredSelector({
   texts: () => ({
@@ -16,4 +16,4 @@ const mapState = createStructuredSelector({
   }),
 });
 
-export default connect(mapState)(Screen3);
+export default connect(mapState)(ScreenServices);

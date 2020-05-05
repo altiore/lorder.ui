@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Events, Link, scrollSpy } from 'react-scroll';
 
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
@@ -11,7 +11,7 @@ import HeaderFixed from '@components/HeaderFixed';
 import { secondary } from '../../../@styles/themes/light/palette';
 
 export interface IHiHeaderProps {
-  blocks: { [key: string]: { name: string; title: string } };
+  blocks: { [key: string]: { menu?: boolean; name: string; title: string } };
   brandName: string;
 }
 
@@ -63,6 +63,10 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
     };
   }, [setIsScroll]);
 
+  const menuBlocks = useMemo(() => {
+    return blocks ? Object.values(blocks).filter(el => el.menu) : [];
+  }, [blocks]);
+
   const handleChange = useCallback(
     (event: React.ChangeEvent<{}>, newValue: string) => {
       if (value !== newValue) {
@@ -82,7 +86,7 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
   );
 
   return (
-    <HeaderFixed brandName="Altiore" brandLink="/">
+    <HeaderFixed brandName={brandName} brandLink="/">
       {showTabs && (
         <Tabs
           classes={{ indicator: MuiTabsIndicator }}
@@ -91,7 +95,7 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
           value={value}
           aria-label="link tabs"
         >
-          {Object.values(blocks).map(({ name, title }) => (
+          {menuBlocks.map(({ name, title }) => (
             <Tab
               classes={{ root: MuiTabRoot }}
               value={name}

@@ -10,11 +10,11 @@ import { LinkButton } from '#/@common/LinkButton';
 import ActiveClock from './ActiveClock';
 import { useStyles } from './styles';
 
-interface Screen1I {
+interface ScreenStartI {
   name: string;
 }
 
-const Screen1: React.FC<Screen1I> = ({ name }) => {
+const ScreenStart: React.FC<ScreenStartI> = ({ name }) => {
   const classes = useStyles();
 
   const [counter, setCounter] = useState(1);
@@ -70,4 +70,4 @@ const Screen1: React.FC<Screen1I> = ({ name }) => {
   );
 };
 
-export default Screen1;
+export default ScreenStart;
