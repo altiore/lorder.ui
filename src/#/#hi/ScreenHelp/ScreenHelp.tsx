@@ -18,7 +18,7 @@ import SubTitle from '#/#hi/@common/SubTitle';
 import HoveredItem from './HoveredItem';
 import { useStyles } from './styles';
 
-interface Screen1I {
+interface ScreenHelpI {
   name: string;
 }
 
@@ -59,7 +59,7 @@ const INFO_LIST = [
   },
 ];
 
-const Screen2: React.FC<Screen1I> = ({ name }) => {
+const ScreenHelp: React.FC<ScreenHelpI> = ({ name }) => {
   const classes = useStyles();
 
   return (
@@ -82,4 +82,4 @@ const Screen2: React.FC<Screen1I> = ({ name }) => {
   );
 };
 
-export default Screen2;
+export default ScreenHelp;

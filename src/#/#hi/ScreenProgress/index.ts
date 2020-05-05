@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { altioreMembers, isPublicAltioreLoaded, isPublicAltioreLoading } from '#/@store/publicAltiore';
 
-import Screen5 from './Screen5';
+import ScreenProgress from './ScreenProgress';
 
 import { IState } from '@types';
 
@@ -20,4 +20,4 @@ const mapState = createStructuredSelector<IState, IMappedProps>({
   team: altioreMembers,
 } as any);
 
-export default connect(mapState)(Screen5);
+export default connect(mapState)(ScreenProgress);

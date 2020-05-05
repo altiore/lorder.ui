@@ -9,7 +9,7 @@ import { ReactComponent as AltioreSvg } from './Altiore_2.svg';
 import Item from './Item';
 import { useStyles } from './styles';
 
-interface Screen3I {
+interface ScreenServicesI {
   name: string;
   texts: {
     adv1: string;
@@ -22,7 +22,7 @@ interface Screen3I {
   };
 }
 
-const Screen3: React.FC<Screen3I> = ({ name, texts }) => {
+const ScreenServices: React.FC<ScreenServicesI> = ({ name, texts }) => {
   const classes = useStyles();
 
   return (
@@ -47,4 +47,4 @@ const Screen3: React.FC<Screen3I> = ({ name, texts }) => {
   );
 };
 
-export default Screen3;
+export default ScreenServices;
