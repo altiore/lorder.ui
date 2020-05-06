@@ -61,7 +61,7 @@ declare module 'react-jsx-highcharts' {
 declare module 'react-copy-to-clipboard' {
   export class CopyToClipboard extends React.Component<{
     text: string;
-    onCopy?: (e?: React.SyntheticEvent | string) => any;
+    onCopy?: (link: string) => any;
     children: React.ReactNode;
   }> {
     render(): JSX.Element | null;

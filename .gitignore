@@ -8,6 +8,7 @@
 
 # production
 /build
+/heroku/build
 
 # misc
 .DS_Store

@@ -97,8 +97,7 @@ export const YouTubeVideoTsx: React.FC<IYouTubeVideoProps> = ({
       <div className={classes.root}>
         <div className={classes.videoWrapper} style={wrapperStyle as any}>
           <div className={classes.video} style={videoStyle as any}>
-            test text
-            {/*<YouTube videoId={videoId} opts={preparedOpts as any} onStateChange={onStateChange} />*/}
+            <YouTube videoId={videoId} opts={preparedOpts as any} onStateChange={onStateChange} />
           </div>
         </div>
       </div>

@@ -1,9 +1,11 @@
 import React, { useMemo } from 'react';
 
 import get from 'lodash/get';
-import { WrappedFieldProps } from 'redux-form';
 
-import { Avatar, ButtonBase } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
+import ButtonBase from '@material-ui/core/ButtonBase';
+
+import { WrappedFieldProps } from 'redux-form';
 
 import { useStyles } from './styles';
 

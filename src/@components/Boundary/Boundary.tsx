@@ -1,5 +1,6 @@
-import * as Sentry from '@sentry/browser';
 import React from 'react';
+
+import * as Sentry from '@sentry/browser';
 
 export interface IBoundaryProps {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ export default class Boundary extends React.Component<IBoundaryProps, IBoundaryS
   state = { error: null };
 
   componentDidCatch(error: any, errorInfo: any) {
+    console.log('catch an error');
     this.setState({ error });
     Sentry.withScope(scope => {
       Object.keys(errorInfo).forEach(key => {

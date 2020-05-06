@@ -1,21 +1,28 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react';
-import { Field } from 'redux-form';
 
-import { Button, ClickAwayListener, Grow, Popper } from '@material-ui/core';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Popper from '@material-ui/core/Popper';
+
+import { Field } from 'redux-form';
 
 import AssigneeList from './AssigneeList';
 import ChangeStatus from './ChangeStatus';
 import PerformerField from './PerformerField';
 import StartStopBtn from './StartStopBtn';
+import StatusField from './StatusField';
 import { useStyles } from './styles';
 
+import { IUser } from '@types';
+
 interface ITaskStatus {
-  assignees: Array<{ id: number; userName: string; avatar?: string }>;
+  assignees: IUser[];
   isCurrent?: boolean;
   isMine?: boolean;
   onChangeAssignee: (userId: number) => void;
   onStart: (_: any) => void;
   onStop: (_: any) => void;
+  statuses: string[];
 }
 
 enum POPPER_TYPE {
@@ -29,7 +36,7 @@ let lastPopperType: IPopperType = null;
 let nextPopperType: IPopperType = null;
 
 export const TaskStatus: React.FC<ITaskStatus> = React.memo(
-  ({ assignees, isCurrent, isMine, onChangeAssignee, onStart, onStop }) => {
+  ({ assignees, isCurrent, isMine, onChangeAssignee, onStart, onStop, statuses }) => {
     const classes = useStyles();
 
     const anchorRef = React.useRef(null);
@@ -80,14 +87,7 @@ export const TaskStatus: React.FC<ITaskStatus> = React.memo(
       <div className={classes.wrapper}>
         <ClickAwayListener onClickAway={handleClose}>
           <div className={classes.taskStatus} ref={anchorRef}>
-            <Button
-              className={classes.button}
-              variant="outlined"
-              aria-label="split button"
-              onClick={changeStatusToggle}
-            >
-              В процессе
-            </Button>
+            <Field name="status" component={StatusField} changeStatusToggle={changeStatusToggle} statuses={statuses} />
             <Field
               name="performerId"
               component={PerformerField}

@@ -26,13 +26,19 @@ export default function(theme: Theme): Partial<Overrides> {
         borderRadius: theme.typography.pxToRem(4),
       },
     },
+    MuiInputLabel: {
+      outlined: {
+        transform: 'translate(14px, 11px) scale(1)',
+      },
+    },
     MuiOutlinedInput: {
       adornedStart: {
         paddingLeft: 0,
       },
       input: {
+        backgroundColor: '#fff',
         boxSizing: 'border-box',
-        fontSize: theme.typography.pxToRem(14),
+        fontSize: theme.typography.pxToRem(16),
         height: theme.typography.pxToRem(36),
         minWidth: theme.typography.pxToRem(theme.spacing(20)),
         padding: theme.typography.pxToRem(theme.spacing(1)),
@@ -48,11 +54,11 @@ export default function(theme: Theme): Partial<Overrides> {
         backgroundColor: 'transparent',
         borderRadius: theme.typography.pxToRem(theme.shape.borderRadius),
         height: theme.typography.pxToRem(36),
+        minWidth: 120,
       },
     },
     MuiTextField: {
       root: {
-        marginBottom: theme.typography.pxToRem(theme.spacing(2)),
         width: '100%',
       },
     },

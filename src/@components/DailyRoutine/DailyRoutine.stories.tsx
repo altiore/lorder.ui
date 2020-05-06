@@ -1,8 +1,9 @@
-import { action } from '@storybook/addon-actions';
-import { storiesOf } from '@storybook/react';
 import React from 'react';
 
 import { DailyRoutine } from './DailyRoutine';
+
+import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react';
 
 const moment = require('moment');
 

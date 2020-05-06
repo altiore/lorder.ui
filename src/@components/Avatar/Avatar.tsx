@@ -1,7 +1,9 @@
+import React from 'react';
+
+import cn from 'classnames';
+
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import cn from 'classnames';
-import React from 'react';
 
 export interface IAvatarProps {
   classes: any;

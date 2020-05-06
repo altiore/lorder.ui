@@ -1,4 +1,3 @@
-import * as Highcharts from 'highcharts';
 import React from 'react';
 import {
   Chart,
@@ -12,6 +11,8 @@ import {
   XAxis,
   YAxis,
 } from 'react-jsx-highcharts';
+
+import * as Highcharts from 'highcharts';
 
 export interface ILinearChartProps {
   className?: string;

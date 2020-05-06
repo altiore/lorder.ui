@@ -1,4 +1,4 @@
-import { ACCESS_LEVEL } from '@store/projects';
+import { ACCESS_LEVEL } from '@types';
 
 export interface IProjectMember {
   accessLevel: ACCESS_LEVEL;

@@ -1,27 +1,30 @@
-import { action } from '@storybook/addon-actions';
-import { storiesOf } from '@storybook/react';
 import React from 'react';
 
-import Center from '../../../.storybook/decor/Center';
 import TaskStatus from '.';
+import Center from '../../../.storybook/decor/Center';
+import { IUser } from '../../@types';
 
-const assignees = [
+import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react';
+
+const assignees: IUser[] = [
   {
+    avatar: undefined,
     id: 1,
     userName: 'razvanlomov@gmail.com',
-    avatar: '',
-  },
+  } as IUser,
   {
+    avatar: undefined,
     id: 2,
     userName: 'other@gmail.com',
-    avatar: '',
-  },
+  } as IUser,
 ];
 
 storiesOf('TaskStatus', module)
   .addDecorator(Center)
   .add('assigned to me', () => (
     <TaskStatus
+      statuses={[]}
       assignees={assignees}
       isMine
       onChangeAssignee={action('Assignee changed:')}
@@ -31,6 +34,7 @@ storiesOf('TaskStatus', module)
   ))
   .add('assigned to other', () => (
     <TaskStatus
+      statuses={[]}
       assignees={assignees}
       onChangeAssignee={action('Assignee changed:')}
       onStart={action('Start task')}
