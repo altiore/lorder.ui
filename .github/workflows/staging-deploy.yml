@@ -1,0 +1,37 @@
+name: STAGING DEPLOYMENT
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: |
+        npm run test:ci
+
+    - name: Build
+      run: |
+        npm run build
+
+    - name: Deploy to staging
+      run: |
+        - cd heroku
+        - rm -rf ./build
+        - rm -rf .git
+        - cp -r ../build ./build
+        - git init
+        - git add .
+        - git config user.email "razvanlomov@gmail.com"
+        - git config user.name "bitbucket-pipelines"
+        - git commit -m 'dynamic version'
+        - git status
+        - git push https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git -f HEAD:master
