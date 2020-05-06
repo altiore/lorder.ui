@@ -23,6 +23,19 @@ const IMG_SIZE = {
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
+  fields: {
+    '& > *': {
+      marginBottom: theme.spacing(2),
+    },
+    [theme.breakpoints.up('lg')]: {
+      alignItems: 'center',
+      display: 'flex',
+      flexFlow: 'column',
+      justifyContent: 'center',
+      maxWidth: theme.spacing(37),
+      minWidth: theme.spacing(37),
+    },
+  },
   form: {
     '& > *': {
       marginBottom: theme.spacing(2),
@@ -31,6 +44,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(0, 1),
     [theme.breakpoints.down('md')]: {
       padding: 0,
+    },
+    [theme.breakpoints.up('lg')]: {
+      alignItems: 'center',
+      display: 'flex',
+      flexFlow: 'column',
+      justifyContent: 'center',
     },
   },
   root: {
@@ -56,7 +75,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const SubscribeForm: React.FC<ISubscribeForm> = ({ handleSubmit }) => {
-  const { form, root, svgWrapper, title } = useStyles();
+  const { fields, form, root, svgWrapper, title } = useStyles();
 
   return (
     <Paper className={root}>
@@ -64,18 +83,20 @@ export const SubscribeForm: React.FC<ISubscribeForm> = ({ handleSubmit }) => {
         <Typography variant="h4" className={title}>
           Хочу получать обновления о проекте
         </Typography>
-        <Field
-          autoComplete="username"
-          component={InputField}
-          icon={<UserIco />}
-          name="email"
-          placeholder="Введите email..."
-          type="email"
-          validate={[email({ msg: 'Введите валидный email-адрес' })]}
-        />
-        <Button fullWidth type="submit" color="secondary" variant="outlined">
-          Подписаться на обновления
-        </Button>
+        <div className={fields}>
+          <Field
+            autoComplete="username"
+            component={InputField}
+            icon={<UserIco />}
+            name="email"
+            placeholder="Введите email..."
+            type="email"
+            validate={[email({ msg: 'Введите валидный email-адрес' })]}
+          />
+          <Button fullWidth type="submit" color="secondary" variant="outlined">
+            Подписаться на обновления
+          </Button>
+        </div>
       </form>
       <div className={svgWrapper}>
         <img src={GetInTouchImg} alt="Subscribe" />

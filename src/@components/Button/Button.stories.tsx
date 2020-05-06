@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { storiesOf } from '@storybook/react';
-
-import Center from '../.storybook/decor/Center';
-
 import Button from '@material-ui/core/Button';
+
+import Center from '../../../.storybook/decor/Center';
+
+import { storiesOf } from '@storybook/react';
 
 storiesOf('Button', module)
   .addDecorator(Center)

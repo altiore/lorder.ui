@@ -1,7 +1,10 @@
 import React from 'react';
 
+import { reduxForm } from 'redux-form';
+
 import TaskStatus from '.';
 import Center from '../../../.storybook/decor/Center';
+import FormDecorator from '../../../.storybook/decor/FormDecorator';
 import { IUser } from '../../@types';
 
 import { action } from '@storybook/addon-actions';
@@ -20,10 +23,15 @@ const assignees: IUser[] = [
   } as IUser,
 ];
 
+const MyForm1 = reduxForm({
+  form: 'test1',
+})(TaskStatus as any) as any;
+
 storiesOf('TaskStatus', module)
   .addDecorator(Center)
+  .addDecorator(FormDecorator)
   .add('assigned to me', () => (
-    <TaskStatus
+    <MyForm1
       statuses={[]}
       assignees={assignees}
       isMine
@@ -33,7 +41,7 @@ storiesOf('TaskStatus', module)
     />
   ))
   .add('assigned to other', () => (
-    <TaskStatus
+    <MyForm1
       statuses={[]}
       assignees={assignees}
       onChangeAssignee={action('Assignee changed:')}
