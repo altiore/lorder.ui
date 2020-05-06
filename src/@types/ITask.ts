@@ -20,4 +20,5 @@ export interface ITask {
   userTasks?: IUserTask[];
 
   duration: string;
+  time: number;
 }

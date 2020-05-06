@@ -5,7 +5,10 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import { millisecondsToTime } from '#/@store/@common/helpers';
+
 import CurrentDurationItem from './CurrentDurationItem';
+import { ReactComponent as HourglassSvg } from './hourglass.svg';
 import { UserWorkTable } from './UserWorkTable';
 
 import { ITask } from '@types';
@@ -31,6 +34,25 @@ export const useStyles = makeStyles((theme: Theme) => ({
       // display: 'inline-block',
     },
   },
+  time: {
+    '& > div': {
+      lineHeight: 1,
+    },
+    '& > div:first-child': {
+      alignSelf: 'center',
+      marginRight: theme.spacing(1),
+    },
+    '& svg': {
+      color: theme.palette.secondary.main,
+      height: 20,
+      width: 15,
+    },
+    alignContent: 'flex-start',
+    alignItems: 'baseline',
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: theme.spacing(10),
+  },
   userWorkTable: {
     zIndex: 1300,
   },
@@ -50,6 +72,28 @@ export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ currentTaskId, g
   const onToggleOpenWorkTable = useCallback(() => setIsWorkTableOpen(st => !st), [setIsWorkTableOpen]);
 
   const didNotTouched = task.duration === '00:00';
+
+  const ConvertedTime = () => {
+    const time = task && task.userTasks && task.userTasks.length ? task.userTasks.map(task => task.time) : [];
+    const convertedTime = millisecondsToTime(time[0]);
+    const { hours, minutes } = convertedTime;
+    return (
+      <div className={classes.time}>
+        <div>
+          <HourglassSvg />
+        </div>
+        <div>
+          <div>{hours < 10 ? `0${hours}` : hours}</div>
+          <div>час</div>
+        </div>
+        <div>:</div>
+        <div>
+          <div>{minutes < 10 ? `0${minutes}` : minutes}</div>
+          <div>мин</div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <Popover
@@ -73,7 +117,9 @@ export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ currentTaskId, g
                 : 'Нажмите, чтоб раскрыть подробности'
             }
           >
-            <Button onClick={task.duration === '00:00' ? undefined : onToggleOpenWorkTable}>{task.duration}</Button>
+            <Button onClick={task.duration === '00:00' ? undefined : onToggleOpenWorkTable}>
+              <ConvertedTime />
+            </Button>
           </Tooltip>
         )}
       </div>

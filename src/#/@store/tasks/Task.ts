@@ -25,6 +25,15 @@ export class Task implements ITask {
     });
   }
 
+  get time(): number {
+    const performerUserTask = this.userTasks.find(el => el.userId === this.performerId);
+    if (performerUserTask && performerUserTask.time) {
+      return performerUserTask.time;
+    }
+
+    return 0;
+  }
+
   get durationInSeconds(): number {
     const performerUserTask = this.userTasks.find(el => el.userId === this.performerId);
     if (performerUserTask && performerUserTask.time) {
