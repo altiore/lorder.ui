@@ -14,10 +14,14 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Run tests
+    - name: Unit Tests
       run: |
         npm run test:ci
 
-    - name: Test build
+    - name: Build
       run: |
         npm run build
+
+    - name: Storybook
+      run: |
+        npm run build-storybook
