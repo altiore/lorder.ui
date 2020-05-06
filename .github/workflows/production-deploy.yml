@@ -1,0 +1,23 @@
+name: PRODUCTION DEPLOYMENT
+
+on:
+  push:
+    branches: [ release-* ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: |
+        npm run test:ci
+
+    - name: Build
+      run: |
+        npm run build
