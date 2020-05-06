@@ -1,4 +1,4 @@
-# Altiore UI
+# Altiore UI [Storybook](https://altiore.github.io/altiore.ui)
 
 ## Трекер задач и времени
 
