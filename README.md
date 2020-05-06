@@ -2,6 +2,12 @@
 
 ## Трекер задач и времени
 
+![Auto-тесты](https://github.com//altiore/altiore.ui/workflows/CI/badge.svg)
+
+![Staging Deployment](https://github.com//altiore/altiore.ui/workflows/Staging%20Deployment/badge.svg)
+
+![Production Deployment](https://github.com//altiore/altiore.ui/workflows/Production%20Deployment/badge.svg)
+
 ### Установка
 
 ##### 1. Скопируй файл .env.example -> .env

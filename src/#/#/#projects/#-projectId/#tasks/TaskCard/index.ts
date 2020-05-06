@@ -13,4 +13,4 @@ const mapState = createStructuredSelector({
   getProjectMemberById,
 });
 
-export const TaskCard = connect(mapState)(withStyles(styles)(TaskCardTsx));
+export const TaskCard = connect(mapState)(withStyles(styles)(TaskCardTsx)) as any;
