@@ -148,11 +148,11 @@
     }
   },
   "lint-staged": {
-    "src/*.{js,jsx,json,css,md}": [
+    "src/**/*.{js,jsx,json,css,md}": [
       "prettier --write --print-width 120 --single-quote --trailing-comma es5",
       "git add"
     ],
-    "src/*.{ts,tsx}": [
+    "src/**/*.{ts,tsx}": [
       "tslint --fix -t verbose",
       "prettier --write --print-width 120 --single-quote --parser typescript --trailing-comma es5",
       "git add"
