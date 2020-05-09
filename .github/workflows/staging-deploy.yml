@@ -37,7 +37,7 @@ jobs:
         npm run build
 
     - name: Deploy to staging  🚀
-      run: |
+      run: |K
         cd heroku
         rm -rf ./build
         rm -rf .git
