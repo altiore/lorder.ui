@@ -18,11 +18,22 @@ jobs:
       run: |
         npm run test:ci
 
+    - name: Storybook Build
+      run: |
+        npm run build-storybook
+
+    - name: Storybook Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: docs # The folder the action should deploy.
+
     - name: Build
       run: |
         npm run build
 
-    - name: Deploy to staging
+    - name: Deploy to staging  🚀
       run: |
         cd heroku
         rm -rf ./build

@@ -30,3 +30,6 @@ src/config/dev.js
 .cache
 
 *.m.scss.d.ts
+
+/docs
+!/docs/.gitkeep
