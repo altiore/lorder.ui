@@ -9,40 +9,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        with:
+          persist-credentials: false
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Unit Tests
-      run: |
-        npm run test:ci
+      - name: Unit Tests
+        run: |
+          npm run test:ci
 
-    - name: Storybook Build
-      run: |
-        npm run build-storybook
+      - name: Storybook Build
+        run: |
+          npm run build-storybook
 
-    - name: Storybook Deploy 🚀
+      - name: Storybook Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: docs # The folder the action should deploy.
+          FOLDER: docs
 
-    - name: Build
-      run: |
-        npm run build
+      - name: Build
+        run: |
+          npm run build
 
-    - name: Deploy to staging  🚀
-      run: |
-        cd heroku
-        rm -rf ./build
-        rm -rf .git
-        cp -r ../build ./build
-        git init
-        git add .
-        git config user.email "razvanlomov@gmail.com"
-        git config user.name "bitbucket-pipelines"
-        git commit -m 'dynamic version'
-        git status
-        git push https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git -f HEAD:master
+      - name: Deploy to staging  🚀
+        run: |
+          cd heroku
+          rm -rf ./build
+          rm -rf .git
+          cp -r ../build ./build
+          git init
+          git add .
+          git config user.email "razvanlomov@gmail.com"
+          git config user.name "bitbucket-pipelines"
+          git commit -m 'dynamic version'
+          git status
+          git push https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git -f HEAD:master
