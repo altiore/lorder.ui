@@ -12,13 +12,13 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import TelegramIco from '@components/@icons/Telegram';
 import YouTubeVideo from '@components/YouTubeVideo';
 
-import HiHeader from './HiHeader';
+import HiHeader from '#/#hi/HiHeader';
 import ScreenAdvantages from './ScreenAdvantages';
 import ScreenHelp from './ScreenHelp';
 import ScreenProgress from './ScreenProgress';
 import ScreenServices from './ScreenServices';
 import ScreenStart from './ScreenStart';
-import ScreenSupport from './ScreenSupport';
+import ScreenSupport from '#/@common/ScreenSupport';
 import ScreenTeam from './ScreenTeam';
 
 export interface IHiProps {
