@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { fetchAltiore } from '#/@store/publicAltiore';
 import { fetchStatistics } from '#/@store/statistics';
 
-import { HiTsx } from './hi-layout';
+import { HiTsx } from './Hi';
 import { styles } from './styles';
 
 import { withResize } from '@hooks/withResize';

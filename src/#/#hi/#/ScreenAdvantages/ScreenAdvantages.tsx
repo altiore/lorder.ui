@@ -9,9 +9,9 @@ import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import Block from '#/#hi/@common/Block';
-import BlockContent from '#/#hi/@common/BlockContent';
-import ScreenTitle from '#/#hi/@common/ScreenTitle';
+import Block from '#/#hi/#/@common/Block';
+import BlockContent from '#/#hi/#/@common/BlockContent';
+import ScreenTitle from '#/#hi/#/@common/ScreenTitle';
 import AuthForm from '#/@common/AuthForm';
 
 import StarItem from './StarItem';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import cn from 'classnames';
 
-import BlockContent from '#/#hi/@common/BlockContent';
+import BlockContent from '#/#hi/#/@common/BlockContent';
 
 import { useStyles } from './styles';
 
