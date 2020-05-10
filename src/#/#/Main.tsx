@@ -82,9 +82,9 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
   }, [closeDialog, prevLocation, push]);
 
   useEffect(() => {
-    if (isModal && location.pathname !== get(prevLocation, 'pathname')) {
+    if (isModal && get(location, 'pathname') !== get(prevLocation, 'pathname')) {
       openDialog(
-        <PatchTaskForm taskId={location.state.taskId} projectId={location.state.projectId} />,
+        <PatchTaskForm taskId={get(location, ['state', 'taskId'])} projectId={get(location, ['state', 'projectId'])} />,
         {
           maxWidth: 'lg',
           onClose: handleCloseDialog,
