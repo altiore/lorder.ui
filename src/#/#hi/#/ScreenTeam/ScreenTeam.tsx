@@ -6,10 +6,10 @@ import Typography from '@material-ui/core/Typography';
 
 import Person from '@components/Person';
 
-import Block from '#/#hi/@common/Block';
-import BlockContent from '#/#hi/@common/BlockContent';
-import ScreenTitle from '#/#hi/@common/ScreenTitle';
-import SubTitle from '#/#hi/@common/SubTitle';
+import Block from '#/#hi/#/@common/Block';
+import BlockContent from '#/#hi/#/@common/BlockContent';
+import ScreenTitle from '#/#hi/#/@common/ScreenTitle';
+import SubTitle from '#/#hi/#/@common/SubTitle';
 import { IMember } from '#/@store/projects/members/Member';
 
 import { useStyles } from './styles';

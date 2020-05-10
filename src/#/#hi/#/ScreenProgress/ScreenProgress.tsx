@@ -2,9 +2,9 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
-import Block from '#/#hi/@common/Block';
-import BlockContent from '#/#hi/@common/BlockContent';
-import ScreenTitle from '#/#hi/@common/ScreenTitle';
+import Block from '#/#hi/#/@common/Block';
+import BlockContent from '#/#hi/#/@common/BlockContent';
+import ScreenTitle from '#/#hi/#/@common/ScreenTitle';
 
 import ProjectsAch from './ProjectsAch';
 import PublicProjectsAch from './PublicProjectsAch';

@@ -10,10 +10,10 @@ import NetworkingIcon from '@components/@icons/Networking';
 import StatisticsIcon from '@components/@icons/Statistics';
 import TimeIcon from '@components/@icons/Time';
 
-import Block from '#/#hi/@common/Block';
-import BlockContent from '#/#hi/@common/BlockContent';
-import ScreenTitle from '#/#hi/@common/ScreenTitle';
-import SubTitle from '#/#hi/@common/SubTitle';
+import Block from '#/#hi/#/@common/Block';
+import BlockContent from '#/#hi/#/@common/BlockContent';
+import ScreenTitle from '#/#hi/#/@common/ScreenTitle';
+import SubTitle from '#/#hi/#/@common/SubTitle';
 
 import HoveredItem from './HoveredItem';
 import { useStyles } from './styles';
