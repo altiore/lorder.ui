@@ -149,14 +149,16 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
               <Typography variant="h4">Команда проекта</Typography>
               <Typography>Мы дарим людям мир и красоту, но только если это будет добром!</Typography>
             </Grid>
-            {members.map(member => (
-              <Grid item key={member.member.email}>
-                <Person
-                  avatar={get(member, 'member.avatar.url', '')}
-                  name={get(member.member, 'displayName') || get(member.member, 'email', '').replace(/@.*$/, '')}
-                />
-              </Grid>
-            ))}
+            <div className={classes.members}>
+              {members.map(member => (
+                <Grid item key={member.member.email}>
+                  <Person
+                    avatar={get(member, 'member.avatar.url', '')}
+                    name={get(member.member, 'displayName') || get(member.member, 'email', '').replace(/@.*$/, '')}
+                  />
+                </Grid>
+              ))}
+            </div>
           </Block>
         </Grid>
 
