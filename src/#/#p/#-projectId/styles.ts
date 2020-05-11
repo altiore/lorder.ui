@@ -29,6 +29,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexGrow: 1,
     padding: theme.spacing(2),
   },
+  members: {
+    backgroundColor: '#ccc',
+    display: 'flex',
+    overflow: 'auto',
+    whiteSpace: 'nowrap',
+    width: '80%',
+  },
   overlay: {
     display: 'flex',
     zIndex: 1,
