@@ -2,7 +2,7 @@ import { createMuiTheme, Theme } from '@material-ui/core/styles';
 
 import MuiDialog from './MuiDialog';
 import MuiTextField from './MuiTextField';
-import { background, /*error,*/ primary, secondary } from './palette';
+import { background, error, primary, secondary } from './palette';
 import { prettyScroll1, SECONDARY_DARKEN } from './variables';
 
 const defaultTheme: Theme = createMuiTheme({});
@@ -55,6 +55,7 @@ export default createMuiTheme({
   },
   palette: {
     background,
+    error,
     primary,
     secondary,
   },

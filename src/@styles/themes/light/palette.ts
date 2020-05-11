@@ -1,3 +1,5 @@
+import { darken, lighten } from '@material-ui/core/styles';
+
 export const primary = {
   contrastText: '#ffffff',
   dark: '#000000',
@@ -12,7 +14,12 @@ export const secondary = {
   main: '#FFF0B5',
 };
 
-export const error = {};
+export const error = {
+  contrastText: '#ffffff',
+  dark: darken('#ec3b0f', 0.1),
+  light: lighten('#ec3b0f', 0.1),
+  main: '#ec3b0f',
+};
 
 export const background = {
   default: '#EBEEF0',

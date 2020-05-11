@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
         height: '32px',
         width: '32px',
       },
-      backgroundColor: '#4BC800',
+      backgroundColor: '#66cc33',
       color: 'white',
     },
     speedDial: {
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
         height: '32px',
         width: '32px',
       },
-      backgroundColor: theme.palette.error.dark,
+      backgroundColor: theme.palette.error.main,
       color: theme.palette.background.paper,
     },
     stopOpen: {
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) =>
         height: '32px',
         width: '32px',
       },
-      backgroundColor: `${theme.palette.grey.A100}!important`,
+      backgroundColor: '#d8d8d8!important',
     },
   })
 );
