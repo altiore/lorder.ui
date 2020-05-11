@@ -36,11 +36,7 @@ jobs:
         run: |
           npm run build
 
-      - name: Deploy to staging  🚀
-        env:
-          REACT_APP_API_BASE_URL: https://staging-altiore-api.herokuapp.com/v1
-          REACT_APP_MAIN_PUBLIC_PROJECT: 1d9905e6-b06f-49f3-8d47-971291746399
-          PUBLIC_URL: https://staging-altiore.herokuapp.com
+      - name: Deploy to staging 🚀
         run: |
           cd heroku
           rm -rf ./build
@@ -53,3 +49,8 @@ jobs:
           git commit -m 'dynamic version'
           git status
           git push https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git -f HEAD:master
+        env:
+          CI: true
+          REACT_APP_API_BASE_URL: https://staging-altiore-api.herokuapp.com/v1
+          REACT_APP_MAIN_PUBLIC_PROJECT: 1d9905e6-b06f-49f3-8d47-971291746399
+          PUBLIC_URL: https://staging-altiore.herokuapp.com
