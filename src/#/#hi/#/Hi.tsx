@@ -1,15 +1,8 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 
-import AppBar from '@material-ui/core/AppBar';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import { useTheme } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import TelegramIco from '@components/@icons/Telegram';
 import YouTubeVideo from '@components/YouTubeVideo';
 
 import HiHeader from '#/#hi/HiHeader';
@@ -90,10 +83,7 @@ export const HiTsx: React.FC<IHiProps> = ({
   const isDesctop = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <Grid container direction="column" className={classes.root}>
-      <Helmet>
-        <body className={classes.hiBody} />
-      </Helmet>
+    <>
       {isDesctop ? (
         <YouTubeVideo
           videoId="PT8urv0CtUw"
@@ -121,19 +111,6 @@ export const HiTsx: React.FC<IHiProps> = ({
       <ScreenProgress name={BLOCKS.progress.name} />
 
       <ScreenSupport name={BLOCKS.support.name} />
-
-      <AppBar key={'bottom'} position="static" component={'footer'}>
-        <Toolbar className={classes.bottomBar}>
-          <Typography variant="h5" color="inherit">
-            Copyright &copy; {brandName}
-          </Typography>
-          <div className={classes.sectionDesktop}>
-            <IconButton color="inherit" href="https://t.me/razzwan_altiore" target="_blank">
-              <TelegramIco />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-    </Grid>
+    </>
   );
 };

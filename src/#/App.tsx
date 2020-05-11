@@ -8,7 +8,7 @@ import NotFound from '#/@common/NotFoundPage';
 
 import { ROLES } from './@store/roles';
 
-import { useAllowedRoutes } from '../@utils/useAllowedRoutes';
+import { useAllowedRoutes } from '@utils/useAllowedRoutes';
 
 import { IRoute, ROLE } from '@types';
 
@@ -29,13 +29,8 @@ export const APP_MAIN_ROUTES: IRoute[] = [
   },
   {
     access: [ROLES.ALL],
-    component: lazy(() => import('./#hi/#')),
+    component: lazy(() => import('./#hi')),
     path: '/hi',
-  },
-  {
-    access: [ROLES.ALL],
-    component: lazy(() => import('./#hi/#support')),
-    path: '/support',
   },
   {
     access: [ROLES.GUESTS],
