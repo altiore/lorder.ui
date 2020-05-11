@@ -10,11 +10,10 @@ import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { darken } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-// import SupportIcon from '@material-ui/icons/ContactSupport';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import SecurityIcon from '@material-ui/icons/Lock';
-// import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import PersonIcon from '@material-ui/icons/Person';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 
@@ -23,9 +22,15 @@ import { ROLE } from '@types';
 const useStyles = makeStyles((theme: Theme) => ({
   avatar: {
     border: '2px solid #faf0b5',
-    margin: '10px',
+    borderRadius: theme.spacing(3),
+    height: theme.spacing(6),
+    margin: theme.spacing(0.5),
+    width: theme.spacing(6),
   },
   avatarButton: {
+    '&:hover': {
+      backgroundColor: darken(theme.palette.secondary.dark, 0.5),
+    },
     borderRadius: '50%',
   },
   email: {
