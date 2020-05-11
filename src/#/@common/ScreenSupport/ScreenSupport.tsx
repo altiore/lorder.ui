@@ -32,8 +32,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   content: {
     backgroundColor: theme.palette.background.paper,
+    minHeight: 'calc(100vh - 136px)',
     overflow: 'hidden',
-    position: 'relative',
+    position: 'relative'
   },
 }));
 
