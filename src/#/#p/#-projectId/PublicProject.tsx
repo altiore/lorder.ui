@@ -20,6 +20,7 @@ import Person from '@components/Person';
 import { LinkButton } from '#/@common/LinkButton';
 import PieChart from '#/@common/PieChart';
 import { millisecondsToHours } from '#/@store/@common/helpers';
+import { Member } from '#/@store/projects/members/Member';
 import { PublicProject } from '#/@store/publicProject';
 
 import { useStyles } from './styles';
@@ -65,6 +66,10 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
       return match.params.projectId;
     }, [match]);
 
+    const members: Member[] = useMemo(() => {
+      return (project && project.members ? project.members : []) as Member[];
+    }, [project]);
+
     useEffect(() => {
       if (fetchPublicProject && matchProjectUuid && !uuid) {
         fetchPublicProject(matchProjectUuid);
@@ -74,24 +79,18 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
     const classes = useStyles();
 
     const chartData = useMemo(() => {
-      if (!get(project, ['members', 'length'])) {
-        return null;
-      }
-      return project.members.map(el => ({
+      return members.map(el => ({
         name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
-        y: millisecondsToHours(el.timeSum) || 0.1,
+        y: millisecondsToHours(el.timeSum) || 0.01,
       }));
-    }, [project]);
+    }, [members]);
 
     const chartValueData = useMemo(() => {
-      if (!get(project, ['members', 'length'])) {
-        return null;
-      }
-      return project.members.map(el => ({
+      return members.map(el => ({
         name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
         y: el.valueSum || 0.1,
       }));
-    }, [project]);
+    }, [members]);
 
     if (isLoading || !isLoaded || !chartData || !chartValueData) {
       return <LoadingPage />;
@@ -150,16 +149,14 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
               <Typography variant="h4">Команда проекта</Typography>
               <Typography>Мы дарим людям мир и красоту, но только если это будет добром!</Typography>
             </Grid>
-            {project &&
-              project.members &&
-              project.members.map(member => (
-                <Grid item key={member.member.email}>
-                  <Person
-                    avatar={get(member, 'member.avatar.url', '')}
-                    name={get(member, 'member.email', '').replace(/@.*$/, '')}
-                  />
-                </Grid>
-              ))}
+            {members.map(member => (
+              <Grid item key={member.member.email}>
+                <Person
+                  avatar={get(member, 'member.avatar.url', '')}
+                  name={get(member.member, 'displayName') || get(member.member, 'email', '').replace(/@.*$/, '')}
+                />
+              </Grid>
+            ))}
           </Block>
         </Grid>
 
