@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { altioreMembers, isPublicAltioreLoaded, isPublicAltioreLoading } from '#/@store/publicAltiore';
+import { altioreHighLevelMembers, isPublicAltioreLoaded, isPublicAltioreLoading } from '#/@store/publicAltiore';
 
 import ScreenTeam from './ScreenTeam';
 
@@ -17,7 +17,7 @@ interface IMappedProps {
 const mapState = createStructuredSelector<IState, IMappedProps>({
   isPublicAltioreLoaded,
   isPublicAltioreLoading,
-  team: altioreMembers,
+  team: altioreHighLevelMembers,
 } as any);
 
 export default connect(mapState)(ScreenTeam);
