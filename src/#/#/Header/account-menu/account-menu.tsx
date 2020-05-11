@@ -22,6 +22,7 @@ import { ROLE } from '@types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   avatar: {
+    border: '2px solid #faf0b5',
     margin: '10px',
   },
   avatarButton: {
