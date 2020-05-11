@@ -3,29 +3,24 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) =>
   createStyles({
-    input: {
-      flexGrow: 1,
-      marginBottom: theme.spacing(1),
-    },
-    inputBlock: {
-      alignItems: 'baseline',
-      display: 'flex',
-      flexFlow: 'row nowrap',
-      marginBottom: theme.spacing(1),
-      width: '100%',
-      [theme.breakpoints.down('sm')]: {
-        marginBottom: 0,
+    add: {
+      '& svg': {
+        fontSize: theme.typography.pxToRem(28),
       },
+      '&:hover': {
+        backgroundColor: '#f2d578',
+        boxShadow: '0 4px 10px rgba(242, 213, 120, 0.5)',
+      },
+      backgroundColor: '#f2d578',
+      boxShadow: 'none',
+      color: 'white',
     },
-    play: {
+    form: {
       alignItems: 'center',
       display: 'flex',
       flexFlow: 'column',
       justifyContent: 'center',
       marginBottom: theme.spacing(2),
       width: '100%',
-    },
-    select: {
-      width: 150,
     },
   });

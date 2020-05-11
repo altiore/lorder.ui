@@ -27,6 +27,12 @@ export default createMuiTheme({
         padding: '0 16px 16px',
       },
     },
+    MuiFab: {
+      sizeMedium: {
+        height: '44px',
+        width: '44px',
+      },
+    },
     MuiIconButton: {
       root: {
         borderRadius: defaultTheme.shape.borderRadius,

@@ -25,7 +25,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
-    marginRight: theme.spacing(1),
     width: theme.spacing(10),
     [theme.breakpoints.down('sm')]: {
       // display: 'inline-block',

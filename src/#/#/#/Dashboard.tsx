@@ -92,8 +92,8 @@ export const DashboardJsx: React.FC<IDashboardProps> = memo(({ getAllTasks }) =>
       </div>
       <Grid container spacing={2}>
         <Grid item lg={9} md={8} sm={12} className={classes.content}>
-          <StartForm />
           <TasksList />
+          <StartForm />
         </Grid>
         <MediaQuery minDeviceWidth={theme.breakpoints.values.sm}>
           <Grid item lg={3} md={4} sm={12}>

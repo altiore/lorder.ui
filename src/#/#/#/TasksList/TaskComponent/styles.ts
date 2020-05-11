@@ -1,4 +1,4 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { darken, makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   actions: {
@@ -10,14 +10,29 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   buttonTitle: {
+    '& $buttonTitleLabel': {
+      color: '#676767',
+    },
+    borderRadius: '6px',
+    color: '#676767',
     flexGrow: 1,
     paddingLeft: theme.spacing(5),
     [theme.breakpoints.down('sm')]: {
       display: 'inline-block',
     },
   },
+  buttonTitleCurrent: {
+    '& $buttonTitleLabel': {
+      color: '#292929',
+    },
+    '&:hover': {
+      backgroundColor: '#fcfaee',
+    },
+  },
   buttonTitleLabel: {
     display: 'block',
+    fontSize: 16,
+    fontWeight: 400,
     maxWidth: '100%',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -40,16 +55,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   listItem: {
     '&:hover': {
-      borderColor: theme.palette.primary.main,
+      borderColor: 'rgba(0, 0, 0, 0.2)',
     },
     alignItems: 'center',
     backgroundColor: theme.palette.background.paper,
     border: '1px solid rgba(0, 0, 0, 0.1)',
-    borderRadius: theme.shape.borderRadius,
-    boxShadow: theme.shadows[1],
+    borderRadius: '8px',
+    boxShadow: '0 2px 10px #d8d8d8',
     display: 'flex',
     flexGrow: 1,
-    height: 64,
+    height: 60,
     justifyContent: 'space-between',
     marginBottom: theme.spacing(2),
     padding: theme.spacing(1, 2, 1, 1.5),
@@ -58,6 +73,14 @@ export const useStyles = makeStyles((theme: Theme) => ({
       marginBottom: theme.spacing(1),
       padding: theme.spacing(1),
     },
+  },
+  listItemCurrent: {
+    '&:hover': {
+      borderColor: darken('#eecf6d', 0.1),
+    },
+    backgroundColor: '#f8f1cc',
+    border: '1px solid #eecf6d',
+    boxShadow: '0 4px 10px rgba(242, 213, 120, 0.6)',
   },
   listItemRoot: {
     [theme.breakpoints.down('sm')]: {
@@ -68,12 +91,28 @@ export const useStyles = makeStyles((theme: Theme) => ({
     '&:hover p, &:focus p': {
       opacity: 1,
     },
+    borderRadius: '6px',
+    color: '#9d9d9d',
+    marginRight: theme.spacing(1),
     minWidth: theme.spacing(5),
     textTransform: 'none',
     whiteSpace: 'nowrap',
   },
+  projectButtonCurrent: {
+    '&:hover': {
+      backgroundColor: '#fcfaee',
+    },
+    backgroundColor: '#f8f4ea',
+    color: '#292929',
+  },
   projectText: {
-    opacity: 0.2,
+    // opacity: 0.2,
+  },
+  startBtnDivider: {
+    borderLeft: '1px dashed #eecf6d',
+    height: theme.spacing(4.5),
+    margin: theme.spacing(0, 2, 0, 1),
+    width: 0,
   },
   taskIcon: {
     left: 8,
@@ -88,5 +127,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   userWorkTable: {
     zIndex: 1202,
+  },
+  verticalDivider: {
+    borderLeft: '1px dashed #eecf6d',
+    height: theme.spacing(4.5),
+    margin: theme.spacing(0, 1),
+    width: 0,
   },
 }));

@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import MediaQuery from 'react-responsive';
 
+import cn from 'classnames';
+
 import Button from '@material-ui/core/Button';
 import { DialogProps } from '@material-ui/core/Dialog';
 import { useTheme } from '@material-ui/core/styles';
@@ -115,14 +117,20 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
   );
 
   return (
-    <div className={classes.listItem}>
+    <div
+      className={cn(classes.listItem, {
+        [classes.listItemCurrent]: isCurrent,
+      })}
+    >
       <div className={classes.title}>
         <MediaQuery minWidth={theme.breakpoints.values.sm}>
           <Tooltip title={`Открыть "${(project && project.title) || '...'}"`} placement="bottom">
             <Button
               component="a"
               href={isShown ? `/projects/${project.id}` : '#'}
-              className={classes.projectButton}
+              className={cn(classes.projectButton, {
+                [classes.projectButtonCurrent]: isCurrent,
+              })}
               onClick={goToProjectAskCreateTask}
             >
               <Typography className={classes.projectText}>{projectShortName}</Typography>
@@ -133,7 +141,9 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
           <Button
             component="a"
             classes={{ label: classes.buttonTitleLabel }}
-            className={classes.buttonTitle}
+            className={cn(classes.buttonTitle, {
+              [classes.buttonTitleCurrent]: isCurrent,
+            })}
             href={isShown ? `${TASKS_ROUTE(project.id)}/${task.sequenceNumber}` : '#'}
             onClick={isShown ? openEditTaskForm(task.sequenceNumber, project.id as number) : undefined}
           >
@@ -141,9 +151,11 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
             {isShown ? task.title : '...'}
           </Button>
         </Tooltip>
+        <div className={classes.verticalDivider} />
       </div>
       <div className={classes.actions}>
         <TaskDuration taskId={taskId} />
+        <div className={classes.startBtnDivider} />
         <StartStopBtn task={task} />
       </div>
     </div>

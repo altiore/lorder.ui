@@ -31,10 +31,18 @@ export interface IStartStopBtnProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     play: {
+      '& svg': {
+        height: '32px',
+        width: '32px',
+      },
       backgroundColor: '#4BC800',
       color: 'white',
     },
     speedDial: {
+      '& svg': {
+        height: '32px',
+        width: '32px',
+      },
       '&.MuiSpeedDial-directionDown, &.MuiSpeedDial-directionRight': {
         left: theme.spacing(2),
         top: theme.spacing(2),
@@ -46,10 +54,18 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(-9),
     },
     stop: {
+      '& svg': {
+        height: '32px',
+        width: '32px',
+      },
       backgroundColor: theme.palette.error.dark,
       color: theme.palette.background.paper,
     },
     stopOpen: {
+      '& svg': {
+        height: '32px',
+        width: '32px',
+      },
       backgroundColor: `${theme.palette.grey.A100}!important`,
     },
   })
