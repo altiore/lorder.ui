@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { Route, Switch } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
@@ -9,15 +9,14 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import TelegramIco from '@components/@icons/Telegram';
-
 import LoadingPage from '@components/LoadingPage';
+
 import NestedRoute from '#/@common/#NestedRoute';
 import NotFound from '#/@common/NotFoundPage';
-
-import { useAllowedRoutes } from '@utils/useAllowedRoutes';
-
 import { ROLES } from '#/@store/roles';
+
 import { IRoute, ROLE } from '@types';
+import { useAllowedRoutes } from '@utils/useAllowedRoutes';
 
 export interface IHiProps {
   brandName: string;
@@ -29,22 +28,18 @@ export const HI_ROUTES: IRoute[] = [
   {
     access: [ROLES.ALL],
     component: lazy(() => import('./#')),
+    exact: true,
     path: '/hi',
-    exact: true
   },
   {
     access: [ROLES.ALL],
     component: lazy(() => import('./#support')),
+    exact: true,
     path: '/hi/support',
-    exact: true
-  }
+  },
 ];
 
-export const HiTsx: React.FC<IHiProps> = ({
-  userRole,
-  brandName,
-  classes
-}) => {
+export const HiTsx: React.FC<IHiProps> = ({ userRole, brandName, classes }) => {
   const preparedRoutes = useAllowedRoutes(HI_ROUTES, userRole);
 
   return (
@@ -54,13 +49,13 @@ export const HiTsx: React.FC<IHiProps> = ({
       </Helmet>
 
       <Suspense fallback={<LoadingPage />}>
-      <Switch>
-        {preparedRoutes.map((route: IRoute) => (
-          <NestedRoute key={route.path} {...route} />
-        ))}
-        <Route component={NotFound} />
-      </Switch>
-    </Suspense>
+        <Switch>
+          {preparedRoutes.map((route: IRoute) => (
+            <NestedRoute key={route.path} {...route} />
+          ))}
+          <Route component={NotFound} />
+        </Switch>
+      </Suspense>
 
       <AppBar key={'bottom'} position="static" component={'footer'}>
         <Toolbar className={classes.bottomBar}>

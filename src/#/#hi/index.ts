@@ -1,24 +1,21 @@
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect'
+
+import { createStructuredSelector } from 'reselect';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import { userRole } from '#/@store/identity';
 import { fetchAltiore } from '#/@store/publicAltiore';
 import { fetchStatistics } from '#/@store/statistics';
-import { userRole } from '#/@store/identity';
-
 
 import { HiTsx } from './hi-layout';
 import { styles } from './styles';
 
-import { withResize } from '@hooks/withResize';
-
-
-const brandName = () => 'Altiore'
+const brandName = () => 'Altiore';
 
 const mapStateToProps = createStructuredSelector({
   brandName,
-  userRole
+  userRole,
 });
 
 const mapDispatch = {
@@ -29,4 +26,4 @@ const mapDispatch = {
 export default connect(
   mapStateToProps,
   mapDispatch
-)(withStyles(styles)(withResize(HiTsx)) as any);
+)(withStyles(styles)(HiTsx) as any);

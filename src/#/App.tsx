@@ -8,9 +8,8 @@ import NotFound from '#/@common/NotFoundPage';
 
 import { ROLES } from './@store/roles';
 
-import { useAllowedRoutes } from '@utils/useAllowedRoutes';
-
 import { IRoute, ROLE } from '@types';
+import { useAllowedRoutes } from '@utils/useAllowedRoutes';
 
 interface IAppProps {
   userRole: ROLE;

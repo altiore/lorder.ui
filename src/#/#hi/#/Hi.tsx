@@ -5,13 +5,14 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import YouTubeVideo from '@components/YouTubeVideo';
 
-import HiHeader from '#/#hi/HiHeader';
+import HiHeader from '#/#hi/@common/HiHeader';
+import ScreenSupport from '#/@common/ScreenSupport';
+
 import ScreenAdvantages from './ScreenAdvantages';
 import ScreenHelp from './ScreenHelp';
 import ScreenProgress from './ScreenProgress';
 import ScreenServices from './ScreenServices';
 import ScreenStart from './ScreenStart';
-import ScreenSupport from '#/@common/ScreenSupport';
 import ScreenTeam from './ScreenTeam';
 
 export interface IHiProps {
@@ -65,26 +66,18 @@ const BLOCKS = {
   },
 };
 
-export const HiTsx: React.FC<IHiProps> = ({
-  brandName,
-  classes,
-  fetchAltiore,
-  fetchStatistics,
-  height,
-  scrollWidth,
-  width,
-}) => {
+export const HiTsx: React.FC<IHiProps> = ({ fetchAltiore, fetchStatistics, height, scrollWidth, width }) => {
   useEffect(() => {
     fetchStatistics();
     fetchAltiore();
   }, [fetchAltiore, fetchStatistics]);
 
   const theme = useTheme();
-  const isDesctop = useMediaQuery(theme.breakpoints.up('sm'));
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <>
-      {isDesctop ? (
+      {isDesktop ? (
         <YouTubeVideo
           videoId="PT8urv0CtUw"
           opts={{ start: 14, end: 280 }}
