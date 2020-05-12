@@ -2,11 +2,7 @@
 
 ## Трекер задач и времени
 
-![Auto-тесты](https://github.com//altiore/altiore.ui/workflows/CI/badge.svg)
-
-![Staging Deployment](https://github.com//altiore/altiore.ui/workflows/Staging%20Deployment/badge.svg)
-
-![Production Deployment](https://github.com//altiore/altiore.ui/workflows/Production%20Deployment/badge.svg)
+![Auto-тесты](https://github.com//altiore/altiore.ui/workflows/CI/badge.svg) ![Staging Deployment](https://github.com//altiore/altiore.ui/workflows/Staging%20Deployment/badge.svg) ![Production Deployment](https://github.com//altiore/altiore.ui/workflows/Production%20Deployment/badge.svg)
 
 ### Установка
 
@@ -53,3 +49,5 @@ $ npm start
 4. _@styles_ - содержит общие стили. [смотри стилизацию темы для material-ui библиотеки](https://material-ui.com/customization/theming/)
 5. _@types_ - общие типы данных в проекте
 6. _@utils_ - полезные утилиты, используемые в проекте
+
+#### [Участие в разработке](https://github.com/altiore/altiore.ui/blob/master/CONTRIBUTING.md)
