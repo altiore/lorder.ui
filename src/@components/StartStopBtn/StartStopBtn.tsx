@@ -12,12 +12,12 @@ import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 
 import { SpeedDial } from './SpeedDeal';
 
-import { ITask, IUserWork } from '@types';
+import { ITask } from '@types';
 
 export interface IStartStopBtnProps {
   afterStop?: any;
   currentTaskId: number;
-  currentUserWork?: IUserWork;
+  isPaused: boolean;
   isLarge?: boolean;
   isStarted: boolean;
   theme: Theme;
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
   afterStop,
   currentTaskId,
-  currentUserWork,
+  isPaused,
   isLarge,
   theme,
   onStart,
@@ -89,10 +89,6 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
   const isCurrent = useMemo(() => {
     return !task || task.id === currentTaskId;
   }, [currentTaskId, task]);
-
-  const isPaused = useMemo(() => {
-    return currentUserWork && currentUserWork.taskId !== currentTaskId;
-  }, [currentTaskId, currentUserWork]);
 
   const handleClose = useCallback(() => {
     setOpen(false);

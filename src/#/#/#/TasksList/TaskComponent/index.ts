@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { openDialog } from '#/@store/dialog';
 import { showWarning } from '#/@store/notifications';
 import { getTaskById, openTaskModal } from '#/@store/tasks';
-import { startUserWork } from '#/@store/user-works';
+import { isPaused, startUserWork } from '#/@store/user-works';
 
 import { TaskComponentTsx } from './TaskComponent';
 
@@ -18,6 +18,7 @@ interface ITaskComponentOwn {
 
 const mapStateToProps = createStructuredSelector({
   getTaskById,
+  isPaused,
 } as any);
 
 const mapDispatch = {

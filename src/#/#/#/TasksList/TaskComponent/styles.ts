@@ -17,6 +17,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     color: '#676767',
     flexGrow: 1,
     paddingLeft: theme.spacing(5),
+    transition: theme.transitions.create(['background-color']),
     [theme.breakpoints.down('sm')]: {
       display: 'inline-block',
     },
@@ -38,6 +39,15 @@ export const useStyles = makeStyles((theme: Theme) => ({
     textOverflow: 'ellipsis',
     textTransform: 'none',
     whiteSpace: 'nowrap',
+  },
+  buttonTitlePaused: {
+    '& $buttonTitleLabel': {
+      color: '#676767',
+    },
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+    },
+    backgroundColor: '#f4f5f7',
   },
   duration: {
     '& > button': {
@@ -69,6 +79,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(2),
     padding: theme.spacing(1, 2, 1, 1.5),
     position: 'relative',
+    transition: theme.transitions.create(['background-color', 'border-color', 'box-shadow']),
     [theme.breakpoints.down('sm')]: {
       marginBottom: theme.spacing(1),
       padding: theme.spacing(1),
@@ -81,6 +92,14 @@ export const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: '#f8f1cc',
     border: '1px solid #eecf6d',
     boxShadow: '0 4px 10px rgba(242, 213, 120, 0.6)',
+  },
+  listItemPaused: {
+    '&:hover': {
+      borderColor: darken('#f4f5f7', 0.1),
+    },
+    backgroundColor: '#f4f5f7',
+    border: '1px solid #d1d1d1',
+    boxShadow: '0 4px 10px #d8d8d8',
   },
   listItemRoot: {
     [theme.breakpoints.down('sm')]: {
@@ -96,6 +115,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginRight: theme.spacing(1),
     minWidth: theme.spacing(5),
     textTransform: 'none',
+    transition: theme.transitions.create(['background-color']),
     whiteSpace: 'nowrap',
   },
   projectButtonCurrent: {
@@ -104,6 +124,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
     backgroundColor: '#f8f4ea',
     color: '#292929',
+  },
+  projectButtonPaused: {
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+    },
+    backgroundColor: '#fcfcfc',
   },
   projectText: {
     // opacity: 0.2,

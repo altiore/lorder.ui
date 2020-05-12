@@ -25,6 +25,7 @@ import { ITask } from '@types';
 export interface ITaskComponentProps {
   getTaskById: (id: number | string) => ITask;
   isCurrent: boolean;
+  isPaused: boolean;
   project: Project;
   push: any;
   taskId: number | string;
@@ -38,6 +39,7 @@ export interface ITaskComponentProps {
 export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
   getTaskById,
   isCurrent,
+  isPaused,
   openTaskModal,
   project,
   push,
@@ -120,6 +122,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
     <div
       className={cn(classes.listItem, {
         [classes.listItemCurrent]: isCurrent,
+        [classes.listItemPaused]: isPaused && isCurrent,
       })}
     >
       <div className={classes.title}>
@@ -130,6 +133,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
               href={isShown ? `/projects/${project.id}` : '#'}
               className={cn(classes.projectButton, {
                 [classes.projectButtonCurrent]: isCurrent,
+                [classes.projectButtonPaused]: isCurrent && isPaused,
               })}
               onClick={goToProjectAskCreateTask}
             >
@@ -143,6 +147,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
             classes={{ label: classes.buttonTitleLabel }}
             className={cn(classes.buttonTitle, {
               [classes.buttonTitleCurrent]: isCurrent,
+              [classes.buttonTitlePaused]: isPaused && isCurrent,
             })}
             href={isShown ? `${TASKS_ROUTE(project.id)}/${task.sequenceNumber}` : '#'}
             onClick={isShown ? openEditTaskForm(task.sequenceNumber, project.id as number) : undefined}
