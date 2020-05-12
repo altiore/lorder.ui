@@ -133,6 +133,7 @@
     "tslint-lint": "tslint -t verbose \"src/**/*.{ts,tsx}\" --fix",
     "prettier-lint": "prettier --write \"src/**/*.{ts,tsx}\" --print-width 120 --single-quote --parser typescript --trailing-comma es5",
     "lint": "npm run prettier-lint && npm run tslint-lint",
+    "lint:ci": "prettier \"src/**/*.{ts,tsx}\" --print-width 120 --single-quote --parser typescript --trailing-comma es5 && tslint -t verbose \"src/**/*.{ts,tsx}\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o docs",
     "release": "release-it patch commit",
