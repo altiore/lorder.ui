@@ -25,7 +25,7 @@ export interface ITasksListProps {
 export class TasksListJsx extends React.Component<ITasksListProps, ITaskListState> {
   state = {
     page: 0,
-    perPage: 4,
+    perPage: 5,
   };
 
   shouldComponentUpdate(
