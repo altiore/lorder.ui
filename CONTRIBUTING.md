@@ -36,3 +36,10 @@ git push
 git fetch origin
 git rebase origin/master -i
 ```
+
+#### 5. Добавить исправления в ТОТ ЖЕ коммит (commit)
+```bash
+git add .
+git commit --amend
+git push -f
+```

@@ -4,6 +4,7 @@ import get from 'lodash/get';
 
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { WrappedFieldProps } from 'redux-form';
 
@@ -22,6 +23,12 @@ export const PerformerField: React.FC<IPerformerField> = ({ assigneeListToggle, 
     return assignees.find(el => el.id === input.value);
   }, [assignees, input.value]);
 
+  const shortName = useMemo(() => get(currentUser, 'shortName', '--'), [currentUser]);
+
+  const userName = useMemo(() => get(currentUser, 'userName', '--'), [currentUser]);
+
+  const avatarUrl = useMemo(() => get(currentUser, ['avatar', 'url']), [currentUser]);
+
   return (
     <ButtonBase
       className={classes.avatarWrapper}
@@ -29,9 +36,11 @@ export const PerformerField: React.FC<IPerformerField> = ({ assigneeListToggle, 
       aria-haspopup="true"
       onClick={assigneeListToggle}
     >
-      <Avatar className={classes.avatar} src={get(currentUser, ['avatar', 'url'])}>
-        {get(currentUser, 'shortName', '--')}
-      </Avatar>
+      <Tooltip title={userName}>
+        <Avatar className={classes.avatar} src={avatarUrl}>
+          {shortName}
+        </Avatar>
+      </Tooltip>
     </ButtonBase>
   );
 };
