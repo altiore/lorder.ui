@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import TimerIcon from '@material-ui/icons/Timer';
@@ -159,9 +160,15 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
                 <ProjectField onClick={selectProject} onOpenInNew={handleOpenInNew} />
               </div>
             </Menu>
-            <IconButton color="secondary" onClick={openCreateProject} className={classes.expandButton}>
-              <AddIcon />
-            </IconButton>
+            
+            <div>
+              <Tooltip title="Создать новый проект" placement="right">
+                <IconButton color="secondary" onClick={openCreateProject} className={classes.expandButton}>
+                  <AddIcon />
+                </IconButton>
+              </Tooltip>
+            </div>
+
           </div>
           <div className={classes.grow}>
             <Switch>

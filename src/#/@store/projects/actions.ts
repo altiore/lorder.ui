@@ -5,11 +5,12 @@ import { requestActions } from '#/@store/@common/requestActions';
 export interface IPostProjectData {
   monthlyBudget?: string | number;
   title: string;
+  type: string;
 }
 
 export const postProject = requestActions<IPostProjectData>(
   'PROJECTS/POST',
-  ({ monthlyBudget, title }: IPostProjectData) => ({
+  ({ monthlyBudget, title, type }: IPostProjectData) => ({
     error: {
       message: 'Не удалось сохранить проект',
       title: 'Неудача',
@@ -19,6 +20,7 @@ export const postProject = requestActions<IPostProjectData>(
       data: {
         monthlyBudget: monthlyBudget && parseInt(monthlyBudget as string, 0),
         title,
+        type
       },
       method: 'POST',
       url: '/projects',
