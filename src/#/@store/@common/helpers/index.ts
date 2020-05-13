@@ -10,4 +10,4 @@ export * from './combineActions';
 export * from './queryParser';
 export * from './nullIfEmpty';
 export * from './mapEnum';
-export * from './millisecondsToTime';
+export * from './secondsToTime';
