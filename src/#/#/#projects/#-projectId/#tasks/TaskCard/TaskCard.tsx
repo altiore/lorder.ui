@@ -74,7 +74,7 @@ export const TaskCardTsx: React.FC<ITaskCard> = ({
             </Typography>
           </div>
         </div>
-        <Tooltip title={taskPerformer.userName}>
+        <Tooltip title={get(taskPerformer, 'userName', 'N/A')}>
           <Avatar size="sm" src={get(taskPerformer, ['avatar', 'url'])}>
             {get(taskPerformer, ['email'], '--')}
           </Avatar>
