@@ -4,7 +4,7 @@ import { defaultProjectId } from '#/@store/identity';
 import { routeProjectId } from '#/@store/router';
 import { currentProjectId } from '#/@store/timer';
 
-import { Member } from './members/Member';
+import { IMember } from './members/Member';
 import { Project } from './Project';
 
 import { IState, IUser } from '@types';
@@ -63,16 +63,23 @@ export const initialUpdateProject = createDeepEqualSelector(
 export const projectMembers = createDeepEqualSelector(
   [openedProject, selectedProject],
   (opened: Project, selected: Project) => {
-    return opened ? opened.members : selected && selected.members;
+    const res = opened ? opened.members : selected && selected.members;
+    return res && res.list
+      ? res.list.sort((a, b) => {
+          if (a.valueSum > b.valueSum) {
+            return -1;
+          } else if (a.valueSum < b.valueSum) {
+            return 1;
+          }
+          return 0;
+        })
+      : [];
   }
 );
 
-export const projectMembersAsUsers = createDeepEqualSelector(
-  projectMembers as any,
-  (members: Member[] = []): IUser[] => {
-    return members.map(el => el.member);
-  }
-);
+export const projectMembersAsUsers = createDeepEqualSelector([projectMembers], (members: IMember[]): IUser[] => {
+  return members.map(el => el.member);
+});
 
 export const getProjectMemberById = createDeepEqualSelector([projectMembersAsUsers], members => userId =>
   members && members.find(el => el.id === userId)
