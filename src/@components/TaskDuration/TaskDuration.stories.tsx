@@ -15,16 +15,16 @@ storiesOf('TaskDuration', module)
   ))
   .add('days & hours', () => (
     <div style={{ backgroundColor: '#fff', padding: 8 }}>
-      <TaskDuration time={2678340000} onClick={action('onClick')} hoursPerDay={24} />
+      <TaskDuration time={2678340} onClick={action('onClick')} hoursPerDay={24} />
     </div>
   ))
   .add('hours & minutes', () => (
     <div style={{ backgroundColor: '#fff', padding: 8 }}>
-      <TaskDuration time={86340000} onClick={action('onClick')} hoursPerDay={24} />
+      <TaskDuration time={86340} onClick={action('onClick')} hoursPerDay={24} />
     </div>
   ))
   .add('minutes & seconds', () => (
     <div style={{ backgroundColor: '#fff', padding: 8 }}>
-      <TaskDuration time={3599000} onClick={action('onClick')} hoursPerDay={24} />
+      <TaskDuration time={3599} onClick={action('onClick')} hoursPerDay={24} />
     </div>
   ));

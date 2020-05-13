@@ -2,12 +2,12 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { currentTimeWithLocal } from '#/@store/timer';
+import TaskDuration from '@components/TaskDuration';
 
-import { CurrentDurationItemTsx } from './CurrentDurationItem';
+import { currentTimerTime } from '#/@store/timer';
 
 const mapStateToProps = createStructuredSelector({
-  time: currentTimeWithLocal,
+  time: currentTimerTime,
 } as any);
 
-export default connect<any, any, any>(mapStateToProps)(CurrentDurationItemTsx);
+export default connect<any, any, any>(mapStateToProps)(TaskDuration);
