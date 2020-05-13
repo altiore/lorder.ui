@@ -14,10 +14,14 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Install dependencies
+      - name: Install dependencies (please, check you dependencies)
         run: npm ci
 
-      - name: Unit Tests
+      - name: Linter (please, run `npm run lint` locally before merge)
+        run: |
+          npm run lint:ci
+
+      - name: Unit Tests (please, run `npm run test` locally before merge)
         run: |
           npm run test:ci
 
@@ -33,15 +37,22 @@ jobs:
           FOLDER: docs
 
       - name: Build
-        run: |
-          npm run build
         env:
           CI: true
           REACT_APP_API_BASE_URL: https://staging-altiore-api.herokuapp.com/v1
           REACT_APP_MAIN_PUBLIC_PROJECT: 1d9905e6-b06f-49f3-8d47-971291746399
           PUBLIC_URL: https://staging-altiore.herokuapp.com
+          GENERATE_SOURCEMAP: false
+        run: |
+          npm run build
 
       - name: Deploy to staging 🚀
+        env:
+          CI: true
+          REACT_APP_API_BASE_URL: https://staging-altiore-api.herokuapp.com/v1
+          REACT_APP_MAIN_PUBLIC_PROJECT: 1d9905e6-b06f-49f3-8d47-971291746399
+          PUBLIC_URL: https://staging-altiore.herokuapp.com
+          GENERATE_SOURCEMAP: false
         run: |
           cd heroku
           rm -rf ./build
@@ -54,8 +65,3 @@ jobs:
           git commit -m 'dynamic version'
           git status
           git push https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git -f HEAD:master
-        env:
-          CI: true
-          REACT_APP_API_BASE_URL: https://staging-altiore-api.herokuapp.com/v1
-          REACT_APP_MAIN_PUBLIC_PROJECT: 1d9905e6-b06f-49f3-8d47-971291746399
-          PUBLIC_URL: https://staging-altiore.herokuapp.com
