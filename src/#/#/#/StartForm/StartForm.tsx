@@ -2,10 +2,8 @@ import React from 'react';
 
 import { InjectedFormProps } from 'redux-form';
 
-import Fab from '@material-ui/core/Fab';
 import { Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
-import AddIcon from '@material-ui/icons/Add';
 // import { length } from 'redux-form-validators';
 
 // import AutoTaskField from './AutoTaskField';
@@ -40,9 +38,7 @@ export const StartFormJsx: React.FunctionComponent<
     {/*</div>*/}
     {selectedProject && (
       <Tooltip title={`Создать новую задачу в проекте "${selectedProject.title}"`} placement={'top'}>
-        <Fab onClick={handleSubmit} className={classes.add}>
-          <AddIcon fontSize={'default'} />
-        </Fab>
+        <button onClick={handleSubmit} className={classes.add} />
       </Tooltip>
     )}
   </form>
