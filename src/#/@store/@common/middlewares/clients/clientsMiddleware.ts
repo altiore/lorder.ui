@@ -11,6 +11,7 @@ import { stopAsyncValidation } from 'redux-form';
 
 import { parseFormErrorsFromResponse } from '../../helpers';
 import { api } from './api';
+import { intl } from './intl';
 
 const objectToFormData = require('object-to-formdata');
 
@@ -68,6 +69,9 @@ export default multiClientMiddleware(
   {
     default: {
       client: api,
+    },
+    intl: {
+      client: intl,
     },
   },
   {

@@ -1,3 +1,4 @@
+import { intlReducer as intl } from 'react-intl-redux';
 import { reducer as notifications } from 'react-notification-system-redux';
 
 import { createTransform, PersistConfig, persistReducer } from 'redux-persist';
@@ -124,6 +125,7 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
       highcharts,
       identity,
       info,
+      intl,
       notifications,
       publicAltiore,
       publicProject,
@@ -147,7 +149,6 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
       taskTypes,
       timer,
       userWorks,
-
       ...asyncReducers,
     })
   );
