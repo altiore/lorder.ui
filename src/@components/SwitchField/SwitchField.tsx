@@ -13,20 +13,13 @@ export interface ISwitchFieldProps extends WrappedFieldProps {
 
 export const SwitchField: React.FC<ISwitchFieldProps> = ({ input, label, on, off }) => {
   const handleProjectType = (event: any) => {
-    input.onChange(event.target.checked ? on : off)
-  }
+    input.onChange(event.target.checked ? on : off);
+  };
 
   return (
     <FormControlLabel
       label={label}
-      control={ 
-        <Switch
-          name={input.name}
-          color="primary"
-          checked={input.checked}
-          onChange={handleProjectType}
-        />
-      }
+      control={<Switch name={input.name} color="primary" checked={input.checked} onChange={handleProjectType} />}
     />
-  )
-}
+  );
+};

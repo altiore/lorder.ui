@@ -28,13 +28,8 @@ export const APP_MAIN_ROUTES: IRoute[] = [
   },
   {
     access: [ROLES.ALL],
-    component: lazy(() => import('./#hi/#')),
+    component: lazy(() => import('./#hi')),
     path: '/hi',
-  },
-  {
-    access: [ROLES.ALL],
-    component: lazy(() => import('./#hi/#support')),
-    path: '/support',
   },
   {
     access: [ROLES.GUESTS],
