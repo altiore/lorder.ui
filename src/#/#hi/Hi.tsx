@@ -35,13 +35,13 @@ const BLOCKS = {
   start: {
     menu: true,
     name: 'start',
-    title: 'Начать',
+    title: 'homepage.navigation.start',
   },
 
   help: {
     menu: true,
     name: 'help',
-    title: 'Что это?',
+    title: 'homepage.navigation.help',
   },
 
   services: {
@@ -62,13 +62,13 @@ const BLOCKS = {
   team: {
     menu: true,
     name: 'team',
-    title: 'Наша Команда',
+    title: 'homepage.navigation.team',
   },
 
   support: {
     menu: true,
     name: 'support',
-    title: 'Поддержать проект',
+    title: 'homepage.navigation.support',
   },
 };
 

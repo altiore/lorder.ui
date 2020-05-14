@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { IntlProvider } from 'react-intl-redux';
 import { Provider } from 'react-redux';
 
 import { ConnectedRouter } from 'connected-react-router';
@@ -22,16 +23,18 @@ import * as serviceWorker from './serviceWorker';
 createStore().then(({ store, history }) => {
   ReactDOM.render(
     <Provider store={store}>
-      <PersistGate loading={null} persistor={store.persistor}>
-        <ConnectedRouter history={history}>
-          <MuiThemeProvider theme={lightTheme}>
-            <CssBaseline />
-            <App />
-            <Notification />
-            <Dialog />
-          </MuiThemeProvider>
-        </ConnectedRouter>
-      </PersistGate>
+      <IntlProvider>
+        <PersistGate loading={null} persistor={store.persistor}>
+          <ConnectedRouter history={history}>
+            <MuiThemeProvider theme={lightTheme}>
+              <CssBaseline />
+              <App />
+              <Notification />
+              <Dialog />
+            </MuiThemeProvider>
+          </ConnectedRouter>
+        </PersistGate>
+      </IntlProvider>
     </Provider>,
     document.getElementById('root') as HTMLElement
   );

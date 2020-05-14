@@ -61,6 +61,7 @@ export interface IState {
   ui: IUiState;
   userWorks: IDownloadList<IUserWork>;
   versionHistory: VersionHistory;
+  intl: any;
 
   authorized: {
     users: DownloadList<IUser>;

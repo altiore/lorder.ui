@@ -4,6 +4,7 @@ import { persistStore } from 'redux-persist';
 
 import { replaceReducers } from '#/@store/asyncReducers';
 import { loadInitialData } from '#/@store/identity';
+import { getIntl } from '#/@store/intl/thunk';
 import { initSockets } from '#/@store/sockets';
 
 import { createBrowserHistory } from 'history';
@@ -17,6 +18,7 @@ import { initExternalLibraries } from './externalLibraries/thunk';
 import { rootSaga } from './rootSaga';
 
 import { ROLE } from '@types';
+import { getUserLanguage } from '@utils/detectUserLanguage';
 
 const composeEnhancers =
   process.env.NODE_ENV === 'development' &&
@@ -51,6 +53,7 @@ export async function createStore(initialState?: any) {
 
   store.persistor = persistStore(store, undefined, async () => {
     store.dispatch(replaceReducers(Object.getOwnPropertyNames(rootReducer)));
+    await store.dispatch(getIntl(getUserLanguage()));
     await store.dispatch(initExternalLibraries() as any);
     await store.dispatch(initSockets() as any);
     await store.dispatch(loadInitialData() as any);

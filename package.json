@@ -96,6 +96,8 @@
     "react-flip-move": "3.0.3",
     "react-helmet": "5.2.1",
     "react-icons": "3.6.1",
+    "react-intl": "^4.5.3",
+    "react-intl-redux": "^2.2.0",
     "react-jsx-highcharts": "3.6.0",
     "react-markdown": "4.0.8",
     "react-notification-system": "0.2.17",

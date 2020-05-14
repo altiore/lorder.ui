@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { Events, Link, scrollSpy } from 'react-scroll';
 
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
@@ -84,6 +85,7 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
     },
     [isScroll, value]
   );
+  const { formatMessage } = useIntl();
 
   return (
     <HeaderFixed brandName={brandName} brandLink="/">
@@ -105,7 +107,7 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
               smooth
               to={name}
               offset={-56}
-              label={title}
+              label={formatMessage({ id: title })}
               duration={500}
               onSetActive={handleSetActive}
             />
