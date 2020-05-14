@@ -13,4 +13,4 @@ export const changeFilter = createAction<IChangeFilterP, filterType, any>(
   (filter, value): any => ({ filter, value })
 );
 
-export const toggleMember = createAction<number>('TASKS_FILTER/TOGGLE_MEMBER');
+export const toggleMemberA = createAction<number>('TASKS_FILTER/TOGGLE_MEMBER');

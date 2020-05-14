@@ -56,28 +56,22 @@ export const PROJECT_ROUTES: IRoute[] = [
 ];
 
 export interface IProjectProps {
-  fetchProjectDetails: any;
+  fetchOneProject: any;
   openedProject: Project;
   routes: IRoute[];
   userRole: ROLE;
 }
 
 export const ProjectTsx: React.FC<IProjectProps> = ({
-  fetchProjectDetails,
+  fetchOneProject,
   openedProject,
   userRole,
 }): JSX.Element | null => {
   useEffect(() => {
-    if (
-      openedProject &&
-      openedProject.id &&
-      typeof openedProject.accessLevel === 'number' &&
-      openedProject.accessLevel > ACCESS_LEVEL.WHITE &&
-      fetchProjectDetails
-    ) {
-      fetchProjectDetails(openedProject.id);
+    if (fetchOneProject) {
+      fetchOneProject();
     }
-  }, [fetchProjectDetails, openedProject]);
+  }, [fetchOneProject]);
 
   const availableRoutes = useAllowedRoutes(PROJECT_ROUTES, userRole, openedProject && openedProject.accessLevel);
 

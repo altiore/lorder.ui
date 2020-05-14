@@ -66,7 +66,7 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
     }, [fetchItems]);
 
     const preparedList = useMemo(() => {
-      return get(list, 'list', []).map(el => ({
+      return (list || []).map(el => ({
         ...el,
         roles: el.roles ? el.roles.map(r => r.role.id) : [],
       }));

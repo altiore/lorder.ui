@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import { changeFilter, changeTasksFilter, IChangeFilterP, toggleMember } from './actions';
+import { changeFilter, changeTasksFilter, IChangeFilterP, toggleMemberA } from './actions';
 import { TasksFilter } from './TasksFilter';
 
 import { ITasksFilter } from '@types';
@@ -50,7 +50,7 @@ export const tasksFilter: any = handleActions<any, any, any>(
   {
     [changeFilter.toString()]: changeFilterHandler,
     [changeTasksFilter.toString()]: changeTasksFilterHandler,
-    [toggleMember.toString()]: toggleMemberHandler,
+    [toggleMemberA.toString()]: toggleMemberHandler,
   },
   new TasksFilter()
 );

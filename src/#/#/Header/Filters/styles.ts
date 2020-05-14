@@ -28,6 +28,14 @@ export const styles = (theme: Theme) =>
       flexFlow: 'row nowrap',
       justifyContent: 'center',
     },
+    moreBtn: {
+      marginRight: theme.spacing(2),
+    },
+    popper: {
+      maxHeight: 324,
+      overflowY: 'auto',
+      zIndex: 1311,
+    },
     root: {
       alignItems: 'center',
       display: 'flex',
