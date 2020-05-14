@@ -160,15 +160,11 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
                 <ProjectField onClick={selectProject} onOpenInNew={handleOpenInNew} />
               </div>
             </Menu>
-            
-            <div>
-              <Tooltip title="Создать новый проект" placement="right">
-                <IconButton color="secondary" onClick={openCreateProject} className={classes.expandButton}>
-                  <AddIcon />
-                </IconButton>
-              </Tooltip>
-            </div>
-
+            <Tooltip title="Создать новый проект" placement="right">
+              <IconButton color="secondary" onClick={openCreateProject} className={classes.expandButton}>
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
           </div>
           <div className={classes.grow}>
             <Switch>

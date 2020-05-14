@@ -20,7 +20,7 @@ export const postProject = requestActions<IPostProjectData>(
       data: {
         monthlyBudget: monthlyBudget && parseInt(monthlyBudget as string, 0),
         title,
-        type
+        type,
       },
       method: 'POST',
       url: '/projects',
