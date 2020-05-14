@@ -1,24 +1,26 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import Button from '@material-ui/core/Button';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 
-import { millisecondsToTime } from '#/@store/@common/helpers';
+import { secondsToTime } from '#/@store/@common/helpers';
 
 import HourglassSvg from './hourglass';
 
 export interface ITaskDurationProps {
+  isOpen?: boolean;
   time: number;
   onClick: any;
-  hoursPerDay: number
+  hoursPerDay: number;
 }
 
 interface IPartTime {
-  value: number,
-  unit: string
+  value: number;
+  unit: string;
 }
 
-export const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   time: {
     '& > div': {
       lineHeight: 1,
@@ -41,46 +43,63 @@ const initPartTimeState = {
   value: 0,
 };
 
-export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ time, onClick, hoursPerDay }) => {
+export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ isOpen, time, onClick, hoursPerDay }) => {
   const classes = useStyles();
 
-  const convertedTime = millisecondsToTime(time, hoursPerDay);
+  const convertedTime = useMemo(() => secondsToTime(time, hoursPerDay), [hoursPerDay, time]);
 
-  const [firstPartTime, setFirstPartTime]= useState<IPartTime>(initPartTimeState);
-  const [secondPartTime, setSecondPartTime]= useState<IPartTime>(initPartTimeState);
+  const [firstPartTime, setFirstPartTime] = useState<IPartTime>(initPartTimeState);
+  const [secondPartTime, setSecondPartTime] = useState<IPartTime>(initPartTimeState);
 
-  const didNotTouched = useMemo( ()=>time === 0, [time]);
-  const {days, hours, minutes, seconds } = convertedTime;
+  const didNotTouched = useMemo(() => time === 0, [time]);
+  const { days, hours, minutes, seconds } = convertedTime;
 
   useEffect(() => {
     if (days) {
-      setFirstPartTime({value: days, unit: 'дни'});
-      setSecondPartTime({value: hours, unit: 'час'});
+      setFirstPartTime({ value: days, unit: 'дни' });
+      setSecondPartTime({ value: hours, unit: 'час' });
     } else if (hours) {
-      setFirstPartTime({value: hours, unit: 'час'});
-      setSecondPartTime({value: minutes, unit: 'мин'});
+      setFirstPartTime({ value: hours, unit: 'час' });
+      setSecondPartTime({ value: minutes, unit: 'мин' });
     } else {
-      setFirstPartTime({value: minutes, unit: 'мин'});
-      setSecondPartTime({value: seconds, unit: 'сек'});
+      setFirstPartTime({ value: minutes, unit: 'мин' });
+      setSecondPartTime({ value: seconds, unit: 'сек' });
     }
-  }, [ convertedTime, days, hours, minutes, seconds ]);
+  }, [convertedTime, days, hours, minutes, seconds]);
 
   return (
-      <Button onClick={didNotTouched ? undefined : onClick}>
-        <div className={classes.time}>
-          <div>
-            <HourglassSvg />
+    <div>
+      <Tooltip
+        placement={'right'}
+        title={
+          didNotTouched
+            ? 'Вы пока не работали над этой задачей'
+            : isOpen
+            ? 'Закрыть подробности'
+            : 'Нажмите, чтоб раскрыть подробности'
+        }
+      >
+        <Button onClick={didNotTouched ? undefined : onClick}>
+          <div className={classes.time}>
+            <div>
+              <HourglassSvg />
+            </div>
+            <div>
+              <div>
+                <b>{firstPartTime.value < 10 ? `0${firstPartTime.value}` : firstPartTime.value}</b>
+              </div>
+              <div>{firstPartTime.unit}</div>
+            </div>
+            <div>:</div>
+            <div>
+              <div>
+                <b>{secondPartTime.value < 10 ? `0${secondPartTime.value}` : secondPartTime.value}</b>
+              </div>
+              <div>{secondPartTime.unit}</div>
+            </div>
           </div>
-          <div>
-            <div><b>{firstPartTime.value < 10 ? `0${firstPartTime.value}` : firstPartTime.value}</b></div>
-            <div>{firstPartTime.unit}</div>
-          </div>
-          <div>:</div>
-          <div>
-            <div><b>{secondPartTime.value < 10 ? `0${secondPartTime.value}` : secondPartTime.value}</b></div>
-            <div>{secondPartTime.unit}</div>
-          </div>
-        </div>
-      </Button>
+        </Button>
+      </Tooltip>
+    </div>
   );
 };

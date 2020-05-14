@@ -95,7 +95,7 @@ export const TaskStatus: React.FC<ITaskStatus> = React.memo(
               open={open}
               assignees={assignees}
             />
-            <Popper open={open} anchorEl={anchorRef.current} transition style={{ zIndex: 1303 }}>
+            <Popper open={open} anchorEl={anchorRef.current} transition className={classes.popper}>
               {({ TransitionProps, placement }) => (
                 <Grow
                   {...TransitionProps}

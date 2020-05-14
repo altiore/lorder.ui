@@ -1,6 +1,11 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
+  popper: {
+    maxHeight: 324,
+    overflowY: 'auto',
+    zIndex: 1303,
+  },
   taskStatus: {
     position: 'relative',
   },

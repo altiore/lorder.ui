@@ -3,8 +3,8 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import Block from '#/#hi/@common/Block';
-import ScreenTitle from '#/#hi/@common/ScreenTitle';
+import Block from '#/#hi/#/@common/Block';
+import ScreenTitle from '#/#hi/#/@common/ScreenTitle';
 
 import SubscribeForm from './SubscribeForm';
 import SupportForm from './SupportForm';
@@ -33,6 +33,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   content: {
     backgroundColor: theme.palette.background.paper,
+    minHeight: 'calc(100vh - 136px)',
     overflow: 'hidden',
     position: 'relative',
   },

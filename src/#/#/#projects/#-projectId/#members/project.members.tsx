@@ -8,6 +8,7 @@ import { Page } from '@components/Page';
 
 import Crud from '#/@common/Crud';
 import { LinkButton } from '#/@common/LinkButton';
+import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 
 import { ACCESS_LEVEL } from '@types';
 
@@ -31,10 +32,16 @@ const STATUS = {
   10: 'Да',
 };
 
+const TimeComponent: React.FC<any> = ({ value }): JSX.Element => {
+  return <span>{convertSecondsToDurationWithLocal(value / 1000)}</span>;
+};
+
 const COLUMNS: ICrudColumn[] = [
   { title: 'Имя', path: 'member.displayName' },
   { title: 'E-mail', path: 'member.email', name: 'email' },
   { title: 'Активен', path: 'member.status', allowed: STATUS },
+  { title: 'Время', path: 'timeSum', component: TimeComponent },
+  { title: 'Вклад', path: 'valueSum' },
   { title: 'Роли', path: 'roles', multiple: true },
   { title: 'Уровень доступа', path: 'accessLevel', allowed: ACCESS_LEVEL },
 ];
@@ -66,21 +73,21 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
     }, [list]);
 
     const preparedColumns = useMemo(() => {
-      COLUMNS[3].editable = openedAccessLevel >= ACCESS_LEVEL.VIOLET;
-      COLUMNS[3].allowed = projectRoles.reduce((res, cur) => {
+      COLUMNS[5].editable = openedAccessLevel >= ACCESS_LEVEL.VIOLET;
+      COLUMNS[5].allowed = projectRoles.reduce((res, cur) => {
         res[cur.name || cur.role.name] = cur.role.id;
         return res;
       }, {});
-      COLUMNS[3].emptyElement =
+      COLUMNS[5].emptyElement =
         openedAccessLevel >= ACCESS_LEVEL.INDIGO ? (
           <LinkButton to={`/projects/${projectId}/roles`}>Добавить роли в проект</LinkButton>
         ) : (
           undefined
         );
       // только человек с максимальным уровнем доступа к проекту может редактировать accessLevel Других пользовтаелей
-      COLUMNS[4].editable = openedAccessLevel >= ACCESS_LEVEL.VIOLET;
+      COLUMNS[6].editable = openedAccessLevel >= ACCESS_LEVEL.VIOLET;
       // нельзя редактировать свой уровень доступа или уровень доступа человека, у которого максимальный уровень доступа
-      COLUMNS[4].skip = item => {
+      COLUMNS[6].skip = item => {
         if (item) {
           return item.accessLevel === ACCESS_LEVEL.VIOLET || item.member.id === userId;
         }

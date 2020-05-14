@@ -1,24 +1,18 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 
-import AppBar from '@material-ui/core/AppBar';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import { useTheme } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import TelegramIco from '@components/@icons/Telegram';
 import YouTubeVideo from '@components/YouTubeVideo';
 
-import HiHeader from './HiHeader';
+import HiHeader from '#/#hi/@common/HiHeader';
+import ScreenSupport from '#/@common/ScreenSupport';
+
 import ScreenAdvantages from './ScreenAdvantages';
 import ScreenHelp from './ScreenHelp';
 import ScreenProgress from './ScreenProgress';
 import ScreenServices from './ScreenServices';
 import ScreenStart from './ScreenStart';
-import ScreenSupport from './ScreenSupport';
 import ScreenTeam from './ScreenTeam';
 
 export interface IHiProps {
@@ -72,29 +66,18 @@ const BLOCKS = {
   },
 };
 
-export const HiTsx: React.FC<IHiProps> = ({
-  brandName,
-  classes,
-  fetchAltiore,
-  fetchStatistics,
-  height,
-  scrollWidth,
-  width,
-}) => {
+export const HiTsx: React.FC<IHiProps> = ({ fetchAltiore, fetchStatistics, height, scrollWidth, width }) => {
   useEffect(() => {
     fetchStatistics();
     fetchAltiore();
   }, [fetchAltiore, fetchStatistics]);
 
   const theme = useTheme();
-  const isDesctop = useMediaQuery(theme.breakpoints.up('sm'));
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <Grid container direction="column" className={classes.root}>
-      <Helmet>
-        <body className={classes.hiBody} />
-      </Helmet>
-      {isDesctop ? (
+    <>
+      {isDesktop ? (
         <YouTubeVideo
           videoId="PT8urv0CtUw"
           opts={{ start: 14, end: 280 }}
@@ -121,19 +104,6 @@ export const HiTsx: React.FC<IHiProps> = ({
       <ScreenProgress name={BLOCKS.progress.name} />
 
       <ScreenSupport name={BLOCKS.support.name} />
-
-      <AppBar key={'bottom'} position="static" component={'footer'}>
-        <Toolbar className={classes.bottomBar}>
-          <Typography variant="h5" color="inherit">
-            Copyright &copy; {brandName}
-          </Typography>
-          <div className={classes.sectionDesktop}>
-            <IconButton color="inherit" href="https://t.me/razzwan_altiore" target="_blank">
-              <TelegramIco />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-    </Grid>
+    </>
   );
 };

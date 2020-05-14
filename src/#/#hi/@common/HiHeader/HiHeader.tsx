@@ -9,8 +9,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import HeaderFixed from '@components/HeaderFixed';
 
-import { secondary } from '../../../@styles/themes/light/palette';
-
 export interface IHiHeaderProps {
   blocks: { [key: string]: { menu?: boolean; name: string; title: string } };
   brandName: string;
@@ -29,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   MuiTabsIndicator: {
     '& > div': {
-      backgroundColor: secondary.dark,
+      backgroundColor: theme.palette.secondary.dark,
       maxWidth: 40,
       width: '100%',
     },

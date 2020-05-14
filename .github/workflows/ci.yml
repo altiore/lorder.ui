@@ -11,17 +11,21 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install dependencies
+    - name: Install dependencies (please, check you dependencies)
       run: npm ci
 
-    - name: Unit Tests
+    - name: Linter (please, run `npm run lint` locally before merge)
+      run: |
+        npm run lint:ci
+
+    - name: Unit Tests (please, run `npm run test` locally before merge)
       run: |
         npm run test:ci
 
-    - name: Build
+    - name: Build (please, run `npm run build` locally before merge)
       run: |
         npm run build
 
-    - name: Storybook
+    - name: Storybook Build (please, run `npm run build-storybook` locally before merge)
       run: |
         npm run build-storybook

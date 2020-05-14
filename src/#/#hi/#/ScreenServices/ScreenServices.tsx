@@ -2,8 +2,8 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
-import Block from '#/#hi/@common/Block';
-import ScreenTitle from '#/#hi/@common/ScreenTitle';
+import Block from '#/#hi/#/@common/Block';
+import ScreenTitle from '#/#hi/#/@common/ScreenTitle';
 
 import { ReactComponent as AltioreSvg } from './Altiore_2.svg';
 import Item from './Item';

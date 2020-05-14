@@ -4,6 +4,7 @@ import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import get from 'lodash/get';
 
 import grey from '@material-ui/core/colors/grey';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import BugReportIcon from '@material-ui/icons/BugReport';
 import ExtensionIcon from '@material-ui/icons/Extension';
@@ -12,9 +13,11 @@ import Avatar from '@components/Avatar';
 
 import { Task } from '#/@store/tasks';
 
+import { IUser } from '@types';
+
 export interface ITaskCard extends Partial<Task> {
   classes: any;
-  getProjectMemberById: (_: any) => void;
+  getProjectMemberById: (_: any) => IUser;
   provided: DraggableProvided;
   snapshot: DraggableStateSnapshot;
   onClick: any;
@@ -40,7 +43,7 @@ export const TaskCardTsx: React.FC<ITaskCard> = ({
   provided,
   snapshot,
 }) => {
-  const taskPerformer = useMemo(() => {
+  const taskPerformer = useMemo<IUser>(() => {
     return getProjectMemberById(performerId);
   }, [getProjectMemberById, performerId]);
 
@@ -71,9 +74,11 @@ export const TaskCardTsx: React.FC<ITaskCard> = ({
             </Typography>
           </div>
         </div>
-        <Avatar size="sm" src={get(taskPerformer, ['avatar', 'url'])}>
-          {get(taskPerformer, ['email'], '--')}
-        </Avatar>
+        <Tooltip title={get(taskPerformer, 'userName', 'N/A')}>
+          <Avatar size="sm" src={get(taskPerformer, ['avatar', 'url'])}>
+            {get(taskPerformer, ['email'], '--')}
+          </Avatar>
+        </Tooltip>
       </div>
     </div>
   );
