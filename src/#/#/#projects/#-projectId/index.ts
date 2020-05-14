@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from '#/@store/dialog';
 import { userRole } from '#/@store/identity';
-import { fetchProjectDetails, openedProject } from '#/@store/projects';
+import { fetchOneProject, openedProject } from '#/@store/projects';
 
 import { ProjectTsx } from './one-project';
 
@@ -16,7 +16,7 @@ const mapState = createStructuredSelector({
 
 const mapDispatch = {
   closeDialog,
-  fetchProjectDetails,
+  fetchOneProject,
   goTo: push,
   openDialog,
 };

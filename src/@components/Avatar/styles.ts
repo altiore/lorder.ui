@@ -1,7 +1,6 @@
-import { Theme } from '@material-ui/core/styles';
-import createStyles from '@material-ui/core/styles/createStyles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme) =>
+export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     avatar: {
       margin: 0,
@@ -32,4 +31,5 @@ export const styles = (theme: Theme) =>
       margin: 2,
       pointerEvents: 'auto',
     },
-  });
+  })
+);

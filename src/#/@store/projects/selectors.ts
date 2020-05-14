@@ -25,20 +25,23 @@ export const selectedProject: any = createDeepEqualSelector(
   (projects, id) => id && projects.find(el => el.id === id)
 );
 
-export const projectsExceptDefault = createDeepEqualSelector([ownProjectList, defaultProjectId], (list, defProjectId) =>
-  list
-    ? list
-        .filter(el => el.id !== defProjectId)
-        .sort((a, b) => {
-          if (a.shareValue > b.shareValue) {
-            return -1;
-          }
-          if (a.shareValue < b.shareValue) {
-            return 1;
-          }
-          return 0;
-        })
-    : []
+export const projectsExceptDefault = createDeepEqualSelector(
+  [ownProjectList, defaultProjectId],
+  (list, defProjectId) => {
+    return list
+      ? list
+          .filter(el => el.id !== defProjectId)
+          .sort((a, b) => {
+            if (a.shareValue > b.shareValue) {
+              return -1;
+            }
+            if (a.shareValue < b.shareValue) {
+              return 1;
+            }
+            return 0;
+          })
+      : [];
+  }
 );
 
 export const openedProject = createDeepEqualSelector([ownProjectList, routeProjectId], (projects, id) => {
@@ -63,7 +66,7 @@ export const initialUpdateProject = createDeepEqualSelector(
 export const projectMembers = createDeepEqualSelector(
   [openedProject, selectedProject],
   (opened: Project, selected: Project) => {
-    const res = opened ? opened.members : selected && selected.members;
+    const res = opened ? opened.members : selected ? selected.members : { list: [] };
     return res && res.list
       ? res.list.sort((a, b) => {
           if (a.valueSum > b.valueSum) {

@@ -1,23 +1,41 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import cn from 'classnames';
 
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
+import { useStyles } from './styles';
+
 export interface IAvatarProps {
-  classes: any;
   children?: string | number;
   isSelected?: boolean;
   onClick?: (e: React.SyntheticEvent) => any;
   size?: 'sm' | 'md' | 'lg';
   src?: string;
+  value?: any;
 }
 
-export class AvatarTsx extends React.Component<IAvatarProps, {}> {
-  render() {
-    const { classes, isSelected, children, onClick, size = 'md', src, ...rest } = this.props;
-    const avatarData: string = (children || '- -').toString();
+export const AvatarTsx: React.FC<IAvatarProps> = React.forwardRef<any, IAvatarProps>(
+  ({ children, isSelected, onClick, size = 'md', src, value, ...rest }, ref) => {
+    const classes = useStyles();
+
+    const avatarData = useMemo<string>(() => (children || '- -').toString(), [children]);
+
+    const handleClick = useCallback(
+      e => {
+        if (onClick) {
+          e.persist();
+          e.target.value = value;
+          if (value) {
+            onClick(e);
+          } else {
+            onClick(e);
+          }
+        }
+      },
+      [onClick, value]
+    );
 
     return (
       <div
@@ -25,9 +43,8 @@ export class AvatarTsx extends React.Component<IAvatarProps, {}> {
         className={cn(classes.avatarBorder, {
           [classes.avatarSelected]: isSelected,
         })}
-        onClick={isSelected ? onClick : undefined}
       >
-        <ButtonBase className={classes.avatarWrapper} onClick={isSelected ? undefined : onClick}>
+        <ButtonBase ref={ref} className={classes.avatarWrapper} onClick={handleClick}>
           <Avatar
             className={cn(classes.avatar, {
               [classes.avatarSmall]: size === 'sm',
@@ -41,4 +58,4 @@ export class AvatarTsx extends React.Component<IAvatarProps, {}> {
       </div>
     );
   }
-}
+);
