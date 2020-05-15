@@ -54,6 +54,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   root: {
     alignItems: 'center',
+    backgroundImage: theme.gradient[0],
+    borderRadius: theme.shape.borderRadius2,
     display: 'flex',
     padding: theme.spacing(2),
     [theme.breakpoints.down('md')]: {
@@ -79,7 +81,7 @@ export const SubscribeForm: React.FC<ISubscribeForm> = ({ handleSubmit }) => {
   const { fields, form, root, svgWrapper, title } = useStyles();
 
   return (
-    <Paper className={root}>
+    <Paper className={root} elevation={6}>
       <form className={form} onSubmit={handleSubmit}>
         <Typography variant="h4" className={title}>
           Хочу получать обновления о проекте

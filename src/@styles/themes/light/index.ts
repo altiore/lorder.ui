@@ -11,6 +11,7 @@ const defaultTheme: Theme = createMuiTheme({});
 export default createMuiTheme({
   themeName: 'LIGHT',
 
+  gradient: ['linear-gradient(45deg, #29292b 0%, #424247 50%, #29292b 100%)'],
   mainContent: {
     scroll: prettyScroll1,
     width: 1012,
@@ -68,6 +69,10 @@ export default createMuiTheme({
     MuiTextField: {
       variant: 'outlined',
     },
+  },
+  shape: {
+    borderRadius: 4,
+    borderRadius2: 8,
   },
   textGradient: [
     {
@@ -137,8 +142,16 @@ export default createMuiTheme({
   },
 });
 
+declare module '@material-ui/core/styles/shape' {
+  interface Shape {
+    borderRadius: number;
+    borderRadius2: number;
+  }
+}
+
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
+    gradient: string[];
     mainContent: {
       scroll: object;
       width: number;
@@ -150,6 +163,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
 
   // allow configuration using `createMuiTheme`
   interface ThemeOptions {
+    gradient?: string[];
     mainContent?: {
       scroll?: object;
       width?: number;
