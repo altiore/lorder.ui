@@ -16,8 +16,7 @@ interface ScreenSupportI {
 export const useStyles = makeStyles((theme: Theme) => ({
   block: {
     '& > div': {
-      backgroundColor: theme.palette.primary.main,
-      minHeight: theme.spacing(34),
+      minHeight: theme.spacing(38),
     },
     alignItems: 'justify',
     color: 'white',
