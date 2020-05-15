@@ -71,6 +71,14 @@ export const FilterTsx: React.FC<IFilterProps> = ({
     [changeTasksFilter]
   );
 
+  const style = {
+    backgroundColor: '#f2d578',
+    borderRadius: 15,
+    height: '30px',
+    minHeight: 0,
+    width: '30px',
+  };
+
   return (
     <ListItem className={classes.root}>
       <div
@@ -81,14 +89,14 @@ export const FilterTsx: React.FC<IFilterProps> = ({
         onBlur={handlePaginatorLeave}
       >
         <Grow in={isPaginatorHovered} timeout={600}>
-          <Fab size="small" color="secondary" onClick={changePage(page - 1)} className={classes.left}>
-            <ChevronLeftIcon fontSize="small" />
+          <Fab size="small" color="secondary" onClick={changePage(page - 1)} className={classes.left} style={style}>
+            <ChevronLeftIcon fontSize="small" style={{ color: '#FFFFFF' }} />
           </Fab>
         </Grow>
         {page + 1} из {Math.ceil(count / perPage)}
         <Grow in={isPaginatorHovered} timeout={600}>
-          <Fab size="small" color="secondary" onClick={changePage(page + 1)} className={classes.right}>
-            <ChevronRightIcon fontSize="small" />
+          <Fab size="small" color="secondary" onClick={changePage(page + 1)} className={classes.right} style={style}>
+            <ChevronRightIcon fontSize="small" style={{ color: '#FFFFFF' }} />
           </Fab>
         </Grow>
       </div>
