@@ -32,11 +32,11 @@ export const LastEventsTsx: React.FC<ILastEventsProps> = ({ events }): JSX.Eleme
 
   const toggleStatistic = useCallback(() => {
     setExpanded({ ...expanded, statistic: !expanded.statistic });
-  }, [expanded]);
+  }, [setExpanded]);
 
   const toggleLastEvents = useCallback(() => {
     setExpanded({ ...expanded, lastEvents: !expanded.lastEvents });
-  }, [expanded]);
+  }, [setExpanded]);
 
   return (
     <div className={classes.root}>
