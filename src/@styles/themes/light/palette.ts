@@ -21,6 +21,13 @@ export const error = {
   main: '#ec3b0f',
 };
 
+export const pause = {
+  contrastText: '#000',
+  dark: '#292929',
+  light: '#fcfaee',
+  main: '#676767',
+};
+
 export const background = {
   default: '#EBEEF0',
   paper: '#ffffff',

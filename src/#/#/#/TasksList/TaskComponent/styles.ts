@@ -11,10 +11,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   buttonTitle: {
     '& $buttonTitleLabel': {
-      color: '#676767',
+      color: theme.pauseColor.main,
     },
     borderRadius: '6px',
-    color: '#676767',
+    color: theme.pauseColor.main,
     flexGrow: 1,
     paddingLeft: theme.spacing(5),
     transition: theme.transitions.create(['background-color']),
@@ -24,10 +24,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   buttonTitleCurrent: {
     '& $buttonTitleLabel': {
-      color: '#292929',
+      color: theme.pauseColor.dark,
     },
     '&:hover': {
-      backgroundColor: '#fcfaee',
+      backgroundColor: theme.pauseColor.light,
     },
   },
   buttonTitleLabel: {
@@ -42,7 +42,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   buttonTitlePaused: {
     '& $buttonTitleLabel': {
-      color: '#676767',
+      color: theme.pauseColor.main,
     },
     '&:hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.04)',
@@ -120,10 +120,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   projectButtonCurrent: {
     '&:hover': {
-      backgroundColor: '#fcfaee',
+      backgroundColor: theme.pauseColor.light,
     },
     backgroundColor: '#f8f4ea',
-    color: '#292929',
+    color: theme.pauseColor.dark,
   },
   projectButtonPaused: {
     '&:hover': {

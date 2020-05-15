@@ -6,7 +6,7 @@ import { BACKGROUND_DEFAULT, BACKGROUND_DARK } from '@styles/themes/light/variab
 function loadStories() {
   const importAll = r => r.keys().forEach(r);
 
-  importAll(require.context('../src/@components', true, /\.stories\.(tsx|js)/));
+  importAll(require.context('../' + (process.env.STORYBOOK_COMPONENTS_FOLDER || 'src/@components'), true, /\.stories\.(tsx|js)/));
 }
 
 addDecorator(MaterialThemes);

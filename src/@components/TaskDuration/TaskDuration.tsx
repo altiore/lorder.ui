@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
+import cn from 'classnames';
+
 import Button from '@material-ui/core/Button';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -21,21 +23,50 @@ interface IPartTime {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  time: {
-    '& > div': {
-      lineHeight: 1,
-    },
-    '& > div:first-child': {
-      alignSelf: 'center',
-    },
-    '& svg': {
-      color: '#eecf6d',
-    },
-    alignContent: 'flex-start',
-    alignItems: 'baseline',
+  block: {
+    alignItems: 'center',
     display: 'flex',
     justifyContent: 'space-between',
-    width: theme.spacing(10),
+    lineHeight: 1,
+    width: theme.spacing(6),
+  },
+  button: {
+    alignItems: 'center',
+    display: 'flex',
+    height: theme.spacing(4.5),
+    justifyContent: 'space-between',
+    padding: theme.spacing(0, 1, 0, 0),
+  },
+  divider: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    width: theme.spacing(1),
+  },
+  svg: {
+    color: '#eecf6d',
+  },
+  timeStyle: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    justifyContent: 'center',
+  },
+  unit: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    width: theme.spacing(2.5),
+  },
+  unitStyle: {
+    color: theme.pauseColor.main,
+    fontSize: theme.typography.pxToRem(12),
+    fontWeight: 300,
+  },
+  valueStyle: {
+    color: theme.pauseColor.dark,
+    fontSize: theme.typography.pxToRem(16),
+    fontWeight: 500,
   },
 }));
 const initPartTimeState = {
@@ -44,7 +75,7 @@ const initPartTimeState = {
 };
 
 export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ isOpen, time, onClick, hoursPerDay }) => {
-  const classes = useStyles();
+  const { block, button, divider, svg, timeStyle, unit, unitStyle, valueStyle } = useStyles();
 
   const convertedTime = useMemo(() => secondsToTime(time, hoursPerDay), [hoursPerDay, time]);
 
@@ -79,23 +110,20 @@ export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ isOpen, time, on
             : 'Нажмите, чтоб раскрыть подробности'
         }
       >
-        <Button onClick={didNotTouched ? undefined : onClick}>
-          <div className={classes.time}>
-            <div>
-              <HourglassSvg />
+        <Button className={button} onClick={didNotTouched ? undefined : onClick}>
+          <HourglassSvg className={svg} />
+          <div className={timeStyle}>
+            <div className={cn(block, valueStyle)}>
+              <span className={unit}>{firstPartTime.value < 10 ? `0${firstPartTime.value}` : firstPartTime.value}</span>
+              <span className={divider}>:</span>
+              <span className={unit}>
+                {secondPartTime.value < 10 ? `0${secondPartTime.value}` : secondPartTime.value}
+              </span>
             </div>
-            <div>
-              <div>
-                <b>{firstPartTime.value < 10 ? `0${firstPartTime.value}` : firstPartTime.value}</b>
-              </div>
-              <div>{firstPartTime.unit}</div>
-            </div>
-            <div>:</div>
-            <div>
-              <div>
-                <b>{secondPartTime.value < 10 ? `0${secondPartTime.value}` : secondPartTime.value}</b>
-              </div>
-              <div>{secondPartTime.unit}</div>
+            <div className={cn(block, unitStyle)}>
+              <span className={unit}>{firstPartTime.unit}</span>
+              <span className={divider} />
+              <span className={unit}>{secondPartTime.unit}</span>
             </div>
           </div>
         </Button>

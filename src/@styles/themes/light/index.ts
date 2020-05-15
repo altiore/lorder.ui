@@ -1,8 +1,9 @@
 import { createMuiTheme, Theme } from '@material-ui/core/styles';
+import { PaletteColor, PaletteColorOptions } from '@material-ui/core/styles/createPalette';
 
 import MuiDialog from './MuiDialog';
 import MuiTextField from './MuiTextField';
-import { background, error, primary, secondary } from './palette';
+import { background, error, pause, primary, secondary } from './palette';
 import { prettyScroll1, SECONDARY_DARKEN } from './variables';
 
 const defaultTheme: Theme = createMuiTheme({});
@@ -59,6 +60,7 @@ export default createMuiTheme({
     primary,
     secondary,
   },
+  pauseColor: pause,
   props: {
     MuiSelect: {
       variant: 'outlined',
@@ -141,6 +143,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       scroll: object;
       width: number;
     };
+    pauseColor: PaletteColor;
     textGradient: object[];
     themeName?: string;
   }
@@ -151,6 +154,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       scroll?: object;
       width?: number;
     };
+    pauseColor?: PaletteColorOptions;
     textGradient?: object[];
     themeName?: string;
   }
