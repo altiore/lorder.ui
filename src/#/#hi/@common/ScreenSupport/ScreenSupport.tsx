@@ -18,7 +18,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     '& > div': {
       backgroundColor: theme.palette.primary.main,
       minHeight: theme.spacing(34),
-      padding: theme.spacing(2),
     },
     alignItems: 'justify',
     color: 'white',

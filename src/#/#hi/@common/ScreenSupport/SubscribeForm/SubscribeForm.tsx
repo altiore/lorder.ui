@@ -9,7 +9,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import { UserIco } from '@components/@icons/User';
-import InputField from '@components/InputField';
+import InputField from '@components/InputField/index';
 
 import GetInTouchImg from './get_in_touch.png';
 
@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     alignItems: 'center',
     display: 'flex',
+    padding: theme.spacing(2),
     [theme.breakpoints.down('md')]: {
       flexFlow: 'column-reverse',
     },

@@ -6,7 +6,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import YouTubeVideo from '@components/YouTubeVideo';
 
 import HiHeader from '#/#hi/@common/HiHeader';
-import ScreenSupport from '#/@common/ScreenSupport';
+import ScreenSupport from '#/#hi/@common/ScreenSupport';
 
 import ScreenAdvantages from './ScreenAdvantages';
 import ScreenHelp from './ScreenHelp';

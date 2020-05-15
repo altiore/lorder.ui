@@ -1,7 +1,7 @@
 import React from 'react';
 
 import HiHeader from '#/#hi/@common/HiHeader';
-import ScreenSupport from '#/@common/ScreenSupport';
+import ScreenSupport from '#/#hi/@common/ScreenSupport';
 
 const BLOCKS = {
   start: {
