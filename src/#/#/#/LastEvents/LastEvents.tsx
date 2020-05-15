@@ -20,28 +20,27 @@ export interface ILastEventsProps {
   events: IEvent[];
 }
 
+export interface IExpanded {
+  statistic: boolean;
+  lastEvents: boolean;
+}
+
 export const LastEventsTsx: React.FC<ILastEventsProps> = ({ events }): JSX.Element => {
-  const [expanded, setExpanded] = useState('statistic');
+  const [expanded, setExpanded] = useState<IExpanded>({ statistic: true, lastEvents: false });
 
   const classes = useStyles();
 
-  const toggleStatistic = useCallback(
-    (event: React.ChangeEvent<any>, expanded: boolean) => {
-      setExpanded(expanded ? 'statistic' : '');
-    },
-    [setExpanded]
-  );
+  const toggleStatistic = useCallback(() => {
+    setExpanded({ ...expanded, statistic: !expanded.statistic });
+  }, [expanded]);
 
-  const toggleLastEvents = useCallback(
-    (event: React.ChangeEvent<any>, expanded: boolean) => {
-      setExpanded(expanded ? 'lastEvents' : '');
-    },
-    [setExpanded]
-  );
+  const toggleLastEvents = useCallback(() => {
+    setExpanded({ ...expanded, lastEvents: !expanded.lastEvents });
+  }, [expanded]);
 
   return (
     <div className={classes.root}>
-      <ExpansionPanel expanded={expanded === 'statistic'} onChange={toggleStatistic}>
+      <ExpansionPanel expanded={expanded.statistic} onChange={toggleStatistic}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography className={classes.heading}>Статистика</Typography>
         </ExpansionPanelSummary>
@@ -49,7 +48,7 @@ export const LastEventsTsx: React.FC<ILastEventsProps> = ({ events }): JSX.Eleme
           <Today />
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      <ExpansionPanel expanded={expanded === 'lastEvents'} onChange={toggleLastEvents}>
+      <ExpansionPanel expanded={expanded.lastEvents} onChange={toggleLastEvents}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography className={classes.heading}>Последние действия</Typography>
         </ExpansionPanelSummary>
