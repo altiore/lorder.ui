@@ -31,11 +31,11 @@ export const LastEventsTsx: React.FC<ILastEventsProps> = ({ events }): JSX.Eleme
   const classes = useStyles();
 
   const toggleStatistic = useCallback(() => {
-    setExpanded({ ...expanded, statistic: !expanded.statistic });
+    setExpanded(prev => ({ ...prev, statistic: !prev.statistic }));
   }, [setExpanded]);
 
   const toggleLastEvents = useCallback(() => {
-    setExpanded({ ...expanded, lastEvents: !expanded.lastEvents });
+    setExpanded(prev => ({ ...prev, lastEvents: !prev.lastEvents }));
   }, [setExpanded]);
 
   return (
