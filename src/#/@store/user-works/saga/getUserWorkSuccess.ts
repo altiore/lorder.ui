@@ -1,7 +1,7 @@
+import { put, select, takeLatest } from 'redux-saga/effects';
+
 import { isTimerStarted } from '#/@store/timer';
 import { startTimer, stopUserWork, UserWork } from '#/@store/user-works';
-
-import { put, select, takeLatest } from 'redux-saga/effects';
 
 import { getUserWorks } from '../actions';
 

@@ -1,6 +1,6 @@
-import { pauseUserWork, startTimer, UserWork } from '#/@store/user-works';
-
 import { put, takeLatest } from 'redux-saga/effects';
+
+import { pauseUserWork, startTimer, UserWork } from '#/@store/user-works';
 
 function* pauseUserWorkSuccessHandler({ payload }: any) {
   try {

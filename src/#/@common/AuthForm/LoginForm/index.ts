@@ -1,6 +1,6 @@
-import { logIn, LOGIN_FORM_NAME } from '#/@store/identity';
-
 import { reduxForm } from 'redux-form';
+
+import { logIn, LOGIN_FORM_NAME } from '#/@store/identity';
 
 import LoginFormJsx, { ILoginFormProps } from './LoginForm';
 

@@ -1,12 +1,11 @@
 import get from 'lodash/get';
 import groupBy from 'lodash/groupBy';
+import moment from 'moment';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { defaultProjectId, userId } from '#/@store/identity';
 import { currentTaskId, currentTimerTime, currentUserWorkId } from '#/@store/timer';
-
-import moment from 'moment';
 
 import { UserWork } from './UserWork';
 

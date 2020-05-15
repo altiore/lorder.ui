@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 
+import { isValid } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -9,8 +10,6 @@ import { getProjectById, ownProjectList } from '#/@store/projects';
 import { allTaskListWithoutDefProject } from '#/@store/tasks';
 import { currentProjectId } from '#/@store/timer';
 import { CREATE_USER_WORK_FORM_NAME, startUserWork } from '#/@store/user-works';
-
-import { isValid } from 'redux-form';
 
 import { AutoTaskFieldTsx } from './AutoTaskField';
 import { styles } from './styles';

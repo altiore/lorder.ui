@@ -1,6 +1,6 @@
-import { userId } from '#/@store/identity';
-
 import { Dispatch } from 'redux';
+
+import { userId } from '#/@store/identity';
 
 import { postFeedbackReq } from '../actions';
 

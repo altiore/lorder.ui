@@ -32,7 +32,7 @@
           },
           {
             "name": "external libraries",
-            "match": "^lodash|classnames|^connected-react-router.*|^redux-persist.*|^reselect.*|^redux-actions.*",
+            "match": "^lodash|classnames|history|^connected-react-router.*|localforage|^redux-persist.*|^reselect.*|^redux.*|^moment.*",
             "order": 20
           },
           {

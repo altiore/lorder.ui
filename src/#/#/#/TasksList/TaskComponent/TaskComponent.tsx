@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import MediaQuery from 'react-responsive';
 
 import cn from 'classnames';
+import moment from 'moment';
 
 import Button from '@material-ui/core/Button';
 import { DialogProps } from '@material-ui/core/Dialog';
@@ -15,8 +16,6 @@ import StartStopBtn from '#/@common/StartStopBtn';
 import TaskDuration from '#/@common/TaskDuration';
 import { Project } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
-
-import moment from 'moment';
 
 import { useStyles } from './styles';
 

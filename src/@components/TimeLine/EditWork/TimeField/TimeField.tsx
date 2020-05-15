@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { WrappedFieldProps } from 'redux-form';
+
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-
-import { WrappedFieldProps } from 'redux-form';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({

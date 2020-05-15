@@ -1,8 +1,7 @@
 import { push } from 'connected-react-router';
+import { Dispatch } from 'redux';
 
 import { identifier, projectIdSearchParam } from '#/@store/router';
-
-import { Dispatch } from 'redux';
 
 import { getAuthActivate, IGetAuthActivateData, setIsLoading } from '../actions';
 import { userBearerKey } from '../selectors';

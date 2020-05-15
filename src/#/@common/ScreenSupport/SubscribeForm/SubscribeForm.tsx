@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { Field, InjectedFormProps } from 'redux-form';
+import { email } from 'redux-form-validators';
+
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -7,9 +10,6 @@ import Typography from '@material-ui/core/Typography';
 
 import { UserIco } from '@components/@icons/User';
 import InputField from '@components/InputField';
-
-import { Field, InjectedFormProps } from 'redux-form';
-import { email } from 'redux-form-validators';
 
 import GetInTouchImg from './get_in_touch.png';
 

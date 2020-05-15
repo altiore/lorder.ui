@@ -1,7 +1,6 @@
+import moment from 'moment';
 import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
-
-import moment from 'moment';
 
 import { setCurrentUserWorkId, tickUserWorkTimer } from './actions';
 import { Timer } from './Timer';

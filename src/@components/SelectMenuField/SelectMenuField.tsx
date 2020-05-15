@@ -1,12 +1,13 @@
 import React from 'react';
 
+import { WrappedFieldProps } from 'redux-form';
+
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Select, { SelectProps } from '@material-ui/core/Select';
 
-import { WrappedFieldProps } from 'redux-form';
 import uniqueId from 'uniqid';
 
 export interface ISelectFieldProps {

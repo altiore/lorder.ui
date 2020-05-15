@@ -1,6 +1,5 @@
-import { handleActions } from 'redux-actions';
-
 import moment from 'moment';
+import { handleActions } from 'redux-actions';
 
 import { resetGlobalCache } from './actions';
 import { Other } from './Other';

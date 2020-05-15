@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
 
 import get from 'lodash/get';
+import moment from 'moment';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-
-import moment from 'moment';
 
 import { useStyles } from './styles';
 

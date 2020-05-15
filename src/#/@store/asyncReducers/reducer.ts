@@ -1,6 +1,5 @@
-import { handleActions } from 'redux-actions';
-
 import { Reducer } from 'redux';
+import { handleActions } from 'redux-actions';
 
 import { replaceReducers } from './actions';
 

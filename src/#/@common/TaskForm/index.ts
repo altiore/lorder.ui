@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 
 import { push, replace } from 'connected-react-router';
 import get from 'lodash/get';
+import pick from 'lodash/pick';
+import { initialize, reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { onSubmitFail } from '#/@store/@common/helpers';
@@ -12,14 +14,13 @@ import {
   archiveTask,
   checkIsCurrent,
   EDIT_TASK_FORM,
+  EDIT_TASK_FORM_PROPS,
   fetchTaskDetails,
   getEditTaskInitialValues,
   patchProjectTask,
   postProjectTask,
 } from '#/@store/tasks';
 import { startUserWork } from '#/@store/user-works';
-
-import { change, reduxForm } from 'redux-form';
 
 import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
@@ -77,9 +78,9 @@ export const PatchTaskForm = connect<
   onSubmitFail,
   onSubmitSuccess: (result, dispatch) => {
     const actionType = get(result, 'meta.previousAction.type');
-    const taskId = get(result, 'payload.data.id');
+    const data = get(result, 'payload.data');
     if (actionType === postProjectTask.toString()) {
-      dispatch(change(EDIT_TASK_FORM, 'id', taskId));
+      dispatch(initialize(EDIT_TASK_FORM, pick(data, EDIT_TASK_FORM_PROPS), false));
     }
   },
 })(TaskFormJsx) as any);

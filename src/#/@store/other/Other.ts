@@ -1,5 +1,4 @@
 import map from 'lodash/map';
-
 import moment from 'moment';
 
 import { IOther } from '@types';

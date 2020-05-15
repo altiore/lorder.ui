@@ -1,7 +1,6 @@
 import { error } from 'react-notification-system-redux';
 
 import get from 'lodash/get';
-
 import { Dispatch } from 'redux';
 import { FormErrors, InjectedFormProps } from 'redux-form';
 

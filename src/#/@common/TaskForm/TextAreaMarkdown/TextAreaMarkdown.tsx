@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import cn from 'classnames';
+import { WrappedFieldProps } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -11,8 +12,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import CodeIcon from '@material-ui/icons/Code';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-
-import { WrappedFieldProps } from 'redux-form';
 
 type TabsType = 'editor' | 'view';
 

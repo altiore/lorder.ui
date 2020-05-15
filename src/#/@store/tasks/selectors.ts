@@ -22,21 +22,26 @@ export const allTaskListWithoutDefProject = createDeepEqualSelector(
 
 export const filteredTaskList = createDeepEqualSelector(allTaskList, tasks => tasks);
 
+export const EDIT_TASK_FORM_PROPS = [
+  'description',
+  'id',
+  'sequenceNumber',
+  'isDetailsLoaded',
+  'source',
+  'title',
+  'status',
+  'value',
+  'performerId',
+];
+
 export const getEditTaskInitialValues = createDeepEqualSelector(
   [allTaskList],
   (allTaskList: Task[]) => (projectId: number, sequenceNumber: number) => {
     return (
-      pick<any>(allTaskList.find((el: Task) => el.projectId === projectId && el.sequenceNumber === sequenceNumber), [
-        'description',
-        'id',
-        'sequenceNumber',
-        'isDetailsLoaded',
-        'source',
-        'title',
-        'status',
-        'value',
-        'performerId',
-      ]) || {}
+      pick<any>(
+        allTaskList.find((el: Task) => el.projectId === projectId && el.sequenceNumber === sequenceNumber),
+        EDIT_TASK_FORM_PROPS
+      ) || {}
     );
   }
 );

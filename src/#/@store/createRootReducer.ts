@@ -1,12 +1,11 @@
 import { intlReducer as intl } from 'react-intl-redux';
 import { reducer as notifications } from 'react-notification-system-redux';
 
-import { createTransform, PersistConfig, persistReducer } from 'redux-persist';
-
 import { History } from 'history';
 import * as localForage from 'localforage';
 import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
+import { createTransform, PersistConfig, persistReducer } from 'redux-persist';
 
 import { DownloadList } from './@common/entities';
 import { asyncReducersReducer } from './asyncReducers/reducer';

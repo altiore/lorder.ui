@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import Popover from 'react-popover';
 
+import { WrappedFieldProps } from 'redux-form';
+
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-
-import { WrappedFieldProps } from 'redux-form';
 
 import { useStyles } from './styles';
 
