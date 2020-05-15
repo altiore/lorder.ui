@@ -1,6 +1,7 @@
 import React, { FC, KeyboardEvent, MouseEvent, SyntheticEvent, useCallback, useState } from 'react';
 
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Divider from '@material-ui/core/Divider';
@@ -16,6 +17,8 @@ import ExitIcon from '@material-ui/icons/ExitToApp';
 import SecurityIcon from '@material-ui/icons/Lock';
 import PersonIcon from '@material-ui/icons/Person';
 import ScheduleIcon from '@material-ui/icons/Schedule';
+
+import EnterSvg from './enter-svg';
 
 import { ROLE } from '@types';
 
@@ -36,6 +39,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   email: {
     fontWeight: 'bold',
     textTransform: 'uppercase',
+  },
+  enterButton: {
+    '& svg': {
+      color: theme.palette.secondary.main,
+      marginRight: theme.spacing(1),
+    },
+    fontSize: '0.9375rem',
+    marginLeft: theme.spacing(3),
   },
   header: {
     backgroundColor: theme.palette.primary.light,
@@ -80,6 +91,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface IAccountMenuTsx {
+  isAuth: boolean;
   menuId: string;
   isMenuOpen: boolean;
   onClose: () => void;
@@ -91,6 +103,7 @@ interface IAccountMenuTsx {
 }
 
 export const AccountMenuTsx: FC<IAccountMenuTsx> = ({
+  isAuth,
   menuId,
   logOut,
   userAvatar,
@@ -164,61 +177,74 @@ export const AccountMenuTsx: FC<IAccountMenuTsx> = ({
     [handleClose]
   );
 
+  const handleLogIn = useCallback(() => {
+    push('/login');
+  }, [push]);
+
   return (
     <div className={classes.root}>
-      <ButtonBase
-        aria-owns={open ? elId : undefined}
-        aria-haspopup="true"
-        buttonRef={setAnchorEl}
-        className={classes.avatarButton}
-        onClick={handleToggle}
-      >
-        <Avatar alt={userEmail} src={userAvatar || '/d-avatar.png'} className={classes.avatar} />
-      </ButtonBase>
-      <Popper className={classes.popper} open={open} anchorEl={anchorEl} role={undefined} transition>
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+      {isAuth ? (
+        <>
+          <ButtonBase
+            aria-owns={open ? elId : undefined}
+            aria-haspopup="true"
+            buttonRef={setAnchorEl}
+            className={classes.avatarButton}
+            onClick={handleToggle}
           >
-            <Paper id={menuId} className={classes.paper}>
-              <ClickAwayListener onClickAway={clickAway}>
-                <div>
-                  <div className={classes.header}>
-                    <Typography className={classes.email} variant="h6" noWrap>
-                      {userEmail}
-                    </Typography>
-                    <Typography variant="subtitle2">{userRole}</Typography>
-                  </div>
-                  <MenuList autoFocusItem={open} onKeyDown={handleListKeyDown}>
-                    <MenuItem className={classes.menuItem} onClick={goToMain}>
-                      <ScheduleIcon className={classes.icon} />
-                      <Typography variant="h6">Главная</Typography>
-                    </MenuItem>
-                    <MenuItem className={classes.menuItem} onClick={goToProfile}>
-                      <PersonIcon className={classes.icon} />
-                      <Typography variant="h6">Профиль</Typography>
-                    </MenuItem>
-                    {userRole === ROLE.SUPER_ADMIN && (
-                      <MenuItem className={classes.menuItem} onClick={goToAdminPanel}>
-                        <SecurityIcon className={classes.icon} />
-                        <Typography variant="h6">Админ Панель</Typography>
-                      </MenuItem>
-                    )}
-                  </MenuList>
-                  <Divider />
-                  <MenuList autoFocusItem={open} onKeyDown={handleListKeyDown}>
-                    <MenuItem className={classes.menuItem} onClick={logOut}>
-                      <ExitIcon className={classes.icon} />
-                      <Typography variant="h6">Выйти</Typography>
-                    </MenuItem>
-                  </MenuList>
-                </div>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
+            <Avatar alt={userEmail} src={userAvatar || '/d-avatar.png'} className={classes.avatar} />
+          </ButtonBase>
+          <Popper className={classes.popper} open={open} anchorEl={anchorEl} role={undefined} transition>
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+              >
+                <Paper id={menuId} className={classes.paper}>
+                  <ClickAwayListener onClickAway={clickAway}>
+                    <div>
+                      <div className={classes.header}>
+                        <Typography className={classes.email} variant="h6" noWrap>
+                          {userEmail}
+                        </Typography>
+                        <Typography variant="subtitle2">{userRole}</Typography>
+                      </div>
+                      <MenuList autoFocusItem={open} onKeyDown={handleListKeyDown}>
+                        <MenuItem className={classes.menuItem} onClick={goToMain}>
+                          <ScheduleIcon className={classes.icon} />
+                          <Typography variant="h6">Главная</Typography>
+                        </MenuItem>
+                        <MenuItem className={classes.menuItem} onClick={goToProfile}>
+                          <PersonIcon className={classes.icon} />
+                          <Typography variant="h6">Профиль</Typography>
+                        </MenuItem>
+                        {userRole === ROLE.SUPER_ADMIN && (
+                          <MenuItem className={classes.menuItem} onClick={goToAdminPanel}>
+                            <SecurityIcon className={classes.icon} />
+                            <Typography variant="h6">Админ Панель</Typography>
+                          </MenuItem>
+                        )}
+                      </MenuList>
+                      <Divider />
+                      <MenuList autoFocusItem={open} onKeyDown={handleListKeyDown}>
+                        <MenuItem className={classes.menuItem} onClick={logOut}>
+                          <ExitIcon className={classes.icon} />
+                          <Typography variant="h6">Выйти</Typography>
+                        </MenuItem>
+                      </MenuList>
+                    </div>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </>
+      ) : (
+        <Button color="secondary" aria-haspopup="true" className={classes.enterButton} onClick={handleLogIn}>
+          <EnterSvg />
+          <span>Войти</span>
+        </Button>
+      )}
     </div>
   );
 };

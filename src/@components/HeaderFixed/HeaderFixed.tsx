@@ -12,7 +12,7 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 export interface IHeaderFixedProps {
   brandName: string;
   brandLink: string;
-  children?: React.ReactElement | false;
+  children?: React.ReactNode | false;
 }
 
 export const useStyles = makeStyles((theme: Theme) => ({

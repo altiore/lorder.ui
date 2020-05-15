@@ -23,11 +23,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(),
     position: 'relative',
     minHeight: '30vh',
+    transition: theme.transitions.create('all', {
+      duration: theme.transitions.duration.complex,
+      easing: theme.transitions.easing.easeInOut,
+    }),
     '&:hover': {
       backgroundColor: '#29292b',
       backgroundImage: 'linear-gradient(45deg, #29292b 0%, #424247 50%, #29292b 100%)',
       boxShadow: theme.shadows[4],
       color: theme.palette.primary.contrastText,
+      transition: theme.transitions.create('background-color'),
       '& $svgWrap': {
         display: 'block',
       },

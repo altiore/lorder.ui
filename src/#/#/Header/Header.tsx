@@ -12,13 +12,13 @@ import AddIcon from '@material-ui/icons/Add';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import TimerIcon from '@material-ui/icons/Timer';
 
+import { AccountMenu } from '#/@common/account-menu';
 import { CreateProjectPopup } from '#/@common/CreateProjectPopup';
 import { LinkIconButton } from '#/@common/LinkIconButton';
 import { Project } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
 import { IUserWorkData } from '#/@store/user-works';
 
-import { AccountMenu } from './account-menu';
 import Filters from './Filters';
 import ProjectButton from './ProjectButton';
 import { ProjectField } from './ProjectField';
