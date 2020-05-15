@@ -1,10 +1,9 @@
 import { push } from 'connected-react-router';
 import get from 'lodash/get';
-
-import { showSuccess } from '#/@store/notifications';
-
 import { Dispatch } from 'redux';
 import { clearAsyncError } from 'redux-form';
+
+import { showSuccess } from '#/@store/notifications';
 
 import { logInPatch } from '../actions';
 import { loadInitialData } from './loadInitialData';

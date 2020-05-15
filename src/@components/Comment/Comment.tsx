@@ -1,9 +1,9 @@
 import React from 'react';
 
+import moment from 'moment';
+
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-
-import moment from 'moment';
 
 import { IUser, TASK_CHANGE_TYPE } from '../../@types';
 

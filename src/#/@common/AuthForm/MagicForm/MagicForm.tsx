@@ -1,14 +1,14 @@
 import React from 'react';
 
+import { Field, InjectedFormProps } from 'redux-form';
+import { email } from 'redux-form-validators';
+
 import Button from '@material-ui/core/Button';
 
 import { UserIco } from '@components/@icons/User';
 import InputField from '@components/InputField';
 
 import { useStyles } from '#/@common/AuthForm/LoginForm/styles';
-
-import { Field, InjectedFormProps } from 'redux-form';
-import { email } from 'redux-form-validators';
 
 export class IMagicFormProps {
   autoFocus?: boolean;

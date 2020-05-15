@@ -1,4 +1,6 @@
 import get from 'lodash/get';
+import moment from 'moment';
+import { change } from 'redux-form';
 
 import { selectProject } from '#/@store/project';
 import { fetchProjectDetails, getProjectById, Project, projectMembers } from '#/@store/projects';
@@ -11,9 +13,6 @@ import {
   patchAndStopUserWork,
   UserWork,
 } from '#/@store/user-works';
-
-import moment from 'moment';
-import { change } from 'redux-form';
 
 import { pauseUserWork, postAndStartUserWork } from '../actions';
 

@@ -1,10 +1,9 @@
 import { connect } from 'react-redux';
 
+import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { initialUpdateProject, updateProject } from '#/@store/projects';
-
-import { reduxForm } from 'redux-form';
 
 import { ProfileForm } from './ProfileForm';
 

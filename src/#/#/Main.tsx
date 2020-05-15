@@ -1,13 +1,12 @@
 import React, { lazy, useCallback, useEffect, useMemo } from 'react';
 import { RouteComponentProps, Switch } from 'react-router-dom';
 
+import { Location } from 'history';
 import get from 'lodash/get';
 
 import NestedRoute from '#/@common/#NestedRoute';
 import { PatchTaskForm } from '#/@common/TaskForm';
 import { ROLES } from '#/@store/roles';
-
-import { Location } from 'history';
 
 import { Header } from './Header';
 import { useStyles } from './styles';

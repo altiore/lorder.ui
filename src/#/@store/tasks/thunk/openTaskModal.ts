@@ -1,10 +1,9 @@
 import { push } from 'connected-react-router';
+import { ThunkDispatch } from 'redux-thunk';
 
 import { showError } from '#/@store/notifications';
 import { TASKS_ROUTE } from '#/@store/router';
 import { currentTask } from '#/@store/timer';
-
-import { ThunkDispatch } from 'redux-thunk';
 
 import { IState, ITask } from '@types';
 

@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 
-import { createStructuredSelector } from 'reselect';
-
 import { getFormValues } from 'redux-form';
+import { createStructuredSelector } from 'reselect';
 
 import { TimeDiffTsx } from './TimeDiff';
 

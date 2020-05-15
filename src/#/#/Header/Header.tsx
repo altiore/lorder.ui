@@ -1,6 +1,8 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import moment from 'moment';
+
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -15,8 +17,6 @@ import { LinkIconButton } from '#/@common/LinkIconButton';
 import { Project } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
 import { IUserWorkData } from '#/@store/user-works';
-
-import moment from 'moment';
 
 import { AccountMenu } from './account-menu';
 import Filters from './Filters';

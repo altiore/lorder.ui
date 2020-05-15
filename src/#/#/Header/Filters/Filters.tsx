@@ -52,9 +52,13 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
         } else {
           return 1;
         }
+      } else {
+        if (filteredMembers.indexOf(b.id || 0) === -1) {
+          return -1;
+        } else {
+          return 0;
+        }
       }
-
-      return -1;
     });
   }, [filteredMembers, members]);
 

@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { WrappedFieldProps } from 'redux-form';
+
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-
-import { WrappedFieldProps } from 'redux-form';
 
 export interface ISwitchFieldProps extends WrappedFieldProps {
   label: string;

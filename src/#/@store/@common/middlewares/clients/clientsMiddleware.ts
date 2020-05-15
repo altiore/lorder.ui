@@ -2,12 +2,12 @@ import { Notification } from 'react-notification-system';
 import { error, show } from 'react-notification-system-redux';
 
 import get from 'lodash/get';
+import { multiClientMiddleware } from 'redux-axios-middleware';
+import { stopAsyncValidation } from 'redux-form';
 
 import { logOut, userBearerKey } from '#/@store/identity';
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { multiClientMiddleware } from 'redux-axios-middleware';
-import { stopAsyncValidation } from 'redux-form';
 
 import { parseFormErrorsFromResponse } from '../../helpers';
 import { api } from './api';

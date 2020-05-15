@@ -1,16 +1,15 @@
 import { routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
 import omit from 'lodash/omit';
+import { applyMiddleware, compose, createStore as createReduxStore } from 'redux';
 import { persistStore } from 'redux-persist';
+import createSagaMiddleware from 'redux-saga';
+import thunk from 'redux-thunk';
 
 import { replaceReducers } from '#/@store/asyncReducers';
 import { loadInitialData } from '#/@store/identity';
 import { getIntl } from '#/@store/intl/thunk';
 import { initSockets } from '#/@store/sockets';
-
-import { createBrowserHistory } from 'history';
-import { applyMiddleware, compose, createStore as createReduxStore } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import thunk from 'redux-thunk';
 
 import { clientsMiddleware } from './@common/middlewares';
 import { createRootReducer } from './createRootReducer';

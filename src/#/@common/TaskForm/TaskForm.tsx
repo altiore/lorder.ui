@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
+import get from 'lodash/get';
 import includes from 'lodash/includes';
+import { Field, InjectedFormProps } from 'redux-form';
+import { length, required } from 'redux-form-validators';
 
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -22,9 +25,7 @@ import { TextField } from '@components/TextField';
 import TaskDuration from '#/@common/TaskDuration';
 import { parseNumber } from '#/@store/@common/helpers';
 import { TASKS_ROUTE } from '#/@store/router';
-
-import { Field, InjectedFormProps } from 'redux-form';
-import { length, required } from 'redux-form-validators';
+import { patchProjectTask, postProjectTask } from '#/@store/tasks';
 
 import StatusField from './StatusField';
 import { useStyles } from './styles';
@@ -72,7 +73,6 @@ const titleValidate = [
 export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   archiveTask,
   buttonText = 'Сохранить',
-  dirty,
   fetchTaskDetails,
   handleSubmit,
   initialValues,
@@ -86,9 +86,12 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   showSuccess,
   startUserWork,
   submitting,
-  valid,
 }) => {
   const classes = useStyles();
+
+  const [currentSequenceNumber, setSequenceNumber] = useState(sequenceNumber);
+
+  const [isCurrentState, setIsCurrentState] = useState(isCurrent);
 
   const [invisible, setInvisible] = useState([true, true, true, true]);
   useEffect(() => {
@@ -107,10 +110,10 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   }, [invisible, setInvisible]);
 
   useEffect(() => {
-    if (sequenceNumber) {
-      fetchTaskDetails({ projectId, sequenceNumber });
+    if (currentSequenceNumber) {
+      fetchTaskDetails({ projectId, sequenceNumber: currentSequenceNumber });
     }
-  }, [fetchTaskDetails, projectId, sequenceNumber]);
+  }, [fetchTaskDetails, projectId, currentSequenceNumber]);
 
   /** show copy block */
   const [isShownCopy, setIsShowCopy] = useState(false);
@@ -135,18 +138,29 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
     }
   }, [isPage, onClose, push]);
 
-  const handleSave = (isClose: boolean = true) => (e: React.SyntheticEvent) => {
-    if (dirty && valid) {
-      handleSubmit(e);
-    }
-    if (isClose && handleClose && valid) {
-      handleClose();
-    }
-  };
+  const handleSave = useCallback(
+    async (e: React.SyntheticEvent) => {
+      const res: any = await handleSubmit(e);
+      if (res && [postProjectTask.success, patchProjectTask.success].includes(res.type)) {
+        return res;
+      }
+      return false;
+    },
+    [handleSubmit]
+  );
+
+  const saveAndClose = useCallback(
+    async e => {
+      if (await handleSave(e)) {
+        handleClose();
+      }
+    },
+    [handleClose, handleSave]
+  );
 
   const getLink = useCallback(
     (absolute: boolean = false) => {
-      const path = `${TASKS_ROUTE(projectId)}/${sequenceNumber}`;
+      const path = `${TASKS_ROUTE(projectId)}/${currentSequenceNumber}`;
       if (absolute) {
         const port = includes(['443', '80', ''], window.location.port)
           ? window.location.port
@@ -155,7 +169,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
       }
       return path;
     },
-    [projectId, sequenceNumber]
+    [projectId, currentSequenceNumber]
   );
 
   const copyToClipboard = useCallback(
@@ -182,15 +196,31 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   const moreMenuClose = useCallback(() => setAnchorEl(null), [setAnchorEl]);
 
   const onArchiveTask = useCallback(() => {
-    archiveTask({ sequenceNumber, projectId });
+    archiveTask({ sequenceNumber: currentSequenceNumber, projectId });
     if (handleClose) {
       handleClose();
     }
-  }, [archiveTask, handleClose, projectId, sequenceNumber]);
+  }, [archiveTask, handleClose, projectId, currentSequenceNumber]);
 
-  const handleStartTask = useCallback(() => {
-    startUserWork({ sequenceNumber, projectId });
-  }, [startUserWork, sequenceNumber, projectId]);
+  const handleStartTask = useCallback(
+    async e => {
+      const res = await handleSave(e);
+      if (res) {
+        const newSequenceNumber = get(res, ['payload', 'data', 'sequenceNumber']);
+        const newProjectId = get(res, ['payload', 'data', 'projectId']);
+
+        if (newSequenceNumber && newProjectId) {
+          await startUserWork({
+            projectId: newProjectId,
+            sequenceNumber: newSequenceNumber,
+          });
+          setSequenceNumber(newSequenceNumber);
+          setIsCurrentState(true);
+        }
+      }
+    },
+    [handleSave, setIsCurrentState, setSequenceNumber, startUserWork]
+  );
 
   const copyText = 'Скопировать ссылку на задачу';
 
@@ -201,11 +231,11 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
           <IconButton>
             <TaskTypeIcon typeId={initialValues.typeId} />
           </IconButton>
-          {sequenceNumber && (
+          {currentSequenceNumber && (
             <div onMouseLeave={hideCopy} onMouseOver={isPage ? undefined : showCopy}>
               <Tooltip title={isPage ? copyText : 'Открыть в отдельном окне'} placement="bottom">
                 <CopyToClipboard text={getLink(true)} onCopy={isPage ? copyToClipboard : goToTask}>
-                  <Button variant="text">#{sequenceNumber}</Button>
+                  <Button variant="text">#{currentSequenceNumber}</Button>
                 </CopyToClipboard>
               </Tooltip>
               {!isPage && isShownCopy && (
@@ -221,7 +251,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
           )}
         </div>
         <div>
-          {sequenceNumber && (
+          {currentSequenceNumber && (
             <>
               <IconButton aria-label="more" className={classes.margin} onClick={moreMenuOpen}>
                 <MoreHorizIcon fontSize="small" />
@@ -237,7 +267,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
         </div>
       </DialogTitle>
       <DialogContent className={classes.card}>
-        <form onSubmit={handleSave(false)} className={classes.cardForm}>
+        <form onSubmit={handleSave} className={classes.cardForm}>
           <div className={classes.cardFirst}>
             <Field
               name="title"
@@ -245,18 +275,18 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
               component={TextField}
               margin="normal"
               validate={titleValidate}
-              onSubmit={handleSave(false)}
+              onSubmit={handleSave}
             />
             <Field
               placeholder="Описание задачи..."
               name="description"
               component={TextAreaMarkdown}
-              onSave={handleSave(false)}
+              onSave={handleSave}
             />
-            <TaskHistory />
+            {currentSequenceNumber && <TaskHistory />}
           </div>
           <div className={classes.cardSecond}>
-            <StatusField isMine onStart={handleStartTask} isCurrent={isCurrent} />
+            <StatusField isMine onStart={handleStartTask} isCurrent={isCurrentState} />
 
             <div className={classes.valueWrap}>
               <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />
@@ -274,7 +304,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
       </DialogContent>
       <DialogActions key={'actions'} className={classes.actions}>
         <div className={classes.grow} />
-        <Button color="primary" variant="contained" onClick={handleSave()} disabled={submitting || pristine}>
+        <Button color="primary" variant="contained" onClick={saveAndClose} disabled={submitting || pristine}>
           {buttonText}
           {submitting && '...'}
         </Button>

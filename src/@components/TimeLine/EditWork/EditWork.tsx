@@ -1,13 +1,12 @@
 import React from 'react';
 
 import cn from 'classnames';
+import moment from 'moment';
+import { Field, InjectedFormProps } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Typography from '@material-ui/core/Typography';
-
-import moment from 'moment';
-import { Field, InjectedFormProps } from 'redux-form';
 
 import { useStyles } from './styles';
 import TimeDiff from './TimeDiff';

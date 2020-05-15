@@ -1,11 +1,11 @@
 import React from 'react';
 
+import { InjectedFormProps } from 'redux-form';
+
 import Fab from '@material-ui/core/Fab';
 import { Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
-
-import { InjectedFormProps } from 'redux-form';
 // import { length } from 'redux-form-validators';
 
 // import AutoTaskField from './AutoTaskField';

@@ -1,7 +1,6 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
-import { handleActions } from 'redux-actions';
-
 import { History } from 'history';
+import { handleActions } from 'redux-actions';
 
 import getRouter from './getRouter';
 

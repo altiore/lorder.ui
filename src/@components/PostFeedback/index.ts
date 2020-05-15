@@ -1,10 +1,10 @@
+import { reduxForm } from 'redux-form';
+
 import { withStyles } from '@material-ui/core/styles';
 
 import { onSubmitFail, onSubmitForm } from '#/@store/@common/helpers';
 import { closeDialog } from '#/@store/dialog';
 import { postFeedback } from '#/@store/feedback';
-
-import { reduxForm } from 'redux-form';
 
 import { PostFeedbackTsx } from './PostFeedback';
 import { styles } from './styles';

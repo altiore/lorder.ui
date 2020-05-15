@@ -1,10 +1,9 @@
 import toString from 'lodash/toString';
+import { Dispatch } from 'redux';
 
 import { fetchAllParticipantProjects } from '#/@store/projects';
 import { identifier } from '#/@store/router';
 import { getUserWorks } from '#/@store/user-works';
-
-import { Dispatch } from 'redux';
 
 import { IIdentityState } from '../Identity';
 import { baseIdentityState, userIsLoading, userRole } from '../selectors';

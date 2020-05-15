@@ -2,14 +2,13 @@ import React from 'react';
 import Autosuggest from 'react-autosuggest';
 
 import deburr from 'lodash-es/deburr';
+import { WrappedFieldProps } from 'redux-form';
 
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import TextField from '@material-ui/core/TextField';
 
 import { Project } from '#/@store/projects';
-
-import { WrappedFieldProps } from 'redux-form';
 
 import Suggestion from './Suggestion';
 

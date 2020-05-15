@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import includes from 'lodash/includes';
+import moment from 'moment';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { defaultProjectId, userId } from '#/@store/identity/selectors';
@@ -8,8 +9,6 @@ import { Task } from '#/@store/tasks/Task';
 import { filteredMembers, searchTerm, tasksFilter } from '#/@store/tasksFilter';
 import { currentTask, currentTaskId } from '#/@store/timer';
 import { lastUserWorks } from '#/@store/user-works/selectors';
-
-import moment from 'moment';
 
 import { allTasks, getTaskById } from './selectors';
 

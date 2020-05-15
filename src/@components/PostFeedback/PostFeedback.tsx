@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+import { Field, InjectedFormProps } from 'redux-form';
+import { email, length, required } from 'redux-form-validators';
+
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,9 +14,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import { TextField } from '@components/TextField';
 
 import { TextAreaMarkdown } from '#/@common/TaskForm/TextAreaMarkdown';
-
-import { Field, InjectedFormProps } from 'redux-form';
-import { email, length, required } from 'redux-form-validators';
 
 export interface IPostFeedbackData {
   email: string;

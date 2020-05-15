@@ -3,14 +3,13 @@ import Popover from 'react-popover';
 
 import get from 'lodash/get';
 import minBy from 'lodash/minBy';
+import moment from 'moment';
 
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
 import Paper from '@material-ui/core/Paper';
 import { Theme, useTheme } from '@material-ui/core/styles';
-
-import moment from 'moment';
 
 import EditWork from './EditWork';
 import HoverInfo from './HoverInfo';
