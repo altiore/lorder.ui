@@ -25,7 +25,7 @@ export const startTimer = (userWork: Partial<UserWork>, projectProp?: IProject) 
   getState: any
 ) => {
   clearInterval(timer);
-  if (!userWork.durationInSeconds) {
+  if (!userWork || !userWork.durationInSeconds) {
     userWork = new UserWork(userWork);
   }
   const taskId = userWork.prevTaskId || userWork.taskId;

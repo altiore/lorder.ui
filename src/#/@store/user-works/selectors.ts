@@ -34,7 +34,7 @@ export const totalTimeSpentTodayInSeconds = createDeepEqualSelector(
   (list, currentTimerSeconds) =>
     list.reduce((res, userWork: UserWork) => {
       if (userWork.startAt.format(DATE_FORMAT) === moment().format(DATE_FORMAT)) {
-        return res + userWork.durationInSeconds;
+        return res + get(userWork, 'durationInSeconds', 0);
       } else {
         if (userWork.finishAt) {
           return res + userWork.finishAt.diff(moment().startOf('day'), 'second');
@@ -62,7 +62,7 @@ export const timeSpentByProjectIdInSeconds = createDeepEqualSelector(
   getUserWorksByProjectId,
   getUserWorks => (projectId: number) =>
     getUserWorks(projectId).reduce((res: number, userWork: UserWork) => {
-      return res + userWork.durationInSeconds;
+      return res + get(userWork, 'durationInSeconds', 0);
     }, 0)
 );
 
