@@ -9,6 +9,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import HeaderFixed from '@components/HeaderFixed';
 
+import { AccountMenu } from '#/@common/account-menu';
+
 export interface IHiHeaderProps {
   blocks: { [key: string]: { menu?: boolean; name: string; title: string } };
   brandName: string;
@@ -112,6 +114,7 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
           ))}
         </Tabs>
       )}
+      <AccountMenu />
     </HeaderFixed>
   );
 };

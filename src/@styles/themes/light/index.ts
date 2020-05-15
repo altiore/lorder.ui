@@ -114,7 +114,7 @@ export default createMuiTheme({
     },
     h4: {
       fontSize: defaultTheme.typography.pxToRem(24),
-      fontWeight: 500,
+      fontWeight: 400,
     },
     h5: {
       fontSize: defaultTheme.typography.pxToRem(18),
