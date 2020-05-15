@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
+import cn from 'classnames';
 import get from 'lodash-es/get';
 
 import Chip from '@material-ui/core/Chip';
@@ -71,14 +72,6 @@ export const FilterTsx: React.FC<IFilterProps> = ({
     [changeTasksFilter]
   );
 
-  const style = {
-    backgroundColor: '#f2d578',
-    borderRadius: 15,
-    height: '30px',
-    minHeight: 0,
-    width: '30px',
-  };
-
   return (
     <ListItem className={classes.root}>
       <div
@@ -89,14 +82,24 @@ export const FilterTsx: React.FC<IFilterProps> = ({
         onBlur={handlePaginatorLeave}
       >
         <Grow in={isPaginatorHovered} timeout={600}>
-          <Fab size="small" color="secondary" onClick={changePage(page - 1)} className={classes.left} style={style}>
-            <ChevronLeftIcon fontSize="small" style={{ color: '#FFFFFF' }} />
+          <Fab
+            size="small"
+            color="secondary"
+            onClick={changePage(page - 1)}
+            className={cn(classes.left, classes.fabStyle)}
+          >
+            <ChevronLeftIcon fontSize="small" />
           </Fab>
         </Grow>
         {page + 1} из {Math.ceil(count / perPage)}
         <Grow in={isPaginatorHovered} timeout={600}>
-          <Fab size="small" color="secondary" onClick={changePage(page + 1)} className={classes.right} style={style}>
-            <ChevronRightIcon fontSize="small" style={{ color: '#FFFFFF' }} />
+          <Fab
+            size="small"
+            color="secondary"
+            onClick={changePage(page + 1)}
+            className={cn(classes.right, classes.fabStyle)}
+          >
+            <ChevronRightIcon fontSize="small" />
           </Fab>
         </Grow>
       </div>

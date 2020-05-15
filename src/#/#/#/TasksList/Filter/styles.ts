@@ -11,6 +11,20 @@ export const styles = (theme: Theme) =>
       }),
       width: '100%',
     },
+    fabStyle: {
+      '& svg': {
+        color: theme.palette.primary.contrastText,
+      },
+      '&:hover': {
+        backgroundColor: theme.palette.secondary.dark,
+      },
+      backgroundColor: '#f2d578',
+      borderRadius: 15,
+      boxShadow: '0 4px 10px rgba(242, 213, 120, 0.5)',
+      height: '30px',
+      minHeight: 0,
+      width: '30px',
+    },
     filter: {
       alignItems: 'center',
       display: 'flex',

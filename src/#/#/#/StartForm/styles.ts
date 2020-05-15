@@ -13,7 +13,7 @@ export const styles = (theme: Theme) =>
         fontSize: theme.typography.pxToRem(28),
         fontWeight: 500,
         overflow: 'hidden',
-        transition: theme.transitions.create(['content'], { delay: 1000 }),
+        transition: theme.transitions.create(['width'], { delay: 1000 }),
       },
       '&:hover': {
         '&:after': {
@@ -25,7 +25,7 @@ export const styles = (theme: Theme) =>
           overflow: 'hidden',
           whiteSpace: 'nowrap',
         },
-        backgroundColor: '#f2d578',
+        backgroundColor: theme.palette.secondary.dark,
         border: 'none',
         boxShadow: '0 4px 10px rgba(242, 213, 120, 0.5)',
         color: '#ffffff',
@@ -33,6 +33,14 @@ export const styles = (theme: Theme) =>
         height: 48,
         transition: theme.transitions.create(['width']),
         width: 193,
+      },
+      '&:not(:hover)': {
+        '&:after': {
+          content: '"+"',
+          display: 'block',
+        },
+        transition: theme.transitions.create(['width']),
+        width: 48,
       },
       backgroundColor: '#f2d578',
       border: 'none',
