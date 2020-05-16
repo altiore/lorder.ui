@@ -1,55 +1,37 @@
 import { Theme } from '@material-ui/core/styles';
 import createStyles from '@material-ui/core/styles/createStyles';
 
+const ADD_BTN_SIZE = 52;
+
 export const styles = (theme: Theme) =>
   createStyles({
     add: {
       '& svg': {
         fontSize: theme.typography.pxToRem(28),
       },
-      '&:after': {
-        content: '"+"',
-        display: 'block',
-        fontSize: theme.typography.pxToRem(28),
-        fontWeight: 500,
-        overflow: 'hidden',
-        transition: theme.transitions.create(['width'], { delay: 1000 }),
-      },
       '&:hover': {
-        '&:after': {
-          content: '"Создать новую задачу"',
-          display: 'block',
-          fontFamily: 'Roboto',
-          fontSize: theme.typography.pxToRem(14),
-          fontWeight: 500,
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-        },
         backgroundColor: theme.palette.secondary.dark,
-        border: 'none',
-        boxShadow: '0 4px 10px rgba(242, 213, 120, 0.5)',
-        color: '#ffffff',
+        borderRadius: ADD_BTN_SIZE / 2.1,
+        boxShadow: theme.shadow.secondary,
+        color: theme.palette.background.paper,
         cursor: 'pointer',
-        height: 48,
-        transition: theme.transitions.create(['width']),
-        width: 193,
-      },
-      '&:not(:hover)': {
-        '&:after': {
-          content: '"+"',
-          display: 'block',
-        },
-        transition: theme.transitions.create(['width']),
-        width: 48,
+        padding: theme.spacing(0, 2),
+        width: theme.spacing(25),
       },
       backgroundColor: '#f2d578',
-      border: 'none',
-      borderRadius: 24,
+      borderRadius: ADD_BTN_SIZE / 2,
       boxShadow: 'none',
-      color: 'white',
-      height: 48,
-      minWidth: 0,
-      width: 48,
+      color: theme.palette.background.paper,
+      fontFamily: 'Roboto',
+      fontSize: theme.typography.pxToRem(14),
+      fontWeight: 500,
+      height: ADD_BTN_SIZE,
+      overflow: 'hidden',
+      transition: theme.transitions.create(['color', 'width'], {
+        duration: theme.transitions.duration.shortest,
+      }),
+      whiteSpace: 'nowrap',
+      width: ADD_BTN_SIZE,
     },
     form: {
       alignItems: 'center',

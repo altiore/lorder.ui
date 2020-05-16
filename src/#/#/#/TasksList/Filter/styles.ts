@@ -19,11 +19,9 @@ export const styles = (theme: Theme) =>
         backgroundColor: theme.palette.secondary.dark,
       },
       backgroundColor: '#f2d578',
-      borderRadius: 15,
-      boxShadow: '0 4px 10px rgba(242, 213, 120, 0.5)',
-      height: '30px',
+      borderRadius: '50%',
+      boxShadow: theme.shadow.secondary,
       minHeight: 0,
-      width: '30px',
     },
     filter: {
       alignItems: 'center',

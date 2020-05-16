@@ -88,7 +88,7 @@ export const FilterTsx: React.FC<IFilterProps> = ({
             onClick={changePage(page - 1)}
             className={cn(classes.left, classes.fabStyle)}
           >
-            <ChevronLeftIcon fontSize="small" />
+            <ChevronLeftIcon />
           </Fab>
         </Grow>
         {page + 1} из {Math.ceil(count / perPage)}
@@ -99,7 +99,7 @@ export const FilterTsx: React.FC<IFilterProps> = ({
             onClick={changePage(page + 1)}
             className={cn(classes.right, classes.fabStyle)}
           >
-            <ChevronRightIcon fontSize="small" />
+            <ChevronRightIcon />
           </Fab>
         </Grow>
       </div>
