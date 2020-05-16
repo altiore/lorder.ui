@@ -53,6 +53,7 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
   classes?: any;
   fetchTaskDetails: any;
   isCurrent?: boolean;
+  isPaused: boolean;
   location: any;
   onClose: any;
   projectId: number;
@@ -77,6 +78,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
   handleSubmit,
   initialValues,
   isCurrent,
+  isPaused,
   location,
   onClose,
   pristine,
@@ -204,22 +206,29 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
 
   const handleStartTask = useCallback(
     async e => {
-      const res = await handleSave(e);
-      if (res) {
-        const newSequenceNumber = get(res, ['payload', 'data', 'sequenceNumber']);
-        const newProjectId = get(res, ['payload', 'data', 'projectId']);
+      setIsCurrentState(true);
+      if (currentSequenceNumber) {
+        await startUserWork({
+          projectId,
+          sequenceNumber: currentSequenceNumber,
+        });
+      } else {
+        const res = await handleSave(e);
+        if (res) {
+          const newSequenceNumber = get(res, ['payload', 'data', 'sequenceNumber']);
+          const newProjectId = get(res, ['payload', 'data', 'projectId']);
 
-        if (newSequenceNumber && newProjectId) {
-          await startUserWork({
-            projectId: newProjectId,
-            sequenceNumber: newSequenceNumber,
-          });
-          setSequenceNumber(newSequenceNumber);
-          setIsCurrentState(true);
+          if (newSequenceNumber && newProjectId) {
+            await startUserWork({
+              projectId: newProjectId,
+              sequenceNumber: newSequenceNumber,
+            });
+            setSequenceNumber(newSequenceNumber);
+          }
         }
       }
     },
-    [handleSave, setIsCurrentState, setSequenceNumber, startUserWork]
+    [currentSequenceNumber, handleSave, projectId, setIsCurrentState, setSequenceNumber, startUserWork]
   );
 
   const copyText = 'Скопировать ссылку на задачу';
@@ -293,6 +302,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
             </div>
             {initialValues.id && (
               <div>
+                {isPaused && 'задача на паузе!'}
                 <TaskDuration taskId={initialValues.id} />
               </div>
             )}
