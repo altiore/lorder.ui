@@ -52,6 +52,6 @@ $ npm start
 5. _@types_ - общие типы данных в проекте
 6. _@utils_ - полезные утилиты, используемые в проекте
 
-#### [Участие в разработке](https://github.com/altiore/altiore.ui/wiki/Start)
+#### [Участие в разработке проекта](https://github.com/altiore/altiore.ui/wiki/Start)
 #### [Начать решать задачи проекта](https://github.com/altiore/altiore.ui/wiki/Start)
 #### [Приступить к работе](https://github.com/altiore/altiore.ui/wiki/NoRabota)
