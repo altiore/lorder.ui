@@ -8,7 +8,6 @@ import { createStructuredSelector } from 'reselect';
 
 import { onSubmitFail } from '#/@store/@common/helpers';
 import { changeSettings } from '#/@store/dialog';
-import { showSuccess } from '#/@store/notifications';
 import { routeProjectId, routeTaskSequenceNumber } from '#/@store/router';
 import {
   archiveTask,
@@ -38,7 +37,6 @@ const mapDispatchToProps = {
   fetchTaskDetails,
   push,
   replace,
-  showSuccess,
   startUserWork,
 };
 

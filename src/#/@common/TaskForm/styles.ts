@@ -38,19 +38,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexGrow: 1,
     paddingLeft: theme.spacing(1),
   },
-  field: {
-    paddingLeft: theme.spacing(4),
-  },
   grow: {
     flexGrow: 1,
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  row: {
-    alignItems: 'center',
-    display: 'flex',
-    flexFlow: 'row nowrap',
   },
   valueWrap: {
     marginTop: theme.spacing(2),
