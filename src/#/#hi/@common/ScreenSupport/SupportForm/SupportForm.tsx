@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { ReactComponent as GoSvg } from './go.svg';
 import { ReactComponent as PatreonSvg } from './patreon-logo.svg';
-import PatreonPng from './patreon.png';
+import { ReactComponent as PatreonTextSvg } from './Patreon.svg';
 import PatreonBG from './Patreon_bg.jpg';
 import { ReactComponent as PlaySvg } from './play.svg';
 
@@ -20,14 +20,19 @@ const IMG_SIZE = {
   width: 95,
 };
 
-const PATREON_IMG = {
-  height: 385,
-  width: 1680,
-};
-
 const useStyles = makeStyles((theme: Theme) => ({
-  patreonImg: {
-    width: PATREON_IMG.width / 10,
+  on: {
+    '& > svg': {
+      marginLeft: theme.spacing(1),
+      width: theme.spacing(20),
+    },
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  onSvg: {
+    height: 'none',
+    width: 'none',
   },
   root: {
     alignItems: 'center',
@@ -38,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
   },
   supportContent: {
-    '& svg': {
+    '& > svg': {
       '& [data-color="1"]': {
         fill: 'rgb(232, 91, 70)',
       },
@@ -51,7 +56,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'space-around',
-    width: theme.spacing(38),
+    width: theme.spacing(45),
+    [theme.breakpoints.down('sm')]: {
+      flexFlow: 'column nowrap',
+      padding: theme.spacing(1, 0),
+      width: theme.spacing(37),
+    },
   },
   supportLink: {
     alignItems: 'center',
@@ -103,7 +113,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const SupportForm: React.FC<ISupportForm> = () => {
-  const { patreonImg, root, supportContent, supportLink, supportLinkText, svgWrapper, svgWrapperBack } = useStyles();
+  const { root, on, onSvg, supportContent, supportLink, supportLinkText, svgWrapper, svgWrapperBack } = useStyles();
 
   return (
     <Paper className={root} elevation={6}>
@@ -127,8 +137,11 @@ export const SupportForm: React.FC<ISupportForm> = () => {
           <div className={supportContent}>
             <PatreonSvg />
             <div className={supportLinkText}>
-              <Typography variant="h5">Поддержать проект</Typography>
-              <img className={patreonImg} src={PatreonPng} alt="Patreon" />
+              <Typography variant="h4">Поддержать проект</Typography>
+              <div className={on}>
+                <Typography>на</Typography>
+                <PatreonTextSvg className={onSvg} />
+              </div>
             </div>
             <GoSvg />
           </div>
