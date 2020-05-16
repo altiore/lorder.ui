@@ -23,6 +23,7 @@ export interface IStartStopBtnProps {
   theme: Theme;
   onStart: (task: { projectId?: number; taskId: number | string }) => any;
   onStop: (event: React.SyntheticEvent<any>) => any;
+  onStopPaused: (...a: any) => any;
   onPause: (event: React.SyntheticEvent<any>) => any;
   task?: ITask;
   width?: number;
@@ -79,6 +80,7 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
   theme,
   onStart,
   onStop,
+  onStopPaused,
   onPause,
   task,
   width,
@@ -149,10 +151,13 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
     [currentTaskId, onStart]
   );
 
-  const handleStopPaused = useCallback(e => {
-    e.stopPropagation();
-    alert('Еще не реализовано');
-  }, []);
+  const handleStopPaused = useCallback(
+    e => {
+      e.stopPropagation();
+      onStopPaused();
+    },
+    [onStopPaused]
+  );
 
   let size: 'small' | 'medium' = width && width < theme.breakpoints.values.sm ? 'small' : 'medium';
   if (isLarge) {
