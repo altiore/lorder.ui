@@ -70,6 +70,9 @@ export default createMuiTheme({
       variant: 'outlined',
     },
   },
+  shadow: {
+    secondary: '0 4px 10px rgba(242, 213, 120, 0.5)',
+  },
   shape: {
     borderRadius: 4,
     borderRadius2: 8,
@@ -157,6 +160,9 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       width: number;
     };
     pauseColor: PaletteColor;
+    shadow: {
+      secondary: string;
+    };
     textGradient: object[];
     themeName?: string;
   }
@@ -169,6 +175,9 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       width?: number;
     };
     pauseColor?: PaletteColorOptions;
+    shadow?: {
+      secondary?: string;
+    };
     textGradient?: object[];
     themeName?: string;
   }

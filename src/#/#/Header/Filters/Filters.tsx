@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 
 import cn from 'classnames';
 import get from 'lodash/get';
+import intersection from 'lodash/intersection';
 
 import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
@@ -34,6 +35,8 @@ interface IFiltersProps {
   toggleUiSetting: any;
 }
 
+const SHOWN_MEMBERS = 7;
+
 export const FiltersTsx: React.FC<IFiltersProps> = ({
   changeFilter,
   classes,
@@ -44,30 +47,34 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
   toggleMember,
   toggleUiSetting,
 }) => {
+  const firstTopMembersIds = useMemo(() => {
+    return members ? members.slice(0, SHOWN_MEMBERS).map(el => el.id) : [];
+  }, [members]);
+
   const sortedMembers = useMemo(() => {
     return members.slice(0).sort((a: IUser, b: IUser) => {
       if (filteredMembers.indexOf(a.id || 0) === -1) {
         if (filteredMembers.indexOf(b.id || 0) === -1) {
           return 0;
         } else {
-          return 1;
+          return intersection(firstTopMembersIds, filteredMembers).length === filteredMembers.length ? 0 : 1;
         }
       } else {
         if (filteredMembers.indexOf(b.id || 0) === -1) {
-          return -1;
+          return intersection(firstTopMembersIds, filteredMembers).length === filteredMembers.length ? 0 : -1;
         } else {
           return 0;
         }
       }
     });
-  }, [filteredMembers, members]);
+  }, [filteredMembers, firstTopMembersIds, members]);
 
   const shownMembers = useMemo(() => {
-    return sortedMembers ? sortedMembers.slice(0, 7) : [];
+    return sortedMembers ? sortedMembers.slice(0, SHOWN_MEMBERS) : [];
   }, [sortedMembers]);
 
   const dropDownMembers = useMemo(() => {
-    return sortedMembers ? sortedMembers.slice(7) : [];
+    return sortedMembers ? sortedMembers.slice(SHOWN_MEMBERS) : [];
   }, [sortedMembers]);
 
   const anchorRef = useRef(null);

@@ -52,10 +52,10 @@ export const styles = (theme: Theme) =>
       backgroundColor: theme.palette.primary.main,
       float: 'none',
       height: 56,
-      left: 86,
+      left: 76,
       position: 'absolute',
       top: 0,
-      width: 'calc(100% - 110px)',
+      width: 'calc(100% - 104px)',
       zIndex: 1300,
     },
     search: {

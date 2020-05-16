@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { InjectedFormProps } from 'redux-form';
 
+import Fab from '@material-ui/core/Fab';
 import { Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
+import AddIcon from '@material-ui/icons/Add';
 // import { length } from 'redux-form-validators';
 
 // import AutoTaskField from './AutoTaskField';
@@ -26,20 +28,29 @@ export class IStartFormProps {
 
 export const StartFormJsx: React.FunctionComponent<
   IInternalProps & InjectedFormProps<IStartFormData, IStartFormProps>
-> = React.memo(({ classes, handleSubmit, selectedProject }) => (
-  <form onSubmit={handleSubmit} className={classes.form}>
-    {/*<div className={classes.inputBlock}>*/}
-    {/*  <Field*/}
-    {/*    name="description"*/}
-    {/*    component={AutoTaskField}*/}
-    {/*    label="Выбери или создай задачу..."*/}
-    {/*    validate={[length({ max: 140, msg: 'Превышен максимум 140 символов' })]}*/}
-    {/*  />*/}
-    {/*</div>*/}
-    {selectedProject && (
-      <Tooltip title={`Создать новую задачу в проекте "${selectedProject.title}"`} placement={'top'}>
-        <button onClick={handleSubmit} className={classes.add} />
-      </Tooltip>
-    )}
-  </form>
-));
+> = React.memo(({ classes, handleSubmit, selectedProject }) => {
+  const [hovered, setHovered] = useState(false);
+
+  const onHover = () => setHovered(true);
+  const onOut = () => setHovered(false);
+
+  return (
+    <form onSubmit={handleSubmit} className={classes.form}>
+      {/*<div className={classes.inputBlock}>*/}
+      {/*  <Field*/}
+      {/*    name="description"*/}
+      {/*    component={AutoTaskField}*/}
+      {/*    label="Выбери или создай задачу..."*/}
+      {/*    validate={[length({ max: 140, msg: 'Превышен максимум 140 символов' })]}*/}
+      {/*  />*/}
+      {/*</div>*/}
+      {selectedProject && (
+        <Tooltip title={`Создать новую задачу в проекте "${selectedProject.title}"`} placement={'top'}>
+          <Fab onClick={handleSubmit} className={classes.add} onMouseOver={onHover} onMouseLeave={onOut} size="large">
+            {hovered ? `Создать новую задачу` : <AddIcon />}
+          </Fab>
+        </Tooltip>
+      )}
+    </form>
+  );
+});
