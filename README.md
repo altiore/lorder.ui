@@ -28,6 +28,8 @@ $ npm start
 
 ##### 5. Приложение должно автоматически открыться в браузере и автоматически обновляться при любом изменении кода
 
+[Независимому члену команды](https://github.com/altiore/altiore.ui/wiki/Start)
+
 ### Именование файлов и папок
 
 #### Общие положения
@@ -50,4 +52,6 @@ $ npm start
 5. _@types_ - общие типы данных в проекте
 6. _@utils_ - полезные утилиты, используемые в проекте
 
-#### [Участие в разработке](https://github.com/altiore/altiore.ui/blob/master/CONTRIBUTING.md)
+#### [Участие в разработке](https://github.com/altiore/altiore.ui/wiki/Start)
+#### [Начать решать задачи проекта](https://github.com/altiore/altiore.ui/wiki/Start)
+#### [Приступить к работе](https://github.com/altiore/altiore.ui/wiki/NoRabota)
