@@ -119,7 +119,7 @@ export const AccountMenuTsx: FC<IAccountMenuTsx> = ({
     setOpen(o => !o);
   }, [setOpen]);
 
-  const [anchorEl, setAnchorEl] = useState();
+  const [anchorEl, setAnchorEl] = useState<any>();
 
   const handleClose = useCallback(
     (event: KeyboardEvent | MouseEvent | SyntheticEvent) => {

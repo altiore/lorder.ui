@@ -77,10 +77,10 @@ export class TableVirtualized extends React.Component<ITableVirtualizedProps, IT
               <Table
                 className={classes.table}
                 height={height}
+                {...tableProps}
                 width={width}
                 rowCount={rows.length}
                 rowGetter={this.rowGetter(rows)}
-                {...tableProps}
                 rowClassName={this.getRowClassName}
               >
                 {columns.map(({ component = null, dataKey, ...other }, index: number) => {

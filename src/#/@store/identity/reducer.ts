@@ -77,7 +77,7 @@ const updateProfileFail = (state: IIdentityState, { payload }) => {
   });
 };
 
-export const identity: any = handleActions<IIdentityState>(
+export const identity = handleActions<IIdentityState>(
   {
     [getAuthActivate.toString()]: getAuthActivateHandler,
     [getAuthActivate.success]: getAuthActivateSuccessHandler,

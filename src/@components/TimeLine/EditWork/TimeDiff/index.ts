@@ -1,12 +1,15 @@
 import { connect } from 'react-redux';
 
 import { getFormValues } from 'redux-form';
-import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector, Selector } from 'reselect';
 
-import { TimeDiffTsx } from './TimeDiff';
+import { IEditWorkData } from '../@common';
+import { ITimeDiff, TimeDiffTsx } from './TimeDiff';
 
-const mapStateToProps = createStructuredSelector({
-  formValues: getFormValues('EditWorkForm'),
+import { IState } from '@types';
+
+const mapStateToProps = createStructuredSelector<Partial<IState>, ITimeDiff>({
+  formValues: getFormValues('EditWorkForm') as Selector<Partial<IState>, IEditWorkData>,
 });
 
-export default connect(mapStateToProps)(TimeDiffTsx as any);
+export default connect<ITimeDiff>(mapStateToProps)(TimeDiffTsx);

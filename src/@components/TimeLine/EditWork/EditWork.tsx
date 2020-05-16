@@ -8,16 +8,13 @@ import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Typography from '@material-ui/core/Typography';
 
+import { IEditWorkData } from './@common';
 import { useStyles } from './styles';
 import TimeDiff from './TimeDiff';
 import TimeField from './TimeField';
 
 import { IEvent } from '@types';
 
-export interface IEditWorkData {
-  finishAt: moment.Moment;
-  startAt: moment.Moment;
-}
 const FORMAT = 'YYYY-MM-DDTHH:mm';
 
 const formatter = (value: moment.Moment) => (value ? value.format(FORMAT) : '');

@@ -3,7 +3,7 @@ import { reducer as notifications } from 'react-notification-system-redux';
 
 import { History } from 'history';
 import * as localForage from 'localforage';
-import { combineReducers } from 'redux';
+import { combineReducers, Reducer } from 'redux';
 import { reducer as form } from 'redux-form';
 import { createTransform, PersistConfig, persistReducer } from 'redux-persist';
 
@@ -110,45 +110,41 @@ const persistConfig: PersistConfig<Partial<IState>> = {
   ],
 };
 
-// TODO: fix async loading for reducers considering user role
 export async function createRootReducer(history: History, asyncReducers = {}) {
-  return persistReducer(
-    persistConfig,
-    combineReducers({
-      /** common reducers */
-      asyncReducers: asyncReducersReducer,
-      counter: counterReducer,
-      dialog,
-      externalLibraries,
-      form,
-      highcharts,
-      identity,
-      info,
-      intl,
-      notifications,
-      publicAltiore,
-      publicProject,
-      roles,
-      router: routerReducer(history),
-      sockets: socketsReducer,
-      statistics,
-      ui: uiReducer,
-      versionHistory,
-      /** end common reducers */
+  return persistReducer(persistConfig, combineReducers({
+    /** common reducers */
+    asyncReducers: asyncReducersReducer,
+    counter: counterReducer,
+    dialog,
+    externalLibraries,
+    form,
+    highcharts,
+    identity,
+    info,
+    intl,
+    notifications: notifications as any,
+    publicAltiore,
+    publicProject,
+    roles,
+    router: routerReducer(history),
+    sockets: socketsReducer,
+    statistics,
+    ui: uiReducer,
+    versionHistory,
+    /** end common reducers */
 
-      feedback,
-      other,
-      project: projectReducer,
-      projects,
-      projectStatusMoves: projectStatusMovesReducer,
-      taskActive,
-      tasks,
-      tasksFilter,
-      taskStatuses,
-      taskTypes,
-      timer,
-      userWorks,
-      ...asyncReducers,
-    })
-  );
+    feedback,
+    other,
+    project: projectReducer,
+    projects,
+    projectStatusMoves: projectStatusMovesReducer,
+    taskActive,
+    tasks,
+    tasksFilter,
+    taskStatuses,
+    taskTypes,
+    timer,
+    userWorks,
+    ...asyncReducers,
+  }) as Reducer<Partial<IState>>);
 }

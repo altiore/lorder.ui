@@ -12,7 +12,7 @@ export const fetchProjectRolesAct = requestActions('CURRENT_PROJECT/FETCH_ROLES'
 
 export const createProjectRoleAct = requestActions(
   'CURRENT_PROJECT/ADD_ROLE',
-  (projectId: number, data: { roleId: string; allowedMoveIds: number[]; name?: string }) => ({
+  (projectId: number, data: { roleId: string; allowedMoveIds?: number[]; name?: string }) => ({
     request: {
       data: {
         allowedMoveIds: [],

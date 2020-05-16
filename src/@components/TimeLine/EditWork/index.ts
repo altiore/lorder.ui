@@ -1,7 +1,8 @@
 import { reduxForm } from 'redux-form';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { EditWorkTsx, IEditWorkData } from './EditWork';
+import { IEditWorkData } from './@common';
+import { EditWorkTsx } from './EditWork';
 
 const formConfig = {
   enableReinitialize: true,

@@ -16,6 +16,6 @@ const mapStateToProps = createStructuredSelector({
   tasksFilter,
 } as any);
 
-export const TasksList = connect<Partial<ITasksListProps>, Partial<ITasksListProps>, {}>(mapStateToProps)(
+export const TasksList = connect<Partial<ITasksListProps>, Partial<ITasksListProps>, {}>(mapStateToProps as any)(
   TasksListJsx as any
 );
