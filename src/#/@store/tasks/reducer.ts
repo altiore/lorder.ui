@@ -5,7 +5,13 @@ import { PURGE } from 'redux-persist';
 import { User } from '#/#/@store/users';
 import { DownloadList } from '#/@store/@common/entities';
 import { combineActions } from '#/@store/@common/helpers';
-import { getUserWorks, patchAndStopUserWork, patchUserWork, postAndStartUserWork } from '#/@store/user-works';
+import {
+  getUserWorks,
+  patchAndStopUserWork,
+  patchUserWork,
+  pauseUserWork,
+  postAndStartUserWork,
+} from '#/@store/user-works';
 import { UserWork } from '#/@store/user-works/UserWork';
 
 import { AxiosResponse } from 'axios';
@@ -329,9 +335,9 @@ export const tasks: any = handleActions<S, any, any>(
     [postProjectTask.success]: postProjectTaskSuccessHandler,
     [postProjectTask.fail]: postProjectTaskFailHandler,
 
-    [patchAndStopUserWork.toString()]: patchAndStopUserWorkHandler,
-    [patchAndStopUserWork.success]: patchAndStopUserWorkSuccessHandler,
-    [patchAndStopUserWork.fail]: patchAndStopUserWorkFailHandler,
+    [combineActions(patchAndStopUserWork.toString(), pauseUserWork.toString()).toString()]: patchAndStopUserWorkHandler,
+    [combineActions(patchAndStopUserWork.success, pauseUserWork.success)]: patchAndStopUserWorkSuccessHandler,
+    [combineActions(patchAndStopUserWork.fail, pauseUserWork.fail)]: patchAndStopUserWorkFailHandler,
 
     [replaceTasks.toString()]: replaceTasksHandler,
 

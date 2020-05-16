@@ -20,13 +20,14 @@ import {
   patchProjectTask,
   postProjectTask,
 } from '#/@store/tasks';
-import { startUserWork } from '#/@store/user-works';
+import { isPaused, startUserWork } from '#/@store/user-works';
 
 import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
   checkIsCurrent,
   getEditTaskInitialValues,
+  isPaused,
   routeProjectId,
   routeTaskSequenceNumber,
 } as any);
