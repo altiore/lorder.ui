@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { StartStopBtn } from '@components/StartStopBtn';
 
 import { currentTaskId } from '#/@store/timer';
-import { isPaused, pauseWork, startUserWork, stopUserWork } from '#/@store/user-works';
+import { isPaused, pauseWork, startUserWork, stopPausedTask, stopUserWork } from '#/@store/user-works';
 
 import { ITask } from '@types';
 
@@ -23,6 +23,7 @@ const mapDispatchToProps = {
   onPause: pauseWork,
   onStart: startUserWork,
   onStop: stopUserWork,
+  onStopPaused: stopPausedTask,
 };
 
 export default connect(
