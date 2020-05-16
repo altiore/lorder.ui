@@ -50,9 +50,7 @@ export const withResize = <P>(
           ...restProps,
           ...restState,
         };
-        if (getNode) {
-          componentProps.getRef = getRef;
-        }
+        componentProps.getRef = getRef;
         return React.createElement(Component as any, componentProps, children);
       }
 

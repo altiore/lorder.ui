@@ -50,8 +50,8 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
   const [finishAt, setFinishAt] = useState(getFinishAt);
   const [height, setHeight] = useState(Y_HEIGHT_LITTLE);
   const [hoveredEl, setHoveredEl] = useState<any>(null);
-  const [hoveredEvent, setHoveredEvent] = useState();
-  const [editedEvent, setEditedEvent] = useState();
+  const [hoveredEvent, setHoveredEvent] = useState<IEvent>();
+  const [editedEvent, setEditedEvent] = useState<IEvent>();
 
   const clearTimer = useCallback(() => {
     if (heightTimer) {

@@ -5,11 +5,10 @@ import moment from 'moment';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+import { IEditWorkData } from '../@common';
+
 export interface ITimeDiff {
-  formValues: {
-    finishAt: moment.Moment;
-    startAt: moment.Moment;
-  };
+  formValues: IEditWorkData;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({

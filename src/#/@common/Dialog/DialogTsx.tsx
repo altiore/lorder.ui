@@ -20,7 +20,7 @@ export const DialogTsx: React.FunctionComponent<DialogProps & IDialogTsx> = prop
   if (!CurrentDialog) {
     return null;
   }
-  const { isWidthSm } = props;
+  const { isWidthSm, open } = props;
   const rest = omit(props, [
     'scrollHeight',
     'scrollWidth',
@@ -33,7 +33,7 @@ export const DialogTsx: React.FunctionComponent<DialogProps & IDialogTsx> = prop
     'width',
   ]);
   return (
-    <Dialog fullScreen={isWidthSm} {...rest} aria-labelledby="scroll-dialog-title">
+    <Dialog open={open || false} fullScreen={isWidthSm} {...rest} aria-labelledby="scroll-dialog-title">
       {React.isValidElement(CurrentDialog)
         ? React.cloneElement<any>(CurrentDialog, { onClose: props.onClose })
         : React.createElement(CurrentDialog as any, { onClose: props.onClose })}
