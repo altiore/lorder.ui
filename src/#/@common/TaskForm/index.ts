@@ -10,7 +10,6 @@ import { onSubmitFail } from '#/@store/@common/helpers';
 import { changeSettings } from '#/@store/dialog';
 import { routeProjectId, routeTaskSequenceNumber } from '#/@store/router';
 import {
-  archiveTask,
   checkIsCurrent,
   EDIT_TASK_FORM,
   EDIT_TASK_FORM_PROPS,
@@ -32,7 +31,6 @@ const mapStateToProps = createStructuredSelector({
 } as any);
 
 const mapDispatchToProps = {
-  archiveTask,
   changeSettings,
   fetchTaskDetails,
   push,

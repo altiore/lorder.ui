@@ -20,7 +20,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import Avatar from '@components/Avatar';
-import AssigneeList from '@components/TaskStatus/AssigneeList';
+
+import AssigneeList from '#/@common/TaskForm/StatusField/AssigneeList';
 
 import { IUser } from '@types';
 

@@ -171,7 +171,12 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
             {currentSequenceNumber && <TaskHistory />}
           </div>
           <div className={cardSecond}>
-            <StatusField isMine onStart={handleStartTask} isCurrent={isCurrentState} />
+            <StatusField
+              onStart={handleStartTask}
+              isCurrent={isCurrentState}
+              projectId={projectId}
+              sequenceNumber={currentSequenceNumber}
+            />
 
             <div className={valueWrap}>
               <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />

@@ -2,13 +2,13 @@ import React from 'react';
 
 import { reduxForm } from 'redux-form';
 
-import TaskStatus from '.';
-import Center from '../../../.storybook/decor/Center';
-import FormDecorator from '../../../.storybook/decor/FormDecorator';
-import { IUser } from '../../@types';
+import Center from '../../../../../.storybook/decor/Center';
+import FormDecorator from '../../../../../.storybook/decor/FormDecorator';
+import { TaskStatus } from './TaskStatus';
 
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
+import { IUser } from '@types';
 
 const assignees: IUser[] = [
   {

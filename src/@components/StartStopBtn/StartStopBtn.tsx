@@ -68,6 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '32px',
       },
       backgroundColor: '#d8d8d8!important',
+      color: theme.palette.background.paper,
     },
   })
 );
