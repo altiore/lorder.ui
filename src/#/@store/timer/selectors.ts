@@ -1,5 +1,5 @@
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
-import { convertSecondsToDuration, convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
+import { convertSecondsToDuration } from '#/@store/@common/helpers';
 import { filteredTaskList } from '#/@store/tasks/selectors';
 import { IUserWorkDelete } from '#/@store/user-works/actions';
 
@@ -34,8 +34,4 @@ export const currentTimeHumanize = createDeepEqualSelector(currentTimerTime, tim
 
 export const currentTimeToString = createDeepEqualSelector([currentTimerTime], seconds =>
   convertSecondsToDuration(seconds)
-);
-
-export const currentTimeWithLocal = createDeepEqualSelector([currentTimerTime], seconds =>
-  convertSecondsToDurationWithLocal(seconds)
 );

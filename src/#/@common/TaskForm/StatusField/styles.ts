@@ -7,6 +7,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     zIndex: 1303,
   },
   taskStatus: {
+    marginRight: theme.spacing(3),
     position: 'relative',
   },
   wrapper: {

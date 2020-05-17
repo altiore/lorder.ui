@@ -4,15 +4,16 @@ import moment from 'moment';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { defaultProjectId, userId } from '#/@store/identity/selectors';
+import { getProjectById } from '#/@store/projects/selectors';
 import { routeProjectId } from '#/@store/router';
 import { Task } from '#/@store/tasks/Task';
 import { filteredMembers, searchTerm, tasksFilter } from '#/@store/tasksFilter';
 import { currentTask, currentTaskId } from '#/@store/timer';
 import { isPaused, lastUserWorks } from '#/@store/user-works/selectors';
 
-import { allTasks, getTaskById } from './selectors';
+import { allTasks, getTaskById, getTaskBySequenceNumber } from './selectors';
 
-import { IDownloadList, IEvent, ITask, IUserWork } from '@types';
+import { ACCESS_LEVEL, IDownloadList, IEvent, ITask, IUserWork } from '@types';
 
 export const filteredByPerformerTasks = createDeepEqualSelector(
   [allTasks, userId, currentTaskId],
@@ -85,6 +86,22 @@ export const filteredProjectTasks = createDeepEqualSelector(
       res = res.filter(el => (members.length ? includes(members, el.performerId) : true));
     }
     return res;
+  }
+);
+
+export const canStartTask = createDeepEqualSelector(
+  [getTaskBySequenceNumber, getProjectById, userId],
+  (getTask, getProject, userId) => (sequenceNumber: number, projectId: number) => {
+    const task: ITask = getTask(sequenceNumber, projectId) as ITask;
+    if (task) {
+      const project = getProject(task.projectId);
+      return (
+        task.performerId === userId ||
+        Boolean(project && project.accessLevel && project.accessLevel >= ACCESS_LEVEL.YELLOW)
+      );
+    }
+
+    return false;
   }
 );
 
