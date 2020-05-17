@@ -49,7 +49,6 @@ export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, isMagicLoginForm, t
     [setFormType, toggleUiSetting]
   );
 
-  console.log('render AuthForm');
   return (
     <div className={classes.form}>
       <AppBar position="static" className={classes.header}>
