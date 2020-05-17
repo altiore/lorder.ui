@@ -1,12 +1,11 @@
 import { createMuiTheme, Theme } from '@material-ui/core/styles';
-import { PaletteColor, PaletteColorOptions } from '@material-ui/core/styles/createPalette';
 
 import MuiDialog from './MuiDialog';
 import MuiTextField from './MuiTextField';
-import { background, error, pause, primary, secondary } from './palette';
+import { defaultTheme as theme, palette } from './palette';
 import { prettyScroll1, SECONDARY_DARKEN } from './variables';
 
-const defaultTheme: Theme = createMuiTheme({});
+const SECONDARY_SHADOW = '0 4px 10px rgba(242, 213, 120, 0.5)';
 
 export default createMuiTheme({
   themeName: 'LIGHT',
@@ -22,8 +21,27 @@ export default createMuiTheme({
     },
   },
   overrides: {
-    ...MuiDialog(defaultTheme),
-    ...MuiTextField(defaultTheme),
+    ...MuiDialog(theme),
+    ...MuiTextField(theme),
+    MuiAppBar: {
+      colorDefault: {
+        backgroundColor: palette.default.main,
+      },
+    },
+    MuiChip: {
+      outlined: {
+        '&:hover': {
+          backgroundColor: `${palette.primary.main}!important`,
+          borderColor: 'rgb(214, 186, 98)',
+          boxShadow: SECONDARY_SHADOW,
+          color: palette.common.white,
+        },
+        border: '1px solid rgba(0, 0, 0, 0.1)',
+        color: palette.default.light,
+        fontSize: theme.typography.pxToRem(14),
+        fontWeight: 400,
+      },
+    },
     MuiExpansionPanelDetails: {
       root: {
         padding: '0 16px 16px',
@@ -37,8 +55,8 @@ export default createMuiTheme({
     },
     MuiIconButton: {
       root: {
-        borderRadius: defaultTheme.shape.borderRadius,
-        padding: defaultTheme.typography.pxToRem(7),
+        borderRadius: theme.shape.borderRadius,
+        padding: theme.typography.pxToRem(7),
       },
     },
     MuiToolbar: {
@@ -47,21 +65,15 @@ export default createMuiTheme({
         paddingRight: 6,
       },
       root: {
-        zIndex: defaultTheme.zIndex.drawer + 1,
-        [defaultTheme.breakpoints.down('sm')]: {
-          ...(defaultTheme.overrides as any).MuiAppBar,
+        zIndex: theme.zIndex.drawer + 1,
+        [theme.breakpoints.down('sm')]: {
+          ...(theme.overrides as any).MuiAppBar,
           padding: 0,
         },
       },
     },
   },
-  palette: {
-    background,
-    error,
-    primary,
-    secondary,
-  },
-  pauseColor: pause,
+  palette,
   props: {
     MuiSelect: {
       variant: 'outlined',
@@ -71,7 +83,7 @@ export default createMuiTheme({
     },
   },
   shadow: {
-    secondary: '0 4px 10px rgba(242, 213, 120, 0.5)',
+    secondary: SECONDARY_SHADOW,
   },
   shape: {
     borderRadius: 4,
@@ -82,7 +94,7 @@ export default createMuiTheme({
       '-webkit-background-clip': 'text',
       background: `linear-gradient(45deg,
       ${SECONDARY_DARKEN} 35%,
-       ${secondary.light} 50%,
+       ${palette.secondary.light} 50%,
         ${SECONDARY_DARKEN} 65%
          )`,
       backgroundClip: 'text',
@@ -91,56 +103,56 @@ export default createMuiTheme({
   ],
   typography: {
     body1: {
-      fontSize: defaultTheme.typography.pxToRem(16),
+      fontSize: theme.typography.pxToRem(16),
     },
     body2: {
-      fontSize: defaultTheme.typography.pxToRem(14),
+      fontSize: theme.typography.pxToRem(14),
     },
     button: {
       textTransform: 'none',
     },
     caption: {
-      fontSize: defaultTheme.typography.pxToRem(12),
-      lineHeight: defaultTheme.typography.pxToRem(12),
+      fontSize: theme.typography.pxToRem(12),
+      lineHeight: theme.typography.pxToRem(12),
     },
     h1: {
-      fontSize: defaultTheme.typography.pxToRem(55),
+      fontSize: theme.typography.pxToRem(55),
       fontWeight: 'bold',
-      [defaultTheme.breakpoints.down('md')]: {
-        fontSize: defaultTheme.typography.pxToRem(34),
+      [theme.breakpoints.down('md')]: {
+        fontSize: theme.typography.pxToRem(34),
       },
     },
     h2: {
-      fontSize: defaultTheme.typography.pxToRem(50),
+      fontSize: theme.typography.pxToRem(50),
       fontWeight: 'bold',
-      [defaultTheme.breakpoints.down('md')]: {
-        fontSize: defaultTheme.typography.pxToRem(32),
+      [theme.breakpoints.down('md')]: {
+        fontSize: theme.typography.pxToRem(32),
       },
     },
     h3: {
-      fontSize: defaultTheme.typography.pxToRem(30),
+      fontSize: theme.typography.pxToRem(30),
     },
     h4: {
-      fontSize: defaultTheme.typography.pxToRem(24),
+      fontSize: theme.typography.pxToRem(24),
       fontWeight: 400,
     },
     h5: {
-      fontSize: defaultTheme.typography.pxToRem(18),
+      fontSize: theme.typography.pxToRem(18),
       fontWeight: 500,
     },
     h6: {
-      fontSize: defaultTheme.typography.pxToRem(13),
+      fontSize: theme.typography.pxToRem(13),
       fontWeight: 700,
     },
     subtitle1: {
-      fontSize: defaultTheme.typography.pxToRem(22),
+      fontSize: theme.typography.pxToRem(22),
       fontWeight: 200,
-      [defaultTheme.breakpoints.down('md')]: {
-        fontSize: defaultTheme.typography.pxToRem(20),
+      [theme.breakpoints.down('md')]: {
+        fontSize: theme.typography.pxToRem(20),
       },
     },
     subtitle2: {
-      fontSize: defaultTheme.typography.pxToRem(10),
+      fontSize: theme.typography.pxToRem(10),
     },
   },
 });
@@ -159,7 +171,6 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       scroll: object;
       width: number;
     };
-    pauseColor: PaletteColor;
     shadow: {
       secondary: string;
     };
@@ -174,7 +185,6 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       scroll?: object;
       width?: number;
     };
-    pauseColor?: PaletteColorOptions;
     shadow?: {
       secondary?: string;
     };

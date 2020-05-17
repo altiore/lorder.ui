@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   supportLinkText: {
     alignItems: 'center',
-    color: theme.pauseColor.main,
+    color: theme.palette.pause.main,
     display: 'flex',
     flexFlow: 'column nowrap',
   },

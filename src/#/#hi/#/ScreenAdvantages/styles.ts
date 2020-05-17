@@ -22,7 +22,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   loginBlock: {
     alignItems: 'center',
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.default.light,
     boxShadow: theme.shadows[6],
     display: 'flex',
     flexFlow: 'column nowrap',

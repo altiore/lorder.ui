@@ -151,8 +151,10 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
             href={isShown ? `${TASKS_ROUTE(project.id)}/${task.sequenceNumber}` : '#'}
             onClick={isShown ? openEditTaskForm(task.sequenceNumber, project.id as number) : undefined}
           >
-            {<TaskTypeIcon typeId={isShown ? task.typeId : 'feature'} className={classes.taskIcon} />}
-            {isShown ? task.title : '...'}
+            <MediaQuery minWidth={theme.breakpoints.values.sm}>
+              {<TaskTypeIcon typeId={isShown ? task.typeId : 'feature'} className={classes.taskIcon} />}
+            </MediaQuery>
+            <span>{isShown ? task.title : '...'}</span>
           </Button>
         </Tooltip>
         <div className={classes.verticalDivider} />

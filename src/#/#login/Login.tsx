@@ -7,6 +7,8 @@ import { useStyles } from './styles';
 
 export const Login: React.FC<RouteComponentProps<{}>> = () => {
   const classes = useStyles();
+
+  console.log('render Login Page');
   return (
     <div className={classes.login}>
       <AuthForm autoFocus />

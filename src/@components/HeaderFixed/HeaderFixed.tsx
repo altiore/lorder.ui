@@ -56,7 +56,7 @@ export const HeaderFixedTsx: React.FC<IHeaderFixedProps> = ({ brandName, brandLi
   return (
     <>
       <ElevationScroll classes={classes}>
-        <AppBar key={'top'} position="fixed">
+        <AppBar key={'top'} position="fixed" color="default">
           <Toolbar className={classes.firstToolbar}>
             <Typography className={classes.brand} variant="h4" color="secondary" component={Link} to={brandLink || '#'}>
               {brandName}

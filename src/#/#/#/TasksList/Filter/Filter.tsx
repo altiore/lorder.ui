@@ -9,6 +9,8 @@ import Grow from '@material-ui/core/Grow';
 import ListItem from '@material-ui/core/ListItem';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DoneIcon from '@material-ui/icons/Done';
@@ -43,6 +45,9 @@ export const FilterTsx: React.FC<IFilterProps> = ({
   changePage,
   filter,
 }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   const [hoveredFilter, setHoveredFilter] = useState();
   const handleRadioEnter = useCallback((e: React.SyntheticEvent) => {
     setHoveredFilter(get(e, 'target.value'));
@@ -55,6 +60,8 @@ export const FilterTsx: React.FC<IFilterProps> = ({
   }, []);
   const handleSetHovered = useCallback(() => setIsFilterHovered(true), []);
   const handleSetNotHovered = useCallback(() => setIsFilterHovered(false), []);
+
+  const isFilterShown = useMemo(() => isMobile || isFilterHovered, [isMobile, isFilterHovered]);
 
   const [isPaginatorHovered, setIsPaginatorHovered] = useState(false);
   const handlePaginatorEnter = useCallback(() => setIsPaginatorHovered(true), []);
@@ -108,16 +115,16 @@ export const FilterTsx: React.FC<IFilterProps> = ({
         <Chip
           label={currentSelectedFilter}
           clickable
-          className={classes.chip}
-          color="secondary"
+          className={cn(classes.chip, { [classes.chipHovered]: isFilterHovered })}
+          variant="outlined"
           deleteIcon={<DoneIcon />}
           onClick={toggleFilterHovered}
-          style={{ bottom: isFilterHovered ? 40 : 16 }}
+          style={{ bottom: isFilterShown ? 40 : 16 }}
           onFocus={handleSetHovered}
           onBlur={handleSetNotHovered}
         />
-        {isFilterHovered && (
-          <Grow in={isFilterHovered} timeout={500}>
+        {isFilterShown && (
+          <Grow in={isFilterShown} timeout={500}>
             <RadioGroup
               row
               aria-label="Gender"

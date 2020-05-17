@@ -36,7 +36,7 @@ export const getAuthActivate = requestActions<IGetAuthActivateData>(
   })
 );
 
-export const logInPatch = requestActions('USER/LOGIN', (data: { username: string; password: string }) => ({
+export const logInPatch = requestActions('USER/LOGIN', (data: { email: string; password: string }) => ({
   form: LOGIN_FORM_NAME,
   request: {
     data,

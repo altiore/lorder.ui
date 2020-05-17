@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   title: {
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.default.contrastText,
   },
 }));
 

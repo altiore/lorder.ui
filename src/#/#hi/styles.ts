@@ -18,7 +18,7 @@ export const styles = (theme: Theme): any => ({
     overflowX: 'hidden',
   },
   root: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.default.main,
   },
   sectionDesktop: {
     display: 'flex',

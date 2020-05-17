@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     theme.palette.type === 'light'
       ? {
           backgroundColor: theme.palette.secondary.main,
-          color: theme.palette.primary.main,
+          color: theme.palette.default.main,
         }
       : {
           backgroundColor: theme.palette.secondary.dark,

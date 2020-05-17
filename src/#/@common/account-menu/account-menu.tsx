@@ -49,8 +49,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginLeft: theme.spacing(3),
   },
   header: {
-    backgroundColor: theme.palette.primary.light,
-    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.default.light,
+    color: theme.palette.default.contrastText,
     display: 'flex',
     flexFlow: 'column nowrap',
     height: 50,
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(1, 2),
   },
   icon: {
-    color: theme.palette.primary.light,
+    color: theme.palette.default.light,
   },
   item: {
     display: 'flex',

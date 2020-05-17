@@ -6,43 +6,45 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     [theme.breakpoints.down('sm')]: {
-      width: theme.spacing(17),
+      width: 129,
     },
   },
   buttonTitle: {
     '& $buttonTitleLabel': {
-      color: theme.pauseColor.main,
+      color: theme.palette.pause.main,
     },
     borderRadius: '6px',
-    color: theme.pauseColor.main,
+    color: theme.palette.pause.main,
     flexGrow: 1,
-    paddingLeft: theme.spacing(5),
+    fontSize: theme.typography.pxToRem(16),
+    minHeight: theme.spacing(4.5),
+    padding: theme.spacing(0.5, 1, 0.5, 5),
     transition: theme.transitions.create(['background-color']),
     [theme.breakpoints.down('sm')]: {
-      display: 'inline-block',
+      padding: theme.spacing(0.5, 0),
     },
   },
   buttonTitleCurrent: {
     '& $buttonTitleLabel': {
-      color: theme.pauseColor.dark,
+      color: theme.palette.pause.dark,
     },
     '&:hover': {
-      backgroundColor: theme.pauseColor.light,
+      backgroundColor: theme.palette.pause.light,
     },
   },
   buttonTitleLabel: {
-    display: 'block',
-    fontSize: 16,
-    fontWeight: 400,
-    maxWidth: '100%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    textTransform: 'none',
-    whiteSpace: 'nowrap',
+    '& > span': {
+      fontWeight: 400,
+      lineHeight: 1.4,
+      maxHeight: theme.spacing(5.5),
+    },
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'flex-start',
   },
   buttonTitlePaused: {
     '& $buttonTitleLabel': {
-      color: theme.pauseColor.main,
+      color: theme.palette.pause.main,
     },
     '&:hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.04)',
@@ -112,7 +114,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
     borderRadius: '6px',
     color: '#9d9d9d',
-    marginRight: theme.spacing(1),
+    fontSize: theme.typography.pxToRem(16),
     minWidth: theme.spacing(5),
     textTransform: 'none',
     transition: theme.transitions.create(['background-color']),
@@ -120,10 +122,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   projectButtonCurrent: {
     '&:hover': {
-      backgroundColor: theme.pauseColor.light,
+      backgroundColor: theme.palette.pause.light,
     },
     backgroundColor: '#f8f4ea',
-    color: theme.pauseColor.dark,
+    color: theme.palette.pause.dark,
   },
   projectButtonPaused: {
     '&:hover': {
@@ -139,6 +141,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: theme.spacing(4.5),
     margin: theme.spacing(0, 2, 0, 1),
     width: 0,
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(0, 1, 0, 0),
+    },
   },
   taskIcon: {
     left: 8,
@@ -159,5 +164,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: theme.spacing(4.5),
     margin: theme.spacing(0, 1),
     width: 0,
+    [theme.breakpoints.down('sm')]: {
+      margin: 0,
+    },
   },
 }));

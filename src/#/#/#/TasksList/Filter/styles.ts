@@ -1,3 +1,5 @@
+import get from 'lodash/get';
+
 import { Theme } from '@material-ui/core/styles';
 import createStyles from '@material-ui/core/styles/createStyles';
 
@@ -11,9 +13,10 @@ export const styles = (theme: Theme) =>
       }),
       width: '100%',
     },
+    chipHovered: get(theme, 'overrides.MuiChip.outlined.&:hover', {}),
     fabStyle: {
       '& svg': {
-        color: theme.palette.primary.contrastText,
+        color: theme.palette.default.contrastText,
       },
       '&:hover': {
         backgroundColor: theme.palette.secondary.dark,
@@ -33,6 +36,9 @@ export const styles = (theme: Theme) =>
       width: 144,
     },
     group: {
+      '& > span': {
+        borderRadius: '50%',
+      },
       display: 'flex',
     },
     grow: {

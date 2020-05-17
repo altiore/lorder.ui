@@ -25,20 +25,12 @@ const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProp
 }) => {
   const classes = useStyles();
   useEffect(() => {
-    // if ('credentials' in navigator) {
-    //   (navigator as any).credentials.get({
-    //     password: true,
-    //     // unmediated: true,
-    //   })
-    //     .then(function(creds) {
-    //       //Do something with the credentials.
-    //       console.log('creds here', creds);
-    //       setIsKnownUser(true);
-    //     });
-    // } else {
-    //   console.log("No credentials");
-    //   //Handle sign-in the way you did before.
-    // };
+    setTimeout(async () => {
+      if ('navigator' in window && 'credentials' in navigator) {
+        // const credentials = await (navigator as any).credentials.get({ password: true } as any);
+        // console.log('credentials', { credentials });
+      }
+    }, 0);
   }, []);
 
   return (

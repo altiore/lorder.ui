@@ -29,9 +29,6 @@ export const useStyles = makeStyles((theme: Theme) =>
     root: {
       alignItems: 'flex-end',
       backgroundColor: theme.palette.background.paper,
-      // border: '1px solid #FFB200',
-      // border: '1px solid #eeeeee',
-      // boxSizing: 'border-box',
       cursor: 'pointer',
       display: 'flex',
       flexFlow: 'column nowrap',
@@ -52,10 +49,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       top: 0,
     },
     text: {
-      // fill: '#77909D',
       fill: '#87A082',
-      // fill: theme.palette.primary.main,
-      // fill: '#24292E',
     },
   })
 );

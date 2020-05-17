@@ -39,6 +39,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
       width: theme.mainContent.width,
     },
   },
+  contentWrap: {},
   duration: {
     width: 100,
   },
@@ -90,7 +91,7 @@ export const DashboardJsx: React.FC<IDashboardProps> = memo(({ getAllTasks }) =>
       <div className={classes.timeLine}>
         <DailyRoutine />
       </div>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} className={classes.contentWrap}>
         <Grid item lg={9} md={8} sm={12} className={classes.content}>
           <TasksList />
           <StartForm />
