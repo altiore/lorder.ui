@@ -49,7 +49,7 @@ export const styles = (theme: Theme) =>
       width: '48px',
     },
     rootOpen: {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.default.main,
       float: 'none',
       height: 56,
       left: 76,

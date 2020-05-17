@@ -14,7 +14,7 @@ export const styles = (theme: Theme) =>
       position: 'absolute',
     },
     overlay: {
-      backgroundColor: theme.palette.primary.dark,
+      backgroundColor: theme.palette.default.dark,
       height: '100%',
       left: 0,
       opacity: 0.6,
@@ -25,7 +25,7 @@ export const styles = (theme: Theme) =>
     },
     popperPaper: {
       ...theme.mainContent.scroll,
-      border: `2px solid ${theme.palette.primary.main}`,
+      border: `2px solid ${theme.palette.default.main}`,
       borderBottomLeftRadius: theme.shape.borderRadius,
       borderBottomRightRadius: theme.shape.borderRadius,
       boxShadow: theme.shadows[5],

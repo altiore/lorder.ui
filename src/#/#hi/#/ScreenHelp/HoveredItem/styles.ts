@@ -15,9 +15,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   item: {
-    backgroundColor: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.default.contrastText,
     boxShadow: 'none',
-    color: theme.palette.primary.light,
+    color: theme.palette.default.light,
     cursor: 'pointer',
     height: '100%',
     padding: theme.spacing(),
@@ -31,7 +31,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
       backgroundColor: '#29292b',
       backgroundImage: theme.gradient[0],
       boxShadow: theme.shadows[4],
-      color: theme.palette.primary.contrastText,
+      color: theme.palette.default.contrastText,
       transition: theme.transitions.create('background-color'),
       '& $svgWrap': {
         display: 'block',

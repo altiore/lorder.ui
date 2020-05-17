@@ -1,10 +1,9 @@
 import React, { lazy, Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Switch } from 'react-router-dom';
 
 import LoadingPage from '@components/LoadingPage';
 
 import NestedRoute from '#/@common/#NestedRoute';
-import NotFound from '#/@common/NotFoundPage';
 
 import { ROLES } from './@store/roles';
 
@@ -50,13 +49,12 @@ export const AppJsx: React.FC<IAppProps> = ({ userRole }) => {
   return (
     <Suspense fallback={<LoadingPage />}>
       <Switch>
+        <Redirect from="/index.html" to="/" exact />
         {preparedRoutes.map((route: IRoute) => (
           <NestedRoute key={route.path} {...route} />
         ))}
-        <Redirect from="/index.html" to="/" exact />
         <Redirect from="/" to="/hi" exact />
         <Redirect to="/login" />
-        <Route component={NotFound} />
       </Switch>
     </Suspense>
   );

@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     height: theme.spacing(4.5),
     justifyContent: 'space-between',
+    minWidth: theme.spacing(3),
     padding: theme.spacing(0, 1, 0, 0),
   },
   divider: {
@@ -59,12 +60,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: theme.spacing(2.5),
   },
   unitStyle: {
-    color: theme.pauseColor.main,
+    color: theme.palette.pause.main,
     fontSize: theme.typography.pxToRem(12),
     fontWeight: 300,
   },
   valueStyle: {
-    color: theme.pauseColor.dark,
+    color: theme.palette.pause.dark,
     fontSize: theme.typography.pxToRem(16),
     fontWeight: 500,
   },

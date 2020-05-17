@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router-dom';
 
@@ -9,7 +9,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import TelegramIco from '@components/@icons/Telegram';
-import LoadingPage from '@components/LoadingPage';
 
 import NestedRoute from '#/@common/#NestedRoute';
 import NotFound from '#/@common/NotFoundPage';
@@ -48,18 +47,16 @@ export const HiTsx: React.FC<IHiProps> = ({ userRole, brandName, classes }) => {
         <body className={classes.hiBody} />
       </Helmet>
 
-      <Suspense fallback={<LoadingPage />}>
-        <Switch>
-          {preparedRoutes.map((route: IRoute) => (
-            <NestedRoute key={route.path} {...route} />
-          ))}
-          <Route component={NotFound} />
-        </Switch>
-      </Suspense>
+      <Switch>
+        {preparedRoutes.map((route: IRoute) => (
+          <NestedRoute key={route.path} {...route} />
+        ))}
+        <Route component={NotFound} />
+      </Switch>
 
-      <AppBar key={'bottom'} position="static" component={'footer'}>
+      <AppBar key={'bottom'} position="static" component={'footer'} color="default">
         <Toolbar className={classes.bottomBar}>
-          <Typography variant="h5" color="inherit">
+          <Typography variant="h5" color="primary">
             Copyright &copy; {brandName}
           </Typography>
           <div className={classes.sectionDesktop}>

@@ -26,6 +26,7 @@ export const styles = (theme: Theme) =>
       fontSize: theme.typography.pxToRem(14),
       fontWeight: 500,
       height: ADD_BTN_SIZE,
+      marginTop: theme.spacing(2),
       overflow: 'hidden',
       transition: theme.transitions.create(['color', 'width'], {
         duration: theme.transitions.duration.shortest,

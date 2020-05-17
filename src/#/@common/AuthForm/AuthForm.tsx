@@ -49,10 +49,11 @@ export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, isMagicLoginForm, t
     [setFormType, toggleUiSetting]
   );
 
+  console.log('render AuthForm');
   return (
     <div className={classes.form}>
       <AppBar position="static" className={classes.header}>
-        <Tabs value={formTypeIndex} onChange={handleChange} variant="fullWidth">
+        <Tabs value={formTypeIndex} onChange={handleChange} variant="fullWidth" textColor="inherit">
           <Tab label="Вход" />
           <Tab label="Регистрация" />
         </Tabs>

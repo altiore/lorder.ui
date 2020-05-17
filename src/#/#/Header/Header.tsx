@@ -143,7 +143,7 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
     const nullComponent = useCallback(() => null, []);
 
     return (
-      <AppBar classes={{ root: classes.appBarRoot }} position="static" color="primary">
+      <AppBar classes={{ root: classes.appBarRoot }} position="static" color="default">
         <Toolbar className={classes.toolbar}>
           <LinkIconButton to="/" color="secondary">
             <TimerIcon fontSize="large" color="inherit" className={classes.timerIco} />

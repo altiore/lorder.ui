@@ -2,7 +2,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   background: {
-    background: 'url(/puzzle.svg)',
+    background: `url(${process.env.PUBLIC_URL}/puzzle.svg)`,
     // filter: 'blur(5px)',
     height: '100%',
     position: 'absolute',
@@ -19,7 +19,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexFlow: 'column nowrap',
     flexGrow: 1,
     height: 'calc(100vh - 56px)',
-    zIndex: 1,
+    zIndex: 0,
   },
   root: {
     display: 'flex',

@@ -2,7 +2,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   appBarRoot: {
-    zIndex: 999,
+    zIndex: 1207,
   },
   buttonBlock: {
     display: 'flex',
@@ -18,7 +18,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexGrow: 1,
   },
   menu: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.default.dark,
   },
   timerIco: {
     color: theme.palette.secondary.main,

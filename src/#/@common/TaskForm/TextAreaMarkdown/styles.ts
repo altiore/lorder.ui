@@ -77,7 +77,7 @@ export const styles = (theme: Theme) =>
       justifyContent: 'flex-end',
     },
     tabsIndicator: {
-      backgroundColor: theme.palette.primary.dark,
+      backgroundColor: theme.palette.default.dark,
     },
     tabsRoot: {
       minHeight: TAB_HEIGHT,

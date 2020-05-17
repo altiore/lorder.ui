@@ -7,6 +7,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
   },
   contentBlack: {
-    color: theme.palette.primary.dark,
+    color: theme.palette.default.dark,
   },
 }));

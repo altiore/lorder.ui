@@ -22,7 +22,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     zIndex: 1,
   },
   content: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.default.main,
     overflow: 'hidden',
     position: 'relative',
     [theme.breakpoints.down('sm')]: {

@@ -4,7 +4,7 @@ const MIN_HEIGHT = 'calc(50vh - 80px)';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   achievement: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.default.main,
     display: 'flex',
     flexFlow: 'column nowrap',
     flexGrow: 1,
@@ -29,7 +29,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   loader: {
     alignItems: 'center',
-    color: theme.palette.primary.dark,
+    color: theme.palette.default.dark,
     display: 'flex',
     flex: 1,
     justifyContent: 'center',
