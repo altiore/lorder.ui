@@ -3,6 +3,14 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 const drawerWidth = 300;
 
 export const useStyles = makeStyles((theme: Theme) => ({
+  '@keyframes EndLessRotation': {
+    '0%': {
+      transform: 'rotate(0deg)',
+    },
+    '100%': {
+      transform: 'rotate(360deg)',
+    },
+  },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       duration: theme.transitions.duration.leavingScreen,
@@ -74,6 +82,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+  },
+  refreshIcon: {
+    animation: '$EndLessRotation 0.5s linear infinite',
   },
   toggleButton: {
     '&:hover': {

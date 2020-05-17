@@ -20,6 +20,7 @@ import uniqid from 'uniqid';
 import { IRequestAction } from '../@common/requestActions';
 import {
   archiveTaskA,
+  clearAllProjectTask,
   deleteProjectTask,
   fetchProjectTasksA,
   fetchTaskDetailsA,
@@ -363,7 +364,7 @@ export const tasks: any = handleActions<S, any, any>(
 
     [patchUserWork.success]: patchUserWorkSuccessHandler,
 
-    [PURGE]: logOutHandler,
+    [combineActions(PURGE, clearAllProjectTask)]: logOutHandler,
 
     [updateProjectTask.toString()]: updateProjectTaskHandler,
 

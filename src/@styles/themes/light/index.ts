@@ -5,7 +5,8 @@ import MuiTextField from './MuiTextField';
 import { defaultTheme as theme, palette } from './palette';
 import { prettyScroll1, SECONDARY_DARKEN } from './variables';
 
-const SECONDARY_SHADOW = '0 4px 10px rgba(242, 213, 120, 0.5)';
+const SHADOW_DEFAULT = '0 2px 10px #d8d8d8';
+const SHADOW_SECONDARY = '0 4px 10px rgba(242, 213, 120, 0.5)';
 
 export default createMuiTheme({
   themeName: 'LIGHT',
@@ -13,7 +14,7 @@ export default createMuiTheme({
   gradient: ['linear-gradient(45deg, #29292b 0%, #424247 50%, #29292b 100%)'],
   mainContent: {
     scroll: prettyScroll1,
-    width: 1012,
+    width: 1280,
   },
   mixins: {
     toolbar: {
@@ -33,7 +34,7 @@ export default createMuiTheme({
         '&:hover': {
           backgroundColor: `${palette.primary.main}!important`,
           borderColor: 'rgb(214, 186, 98)',
-          boxShadow: SECONDARY_SHADOW,
+          boxShadow: SHADOW_SECONDARY,
           color: palette.common.white,
         },
         border: '1px solid rgba(0, 0, 0, 0.1)',
@@ -42,9 +43,34 @@ export default createMuiTheme({
         fontWeight: 400,
       },
     },
+    MuiExpansionPanel: {
+      rounded: {
+        '&:first-child': {
+          borderTopLeftRadius: 8,
+          borderTopRightRadius: 8,
+        },
+        '&:last-child': {
+          borderBottomLeftRadius: 8,
+          borderBottomRightRadius: 8,
+        },
+      },
+    },
     MuiExpansionPanelDetails: {
       root: {
         padding: '0 16px 16px',
+      },
+    },
+    MuiExpansionPanelSummary: {
+      content: {
+        '&$expanded': {
+          margin: theme.spacing(1, 0),
+        },
+      },
+      root: {
+        '&$expanded': {
+          borderBottom: `2px solid ${palette.secondary.light}`,
+          minHeight: theme.spacing(7.5) - 2,
+        },
       },
     },
     MuiFab: {
@@ -83,7 +109,8 @@ export default createMuiTheme({
     },
   },
   shadow: {
-    secondary: SECONDARY_SHADOW,
+    default: SHADOW_DEFAULT,
+    secondary: SHADOW_SECONDARY,
   },
   shape: {
     borderRadius: 4,
@@ -172,6 +199,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       width: number;
     };
     shadow: {
+      default: string;
       secondary: string;
     };
     textGradient: object[];
@@ -186,6 +214,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       width?: number;
     };
     shadow?: {
+      default?: string;
       secondary?: string;
     };
     textGradient?: object[];

@@ -7,14 +7,57 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FolderIcon from '@material-ui/icons/Folder';
 
-import { useStyles } from './styles';
+import Statistics from '@components/@icons/Statistics';
+import TimeIcon from '@components/@icons/Time';
+
 import Today from './Today';
 
 import { IEvent } from '@types';
+
+const BLOCK_MAX_HEIGHT = 462;
+
+export const useStyles = makeStyles((theme: Theme) => ({
+  details: {
+    ...theme.mainContent.scroll,
+    maxHeight: BLOCK_MAX_HEIGHT,
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    padding: 0,
+  },
+  expanded: {
+    ...theme.mainContent.scroll,
+    maxHeight: BLOCK_MAX_HEIGHT,
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    padding: 0,
+  },
+  heading: {
+    color: theme.palette.pause.dark,
+    flexBasis: '100%',
+    flexShrink: 0,
+    fontSize: theme.typography.pxToRem(16),
+    fontWeight: 400,
+    lineHeight: 1.7,
+  },
+  icon: {
+    color: theme.palette.primary.light,
+  },
+  list: {
+    width: '100%',
+  },
+  root: {
+    width: '100%',
+  },
+  summaryIcon: {
+    color: theme.palette.primary.main,
+    marginRight: theme.spacing(1),
+  },
+}));
 
 export interface ILastEventsProps {
   events: IEvent[];
@@ -41,7 +84,8 @@ export const LastEventsTsx: React.FC<ILastEventsProps> = ({ events }): JSX.Eleme
   return (
     <div className={classes.root}>
       <ExpansionPanel expanded={expanded.statistic} onChange={toggleStatistic}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon className={classes.icon} />}>
+          <Statistics className={classes.summaryIcon} />
           <Typography className={classes.heading}>Статистика</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails classes={{ root: classes.expanded }}>
@@ -49,7 +93,8 @@ export const LastEventsTsx: React.FC<ILastEventsProps> = ({ events }): JSX.Eleme
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel expanded={expanded.lastEvents} onChange={toggleLastEvents}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon className={classes.icon} />}>
+          <TimeIcon className={classes.summaryIcon} />
           <Typography className={classes.heading}>Последние действия</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails classes={{ root: classes.details }}>

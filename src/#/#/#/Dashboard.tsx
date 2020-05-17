@@ -91,13 +91,13 @@ export const DashboardJsx: React.FC<IDashboardProps> = memo(({ getAllTasks }) =>
       <div className={classes.timeLine}>
         <DailyRoutine />
       </div>
-      <Grid container spacing={2} className={classes.contentWrap}>
-        <Grid item lg={9} md={8} sm={12} className={classes.content}>
+      <Grid container spacing={4} className={classes.contentWrap}>
+        <Grid item lg={8} md={7} sm={12} className={classes.content}>
           <TasksList />
           <StartForm />
         </Grid>
         <MediaQuery minDeviceWidth={theme.breakpoints.values.sm}>
-          <Grid item lg={3} md={4} sm={12}>
+          <Grid item lg={4} md={5} sm={12}>
             <LastEvents />
           </Grid>
         </MediaQuery>

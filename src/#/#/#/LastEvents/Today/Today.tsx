@@ -14,15 +14,49 @@ interface IToday {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
+  firstLine: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    height: theme.spacing(6),
+    padding: theme.spacing(0, 2),
+  },
+  freeSpace: {
+    height: theme.spacing(2),
+  },
   root: {
     alignItems: 'flex-start',
     display: 'flex',
-    padding: theme.spacing(0, 1),
+    flexFlow: 'column nowrap',
+    padding: 0,
+    width: '100%',
+  },
+  secondLine: {
+    alignItems: 'center',
+    backgroundColor: theme.palette.default.light,
+    color: theme.palette.secondary.light,
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    height: theme.spacing(4),
+    padding: theme.spacing(0, 2),
+    width: '100%',
+  },
+  todayStyle: {
+    alignItems: 'center',
+    display: 'flex',
+    height: theme.spacing(6),
+    textTransform: 'uppercase',
+    width: theme.spacing(10),
+  },
+  totalStyle: {
+    alignItems: 'center',
+    display: 'flex',
+    height: theme.spacing(6),
   },
 }));
 
 export const TodayTsx: React.FC<IToday> = ({ total, todayUserWorks = [] }): JSX.Element => {
-  const { root } = useStyles();
+  const { firstLine, freeSpace, root, secondLine, todayStyle, totalStyle } = useStyles();
 
   const differentTasksCount: string = useMemo(() => {
     const count = uniqBy(todayUserWorks, el => el.taskId).length;
@@ -44,11 +78,17 @@ export const TodayTsx: React.FC<IToday> = ({ total, todayUserWorks = [] }): JSX.
 
   return (
     <div className={root}>
-      <span>Сегодня:&nbsp;</span>
-      <div>
-        <Typography variant="h5">{total}</Typography>
-        <Typography variant="subtitle2">({text})</Typography>
+      <div className={firstLine}>
+        <Typography className={todayStyle}>Сегодня:&nbsp;</Typography>
+        <Typography className={totalStyle} variant="h5">
+          {total}
+        </Typography>
       </div>
+      <div className={secondLine}>
+        <div className={todayStyle} />
+        <Typography variant="h6">{text}</Typography>
+      </div>
+      <div className={freeSpace} />
     </div>
   );
 };

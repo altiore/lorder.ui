@@ -99,7 +99,7 @@ export const palette: Palette = {
   primary: {
     contrastText: '#29292b',
     dark: darken('#ffb200', 0.1),
-    light: lighten('#ffb200', 0.1),
+    light: '#eecf6d',
     main: '#ffb200',
   },
   secondary: {

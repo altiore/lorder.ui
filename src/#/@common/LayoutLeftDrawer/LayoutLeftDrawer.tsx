@@ -6,18 +6,21 @@ import cn from 'classnames';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
+import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Theme } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ExtensionIcon from '@material-ui/icons/Extension';
 import LaptopIcon from '@material-ui/icons/Laptop';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SyncAltIcon from '@material-ui/icons/SyncAlt';
 
@@ -32,10 +35,12 @@ export interface ILayoutLeftDrawerProps {
   children?: React.ReactNode;
   goTo: any;
   isLeftBarOpen: boolean;
+  isTasksLoading: boolean;
   isWidthSm: boolean;
   match: match<any>;
   routes?: IRoute[];
   openedProject?: Project;
+  refreshProjectTasks: any;
   selectProject?: Project;
   showFooter?: boolean;
   theme: Theme;
@@ -54,10 +59,12 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
   children,
   goTo,
   isLeftBarOpen,
+  isTasksLoading,
   isWidthSm,
   match,
   routes,
   openedProject,
+  refreshProjectTasks,
   selectProject,
   showFooter,
   theme,
@@ -108,6 +115,13 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
             </LinkButton>
           )}
           <div className={classes.grow} />
+          {project && project.id && (
+            <Tooltip title="Обновить задачи проекта">
+              <Fab color="secondary" size="small" onClick={refreshProjectTasks}>
+                <RefreshIcon className={cn({ [classes.refreshIcon]: isTasksLoading })} />
+              </Fab>
+            </Tooltip>
+          )}
           <IconButton onClick={handleDrawerToggle}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>

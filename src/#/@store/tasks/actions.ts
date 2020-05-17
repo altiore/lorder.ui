@@ -171,3 +171,5 @@ export const moveProjectTask = requestActions<IProjectTaskData>(
 );
 
 export const updateProjectTask = createAction('TASK/UPDATE_FROM_SOCKET');
+
+export const clearAllProjectTask = createAction('TASKS/CLEAR_ALL_TASKS');
