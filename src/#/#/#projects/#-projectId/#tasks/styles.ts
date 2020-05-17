@@ -65,6 +65,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     padding: '6px 4px 6px 8px',
     position: 'relative',
     userSelect: 'none',
+    width: '100%',
   },
   pointer: {
     cursor: 'pointer',

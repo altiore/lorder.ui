@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   DragDropContext,
   Draggable,
@@ -38,9 +38,11 @@ export interface IDragAndDropProps {
   items: Task[];
   moveProjectTask: any;
   openDialog: any;
+  openedStatuses: number[];
   projectId: number;
   push: any;
   statuses: number[];
+  toggleOpenedTab: any;
 }
 
 export const DragAndDrop: React.FC<IDragAndDropProps> = ({
@@ -49,9 +51,11 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   items,
   moveProjectTask,
   openDialog,
+  openedStatuses,
   projectId,
   push,
   statuses,
+  toggleOpenedTab,
 }) => {
   const classes = useStyles();
 
@@ -59,9 +63,19 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
     fetchProjectTasks(projectId);
   }, [fetchProjectTasks, projectId]);
 
-  const [columns, setColumns] = useState([false, true, true, true, false]);
-
   // const getList = useCallback((id: string) => items.filter(el => el.status === parseInt(id, 0)), [items]);
+
+  const handleToggleOpened = useCallback(
+    e => {
+      const toggledStatus = parseInt(e.currentTarget.value, 0);
+      if (typeof toggledStatus === 'number') {
+        toggleOpenedTab(toggledStatus);
+      } else {
+        console.log('current target is', e.currentTarget);
+      }
+    },
+    [toggleOpenedTab]
+  );
 
   const handleTaskClick = useCallback(
     (sequenceNumber: number | string) => () => {
@@ -110,17 +124,6 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
     [openDialog]
   );
 
-  const toggleCollapse = useCallback(
-    (status: number) => () => {
-      setColumns(columns => {
-        const newColumns = [...columns];
-        newColumns[status] = !newColumns[status];
-        return newColumns;
-      });
-    },
-    [setColumns]
-  );
-
   return (
     <div className={classes.root}>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -132,8 +135,10 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
               <Typography variant="h6" className={classes.columnTitle}>
                 <span>{STATUS_NAMES[status]}</span>
                 {!!filteredItemsLength && (
-                  <ButtonBase className={classes.arrowWrap} onClick={toggleCollapse(status)}>
-                    <KeyboardArrowDown className={cn(classes.arrow, { [classes.arrowDown]: columns[status] })} />
+                  <ButtonBase value={status} className={classes.arrowWrap} onClick={handleToggleOpened}>
+                    <KeyboardArrowDown
+                      className={cn(classes.arrow, { [classes.arrowDown]: openedStatuses.indexOf(status) !== -1 })}
+                    />
                   </ButtonBase>
                 )}
               </Typography>
@@ -144,7 +149,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                     style={getListStyle(snapshot.isDraggingOver, height)}
                     className={classes.columnContent}
                   >
-                    {columns[status] && filteredItemsLength ? (
+                    {openedStatuses.indexOf(status) !== -1 && filteredItemsLength ? (
                       filteredItems.map((item: Task, index) => {
                         return (
                           <Draggable
@@ -165,12 +170,13 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                         );
                       })
                     ) : (
-                      <div
+                      <ButtonBase
+                        value={status}
                         className={cn(classes.placeholderCard, { [classes.pointer]: !!filteredItemsLength })}
-                        onClick={toggleCollapse(status)}
+                        onClick={handleToggleOpened}
                       >
                         {filteredItemsLength} задач
-                      </div>
+                      </ButtonBase>
                     )}
                     {provided.placeholder}
                   </div>
