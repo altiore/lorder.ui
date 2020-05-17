@@ -73,7 +73,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: '1px solid rgba(0, 0, 0, 0.1)',
     borderRadius: '8px',
-    boxShadow: '0 2px 10px #d8d8d8',
+    boxShadow: theme.shadow.default,
     display: 'flex',
     flexGrow: 1,
     height: 60,
@@ -93,7 +93,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
     backgroundColor: '#f8f1cc',
     border: '1px solid #eecf6d',
-    boxShadow: '0 4px 10px rgba(242, 213, 120, 0.6)',
+    boxShadow: theme.shadow.secondary,
   },
   listItemPaused: {
     '&:hover': {
@@ -101,7 +101,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
     backgroundColor: '#f4f5f7',
     border: '1px solid #d1d1d1',
-    boxShadow: '0 4px 10px #d8d8d8',
+    boxShadow: theme.shadow.default,
   },
   listItemRoot: {
     [theme.breakpoints.down('sm')]: {

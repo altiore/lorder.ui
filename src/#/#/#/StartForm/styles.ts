@@ -1,7 +1,7 @@
 import { Theme } from '@material-ui/core/styles';
 import createStyles from '@material-ui/core/styles/createStyles';
 
-const ADD_BTN_SIZE = 52;
+const ADD_BTN_SIZE = 56;
 
 export const styles = (theme: Theme) =>
   createStyles({
