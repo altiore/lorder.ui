@@ -1,9 +1,10 @@
 import { handleActions } from 'redux-actions';
 
-import { changeFilter, changeTasksFilter, IChangeFilterP, toggleMemberA } from './actions';
+import { changeFilter, changeTasksFilter, IChangeFilterP, toggleMemberA, toggleOpenedTab } from './actions';
 import { TasksFilter } from './TasksFilter';
 
 import { ITasksFilter } from '@types';
+import { toggleInArray } from '@utils/toggleInArray';
 
 interface IP {
   payload?: IChangeFilterP;
@@ -33,16 +34,19 @@ const toggleMemberHandler = (state: ITasksFilter, { payload }: IP2) => {
   if (!payload) {
     throw new Error('Payload is required');
   }
-  const index = state.members.indexOf(payload);
-  let members;
-  if (~index) {
-    members = [...state.members.slice(0, index), ...state.members.slice(index + 1)];
-  } else {
-    members = [...state.members, payload];
+  return new TasksFilter({
+    ...state,
+    members: toggleInArray(state.members, payload),
+  });
+};
+
+const toggleOpenedTabHandler = (state: ITasksFilter, { payload }: IP2) => {
+  if (typeof payload !== 'number') {
+    throw new Error('Payload MUST be number');
   }
   return new TasksFilter({
     ...state,
-    members,
+    openedStatuses: toggleInArray(state.openedStatuses || [], payload),
   });
 };
 
@@ -51,6 +55,7 @@ export const tasksFilter: any = handleActions<any, any, any>(
     [changeFilter.toString()]: changeFilterHandler,
     [changeTasksFilter.toString()]: changeTasksFilterHandler,
     [toggleMemberA.toString()]: toggleMemberHandler,
+    [toggleOpenedTab.toString()]: toggleOpenedTabHandler,
   },
   new TasksFilter()
 );

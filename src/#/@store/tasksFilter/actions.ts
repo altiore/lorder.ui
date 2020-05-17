@@ -14,3 +14,5 @@ export const changeFilter = createAction<IChangeFilterP, filterType, any>(
 );
 
 export const toggleMemberA = createAction<number>('TASKS_FILTER/TOGGLE_MEMBER');
+
+export const toggleOpenedTab = createAction<number>('TASKS_FILTER/TOGGLE_TASK_TYPE');
