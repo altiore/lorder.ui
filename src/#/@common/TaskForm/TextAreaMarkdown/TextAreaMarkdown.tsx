@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import TextareaAutosize from 'react-textarea-autosize';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import cn from 'classnames';
 import { WrappedFieldProps } from 'redux-form';
@@ -12,6 +12,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import CodeIcon from '@material-ui/icons/Code';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+
+import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 
 type TabsType = 'editor' | 'view';
 
@@ -31,8 +33,18 @@ export const TextAreaMarkdownTsx: React.FC<ITextAreaMarkdownProps> = ({
   placeholder,
   title,
 }) => {
+  let text: any;
+  try {
+    text = JSON.parse(input.value);
+  } catch (e) {
+    text = input.value;
+  }
+
   const [active, setActive] = useState(false);
   const [activeTab, setActiveTab] = useState('editor' as TabsType);
+  const [editorState, setEditorState] = React.useState(() => {
+    return EditorState.createWithContent(convertFromRaw(text));
+  });
 
   const handleChange = useCallback(
     (event: React.SyntheticEvent, activeTab: TabsType) => {
@@ -57,6 +69,15 @@ export const TextAreaMarkdownTsx: React.FC<ITextAreaMarkdownProps> = ({
     [onSave]
   );
 
+  const SyncWithRefuxFormAndSave = async (e: React.SyntheticEvent) => {
+    await input.onChange(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
+    handleSave(e);
+  };
+
+  const handleEditorState = async (value: any) => {
+    setEditorState(value);
+  };
+
   if (!input.value && !active) {
     return (
       <div className={classes.root}>
@@ -66,7 +87,6 @@ export const TextAreaMarkdownTsx: React.FC<ITextAreaMarkdownProps> = ({
       </div>
     );
   }
-
   return (
     <div className={classes.root} onClick={active ? undefined : handleClick}>
       <div className={classes.header}>
@@ -98,18 +118,29 @@ export const TextAreaMarkdownTsx: React.FC<ITextAreaMarkdownProps> = ({
             </Tabs>
             <div className={classes.content}>
               {activeTab === 'view' && (
-                <ReactMarkdown source={input.value} className={cn(classes.markdown, classes.markdownNested)} />
+                <Editor editorState={editorState} toolbarHidden onEditorStateChange={handleEditorState} />
               )}
               {activeTab === 'editor' && (
-                <TextareaAutosize className={classes.editor} autoFocus minRows={5} maxRows={30} {...input} />
+                <div style={{ background: 'white', minHeight: 30 }}>
+                  <Editor
+                    editorState={editorState}
+                    onEditorStateChange={handleEditorState}
+                    toolbar={{
+                      inline: { inDropdown: true },
+                      link: { inDropdown: true },
+                      list: { inDropdown: true },
+                      textAlign: { inDropdown: true },
+                    }}
+                  />
+                </div>
               )}
-              <Button variant="outlined" onClick={handleSave} className={classes.saveButton}>
+              <Button variant="outlined" onClick={SyncWithRefuxFormAndSave} className={classes.saveButton}>
                 Сохранить
               </Button>
             </div>
           </>
         ) : (
-          <ReactMarkdown source={input.value} className={classes.markdown} />
+          <Editor editorState={editorState} onEditorStateChange={handleEditorState} />
         )}
       </div>
     </div>
