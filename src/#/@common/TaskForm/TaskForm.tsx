@@ -9,6 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 
 import InputField from '@components/InputField';
+import TextAreaMarkdown from '@components/TextAreaMarkdown';
 import { TextField } from '@components/TextField';
 
 import TaskDuration from '#/@common/TaskDuration';
@@ -19,7 +20,6 @@ import DialogHeader from './DialogHeader';
 import StatusField from './StatusField';
 import { useStyles } from './styles';
 import TaskHistory from './TaskHistory';
-import { TextAreaMarkdown } from './TextAreaMarkdown';
 
 export interface ITaskFormData {
   isDetailsLoaded: boolean;
@@ -162,12 +162,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
               validate={titleValidate}
               onSubmit={handleSave}
             />
-            <Field
-              placeholder="Описание задачи..."
-              name="description"
-              component={TextAreaMarkdown}
-              onSave={handleSave}
-            />
+            <Field placeholder="Описание задачи..." name="description" component={TextAreaMarkdown} />
             {currentSequenceNumber && <TaskHistory />}
           </div>
           <div className={cardSecond}>

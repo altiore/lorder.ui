@@ -3,12 +3,14 @@ import React from 'react';
 import { Field } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { SelectField } from '@components/SelectField';
+import TextAreaMarkdown from '@components/TextAreaMarkdown';
 
 import { TextField } from '.';
 import FormDecorator from '../../../.storybook/decor/FormDecorator';
+// import { convertFromRaw, convertToRaw } from 'draft-js';
 
 import { storiesOf } from '@storybook/react';
 
@@ -19,7 +21,7 @@ enum YesOrNo {
 
 const useStyles = makeStyles((theme: Theme) => ({
   form: {
-    width: 320,
+    width: 500,
   },
   root: {
     alignItems: 'center',
@@ -39,6 +41,7 @@ storiesOf('TextField', module)
         <div className={form}>
           <Field name="test" component={TextField} />
           <Field name="select" component={SelectField} items={YesOrNo} />
+          <Field placeholder="Описание задачи..." name="description" component={TextAreaMarkdown} />
           <Button type="submit">Отправить</Button>
         </div>
       </div>
