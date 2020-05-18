@@ -11,6 +11,7 @@
 ```bash
 $ cp .env.example .env
 ```
+(На Windows можно сделат это через проводник)
 
 ##### 2. Для локальной работы необходимо установить [пакетный менеджер npm](https://www.npmjs.com/get-npm) и [node.js server](https://nodejs.org/en/) (обычно устанавливаются вместе)
 
