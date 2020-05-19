@@ -3,7 +3,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { SelectField } from '@components/SelectField';
 

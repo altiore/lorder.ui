@@ -15,14 +15,14 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DoneIcon from '@material-ui/icons/Done';
 
-type FilterType = 'smart' | 'recent' | 'new';
+import { TASK_FILTER_TYPE } from '#/@store/tasksFilter/TasksFilter';
 
 export interface IFilterProps {
   changeTasksFilter: any;
   changePage: any;
   classes?: any;
   count: number;
-  filter: FilterType;
+  filter: TASK_FILTER_TYPE;
   page: number;
   perPage: number;
 }
@@ -33,8 +33,12 @@ export interface IFilterState {
   isPaginatorHovered: boolean;
 }
 
-const FILTERS = { smart: 'Ценные', recent: 'Недавние', new: 'Новые' };
-const getLabelFromFilter = (filter: FilterType) => FILTERS[filter];
+const FILTERS: { [key in TASK_FILTER_TYPE]: string } = {
+  [TASK_FILTER_TYPE.SMART]: 'Ценные',
+  [TASK_FILTER_TYPE.RECENT]: 'Недавние',
+  [TASK_FILTER_TYPE.NEW]: 'Новые',
+};
+const getLabelFromFilter = (filter: TASK_FILTER_TYPE) => FILTERS[filter];
 
 export const FilterTsx: React.FC<IFilterProps> = ({
   classes,

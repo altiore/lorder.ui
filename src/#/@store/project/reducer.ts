@@ -1,7 +1,18 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
+import get from 'lodash/get';
 import { Action, handleActions } from 'redux-actions';
 
-import { createProjectRoleAct, deleteProjectRoleAct, fetchProjectRolesAct, selectProject } from './actions';
+import { nothing, removeFromList } from '#/@store/@reducers';
+
+import {
+  createProjectPartAct,
+  createProjectRoleAct,
+  deleteProjectPartAct,
+  deleteProjectRoleAct,
+  fetchProjectPartsAct,
+  fetchProjectRolesAct,
+  selectProject,
+} from './actions';
 import { SelectedProject } from './SelectedProject';
 
 import { ISelectedProject } from '@types';
@@ -19,71 +30,71 @@ const locationChangeHandler = (state: IS, { payload }: Action<IChangePayload>) =
   }
   const matches = payload && payload.pathname && payload.pathname.match(/^\/projects\/(\d+)/);
   if (matches && matches[1]) {
-    console.log('selectedProject changed to', parseInt(matches[1], 0));
     return { ...state, selected: parseInt(matches[1], 0) };
   }
   return state;
 };
 
 const selectProjectHandler = (state: IS, { payload }: Action<Selected>) => {
-  return { roles: [], selected: payload };
+  return { ...state, roles: [], selected: payload };
 };
 
-const fetchProjectRolesHandler = (state: IS, { payload }) => {
-  return state;
-};
 const fetchProjectRolesSuccessHandler = (state: IS, { payload }) => {
   return {
     ...state,
     roles: payload.data,
   };
 };
-const fetchProjectRolesFailHandler = (state: IS, { payload }) => {
-  return state;
-};
 
-const createProjectRoleHandler = (state: IS, { payload }) => {
-  return state;
-};
 const createProjectRoleSuccessHandler = (state: IS, { payload }) => {
   return {
     ...state,
     roles: [...state.roles, payload.data],
   };
 };
-const createProjectRoleFailHandler = (state: IS, { payload }) => {
-  return state;
-};
 
-const deleteProjectRoleHandler = (state: IS, { payload }) => {
-  return state;
-};
-const deleteProjectRoleSuccessHandler = (state: IS, { payload }) => {
+const fetchProjectPartsSuccessHandler = (state: IS, { payload }) => {
   return {
     ...state,
-    roles: [...state.roles, payload.data],
+    parts: get(payload, ['data', 'data'], payload.data || []),
   };
 };
-const deleteProjectRoleFailHandler = (state: IS, { payload }) => {
-  return state;
+
+const createProjectPartActSuccessHandler = (state: IS, { payload }) => {
+  return {
+    ...state,
+    parts: [...state.parts, payload.data],
+  };
 };
 
-export const projectReducer: any = handleActions<IS, any>(
+export const projectReducer: any = handleActions<IS, any, any>(
   {
     [LOCATION_CHANGE]: locationChangeHandler,
     [selectProject.toString()]: selectProjectHandler,
 
-    [fetchProjectRolesAct.toString()]: fetchProjectRolesHandler,
+    [fetchProjectRolesAct.toString()]: nothing,
     [fetchProjectRolesAct.success]: fetchProjectRolesSuccessHandler,
-    [fetchProjectRolesAct.fail]: fetchProjectRolesFailHandler,
+    [fetchProjectRolesAct.fail]: nothing,
 
-    [createProjectRoleAct.toString()]: createProjectRoleHandler,
+    [createProjectRoleAct.toString()]: nothing,
     [createProjectRoleAct.success]: createProjectRoleSuccessHandler,
-    [createProjectRoleAct.fail]: createProjectRoleFailHandler,
+    [createProjectRoleAct.fail]: nothing,
 
-    [deleteProjectRoleAct.toString()]: deleteProjectRoleHandler,
-    [deleteProjectRoleAct.success]: deleteProjectRoleSuccessHandler,
-    [deleteProjectRoleAct.fail]: deleteProjectRoleFailHandler,
+    [deleteProjectRoleAct.toString()]: nothing,
+    [deleteProjectRoleAct.success]: removeFromList('roles'),
+    [deleteProjectRoleAct.fail]: nothing,
+
+    [fetchProjectPartsAct.toString()]: nothing,
+    [fetchProjectPartsAct.success]: fetchProjectPartsSuccessHandler,
+    [fetchProjectPartsAct.fail]: nothing,
+
+    [createProjectPartAct.toString()]: nothing,
+    [createProjectPartAct.success]: createProjectPartActSuccessHandler,
+    [createProjectPartAct.fail]: nothing,
+
+    [deleteProjectPartAct.toString()]: nothing,
+    [deleteProjectPartAct.success]: removeFromList('parts'),
+    [deleteProjectPartAct.fail]: nothing,
   },
   new SelectedProject()
 );

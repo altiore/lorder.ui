@@ -39,7 +39,14 @@ const mapDispatchToProps = {
 };
 
 const mergeProps = (
-  { checkIsCurrent, getEditTaskInitialValues, routeProjectId, routeTaskSequenceNumber, ...restState }: any,
+  {
+    checkIsCurrent,
+    getEditTaskInitialValues,
+    getTaskProjectParts,
+    routeProjectId,
+    routeTaskSequenceNumber,
+    ...restState
+  }: any,
   { ...restDispatch }: any,
   { sequenceNumber, projectId, initialValues, ...restOwn }: any
 ) => {
@@ -67,6 +74,7 @@ export const PatchTaskForm = connect<
   mapDispatchToProps,
   mergeProps
 )(reduxForm<ITaskFormData, ITaskFormProps>({
+  enableReinitialize: true,
   form: EDIT_TASK_FORM,
   onSubmit: async (values, dispatch, { projectId }: any) => {
     const val = { ...values, projectId };

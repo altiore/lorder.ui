@@ -1,11 +1,12 @@
 import map from 'lodash/map';
 
-import { ISelectedProject } from '@types';
+import { IProjectPart, ISelectedProject } from '@types';
 
 export class SelectedProject implements ISelectedProject {
-  roles: any[];
-  members: any[];
+  roles: any[] = [];
+  members: any[] = [];
   selected?: number;
+  parts: IProjectPart[] = [];
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

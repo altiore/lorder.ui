@@ -1,3 +1,4 @@
+import omit from 'lodash/omit';
 import { createAction } from 'redux-actions';
 
 import { User } from '#/#/@store/users';
@@ -6,6 +7,8 @@ import { PROJECT_TASK_FORM_NAME } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
 
 import { EDIT_TASK_FORM } from './consts';
+
+import { ITask } from '@types';
 
 export interface IProjectTaskData {
   description?: string;
@@ -17,20 +20,7 @@ export interface IProjectTaskData {
   title?: string;
   value?: number;
   users?: User[];
-}
-
-export interface IPatchProjectTaskData {
-  id?: number;
-  description?: string;
-  projectId: number;
-  title?: string;
-  source?: string;
-  status?: number;
-  sequenceNumber?: number;
-  value?: number;
-  users?: User[];
-  userWorks?: any;
-  performerId?: number;
+  projectParts?: number[];
 }
 
 export const getAllTasks = requestActions('TASKS/GET_ALL', (): any => ({
@@ -80,9 +70,9 @@ export const archiveTaskA = requestActions(
 
 export const replaceTasks = createAction('TASKS/REPLACE_BY_IDS');
 
-export const postProjectTask = requestActions<IProjectTaskData>(
+export const postProjectTask = requestActions<Partial<ITask>>(
   'TASKS/POST_PROJECT_TASK',
-  ({ projectId, ...data }: IProjectTaskData): any => ({
+  ({ projectId, ...data }: Partial<ITask>): any => ({
     form: PROJECT_TASK_FORM_NAME,
     projectId,
     request: {
@@ -97,31 +87,14 @@ export const postProjectTask = requestActions<IProjectTaskData>(
   })
 );
 
-export const patchProjectTask = requestActions<IPatchProjectTaskData>(
+export const patchProjectTask = requestActions<Partial<ITask>>(
   'PROJECT_TASK/PATCH',
-  ({
-    description,
-    title,
-    projectId,
-    value,
-    performerId,
-    source,
-    status,
-    sequenceNumber,
-  }: IPatchProjectTaskData): any => {
-    const data: any = {
-      description,
-      performerId,
-      source,
-      status,
-      title,
-      value,
-    };
+  ({ projectId, sequenceNumber, ...rest }: Partial<ITask>): any => {
     return {
       form: EDIT_TASK_FORM,
       projectId,
       request: {
-        data,
+        data: omit(rest, ['id', 'isDetailsLoaded']),
         method: 'PATCH',
         url: `${TASKS_ROUTE(projectId)}/${sequenceNumber}`,
       },

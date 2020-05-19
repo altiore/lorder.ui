@@ -52,6 +52,7 @@ export const MAIN_USER_ROUTES: IRoute[] = [
 
 export interface IMainProps {
   closeDialog: () => any;
+  getAllTasks: () => any;
   openDialog: (comp: any, props: any, location: any) => any;
   prevLocation?: Location;
   push: (path: string | any) => any;
@@ -61,6 +62,7 @@ export interface IMainProps {
 
 export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
   closeDialog,
+  getAllTasks,
   location,
   openDialog,
   prevLocation,
@@ -72,6 +74,10 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
   const preparedRoutes = useAllowedRoutes(MAIN_USER_ROUTES, userRole);
 
   const isModal = useMemo(() => get(location, ['state', 'modal']), [location]);
+
+  useEffect(() => {
+    getAllTasks();
+  }, [getAllTasks]);
 
   const handleCloseDialog = useCallback(() => {
     closeDialog();

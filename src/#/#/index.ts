@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { closeDialog, openDialog } from '#/@store/dialog';
 import { userRole } from '#/@store/identity';
 import { prevLocation } from '#/@store/router';
+import { getAllTasks } from '#/@store/tasks';
 
 import { MainJsx } from './Main';
 
@@ -18,6 +19,7 @@ const mapState = createStructuredSelector<IState, any>({
 
 const mapDispatchToProps = {
   closeDialog,
+  getAllTasks,
   openDialog,
   push,
 };

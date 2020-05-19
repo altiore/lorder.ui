@@ -16,6 +16,7 @@ import { parseNumber } from '#/@store/@common/helpers';
 import { patchProjectTask, postProjectTask } from '#/@store/tasks';
 
 import DialogHeader from './DialogHeader';
+import ProjectPartsField from './ProjectPartsField';
 import StatusField from './StatusField';
 import { useStyles } from './styles';
 import TaskHistory from './TaskHistory';
@@ -187,6 +188,13 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
                 <TaskDuration taskId={initialValues.id} />
               </div>
             )}
+            <Field
+              name="projectParts"
+              label="Части проекта"
+              component={ProjectPartsField}
+              projectId={projectId}
+              sequenceNumber={currentSequenceNumber}
+            />
           </div>
           <button style={{ display: 'none' }} type="submit">
             Эта кнопка нужна, чтоб работало сохранение с клавиатуры

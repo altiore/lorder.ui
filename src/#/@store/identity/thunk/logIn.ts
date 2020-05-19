@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import { Dispatch } from 'redux';
 import { clearAsyncError } from 'redux-form';
 
-import { showError, showSuccess } from '#/@store/notifications';
+import { showError, showSuccess, showWarning } from '#/@store/notifications';
 
 import { logInPatch } from '../actions';
 import { loadInitialData } from './loadInitialData';
@@ -26,26 +26,47 @@ export const logIn = async (data: { email: string; password: string }, dispatch:
       await (navigator as any).credentials.store(cred);
     }
   } catch (e) {
-    if (!isLogin && get(e, 'error.response.status') === 422) {
-      const messageObj: INotification = {
-        message: 'Проверьте почту, чтоб продолжить регистрицию',
-        title: 'Пользователь был успешно создан',
-      };
-      const email = get(e, ['meta', 'previousAction', 'payload', 'request', 'data', 'email']);
-      const url = email && getMailClientLinkByEmail(email);
-      if (url) {
-        messageObj.action = {
-          callback: () => openUrlInNewTab(url),
-          label: 'Перейти в почту',
+    const statusError = get(e, 'error.response.status');
+
+    if (statusError === 422) {
+      if (isLogin) {
+        const message = get(e, ['error', 'response', 'data', 'message'], 'Ошибка логина или пароля');
+        const messageObj: INotification = {
+          message,
+          title: 'Что-то пошло не так',
         };
+        const email = get(e, ['meta', 'previousAction', 'payload', 'request', 'data', 'email']);
+        const url = email && getMailClientLinkByEmail(email);
+        if (url) {
+          messageObj.action = {
+            callback: () => openUrlInNewTab(url),
+            label: 'Перейти в почту',
+          };
+        }
+        dispatch(showWarning(messageObj));
+      } else {
+        const messageObj: INotification = {
+          message: 'Проверьте почту, чтоб продолжить регистрицию',
+          title: 'Пользователь был успешно создан',
+        };
+        const email = get(e, ['meta', 'previousAction', 'payload', 'request', 'data', 'email']);
+        const url = email && getMailClientLinkByEmail(email);
+        if (url) {
+          messageObj.action = {
+            callback: () => openUrlInNewTab(url),
+            label: 'Перейти в почту',
+          };
+        }
+        dispatch(showSuccess(messageObj));
+        const formName = get(e, ['meta', 'previousAction', 'payload', 'form']);
+        if (formName) {
+          dispatch(clearAsyncError(formName, 'email'));
+        }
       }
-      dispatch(showSuccess(messageObj));
-      const formName = get(e, ['meta', 'previousAction', 'payload', 'form']);
-      if (formName) {
-        dispatch(clearAsyncError(formName, 'email'));
-      }
-    } else {
-      dispatch(showError({ message: e.toString() }));
+
+      return;
     }
+
+    dispatch(showError({ message: e.toString() }));
   }
 };
