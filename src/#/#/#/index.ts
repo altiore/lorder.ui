@@ -1,12 +1,8 @@
 import { connect } from 'react-redux';
 
-import { getAllTasks } from '#/@store/tasks';
-
 import { DashboardJsx } from './Dashboard';
 
-const mapDispatchToProps = {
-  getAllTasks,
-};
+const mapDispatchToProps = {};
 
 export default connect(
   undefined,

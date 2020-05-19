@@ -28,6 +28,8 @@ jobs:
       - name: Storybook Build
         run: |
           npm run build-storybook
+        env:
+          STORYBOOK_COMPONENTS_FOLDER: src/@components
 
       - name: Storybook Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3

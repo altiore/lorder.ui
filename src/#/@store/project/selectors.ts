@@ -15,3 +15,5 @@ export const getNewOption = createDeepEqualSelector([selectedProjectId], project
 export const createUserTaskFormInitials = createDeepEqualSelector(selectedProjectId, projectId => ({ projectId }));
 
 export const projectRoles = createDeepEqualSelector(baseState, s => s.roles || []);
+
+export const projectParts = createDeepEqualSelector(baseState, s => s.parts);

@@ -1,4 +1,5 @@
 import { IDownloadList } from './IDownloadList';
+import { IProjectPart } from './IProjectPart';
 import { IUser } from './IUser';
 import { IUserTask } from './IUserTask';
 import { IUserWork } from './IUserWork';
@@ -18,6 +19,7 @@ export interface ITask {
   typeId?: number;
   userWorks?: IDownloadList<IUserWork>;
   userTasks?: IUserTask[];
+  projectParts: IProjectPart[];
 
   duration: string;
   durationInSeconds: number;

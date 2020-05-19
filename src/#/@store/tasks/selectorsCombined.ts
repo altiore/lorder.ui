@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import includes from 'lodash/includes';
+import uniq from 'lodash/uniq';
 import moment from 'moment';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
@@ -11,6 +12,7 @@ import { filteredMembers, searchTerm, tasksFilter } from '#/@store/tasksFilter';
 import { currentTask, currentTaskId } from '#/@store/timer';
 import { isPaused, lastUserWorks } from '#/@store/user-works/selectors';
 
+import { TASK_FILTER_TYPE } from '../tasksFilter/TasksFilter';
 import { allTasks, getTaskById, getTaskBySequenceNumber } from './selectors';
 
 import { ACCESS_LEVEL, IDownloadList, IEvent, ITask, IUserWork } from '@types';
@@ -21,15 +23,42 @@ export const filteredByPerformerTasks = createDeepEqualSelector(
     currentUserId ? tasks.list.filter(el => el.performerId === currentUserId && el.id !== taskId) : []
 );
 
-const filteredFunction = {
+const filteredFunction: { [key in TASK_FILTER_TYPE]: (a: any, b: any) => 1 | -1 | 0 } = {
   new: (a: ITask, b: ITask) => (a.id > b.id ? -1 : 1),
   recent: (a: ITask, b: ITask) => (a.id < b.id ? -1 : 1),
   smart: (a: ITask, b: ITask) => (a.value > b.value ? -1 : 1),
 };
 
 export const sortedByFilterTasks = createDeepEqualSelector(
-  [filteredByPerformerTasks, tasksFilter],
-  (tasks = [], filter = 'smart') => [...tasks].sort(filteredFunction[filter])
+  [filteredByPerformerTasks, lastUserWorks, tasksFilter],
+  (tasks = [], userWorks, filter = TASK_FILTER_TYPE.SMART) => {
+    if (filter === TASK_FILTER_TYPE.RECENT) {
+      const sortedUserWorks = uniq(
+        get(userWorks, 'list', [])
+          .slice(0)
+          .sort((a, b) => {
+            return (a.finishAt || moment()).diff(b.finishAt || moment()) > 0 ? -1 : 1;
+          })
+          .map(el => el.taskId)
+      );
+      return tasks.slice(0).sort(function(a, b) {
+        if (sortedUserWorks.indexOf(a.id) !== -1) {
+          if (sortedUserWorks.indexOf(b.id) !== -1) {
+            return sortedUserWorks.indexOf(a.id) - sortedUserWorks.indexOf(b.id) > 0 ? 1 : -1;
+          } else {
+            return -1;
+          }
+        } else {
+          if (sortedUserWorks.indexOf(b.id) !== -1) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      });
+    }
+    return tasks.slice(0).sort(filteredFunction[filter]);
+  }
 );
 
 export const sortedByFilterTasksWithActive = createDeepEqualSelector(

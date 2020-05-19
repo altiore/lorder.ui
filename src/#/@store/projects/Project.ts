@@ -4,10 +4,11 @@ import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { Task } from '#/@store/tasks';
 
 import { DownloadList } from '../@common/entities';
+import { ProjectPart } from '../project';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';
 
-import { ACCESS_LEVEL, IProject, PROJECT_TYPE } from '@types';
+import { ACCESS_LEVEL, IProject, IProjectPart, PROJECT_TYPE } from '@types';
 
 export class Project implements IProject {
   id?: number;
@@ -21,6 +22,7 @@ export class Project implements IProject {
   members: DownloadList<Member> = new DownloadList(Member);
   tasks: DownloadList<Task> = new DownloadList(Task);
   taskTypes: DownloadList<TaskType> = new DownloadList(TaskType);
+  parts: DownloadList<IProjectPart> = new DownloadList(ProjectPart);
   /** время в секундах, потраченное всеми пользователями на этот проект */
   timeSum?: number;
   /** ценность всех задач в этом проекте */
@@ -43,6 +45,10 @@ export class Project implements IProject {
       }
       if (key === 'accessLevel') {
         this[key] = typeof val === 'number' ? val : val && val.accessLevel;
+        return;
+      }
+      if (key === 'parts') {
+        this[key] = typeof val === 'number' ? val : val && val.parts;
         return;
       }
       this[key] = val;

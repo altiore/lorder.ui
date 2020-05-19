@@ -32,16 +32,36 @@ export const EDIT_TASK_FORM_PROPS = [
   'status',
   'value',
   'performerId',
+  'projectParts',
 ];
 
 export const getEditTaskInitialValues = createDeepEqualSelector(
   [allTaskList],
   (allTaskList: Task[]) => (projectId: number, sequenceNumber: number) => {
-    return (
+    const initialValues =
       pick<any>(
         allTaskList.find((el: Task) => el.projectId === projectId && el.sequenceNumber === sequenceNumber),
         EDIT_TASK_FORM_PROPS
-      ) || {}
+      ) || {};
+    if (initialValues.projectParts) {
+      initialValues.projectParts = (initialValues.projectParts as any)
+        .slice(0)
+        .map(el => (typeof el === 'number' ? el : el.id));
+    }
+    console.log('current initial values', {
+      initialValues,
+    });
+    return initialValues;
+  }
+);
+
+export const getTaskProjectParts = createDeepEqualSelector(
+  [allTaskList],
+  (allTaskList: Task[]) => (projectId: number, sequenceNumber: number) => {
+    return get(
+      allTaskList.find((el: Task) => el.projectId === projectId && el.sequenceNumber === sequenceNumber),
+      'projectParts',
+      []
     );
   }
 );

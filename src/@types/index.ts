@@ -9,6 +9,7 @@ export * from './IOther';
 export * from './IProject';
 export * from './INotification';
 export * from './IProjectMember';
+export * from './IProjectPart';
 export * from './IPublicProject';
 export * from './ISockets';
 export * from './IState';

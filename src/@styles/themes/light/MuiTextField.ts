@@ -24,6 +24,7 @@ export default function(theme: Theme): Partial<Overrides> {
     MuiInputBase: {
       input: {
         borderRadius: theme.typography.pxToRem(4),
+        height: 'unset',
       },
     },
     MuiInputLabel: {

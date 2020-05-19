@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React from 'react';
 import MediaQuery from 'react-responsive';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ import { StartForm } from './StartForm';
 import { TasksList } from './TasksList';
 
 export interface IDashboardProps extends RouteComponentProps<{}> {
-  getAllTasks: any;
+  getAllTasks?: any;
 }
 
 export const useStyles = makeStyles((theme: Theme) => ({
@@ -77,14 +77,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const DashboardJsx: React.FC<IDashboardProps> = memo(({ getAllTasks }) => {
+export const DashboardJsx: React.FC<IDashboardProps> = () => {
   const classes = useStyles();
 
   const theme = useTheme();
-
-  useEffect(() => {
-    getAllTasks();
-  }, [getAllTasks]);
 
   return (
     <div className={classes.content2}>
@@ -104,4 +100,4 @@ export const DashboardJsx: React.FC<IDashboardProps> = memo(({ getAllTasks }) =>
       </Grid>
     </div>
   );
-});
+};

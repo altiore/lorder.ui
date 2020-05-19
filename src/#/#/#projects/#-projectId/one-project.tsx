@@ -43,6 +43,12 @@ export const PROJECT_ROUTES: IRoute[] = [
     title: 'Разрешенные перемещения',
   },
   {
+    access: [ROLES.USERS, ACCESS_LEVEL.YELLOW],
+    component: lazy(() => import('./#parts')),
+    path: '/projects/:projectId/parts',
+    title: 'Части проекта',
+  },
+  {
     access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
     component: lazy(() => import('./#settings')),
     path: '/projects/:projectId/settings',

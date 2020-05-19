@@ -180,18 +180,17 @@ const replaceTasksHandler = (state: S, { payload }: Action<Array<Partial<UserWor
   return newState;
 };
 
-const patchProjectTaskHandler = (state: S, { payload }: Action<P>) => {
-  const index = state.list.findIndex(
-    el => el.projectId === get(payload, 'projectId') && el.sequenceNumber === get(payload, 'sequenceNumber')
-  );
-  if (!~index) {
-    return state.startLoading();
-  }
-  return state.startLoading().updateItem(index, { ...get(payload, 'request.data'), users: get(payload, 'users') });
+const patchProjectTaskHandler = (state: S) => {
+  return state.startLoading();
 };
 
-const patchProjectTaskSuccessHandler = (state: S) => {
-  return state.stopLoading();
+const patchProjectTaskSuccessHandler = (state: S, { payload, meta }) => {
+  const newId = get(payload, ['data', 'id']);
+  const index = state.list.findIndex(el => el.id === newId);
+  if (index === -1) {
+    throw new Error('Обновленный элемент не был найден');
+  }
+  return state.stopLoading().updateItem(index, payload.data);
 };
 
 const patchProjectTaskFailHandler = (state: S, action) => {

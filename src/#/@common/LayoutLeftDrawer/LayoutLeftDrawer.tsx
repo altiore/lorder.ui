@@ -17,6 +17,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ExtensionIcon from '@material-ui/icons/Extension';
+import LabelIcon from '@material-ui/icons/Label';
 import LaptopIcon from '@material-ui/icons/Laptop';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
@@ -50,6 +51,7 @@ export interface ILayoutLeftDrawerProps {
 export const ICONS_MAP = {
   '/projects/:projectId/board': ExtensionIcon,
   '/projects/:projectId/members': PeopleOutlineIcon,
+  '/projects/:projectId/parts': LabelIcon,
   '/projects/:projectId/roles': PeopleOutlinedIcon,
   '/projects/:projectId/settings': SettingsIcon,
   '/projects/:projectId/status-moves': SyncAltIcon,

@@ -14,11 +14,15 @@ function parseErrors(errors: any) {
 
 export const parseFormErrorsFromResponse = (response: any) => {
   const errors = get(response, 'error.response.data.errors');
+  const errorMessage = get(response, ['error', 'response', 'data', 'message'], 'Неизвестная ошибка');
   if (errors) {
-    return parseErrors(errors);
+    return {
+      ...parseErrors(errors),
+      _error: errorMessage,
+    };
   } else {
     return {
-      _error: 'Неизвестная ошибка',
+      _error: errorMessage,
     };
   }
 };
