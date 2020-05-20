@@ -5,7 +5,7 @@ import { CrudJsx, ICrudColumn } from '@components/Crud';
 import { closeDialog, openDialog } from '#/@store/dialog';
 
 interface IOwnProps {
-  formName: string;
+  formName?: string;
   entityName: string;
   createItem?: any;
   deleteItem?: (id: number) => void;
