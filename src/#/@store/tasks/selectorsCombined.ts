@@ -52,16 +52,14 @@ export const events = createDeepEqualSelector(
       .filter(uw => moment().diff(uw.startAt, 'hours') <= 24)
       .sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1))
       .map(userWork => {
-        const task = getTask(userWork.taskId);
+        const task = getTask(userWork.taskId) as ITask;
         return {
-          data: {
-            ...userWork,
-            task,
-          },
-          finishAt: userWork.finishAt,
-          isActive: userWork.projectId !== defPrId,
+          userWork,
+
+          task,
+
+          isActive: (userWork.projectId || task.projectId) !== defPrId,
           name: get(task, 'title', userWork.taskId.toString()),
-          startAt: userWork.startAt,
         };
       });
   }

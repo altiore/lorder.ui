@@ -1,9 +1,11 @@
-import moment from 'moment';
+import { ITask } from './ITask';
+import { IUserWorkEditable } from './IUserWork';
 
-export interface IEvent<D = any> {
-  data: D;
-  finishAt?: moment.Moment | null;
+export interface IEvent {
+  userWork: IUserWorkEditable;
+
+  task: ITask;
+
   isActive: boolean;
   name: string;
-  startAt: moment.Moment;
 }

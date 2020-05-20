@@ -8,17 +8,21 @@ import { Task } from '#/@store/tasks/Task';
 import { ITask, IUserWork } from '@types';
 
 export class UserWork implements IUserWork {
-  id?: number | string;
-  description?: string;
-  finishAt?: moment.Moment | null;
+  id?: number;
+
   projectId: number;
+
+  description?: string;
+  finishAt: moment.Moment | null;
   source?: string | null;
   startAt: moment.Moment;
   task?: ITask;
   taskId: number;
   taskTypeId?: number;
+  taskType: any;
   value?: number;
   prevTaskId?: number;
+  userId: number;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

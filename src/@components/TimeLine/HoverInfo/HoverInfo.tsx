@@ -20,17 +20,17 @@ export const HoverInfoTsx: React.FC<IHoverInfoProps> = ({ hoveredEvent, onOver, 
   const { popoverPaper, time } = useStyles();
 
   const hours = useMemo(() => {
-    return (hoveredEvent.finishAt || moment()).diff(hoveredEvent.startAt, 'hours');
+    return (hoveredEvent.userWork.finishAt || moment()).diff(hoveredEvent.userWork.startAt, 'hours');
   }, [hoveredEvent]);
 
   const minutes = useMemo(() => {
-    return (hoveredEvent.finishAt || moment()).diff(hoveredEvent.startAt, 'minutes') % 60;
+    return (hoveredEvent.userWork.finishAt || moment()).diff(hoveredEvent.userWork.startAt, 'minutes') % 60;
   }, [hoveredEvent]);
 
   return (
     <Paper
       className={popoverPaper}
-      id={`popover-body-${hoveredEvent.data.id}`}
+      id={`popover-body-${hoveredEvent.userWork.id}`}
       onMouseOver={onOver}
       onMouseLeave={onLeave}
     >

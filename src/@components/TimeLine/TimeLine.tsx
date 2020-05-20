@@ -36,8 +36,10 @@ let leaveTimer: any = null;
 export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patchUserWork, width }) => {
   const getStartAt = useCallback((): number => {
     const current = moment();
-    const first = minBy(events, (ev: IEvent) => (ev.startAt.day() === current.day() ? ev.startAt.hours() : 24));
-    const hours = first ? first.startAt.hours() : 0;
+    const first = minBy(events, (ev: IEvent) =>
+      ev.userWork.startAt.day() === current.day() ? ev.userWork.startAt.hours() : 24
+    );
+    const hours = first ? first.userWork.startAt.hours() : 0;
     return first && hours < current.hours() ? hours : 0;
   }, [events]);
 
@@ -120,7 +122,7 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
   const handleHover = useCallback(
     (e: React.SyntheticEvent) => {
       const eventId = parseInt(get(e, ['target', 'dataset', 'id'], 0), 0);
-      const newHoveredEvent = events.find(el => get(el, ['data', 'id']) === eventId);
+      const newHoveredEvent = events.find(el => get(el, ['userWork', 'id']) === eventId);
       cleanLeaveTimer();
       setHoveredEl(e.currentTarget);
       if (!editedEvent && newHoveredEvent) {
@@ -180,7 +182,7 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
 
   const getWidth = useCallback(
     (el: IEvent) => {
-      return getPosition(el.finishAt) - getPosition(el.startAt);
+      return getPosition(el.userWork.finishAt) - getPosition(el.userWork.startAt);
     },
     [getPosition]
   );
@@ -190,10 +192,10 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
       const eventId = parseInt(get(e, ['target', 'dataset', 'id'], 0), 0);
       if (height === Y_HEIGHT_BIG) {
         e.stopPropagation();
-        if (eventId === get(editedEvent, ['data', 'id'])) {
+        if (eventId === get(editedEvent, ['userWork', 'id'])) {
           setEditedEvent(undefined);
         } else {
-          const newEditEvent = events.find(el => get(el, ['data', 'id']) === eventId);
+          const newEditEvent = events.find(el => get(el, ['userWork', 'id']) === eventId);
           if (newEditEvent) {
             setEditedEvent(newEditEvent);
             setHoveredEvent(undefined);
@@ -239,11 +241,21 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
 
   const preparedEvents = useMemo(() => {
     return events.filter((el: IEvent) => {
-      return !el.finishAt || (el.finishAt.day() === moment().day() && getHours(el.finishAt) > startAt);
+      return (
+        !el.userWork.finishAt ||
+        (el.userWork.finishAt.day() === moment().day() && getHours(el.userWork.finishAt) > startAt)
+      );
     });
   }, [events, getHours, startAt]);
 
   const isExpended = useMemo(() => height === Y_HEIGHT_BIG, [height]);
+
+  const formInitialValues = useMemo(() => {
+    return {
+      ...get(editedEvent, ['userWork']),
+      projectId: get(editedEvent, ['userWork', 'projectId'], get(editedEvent, ['task', 'projectId'])),
+    };
+  }, [editedEvent]);
 
   return (
     <ClickAwayListener onClickAway={decreaseHeightNow}>
@@ -256,7 +268,7 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
           <Paper className={classes.popoverPaper}>
             <EditWork
               event={editedEvent}
-              initialValues={get(editedEvent, ['data'])}
+              initialValues={formInitialValues}
               onClose={handleEditEventClose}
               patchUserWork={patchUserWork}
             />
@@ -284,22 +296,22 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
             {preparedEvents.map((event, i) => {
               return (
                 <Popover
-                  key={event.data.id}
+                  key={event.userWork.id}
                   preferPlace="below"
                   tipSize={0.01}
                   className={classes.popover}
-                  isOpen={get(hoveredEvent, 'data.id') === event.data.id && !!hoveredEvent}
+                  isOpen={get(hoveredEvent, 'userWork.id') === event.userWork.id && !!hoveredEvent}
                   target={hoveredEl as any}
                   onOuterAction={handlePopoverClose}
                   body={<HoverInfo onOver={handleHover} onLeave={handlePopoverClose} hoveredEvent={event} />}
                 >
                   <div
-                    aria-owns={`popover-body-${event.data.id}`}
-                    data-id={event.data.id}
+                    aria-owns={`popover-body-${event.userWork.id}`}
+                    data-id={event.userWork.id}
                     className={classes.block}
                     style={{
                       ...getStyle(event),
-                      left: getPosition(event.startAt),
+                      left: getPosition(event.userWork.startAt),
                       width: getWidth(event),
                     }}
                     onClick={handleEventClick}
