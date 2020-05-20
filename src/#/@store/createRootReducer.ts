@@ -42,6 +42,7 @@ import { uiReducer } from './ui';
 import { UserWork } from './user-works';
 import { userWorks } from './user-works/reducer';
 import { versionHistory } from './versionHistory';
+import { webHooks } from './webhooks/reducer';
 
 import { IState } from '@types';
 
@@ -145,6 +146,7 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
     taskTypes,
     timer,
     userWorks,
+    webHooks,
     ...asyncReducers,
   }) as Reducer<Partial<IState>>);
 }

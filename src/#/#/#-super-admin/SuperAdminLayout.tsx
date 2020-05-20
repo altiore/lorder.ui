@@ -8,6 +8,7 @@ import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent';
 import SyncAltIcon from '@material-ui/icons/SyncAlt';
+import WebIcon from '@material-ui/icons/Web';
 
 import NestedRoute from '#/@common/#NestedRoute';
 import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
@@ -51,6 +52,12 @@ export const MAIN_SUPER_ADMIN_ROUTES: IRoute[] = [
     icon: <SyncAltIcon />,
     path: '/feedback',
     title: 'Обратная связь',
+  },
+  {
+    component: lazy(() => import('./#webhooks')),
+    icon: <WebIcon />,
+    path: '/web-hooks',
+    title: 'WebHooks',
   },
   {
     component: lazy(() => import('./#other')),

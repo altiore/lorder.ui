@@ -123,10 +123,10 @@ export interface ICrudProps<IItem = {}> {
   columns: ICrudColumn[];
   createItem?: any;
   deleteBulk?: (ids: Array<number | string>) => any;
-  deleteItem: (id: number) => void;
+  deleteItem?: (id: number) => void;
   editItem?: (itemId, item: Partial<IItem>) => any;
   entityName: string;
-  formName: string;
+  formName?: string;
   getId?: (item: IItem) => number | string;
   openDialog: (el: JSX.Element, props?: Partial<DialogProps>) => void;
   rows: any[];
@@ -233,7 +233,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
 
     const handleRemoveClick = useCallback(
       (item: any) => (e: any) => {
-        if (item) {
+        if (deleteItem && item) {
           e.stopPropagation();
 
           const handleConfirm = () => deleteItem(useId ? getId(item) : item);
@@ -272,18 +272,20 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
     );
 
     const handleOpenCreate = useCallback(() => {
-      openDialog(
-        <CreateForm
-          form={formName}
-          onSubmit={createItem}
-          columns={columns}
-          onSubmitSuccess={closeDialog}
-          createTitle={createTitle}
-        />,
-        {
-          maxWidth: 'md',
-        }
-      );
+      if (formName) {
+        openDialog(
+          <CreateForm
+            form={formName}
+            onSubmit={createItem}
+            columns={columns}
+            onSubmitSuccess={closeDialog}
+            createTitle={createTitle}
+          />,
+          {
+            maxWidth: 'md',
+          }
+        );
+      }
     }, [closeDialog, createItem, createTitle, formName, columns, openDialog]);
 
     const handleChangeField = (event: any, child) => {

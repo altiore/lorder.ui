@@ -62,6 +62,7 @@ export interface IState {
   userWorks: IDownloadList<IUserWork>;
   versionHistory: VersionHistory;
   intl: any;
+  webHooks: IDownloadList<any>;
 
   authorized: {
     users: DownloadList<IUser>;
