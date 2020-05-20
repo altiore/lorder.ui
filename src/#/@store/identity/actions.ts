@@ -62,7 +62,7 @@ export const uploadAvatar = requestActions('USER/UPLOAD_AVATAR', file => ({
   },
 }));
 
-export const updateProfile = requestActions('ME/UPDATE', (newUserData: { displayName: string; tel: string }) => ({
+export const updateProfile = requestActions('ME/UPDATE', (newUserData: { displayName?: string; tel?: string }) => ({
   form: 'ProfileForm',
   request: {
     data: newUserData,

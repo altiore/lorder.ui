@@ -4,17 +4,13 @@ import { Field, InjectedFormProps } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import InputField from '@components/InputField';
 
-import { updateProfile } from '#/@store/identity';
+import { parseStrToUndefined } from '@utils/parseFormat';
 
-export interface IProfileFormProps extends InjectedFormProps {
-  updateProfile: typeof updateProfile;
-}
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   button: {
     marginLeft: 'auto',
   },
@@ -25,27 +21,22 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const ProfileForm: React.FC<IProfileFormProps> = ({
-  submitting,
-  pristine,
-  handleSubmit,
-  updateProfile,
-}: IProfileFormProps) => {
-  const classes = useStyles();
+export const ProfileForm: React.FC<InjectedFormProps> = ({ submitting, pristine, handleSubmit }) => {
+  const { button, displayNameField } = useStyles();
 
   return (
     <>
       <ListItem>
-        <div className={classes.displayNameField}>
-          <Field name="displayName" component={InputField} label="Показываемое имя" />
+        <div className={displayNameField}>
+          <Field name="displayName" component={InputField} label="Показываемое имя" parse={parseStrToUndefined} />
         </div>
       </ListItem>
       <ListItem>
-        <Field name="tel" component={InputField} label="Телефон" />
+        <Field name="tel" component={InputField} label="Телефон" parse={parseStrToUndefined} />
       </ListItem>
       <ListItem>
         <Button
-          className={classes.button}
+          className={button}
           variant="outlined"
           color="primary"
           onClick={handleSubmit}
