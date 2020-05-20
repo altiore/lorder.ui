@@ -100,13 +100,13 @@ export const LastEventsTsx: React.FC<ILastEventsProps> = ({ events }): JSX.Eleme
         <ExpansionPanelDetails classes={{ root: classes.details }}>
           <List dense classes={{ root: classes.list }}>
             {events.map(event => (
-              <ListItem key={event.data.id} button>
+              <ListItem key={event.userWork.id} button>
                 <ListItemIcon>
                   <FolderIcon />
                 </ListItemIcon>
                 <ListItemText
                   secondary={`${event.name}`}
-                  primary={`${event.startAt.fromNow()} (${event.startAt.format('HH:mm')})`}
+                  primary={`${event.userWork.startAt.fromNow()} (${event.userWork.startAt.format('HH:mm')})`}
                 />
               </ListItem>
             ))}
