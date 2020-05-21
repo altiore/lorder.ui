@@ -68,7 +68,12 @@ const mergeProps = (
 export const PatchTaskForm = connect<
   any,
   any,
-  { buttonText?: string; taskId?: number | string; projectId?: number | string; initialValues?: Partial<ITaskFormData> }
+  {
+    buttonText?: string;
+    taskId?: number | string;
+    projectId?: number | string;
+    initialValues?: Partial<ITaskFormData>;
+  }
 >(
   mapStateToProps,
   mapDispatchToProps,
@@ -81,10 +86,11 @@ export const PatchTaskForm = connect<
     return val.id ? dispatch(patchProjectTask(val)) : dispatch(postProjectTask(val));
   },
   onSubmitFail,
+
   onSubmitSuccess: (result, dispatch) => {
     const actionType = get(result, 'meta.previousAction.type');
     const data = get(result, 'payload.data');
-    if (actionType === postProjectTask.toString()) {
+    if (actionType === patchProjectTask.toString() || actionType === postProjectTask.toString()) {
       dispatch(initialize(EDIT_TASK_FORM, pick(data, EDIT_TASK_FORM_PROPS), false));
     }
   },
