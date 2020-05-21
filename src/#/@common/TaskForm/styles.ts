@@ -36,6 +36,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     boxSizing: 'border-box',
     flexBasis: '25%',
     flexGrow: 1,
+    marginTop: 12,
     paddingLeft: theme.spacing(1),
   },
   grow: {

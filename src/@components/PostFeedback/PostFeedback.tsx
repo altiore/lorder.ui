@@ -11,9 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 
+import TextAreaMarkdown from '@components/TextAreaMarkdown';
 import { TextField } from '@components/TextField';
-
-import { TextAreaMarkdown } from '#/@common/TaskForm/TextAreaMarkdown';
 
 export interface IPostFeedbackData {
   email: string;

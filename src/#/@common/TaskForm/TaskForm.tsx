@@ -9,6 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 
 import InputField from '@components/InputField';
+import TextAreaMarkdown from '@components/TextAreaMarkdown';
 import { TextField } from '@components/TextField';
 
 import TaskDuration from '#/@common/TaskDuration';
@@ -20,7 +21,6 @@ import ProjectPartsField from './ProjectPartsField';
 import StatusField from './StatusField';
 import { useStyles } from './styles';
 import TaskHistory from './TaskHistory';
-import { TextAreaMarkdown } from './TextAreaMarkdown';
 
 export interface ITaskFormData {
   isDetailsLoaded: boolean;
@@ -75,12 +75,13 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
 
   const [isCurrentState, setIsCurrentState] = useState(isCurrent);
 
+  const [disabledSaveBtn, setDisabledSaveBtn] = useState(true);
+
   useEffect(() => {
     if (currentSequenceNumber) {
       fetchTaskDetails({ projectId, sequenceNumber: currentSequenceNumber });
     }
   }, [fetchTaskDetails, projectId, currentSequenceNumber]);
-
   // is this separate page or not?
   const isPage = useMemo(() => {
     return Boolean(location);
@@ -104,6 +105,10 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
     },
     [handleSubmit]
   );
+
+  const handleSaveBtnDisable = useCallback(() => {
+    setDisabledSaveBtn(false);
+  }, []);
 
   const saveAndClose = useCallback(
     async e => {
@@ -165,9 +170,9 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
             />
             <Field
               placeholder="Описание задачи..."
+              onChangeCb={handleSaveBtnDisable}
               name="description"
               component={TextAreaMarkdown}
-              onSave={handleSave}
             />
             {currentSequenceNumber && <TaskHistory />}
           </div>
@@ -203,7 +208,12 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
       </DialogContent>
       <DialogActions key={'actions'} className={actions}>
         <div className={grow} />
-        <Button color="primary" variant="contained" onClick={saveAndClose} disabled={submitting || pristine}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={saveAndClose}
+          disabled={submitting || (pristine && disabledSaveBtn)}
+        >
           {buttonText}
           {submitting && '...'}
         </Button>

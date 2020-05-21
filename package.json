@@ -76,6 +76,7 @@
     "connected-react-router": "6.4.0",
     "highcharts": "7.1.1",
     "immer": "5.1.0",
+    "jodit-react": "^1.0.42",
     "lint-staged": "8.2.1",
     "liw-components": "2.3.46",
     "localforage": "1.7.3",
