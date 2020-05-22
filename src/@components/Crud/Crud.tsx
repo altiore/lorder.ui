@@ -21,7 +21,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import ConfirmationModal from '../ConfirmationModal';
+import ConfirmationModal from '@components/ConfirmationModal';
+
 import CreateForm from './CreateForm';
 import TableHead from './TableHead';
 import TableToolbar from './TableToolbar';
@@ -288,14 +289,36 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
       }
     }, [closeDialog, createItem, createTitle, formName, columns, openDialog]);
 
-    const handleChangeField = (event: any, child) => {
-      event.stopPropagation();
-      if (editItem) {
-        editItem(child.props['data-id'], {
-          [event.target.name]: event.target.value,
-        });
-      }
-    };
+    const handleChangeField = useCallback(
+      (event: any, child) => {
+        event.stopPropagation();
+        if (editItem) {
+          editItem(child.props['data-id'], {
+            [event.target.name]: event.target.value,
+          });
+        }
+      },
+      [editItem]
+    );
+
+    const handleChangeComponentField = useCallback(
+      (elId, event) => {
+        event.stopPropagation();
+        if (editItem) {
+          editItem(elId, {
+            [event.target.name]: event.target.value,
+          });
+        }
+      },
+      [editItem]
+    );
+
+    const getChangeFunc = useCallback(
+      elId => {
+        return handleChangeComponentField.bind(undefined, elId);
+      },
+      [handleChangeComponentField]
+    );
 
     const handleCloseSelect = useCallback((event: any) => {
       event.stopPropagation();
@@ -373,6 +396,10 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
                               return (
                                 <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
                                   {React.createElement(component, {
+                                    allowed,
+                                    editable: allowed && editItem && editable && (!skip || !skip(item)),
+                                    name: name || path,
+                                    onChange: getChangeFunc(elId),
                                     value,
                                   })}
                                 </TableCell>
@@ -390,7 +417,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
                                         onChange={handleChangeField}
                                         onClose={handleCloseSelect}
                                         // tslint:disable
-                                        renderValue={s =>
+                                        renderValue={(s: unknown) =>
                                           multiple
                                             ? ((s as any) || defSelected).map(e => invert(allowed)[e as any]).join(', ')
                                             : allowed[s as string]
