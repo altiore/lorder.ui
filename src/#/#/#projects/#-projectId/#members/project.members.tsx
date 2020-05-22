@@ -4,11 +4,14 @@ import { RouteComponentProps } from 'react-router-dom';
 import get from 'lodash/get';
 
 import { ICrudColumn } from '@components/Crud';
+import SelectCell from '@components/Crud/@cells/select';
 import { Page } from '@components/Page';
 
 import Crud from '#/@common/Crud';
 import { LinkButton } from '#/@common/LinkButton';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
+
+import ColoredSelect from './colored.select';
 
 import { ACCESS_LEVEL } from '@types';
 
@@ -39,11 +42,11 @@ const TimeComponent: React.FC<any> = ({ value }): JSX.Element => {
 const COLUMNS: ICrudColumn[] = [
   { title: 'Имя', path: 'member.displayName' },
   { title: 'E-mail', path: 'member.email', name: 'email' },
-  { title: 'Активен', path: 'member.status', allowed: STATUS },
+  { title: 'Активен', path: 'member.status', component: SelectCell, allowed: STATUS },
   { title: 'Время', path: 'timeSum', component: TimeComponent },
   { title: 'Вклад', path: 'valueSum' },
   { title: 'Роли', path: 'roles', multiple: true },
-  { title: 'Уровень доступа', path: 'accessLevel', allowed: ACCESS_LEVEL },
+  { title: 'Уровень доступа', path: 'accessLevel', component: ColoredSelect, allowed: ACCESS_LEVEL },
 ];
 
 export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
