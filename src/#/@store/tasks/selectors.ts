@@ -48,9 +48,6 @@ export const getEditTaskInitialValues = createDeepEqualSelector(
         .slice(0)
         .map(el => (typeof el === 'number' ? el : el.id));
     }
-    console.log('current initial values', {
-      initialValues,
-    });
     return initialValues;
   }
 );

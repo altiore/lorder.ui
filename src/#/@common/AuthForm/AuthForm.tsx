@@ -8,17 +8,20 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+import { LOGIN_FORM_NAME } from '../../@store/identity';
+
 import { LoginForm } from './LoginForm';
 import { MagicForm } from './MagicForm';
 import { useStyles } from './styles';
 
 export interface ILoginProps {
   autoFocus?: boolean;
+  clearErrors: (form: string, field: string) => void;
   isMagicLoginForm?: boolean;
   toggleUiSetting: any;
 }
 
-export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, isMagicLoginForm, toggleUiSetting }) => {
+export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, clearErrors, isMagicLoginForm, toggleUiSetting }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -30,13 +33,15 @@ export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, isMagicLoginForm, t
   const handleChange = useCallback(
     (event: React.ChangeEvent<{}>, newValue: number) => {
       setFormType(newValue);
+      clearErrors(LOGIN_FORM_NAME, 'email');
     },
-    [setFormType]
+    [clearErrors, setFormType]
   );
 
   const changeToMagic = useCallback(() => {
     toggleUiSetting('isMagicLoginForm');
-  }, [toggleUiSetting]);
+    clearErrors(LOGIN_FORM_NAME, 'email');
+  }, [clearErrors, toggleUiSetting]);
 
   const handleChangeIndex = useCallback(
     (index: number) => {
