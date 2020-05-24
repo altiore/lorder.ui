@@ -14,6 +14,8 @@ export const userId = createDeepEqualSelector([baseIdentityState], state => stat
 
 export const userBearerKey = createDeepEqualSelector([baseIdentityState], state => state.bearerKey);
 
+export const deviceNumber = createDeepEqualSelector([baseIdentityState], state => state.deviceNumber);
+
 export const userEmail = createDeepEqualSelector([baseIdentityState], state => state.email);
 
 export const userAvatar = createDeepEqualSelector([baseIdentityState], state => state.avatar);

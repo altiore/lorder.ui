@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 
+import { clearAsyncError } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { isMagicLoginForm, toggleUiSetting } from '#/@store/ui';
@@ -11,6 +12,7 @@ const mapState = createStructuredSelector({
 });
 
 const mapDispatch = {
+  clearErrors: clearAsyncError,
   toggleUiSetting,
 };
 

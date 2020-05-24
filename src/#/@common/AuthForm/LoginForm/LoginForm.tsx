@@ -20,7 +20,9 @@ export interface ILoginFormProps {
 const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProps>> = ({
   autoFocus,
   handleSubmit,
+  invalid,
   isLogin,
+  pristine,
   submitting,
 }) => {
   const classes = useStyles();
@@ -54,7 +56,13 @@ const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProp
           placeholder="Введите пароль..."
           type="password"
         />
-        <Button color="secondary" disabled={submitting} fullWidth type="submit" variant="outlined">
+        <Button
+          color="secondary"
+          disabled={submitting || (!pristine && invalid)}
+          fullWidth
+          type="submit"
+          variant="outlined"
+        >
           <span>{isLogin ? 'Войти' : 'Зарегистрироваться'}</span>
         </Button>
       </form>

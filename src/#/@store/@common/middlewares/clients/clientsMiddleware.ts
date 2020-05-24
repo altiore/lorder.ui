@@ -13,6 +13,8 @@ import { parseFormErrorsFromResponse } from '../../helpers';
 import { api } from './api';
 import { intl } from './intl';
 
+import { getUuid } from '@utils/getUuid';
+
 const objectToFormData = require('object-to-formdata');
 
 export interface IStoreInfo {
@@ -81,6 +83,14 @@ export default multiClientMiddleware(
           const bearerKey = userBearerKey(getState());
           if (bearerKey) {
             req.headers.Authorization = 'Bearer ' + bearerKey;
+          }
+
+          const url = req.url || '';
+          if (url.match('auth/login')) {
+            req.data.device = getUuid();
+          }
+          if (url.match('auth/activate')) {
+            req.params.device = getUuid();
           }
 
           return req;

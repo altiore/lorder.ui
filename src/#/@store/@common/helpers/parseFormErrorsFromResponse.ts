@@ -1,11 +1,11 @@
 import get from 'lodash/get';
 
-function parseErrors(errors: any) {
+export function parseErrors(errors: any) {
   return errors.reduce((acc: any, error: any) => {
     const { constraints, children } = error;
     acc[error.property] = constraints
       ? Object.keys(constraints)
-          .map(key => constraints[key].substring(constraints[key].indexOf(' ') + 1))
+          .map(key => constraints[key])
           .join(', ')
       : parseErrors(children);
     return acc;

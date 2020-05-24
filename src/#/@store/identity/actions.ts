@@ -49,6 +49,15 @@ export const logInPatch = requestActions('USER/LOGIN', (data: { email: string; p
   },
 }));
 
+export const registerPost = requestActions('USER/REGISTER', (data: { email: string; password: string }) => ({
+  form: LOGIN_FORM_NAME,
+  request: {
+    data,
+    method: 'POST',
+    url: '/auth/register',
+  },
+}));
+
 export const setIsLoading = createAction('IDENTITY/SET_IS_LOADING');
 
 export const uploadAvatar = requestActions('USER/UPLOAD_AVATAR', file => ({
