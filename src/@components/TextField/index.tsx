@@ -10,6 +10,7 @@ export const TextField = (props: any) => {
     ...custom
   } = props;
   return React.createElement(MaterialTextField, {
+    autoFocus: !input.value,
     error: touched && !!error,
     fullWidth: true,
     helperText: touched && error,
