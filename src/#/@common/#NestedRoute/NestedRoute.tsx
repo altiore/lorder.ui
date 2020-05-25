@@ -65,7 +65,7 @@ export const NestedRoute = ({
   }
 
   if (!isRouteLoaded) {
-    return <LoadingPage />;
+    return <Route exact={exact} path={path} component={LoadingPage} />;
   }
 
   return <Route exact={exact} path={path} render={renderRoute} location={location} />;

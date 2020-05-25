@@ -15,7 +15,6 @@ import Dialog from '#/@common/Dialog';
 import Notification from '#/@common/Notification';
 import { createStore } from '#/@store/createStore';
 
-import '@styles/base.css';
 import lightTheme from '@styles/themes/light';
 
 import * as serviceWorker from './serviceWorker';
