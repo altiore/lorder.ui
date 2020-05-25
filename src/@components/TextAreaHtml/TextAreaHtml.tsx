@@ -8,16 +8,12 @@ import { BUTTONS_LIST } from './constants';
 
 const onChangeDefault = () => null;
 
-export interface ITextAreaMarkdownProps extends WrappedFieldProps {
+export interface ITextAreaHtmlProps extends WrappedFieldProps {
   placeholder?: string;
   onChangeCb?: () => void;
 }
 
-export const TextAreaMarkdownTsx: React.FC<ITextAreaMarkdownProps> = ({
-  input,
-  placeholder,
-  onChangeCb = onChangeDefault,
-}) => {
+export const TextAreaHtmlTsx: React.FC<ITextAreaHtmlProps> = ({ input, placeholder, onChangeCb = onChangeDefault }) => {
   const editor = useRef(null);
   /**
    * @see https://xdsoft.net/jodit/doc/
