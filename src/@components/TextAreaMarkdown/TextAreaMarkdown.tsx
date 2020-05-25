@@ -60,12 +60,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     '&:hover': {
       backgroundColor: theme.palette.secondary.light,
     },
+    opacity: 0.2,
     position: 'absolute',
     right: theme.spacing(1),
     top: theme.spacing(1),
   },
   editHovered: {
     boxShadow: theme.shadow.secondary,
+    opacity: 1,
   },
   root: {
     position: 'relative',
