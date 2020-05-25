@@ -1,7 +1,6 @@
 /**
- * https://xdsoft.net/jodit/doc/options/buttons/ - list of all available buttons
+ * @see https://xdsoft.net/jodit/doc/options/buttons/ - list of all available buttons
  */
-
 export const BUTTONS_LIST = [
   'ul',
   'ol',

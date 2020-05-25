@@ -18,7 +18,6 @@ export const TextAreaHtmlTsx: React.FC<ITextAreaHtmlProps> = ({ input, placehold
   /**
    * @see https://xdsoft.net/jodit/doc/
    */
-
   const config = {
     buttons: BUTTONS_LIST,
     buttonsMD: BUTTONS_LIST,

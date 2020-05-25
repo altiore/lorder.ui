@@ -170,6 +170,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
             />
             <Field
               placeholder="Описание задачи..."
+              // onChangeCb используется для версии TextAreaHtml. Не удалять!!!
               onChangeCb={handleSaveBtnDisable}
               name="description"
               component={TextAreaMarkdown}
