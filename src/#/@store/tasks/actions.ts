@@ -68,8 +68,6 @@ export const archiveTaskA = requestActions(
   })
 );
 
-export const replaceTasks = createAction('TASKS/REPLACE_BY_IDS');
-
 export const postProjectTask = requestActions<Partial<ITask>>(
   'TASKS/POST_PROJECT_TASK',
   ({ projectId, ...data }: Partial<ITask>): any => ({

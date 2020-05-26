@@ -4,7 +4,7 @@ import { change } from 'redux-form';
 
 import { selectProject } from '#/@store/project';
 import { fetchProjectDetails, getProjectById, Project, projectMembers } from '#/@store/projects';
-import { getTaskById, getTaskBySequenceNumber, replaceTasks } from '#/@store/tasks';
+import { getTaskById, getTaskBySequenceNumber } from '#/@store/tasks';
 import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from '#/@store/timer';
 import {
   CREATE_USER_WORK_FORM_NAME,
@@ -40,7 +40,7 @@ export const startTimer = (userWork: Partial<UserWork>, projectProp?: IProject) 
   }
   timer = setInterval(() => {
     dispatch(tickUserWorkTimer());
-    document.title = `${currentTimeToString(getState())} | ${get(userWork, 'task.title')} (${get(project, 'title')})`;
+    document.title = `${currentTimeToString(getState())} | ${get(startedTask, 'title')} (${get(project, 'title')})`;
   }, 1000);
   dispatch(
     setCurrentUserWorkId({
@@ -89,10 +89,6 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
       userWork: preparedData,
     })
   );
-  const finishedTasks = get(res, 'payload.data.finished');
-  if (finishedTasks && finishedTasks.length) {
-    dispatch(replaceTasks(finishedTasks));
-  }
 
   const userWorkData = get(res, 'payload.data.started');
   const userWork = new UserWork(userWorkData);
