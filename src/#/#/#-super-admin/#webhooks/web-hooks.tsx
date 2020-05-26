@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { ICrudColumn } from '@components/Crud';
+import { IColumnComponent, ICrudColumn } from '@components/Crud';
 import { Page } from '@components/Page';
 
 import Crud from '#/@common/Crud';
@@ -11,10 +11,18 @@ export interface IWebHooksProps extends RouteComponentProps {
   list: any[];
 }
 
+const DataComponent: React.FC<IColumnComponent> = ({ value }) => {
+  return <div>{value.action}</div>;
+};
+
+const DateComponent: React.FC<IColumnComponent> = ({ value }) => {
+  return <div>{value}</div>;
+};
+
 const COLUMNS: ICrudColumn[] = [
   { title: 'Id', path: 'id' },
-  // { title: 'Данные', path: 'data' },
-  { title: 'Создан', path: 'createdAt' },
+  { title: 'Данные', path: 'data', component: DataComponent },
+  { title: 'Создан', path: 'createdAt', component: DateComponent },
 ];
 
 export const WebHooksJsx: React.FC<IWebHooksProps> = ({ getAllWebHooks, list }) => {

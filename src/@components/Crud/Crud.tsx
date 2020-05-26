@@ -108,6 +108,10 @@ export interface ICrudColumn {
   component?: (...a: any) => JSX.Element | null;
 }
 
+export interface IColumnComponent {
+  value: any;
+}
+
 export interface ICrudProps<IItem = {}> {
   closeDialog: any;
   columns: ICrudColumn[];
