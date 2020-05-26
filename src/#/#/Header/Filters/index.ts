@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { projectParts } from '#/@store/project/';
+import { fetchProjectParts, projectParts } from '#/@store/project';
 import { projectMembersAsUsers } from '#/@store/projects';
 import { changeFilter, filteredMembers, searchTerm, toggleMember, toggleProjectPart } from '#/@store/tasksFilter';
 import { projectPart } from '#/@store/tasksFilter';
@@ -24,6 +24,7 @@ const mapState = createStructuredSelector({
 
 const mapDispatch = {
   changeFilter,
+  fetchProjectParts,
   toggleMember,
   toggleProjectPart,
   toggleUiSetting,

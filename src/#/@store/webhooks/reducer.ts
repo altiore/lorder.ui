@@ -12,15 +12,15 @@ type S = DownloadList<WebHook>;
 type P = AxiosResponse;
 
 const getAllWebHooksHandler = (state: S): S => {
-  return state.startLoading();
+  return state && state.startLoading ? state.startLoading() : new DownloadList(WebHook);
 };
 
 const getAllWebHooksSuccessHandler = (state: S, { payload }: Action<AxiosResponse>): S => {
-  return state.finishLoading(payload);
+  return state && state.finishLoading ? state.finishLoading(payload) : new DownloadList(WebHook);
 };
 
 const getAllWebHooksFailHandler = (state: S): S => {
-  return state.stopLoading();
+  return state && state.stopLoading ? state.stopLoading() : new DownloadList(WebHook);
 };
 
 const logOutHandler = () => {
