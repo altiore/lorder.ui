@@ -1,6 +1,13 @@
 import { handleActions } from 'redux-actions';
 
-import { changeFilter, changeTasksFilter, IChangeFilterP, toggleMemberA, toggleOpenedTab } from './actions';
+import {
+  changeFilter,
+  changeTasksFilter,
+  IChangeFilterP,
+  toggleMemberA,
+  toggleOpenedTab,
+  toggleProjectPart,
+} from './actions';
 import { TasksFilter } from './TasksFilter';
 
 import { ITasksFilter } from '@types';
@@ -50,12 +57,23 @@ const toggleOpenedTabHandler = (state: ITasksFilter, { payload }: IP2) => {
   });
 };
 
+const toggleProjectPartHandler = (state: ITasksFilter, { payload }: any) => {
+  if (typeof payload !== 'number') {
+    throw new Error('Payload MUST be number');
+  }
+  return new TasksFilter({
+    ...state,
+    projectPart: payload,
+  });
+};
+
 export const tasksFilter: any = handleActions<any, any, any>(
   {
     [changeFilter.toString()]: changeFilterHandler,
     [changeTasksFilter.toString()]: changeTasksFilterHandler,
     [toggleMemberA.toString()]: toggleMemberHandler,
     [toggleOpenedTab.toString()]: toggleOpenedTabHandler,
+    [toggleProjectPart.toString()]: toggleProjectPartHandler,
   },
   new TasksFilter()
 );

@@ -8,7 +8,7 @@ import { defaultProjectId, userId } from '#/@store/identity/selectors';
 import { getProjectById } from '#/@store/projects/selectors';
 import { routeProjectId } from '#/@store/router';
 import { Task } from '#/@store/tasks/Task';
-import { filteredMembers, searchTerm, tasksFilter } from '#/@store/tasksFilter';
+import { filteredMembers, projectPart, searchTerm, tasksFilter } from '#/@store/tasksFilter';
 import { currentTask, currentTaskId } from '#/@store/timer';
 import { isPaused, lastUserWorks } from '#/@store/user-works/selectors';
 
@@ -23,7 +23,9 @@ export const filteredByPerformerTasks = createDeepEqualSelector(
     currentUserId ? tasks.list.filter(el => el.performerId === currentUserId && el.id !== taskId) : []
 );
 
-const filteredFunction: { [key in TASK_FILTER_TYPE]: (a: any, b: any) => 1 | -1 | 0 } = {
+const filteredFunction: {
+  [key in TASK_FILTER_TYPE]: (a: any, b: any) => 1 | -1 | 0;
+} = {
   new: (a: ITask, b: ITask) => (a.id > b.id ? -1 : 1),
   recent: (a: ITask, b: ITask) => (a.id < b.id ? -1 : 1),
   smart: (a: ITask, b: ITask) => (a.value > b.value ? -1 : 1),
@@ -100,15 +102,29 @@ export const projectTasks = createDeepEqualSelector(
 );
 
 export const filteredProjectTasks = createDeepEqualSelector(
-  [projectTasks, searchTerm, filteredMembers],
-  (list, sTerm = '', members = []) => {
+  [projectTasks, searchTerm, filteredMembers, projectPart],
+  (list, sTerm = '', members = [], projectPart = '') => {
     if (!list || !list.length) {
       return [];
     }
     let res = list;
+
+    if (projectPart === 0) {
+      res = res.filter(({ projectParts }) => {
+        return !projectParts || !projectParts.length;
+      });
+    }
+
+    if (projectPart) {
+      res = res.filter(({ projectParts }) => {
+        return projectParts.map(({ id }) => id).includes(projectPart as number);
+      });
+    }
+
     if (sTerm) {
       res = res.filter(el => ~el.title.toLowerCase().indexOf(sTerm.trim().toLowerCase()));
     }
+
     if (members) {
       res = res.filter(el => (members.length ? includes(members, el.performerId) : true));
     }
