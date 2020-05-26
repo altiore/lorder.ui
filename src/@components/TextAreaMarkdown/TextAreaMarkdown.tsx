@@ -70,6 +70,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     opacity: 1,
   },
   root: {
+    maxWidth: 740,
     position: 'relative',
   },
   toolbarStyle: {
