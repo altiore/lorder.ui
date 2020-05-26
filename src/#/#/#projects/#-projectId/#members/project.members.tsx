@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import get from 'lodash/get';
 
 import { ICrudColumn } from '@components/Crud';
+import MultiSelectCell from '@components/Crud/@cells/multi-select';
 import SelectCell from '@components/Crud/@cells/select';
 import { Page } from '@components/Page';
 
@@ -45,7 +46,7 @@ const COLUMNS: ICrudColumn[] = [
   { title: 'Активен', path: 'member.status', component: SelectCell, allowed: STATUS },
   { title: 'Время', path: 'timeSum', component: TimeComponent },
   { title: 'Вклад', path: 'valueSum' },
-  { title: 'Роли', path: 'roles', multiple: true },
+  { title: 'Роли', path: 'roles', component: MultiSelectCell },
   { title: 'Уровень доступа', path: 'accessLevel', component: ColoredSelect, allowed: ACCESS_LEVEL },
 ];
 

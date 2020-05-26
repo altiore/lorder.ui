@@ -7,10 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { DialogProps } from '@material-ui/core/Dialog';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-import Select from '@material-ui/core/Select';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import Table from '@material-ui/core/Table';
@@ -58,12 +55,6 @@ function getSorting<K extends keyof any>(
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
-function filterEnum(t: any) {
-  return isNaN(parseInt(t, 0));
-}
-
-const defSelected = [];
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
@@ -110,12 +101,10 @@ export interface ICrudColumn {
   path: any;
   name?: string;
   isNumber?: boolean;
-  disablePadding?: boolean;
+  emptyElement?: any;
   allowed?: object;
-  multiple?: boolean;
   editable?: boolean;
   skip?: (item) => boolean;
-  emptyElement?: JSX.Element;
   component?: (...a: any) => JSX.Element | null;
 }
 
@@ -289,18 +278,6 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
       }
     }, [closeDialog, createItem, createTitle, formName, columns, openDialog]);
 
-    const handleChangeField = useCallback(
-      (event: any, child) => {
-        event.stopPropagation();
-        if (editItem) {
-          editItem(child.props['data-id'], {
-            [event.target.name]: event.target.value,
-          });
-        }
-      },
-      [editItem]
-    );
-
     const handleChangeComponentField = useCallback(
       (elId, event) => {
         event.stopPropagation();
@@ -319,10 +296,6 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
       },
       [handleChangeComponentField]
     );
-
-    const handleCloseSelect = useCallback((event: any) => {
-      event.stopPropagation();
-    }, []);
 
     if (!Array.isArray(rows)) {
       return null;
@@ -383,75 +356,33 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
                             color="primary"
                           />
                         </TableCell>
-                        {columns.map(
-                          ({ allowed, component, editable, emptyElement, isNumber, multiple, name, path, skip }) => {
-                            const value = get(item, path);
-                            const labelValue = allowed
-                              ? Array.isArray(value)
-                                ? value.map(el => invert(allowed)[el]).join(', ')
-                                : allowed[value]
-                              : value;
-                            const editableItems = allowed ? Object.keys(allowed).filter(filterEnum) : [];
-                            if (component) {
-                              return (
-                                <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
-                                  {React.createElement(component, {
-                                    allowed,
-                                    editable: allowed && editItem && editable && (!skip || !skip(item)),
-                                    name: name || path,
-                                    onChange: getChangeFunc(elId),
-                                    value,
-                                  })}
-                                </TableCell>
-                              );
-                            }
+                        {columns.map(({ allowed, component, editable, name, path, skip }) => {
+                          const value = get(item, path);
+                          const labelValue = allowed
+                            ? Array.isArray(value)
+                              ? value.map(el => invert(allowed)[el]).join(', ')
+                              : allowed[value]
+                            : value;
+                          const isNumber = typeof labelValue === 'number';
+                          if (component) {
                             return (
                               <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
-                                {allowed && editItem && editable && (!skip || !skip(item)) ? (
-                                  <>
-                                    {editableItems.length ? (
-                                      <Select
-                                        name={name || path}
-                                        value={value}
-                                        multiple={multiple}
-                                        onChange={handleChangeField}
-                                        onClose={handleCloseSelect}
-                                        // tslint:disable
-                                        renderValue={(s: unknown) =>
-                                          multiple
-                                            ? ((s as any) || defSelected).map(e => invert(allowed)[e as any]).join(', ')
-                                            : allowed[s as string]
-                                        }
-                                        // tslint:enable
-                                      >
-                                        {editableItems.map(key => {
-                                          const selected = multiple
-                                            ? ((value as any) || []).includes(allowed[key])
-                                            : value === allowed[key];
-                                          return (
-                                            <MenuItem
-                                              data-id={elId}
-                                              selected={selected}
-                                              key={allowed[key]}
-                                              value={allowed[key]}
-                                            >
-                                              {multiple && <Checkbox checked={selected} size="small" color="primary" />}
-                                              <ListItemText primary={key} />
-                                            </MenuItem>
-                                          );
-                                        })}
-                                      </Select>
-                                    ) : (
-                                      <>{emptyElement ? emptyElement : <div>[&nbsp;&nbsp;&nbsp;]</div>}</>
-                                    )}
-                                  </>
-                                ) : (
-                                  labelValue
-                                )}
+                                {React.createElement(component, {
+                                  allowed,
+                                  editable: allowed && editItem && editable && (!skip || !skip(item)),
+                                  name: name || path,
+                                  onChange: getChangeFunc(elId),
+                                  value,
+                                })}
                               </TableCell>
                             );
                           }
-                        )}
+                          return (
+                            <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
+                              {labelValue}
+                            </TableCell>
+                          );
+                        })}
                         <TableCell padding="checkbox">
                           <IconButton onClick={handleRemoveClick(item)}>
                             <DeleteIcon />

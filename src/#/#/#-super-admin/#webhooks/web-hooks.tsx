@@ -13,7 +13,7 @@ export interface IWebHooksProps extends RouteComponentProps {
 
 const COLUMNS: ICrudColumn[] = [
   { title: 'Id', path: 'id' },
-  { title: 'Данные', path: 'data' },
+  // { title: 'Данные', path: 'data' },
   { title: 'Создан', path: 'createdAt' },
 ];
 
