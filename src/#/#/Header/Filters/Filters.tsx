@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import cn from 'classnames';
 import get from 'lodash/get';
@@ -31,6 +31,7 @@ import { IProjectPart, IUser } from '@types';
 interface IFiltersProps {
   changeFilter: any;
   classes: any;
+  fetchProjectParts: any;
   filteredMembers: number[];
   isBoardFilterOpened: boolean;
   members: IUser[];
@@ -47,6 +48,7 @@ const SHOWN_MEMBERS = 7;
 export const FiltersTsx: React.FC<IFiltersProps> = ({
   changeFilter,
   classes,
+  fetchProjectParts,
   filteredMembers,
   isBoardFilterOpened,
   members,
@@ -57,9 +59,16 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
   toggleProjectPart,
   toggleUiSetting,
 }) => {
+  useEffect(() => {
+    if (fetchProjectParts) {
+      fetchProjectParts();
+    }
+  }, [fetchProjectParts]);
+
   const firstTopMembersIds = useMemo(() => {
     return members ? members.slice(0, SHOWN_MEMBERS).map(el => el.id) : [];
   }, [members]);
+
   const sortedMembers = useMemo(() => {
     return members.slice(0).sort((a: IUser, b: IUser) => {
       if (filteredMembers.indexOf(a.id || 0) === -1) {
