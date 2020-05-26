@@ -13,6 +13,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
     '& $buttonTitleLabel': {
       color: theme.palette.pause.main,
     },
+    '&:hover': {
+      '& $buttonTitleSetting': {
+        opacity: 1,
+      },
+    },
     borderRadius: '6px',
     color: theme.palette.pause.main,
     flexGrow: 1,
@@ -50,6 +55,14 @@ export const useStyles = makeStyles((theme: Theme) => ({
       backgroundColor: 'rgba(0, 0, 0, 0.04)',
     },
     backgroundColor: '#f4f5f7',
+  },
+  buttonTitleSetting: {
+    color: '#f6d475',
+    opacity: 0,
+    position: 'absolute',
+    right: 4,
+    top: 'calc(50% - 12px)',
+    transition: theme.transitions.create(['opacity']),
   },
   duration: {
     '& > button': {
