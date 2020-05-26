@@ -19,7 +19,6 @@ const COLUMNS: ICrudColumn[] = [
   { title: 'ID', path: 'id' },
   { title: 'Название', path: 'title', name: 'title' },
   { title: 'Родитель', path: 'parentId' },
-  // { title: 'Цвет', path: 'color' },
 ];
 
 export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo(
