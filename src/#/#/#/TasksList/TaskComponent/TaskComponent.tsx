@@ -10,6 +10,7 @@ import { useTheme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
+import SettingsIcon from '@components/@icons/Settings';
 import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
 
 import StartStopBtn from '#/@common/StartStopBtn';
@@ -155,6 +156,9 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
               {<TaskTypeIcon typeId={isShown ? task.typeId : 'feature'} className={classes.taskIcon} />}
             </MediaQuery>
             <span>{isShown ? task.title : '...'}</span>
+            <MediaQuery minWidth={theme.breakpoints.values.md}>
+              <SettingsIcon className={classes.buttonTitleSetting} />
+            </MediaQuery>
           </Button>
         </Tooltip>
         <div className={classes.verticalDivider} />
