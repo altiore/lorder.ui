@@ -12,7 +12,6 @@ import {
   pauseUserWork,
   postAndStartUserWork,
 } from '#/@store/user-works';
-import { UserWork } from '#/@store/user-works/UserWork';
 
 import { AxiosResponse } from 'axios';
 import uniqid from 'uniqid';
@@ -28,7 +27,6 @@ import {
   moveProjectTask,
   patchProjectTask,
   postProjectTask,
-  replaceTasks,
   updateProjectTask,
 } from './actions';
 import { Task } from './Task';
@@ -163,21 +161,6 @@ const patchAndStopUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
 
 const patchAndStopUserWorkFailHandler = (state: S) => {
   return state.stopLoading();
-};
-
-const replaceTasksHandler = (state: S, { payload }: Action<Array<Partial<UserWork>>>) => {
-  if (!payload || !payload.length) {
-    throw new Error('replaceTasksHandler Error: payload is required');
-  }
-  let newState = new DownloadList(Task, state);
-  payload.forEach(userWorkData => {
-    const index = newState.list.findIndex(el => userWorkData.taskId === el.id);
-    if (~index) {
-      const task = { ...get(userWorkData, 'task') } as any;
-      newState = newState.updateItem(index, task);
-    }
-  });
-  return newState;
 };
 
 const patchProjectTaskHandler = (state: S) => {
@@ -338,8 +321,6 @@ export const tasks: any = handleActions<S, any, any>(
     [combineActions(patchAndStopUserWork.toString(), pauseUserWork.toString()).toString()]: patchAndStopUserWorkHandler,
     [combineActions(patchAndStopUserWork.success, pauseUserWork.success)]: patchAndStopUserWorkSuccessHandler,
     [combineActions(patchAndStopUserWork.fail, pauseUserWork.fail)]: patchAndStopUserWorkFailHandler,
-
-    [replaceTasks.toString()]: replaceTasksHandler,
 
     [patchProjectTask.toString()]: patchProjectTaskHandler,
     [patchProjectTask.success]: patchProjectTaskSuccessHandler,
