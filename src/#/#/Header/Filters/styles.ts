@@ -15,6 +15,13 @@ export const styles = (theme: Theme) =>
       color: theme.palette.error.main,
       fontWeight: 'bold',
     },
+    formControl: {
+      '& .MuiSelect-select:focus': {
+        background: '#fff',
+      },
+      background: 'transparent',
+      marginRight: 20,
+    },
     iconButton: {
       padding: 10,
     },

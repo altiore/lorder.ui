@@ -8,11 +8,14 @@ import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Divider from '@material-ui/core/Divider';
+import FormControl from '@material-ui/core/FormControl';
 import Grow from '@material-ui/core/Grow';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
+import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
+import Select from '@material-ui/core/Select';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
 import FilterIcon from '@material-ui/icons/FilterList';
@@ -23,7 +26,7 @@ import Avatar from '@components/Avatar';
 
 import AssigneeList from '#/@common/TaskForm/StatusField/AssigneeList';
 
-import { IUser } from '@types';
+import { IProjectPart, IUser } from '@types';
 
 interface IFiltersProps {
   changeFilter: any;
@@ -33,7 +36,10 @@ interface IFiltersProps {
   members: IUser[];
   searchTerm: string;
   toggleMember: any;
+  toggleProjectPart: any;
   toggleUiSetting: any;
+  projectPart: string | number;
+  projectParts: IProjectPart[];
 }
 
 const SHOWN_MEMBERS = 7;
@@ -45,13 +51,15 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
   isBoardFilterOpened,
   members,
   searchTerm,
+  projectPart,
+  projectParts,
   toggleMember,
+  toggleProjectPart,
   toggleUiSetting,
 }) => {
   const firstTopMembersIds = useMemo(() => {
     return members ? members.slice(0, SHOWN_MEMBERS).map(el => el.id) : [];
   }, [members]);
-
   const sortedMembers = useMemo(() => {
     return members.slice(0).sort((a: IUser, b: IUser) => {
       if (filteredMembers.indexOf(a.id || 0) === -1) {
@@ -110,16 +118,52 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
     if (nextIsClose) {
       changeFilter('search', '');
       changeFilter('members', []);
+      changeFilter('projectPart', '');
     }
     toggleUiSetting('isBoardFilterOpened');
   };
 
   const isFiltered = !!((filteredMembers && filteredMembers.length) || searchTerm);
 
+  const handleSelectProjectPart = ({ target: { value } }) => {
+    if (value === 'clear') {
+      changeFilter('projectPart', '');
+      return;
+    }
+    toggleProjectPart(value);
+  };
+
   return (
     <div className={cn(classes.root, { [classes.rootOpen]: isBoardFilterOpened })}>
       {isBoardFilterOpened ? (
         <>
+          <FormControl className={classes.formControl}>
+            <Select
+              value={projectPart}
+              onChange={handleSelectProjectPart}
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+              placeholder={'По частям'}
+            >
+              <MenuItem value="" disabled>
+                По частям
+              </MenuItem>
+              <MenuItem value={0}>Без частей</MenuItem>
+              {projectParts.length &&
+                projectParts.map(({ title, id }) => {
+                  return (
+                    <MenuItem key={id} value={id}>
+                      {title}
+                    </MenuItem>
+                  );
+                })}
+              {typeof projectPart === 'number' && (
+                <MenuItem value="clear">
+                  <b>Все</b>
+                </MenuItem>
+              )}
+            </Select>
+          </FormControl>
           <div className={classes.members}>
             {shownMembers.map(member => {
               const isSelected = !!~filteredMembers.indexOf(member.id as number);
