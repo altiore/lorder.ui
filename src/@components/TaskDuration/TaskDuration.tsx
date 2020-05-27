@@ -31,12 +31,34 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: theme.spacing(6),
   },
   button: {
+    '&:hover': {
+      '& $buttonInner': {
+        backgroundColor: 'rgba(0, 0, 0, 0.04)',
+        height: theme.taskCard.outerHeight,
+      },
+      backgroundColor: 'transparent',
+    },
     alignItems: 'center',
+    borderRadius: 6,
     display: 'flex',
-    height: theme.spacing(4.5),
+    height: theme.taskCard.outerHeight,
+    justifyContent: 'center',
+    padding: 0,
+    width: theme.spacing(11),
+  },
+  buttonInner: {
+    alignItems: 'center',
+    borderRadius: 6,
+    display: 'flex',
+    height: theme.taskCard.innerHeight,
     justifyContent: 'space-between',
     minWidth: theme.spacing(3),
-    padding: theme.spacing(0, 1, 0, 0),
+    padding: theme.spacing(0, 2 - theme.taskCard.padding, 0, 1 - theme.taskCard.padding),
+    transition: theme.transitions.create(['background-color', 'height']),
+    width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(0, 1, 0, 0),
+    },
   },
   divider: {
     alignItems: 'center',
@@ -76,7 +98,7 @@ const initPartTimeState = {
 };
 
 export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ isOpen, time, onClick, hoursPerDay }) => {
-  const { block, button, divider, svg, timeStyle, unit, unitStyle, valueStyle } = useStyles();
+  const { block, button, buttonInner, divider, svg, timeStyle, unit, unitStyle, valueStyle } = useStyles();
 
   const convertedTime = useMemo(() => secondsToTime(time, hoursPerDay), [hoursPerDay, time]);
 
@@ -100,18 +122,18 @@ export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ isOpen, time, on
   }, [convertedTime, days, hours, minutes, seconds]);
 
   return (
-    <div>
-      <Tooltip
-        placement={'right'}
-        title={
-          didNotTouched
-            ? 'Вы пока не работали над этой задачей'
-            : isOpen
-            ? 'Закрыть подробности'
-            : 'Нажмите, чтоб раскрыть подробности'
-        }
-      >
-        <Button className={button} onClick={didNotTouched ? undefined : onClick}>
+    <Tooltip
+      placement={'right'}
+      title={
+        didNotTouched
+          ? 'Вы пока не работали над этой задачей'
+          : isOpen
+          ? 'Закрыть подробности'
+          : 'Нажмите, чтоб раскрыть подробности'
+      }
+    >
+      <Button className={button} onClick={didNotTouched ? undefined : onClick}>
+        <div className={buttonInner}>
           <HourglassSvg className={svg} />
           <div className={timeStyle}>
             <div className={cn(block, valueStyle)}>
@@ -127,8 +149,8 @@ export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ isOpen, time, on
               <span className={unit}>{secondPartTime.unit}</span>
             </div>
           </div>
-        </Button>
-      </Tooltip>
-    </div>
+        </div>
+      </Button>
+    </Tooltip>
   );
 };

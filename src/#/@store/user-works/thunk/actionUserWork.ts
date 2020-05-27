@@ -40,7 +40,10 @@ export const startTimer = (userWork: Partial<UserWork>, projectProp?: IProject) 
   }
   timer = setInterval(() => {
     dispatch(tickUserWorkTimer());
-    document.title = `${currentTimeToString(getState())} | ${get(startedTask, 'title')} (${get(project, 'title')})`;
+    document.title = `${currentTimeToString(getState())} | #${get(startedTask, 'sequenceNumber')} ${get(
+      startedTask,
+      'title'
+    )} (${get(project, 'title')})`;
   }, 1000);
   dispatch(
     setCurrentUserWorkId({

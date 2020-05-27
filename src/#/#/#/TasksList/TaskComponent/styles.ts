@@ -10,58 +10,76 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   buttonTitle: {
-    '& $buttonTitleLabel': {
-      color: theme.palette.pause.main,
-    },
     '&:hover': {
+      '& $buttonTitleLabel': {
+        backgroundColor: '#F5F5F5',
+        color: theme.palette.pause.dark,
+        minHeight: theme.taskCard.outerHeight,
+      },
       '& $buttonTitleSetting': {
         opacity: 1,
       },
+      '& $sequenceNumber': {
+        opacity: 1,
+      },
+      backgroundColor: 'transparent',
     },
     borderRadius: '6px',
     color: theme.palette.pause.main,
     flexGrow: 1,
     fontSize: theme.typography.pxToRem(16),
-    minHeight: theme.spacing(4.5),
-    padding: theme.spacing(0.5, 1, 0.5, 5),
-    transition: theme.transitions.create(['background-color']),
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(0.5, 0),
-    },
+    height: theme.taskCard.outerHeight,
+    padding: 0,
   },
   buttonTitleCurrent: {
     '& $buttonTitleLabel': {
       color: theme.palette.pause.dark,
     },
     '&:hover': {
-      backgroundColor: theme.palette.pause.light,
+      '& $buttonTitleLabel': {
+        backgroundColor: theme.palette.pause.light,
+      },
     },
   },
   buttonTitleLabel: {
     '& > span': {
+      '-webkit-line-clamp': 2,
+      boxOrient: 'vertical',
+      display: 'block',
       fontWeight: 400,
       lineHeight: 1.4,
-      maxHeight: theme.spacing(5.5),
+      maxHeight: theme.taskCard.outerHeight,
+      overflow: 'hidden',
+      paddingTop: 2,
+      textOverflow: 'ellipsis',
     },
     alignItems: 'center',
+    borderRadius: 6,
+    color: theme.palette.pause.main,
     display: 'flex',
+    height: theme.taskCard.innerHeight,
     justifyContent: 'flex-start',
+    minHeight: theme.taskCard.innerHeight,
+    padding: theme.spacing(0.5, 3, 0.5, 5),
+    transition: theme.transitions.create(['background-color', 'height', 'min-height']),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(0.5, 0),
+    },
   },
   buttonTitlePaused: {
     '& $buttonTitleLabel': {
       color: theme.palette.pause.main,
     },
     '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+      backgroundColor: '#EAEBED',
     },
-    backgroundColor: '#f4f5f7',
   },
   buttonTitleSetting: {
     color: '#f6d475',
     opacity: 0,
     position: 'absolute',
     right: 4,
-    top: 'calc(50% - 12px)',
+    top: 4,
     transition: theme.transitions.create(['opacity']),
   },
   duration: {
@@ -74,12 +92,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     marginRight: theme.spacing(1),
     width: theme.spacing(10),
-    [theme.breakpoints.down('sm')]: {
-      // display: 'inline-block',
-    },
   },
   listItem: {
     '&:hover': {
+      '& $projectText': {
+        backgroundColor: 'transparent',
+      },
       borderColor: 'rgba(0, 0, 0, 0.2)',
     },
     alignItems: 'center',
@@ -92,12 +110,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: 60,
     justifyContent: 'space-between',
     marginBottom: theme.spacing(2),
-    padding: theme.spacing(1, 2, 1, 1.5),
+    padding: theme.spacing(1, 2, 1, 0.75),
     position: 'relative',
     transition: theme.transitions.create(['background-color', 'border-color', 'box-shadow']),
     [theme.breakpoints.down('sm')]: {
       marginBottom: theme.spacing(1),
-      padding: theme.spacing(1),
+      padding: theme.spacing(1, 0.75, 1, 1),
     },
   },
   listItemCurrent: {
@@ -122,40 +140,79 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   projectButton: {
-    '&:hover p, &:focus p': {
-      opacity: 1,
+    '&:hover, &:focus': {
+      '& $projectText': {
+        backgroundColor: '#F5F5F5',
+        color: theme.palette.pause.dark,
+        height: theme.taskCard.outerHeight,
+        width: theme.taskCard.outerHeight + 4,
+      },
+      backgroundColor: 'transparent',
     },
     borderRadius: '6px',
-    color: '#9d9d9d',
-    fontSize: theme.typography.pxToRem(16),
-    minWidth: theme.spacing(5),
-    textTransform: 'none',
-    transition: theme.transitions.create(['background-color']),
-    whiteSpace: 'nowrap',
+    flexShrink: 0,
+    height: theme.taskCard.outerHeight,
+    marginRight: theme.spacing(-1),
+    minWidth: theme.taskCard.outerHeight + 4,
+    padding: 0,
+    width: theme.taskCard.outerHeight + 4,
   },
   projectButtonCurrent: {
-    '&:hover': {
-      backgroundColor: theme.palette.pause.light,
+    '& $projectText': {
+      backgroundColor: '#F8F4E4',
+      color: theme.palette.pause.dark,
     },
-    backgroundColor: '#f8f4ea',
-    color: theme.palette.pause.dark,
+    '&:hover': {
+      '& $projectText': {
+        backgroundColor: theme.palette.pause.light,
+      },
+    },
   },
   projectButtonPaused: {
     '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+      backgroundColor: '#EAEBED',
     },
-    backgroundColor: '#fcfcfc',
   },
   projectText: {
-    // opacity: 0.2,
+    alignItems: 'center',
+    backgroundColor: '#FCFCFC',
+    borderRadius: '6px',
+    color: '#9d9d9d',
+    display: 'flex',
+    fontSize: theme.typography.pxToRem(16),
+    height: theme.taskCard.innerHeight,
+    justifyContent: 'center',
+    textTransform: 'none',
+    transition: theme.transitions.create(['background-color', 'height', 'width']),
+    whiteSpace: 'nowrap',
+    width: theme.taskCard.innerHeight + 4,
+  },
+  sequenceNumber: {
+    alignItems: 'center',
+    borderRadius: 6,
+    bottom: 2,
+    color: '#9d9d9d',
+    display: 'flex',
+    fontSize: theme.typography.pxToRem(11),
+    fontWeight: 500,
+    justifyContent: 'center',
+    opacity: 0,
+    pointerEvents: 'none',
+    position: 'absolute',
+    right: -3,
+    transition: theme.transitions.create(['opacity']),
+    width: theme.spacing(5),
+    [theme.breakpoints.down('sm')]: {
+      opacity: 1,
+    },
   },
   startBtnDivider: {
     borderLeft: '1px dashed #eecf6d',
-    height: theme.spacing(4.5),
-    margin: theme.spacing(0, 2, 0, 1),
+    height: theme.taskCard.innerHeight,
+    margin: theme.spacing(0, 1.5 + theme.taskCard.padding, 0, theme.taskCard.padding),
     width: 0,
     [theme.breakpoints.down('sm')]: {
-      margin: theme.spacing(0, 1, 0, 0),
+      margin: theme.spacing(0, 0.5, 0, 0),
     },
   },
   taskIcon: {
@@ -174,8 +231,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   verticalDivider: {
     borderLeft: '1px dashed #eecf6d',
-    height: theme.spacing(4.5),
-    margin: theme.spacing(0, 1),
+    height: theme.taskCard.innerHeight,
+    margin: theme.spacing(0, theme.taskCard.padding),
     width: 0,
     [theme.breakpoints.down('sm')]: {
       margin: 0,

@@ -1,4 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
+import MediaQuery from 'react-responsive';
 import { Route, Switch } from 'react-router-dom';
 
 import moment from 'moment';
@@ -6,6 +7,7 @@ import moment from 'moment';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
+import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
@@ -19,6 +21,7 @@ import { Project } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
 import { IUserWorkData } from '#/@store/user-works';
 
+import CurrentTaskButton from './CurrentTaskButton';
 import Filters from './Filters';
 import ProjectButton from './ProjectButton';
 import { ProjectField } from './ProjectField';
@@ -41,6 +44,8 @@ const timer: any = null;
 export const HeaderTsx: React.FC<IHeaderProps> = memo(
   ({ isPaused, openDialog, openTaskModal, push, selectedProject, showWarning, startUserWork }) => {
     const classes = useStyles();
+
+    const theme = useTheme();
 
     useEffect(() => {
       return () => {
@@ -172,6 +177,9 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
               <Route component={nullComponent} />
             </Switch>
           </div>
+          <MediaQuery minWidth={theme.breakpoints.values.md}>
+            <CurrentTaskButton />
+          </MediaQuery>
           <div>
             <AccountMenu />
           </div>
