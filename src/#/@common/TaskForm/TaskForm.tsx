@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
+import cn from 'classnames';
 import get from 'lodash/get';
 import { Field, InjectedFormProps } from 'redux-form';
 import { length, required } from 'redux-form-validators';
@@ -82,7 +83,8 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
       fetchTaskDetails({ projectId, sequenceNumber: currentSequenceNumber });
     }
   }, [fetchTaskDetails, projectId, currentSequenceNumber]);
-  // is this separate page or not?
+
+  // is this separate page or not? true - если это отдельная страница, а не окно
   const isPage = useMemo(() => {
     return Boolean(location);
   }, [location]);
@@ -146,7 +148,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
     [currentSequenceNumber, handleSave, projectId, setIsCurrentState, setSequenceNumber, startUserWork]
   );
 
-  const { actions, card, cardFirst, cardForm, cardSecond, grow, valueWrap } = useStyles();
+  const { actions, card, cardFirst, cardFirstNotPage, cardForm, cardSecond, grow, valueWrap } = useStyles();
 
   return (
     <>
@@ -159,7 +161,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
       />
       <DialogContent className={card}>
         <form onSubmit={handleSave} className={cardForm}>
-          <div className={cardFirst}>
+          <div className={cn(cardFirst, { [cardFirstNotPage]: !isPage })}>
             <Field
               name="title"
               placeholder="Заголовок задачи..."

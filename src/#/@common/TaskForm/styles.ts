@@ -28,6 +28,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexGrow: 2,
     paddingRight: theme.spacing(1),
   },
+  cardFirstNotPage: {
+    maxWidth: 750,
+  },
   cardForm: {
     display: 'flex',
     flexFlow: 'row wrap',

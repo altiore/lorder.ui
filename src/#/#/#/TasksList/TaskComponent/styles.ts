@@ -61,7 +61,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'flex-start',
     minHeight: theme.taskCard.innerHeight,
     padding: theme.spacing(0.5, 3, 0.5, 5),
-    transition: theme.transitions.create(['background-color', 'height', 'min-height']),
+    transition: theme.transitions.create(['background-color', 'color', 'height', 'min-height']),
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(0.5, 0),
     },
@@ -183,7 +183,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: theme.taskCard.innerHeight,
     justifyContent: 'center',
     textTransform: 'none',
-    transition: theme.transitions.create(['background-color', 'height', 'width']),
+    transition: theme.transitions.create(['background-color', 'color', 'height', 'width']),
     whiteSpace: 'nowrap',
     width: theme.taskCard.innerHeight + 4,
   },
