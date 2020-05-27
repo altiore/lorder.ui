@@ -50,7 +50,7 @@ export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ currentTaskId, g
           isOpen={isWorkTableOpen}
           hoursPerDay={24}
           onClick={task && task.durationInSeconds ? onToggleOpenWorkTable : undefined}
-          time={task.durationInSeconds || 0}
+          time={(task && task.durationInSeconds) || 0}
         />
       )}
     </Popover>

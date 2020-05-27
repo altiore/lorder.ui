@@ -8,7 +8,7 @@ import { defaultProjectId, userId } from '#/@store/identity/selectors';
 import { getProjectById } from '#/@store/projects/selectors';
 import { routeProjectId } from '#/@store/router';
 import { Task } from '#/@store/tasks/Task';
-import { filteredMembers, projectPart, searchTerm, tasksFilter } from '#/@store/tasksFilter';
+import { filteredMembers, projectId, projectPart, searchTerm, tasksFilter } from '#/@store/tasksFilter';
 import { currentTask, currentTaskId } from '#/@store/timer';
 import { isPaused, lastUserWorks } from '#/@store/user-works/selectors';
 
@@ -64,12 +64,20 @@ export const sortedByFilterTasks = createDeepEqualSelector(
 );
 
 export const sortedByFilterTasksWithActive = createDeepEqualSelector(
-  [sortedByFilterTasks, currentTask, defaultProjectId],
-  (tasks = [], curTask, defProdjId): Array<ITask | 'filter' | undefined> => [
-    curTask,
-    'filter',
-    ...tasks.filter(t => t.id !== get(curTask, 'id') && t.projectId !== defProdjId && includes([1, 2, 3], t.status)),
-  ]
+  [sortedByFilterTasks, searchTerm, currentTask, projectId],
+  (tasks = [], sTerm = '', curTask, projId): Array<ITask | 'filter' | string | undefined> => {
+    return [
+      curTask,
+      'filter',
+      ...tasks.filter(
+        t =>
+          t.id !== get(curTask, 'id') &&
+          includes([1, 2, 3], t.status) &&
+          ~t.title.toLowerCase().indexOf(sTerm.trim().toLowerCase()) &&
+          t.projectId === projId
+      ),
+    ];
+  }
 );
 
 export const checkIsCurrent = createDeepEqualSelector([currentTaskId, isPaused], (cTaskId, taskIsPaused) => taskId =>

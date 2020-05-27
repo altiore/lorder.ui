@@ -119,8 +119,8 @@ export class AutoTaskFieldTsx extends React.Component<IAutoTaskFieldProps, IAuto
     );
   };
 
-  private shouldRenderSuggestions() {
-    return true;
+  private shouldRenderSuggestions(value) {
+    return value.trim().length > 0;
   }
 
   private handleSuggestSelected = async (e: React.FormEvent, data: Autosuggest.SuggestionSelectedEventData<ITask>) => {
