@@ -135,27 +135,32 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
                 [classes.projectButtonCurrent]: isCurrent,
                 [classes.projectButtonPaused]: isCurrent && isPaused,
               })}
+              classes={{ label: classes.projectText }}
               onClick={goToProjectAskCreateTask}
             >
-              <Typography className={classes.projectText}>{projectShortName}</Typography>
+              <Typography>{projectShortName}</Typography>
             </Button>
           </Tooltip>
         </MediaQuery>
         <Tooltip title="Редактировать задачу" placement="bottom">
           <Button
             component="a"
-            classes={{ label: classes.buttonTitleLabel }}
             className={cn(classes.buttonTitle, {
               [classes.buttonTitleCurrent]: isCurrent,
               [classes.buttonTitlePaused]: isPaused && isCurrent,
             })}
+            classes={{ label: classes.buttonTitleLabel }}
             href={isShown ? `${TASKS_ROUTE(project.id)}/${task.sequenceNumber}` : '#'}
             onClick={isShown ? openEditTaskForm(task.sequenceNumber, project.id as number) : undefined}
           >
+            <Typography className={classes.sequenceNumber}>
+              <b>#</b>
+              {task.sequenceNumber}
+            </Typography>
             <MediaQuery minWidth={theme.breakpoints.values.sm}>
               {<TaskTypeIcon typeId={isShown ? task.typeId : 'feature'} className={classes.taskIcon} />}
             </MediaQuery>
-            <span>{isShown ? task.title : '...'}</span>
+            {isShown ? <span>{task.title}</span> : <span>...</span>}
             <MediaQuery minWidth={theme.breakpoints.values.md}>
               <SettingsIcon className={classes.buttonTitleSetting} />
             </MediaQuery>

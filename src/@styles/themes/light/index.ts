@@ -116,6 +116,12 @@ export default createMuiTheme({
     borderRadius: 4,
     borderRadius2: 8,
   },
+  taskCard: {
+    height: theme.spacing(7.5),
+    innerHeight: theme.spacing(4.5),
+    outerHeight: theme.spacing(6),
+    padding: 0.5,
+  },
   textGradient: [
     {
       '-webkit-background-clip': 'text',
@@ -202,6 +208,12 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       default: string;
       secondary: string;
     };
+    taskCard: {
+      height: number;
+      innerHeight: number;
+      outerHeight: number;
+      padding: number;
+    };
     textGradient: object[];
     themeName?: string;
   }
@@ -216,6 +228,12 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     shadow?: {
       default?: string;
       secondary?: string;
+    };
+    taskCard?: {
+      height?: number;
+      innerHeight?: number;
+      outerHeight?: number;
+      padding?: number;
     };
     textGradient?: object[];
     themeName?: string;

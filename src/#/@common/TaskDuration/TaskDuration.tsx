@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import Popover from 'react-popover';
 
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 import TaskDuration from '@components/TaskDuration';
 
@@ -16,17 +16,7 @@ export interface ITaskDurationProps {
   taskId: number | string;
 }
 
-export const useStyles = makeStyles((theme: Theme) => ({
-  duration: {
-    '& > button': {
-      padding: theme.spacing(0.75, 0),
-      width: '100%',
-    },
-    alignItems: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    width: theme.spacing(10),
-  },
+export const useStyles = makeStyles(() => ({
   userWorkTable: {
     zIndex: 1300,
   },
@@ -53,18 +43,16 @@ export const TaskDurationTsx: React.FC<ITaskDurationProps> = ({ currentTaskId, g
       onOuterAction={onToggleOpenWorkTable}
       body={task ? <UserWorkTable task={task} onClose={onToggleOpenWorkTable} /> : <div />}
     >
-      <div className={classes.duration}>
-        {isCurrent ? (
-          <CurrentDurationItem isOpen={isWorkTableOpen} hoursPerDay={24} onClick={onToggleOpenWorkTable} />
-        ) : (
-          <TaskDuration
-            isOpen={isWorkTableOpen}
-            hoursPerDay={24}
-            onClick={task && task.durationInSeconds ? onToggleOpenWorkTable : undefined}
-            time={task.durationInSeconds || 0}
-          />
-        )}
-      </div>
+      {isCurrent ? (
+        <CurrentDurationItem isOpen={isWorkTableOpen} hoursPerDay={24} onClick={onToggleOpenWorkTable} />
+      ) : (
+        <TaskDuration
+          isOpen={isWorkTableOpen}
+          hoursPerDay={24}
+          onClick={task && task.durationInSeconds ? onToggleOpenWorkTable : undefined}
+          time={task.durationInSeconds || 0}
+        />
+      )}
     </Popover>
   );
 };
