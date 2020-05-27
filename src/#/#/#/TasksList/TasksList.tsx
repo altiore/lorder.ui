@@ -62,6 +62,8 @@ export class TasksListJsx extends React.Component<ITasksListProps, ITaskListStat
   }
 
   render() {
+    // console.log(this.state);
+    // console.log(this.props);
     const sortedTasks = this.currentPageTasks(this.props, this.state);
     // return <FlipMove easing="cubic-bezier(0.39, 0, 0.45, 1.4)">{sortedTasks.map(this.renderListItem)}</FlipMove>;
     return <FlipMove>{sortedTasks.map(this.renderListItem)}</FlipMove>;
