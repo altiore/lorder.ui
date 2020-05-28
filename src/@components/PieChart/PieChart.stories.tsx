@@ -16,4 +16,4 @@ const pieData = [
   { name: 'Joe', y: 219 },
 ];
 
-storiesOf('PieChart', module).add('with text', () => <PieChart data={pieData} />);
+storiesOf('_UNUSED/PieChart', module).add('with text', () => <PieChart data={pieData} />);

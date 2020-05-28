@@ -60,7 +60,7 @@ export class TableVirtualized extends React.Component<ITableVirtualizedProps, IT
     columns: this.prepareColumns(this.props),
   };
 
-  componentWillReceiveProps(nextProps: ITableVirtualizedProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: ITableVirtualizedProps) {
     if (this.props.columns !== nextProps.columns) {
       this.setState({ columns: this.prepareColumns(nextProps) });
     }

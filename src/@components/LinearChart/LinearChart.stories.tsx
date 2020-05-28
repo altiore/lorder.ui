@@ -4,4 +4,4 @@ import { LinearChartTsx } from './LinearChart';
 
 import { storiesOf } from '@storybook/react';
 
-storiesOf('LinearChart', module).add('with text', () => <LinearChartTsx />);
+storiesOf('_UNUSED/LinearChart', module).add('with text', () => <LinearChartTsx />);

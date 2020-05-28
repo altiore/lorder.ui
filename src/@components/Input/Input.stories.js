@@ -1,7 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { UserIco } from '@components/@icons/User';
+import UserIco from '@material-ui/icons/PermIdentity';
+
 import InputField from '.';
 
 storiesOf('Input', module).add('default', () => (
