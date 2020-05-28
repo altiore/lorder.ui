@@ -1,11 +1,12 @@
 import React from 'react';
 
-export default function CenterDecorator(getStory) {
+export default function WhiteDecorator(getStory) {
   return (
     <div
       style={{
-        display: 'flex',
         alignItems: 'center',
+        backgroundColor: '#fff',
+        display: 'flex',
         flexFlow: 'column wrap',
         justifyContent: 'center',
         minHeight: '60vh',

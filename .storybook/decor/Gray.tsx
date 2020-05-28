@@ -1,11 +1,12 @@
 import React from 'react';
 
-export default function CenterDecorator(getStory) {
+export default function GrayDecorator(getStory) {
   return (
     <div
       style={{
-        display: 'flex',
         alignItems: 'center',
+        backgroundColor: '#F1F3F5',
+        display: 'flex',
         flexFlow: 'column wrap',
         justifyContent: 'center',
         minHeight: '60vh',
