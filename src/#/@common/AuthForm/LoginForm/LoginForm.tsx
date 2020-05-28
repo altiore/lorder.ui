@@ -4,9 +4,9 @@ import { Field, InjectedFormProps } from 'redux-form';
 import { email } from 'redux-form-validators';
 
 import Button from '@material-ui/core/Button';
+import PassIco from '@material-ui/icons/Lock';
+import UserIco from '@material-ui/icons/PermIdentity';
 
-import { PasswordIco as PassIco } from '@components/@icons/Password';
-import { UserIco } from '@components/@icons/User';
 import InputField from '@components/InputField';
 
 import { useStyles } from './styles';

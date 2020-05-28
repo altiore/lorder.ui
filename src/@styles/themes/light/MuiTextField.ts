@@ -13,7 +13,10 @@ export default function(theme: Theme): Partial<Overrides> {
     },
     MuiInputAdornment: {
       positionStart: {
-        left: theme.typography.pxToRem(theme.spacing(1.25)),
+        '& > svg': {
+          fontSize: theme.typography.pxToRem(22),
+        },
+        left: theme.typography.pxToRem(7),
         position: 'absolute',
         zIndex: 1,
       },

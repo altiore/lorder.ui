@@ -55,6 +55,19 @@ export class Project implements IProject {
     });
   }
 
+  get shortName(): string {
+    if (this.title) {
+      const titleParts = this.title.split(' ');
+      if (titleParts.length > 1) {
+        return titleParts[0][0].toUpperCase() + titleParts[1][0].toUpperCase();
+      } else {
+        return `${this.title[0]}${this.title[1]}`.toUpperCase();
+      }
+    }
+
+    return 'N/A';
+  }
+
   get fullProjectTimeHumanize(): string | undefined {
     return convertSecondsToDurationWithLocal(this.timeSum ? this.timeSum / 1000 : 0, 8);
   }

@@ -22,5 +22,6 @@ export interface IProject {
   // calculated fields
   fullProjectTimeHumanize: string | undefined;
   shareTime: string;
+  shortName: string;
   shareValue: number;
 }
