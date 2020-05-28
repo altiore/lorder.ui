@@ -13,7 +13,7 @@ export default createMuiTheme({
 
   gradient: ['linear-gradient(45deg, #29292b 0%, #424247 50%, #29292b 100%)'],
   mainContent: {
-    scroll: prettyScroll1,
+    scroll: prettyScroll1(theme),
     width: 1280,
   },
   mixins: {

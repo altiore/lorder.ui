@@ -15,18 +15,17 @@ import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
 
 import StartStopBtn from '#/@common/StartStopBtn';
 import TaskDuration from '#/@common/TaskDuration';
-import { Project } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
 
 import { useStyles } from './styles';
 
-import { ITask } from '@types';
+import { IProject, ITask } from '@types';
 
 export interface ITaskComponentProps {
   getTaskById: (id: number | string) => ITask;
   isCurrent: boolean;
   isPaused: boolean;
-  project: Project;
+  project: IProject;
   push: any;
   taskId: number | string;
   timerComponent?: React.ReactNode;
@@ -60,13 +59,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
     if (!isShown) {
       return '...';
     }
-    const title = project.title;
-    const titleParts = title.split(' ');
-    if (titleParts.length > 1) {
-      return titleParts[0][0].toUpperCase() + titleParts[1][0].toUpperCase();
-    } else {
-      return `${title[0]}${title[1]}`.toUpperCase();
-    }
+    return project.shortName;
   }, [isShown, project]);
 
   const openEditTaskForm = useCallback(
