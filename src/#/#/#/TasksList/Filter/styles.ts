@@ -44,6 +44,10 @@ export const styles = (theme: Theme) =>
     grow: {
       grow: 1,
     },
+    input: {
+      paddingLeft: theme.spacing(1),
+      width: 600,
+    },
     left: {
       [theme.breakpoints.down('sm')]: {
         display: 'flex!important',
@@ -58,6 +62,9 @@ export const styles = (theme: Theme) =>
       marginBottom: theme.spacing(1 / 2),
       width: 144,
     },
+    projectSelect: {
+      float: 'left',
+    },
     right: {
       [theme.breakpoints.down('sm')]: {
         display: 'flex!important',
@@ -69,5 +76,9 @@ export const styles = (theme: Theme) =>
       height: 70,
       justifyContent: 'space-between',
       padding: '0 2px 8px',
+      width: '100%',
+    },
+    taskSelect: {
+      paddingLeft: theme.spacing(1 / 2),
     },
   });
