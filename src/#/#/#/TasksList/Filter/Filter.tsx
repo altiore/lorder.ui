@@ -29,8 +29,6 @@ export interface IFilterProps {
   filter: TASK_FILTER_TYPE;
   projectId: number;
   projects: IProject[];
-  getValue: (value: any) => any;
-  getLabel: (label: any) => any;
   page: number;
   perPage: number;
   searchTerm: string;
@@ -42,12 +40,6 @@ const FILTERS: { [key in TASK_FILTER_TYPE]: string } = {
   [TASK_FILTER_TYPE.NEW]: 'Новые',
 };
 const getLabelFromFilter = (filter: TASK_FILTER_TYPE) => FILTERS[filter];
-
-ProjectFieldJsx.defaultProps = {
-  getLabel: (item: any) => item.title,
-  getValue: (item: any) => item.id,
-  items: [],
-};
 
 export const FilterTsx: React.FC<IFilterProps> = ({
   classes,
