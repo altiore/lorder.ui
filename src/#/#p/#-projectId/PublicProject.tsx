@@ -3,12 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import get from 'lodash/get';
 
-import AppBar from '@material-ui/core/AppBar';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import { AppBar, Divider, Grid, IconButton, Toolbar, Typography } from '@material-ui/core/';
 
 import TelegramIco from '@components/@icons/Telegram';
 import { Block } from '@components/Block';
@@ -17,18 +12,20 @@ import LoadingPage from '@components/LoadingPage';
 import { NoMatch } from '@components/NoMatch';
 import Person from '@components/Person';
 
-import { LinkButton } from '#/@common/LinkButton';
 import PieChart from '#/@common/PieChart';
 import { millisecondsToHours } from '#/@store/@common/helpers';
 import { Member } from '#/@store/projects/members/Member';
 import { PublicProject } from '#/@store/publicProject';
 
+import FollowProject from './FollowProject';
+import ProjectHead from './ProjectHead';
 import { useStyles } from './styles';
 
 export interface IPublicProjectProps extends RouteComponentProps<{ projectId: string }> {
   isAuth: boolean;
   fetchPublicProject: any;
   publicProjectData: PublicProject;
+  rolesList: any;
   team: Array<{
     image: string;
     name: string;
@@ -41,7 +38,7 @@ export interface IState {
 }
 
 export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
-  ({ fetchPublicProject, publicProjectData, isAuth, location, match }) => {
+  ({ fetchPublicProject, publicProjectData, isAuth, location, match, rolesList }) => {
     const project = useMemo(() => {
       return publicProjectData.project;
     }, [publicProjectData]);
@@ -102,38 +99,9 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
     return (
       <div className={classes.root}>
         <HeaderFixed brandName="Altiore" brandLink="/" />
-
+        <ProjectHead projectName={title} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
+        <FollowProject roles={rolesList} />
         <Grid container className={classes.content}>
-          <Block>
-            <Grid item>
-              <Typography variant={'h1'} className={classes.projectTitle}>
-                {title}
-              </Typography>
-            </Grid>
-          </Block>
-          <Block>
-            <Grid item className={classes.profile}>
-              {isAuth ? (
-                <LinkButton
-                  variant={'contained'}
-                  color={'primary'}
-                  className={classes.button}
-                  to={`/projects/${project.id}`}
-                >
-                  Настройки проекта
-                </LinkButton>
-              ) : (
-                <>
-                  <Typography variant={'h4'}>Сделай несколько простых шагов - и присоеденись к сообществу</Typography>
-                  <LinkButton variant={'contained'} color={'primary'} className={classes.button} to={'/login'}>
-                    Подключиться к проекту!
-                  </LinkButton>
-                </>
-              )}
-            </Grid>
-          </Block>
-
-          <Divider />
           <Block>
             <Grid item lg={6} md={12} sm={12}>
               <PieChart key={1} data={chartData} title="Статистика по времени" unit="h" />
@@ -161,7 +129,6 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
             </div>
           </Block>
         </Grid>
-
         <AppBar key={'bottom'} position="static" component={'footer'}>
           <Toolbar className={classes.bottomBar}>
             <Typography variant="h6" color="inherit">
