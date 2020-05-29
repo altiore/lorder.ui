@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 
 import { fetchAllParticipantProjects } from '#/@store/projects';
 import { identifier } from '#/@store/router';
+import { getAllTaskTypes } from '#/@store/task-types';
 import { getUserWorks } from '#/@store/user-works';
 
 import { IIdentityState } from '../Identity';
@@ -19,6 +20,7 @@ export const loadInitialData = () => async (dispatch: Dispatch<any>, getState: (
   if (role !== ROLE.GUEST && !isLoading && !isStartRout) {
     await dispatch(fetchAllParticipantProjects());
     await dispatch(getUserWorks({}));
+    await dispatch(getAllTaskTypes());
     const user: IIdentityState = baseIdentityState(getState());
     if (user) {
       Sentry.configureScope(function(scope) {

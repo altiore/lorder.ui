@@ -11,7 +11,7 @@ import { IState } from '@types';
 
 export const allTasks = (state: IState) => state.tasks;
 
-export const allTaskList = createDeepEqualSelector(allTasks, a => a.list);
+export const allTaskList = createDeepEqualSelector(allTasks, a => a.list.filter(el => !el.isArchived));
 
 export const isTasksLoading = createDeepEqualSelector(allTasks, a => a.isLoading);
 
@@ -33,6 +33,7 @@ export const EDIT_TASK_FORM_PROPS = [
   'value',
   'performerId',
   'projectParts',
+  'typeId',
 ];
 
 export const getEditTaskInitialValues = createDeepEqualSelector(

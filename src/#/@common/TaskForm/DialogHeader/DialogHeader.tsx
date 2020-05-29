@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import includes from 'lodash/includes';
+import { Field } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -14,9 +15,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
-import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
-
 import { TASKS_ROUTE } from '#/@store/router';
+
+import SelectTaskType from './SelectTaskType';
 
 import { INotification } from '@types';
 
@@ -48,7 +49,6 @@ export const DialogHeader: React.FC<IDialogHeaderProps> = ({
   projectId,
   sequenceNumber,
   showSuccess,
-  typeId,
 }) => {
   /** show copy block */
   const [isShownCopy, setIsShowCopy] = useState(false);
@@ -111,9 +111,7 @@ export const DialogHeader: React.FC<IDialogHeaderProps> = ({
   return (
     <DialogTitle disableTypography>
       <div className={row}>
-        <IconButton>
-          <TaskTypeIcon typeId={typeId} />
-        </IconButton>
+        <Field name="typeId" component={SelectTaskType} />
         {sequenceNumber && (
           <div onMouseLeave={hideCopy} onMouseOver={isPage ? undefined : showCopy}>
             <Tooltip title={isPage ? copyText : 'Открыть в отдельном окне'} placement="bottom">

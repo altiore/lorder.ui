@@ -5,6 +5,7 @@ import { IUserTask } from './IUserTask';
 import { IUserWork } from './IUserWork';
 
 export interface ITask {
+  isArchived: boolean;
   isDetailsLoaded: boolean;
   id: number | string;
   title: string;

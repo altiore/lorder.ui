@@ -5,6 +5,7 @@ import { convertSecondsToDuration } from '#/@store/@common/helpers';
 import { IProjectPart, ITask, IUser, IUserTask } from '@types';
 
 export class Task implements ITask {
+  isArchived: boolean;
   isDetailsLoaded: boolean;
   id: number | string;
   title: string;
