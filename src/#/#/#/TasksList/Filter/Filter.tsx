@@ -18,7 +18,6 @@ import ProjectSelect from '@components/ProjectSelect';
 import { TASK_FILTER_TYPE } from '#/@store/tasksFilter/TasksFilter';
 
 import { IProject } from '../../../../../@types';
-import { ProjectFieldJsx } from '../../../Header/ProjectField/ProjectField';
 
 export interface IFilterProps {
   changeTasksFilter: any;
