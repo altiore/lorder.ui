@@ -13,14 +13,14 @@ import { currentTask, currentTaskId } from '#/@store/timer';
 import { isPaused, lastUserWorks } from '#/@store/user-works/selectors';
 
 import { TASK_FILTER_TYPE } from '../tasksFilter/TasksFilter';
-import { allTasks, getTaskById, getTaskBySequenceNumber } from './selectors';
+import { allTaskList, getTaskById, getTaskBySequenceNumber } from './selectors';
 
 import { ACCESS_LEVEL, IDownloadList, IEvent, ITask, IUserWork } from '@types';
 
 export const filteredByPerformerTasks = createDeepEqualSelector(
-  [allTasks, userId, currentTaskId],
-  (tasks, currentUserId, taskId) =>
-    currentUserId ? tasks.list.filter(el => el.performerId === currentUserId && el.id !== taskId) : []
+  [allTaskList, userId, currentTaskId],
+  (taskList, currentUserId, taskId) =>
+    currentUserId ? taskList.filter(el => el.performerId === currentUserId && el.id !== taskId) : []
 );
 
 const filteredFunction: {
@@ -89,7 +89,7 @@ export const events = createDeepEqualSelector(
 
           task,
 
-          isActive: (userWork.projectId || task.projectId) !== defPrId,
+          isActive: (userWork.projectId || (task && task.projectId)) !== defPrId,
           name: get(task, 'title', userWork.taskId.toString()),
         };
       });
@@ -97,8 +97,8 @@ export const events = createDeepEqualSelector(
 );
 
 export const projectTasks = createDeepEqualSelector(
-  [allTasks, routeProjectId],
-  (list, projectId: number | undefined): Task[] => (projectId ? list.list.filter(el => el.projectId === projectId) : [])
+  [allTaskList, routeProjectId],
+  (list, projectId: number | undefined): Task[] => (projectId ? list.filter(el => el.projectId === projectId) : [])
 );
 
 export const filteredProjectTasks = createDeepEqualSelector(

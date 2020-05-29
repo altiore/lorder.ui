@@ -5,7 +5,8 @@ import { TaskType } from '#/@store/task-types';
 
 import { AxiosResponse } from 'axios';
 
-import { getAllProjectTaskTypes, postTaskTypeToProject } from './actions';
+import { addTaskTypeToProject, getAllProjectTaskTypes } from './actions';
+import { ProjectTaskType } from './project-task-type';
 
 type S = DownloadList<TaskType>;
 
@@ -14,7 +15,7 @@ const getAllProjectTaskTypesHandler = (state: S) => {
 };
 
 const getAllProjectTaskTypesSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
-  return state.finishLoading(payload);
+  return state.finishLoading(payload, 'taskTypeId');
 };
 
 const getAllProjectTaskTypesFailHandler = (state: S) => {
@@ -39,9 +40,9 @@ export const projectTaskTypes = handleActions<S, any, any>(
     [getAllProjectTaskTypes.success]: getAllProjectTaskTypesSuccessHandler,
     [getAllProjectTaskTypes.fail]: getAllProjectTaskTypesFailHandler,
 
-    [postTaskTypeToProject.toString()]: postTaskTypeToProjectHandler,
-    [postTaskTypeToProject.success]: postTaskTypeToProjectSuccessHandler,
-    [postTaskTypeToProject.fail]: postTaskTypeToProjectFailHandler,
+    [addTaskTypeToProject.toString()]: postTaskTypeToProjectHandler,
+    [addTaskTypeToProject.success]: postTaskTypeToProjectSuccessHandler,
+    [addTaskTypeToProject.fail]: postTaskTypeToProjectFailHandler,
   },
-  new DownloadList(TaskType)
+  new DownloadList(ProjectTaskType)
 );

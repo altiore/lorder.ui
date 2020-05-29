@@ -6,11 +6,10 @@ import get from 'lodash/get';
 import grey from '@material-ui/core/colors/grey';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import BugReportIcon from '@material-ui/icons/BugReport';
-import ExtensionIcon from '@material-ui/icons/Extension';
 
 import Avatar from '@components/Avatar';
 
+import TypeIcon from '#/@common/TypeIcon';
 import { Task } from '#/@store/tasks';
 
 import { IUser } from '@types';
@@ -57,11 +56,7 @@ export const TaskCardTsx: React.FC<ITaskCard> = ({
       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
     >
       <span className={classes.row}>
-        {typeId ? (
-          <BugReportIcon fontSize="small" className={classes.iconBug} />
-        ) : (
-          <ExtensionIcon fontSize="small" className={classes.iconStory} />
-        )}
+        <TypeIcon typeId={typeId} fontSize="small" />
         <Typography gutterBottom component="span">
           {title}
         </Typography>

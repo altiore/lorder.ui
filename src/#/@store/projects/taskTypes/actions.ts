@@ -23,25 +23,6 @@ export const addTaskTypeToProject = requestActions(
   })
 );
 
-export const postTaskTypeToProject = requestActions<any>('PROJECTS/TASK_TYPES/CREATE', ({ projectId, title }: any) => ({
-  error: {
-    message: 'Не удалось сохранить тип задачи',
-    title: 'Неудача',
-  },
-  projectId,
-  request: {
-    data: {
-      title,
-    },
-    method: 'POST',
-    url: `/projects/${projectId}/task-types/create`,
-  },
-  success: {
-    message: 'Тип задачи успешно создан и добавлен в проект',
-    title: 'Успех!',
-  },
-}));
-
 export const deleteTaskTypeFromProject = requestActions(
   'PROJECTS/TASK_TYPES/DELETE',
   ({ projectId, taskTypeId }: { projectId: number; taskTypeId: number }) => ({

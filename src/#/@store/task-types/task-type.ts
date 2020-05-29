@@ -1,9 +1,10 @@
 import map from 'lodash/map';
 
-export class TaskType {
+import { ITaskType, TASK_TYPE } from '@types';
+
+export class TaskType implements ITaskType {
   readonly id: number;
-  readonly title: string;
-  readonly isPublic: boolean;
+  readonly name: TASK_TYPE;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

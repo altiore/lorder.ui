@@ -24,5 +24,5 @@ export const getTaskTypeById = createDeepEqualSelector(taskTypeList, (list: Task
 export const filteredTaskTypes = createDeepEqualSelector(
   [taskTypeList, projectTaskTypes],
   (allTaskTypes, selectedTaskTypes) =>
-    selectedTaskTypes && allTaskTypes.filter(tt => !~selectedTaskTypes.list.findIndex(e => e.id === tt.id))
+    selectedTaskTypes && allTaskTypes.filter(tt => !~selectedTaskTypes.findIndex(e => e.taskTypeId === tt.id))
 );

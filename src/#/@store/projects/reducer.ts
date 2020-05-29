@@ -17,7 +17,6 @@ import {
   getAllProjectTaskTypes,
   postProject,
   postProjectMember,
-  postTaskTypeToProject,
   removeProject,
   removeProjectByAdmin,
   updateProjectAct,
@@ -72,19 +71,14 @@ const removeProjectSuccessHandler = (state: S, { meta }: ActionMeta<P, M>) => {
   return state.removeItem(index);
 };
 
-const addTaskTypeToProjectHandler = (state: DownloadList, { payload }: Action<P>) => {
-  const index = state.list.findIndex(el => get(payload, 'projectId') === el.id);
-  return state.updateItem(index, {
-    taskTypes: state.list[index].taskTypes.addItem({ id: get(payload, 'taskTypeId') }),
-  });
-};
-
 const deleteTaskTypeFromProjectHandler = (state: S, { payload }: Action<P>) => {
   const projectIndex = state.list.findIndex(el => get(payload, 'projectId') === el.id);
-  const taskTypeIndex = state.list[projectIndex].taskTypes.list.findIndex(el => get(payload, 'taskTypeId') === el.id);
-  const newTaskTypes = state.list[projectIndex].taskTypes.removeItem(taskTypeIndex);
+  const taskTypeIndex = state.list[projectIndex].projectTaskTypes.list.findIndex(
+    el => get(payload, 'taskTypeId') === el.taskTypeId
+  );
+  const newTaskTypes = state.list[projectIndex].projectTaskTypes.removeItem(taskTypeIndex);
   return state.updateItem(projectIndex, {
-    taskTypes: newTaskTypes,
+    projectTaskTypes: newTaskTypes,
   });
 };
 
@@ -180,7 +174,7 @@ const deleteProjectMemberHandler = (state: S, { payload }: Action<P>) => {
   });
 };
 
-const projectTaskTypeHandler = (state: S, action: ActionMeta<any, any>) => {
+const projectTaskTypeHandler = (state: any, action: ActionMeta<any, any>) => {
   let index: number;
   // if meta exists get projectId from meta
   if (action.meta) {
@@ -189,8 +183,12 @@ const projectTaskTypeHandler = (state: S, action: ActionMeta<any, any>) => {
     index = state.list.findIndex(el => get(action.payload, 'projectId') === el.id);
   }
 
+  if (index === -1) {
+    return state;
+  }
+
   return state.updateItem(index, {
-    taskTypes: projectTaskTypes(state.list[index].taskTypes, action),
+    projectTaskTypes: projectTaskTypes(state.list[index].projectTaskTypes, action),
   });
 };
 
@@ -231,7 +229,6 @@ export const projects: any = handleActions<S, any, any>(
       fetchAllParticipantProjectsAction.fail,
       getAllProjects.fail
     ).toString()]: getOwnProjectsFailHandler,
-    [addTaskTypeToProject.toString()]: addTaskTypeToProjectHandler,
     [combineActionsRedux(removeProject.success, removeProjectByAdmin.success).toString()]: removeProjectSuccessHandler,
     [fetchProjectDetails.success]: fetchProjectDetailsSuccessHandler,
     [deleteTaskTypeFromProject.toString()]: deleteTaskTypeFromProjectHandler,
@@ -243,7 +240,7 @@ export const projects: any = handleActions<S, any, any>(
     [updateProjectMemberAccessLevel.success]: updateProjectMemberAccessLevelSuccessHandler,
 
     [deleteProjectMemberAct.toString()]: deleteProjectMemberHandler,
-    [combineActions(getAllProjectTaskTypes, postTaskTypeToProject)]: projectTaskTypeHandler,
+    [combineActions(getAllProjectTaskTypes, addTaskTypeToProject)]: projectTaskTypeHandler,
 
     [updateProjectAct.success]: updateProjectHandler,
     [PURGE]: logOutHandler,

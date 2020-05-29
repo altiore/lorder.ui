@@ -7,7 +7,7 @@ import { currentProjectId } from '#/@store/timer';
 import { IMember } from './members/Member';
 import { Project } from './Project';
 
-import { IState, IUser } from '@types';
+import { IProject, IState, IUser } from '@types';
 
 const baseState = (state: IState) => state.projects;
 
@@ -23,6 +23,10 @@ export const ownProjectList = createDeepEqualSelector([baseState], (state: Downl
 export const selectedProject: any = createDeepEqualSelector(
   [ownProjectList, currentProjectId],
   (projects, id) => id && projects.find(el => el.id === id)
+);
+
+export const createUserTaskFormInitials = createDeepEqualSelector([selectedProject], (p: IProject) =>
+  p ? { projectId: p.id } : {}
 );
 
 export const projectsExceptDefault = createDeepEqualSelector(
@@ -90,7 +94,7 @@ export const getProjectMemberById = createDeepEqualSelector([projectMembersAsUse
 
 export const projectTaskTypes = createDeepEqualSelector(
   [openedProject],
-  (project: Project | undefined) => project && project.taskTypes
+  (project: Project | undefined) => project && project.projectTaskTypes && project.projectTaskTypes.list
 );
 
 export const getProjectById = createDeepEqualSelector(allProjectList, (list: Project[]) => (id: number): Project =>

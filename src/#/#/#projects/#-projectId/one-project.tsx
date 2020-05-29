@@ -49,6 +49,12 @@ export const PROJECT_ROUTES: IRoute[] = [
     title: 'Части проекта',
   },
   {
+    access: [ROLES.USERS, ACCESS_LEVEL.BLUE],
+    component: lazy(() => import('./#task-types')),
+    path: '/projects/:projectId/task-types',
+    title: 'Типы задач',
+  },
+  {
     access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
     component: lazy(() => import('./#settings')),
     path: '/projects/:projectId/settings',

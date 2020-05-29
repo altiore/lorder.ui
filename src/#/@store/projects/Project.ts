@@ -1,14 +1,15 @@
 import map from 'lodash/map';
 
+import { DownloadList } from '#/@store/@common/entities';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { Task } from '#/@store/tasks';
 
-import { DownloadList } from '../@common/entities';
 import { ProjectPart } from '../project';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';
+import { ProjectTaskType } from './taskTypes/project-task-type';
 
-import { ACCESS_LEVEL, IProject, IProjectPart, PROJECT_TYPE } from '@types';
+import { ACCESS_LEVEL, IDownloadList, IProject, IProjectPart, IProjectTaskType, PROJECT_TYPE } from '@types';
 
 export class Project implements IProject {
   id?: number;
@@ -21,7 +22,7 @@ export class Project implements IProject {
   phases?: any[];
   members: DownloadList<Member> = new DownloadList(Member);
   tasks: DownloadList<Task> = new DownloadList(Task);
-  taskTypes: DownloadList<TaskType> = new DownloadList(TaskType);
+  projectTaskTypes: IDownloadList<IProjectTaskType> = new DownloadList(ProjectTaskType);
   parts: DownloadList<IProjectPart> = new DownloadList(ProjectPart);
   /** время в секундах, потраченное всеми пользователями на этот проект */
   timeSum?: number;
@@ -35,7 +36,7 @@ export class Project implements IProject {
         this[key] = new DownloadList(Task, val, Array.isArray(val));
         return;
       }
-      if (key === 'taskTypes') {
+      if (key === 'projectTaskTypes') {
         this[key] = new DownloadList(TaskType, val, Array.isArray(val));
         return;
       }

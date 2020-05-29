@@ -222,10 +222,10 @@ const deleteProjectTaskHandler = (state: S, { payload }: Action<P>) => {
   const index = state.list.findIndex(
     el => el.projectId === get(payload, 'projectId') && el.sequenceNumber === get(payload, 'sequenceNumber')
   );
-  if (!~index) {
+  if (index === -1) {
     return state.startLoading();
   }
-  return state.startLoading().removeItem(index);
+  return state.startLoading().updateItem(index, { isArchived: true });
 };
 
 const deleteProjectTaskSuccessHandler = (state: S) => {

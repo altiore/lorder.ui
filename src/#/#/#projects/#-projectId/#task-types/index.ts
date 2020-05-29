@@ -2,41 +2,32 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { withStyles } from '@material-ui/core/styles';
-
-import { deleteTaskTypeFromProject, getAllProjectTaskTypes, projectTaskTypes } from '#/@store/projects';
+import {
+  addTaskTypeToProject,
+  deleteTaskTypeFromProject,
+  getAllProjectTaskTypes,
+  projectTaskTypes,
+} from '#/@store/projects';
 import { routeProjectId } from '#/@store/router';
-import { getAllTaskTypes, getTaskTypeById } from '#/@store/task-types';
+import { getAllTaskTypes, getTaskTypeById, taskTypeList } from '#/@store/task-types';
 
-import { ProjectTaskTypesJsx } from './ProjectTaskTypes';
-import { styles } from './styles';
+import { ProjectTaskTypesJsx } from './task-types';
 
 const mapState = createStructuredSelector({
   getTaskTypeById,
   projectId: routeProjectId,
   projectTaskTypes,
+  taskTypeList,
 } as any);
 
 const mapDispatch = {
+  addTaskTypeToProject,
   deleteTaskTypeFromProject,
   getAllProjectTaskTypes,
   getAllTaskTypes,
 };
 
-const mergeProps = (
-  { projectId, ...restState }: any,
-  { deleteTaskTypeFromProject, getAllProjectTaskTypes, ...restDispatch }: any,
-  { match, ...restOwn }: any
-) => ({
-  deleteTaskType: (taskTypeId: number) => deleteTaskTypeFromProject({ projectId, taskTypeId }),
-  getAllProjectTaskTypes: () => getAllProjectTaskTypes(projectId),
-  ...restState,
-  ...restDispatch,
-  ...restOwn,
-});
-
 export default connect(
   mapState,
-  mapDispatch,
-  mergeProps
-)(withStyles(styles, { withTheme: true })(ProjectTaskTypesJsx));
+  mapDispatch
+)(ProjectTaskTypesJsx);

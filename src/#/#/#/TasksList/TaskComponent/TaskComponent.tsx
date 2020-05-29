@@ -11,10 +11,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import SettingsIcon from '@components/@icons/Settings';
-import TaskTypeIcon from '@components/@icons/TaskTypeIcon';
 
 import StartStopBtn from '#/@common/StartStopBtn';
 import TaskDuration from '#/@common/TaskDuration';
+import TypeIcon from '#/@common/TypeIcon';
 import { TASKS_ROUTE } from '#/@store/router';
 
 import { useStyles } from './styles';
@@ -111,6 +111,10 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
     [openTaskModal, project, push, showWarning, startUserWork]
   );
 
+  if (!task) {
+    return null;
+  }
+
   return (
     <div
       className={cn(classes.listItem, {
@@ -151,7 +155,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
               {task.sequenceNumber}
             </Typography>
             <MediaQuery minWidth={theme.breakpoints.values.sm}>
-              {<TaskTypeIcon typeId={isShown ? task.typeId : 'feature'} className={classes.taskIcon} />}
+              {<TypeIcon className={classes.taskIcon} typeId={isShown ? task.typeId : undefined} />}
             </MediaQuery>
             {isShown ? <span>{task.title}</span> : <span>...</span>}
             <MediaQuery minWidth={theme.breakpoints.values.md}>
