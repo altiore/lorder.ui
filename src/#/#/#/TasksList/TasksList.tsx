@@ -1,117 +1,76 @@
-import React from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import FlipMove from 'react-flip-move';
 
-import get from 'lodash/get';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { Project } from '#/@store/projects';
 
 import { Filter } from './Filter';
+import Pagination from './Pagination';
 import TaskComponent from './TaskComponent';
 
 import { ITask } from '@types';
-
-export interface ITaskListState {
-  page: number;
-  perPage: number;
-}
 
 export interface ITasksListProps {
   currentTaskId?: number | string;
   getProjectById: (id: number | string) => Project;
   tasks: Array<ITask | 'filter'>;
-  tasksFilter: any;
 }
 
-export class TasksListJsx extends React.Component<ITasksListProps, ITaskListState> {
-  state = {
-    page: 0,
-    perPage: 5,
-  };
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    height: 521,
+    maxWidth: 820,
+    overflowY: 'hidden',
+    padding: theme.spacing(0, 1, 1),
+    [theme.breakpoints.down('sm')]: {
+      height: 480,
+      padding: theme.spacing(0, 0, 1),
+    },
+  },
+}));
 
-  shouldComponentUpdate(
-    nextProps: Readonly<ITasksListProps>,
-    nextState: Readonly<ITaskListState>,
-    nextContext: any
-  ): boolean {
-    if (
-      (nextProps.currentTaskId !== this.props.currentTaskId && nextProps.currentTaskId) ||
-      nextProps.tasksFilter !== this.props.tasksFilter ||
-      nextState.page !== this.state.page ||
-      nextState.perPage !== this.state.perPage
-    ) {
-      return true;
-    }
-    const newTs = this.currentPageTasks(nextProps, nextState);
-    const oldTs = this.currentPageTasks(this.props, this.state);
-    const newL = newTs.length;
-    if (newL !== oldTs.length) {
-      return true;
-    }
-    for (let i = 0; i < newL; i++) {
-      if (i === 1 || !newTs[i]) {
-        continue;
+export const TasksListJsx = ({ currentTaskId, getProjectById, tasks }) => {
+  const [page, setPage] = useState<number>(0);
+  const [perPage] = useState<number>(5);
+  const resetPage = useCallback(() => setPage(0), [setPage]);
+
+  const pageTasks = useMemo(() => {
+    return [...tasks.slice(0, 2), ...tasks.slice(2 + page * perPage, 2 + (page + 1) * perPage)];
+  }, [page, perPage, tasks]);
+
+  const renderListItem = useCallback(
+    (task: ITask | 'filter', index: number) => {
+      if (!task) {
+        return <div key="0" />;
       }
-      if (!get(newTs, [i, 'id']) || !get(oldTs, [i, 'id']) || get(newTs, [i, 'id']) !== get(oldTs, [i, 'id'])) {
-        return false;
+      if (task === 'filter') {
+        return (
+          <div key={task + index}>
+            <Filter resetPage={resetPage} />
+          </div>
+        );
       }
-      if (get(newTs, [i, 'title']) !== get(oldTs, [i, 'title'])) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  render() {
-    const sortedTasks = this.currentPageTasks(this.props, this.state);
-    // return <FlipMove easing="cubic-bezier(0.39, 0, 0.45, 1.4)">{sortedTasks.map(this.renderListItem)}</FlipMove>;
-    return <FlipMove>{sortedTasks.map(this.renderListItem)}</FlipMove>;
-  }
-
-  currentPageTasks(props: ITasksListProps, state: ITaskListState): Array<ITask | 'filter'> {
-    const { tasks } = props;
-    const { page, perPage } = state;
-    return [...tasks.slice(0, 2), ...tasks.slice(page * perPage + 2, (page + 1) * perPage + 2)];
-  }
-
-  private renderListItem = (task: ITask | 'filter', index: number) => {
-    if (!task) {
-      return <div key="undefined task" />;
-    }
-    const { currentTaskId, getProjectById } = this.props;
-    if (task === 'filter') {
-      const { tasks } = this.props;
-      const { page, perPage } = this.state;
-      const length = tasks.length - 2;
+      const CurrentTaskComponent: any = TaskComponent;
       return (
-        <div key={task + index}>
-          <Filter page={page} perPage={perPage} count={length} changePage={this.handleChangePage} />
+        <div key={task.id}>
+          <CurrentTaskComponent
+            isCurrent={currentTaskId === task.id}
+            taskId={task.id}
+            project={getProjectById(task.projectId)}
+          />
         </div>
       );
-    }
-    const CurrentTaskComponent: any = TaskComponent;
-    return (
-      <div key={task.id}>
-        <CurrentTaskComponent
-          isCurrent={currentTaskId === task.id}
-          taskId={task.id}
-          project={getProjectById(task.projectId)}
-        />
-      </div>
-    );
-  };
+    },
+    [currentTaskId, getProjectById, resetPage]
+  );
 
-  private handleChangePage = (index: number) => () => {
-    let page = index;
-    const { tasks } = this.props;
-    const { perPage } = this.state;
-    const length = tasks.length - 2;
-    const max = Math.ceil(length / perPage);
-    if (page < 0) {
-      page = max - 1;
-    }
-    if (page > max - 1) {
-      page = 0;
-    }
-    this.setState({ page });
-  };
-}
+  const { root } = useStyles();
+
+  return (
+    <div>
+      <FlipMove className={root}>{pageTasks.map(renderListItem)}</FlipMove>
+      <Pagination changePage={setPage} page={page} perPage={perPage} count={tasks.length - 2} />
+    </div>
+  );
+};

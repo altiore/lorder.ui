@@ -10,8 +10,6 @@ import { useStyles } from './styles';
 
 import { IUser } from '@types';
 
-// import { ListBox } from 'liw-components/ListBox';
-
 export interface IPerformerFieldProps extends WrappedFieldProps {
   taskId: number;
   projectMembers: IUser[];

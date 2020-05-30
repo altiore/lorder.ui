@@ -4,9 +4,8 @@ import { createStructuredSelector } from 'reselect';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import { ownProjectListNoProjectFirst } from '#/@store/projects';
 import { changeFilter, changeTasksFilter, projectId, searchTerm, tasksFilter } from '#/@store/tasksFilter';
-
-import { ownProjectListNoProjectFirst } from '../../../../@store/projects';
 
 import { FilterTsx } from './Filter';
 import { styles } from './styles';

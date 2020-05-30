@@ -5,8 +5,6 @@ import { WrappedFieldProps } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
 
-// import { ListBox } from 'liw-components/ListBox';
-
 interface IChangedCellState {
   isOpen: boolean;
 }

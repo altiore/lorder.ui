@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
         bottom: theme.spacing(2),
         right: theme.spacing(2),
       },
-      marginRight: theme.spacing(-9),
+      marginLeft: theme.spacing(-9),
     },
     stop: {
       '& svg': {
@@ -177,7 +177,7 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
-          direction="right"
+          direction="left"
           FabProps={{ className: cn(classes.stopOpen, { [classes.play]: open }), size }}
         >
           <SpeedDialAction
@@ -200,7 +200,7 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
-          direction="right"
+          direction="left"
           FabProps={{ className: cn(classes.stop, { [classes.stopOpen]: open }), size }}
         >
           <SpeedDialAction

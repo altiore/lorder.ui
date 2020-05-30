@@ -13,6 +13,7 @@ export default createMuiTheme({
 
   gradient: ['linear-gradient(45deg, #29292b 0%, #424247 50%, #29292b 100%)'],
   mainContent: {
+    bigWidth: 1360,
     scroll: prettyScroll1(theme),
     width: 1280,
   },
@@ -201,6 +202,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
     gradient: string[];
     mainContent: {
+      bigWidth: number;
       scroll: object;
       width: number;
     };
@@ -222,6 +224,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
   interface ThemeOptions {
     gradient?: string[];
     mainContent?: {
+      bigWidth?: number;
       scroll?: object;
       width?: number;
     };

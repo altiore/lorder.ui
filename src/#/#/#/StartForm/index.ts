@@ -19,7 +19,7 @@ const mapStateToProps = createStructuredSelector({
 
 const dispatchStateToProps = {};
 
-const StartForm = withStyles(styles, { withTheme: true })(
+export const StartForm = withStyles(styles, { withTheme: true })(
   connect(
     mapStateToProps,
     dispatchStateToProps
@@ -37,5 +37,3 @@ const StartForm = withStyles(styles, { withTheme: true })(
     })(StartFormJsx as any)
   )
 );
-
-export { StartForm, IStartFormProps };
