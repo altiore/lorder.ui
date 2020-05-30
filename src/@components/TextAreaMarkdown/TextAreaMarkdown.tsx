@@ -70,6 +70,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     opacity: 1,
   },
   root: {
+    '& .editor-preview': {
+      '& img': {
+        maxHeight: theme.spacing(34),
+        maxWidth: theme.spacing(90),
+      },
+    },
     position: 'relative',
   },
   toolbarStyle: {

@@ -1,12 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
-import { match, RouteComponentProps } from 'react-router-dom';
+import { match, Route, RouteComponentProps } from 'react-router-dom';
 
 import cn from 'classnames';
 
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
-import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -27,6 +26,8 @@ import SyncAltIcon from '@material-ui/icons/SyncAlt';
 
 import { LinkButton } from '#/@common/LinkButton';
 import { Project } from '#/@store/projects';
+
+import { TASKS_ROUTE } from '../../@store/router';
 
 import { useStyles } from './styles';
 
@@ -112,17 +113,19 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
             </LinkButton>
           )}
           {project && project.uuid && project.title && (
-            <LinkButton to={`/p/${project.uuid}`} className={classes.projectPublic}>
+            <LinkButton to={`/p/${project.uuid}`} color="primary" variant="contained" className={classes.projectPublic}>
               Публичный
             </LinkButton>
           )}
           <div className={classes.grow} />
           {project && project.id && (
-            <Tooltip title="Обновить задачи проекта">
-              <Fab color="secondary" size="small" onClick={refreshProjectTasks}>
-                <RefreshIcon className={cn({ [classes.refreshIcon]: isTasksLoading })} />
-              </Fab>
-            </Tooltip>
+            <Route path={TASKS_ROUTE(project.id)} exact>
+              <Tooltip title="Обновить задачи проекта">
+                <IconButton className={classes.refreshBtn} onClick={refreshProjectTasks}>
+                  <RefreshIcon className={cn({ [classes.refreshIcon]: isTasksLoading })} />
+                </IconButton>
+              </Tooltip>
+            </Route>
           )}
           <IconButton onClick={handleDrawerToggle}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

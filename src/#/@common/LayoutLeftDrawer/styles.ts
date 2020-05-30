@@ -74,14 +74,15 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginRight: 20,
   },
   projectPublic: {
-    border: '1px solid red',
-    color: 'red',
     marginLeft: theme.spacing(0.5),
   },
   projectTitle: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+  },
+  refreshBtn: {
+    marginRight: theme.spacing(1),
   },
   refreshIcon: {
     animation: '$EndLessRotation 0.5s linear infinite',

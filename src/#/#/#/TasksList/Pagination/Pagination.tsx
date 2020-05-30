@@ -46,6 +46,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
     padding: theme.spacing(1, 2),
+    position: 'absolute',
   },
   right: {
     [theme.breakpoints.down('sm')]: {
@@ -91,6 +92,11 @@ export const PaginationTsx: React.FC<IPagination> = ({ page, count, perPage, cha
   }, [changePage, maxPage, page]);
 
   const { fabStyle, left, pagination, paginationWrap, right } = useStyles();
+
+  if (!Boolean(maxPage)) {
+    return null;
+  }
+
   return (
     <div className={paginationWrap}>
       <div
@@ -100,21 +106,17 @@ export const PaginationTsx: React.FC<IPagination> = ({ page, count, perPage, cha
         onFocus={handleOver}
         onBlur={handleOut}
       >
-        {Boolean(maxPage) && (
-          <Grow in={isHovered} timeout={600}>
-            <Fab size="small" color="secondary" onClick={onPrevPage} className={cn(left, fabStyle)}>
-              <ChevronLeftIcon />
-            </Fab>
-          </Grow>
-        )}
+        <Grow in={isHovered} timeout={600}>
+          <Fab size="small" color="secondary" onClick={onPrevPage} className={cn(left, fabStyle)}>
+            <ChevronLeftIcon />
+          </Fab>
+        </Grow>
         {page + 1} из {Math.max(maxPage + 1, 1)}
-        {Boolean(maxPage) && (
-          <Grow in={isHovered} timeout={600}>
-            <Fab size="small" color="secondary" onClick={onNextPage} className={cn(right, fabStyle)}>
-              <ChevronRightIcon />
-            </Fab>
-          </Grow>
-        )}
+        <Grow in={isHovered} timeout={600}>
+          <Fab size="small" color="secondary" onClick={onNextPage} className={cn(right, fabStyle)}>
+            <ChevronRightIcon />
+          </Fab>
+        </Grow>
       </div>
     </div>
   );

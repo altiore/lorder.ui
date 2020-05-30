@@ -39,7 +39,7 @@ export const styles = (theme: Theme) =>
       flexFlow: 'column',
       justifyContent: 'center',
       marginBottom: theme.spacing(0.5),
-      marginTop: theme.spacing(-2),
+      marginTop: theme.spacing(2),
       width: '100%',
     },
   });

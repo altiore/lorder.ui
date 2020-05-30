@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          backgroundColor: theme.palette.secondary.main,
-          color: theme.palette.default.main,
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
         }
       : {
-          backgroundColor: theme.palette.secondary.dark,
+          backgroundColor: theme.palette.primary.dark,
           color: theme.palette.text.primary,
         },
   root: {
@@ -62,7 +62,7 @@ export const TableToolbarTsx: React.FC<TableToolbarProps> = ({
     >
       {numSelected > 0 ? (
         <Typography className={classes.title} color="inherit" variant="body1">
-          {numSelected} выбрано
+          {numSelected}&nbsp;выбрано
         </Typography>
       ) : (
         <div className={classes.title}>
@@ -70,7 +70,7 @@ export const TableToolbarTsx: React.FC<TableToolbarProps> = ({
             {entityName}
           </Typography>
           {createItem && (
-            <Button className={classes.create} variant="outlined" color="primary" onClick={createItem}>
+            <Button className={classes.create} variant="outlined" color="default" onClick={createItem}>
               {createTitle}
             </Button>
           )}

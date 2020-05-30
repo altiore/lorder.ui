@@ -5,15 +5,12 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 export default function Meeting(props) {
   return (
     <SvgIcon {...props}>
-      <title>meeting</title>
-      <path transform="translate(4, 4)" d="M7.18,10.75l5.56,2.93v-12L7.18,4.59Z" />
-      <path transform="translate(4, 4)" d="M14.05,7.18H16v1H14.05Z" />
-      <path transform="translate(4, 4)" d="M15.18,4l.37.9-1.8.74-.37-.9Z" />
-      <path transform="translate(4, 4)" d="M15.18,11.3l-1.8-.74.37-.9,1.8.74Z" />
-      <path
-        transform="translate(4, 4)"
-        d="M6.21,4.91H2v1H1.79a1.79,1.79,0,0,0,0,3.58H2v1H3l1.08,3.91H7.28L6.21,10.59Z"
-      />
+      <title>communication</title>
+      <path d="M10.77,16.07l8.34,4.39v-18L10.77,6.82Z" />
+      <path d="M21.07,10.71H24v1.5H21.07Z" />
+      <path d="M22.77,5.94l.55,1.35L20.62,8.4l-.55-1.35Z" />
+      <path d="M22.77,16.89l-2.7-1.11.55-1.35,2.7,1.11Z" />
+      <path d="M9.31,7.3H3V8.8H2.68a2.69,2.69,0,0,0,0,5.38H3v1.5H4.5l1.62,5.86h4.8L9.31,15.83Z" />
     </SvgIcon>
   );
 }
