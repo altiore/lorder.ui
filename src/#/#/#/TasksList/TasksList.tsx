@@ -5,15 +5,22 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { Project } from '#/@store/projects';
 
+import EmptyList from './EmptyList';
 import { Filter } from './Filter';
+import NoMatch from './NoMatch';
 import Pagination from './Pagination';
+import PlaceHolder from './PlaceHolder';
 import TaskComponent from './TaskComponent';
 
 import { ITask } from '@types';
 
 export interface ITasksListProps {
+  allTaskLength: number;
   currentTaskId?: number | string;
   getProjectById: (id: number | string) => Project;
+  isTasksLoaded: boolean;
+  isTasksLoading: boolean;
+  isTimerStarted: boolean;
   tasks: Array<ITask | 'filter'>;
 }
 
@@ -30,14 +37,28 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const TasksListJsx = ({ currentTaskId, getProjectById, tasks }) => {
+export const TasksListJsx = ({
+  allTaskLength,
+  currentTaskId,
+  getProjectById,
+  isTasksLoaded,
+  isTasksLoading,
+  isTimerStarted,
+  tasks,
+}) => {
   const [page, setPage] = useState<number>(0);
   const [perPage] = useState<number>(5);
   const resetPage = useCallback(() => setPage(0), [setPage]);
 
+  const isOnlyOneTask = useMemo(() => allTaskLength === 1, [allTaskLength]);
+
   const pageTasks = useMemo(() => {
     return [...tasks.slice(0, 2), ...tasks.slice(2 + page * perPage, 2 + (page + 1) * perPage)];
   }, [page, perPage, tasks]);
+
+  const isNoMatch = useMemo(() => {
+    return !tasks || tasks.length <= 2;
+  }, [tasks]);
 
   const renderListItem = useCallback(
     (task: ITask | 'filter', index: number) => {
@@ -48,6 +69,7 @@ export const TasksListJsx = ({ currentTaskId, getProjectById, tasks }) => {
         return (
           <div key={task + index}>
             <Filter resetPage={resetPage} />
+            {isOnlyOneTask ? <EmptyList key="empty-list" /> : isNoMatch ? <NoMatch key="no-match" /> : null}
           </div>
         );
       }
@@ -62,10 +84,14 @@ export const TasksListJsx = ({ currentTaskId, getProjectById, tasks }) => {
         </div>
       );
     },
-    [currentTaskId, getProjectById, resetPage]
+    [currentTaskId, getProjectById, isNoMatch, isOnlyOneTask, resetPage]
   );
 
   const { root } = useStyles();
+
+  if (allTaskLength === 0 || (allTaskLength && !isTimerStarted)) {
+    return <PlaceHolder loading={(!isTasksLoaded && isTasksLoading) || (allTaskLength && !isTimerStarted)} />;
+  }
 
   return (
     <div>

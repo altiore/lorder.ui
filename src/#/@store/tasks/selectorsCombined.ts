@@ -23,6 +23,8 @@ export const filteredByPerformerTasks = createDeepEqualSelector(
     currentUserId ? taskList.filter(el => el.performerId === currentUserId && el.id !== taskId) : []
 );
 
+export const allTaskLength = createDeepEqualSelector([allTaskList], list => (list ? list.length : 0));
+
 const filteredFunction: {
   [key in TASK_FILTER_TYPE]: (a: any, b: any) => 1 | -1 | 0;
 } = {

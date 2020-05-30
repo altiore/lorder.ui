@@ -4,6 +4,7 @@ import {
   changeFilter,
   changeTasksFilter,
   IChangeFilterP,
+  refreshAll,
   toggleMemberA,
   toggleOpenedTab,
   toggleProjectPart,
@@ -67,6 +68,10 @@ const toggleProjectPartHandler = (state: ITasksFilter, { payload }: any) => {
   });
 };
 
+const refreshAllHandler = (state: ITasksFilter) => {
+  return new TasksFilter({ openedStatuses: state.openedStatuses });
+};
+
 export const tasksFilter: any = handleActions<any, any, any>(
   {
     [changeFilter.toString()]: changeFilterHandler,
@@ -74,6 +79,7 @@ export const tasksFilter: any = handleActions<any, any, any>(
     [toggleMemberA.toString()]: toggleMemberHandler,
     [toggleOpenedTab.toString()]: toggleOpenedTabHandler,
     [toggleProjectPart.toString()]: toggleProjectPartHandler,
+    [refreshAll.toString()]: refreshAllHandler,
   },
   new TasksFilter()
 );
