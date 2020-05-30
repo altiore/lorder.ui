@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: 521,
     maxWidth: 820,
-    overflowY: 'hidden',
+    overflow: 'hidden',
     padding: theme.spacing(0, 1, 1),
     [theme.breakpoints.down('sm')]: {
       height: 480,
