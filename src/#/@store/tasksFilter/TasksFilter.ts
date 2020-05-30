@@ -11,9 +11,10 @@ export enum TASK_FILTER_TYPE {
 export class TasksFilter implements ITasksFilter {
   filter: TASK_FILTER_TYPE = TASK_FILTER_TYPE.RECENT;
   projectPart?: '';
-  search?: string;
+  search?: string = '';
   members: number[] = [];
   openedStatuses: number[] = [1, 2, 3];
+  projectId: number = 0;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

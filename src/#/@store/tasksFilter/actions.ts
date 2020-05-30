@@ -18,3 +18,5 @@ export const toggleMemberA = createAction<number>('TASKS_FILTER/TOGGLE_MEMBER');
 export const toggleOpenedTab = createAction<number>('TASKS_FILTER/TOGGLE_TASK_TYPE');
 
 export const toggleProjectPart = createAction<number>('TASKS_FILTER/TOGGLE_PROJECT_PART');
+
+export const refreshAll = createAction('TASKS_FILTER/REFRESH_ALL');

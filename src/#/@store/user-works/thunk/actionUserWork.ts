@@ -2,6 +2,7 @@ import get from 'lodash/get';
 import moment from 'moment';
 import { change } from 'redux-form';
 
+import { defaultProjectId } from '#/@store/identity';
 import { selectProject } from '#/@store/project';
 import { fetchProjectDetails, getProjectById, Project, projectMembers } from '#/@store/projects';
 import { getTaskById, getTaskBySequenceNumber } from '#/@store/tasks';
@@ -70,7 +71,8 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
   if (!preparedData.projectId) {
     preparedData.projectId = get(startedTask, 'projectId') as number;
     if (!preparedData.projectId) {
-      throw new Error('Неясно в каком проекте начинать новую задачу');
+      preparedData.projectId = defaultProjectId(getState()) as number;
+      preparedData.title = 'Знакомство с системой';
     }
   }
   if (startedTask && startedTask.projectId !== preparedData.projectId) {
