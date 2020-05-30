@@ -14,22 +14,11 @@ export const styles = (theme: Theme) =>
       width: '100%',
     },
     chipHovered: get(theme, 'overrides.MuiChip.outlined.&:hover', {}),
-    fabStyle: {
-      '& svg': {
-        color: theme.palette.default.contrastText,
-      },
-      '&:hover': {
-        backgroundColor: theme.palette.secondary.dark,
-      },
-      backgroundColor: '#f2d578',
-      borderRadius: '50%',
-      boxShadow: theme.shadow.secondary,
-      minHeight: 0,
-    },
     filter: {
       alignItems: 'center',
       display: 'flex',
       flexFlow: 'column nowrap',
+      flexShrink: 0,
       justifyContent: 'flex-end',
       marginBottom: -8,
       position: 'relative',
@@ -45,40 +34,30 @@ export const styles = (theme: Theme) =>
       grow: 1,
     },
     input: {
-      paddingLeft: theme.spacing(1),
-      width: 600,
-    },
-    left: {
-      [theme.breakpoints.down('sm')]: {
-        display: 'flex!important',
+      '& input': {
+        paddingLeft: 6,
       },
-    },
-    pagination: {
-      alignItems: 'center',
-      display: 'flex',
-      flexFlow: 'row nowrap',
-      height: 40,
-      justifyContent: 'space-around',
-      marginBottom: theme.spacing(1 / 2),
-      width: 144,
-    },
-    projectSelect: {
-      float: 'left',
-    },
-    right: {
-      [theme.breakpoints.down('sm')]: {
-        display: 'flex!important',
-      },
+      backgroundColor: '#fff',
+      borderRadius: 6,
+      flexGrow: 1,
+      height: 36,
+      margin: theme.spacing(0, 4),
     },
     root: {
       alignItems: 'flex-end',
+      border: '1px solid transparent',
       display: 'flex',
       height: 70,
       justifyContent: 'space-between',
-      padding: '0 2px 8px',
+      maxWidth: 800,
+      padding: '0 2px 8px 12px',
       width: '100%',
     },
-    taskSelect: {
-      paddingLeft: theme.spacing(1 / 2),
+    searchFilter: {
+      alignItems: 'center',
+      display: 'flex',
+      flexFlow: 'row nowrap',
+      flexGrow: 1,
+      padding: theme.spacing(0.75, 0),
     },
   });

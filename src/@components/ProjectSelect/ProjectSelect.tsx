@@ -6,7 +6,6 @@ import toLower from 'lodash/toLower';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Popover from '@material-ui/core/Popover';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -20,13 +19,13 @@ import { IProject, PROJECT_TYPE } from '@types';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
-      backgroundColor: '#F5F5F5',
-      color: '#292929',
+      backgroundColor: '#F2F3F5',
+      color: '#9d9d9d',
       minWidth: theme.spacing(5),
       width: theme.spacing(5),
     },
     inputWrap: {
-      padding: theme.spacing(1),
+      padding: theme.spacing(1, 0.75, 1, 1),
     },
     list: {
       backgroundColor: theme.palette.background.paper,
@@ -44,6 +43,12 @@ const useStyles = makeStyles((theme: Theme) =>
     listSection: {
       backgroundColor: 'inherit',
     },
+    listSubheader: {
+      alignItems: 'center',
+      display: 'flex',
+      height: theme.spacing(2.5),
+      lineHeight: '20px',
+    },
     noMatch: {
       alignItems: 'center',
       backgroundColor: theme.palette.background.paper,
@@ -56,6 +61,9 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       minWidth: theme.spacing(26),
       padding: theme.spacing(0, 0.25, 1, 0),
+    },
+    text: {
+      fontSize: theme.typography.pxToRem(16),
     },
     ul: {
       backgroundColor: 'inherit',
@@ -149,7 +157,7 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({ onChange, projects, pr
     [handleClose, onChange]
   );
 
-  const { button, inputWrap, list, listGutters, listSection, noMatch, root, ul } = useStyles();
+  const { button, inputWrap, list, listGutters, listSection, listSubheader, noMatch, root, text, ul } = useStyles();
 
   const open = Boolean(anchorEl);
   const id = open ? 'project-select-popover' : undefined;
@@ -178,11 +186,16 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({ onChange, projects, pr
         </div>
         {filteredProjects.length ? (
           <List dense className={list} subheader={<li />}>
+            <ListItem data-id={0} onClick={handleSelectProject} button key={`item-all`}>
+              <Typography className={text}>
+                <b>Все</b>
+              </Typography>
+            </ListItem>
             {PROJECT_TYPES.map(({ id, title }) => {
               return preparedProjects[id].length ? (
                 <li key={id} className={listSection}>
                   <ul className={ul}>
-                    <ListSubheader>{title}</ListSubheader>
+                    <ListSubheader className={listSubheader}>{title}</ListSubheader>
                     {preparedProjects[id].map(({ id: projectId, title }) => (
                       <ListItem
                         data-id={projectId}
@@ -191,7 +204,7 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({ onChange, projects, pr
                         button
                         key={`item-${id}-${projectId}`}
                       >
-                        <ListItemText primary={title} />
+                        <Typography className={text}>{title}</Typography>
                       </ListItem>
                     ))}
                   </ul>

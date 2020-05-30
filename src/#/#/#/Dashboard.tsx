@@ -38,6 +38,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.up('lg')]: {
       width: theme.mainContent.width,
     },
+    [theme.breakpoints.up('xl')]: {
+      width: theme.mainContent.bigWidth,
+    },
   },
   contentWrap: {},
   duration: {

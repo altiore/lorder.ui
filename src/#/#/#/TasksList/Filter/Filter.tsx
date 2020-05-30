@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
 import cn from 'classnames';
-import get from 'lodash-es/get';
+import get from 'lodash/get';
 
 import Chip from '@material-ui/core/Chip';
 import Grow from '@material-ui/core/Grow';
@@ -17,19 +17,16 @@ import ProjectSelect from '@components/ProjectSelect';
 
 import { TASK_FILTER_TYPE } from '#/@store/tasksFilter/TasksFilter';
 
-import { IProject } from '../../../../../@types';
+import { IProject } from '@types';
 
 export interface IFilterProps {
-  changeTasksFilter: any;
   changeFilter: any;
-  changePage: any;
+  changeTasksFilter: any;
   classes?: any;
-  count: number;
   filter: TASK_FILTER_TYPE;
   projectId: number;
   projects: IProject[];
-  page: number;
-  perPage: number;
+  resetPage: () => void;
   searchTerm: string;
 }
 
@@ -41,17 +38,14 @@ const FILTERS: { [key in TASK_FILTER_TYPE]: string } = {
 const getLabelFromFilter = (filter: TASK_FILTER_TYPE) => FILTERS[filter];
 
 export const FilterTsx: React.FC<IFilterProps> = ({
-  classes,
-  changeTasksFilter,
   changeFilter,
-  searchTerm,
-  page,
-  count,
-  perPage,
-  changePage,
+  changeTasksFilter,
+  classes,
   filter,
   projectId,
   projects,
+  resetPage,
+  searchTerm,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -86,8 +80,9 @@ export const FilterTsx: React.FC<IFilterProps> = ({
   const filterProject = useCallback(
     (value: number) => {
       changeFilter('projectId', value);
+      resetPage();
     },
-    [changeFilter]
+    [changeFilter, resetPage]
   );
 
   const filterTask = useCallback(
@@ -99,15 +94,16 @@ export const FilterTsx: React.FC<IFilterProps> = ({
 
   return (
     <ListItem className={classes.root}>
-      <div className={classes.projectSelect}>
+      <div className={classes.searchFilter}>
         <ProjectSelect onChange={filterProject} projects={projects} projectId={projectId} />
+
+        <InputBase
+          className={classes.input}
+          placeholder="Выберите или создайте задачу..."
+          value={searchTerm}
+          onChange={filterTask}
+        />
       </div>
-      <InputBase
-        className={classes.input}
-        placeholder="Выберите или создайте задачу..."
-        value={searchTerm}
-        onChange={filterTask}
-      />
       <div className={classes.grow} />
       <div className={classes.filter} onMouseEnter={handleSetHovered} onMouseLeave={handleSetNotHovered}>
         <Chip

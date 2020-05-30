@@ -26,7 +26,6 @@ export const styles = (theme: Theme) =>
       fontSize: theme.typography.pxToRem(14),
       fontWeight: 500,
       height: ADD_BTN_SIZE,
-      marginTop: theme.spacing(2),
       overflow: 'hidden',
       transition: theme.transitions.create(['color', 'width'], {
         duration: theme.transitions.duration.shortest,
@@ -39,7 +38,8 @@ export const styles = (theme: Theme) =>
       display: 'flex',
       flexFlow: 'column',
       justifyContent: 'center',
-      marginBottom: theme.spacing(2),
+      marginBottom: theme.spacing(0.5),
+      marginTop: theme.spacing(-2),
       width: '100%',
     },
   });
