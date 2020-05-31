@@ -10,9 +10,10 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import Popover from '@material-ui/core/Popover';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import SearchIco from '@material-ui/icons/Search';
+// import SearchIco from '@material-ui/icons/Search';
 
-import Input from '@components/Input';
+import SearchIco from '@components/@icons/Search';
+import InputLight from '@components/InputLight';
 
 import { IProject, PROJECT_TYPE } from '@types';
 
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: theme.spacing(5),
     },
     inputWrap: {
-      padding: theme.spacing(1, 0.75, 1, 1),
+      padding: '15px 13px 8px 15px',
     },
     list: {
       backgroundColor: theme.palette.background.paper,
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
       ...theme.mainContent.scroll,
     },
     listGutters: {
-      paddingLeft: theme.spacing(5),
+      paddingLeft: '47px',
       paddingRight: theme.spacing(2),
     },
     listSection: {
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       height: theme.spacing(2.5),
       lineHeight: '20px',
+      textTransform: 'uppercase',
     },
     noMatch: {
       alignItems: 'center',
@@ -59,8 +61,10 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
     },
     root: {
-      minWidth: theme.spacing(26),
-      padding: theme.spacing(0, 0.25, 1, 0),
+      borderRadius: 6,
+      minWidth: theme.spacing(33),
+      overflow: 'hidden',
+      padding: theme.spacing(0, 0.25, 0.5, 0),
     },
     text: {
       fontSize: theme.typography.pxToRem(16),
@@ -182,7 +186,13 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({ onChange, projects, pr
         }}
       >
         <div className={inputWrap}>
-          <Input value={searchTerm} onChange={handleChangeTerm} icon={<SearchIco />} autoFocus />
+          <InputLight
+            autoFocus
+            icon={<SearchIco />}
+            onChange={handleChangeTerm}
+            placeholder="Найти проект..."
+            value={searchTerm}
+          />
         </div>
         {filteredProjects.length ? (
           <List dense className={list} subheader={<li />}>

@@ -15,12 +15,12 @@ export const prettyScroll1 = (theme: Theme) => ({
     width: theme.spacing(),
   },
   '&::-webkit-scrollbar-thumb': {
-    backgroundColor: '#404448',
+    backgroundColor: '#919191',
     borderRadius: theme.spacing(0.5),
     cursor: 'pointer',
   },
   '&::-webkit-scrollbar-thumb:hover': {
-    backgroundColor: '#24292E',
+    backgroundColor: '#737271',
   },
   '&::-webkit-scrollbar-track': {
     backgroundColor: '#CED4D9',
