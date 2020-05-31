@@ -10,7 +10,8 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
-import EditIcon from '@material-ui/icons/Edit';
+
+import EditIcon from '@components/@icons/Edit';
 
 import { ToolbarDropdownIcon, ToolbarIcon } from 'easymde';
 import * as EasyMDE from 'easymde';
@@ -57,8 +58,11 @@ export interface ITextAreaMarkdownProps extends WrappedFieldProps {
 
 const useStyles = makeStyles((theme: Theme) => ({
   edit: {
+    '& > span > svg': {
+      pointerEvents: 'none',
+    },
     '&:hover': {
-      backgroundColor: theme.palette.secondary.light,
+      color: theme.palette.primary.dark,
     },
     opacity: 0.2,
     position: 'absolute',
@@ -66,7 +70,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     top: theme.spacing(1),
   },
   editHovered: {
-    boxShadow: theme.shadow.secondary,
     opacity: 1,
   },
   root: {

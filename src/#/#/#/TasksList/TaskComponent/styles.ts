@@ -216,7 +216,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   taskIcon: {
-    left: 8,
+    left: 10,
     position: 'absolute',
   },
   title: {

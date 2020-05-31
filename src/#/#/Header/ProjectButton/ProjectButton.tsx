@@ -4,9 +4,7 @@ import Popover from 'react-popover';
 import cn from 'classnames';
 
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 import { Project } from '#/@store/projects';
 
@@ -34,7 +32,7 @@ export const ProjectButtonTsx: React.FC<IProjectButtonProps> = memo(
     return (
       <Popover
         className={classes.projectPopover}
-        tipSize={4}
+        tipSize={1}
         place="below"
         isOpen={isOpen}
         onOuterAction={onClosePopover}
@@ -53,14 +51,6 @@ export const ProjectButtonTsx: React.FC<IProjectButtonProps> = memo(
           <Typography variant="body1" noWrap className={classes.text}>
             {selectedProject.title}
           </Typography>
-          <IconButton
-            color="secondary"
-            onClick={onOpenInNew(selectedProject)}
-            className={classes.openInNew}
-            style={{ visibility: isOpen ? 'visible' : 'hidden' }}
-          >
-            <OpenInNewIcon fontSize="small" />
-          </IconButton>
           <span className={cn(classes.inProgress, { [classes.inProgressGreen]: inProgress })} />
         </Button>
       </Popover>
