@@ -84,12 +84,12 @@ interface IProjectSelect {
 
 const PROJECT_TYPES = [
   {
-    id: PROJECT_TYPE.PERSONALLY_USEFUL,
-    title: 'Личные',
-  },
-  {
     id: PROJECT_TYPE.SOCIALLY_USEFUL,
     title: 'Социальные',
+  },
+  {
+    id: PROJECT_TYPE.PERSONALLY_USEFUL,
+    title: 'Личные',
   },
 ];
 
