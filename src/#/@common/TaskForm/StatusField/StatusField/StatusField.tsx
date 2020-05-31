@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 interface IStatusField extends WrappedFieldProps {
-  changeStatusToggle?: any;
   statuses: string[];
 }
 
@@ -17,11 +16,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const StatusField: React.FC<IStatusField> = ({ changeStatusToggle, statuses, input }) => {
+export const StatusField: React.FC<IStatusField> = ({ statuses, input }) => {
   const classes = useStyles();
 
   return (
-    <Button className={classes.button} variant="outlined" aria-label="status button" onClick={changeStatusToggle}>
+    <Button className={classes.button} variant="outlined" aria-label="status button">
       {statuses[input.value] || '...???...'}
     </Button>
   );

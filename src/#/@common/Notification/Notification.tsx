@@ -21,20 +21,24 @@ export const Notification: React.FC<INotificationProps> = props => {
         // and remove all where uid is not found in the reducer
         systemNotifications.forEach((notification: any) => {
           if (notificationIds.indexOf(notification.uid) < 0) {
-            notification.current.removeNotification(notification.uid);
+            if (curNotification && curNotification.removeNotification) {
+              curNotification.removeNotification(notification.uid);
+            }
           }
         });
 
         notifications.forEach((notification: any) => {
-          curNotification.addNotification({
-            ...notification,
-            onRemove: () => {
-              hide(notification.uid);
-              if (notification.onRemove) {
-                notification.onRemove();
-              }
-            },
-          });
+          if (curNotification && curNotification.addNotification) {
+            curNotification.addNotification({
+              ...notification,
+              onRemove: () => {
+                hide(notification.uid);
+                if (notification.onRemove) {
+                  notification.onRemove();
+                }
+              },
+            });
+          }
         });
       }
     }

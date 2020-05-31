@@ -86,14 +86,6 @@ export const TaskStatus: React.FC<ITaskStatus> = React.memo(
       [onChangeAssignee, setPopperType]
     );
 
-    const changeStatusToggle = useCallback(
-      e => {
-        e.stopPropagation();
-        setPopperType(poperType => (poperType === POPPER_TYPE.CHANGE_STATUS ? null : POPPER_TYPE.CHANGE_STATUS));
-      },
-      [setPopperType]
-    );
-
     const assigneeListToggle = useCallback(
       e => {
         e.stopPropagation();
@@ -111,7 +103,7 @@ export const TaskStatus: React.FC<ITaskStatus> = React.memo(
       <div className={classes.wrapper}>
         <ClickAwayListener onClickAway={handleClose}>
           <div className={classes.taskStatus} ref={anchorRef}>
-            <Field name="status" component={StatusField} changeStatusToggle={changeStatusToggle} statuses={statuses} />
+            <Field name="status" component={StatusField} statuses={statuses} />
             <Field
               name="performerId"
               component={PerformerField}
