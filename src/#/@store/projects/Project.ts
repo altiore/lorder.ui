@@ -63,7 +63,7 @@ export class Project implements IProject {
         return titleParts[0][0].toUpperCase() + titleParts[1][0].toUpperCase();
       } else {
         const firstChar = this.title[0];
-        const secondChar = this.title.slice(1).replace(/[euoa]/g, '')[0];
+        const secondChar = this.title.slice(1).replace(/[euoa]/g, '')[0] || '';
         return `${firstChar}${secondChar}`.toUpperCase();
       }
     }
