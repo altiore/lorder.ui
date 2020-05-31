@@ -45,7 +45,7 @@ export interface IState {
   other: IOther;
   project: ISelectedProject;
   projects: DownloadList<Project>;
-  publicAltiore: IPublicProject;
+  publicLorder: IPublicProject;
   publicProject: IPublicProject;
   roles: IDownloadList<IUserRole>;
   sockets: ISockets;

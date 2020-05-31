@@ -5,8 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import Block from '#/#hi/#/@common/Block';
 import ScreenTitle from '#/#hi/#/@common/ScreenTitle';
 
-import { ReactComponent as AltioreSvg } from './Altiore_2.svg';
 import Item from './Item';
+import { ReactComponent as LorderSvg } from './Lorder_2.svg';
 import { useStyles } from './styles';
 
 interface ScreenServicesI {
@@ -30,7 +30,7 @@ const ScreenServices: React.FC<ScreenServicesI> = ({ name, texts }) => {
       <ScreenTitle>Что позволяет наш сервис?</ScreenTitle>
       <Grid item md={1} xs={false} />
       <Grid item className={classes.svgIconBlock} md={5} xs={12}>
-        <AltioreSvg />
+        <LorderSvg />
       </Grid>
       <Grid item className={classes.blockTexts} md={5} xs={12}>
         <Item key={1}>{texts.adv1}</Item>
@@ -42,7 +42,7 @@ const ScreenServices: React.FC<ScreenServicesI> = ({ name, texts }) => {
         <Item key={7}>{texts.adv7}</Item>
       </Grid>
       <Grid item md={1} xs={false} />
-      <div className={classes.backTitle}>ALTIORE</div>
+      <div className={classes.backTitle}>LORDER</div>
     </Block>
   );
 };

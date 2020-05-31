@@ -4,32 +4,32 @@ import { PublicProject } from '#/@store/publicProject/PublicProject';
 
 import { AxiosResponse } from 'axios';
 
-import { fetchAltiore } from './actions';
+import { fetchLorder } from './actions';
 
 import { IPublicProject } from '@types';
 
 type S = IPublicProject;
 type P = AxiosResponse;
 
-const fetchAltioreHandler = () => {
+const fetchLorderHandler = () => {
   return new PublicProject({
     isLoading: true,
   });
 };
 
-const fetchAltioreSuccessHandler = (state: S, { payload }: any) => {
+const fetchLorderSuccessHandler = (state: S, { payload }: any) => {
   return new PublicProject({ ...payload.data, isLoaded: true, isLoading: false });
 };
 
-const fetchAltioreFailHandler = () => {
+const fetchLorderFailHandler = () => {
   return new PublicProject({ isLoaded: false, isLoading: false });
 };
 
-export const publicAltiore: any = handleActions<S, P>(
+export const publicLorder: any = handleActions<S, P>(
   {
-    [fetchAltiore.toString()]: fetchAltioreHandler,
-    [fetchAltiore.success]: fetchAltioreSuccessHandler,
-    [fetchAltiore.fail]: fetchAltioreFailHandler,
+    [fetchLorder.toString()]: fetchLorderHandler,
+    [fetchLorder.success]: fetchLorderSuccessHandler,
+    [fetchLorder.fail]: fetchLorderFailHandler,
   },
   new PublicProject()
 );

@@ -25,7 +25,7 @@ const ActiveClockIcon: React.FC<IActiveClockIcon> = ({ slowTimeSpeed }) => {
       className={classes.root}
       xmlSpace="preserve"
     >
-      <title>Altiore Clock</title>
+      <title>Lorder Clock</title>
       <g>
         <linearGradient
           id="SVGID_1_"

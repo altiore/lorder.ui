@@ -5,13 +5,13 @@ import { createStructuredSelector } from 'reselect';
 import { withStyles } from '@material-ui/core/styles';
 
 import { userRole } from '#/@store/identity';
-import { fetchAltiore } from '#/@store/publicAltiore';
+import { fetchLorder } from '#/@store/publicLorder';
 import { fetchStatistics } from '#/@store/statistics';
 
 import { HiTsx } from './hi-layout';
 import { styles } from './styles';
 
-const brandName = () => 'Altiore';
+const brandName = () => 'Lorder';
 
 const mapStateToProps = createStructuredSelector({
   brandName,
@@ -19,7 +19,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatch = {
-  fetchAltiore,
+  fetchLorder,
   fetchStatistics,
 };
 

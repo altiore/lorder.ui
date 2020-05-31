@@ -59,6 +59,13 @@ export const HiTsx: React.FC<IHiProps> = ({ userRole, brandName, classes }) => {
           <Typography variant="h5" color="primary">
             Copyright &copy; {brandName}
           </Typography>
+          <Typography className={classes.altiore} variant="h6" color="primary">
+            Открытое сообщество разработчиков &copy;{' '}
+            <a href="https://github.com/altiore" target="_blank" rel="noopener noreferrer">
+              Altiore
+            </a>{' '}
+            - from people to generations
+          </Typography>
           <div className={classes.sectionDesktop}>
             <IconButton color="inherit" href="https://t.me/razzwan_altiore" target="_blank">
               <TelegramIco />

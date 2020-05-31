@@ -51,7 +51,7 @@ const ScreenStart: React.FC<ScreenStartI> = ({ name }) => {
         </Typography>
         <Divider className={classes.divider} />
         <Typography className={classes.motto} variant="h4">
-          <span className={classes.title}>ALTIORE</span> - from people to generations
+          <span className={classes.title}>LORDER</span> - is a <b>L</b>ife <b>Order</b>
         </Typography>
         <LinkButton
           onMouseOver={startSlowSpeed}

@@ -1,6 +1,12 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme): any => ({
+  altiore: {
+    '& a': {
+      color: 'inherit',
+      textDecoration: 'none',
+    },
+  },
   bottomBar: {
     alignItems: 'center',
     display: 'flex',

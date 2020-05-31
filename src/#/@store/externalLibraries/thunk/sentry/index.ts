@@ -4,7 +4,7 @@ function getEnv() {
   if (process.env.NODE_ENV !== 'production') {
     return process.env.NODE_ENV;
   }
-  if (process.env.PUBLIC_URL === 'https://altiore.org') {
+  if (process.env.PUBLIC_URL === 'https://lorder.org') {
     return 'production';
   }
   if (process.env.PUBLIC_URL === 'https://staging-altiore.herokuapp.com') {
@@ -20,7 +20,7 @@ export default function() {
       debug: process.env.NODE_ENV === 'development' && process.env.REACT_APP_SENTRY_DEBUG === 'true',
       dsn: process.env.REACT_APP_SENTRY_DSN,
       environment: getEnv(),
-      release: 'altiore.ui@' + process.env.REACT_APP_VERSION,
+      release: 'lorder.ui@' + process.env.REACT_APP_VERSION,
       beforeSend(event, hint) {
         if (event.exception) {
           Sentry.showReportDialog({

@@ -26,7 +26,7 @@ const projects: IProject[] = [
   {
     id: 1,
     shortName: 'AL',
-    title: 'Altiore',
+    title: 'Lorder',
     type: PROJECT_TYPE.SOCIALLY_USEFUL,
   },
   {

@@ -15,13 +15,13 @@ import { IMember } from '#/@store/projects/members/Member';
 import { useStyles } from './styles';
 
 interface ScreenTeamI {
-  isPublicAltioreLoaded: boolean;
-  isPublicAltioreLoading: boolean;
+  isPublicLorderLoaded: boolean;
+  isPublicLorderLoading: boolean;
   name: string;
   team: IMember[];
 }
 
-const ScreenTeam: React.FC<ScreenTeamI> = ({ isPublicAltioreLoaded, isPublicAltioreLoading, name, team }) => {
+const ScreenTeam: React.FC<ScreenTeamI> = ({ isPublicLorderLoaded, isPublicLorderLoading, name, team }) => {
   const classes = useStyles();
 
   const preparedTeam = useMemo(() => {
@@ -33,17 +33,17 @@ const ScreenTeam: React.FC<ScreenTeamI> = ({ isPublicAltioreLoaded, isPublicAlti
 
   return (
     <Block name={name} className={classes.team}>
-      <ScreenTitle black>Команда проекта Altiore</ScreenTitle>
+      <ScreenTitle black>Команда проекта Lorder</ScreenTitle>
       <SubTitle>
         <Typography noWrap>В безумном мире хаоса мы помогаем тебе</Typography>
         <Typography noWrap>навести порядок!</Typography>
       </SubTitle>
       <BlockContent className={classes.members}>
-        {isPublicAltioreLoading ? (
+        {isPublicLorderLoading ? (
           <div className={classes.loader}>
             <CircularProgress size={100} color="secondary" />
           </div>
-        ) : isPublicAltioreLoaded ? (
+        ) : isPublicLorderLoaded ? (
           <Grid className={classes.personsBlock} container justify="space-evenly" spacing={10}>
             {preparedTeam.map(({ member: { id, avatar, displayName } }) => (
               <Grid item key={id}>

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { fetchAltiore } from '#/@store/publicAltiore';
+import { fetchLorder } from '#/@store/publicLorder';
 import { fetchStatistics } from '#/@store/statistics';
 
 import { HiTsx } from './Hi';
@@ -8,11 +8,11 @@ import { HiTsx } from './Hi';
 import { withResize } from '@hooks/withResize';
 
 const masStateToProps = () => ({
-  brandName: 'Altiore',
+  brandName: 'Lorder',
 });
 
 const mapDispatch = {
-  fetchAltiore,
+  fetchLorder,
   fetchStatistics,
 };
 

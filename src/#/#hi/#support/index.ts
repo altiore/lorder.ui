@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Support } from './Support';
 
 const masStateToProps = () => ({
-  brandName: 'Altiore',
+  brandName: 'Lorder',
 });
 
 export default connect(masStateToProps)(Support);

@@ -18,7 +18,7 @@ import ScreenTeam from './ScreenTeam';
 export interface IHiProps {
   brandName: string;
   classes: any;
-  fetchAltiore: () => any;
+  fetchLorder: () => any;
   fetchStatistics: () => any;
   height: number;
   scrollWidth: number;
@@ -66,11 +66,11 @@ const BLOCKS = {
   },
 };
 
-export const HiTsx: React.FC<IHiProps> = ({ fetchAltiore, fetchStatistics, height, scrollWidth, width }) => {
+export const HiTsx: React.FC<IHiProps> = ({ fetchLorder, fetchStatistics, height, scrollWidth, width }) => {
   useEffect(() => {
     fetchStatistics();
-    fetchAltiore();
-  }, [fetchAltiore, fetchStatistics]);
+    fetchLorder();
+  }, [fetchLorder, fetchStatistics]);
 
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));

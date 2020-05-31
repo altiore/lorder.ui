@@ -131,7 +131,7 @@ const MainClockIco: React.FC<IMainClockIco> = ({ donePercent = 12 }) => {
         <linearGradient id="cz" x1="243.1" y1="324.22" x2="257.36" y2="324.22" xlinkHref="#a" />
         <linearGradient id="da" x1="149.33" y1="235.39" x2="163.72" y2="235.39" xlinkHref="#a" />
       </defs>
-      <title>Altiore</title>
+      <title>Lorder</title>
       <g>
         <path
           className={classes.a}

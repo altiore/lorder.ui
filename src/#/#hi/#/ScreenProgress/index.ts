@@ -2,22 +2,22 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { altioreMembers, isPublicAltioreLoaded, isPublicAltioreLoading } from '#/@store/publicAltiore';
+import { isPublicLorderLoaded, isPublicLorderLoading, lorderMembers } from '#/@store/publicLorder';
 
 import ScreenProgress from './ScreenProgress';
 
 import { IState } from '@types';
 
 interface IMappedProps {
-  isPublicAltioreLoaded: boolean;
-  isPublicAltioreLoading: boolean;
+  isPublicLorderLoaded: boolean;
+  isPublicLorderLoading: boolean;
   team: any[];
 }
 
 const mapState = createStructuredSelector<IState, IMappedProps>({
-  isPublicAltioreLoaded,
-  isPublicAltioreLoading,
-  team: altioreMembers,
+  isPublicLorderLoaded,
+  isPublicLorderLoading,
+  team: lorderMembers,
 } as any);
 
 export default connect(mapState)(ScreenProgress);

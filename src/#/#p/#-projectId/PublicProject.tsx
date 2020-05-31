@@ -98,7 +98,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
 
     return (
       <div className={classes.root}>
-        <HeaderFixed brandName="Altiore" brandLink="/" />
+        <HeaderFixed brandName="Lorder" brandLink="/" />
         <ProjectHead projectName={title} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
         <FollowProject roles={rolesList} />
         <Grid container className={classes.content}>
@@ -132,7 +132,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
         <AppBar key={'bottom'} position="static" component={'footer'}>
           <Toolbar className={classes.bottomBar}>
             <Typography variant="h6" color="inherit">
-              Copyright &copy; Altiore
+              Copyright &copy; Lorder
             </Typography>
             <div className={classes.sectionDesktop}>
               <IconButton color="inherit" href={'https://t.me/joinchat/BmXj_kK5vnoAWdQF7tTc1g'} target={'_blank'}>

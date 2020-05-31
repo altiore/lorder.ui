@@ -22,7 +22,7 @@ const ScreenProgress: React.FC<ScreenProgressI> = ({ name }) => {
     <Block name={name} alignItems="flex-start" grow className={classes.achievement}>
       <ScreenTitle>Достижения</ScreenTitle>
       <BlockContent>
-        <div className={classes.backTitle}>ALTIORE</div>
+        <div className={classes.backTitle}>LORDER</div>
         <Grid className={classes.numbers} container justify="space-evenly" alignItems="center" spacing={4}>
           <UsersAch title="Пользователей" />
           <ProjectsAch title="Проектов" />

@@ -22,7 +22,7 @@ import { StatusMove } from './project-status-moves/StatusMove';
 import { projectReducer } from './project/reducer';
 import { Project } from './projects';
 import { projects } from './projects';
-import { publicAltiore } from './publicAltiore/reducer';
+import { publicLorder } from './publicLorder/reducer';
 import { publicProject } from './publicProject';
 import { roles } from './roles/reducer';
 import { UserRole } from './roles/UserRole';
@@ -47,8 +47,8 @@ import { webHooks } from './webhooks/reducer';
 import { IState } from '@types';
 
 localForage.config({
-  description: 'Altiore contribution version 1.0',
-  name: 'altiore',
+  description: 'Lorder contribution version 1.0',
+  name: 'lorder',
   storeName: 'contribution',
   version: 1.0,
 });
@@ -77,7 +77,7 @@ const persistConfig: PersistConfig<Partial<IState>> = {
     'publicProject',
     'versionHistory',
   ],
-  key: 'altiore',
+  key: 'lorder',
   storage: localForage,
   transforms: [
     createTransform(
@@ -124,7 +124,7 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
     info,
     intl,
     notifications: notifications as any,
-    publicAltiore,
+    publicLorder,
     publicProject,
     roles,
     router: routerReducer(history),
