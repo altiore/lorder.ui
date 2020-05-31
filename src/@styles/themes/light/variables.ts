@@ -12,7 +12,7 @@ export const CONFIRM_COLOR = '#63BA3B';
 
 export const prettyScroll1 = (theme: Theme) => ({
   '&::-webkit-scrollbar': {
-    width: theme.spacing(),
+    width: theme.spacing(1),
   },
   '&::-webkit-scrollbar-thumb': {
     backgroundColor: '#919191',
@@ -24,6 +24,24 @@ export const prettyScroll1 = (theme: Theme) => ({
   },
   '&::-webkit-scrollbar-track': {
     backgroundColor: '#CED4D9',
+    borderRadius: theme.spacing(0.5),
+  },
+});
+
+export const prettyScroll2 = (theme: Theme) => ({
+  '&::-webkit-scrollbar': {
+    width: theme.spacing(0.75),
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: '#FAF0B5',
+    borderRadius: theme.spacing(0.5),
+    cursor: 'pointer',
+  },
+  '&::-webkit-scrollbar-thumb:hover': {
+    backgroundColor: '#FFB200',
+  },
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: '#424246',
     borderRadius: theme.spacing(0.5),
   },
 });

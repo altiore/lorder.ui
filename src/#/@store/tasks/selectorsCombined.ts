@@ -66,8 +66,8 @@ export const sortedByFilterTasks = createDeepEqualSelector(
 );
 
 export const sortedByFilterTasksWithActive = createDeepEqualSelector(
-  [sortedByFilterTasks, searchTerm, currentTask, projectId],
-  (tasks = [], sTerm = '', curTask, pId): Array<ITask | 'filter' | string | undefined> => {
+  [sortedByFilterTasks, searchTerm, currentTask, projectId, defaultProjectId],
+  (tasks = [], sTerm = '', curTask, pId, defPId): Array<ITask | 'filter' | string | undefined> => {
     return [
       curTask,
       'filter',
@@ -76,6 +76,7 @@ export const sortedByFilterTasksWithActive = createDeepEqualSelector(
           t.id !== get(curTask, 'id') &&
           includes([1, 2, 3], t.status) &&
           ~t.title.toLowerCase().indexOf(sTerm.trim().toLowerCase()) &&
+          t.projectId !== defPId &&
           (!pId || t.projectId === pId)
       ),
     ];

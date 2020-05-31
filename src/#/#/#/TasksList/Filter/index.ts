@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { ownProjectListNoProjectFirst } from '#/@store/projects';
+import { ownProjectListWithoutDefault } from '#/@store/projects';
 import { changeFilter, changeTasksFilter, projectId, searchTerm, tasksFilter } from '#/@store/tasksFilter';
 
 import { FilterTsx } from './Filter';
@@ -13,7 +13,7 @@ import { styles } from './styles';
 const mapState = createStructuredSelector({
   filter: tasksFilter,
   projectId,
-  projects: ownProjectListNoProjectFirst,
+  projects: ownProjectListWithoutDefault,
   searchTerm,
 } as any);
 

@@ -106,6 +106,6 @@ export const palette: Palette = {
     contrastText: '#29292b',
     dark: '#FFB200',
     light: '#f9edad',
-    main: '#FFF0B5',
+    main: '#FAF0B5',
   },
 };

@@ -18,19 +18,12 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: 0,
       },
       '& > svg': {
-        color: '#cecfcd',
         fontFamily: 'inherit',
         fontSize: 'inherit',
         margin: theme.spacing(0, 1),
       },
-      '&:focus-within': {
-        '& > svg': {
-          color: theme.palette.primary.main,
-        },
-        backgroundColor: '#fdfdfd',
-      },
       alignItems: 'center',
-      border: '1px solid #F3F3F3',
+      backgroundColor: 'transparent',
       borderRadius: 6,
       display: 'flex',
       fontFamily: theme.typography.fontFamily,
@@ -38,18 +31,50 @@ const useStyles = makeStyles((theme: Theme) =>
       height: theme.spacing(3.75),
       justifyContent: 'flex-start',
     },
+    inputDark: {
+      '& > svg': {
+        color: '#9F9F9F',
+      },
+      '& input': {
+        color: '#fafafa',
+      },
+      '& input::placeholder': {
+        color: '#9F9F9F',
+      },
+      '&:focus-within': {
+        '& > svg': {
+          color: theme.palette.secondary.main,
+        },
+        backgroundColor: 'rgb(61, 61, 63)',
+      },
+      border: '1px solid #9F9F9F',
+      color: '9F9F9F',
+    },
+    inputLight: {
+      '& > svg': {
+        color: '#cecfcd',
+      },
+      '&:focus-within': {
+        '& > svg': {
+          color: theme.palette.primary.main,
+        },
+        backgroundColor: '#fafafa',
+      },
+      border: '1px solid #F3F3F3',
+    },
   })
 );
 
 interface IInputLight extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+  dark?: boolean;
   icon: JSX.Element;
 }
 
-export const InputLightTsx: React.FC<IInputLight> = ({ icon, ...props }) => {
-  const { input } = useStyles();
+export const InputLightTsx: React.FC<IInputLight> = ({ icon, dark, ...props }) => {
+  const { input, inputLight, inputDark } = useStyles();
 
   return (
-    <div className={input}>
+    <div className={`${input} ${dark ? inputDark : inputLight}`}>
       <SearchIco />
       <input {...props} />
     </div>

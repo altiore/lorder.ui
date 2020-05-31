@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export class Timer {
-  projectId?: number | string = undefined;
+  projectId?: number = undefined;
   start?: moment.Moment;
   taskId?: number | string = undefined;
   time: number = 0;

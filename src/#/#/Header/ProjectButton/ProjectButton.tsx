@@ -29,6 +29,10 @@ export const ProjectButtonTsx: React.FC<IProjectButtonProps> = memo(
 
     const onMouseEnterHandler = useCallback(() => setIsOpen(true), [setIsOpen]);
 
+    const handleSelectProject = useCallback(() => {
+      selectProject(selectedProject);
+    }, [selectProject, selectedProject]);
+
     return (
       <Popover
         className={classes.projectPopover}
@@ -41,12 +45,12 @@ export const ProjectButtonTsx: React.FC<IProjectButtonProps> = memo(
         <Button
           className={classes.button}
           component="div"
-          onClick={selectProject(selectedProject)}
+          onClick={handleSelectProject}
           onMouseEnter={onMouseEnterHandler}
           onMouseLeave={onClosePopover}
           onMouseOver={onMouseEnterHandler}
-          variant={'outlined'}
-          color={'secondary'}
+          variant="outlined"
+          color="secondary"
         >
           <Typography variant="body1" noWrap className={classes.text}>
             {selectedProject.title}

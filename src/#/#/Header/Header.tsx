@@ -1,17 +1,13 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback } from 'react';
 import MediaQuery from 'react-responsive';
 import { Route, Switch } from 'react-router-dom';
 
-import moment from 'moment';
-
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
 import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import TimerIcon from '@material-ui/icons/Timer';
 
 import { AccountMenu } from '#/@common/account-menu';
@@ -24,10 +20,10 @@ import { IUserWorkData } from '#/@store/user-works';
 import CurrentTaskButton from './CurrentTaskButton';
 import Filters from './Filters';
 import ProjectButton from './ProjectButton';
-import { ProjectField } from './ProjectField';
+import ProjectSelect from './ProjectSelect';
 import { useStyles } from './styles';
 
-import { INotification } from '@types';
+import { INotification, IProject } from '@types';
 
 export interface IHeaderProps {
   isPaused: boolean;
@@ -35,54 +31,26 @@ export interface IHeaderProps {
   openTaskModal: any;
   push: any;
   selectedProject: Project;
+  showSuccess: (ev: INotification) => any;
   showWarning: (ev: INotification) => any;
   startUserWork: (data: IUserWorkData) => any;
 }
 
-const timer: any = null;
-
 export const HeaderTsx: React.FC<IHeaderProps> = memo(
-  ({ isPaused, openDialog, openTaskModal, push, selectedProject, showWarning, startUserWork }) => {
+  ({ isPaused, openDialog, openTaskModal, push, selectedProject, showSuccess, showWarning, startUserWork }) => {
     const classes = useStyles();
 
     const theme = useTheme();
-
-    useEffect(() => {
-      return () => {
-        if (timer) {
-          clearTimeout(timer);
-        }
-      };
-    }, []);
-
-    const handleClearTimeout = useCallback(() => {
-      if (timer) {
-        clearTimeout(timer);
-      }
-    }, []);
 
     const openCreateProject = useCallback(() => {
       openDialog(CreateProjectPopup, { scroll: 'body' });
     }, [openDialog]);
 
-    const [anchorEl, setAnchorEl] = useState<any>(null);
-    const menuOpen = useCallback(
-      (event: React.SyntheticEvent) => {
-        setAnchorEl(event.currentTarget);
-      },
-      [setAnchorEl]
-    );
-    const handleClose = useCallback(() => {
-      setAnchorEl(null);
-    }, [setAnchorEl]);
-
     const selectProject = useCallback(
-      (project: Project) => async () => {
+      async (project: IProject) => {
         const projectId = project.id as number;
-        handleClearTimeout();
-        setAnchorEl(null);
         if (selectedProject && selectedProject.id !== projectId) {
-          showWarning({
+          showSuccess({
             action: {
               callback: async () => {
                 await startUserWork({
@@ -99,50 +67,15 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
               },
               label: 'Создать',
             },
-            message: 'Просто создайте новую задачу для этого проекта',
-            title: `Чтобы переключиться на проект "${project.title}"`,
+            message: 'Создать задчу для обзора?',
+            title: `Доска проекта "${project.title}"`,
           });
-          push(`/`);
+          push(`/projects/${project.id}`);
         } else {
           push(`/projects/${project.id}`);
         }
       },
-      [handleClearTimeout, openTaskModal, push, selectedProject, showWarning, startUserWork, setAnchorEl]
-    );
-
-    const handleOpenInNew = useCallback(
-      (project: Project) => async (e: React.SyntheticEvent) => {
-        e.stopPropagation();
-        handleClearTimeout();
-        setAnchorEl(null);
-        push(`/projects/${project.id}`);
-        if (!selectedProject || selectedProject.id !== project.id) {
-          const taskTitle = `Обзор проекта "${project.title}" ` + moment().format('DD-MM-YYYY');
-          showWarning({
-            action: {
-              // callback: this.props.openTaskModal,
-              callback: async () => {
-                await startUserWork({
-                  projectId: project.id as number,
-                  title: taskTitle,
-                });
-                showWarning({
-                  action: {
-                    callback: openTaskModal,
-                    label: 'Редактировать',
-                  },
-                  message: `Хотите ее отредактировать?`,
-                  title: `Задача для проекта "${project.title}" успешно создана!`,
-                });
-              },
-              label: 'Создать задачу',
-            },
-            message: `Хотите создать задачу для него?`,
-            title: `Вы перешли к проекту "${project.title}"`,
-          });
-        }
-      },
-      [handleClearTimeout, openTaskModal, selectedProject, showWarning, startUserWork, push]
+      [openTaskModal, push, selectedProject, showSuccess, showWarning, startUserWork]
     );
 
     const nullComponent = useCallback(() => null, []);
@@ -155,16 +88,9 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
           </LinkIconButton>
           <div className={classes.buttonBlock}>
             {Boolean(selectedProject) && (
-              <ProjectButton selectProject={selectProject} onOpenInNew={handleOpenInNew} inProgress={!isPaused} />
+              <ProjectButton selectProject={selectProject} createTask={openTaskModal} inProgress={!isPaused} />
             )}
-            <IconButton color="secondary" onClick={menuOpen} className={classes.expandButton}>
-              <MoreHorizIcon />
-            </IconButton>
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} classes={{ paper: classes.menu }}>
-              <div>
-                <ProjectField onClick={selectProject} onOpenInNew={handleOpenInNew} />
-              </div>
-            </Menu>
+            <ProjectSelect openProject={selectProject} />
             <Tooltip title="Создать новый проект" placement="right">
               <IconButton color="secondary" onClick={openCreateProject} className={classes.expandButton}>
                 <AddIcon />

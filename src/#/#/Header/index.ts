@@ -4,7 +4,7 @@ import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
 import { openDialog } from '#/@store/dialog';
-import { showWarning } from '#/@store/notifications';
+import { showSuccess, showWarning } from '#/@store/notifications';
 import { selectedProject } from '#/@store/projects';
 import { openTaskModal } from '#/@store/tasks';
 import { isPaused, startUserWork } from '#/@store/user-works';
@@ -23,6 +23,7 @@ const mapDispatchToProps = {
   openDialog,
   openTaskModal,
   push,
+  showSuccess,
   showWarning,
   startUserWork,
 };

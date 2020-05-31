@@ -3,7 +3,7 @@ import { createMuiTheme, Theme } from '@material-ui/core/styles';
 import MuiDialog from './MuiDialog';
 import MuiTextField from './MuiTextField';
 import { defaultTheme as theme, palette } from './palette';
-import { prettyScroll1, SECONDARY_DARKEN } from './variables';
+import { prettyScroll1, prettyScroll2, SECONDARY_DARKEN } from './variables';
 
 const SHADOW_DEFAULT = '0 2px 10px #d8d8d8';
 const SHADOW_SECONDARY = '0 4px 10px rgba(242, 213, 120, 0.5)';
@@ -99,6 +99,14 @@ export default createMuiTheme({
         },
       },
     },
+    MuiTooltip: {
+      tooltipPlacementBottom: {
+        margin: theme.spacing(1, 0),
+      },
+      tooltipPlacementTop: {
+        margin: theme.spacing(1, 0),
+      },
+    },
   },
   palette,
   props: {
@@ -108,6 +116,9 @@ export default createMuiTheme({
     MuiTextField: {
       variant: 'outlined',
     },
+  },
+  scroll: {
+    secondary: prettyScroll2(theme),
   },
   shadow: {
     default: SHADOW_DEFAULT,
@@ -207,6 +218,9 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       scroll: object;
       width: number;
     };
+    scroll: {
+      secondary: any;
+    };
     shadow: {
       default: string;
       secondary: string;
@@ -228,6 +242,9 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       bigWidth?: number;
       scroll?: object;
       width?: number;
+    };
+    scroll?: {
+      secondary?: any;
     };
     shadow?: {
       default?: string;
