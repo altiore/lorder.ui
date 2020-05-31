@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/static/css/main.da94bdbc.chunk.css",
-    "main.js": "/main.3ac534db28f1fc06314d.bundle.js",
+    "main.js": "/main.50bb6536ce0393bba12b.bundle.js",
     "main.css.map": "/static/css/main.da94bdbc.chunk.css.map",
-    "main.js.map": "/main.3ac534db28f1fc06314d.bundle.js.map",
-    "runtime~main.js": "/runtime~main.3ac534db28f1fc06314d.bundle.js",
-    "runtime~main.js.map": "/runtime~main.3ac534db28f1fc06314d.bundle.js.map",
+    "main.js.map": "/main.50bb6536ce0393bba12b.bundle.js.map",
+    "runtime~main.js": "/runtime~main.50bb6536ce0393bba12b.bundle.js",
+    "runtime~main.js.map": "/runtime~main.50bb6536ce0393bba12b.bundle.js.map",
     "vendors~main.css": "/static/css/vendors~main.86ec1ccd.chunk.css",
-    "vendors~main.js": "/vendors~main.3ac534db28f1fc06314d.bundle.js",
+    "vendors~main.js": "/vendors~main.50bb6536ce0393bba12b.bundle.js",
     "vendors~main.css.map": "/static/css/vendors~main.86ec1ccd.chunk.css.map",
-    "vendors~main.js.map": "/vendors~main.3ac534db28f1fc06314d.bundle.js.map",
+    "vendors~main.js.map": "/vendors~main.50bb6536ce0393bba12b.bundle.js.map",
     "iframe.html": "/iframe.html",
-    "precache-manifest.7a50aa3d543a664683b6f46e07620df3.js": "/precache-manifest.7a50aa3d543a664683b6f46e07620df3.js",
+    "precache-manifest.4ca2099ee275d569a41cc50c5d059a62.js": "/precache-manifest.4ca2099ee275d569a41cc50c5d059a62.js",
     "service-worker.js": "/service-worker.js",
-    "vendors~main.3ac534db28f1fc06314d.bundle.js.LICENSE.txt": "/vendors~main.3ac534db28f1fc06314d.bundle.js.LICENSE.txt"
+    "vendors~main.50bb6536ce0393bba12b.bundle.js.LICENSE.txt": "/vendors~main.50bb6536ce0393bba12b.bundle.js.LICENSE.txt"
   },
   "entrypoints": [
-    "runtime~main.3ac534db28f1fc06314d.bundle.js",
+    "runtime~main.50bb6536ce0393bba12b.bundle.js",
     "static/css/vendors~main.86ec1ccd.chunk.css",
-    "vendors~main.3ac534db28f1fc06314d.bundle.js",
+    "vendors~main.50bb6536ce0393bba12b.bundle.js",
     "static/css/main.da94bdbc.chunk.css",
-    "main.3ac534db28f1fc06314d.bundle.js"
+    "main.50bb6536ce0393bba12b.bundle.js"
   ]
 }
