@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '100%',
       justifyContent: 'center',
       marginRight: 4,
+      opacity: 0,
       padding: theme.spacing(0.75, 1.25),
     },
     inputWrap: {
@@ -82,6 +83,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     listItem: {
       '&:hover, &:focus-within': {
+        '& $iconWrap': {
+          opacity: 1,
+        },
         backgroundColor: '#37373B',
         boxShadow: theme.shadows[2],
         color: theme.palette.secondary.main,
