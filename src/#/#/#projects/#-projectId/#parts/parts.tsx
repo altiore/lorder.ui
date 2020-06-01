@@ -16,9 +16,10 @@ export interface IProjectPartsProps extends RouteComponentProps {
 }
 
 const COLUMNS: ICrudColumn[] = [
-  { title: 'ID', path: 'id' },
+  { title: 'ID', path: 'id', isNumber: true },
   { title: 'Название', path: 'title', name: 'title' },
-  { title: 'Родитель', path: 'parentId' },
+  { title: 'Родитель', path: 'parentId', isNumber: true },
+  { title: 'Задач', path: 'tasks.length', isNumber: true },
 ];
 
 export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo(
