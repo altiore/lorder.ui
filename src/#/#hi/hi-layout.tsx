@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router-dom';
 
@@ -47,12 +47,14 @@ export const HiTsx: React.FC<IHiProps> = ({ userRole, brandName, classes }) => {
         <body className={classes.hiBody} />
       </Helmet>
 
-      <Switch>
-        {preparedRoutes.map((route: IRoute) => (
-          <NestedRoute key={route.path} {...route} />
-        ))}
-        <Route component={NotFound} />
-      </Switch>
+      <Suspense fallback={<div />}>
+        <Switch>
+          {preparedRoutes.map((route: IRoute) => (
+            <NestedRoute key={route.path} {...route} />
+          ))}
+          <Route component={NotFound} />
+        </Switch>
+      </Suspense>
 
       <AppBar key={'bottom'} position="static" component={'footer'} color="default">
         <Toolbar className={classes.bottomBar}>

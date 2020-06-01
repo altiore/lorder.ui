@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useEffect, useMemo } from 'react';
+import React, { lazy, Suspense, useCallback, useEffect, useMemo } from 'react';
 import { RouteComponentProps, Switch } from 'react-router-dom';
 
 import { Location } from 'history';
@@ -111,13 +111,15 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
       <div className={classes.background} />
       <div className={classes.background2} />
       <main className={classes.main}>
-        {Boolean(preparedRoutes) && (
-          <Switch location={pageLocation}>
-            {preparedRoutes.map((route: IRoute) => {
-              return <NestedRoute key={route.path} {...route} routes={MAIN_USER_ROUTES} location={pageLocation} />;
-            })}
-          </Switch>
-        )}
+        <Suspense fallback={<div />}>
+          {Boolean(preparedRoutes) && (
+            <Switch location={pageLocation}>
+              {preparedRoutes.map((route: IRoute) => {
+                return <NestedRoute key={route.path} {...route} routes={MAIN_USER_ROUTES} location={pageLocation} />;
+              })}
+            </Switch>
+          )}
+        </Suspense>
       </main>
     </div>
   );

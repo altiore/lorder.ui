@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { RouteComponentProps, Switch } from 'react-router-dom';
 
 import FaceIcon from '@material-ui/icons/Face';
@@ -70,11 +70,13 @@ export const MAIN_SUPER_ADMIN_ROUTES: IRoute[] = [
 export const SuperAdminLayoutJsx: React.FC<RouteComponentProps> = () => {
   return (
     <LayoutLeftDrawer routes={MAIN_SUPER_ADMIN_ROUTES}>
-      <Switch>
-        {MAIN_SUPER_ADMIN_ROUTES.map((route: IRoute) => {
-          return <NestedRoute key={route.path} {...route} />;
-        })}
-      </Switch>
+      <Suspense fallback={<div />}>
+        <Switch>
+          {MAIN_SUPER_ADMIN_ROUTES.map((route: IRoute) => {
+            return <NestedRoute key={route.path} {...route} />;
+          })}
+        </Switch>
+      </Suspense>
     </LayoutLeftDrawer>
   );
 };

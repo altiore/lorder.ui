@@ -1,4 +1,4 @@
-import React, { lazy, useEffect, useMemo } from 'react';
+import React, { lazy, Suspense, useEffect, useMemo } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 import NestedRoute from '#/@common/#NestedRoute';
@@ -111,13 +111,15 @@ export const ProjectTsx: React.FC<IProjectProps> = ({
 
   return (
     <LayoutLeftDrawer routes={availableRoutes} showFooter>
-      <Switch>
-        <Redirect from="/projects/:projectId" to={redirectTo} exact />
-        {availableRoutes.map((route: IRoute) => (
-          <NestedRoute key={route.path} {...route} />
-        ))}
-        <Redirect from="/projects/:projectId/invite" to={TASKS_ROUTE()} exact />
-      </Switch>
+      <Suspense fallback={<div />}>
+        <Switch>
+          <Redirect from="/projects/:projectId" to={redirectTo} exact />
+          {availableRoutes.map((route: IRoute) => (
+            <NestedRoute key={route.path} {...route} />
+          ))}
+          <Redirect from="/projects/:projectId/invite" to={TASKS_ROUTE()} exact />
+        </Switch>
+      </Suspense>
     </LayoutLeftDrawer>
   );
 };
