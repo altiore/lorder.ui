@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 import LoadingPage from '@components/LoadingPage';
@@ -11,6 +11,7 @@ import { IRoute, ROLE } from '@types';
 import { useAllowedRoutes } from '@utils/useAllowedRoutes';
 
 interface IAppProps {
+  getUserWorks: () => any;
   userRole: ROLE;
 }
 
@@ -43,7 +44,12 @@ export const APP_MAIN_ROUTES: IRoute[] = [
   },
 ];
 
-export const AppJsx: React.FC<IAppProps> = ({ userRole }) => {
+export const AppJsx: React.FC<IAppProps> = ({ getUserWorks, userRole }) => {
+  useEffect(() => {
+    // при каждом открытии таба мы должны заново получать работу, чтоб получить последнюю актуальную работу из другого устройства или окна браузера
+    window.onfocus = getUserWorks;
+  }, [getUserWorks]);
+
   const preparedRoutes = useAllowedRoutes(APP_MAIN_ROUTES, userRole);
 
   return (

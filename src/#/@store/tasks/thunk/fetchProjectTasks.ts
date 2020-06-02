@@ -9,7 +9,7 @@ export const fetchProjectTasks = (projectId, skip = 0) => async (dispatch, getSt
   const res = await dispatch(fetchProjectTasksA({ projectId, skip, count: PER_PAGE_COUNT }));
   if (projectTasks(getState()).length < get(res, ['payload', 'data', 'total'])) {
     if (!get(res, ['payload', 'data', 'list', 'length'])) {
-      console.error(
+      console.warn(
         'В ответе сервера нет данных, но данные получены не все. Нужно обработать случай, когда задача появляется новая задача, добавленная кем-то другим!'
       );
       return;

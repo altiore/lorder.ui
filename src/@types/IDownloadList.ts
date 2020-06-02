@@ -21,4 +21,5 @@ export interface IDownloadList<T> {
   startLoading: () => IDownloadList<T>;
   stopLoading: () => IDownloadList<T>;
   finishLoading(payload?: AxiosResponse<T[]>): IDownloadList<T>;
+  filter(a: (el: T) => boolean): IDownloadList<T>;
 }

@@ -39,7 +39,7 @@ export interface IUserWorkDelete {
 
 export const getUserWorks = requestActions(
   'USER_WORK/GET_MANY',
-  ({ count = 40, skip = 0, orderBy = 'startAt', order = 'desc' }): any => ({
+  ({ count = 40, skip = 0, orderBy = 'startAt', order = 'desc' } = {}): any => ({
     request: {
       params: {
         count,
