@@ -62,7 +62,9 @@ export const initialUpdateProject = createDeepEqualSelector(
   openedProject,
   p =>
     p && {
+      desc: p.desc,
       monthlyBudget: p.monthlyBudget,
+      slogan: p.slogan,
       title: p.title,
     }
 );

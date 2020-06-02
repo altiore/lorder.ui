@@ -33,6 +33,12 @@ export const ProfileForm: React.FC<InjectedFormProps> = ({ submitting, pristine,
         </div>
       </ListItem>
       <ListItem>
+        <Field name="desc" component={InputField} label="Описание" />
+      </ListItem>
+      <ListItem>
+        <Field name="slogan" component={InputField} label="Призыв присоединиться" />
+      </ListItem>
+      <ListItem>
         <Field
           name="monthlyBudget"
           component={InputField}

@@ -6,6 +6,8 @@ export interface IProject {
   uuid?: string;
   accessLevel?: ACCESS_LEVEL;
   title: string;
+  desc?: string;
+  slogan?: string;
   monthlyBudget?: number;
   owner?: any;
   ownerId?: number;
