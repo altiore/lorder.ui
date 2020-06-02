@@ -25,7 +25,6 @@ export interface IPublicProjectProps extends RouteComponentProps<{ projectId: st
   isAuth: boolean;
   fetchPublicProject: any;
   publicProjectData: PublicProject;
-  rolesList: any;
   team: Array<{
     image: string;
     name: string;
@@ -38,7 +37,7 @@ export interface IState {
 }
 
 export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
-  ({ fetchPublicProject, publicProjectData, isAuth, location, match, rolesList }) => {
+  ({ fetchPublicProject, publicProjectData, isAuth, location, match }) => {
     const project = useMemo(() => {
       return publicProjectData.project;
     }, [publicProjectData]);
@@ -99,8 +98,8 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
     return (
       <div className={classes.root}>
         <HeaderFixed brandName="Lorder" brandLink="/" />
-        <ProjectHead projectName={title} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
-        <FollowProject roles={rolesList} />
+        <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
+        <FollowProject project={project} />
         <Grid container className={classes.content}>
           <Block>
             <Grid item lg={6} md={12} sm={12}>
