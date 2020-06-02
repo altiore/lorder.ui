@@ -1,3 +1,1 @@
-import { ProjectHeadTsx } from './ProjectHead';
-
-export default ProjectHeadTsx;
+export { ProjectHeadTsx as default } from './ProjectHead';

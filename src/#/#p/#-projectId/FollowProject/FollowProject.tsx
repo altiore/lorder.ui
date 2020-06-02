@@ -4,11 +4,14 @@ import { Box, Button, Grid, MenuItem, Select, TextField } from '@material-ui/cor
 
 import { useStyles } from './styles';
 
+import { IProject, IUserRole } from '@types';
+
 interface IfollowProject {
-  roles: any[];
+  project: IProject;
+  roles: IUserRole[];
 }
 
-export const FollowProjectTsx = ({ roles }: IfollowProject) => {
+export const FollowProjectTsx = ({ project, roles }: IfollowProject) => {
   const [role, setRole] = useState('role');
   const handleSelect = useCallback((e: any) => {
     setRole(e.target.value);
@@ -17,7 +20,7 @@ export const FollowProjectTsx = ({ roles }: IfollowProject) => {
   const classes = useStyles();
   return (
     <Box className={classes.followWrap}>
-      <h2 className={classes.taglineHeader}>А ты управляешь своим временем?</h2>
+      {project.slogan && <h2 className={classes.taglineHeader}>{project.slogan}</h2>}
       <Grid container justify="space-around" alignItems="center" className={classes.buttonsWrap}>
         <TextField
           className={classes.emailInput}
