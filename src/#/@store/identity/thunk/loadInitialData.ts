@@ -19,7 +19,7 @@ export const loadInitialData = () => async (dispatch: Dispatch<any>, getState: (
   const isStartRout = identifier(state);
   if (role !== ROLE.GUEST && !isLoading && !isStartRout) {
     await dispatch(fetchAllParticipantProjects());
-    await dispatch(getUserWorks({}));
+    await dispatch(getUserWorks());
     await dispatch(getAllTaskTypes());
     const user: IIdentityState = baseIdentityState(getState());
     if (user) {

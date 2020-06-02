@@ -22,7 +22,6 @@ interface IChangePayload {
   pathname: string;
 }
 type Selected = number;
-type P = IChangePayload | Selected;
 
 const locationChangeHandler = (state: IS, { payload }: Action<IChangePayload>) => {
   if (!payload) {
@@ -36,7 +35,7 @@ const locationChangeHandler = (state: IS, { payload }: Action<IChangePayload>) =
 };
 
 const selectProjectHandler = (state: IS, { payload }: Action<Selected>) => {
-  return { ...state, roles: [], selected: payload };
+  return { ...state, parts: [], roles: [], selected: payload };
 };
 
 const fetchProjectRolesSuccessHandler = (state: IS, { payload }) => {

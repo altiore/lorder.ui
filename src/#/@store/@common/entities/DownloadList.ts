@@ -81,7 +81,6 @@ export class DownloadList<T = any> implements IDownloadList<T> {
       isLoading: false,
       list: uniqBy(
         [
-          ...this.list,
           ...(list || []).map(
             (el: any) =>
               new this.Entity({
@@ -89,6 +88,7 @@ export class DownloadList<T = any> implements IDownloadList<T> {
                 ...el,
               })
           ),
+          ...this.list,
         ],
         uniqueBy
       ),
@@ -143,5 +143,10 @@ export class DownloadList<T = any> implements IDownloadList<T> {
       isLoading: this.isLoading,
       list: [...this.list.slice(0, index), newItem, ...this.list.slice(index + 1)],
     });
+  }
+
+  filter(filterFn): DownloadList<T> {
+    this.list = this.list.filter(filterFn);
+    return this;
   }
 }
