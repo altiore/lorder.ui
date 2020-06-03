@@ -19,7 +19,4 @@ const mapDispatch = {
   fetchRoles,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(ProjectRolesJsx);
+export default connect(mapState, mapDispatch)(ProjectRolesJsx);

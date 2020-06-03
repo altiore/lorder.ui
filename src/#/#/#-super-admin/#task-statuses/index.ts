@@ -23,7 +23,4 @@ const dispatchState = {
   fetchItems: fetchTaskStatuses,
 };
 
-export default connect(
-  mapState,
-  dispatchState
-)(TaskStatuses);
+export default connect(mapState, dispatchState)(TaskStatuses);

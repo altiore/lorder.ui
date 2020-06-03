@@ -14,7 +14,4 @@ const mapProps = {
   activateUser,
 };
 
-export default connect(
-  mapState,
-  mapProps
-)(StartJsx as any);
+export default connect(mapState, mapProps)(StartJsx as any);

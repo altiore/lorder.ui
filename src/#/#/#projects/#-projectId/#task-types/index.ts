@@ -27,7 +27,4 @@ const mapDispatch = {
   getAllTaskTypes,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(ProjectTaskTypesJsx);
+export default connect(mapState, mapDispatch)(ProjectTaskTypesJsx);

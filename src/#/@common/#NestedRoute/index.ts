@@ -16,7 +16,4 @@ const mapDispatch = {
   // loadDomainIntl,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(NestedRoute);
+export default connect(mapState, mapDispatch)(NestedRoute);

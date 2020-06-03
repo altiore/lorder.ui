@@ -18,6 +18,10 @@ export const FollowProjectTsx = ({ project, roles }: IfollowProject) => {
   }, []);
 
   const classes = useStyles();
+  if (!project.slogan) {
+    return null;
+  }
+
   return (
     <Box className={classes.followWrap}>
       {project.slogan && <h2 className={classes.taglineHeader}>{project.slogan}</h2>}

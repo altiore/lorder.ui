@@ -24,6 +24,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     maxWidth: 620,
   },
   content: {
+    background: '#fff',
     display: 'flex',
     flexFlow: 'column nowrap',
     flexGrow: 1,
@@ -67,6 +68,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.up('md')]: {
       display: 'flex',
     },
+  },
+  sectionWrap: {
+    background: '#fff',
+    paddingBottom: 170,
   },
   title: {
     color: '#ffffff',

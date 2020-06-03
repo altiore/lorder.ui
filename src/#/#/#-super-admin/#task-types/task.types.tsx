@@ -13,7 +13,10 @@ export interface ITaskTypesProps extends RouteComponentProps {
   list: any[];
 }
 
-const COLUMNS = [{ title: 'Id', path: 'id' }, { title: 'Тип', path: 'name', name: 'name' }];
+const COLUMNS = [
+  { title: 'Id', path: 'id' },
+  { title: 'Тип', path: 'name', name: 'name' },
+];
 
 export const TaskTypesJsx: React.FC<ITaskTypesProps> = ({ postTaskType, deleteTaskType, getAllTaskTypes, list }) => {
   useEffect(() => {

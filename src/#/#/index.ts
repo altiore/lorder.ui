@@ -24,7 +24,4 @@ const mapDispatchToProps = {
   push,
 };
 
-export default connect(
-  mapState,
-  mapDispatchToProps
-)(MainJsx);
+export default connect(mapState, mapDispatchToProps)(MainJsx);

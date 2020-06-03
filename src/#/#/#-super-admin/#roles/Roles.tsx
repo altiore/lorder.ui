@@ -14,7 +14,10 @@ export interface IRolesProps extends RouteComponentProps {
   rolesList: any[];
 }
 
-const COLUMNS = [{ title: 'Id', path: 'id', name: 'id' }, { title: 'Name', path: 'name', name: 'name' }];
+const COLUMNS = [
+  { title: 'Id', path: 'id', name: 'id' },
+  { title: 'Name', path: 'name', name: 'name' },
+];
 
 export const Roles: React.FC<IRolesProps> = React.memo(
   ({ createRole, deleteRole, deleteManyRoles, fetchRoles, rolesList }) => {

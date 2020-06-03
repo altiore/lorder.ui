@@ -22,9 +22,8 @@ export class IProjectFormProps {
   buttonText?: string;
 }
 
-export const CreateProjectPopupJsx: React.FunctionComponent<
-  IProjectFormProps & InjectedFormProps<{}, IProjectFormProps>
-> = ({ handleSubmit, onClose }) => {
+export const CreateProjectPopupJsx: React.FunctionComponent<IProjectFormProps &
+  InjectedFormProps<{}, IProjectFormProps>> = ({ handleSubmit, onClose }) => {
   const classes = useStyles();
 
   return (

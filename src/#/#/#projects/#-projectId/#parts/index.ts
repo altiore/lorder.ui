@@ -16,7 +16,4 @@ const mapDispatch = {
   fetchProjectParts,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(ProjectPartsJsx);
+export default connect(mapState, mapDispatch)(ProjectPartsJsx);

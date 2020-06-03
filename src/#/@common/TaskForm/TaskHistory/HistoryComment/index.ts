@@ -23,8 +23,4 @@ const mergeProps = ({ getProjectMemberById }, restProps, { createdBy, ...restOwn
   };
 };
 
-export default connect<any, any, any, { user: IUser }>(
-  mapState,
-  mapDispatch,
-  mergeProps
-)(Comment);
+export default connect<any, any, any, { user: IUser }>(mapState, mapDispatch, mergeProps)(Comment);

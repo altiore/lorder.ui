@@ -21,7 +21,4 @@ const mapDispatch = {
   openDialog,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(ProjectTsx);
+export default connect(mapState, mapDispatch)(ProjectTsx);

@@ -15,7 +15,4 @@ const mapDispatch = {
   acceptInvitation,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(ProjectInviteJsx);
+export default connect(mapState, mapDispatch)(ProjectInviteJsx);

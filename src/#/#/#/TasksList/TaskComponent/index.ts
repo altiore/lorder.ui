@@ -29,7 +29,4 @@ const mapDispatch = {
   startUserWork,
 };
 
-export default connect<any, any, ITaskComponentOwn>(
-  mapStateToProps as any,
-  mapDispatch
-)(TaskComponentTsx);
+export default connect<any, any, ITaskComponentOwn>(mapStateToProps as any, mapDispatch)(TaskComponentTsx);

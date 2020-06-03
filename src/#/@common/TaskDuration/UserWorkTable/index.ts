@@ -24,7 +24,4 @@ const mapDispatchToProps = {
   stopUserWork,
 };
 
-export const UserWorkTable = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserWorkTableJsx) as any;
+export const UserWorkTable = connect(mapStateToProps, mapDispatchToProps)(UserWorkTableJsx) as any;

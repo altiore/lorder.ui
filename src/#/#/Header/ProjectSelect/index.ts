@@ -30,7 +30,4 @@ const mapDispatchToProps = {
   startUserWork,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProjectSelect);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectSelect);

@@ -17,7 +17,4 @@ const dispatchState = {
   fetchRoles,
 };
 
-export default connect(
-  mapState,
-  dispatchState
-)(Roles);
+export default connect(mapState, dispatchState)(Roles);

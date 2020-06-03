@@ -12,7 +12,4 @@ const mapDispatch = {
   uploadAvatar,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Avatar);
+export default connect(mapState, mapDispatch)(Avatar);

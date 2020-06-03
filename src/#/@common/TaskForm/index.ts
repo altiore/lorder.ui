@@ -78,20 +78,22 @@ export const PatchTaskForm = connect<
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(reduxForm<ITaskFormData, ITaskFormProps>({
-  enableReinitialize: true,
-  form: EDIT_TASK_FORM,
-  onSubmit: async (values, dispatch, { projectId }: any) => {
-    const val = { ...values, projectId };
-    return val.id ? dispatch(patchProjectTask(val)) : dispatch(postProjectTask(val));
-  },
-  onSubmitFail,
+)(
+  reduxForm<ITaskFormData, ITaskFormProps>({
+    enableReinitialize: true,
+    form: EDIT_TASK_FORM,
+    onSubmit: async (values, dispatch, { projectId }: any) => {
+      const val = { ...values, projectId };
+      return val.id ? dispatch(patchProjectTask(val)) : dispatch(postProjectTask(val));
+    },
+    onSubmitFail,
 
-  onSubmitSuccess: (result, dispatch) => {
-    const actionType = get(result, 'meta.previousAction.type');
-    const data = get(result, 'payload.data');
-    if (actionType === patchProjectTask.toString() || actionType === postProjectTask.toString()) {
-      dispatch(initialize(EDIT_TASK_FORM, pick(data, EDIT_TASK_FORM_PROPS), false));
-    }
-  },
-})(TaskFormJsx) as any);
+    onSubmitSuccess: (result, dispatch) => {
+      const actionType = get(result, 'meta.previousAction.type');
+      const data = get(result, 'payload.data');
+      if (actionType === patchProjectTask.toString() || actionType === postProjectTask.toString()) {
+        dispatch(initialize(EDIT_TASK_FORM, pick(data, EDIT_TASK_FORM_PROPS), false));
+      }
+    },
+  })(TaskFormJsx) as any
+);

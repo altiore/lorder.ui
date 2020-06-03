@@ -25,7 +25,4 @@ const mapDispatchToProps = {
   updateMemberLevel,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProjectMembersJsx);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectMembersJsx);

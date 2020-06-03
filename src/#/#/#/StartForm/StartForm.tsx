@@ -23,9 +23,8 @@ export class IStartFormProps {
   buttonText?: string;
 }
 
-export const StartFormJsx: React.FunctionComponent<
-  IInternalProps & InjectedFormProps<IStartFormData, IStartFormProps>
-> = React.memo(({ classes, handleSubmit, selectedProject }) => {
+export const StartFormJsx: React.FunctionComponent<IInternalProps &
+  InjectedFormProps<IStartFormData, IStartFormProps>> = React.memo(({ classes, handleSubmit, selectedProject }) => {
   const [hovered, setHovered] = useState(false);
 
   const onHover = () => setHovered(true);

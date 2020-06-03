@@ -21,7 +21,4 @@ const mapDispatchToProps = {
   push,
 };
 
-export const AccountMenu = connect<any, any, any, any>(
-  mapStateToProps,
-  mapDispatchToProps
-)(AccountMenuTsx);
+export const AccountMenu = connect<any, any, any, any>(mapStateToProps, mapDispatchToProps)(AccountMenuTsx);

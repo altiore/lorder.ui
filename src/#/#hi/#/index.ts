@@ -16,7 +16,4 @@ const mapDispatch = {
   fetchStatistics,
 };
 
-export default connect(
-  masStateToProps,
-  mapDispatch
-)(withResize(HiTsx) as any);
+export default connect(masStateToProps, mapDispatch)(withResize(HiTsx) as any);

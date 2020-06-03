@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import SwipeableViews from 'react-swipeable-views';
 
 import get from 'lodash/get';
 
-import { AppBar, Divider, Grid, IconButton, Toolbar, Typography } from '@material-ui/core/';
+import { AppBar, Grid, IconButton, Paper, Tab, Tabs, Toolbar, Typography } from '@material-ui/core/';
 
 import TelegramIco from '@components/@icons/Telegram';
 import { Block } from '@components/Block';
@@ -19,6 +20,7 @@ import { PublicProject } from '#/@store/publicProject';
 
 import FollowProject from './FollowProject';
 import ProjectHead from './ProjectHead';
+import { StatisticTablesTsx } from './StatisticsTables/StatisticsTables';
 import { useStyles } from './styles';
 
 export interface IPublicProjectProps extends RouteComponentProps<{ projectId: string }> {
@@ -36,8 +38,32 @@ export interface IState {
   width: number;
 }
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`wrapped-tabpanel-${index}`}
+      aria-labelledby={`wrapped-tab-${index}`}
+      {...other}
+    >
+      {value === index && <div>{children}</div>}
+    </div>
+  );
+}
+
 export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
   ({ fetchPublicProject, publicProjectData, isAuth, location, match }) => {
+    const [value, setValue] = React.useState(0);
+
     const project = useMemo(() => {
       return publicProjectData.project;
     }, [publicProjectData]);
@@ -88,6 +114,14 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
       }));
     }, [members]);
 
+    const handleChange = useCallback((_, newValue: number) => {
+      setValue(newValue);
+    }, []);
+
+    const handleChangeIndex = useCallback((index: number) => {
+      setValue(index);
+    }, []);
+
     if (isLoading || !isLoaded || !chartData || !chartValueData) {
       return <LoadingPage />;
     }
@@ -98,19 +132,33 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
     return (
       <div className={classes.root}>
         <HeaderFixed brandName="Lorder" brandLink="/" />
+
         <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
         <FollowProject project={project} />
+        <Paper square variant="outlined" className={classes.sectionWrap}>
+          <Tabs value={value} onChange={handleChange} indicatorColor="primary" textColor="primary" variant="fullWidth">
+            <Tab label="Таблицы" />
+            <Tab label="Диаграммы" />
+          </Tabs>
+          <SwipeableViews axis={'x-reverse'} index={value} onChangeIndex={handleChangeIndex}>
+            <TabPanel value={value} index={0}>
+              <StatisticTablesTsx timeStatistic={chartData} worthPoints={chartValueData} />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <Grid container className={classes.content}>
+                <Block>
+                  <Grid item lg={6} md={12} sm={12}>
+                    <PieChart key={1} data={chartData} title="Статистика по времени" unit="h" />
+                  </Grid>
+                  <Grid item lg={6} md={12} sm={12}>
+                    <PieChart key={2} data={chartValueData} title="Статистика по ценности" />
+                  </Grid>
+                </Block>
+              </Grid>
+            </TabPanel>
+          </SwipeableViews>
+        </Paper>
         <Grid container className={classes.content}>
-          <Block>
-            <Grid item lg={6} md={12} sm={12}>
-              <PieChart key={1} data={chartData} title="Статистика по времени" unit="h" />
-            </Grid>
-            <Grid item lg={6} md={12} sm={12}>
-              <PieChart key={2} data={chartValueData} title="Статистика по ценности" />
-            </Grid>
-          </Block>
-
-          <Divider />
           <Block spacing={10}>
             <Grid item className={classes.profile} xs={12}>
               <Typography variant="h4">Команда проекта</Typography>

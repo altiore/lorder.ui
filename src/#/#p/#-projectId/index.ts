@@ -18,7 +18,4 @@ const mapDispatch = {
   fetchPublicProject,
 };
 
-export default connect(
-  masStateToProps,
-  mapDispatch
-)(PublicProjectTsx);
+export default connect(masStateToProps, mapDispatch)(PublicProjectTsx);

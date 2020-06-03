@@ -19,7 +19,4 @@ const mapDispatch = {
   updateStatistic,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(SettingsTsx);
+export default connect(mapState, mapDispatch)(SettingsTsx);

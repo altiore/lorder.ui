@@ -4,7 +4,4 @@ import { DashboardJsx } from './Dashboard';
 
 const mapDispatchToProps = {};
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(DashboardJsx);
+export default connect(undefined, mapDispatchToProps)(DashboardJsx);

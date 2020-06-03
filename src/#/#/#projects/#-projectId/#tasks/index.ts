@@ -27,7 +27,4 @@ const mapDispatch = {
   toggleOpenedTab,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(withResize(DragAndDrop));
+export default connect(mapState, mapDispatch)(withResize(DragAndDrop));
