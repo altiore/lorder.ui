@@ -73,7 +73,10 @@ export class DurationFieldTsx extends React.Component<IDurationFieldProps, IStat
   }
 
   private valueOnClick = () => {
-    this.setState(({ isEdit }) => ({ isEdit: !isEdit }), () => this.input.focus());
+    this.setState(
+      ({ isEdit }) => ({ isEdit: !isEdit }),
+      () => this.input.focus()
+    );
   };
 
   private onKeyPress = (event: React.KeyboardEvent) => {

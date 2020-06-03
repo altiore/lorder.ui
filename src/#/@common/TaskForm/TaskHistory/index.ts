@@ -16,7 +16,4 @@ const mapDispatch = {
   fetchTaskLogs,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(TaskHistoryTsx);
+export default connect(mapState, mapDispatch)(TaskHistoryTsx);

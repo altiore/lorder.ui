@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 
-import SettingsIcon from '@components/@icons/Settings';
-
-import { LinkButton } from '#/@common/LinkButton';
+import ButtonEdit from '@components/ButtonEdit';
 
 import ProjectLogo from '../data/time.png';
 import { useStyles } from './styles';
@@ -26,12 +24,7 @@ export const ProjectHeadTsx = ({ project, editProjectLink, isAuth }: IprojectHea
           <div>
             <h1 className={classes.projectName}>{project.title}</h1>
             {project.desc && <p className={classes.projectTagline}>{project.desc}</p>}
-            {isAuth && (
-              <LinkButton to={editProjectLink} className={classes.editButton}>
-                <SettingsIcon className={classes.settingsIcon} />
-                <Typography className={classes.editButtonText}>Редактировать</Typography>
-              </LinkButton>
-            )}
+            {isAuth && <ButtonEdit routePath={editProjectLink}>Редактировать</ButtonEdit>}
           </div>
         </Grid>
         <Box className={classes.imageWrap}>

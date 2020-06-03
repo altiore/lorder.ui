@@ -11,7 +11,4 @@ const mapDispatch = {
   hide,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Notification);
+export default connect(mapState, mapDispatch)(Notification);

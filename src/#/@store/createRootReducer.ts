@@ -112,41 +112,44 @@ const persistConfig: PersistConfig<Partial<IState>> = {
 };
 
 export async function createRootReducer(history: History, asyncReducers = {}) {
-  return persistReducer(persistConfig, combineReducers({
-    /** common reducers */
-    asyncReducers: asyncReducersReducer,
-    counter: counterReducer,
-    dialog,
-    externalLibraries,
-    form,
-    highcharts,
-    identity,
-    info,
-    intl,
-    notifications: notifications as any,
-    publicLorder,
-    publicProject,
-    roles,
-    router: routerReducer(history),
-    sockets: socketsReducer,
-    statistics,
-    ui: uiReducer,
-    versionHistory,
-    /** end common reducers */
+  return persistReducer(
+    persistConfig,
+    combineReducers({
+      /** common reducers */
+      asyncReducers: asyncReducersReducer,
+      counter: counterReducer,
+      dialog,
+      externalLibraries,
+      form,
+      highcharts,
+      identity,
+      info,
+      intl,
+      notifications: notifications as any,
+      publicLorder,
+      publicProject,
+      roles,
+      router: routerReducer(history),
+      sockets: socketsReducer,
+      statistics,
+      ui: uiReducer,
+      versionHistory,
+      /** end common reducers */
 
-    feedback,
-    other,
-    project: projectReducer,
-    projects,
-    projectStatusMoves: projectStatusMovesReducer,
-    taskActive,
-    tasks,
-    tasksFilter,
-    taskStatuses,
-    taskTypes,
-    timer,
-    userWorks,
-    webHooks,
-    ...asyncReducers,
-  }) as Reducer<Partial<IState>>);
+      feedback,
+      other,
+      project: projectReducer,
+      projects,
+      projectStatusMoves: projectStatusMovesReducer,
+      taskActive,
+      tasks,
+      tasksFilter,
+      taskStatuses,
+      taskTypes,
+      timer,
+      userWorks,
+      webHooks,
+      ...asyncReducers,
+    }) as Reducer<Partial<IState>>
+  );
 }

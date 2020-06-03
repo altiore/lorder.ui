@@ -14,7 +14,4 @@ const mapDispatch = {
   getAllWebHooks,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(WebHooksJsx);
+export default connect(mapState, mapDispatch)(WebHooksJsx);

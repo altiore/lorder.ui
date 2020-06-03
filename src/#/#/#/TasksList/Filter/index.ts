@@ -23,8 +23,5 @@ const mapDispatch = {
 };
 
 export const Filter = withStyles(styles, { withTheme: true })(
-  connect<any, any, any>(
-    mapState,
-    mapDispatch
-  )(FilterTsx as any)
+  connect<any, any, any>(mapState, mapDispatch)(FilterTsx as any)
 );

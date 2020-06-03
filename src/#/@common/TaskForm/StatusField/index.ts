@@ -32,7 +32,4 @@ const mapDispatch = {
   onStop: stopUserWork,
 };
 
-export default connect<IStatusFieldState, any, any, any>(
-  mapState,
-  mapDispatch
-)(TaskStatus);
+export default connect<IStatusFieldState, any, any, any>(mapState, mapDispatch)(TaskStatus);

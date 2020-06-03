@@ -30,7 +30,4 @@ const mapDispatch = {
   toggleUiSetting,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(withStyles(styles, { withTheme: true })(FiltersTsx));
+export default connect(mapState, mapDispatch)(withStyles(styles, { withTheme: true })(FiltersTsx));

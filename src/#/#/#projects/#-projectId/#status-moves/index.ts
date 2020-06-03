@@ -25,7 +25,4 @@ const mapDispatchToProps = {
   fetchItems: fetchProjectStatusMoves,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StatusMovesJsx);
+export default connect(mapStateToProps, mapDispatchToProps)(StatusMovesJsx);

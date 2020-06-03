@@ -10,22 +10,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
       justifyContent: 'center',
     },
   },
-  editButton: {
-    backgroundColor: 'rgb(44, 44, 46)',
-    borderColor: 'rgb(197, 197, 197)',
-    borderRadius: 18,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    color: '#ffffff',
-    height: 36,
-    width: 170,
-  },
-  editButtonText: {
-    fontFamily: 'Roboto',
-    fontSize: 14,
-    fontWeight: 300,
-    marginLeft: 13,
-  },
   imageWrap: {
     height: 228,
     width: 226,
@@ -35,7 +19,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   projectHeadWrap: {
     backgroundImage: 'linear-gradient(45deg, #29292b 0%, #424247 52%, #29292b 100%)',
-    marginBottom: '15px',
     minHeight: 350,
     [theme.breakpoints.down('xs')]: {
       textAlign: 'center',
@@ -59,10 +42,5 @@ export const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.down('xs')]: {
       textAlign: 'center',
     },
-  },
-  settingsIcon: {
-    fontSize: 28,
-    left: 5,
-    position: 'absolute',
   },
 }));

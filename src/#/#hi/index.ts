@@ -23,7 +23,4 @@ const mapDispatch = {
   fetchStatistics,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatch
-)(withStyles(styles)(HiTsx) as any);
+export default connect(mapStateToProps, mapDispatch)(withStyles(styles)(HiTsx) as any);

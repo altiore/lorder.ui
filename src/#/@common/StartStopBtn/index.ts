@@ -26,7 +26,4 @@ const mapDispatchToProps = {
   onStopPaused: stopPausedTask,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StartStopBtn) as (props: ITaskDurationOwn) => JSX.Element;
+export default connect(mapStateToProps, mapDispatchToProps)(StartStopBtn) as (props: ITaskDurationOwn) => JSX.Element;

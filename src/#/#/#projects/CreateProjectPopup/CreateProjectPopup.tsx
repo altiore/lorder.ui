@@ -18,9 +18,8 @@ export class IProjectFormProps {
   buttonText?: string;
 }
 
-export const CreateProjectPopupJsx: React.StatelessComponent<
-  IProjectFormProps & InjectedFormProps<{}, IProjectFormProps>
-> = ({ handleSubmit, onClose }) => (
+export const CreateProjectPopupJsx: React.StatelessComponent<IProjectFormProps &
+  InjectedFormProps<{}, IProjectFormProps>> = ({ handleSubmit, onClose }) => (
   <React.Fragment>
     <DialogContent>
       <form onSubmit={handleSubmit}>

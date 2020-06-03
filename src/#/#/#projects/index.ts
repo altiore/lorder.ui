@@ -40,8 +40,4 @@ const mergeProps = (state: any, { goToPage, ...restDispatch }: any, { match, ...
   ...restOwn,
 });
 
-export default connect(
-  mapToState(true),
-  mapToProps,
-  mergeProps
-)(withResize(ProjectsJsx));
+export default connect(mapToState(true), mapToProps, mergeProps)(withResize(ProjectsJsx));

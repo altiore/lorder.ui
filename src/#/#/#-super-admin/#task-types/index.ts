@@ -16,7 +16,4 @@ const mapDispatch = {
   postTaskType,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(TaskTypesJsx);
+export default connect(mapState, mapDispatch)(TaskTypesJsx);

@@ -22,7 +22,4 @@ const mapDispatch = {
   openDialog,
 };
 
-export default connect<any, { openDialog: any; closeDialog: any }, IOwnProps>(
-  undefined,
-  mapDispatch
-)(CrudJsx);
+export default connect<any, { openDialog: any; closeDialog: any }, IOwnProps>(undefined, mapDispatch)(CrudJsx);

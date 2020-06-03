@@ -28,7 +28,4 @@ const mapDispatchToProps = {
   startUserWork,
 };
 
-export const Header = connect<any, any, {}, any>(
-  mapStateToProps,
-  mapDispatchToProps
-)(withResize(HeaderTsx));
+export const Header = connect<any, any, {}, any>(mapStateToProps, mapDispatchToProps)(withResize(HeaderTsx));

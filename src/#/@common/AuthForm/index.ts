@@ -16,7 +16,4 @@ const mapDispatch = {
   toggleUiSetting,
 };
 
-export default connect<any, any, any>(
-  mapState,
-  mapDispatch
-)(AuthForm as any);
+export default connect<any, any, any>(mapState, mapDispatch)(AuthForm as any);

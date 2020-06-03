@@ -23,8 +23,4 @@ const mergeProps = ({ ...restState }: any, { openDialog, saveUserWorks, ...restD
   ...restOwn,
 });
 
-export const DailyRoutine = connect(
-  mapStateToProps,
-  mapDispatch,
-  mergeProps
-)(TimeLine);
+export const DailyRoutine = connect(mapStateToProps, mapDispatch, mergeProps)(TimeLine);

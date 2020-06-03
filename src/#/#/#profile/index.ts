@@ -18,7 +18,4 @@ const mapState = createStructuredSelector<IState, any>({
 
 const mapDispatch = {};
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Profile);
+export default connect(mapState, mapDispatch)(Profile);

@@ -12,7 +12,4 @@ const mapDispatch = {
   resetGlobalCache,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(OtherTsx);
+export default connect(mapState, mapDispatch)(OtherTsx);

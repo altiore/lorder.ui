@@ -8,7 +8,4 @@ const mapStateToDispatch = {
   refreshAll,
 };
 
-export default connect(
-  undefined,
-  mapStateToDispatch
-)(NoMatchJsx);
+export default connect(undefined, mapStateToDispatch)(NoMatchJsx);
