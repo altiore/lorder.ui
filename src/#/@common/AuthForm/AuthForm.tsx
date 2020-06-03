@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
+// import { loadReCaptcha } from 'react-recaptcha-v3';
 import SwipeableViews from 'react-swipeable-views';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -8,7 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { LOGIN_FORM_NAME } from '../../@store/identity';
+import { LOGIN_FORM_NAME } from '#/@store/identity';
 
 import { LoginForm } from './LoginForm';
 import { MagicForm } from './MagicForm';
@@ -23,6 +24,11 @@ export interface ILoginProps {
 
 export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, clearErrors, isMagicLoginForm, toggleUiSetting }) => {
   const classes = useStyles();
+
+  // useEffect(() => {
+  //   loadReCaptcha(process.env.REACT_APP_GOOGLE_reCAPTCHA_TOKEN);
+  // }, []);
+
   const theme = useTheme();
 
   const isFullWidth = useMediaQuery(theme.breakpoints.up('sm'));
@@ -63,12 +69,13 @@ export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, clearErrors, isMagi
         </Tabs>
       </AppBar>
       <SwipeableViews
+        disableLazyLoading={false}
         style={{ width: isFullWidth ? 320 : 'calc(100vw - 64px)' }}
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={isMagicLoginForm ? 2 : formTypeIndex}
         onChangeIndex={handleChangeIndex}
       >
-        <LoginForm isLogin={isLogin} />
+        <LoginForm autoFocus={autoFocus} isLogin={isLogin} />
         <LoginForm isLogin={isLogin} />
         <MagicForm isLogin={isLogin} />
       </SwipeableViews>

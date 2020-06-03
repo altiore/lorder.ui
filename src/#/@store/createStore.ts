@@ -11,7 +11,8 @@ import { loadInitialData } from '#/@store/identity';
 import { getIntl } from '#/@store/intl/thunk';
 import { initSockets } from '#/@store/sockets';
 
-import { clientsMiddleware } from './@common/middlewares';
+import clientsMiddleware from './@common/middlewares/clients/clientsMiddleware';
+import { refreshTokenMiddleware } from './@common/middlewares/refreshToken';
 import { createRootReducer } from './createRootReducer';
 import { initExternalLibraries } from './externalLibraries/thunk';
 import { rootSaga } from './rootSaga';
@@ -38,7 +39,9 @@ export async function createStore(initialState?: any) {
   store = createReduxStore(
     rootReducer,
     initialState,
-    composeEnhancers(applyMiddleware(thunk, routerMiddleware(history), clientsMiddleware, sagaMiddleware))
+    composeEnhancers(
+      applyMiddleware(thunk, routerMiddleware(history), refreshTokenMiddleware, clientsMiddleware, sagaMiddleware)
+    )
   );
 
   sagaMiddleware.run(rootSaga);

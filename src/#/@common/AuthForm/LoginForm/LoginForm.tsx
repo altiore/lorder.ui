@@ -9,6 +9,7 @@ import UserIco from '@material-ui/icons/PermIdentity';
 
 import InputField from '@components/InputField';
 
+import ReCaptchaField from '../ReCaptchaField';
 import { useStyles } from './styles';
 
 export interface ILoginFormProps {
@@ -38,6 +39,7 @@ const LoginForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFormProp
   return (
     <div className={classes.wrapper}>
       <form className={classes.form} onSubmit={handleSubmit}>
+        <Field name="reCaptcha" component={ReCaptchaField} isLogin={isLogin} isMagic={false} />
         <Field
           autoComplete="username"
           autoFocus={autoFocus}
