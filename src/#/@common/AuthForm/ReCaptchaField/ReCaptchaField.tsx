@@ -13,7 +13,12 @@ export const ReCaptchaField: React.FC<IReCaptchaField> = ({ input: { onChange },
     return (isMagic ? 'magic_' : 'password') + (isLogin ? 'login' : 'registration');
   }, [isLogin, isMagic]);
 
-  useReCaptcha(process.env.REACT_APP_GOOGLE_reCAPTCHA_TOKEN as string, onChange, actionName);
+  useReCaptcha(
+    process.env.REACT_APP_GOOGLE_reCAPTCHA_TOKEN as string,
+    onChange,
+    actionName,
+    Boolean(process.env.REACT_APP_GOOGLE_reCAPTCHA_TOKEN)
+  );
 
   return null;
 };

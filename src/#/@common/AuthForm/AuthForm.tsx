@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from 'react';
-// import { loadReCaptcha } from 'react-recaptcha-v3';
 import SwipeableViews from 'react-swipeable-views';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -24,11 +23,6 @@ export interface ILoginProps {
 
 export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, clearErrors, isMagicLoginForm, toggleUiSetting }) => {
   const classes = useStyles();
-
-  // useEffect(() => {
-  //   loadReCaptcha(process.env.REACT_APP_GOOGLE_reCAPTCHA_TOKEN);
-  // }, []);
-
   const theme = useTheme();
 
   const isFullWidth = useMediaQuery(theme.breakpoints.up('sm'));
