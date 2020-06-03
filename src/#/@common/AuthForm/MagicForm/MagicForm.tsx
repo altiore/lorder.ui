@@ -10,6 +10,8 @@ import InputField from '@components/InputField';
 
 import { useStyles } from '#/@common/AuthForm/LoginForm/styles';
 
+import ReCaptchaField from '../ReCaptchaField';
+
 export class IMagicFormProps {
   autoFocus?: boolean;
   isLogin: boolean;
@@ -18,12 +20,14 @@ export class IMagicFormProps {
 const MagicForm: React.FC<InjectedFormProps<any, IMagicFormProps> & IMagicFormProps> = ({
   autoFocus,
   handleSubmit,
+  isLogin,
   submitting,
 }) => {
   const classes = useStyles();
   return (
     <div className={classes.wrapper}>
       <form className={classes.form} onSubmit={handleSubmit}>
+        <Field name="reCaptcha" component={ReCaptchaField} isLogin={isLogin} isMagic />
         <Field
           autoComplete="username"
           autoFocus={autoFocus}

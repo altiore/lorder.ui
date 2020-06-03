@@ -17,14 +17,15 @@ export const logIn = async (data: { email: string; password: string }, dispatch:
       await dispatch(logInPatch(data));
       dispatch(push('/'));
       await dispatch(loadInitialData() as any);
-      if ((window as any).PasswordCredential && 'navigator' in window) {
-        const cred = new (window as any).PasswordCredential({
-          id: data.email,
-          name: data.email,
-          password: data.password,
-        });
-        await (navigator as any).credentials.store(cred);
-      }
+      // Сохранение только что введенного пароля. (Не работает на iOS)
+      // if ((window as any).PasswordCredential && 'navigator' in window) {
+      //   const cred = new (window as any).PasswordCredential({
+      //     id: data.email,
+      //     name: data.email,
+      //     password: data.password,
+      //   });
+      //   await (navigator as any).credentials.store(cred);
+      // }
     } catch (e) {
       const statusError = get(e, 'error.response.status');
 
