@@ -16,6 +16,7 @@ export interface IGetAuthActivateData {
 export const postAuthMagic = requestActions<IPostAuthMagicData>('USER/SEND_MAGIC_LINK', (data: IPostAuthMagicData) => ({
   fail: false,
   form: MAGIC_FORM_NAME,
+  noAuth: true,
   request: {
     data: { email: data.email },
     method: 'POST',
@@ -40,6 +41,7 @@ export const getAuthActivate = requestActions<IGetAuthActivateData>(
 export const logInPatch = requestActions('USER/LOGIN', (data: { email: string; password: string }) => ({
   fail: false,
   form: LOGIN_FORM_NAME,
+  noAuth: true,
   request: {
     data,
     method: 'PATCH',
@@ -54,6 +56,7 @@ export const logInPatch = requestActions('USER/LOGIN', (data: { email: string; p
 export const registerPost = requestActions('USER/REGISTER', (data: { email: string; password: string }) => ({
   fail: false,
   form: LOGIN_FORM_NAME,
+  noAuth: true,
   request: {
     data,
     method: 'POST',
@@ -84,5 +87,16 @@ export const updateProfile = requestActions('ME/UPDATE', (newUserData: { display
   success: {
     message: 'Данные успешна обновлены',
     title: 'Успех!',
+  },
+}));
+
+export const refreshToken = requestActions('ME/REFRESH_TOKEN', (refreshToken: string, device: string) => ({
+  request: {
+    data: {
+      device,
+      refreshToken,
+    },
+    method: 'patch',
+    url: `/auth/refresh`,
   },
 }));

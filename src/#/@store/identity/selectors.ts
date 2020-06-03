@@ -14,7 +14,11 @@ export const userId = createDeepEqualSelector([baseIdentityState], state => stat
 
 export const userBearerKey = createDeepEqualSelector([baseIdentityState], state => state.bearerKey);
 
-export const deviceNumber = createDeepEqualSelector([baseIdentityState], state => state.deviceNumber);
+export const userRefreshToken = createDeepEqualSelector([baseIdentityState], state => state.refreshToken);
+
+export const userExpiresIn = createDeepEqualSelector([baseIdentityState], state => state.expiresIn);
+
+export const userIsRefreshing = createDeepEqualSelector([baseIdentityState], state => state.isRefreshing);
 
 export const userEmail = createDeepEqualSelector([baseIdentityState], state => state.email);
 

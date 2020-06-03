@@ -3,7 +3,7 @@ import pick from 'lodash/pick';
 import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
-import { getAuthActivate, logInPatch, setIsLoading, updateProfile } from './actions';
+import { getAuthActivate, logInPatch, refreshToken, setIsLoading, updateProfile } from './actions';
 import { Identity, IIdentityState } from './Identity';
 
 const getAuthActivateHandler = (state: IIdentityState) => {
@@ -70,11 +70,30 @@ const updateProfileSuccess = (state: IIdentityState, { payload }) => {
   });
 };
 
-const updateProfileFail = (state: IIdentityState, { payload }) => {
+const updateProfileFail = (state: IIdentityState) => {
   return new Identity({
     ...state,
     isLoading: false,
   });
+};
+
+const refreshTokenHandler = (state: IIdentityState) => {
+  return new Identity({
+    ...state,
+    isRefreshing: true,
+  });
+};
+
+const refreshTokenSuccessHandler = (state: IIdentityState, { payload }) => {
+  return new Identity({
+    ...state,
+    isRefreshing: false,
+    ...payload.data,
+  });
+};
+
+const refreshTokenFailHandler = (state: IIdentityState, { payload }) => {
+  return new Identity();
 };
 
 export const identity = handleActions<IIdentityState>(
@@ -91,6 +110,10 @@ export const identity = handleActions<IIdentityState>(
     [updateProfile.fail]: updateProfileFail,
 
     [setIsLoading.toString()]: setIsLoadingHandler,
+
+    [refreshToken.toString()]: refreshTokenHandler,
+    [refreshToken.success]: refreshTokenSuccessHandler,
+    [refreshToken.fail]: refreshTokenFailHandler,
 
     [PURGE]: logOutHandler,
   },
