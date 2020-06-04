@@ -5,7 +5,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     zIndex: 1207,
   },
   buttonBlock: {
+    alignItems: 'center',
     display: 'flex',
+    overflow: 'hidden',
     transition: theme.transitions.create('width', {
       duration: theme.transitions.duration.enteringScreen,
       easing: theme.transitions.easing.easeOut,

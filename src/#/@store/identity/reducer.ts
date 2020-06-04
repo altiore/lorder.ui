@@ -1,10 +1,19 @@
 import get from 'lodash/get';
 import pick from 'lodash/pick';
 import { Action, handleActions } from 'redux-actions';
-import { PURGE } from 'redux-persist';
+import { PURGE, REHYDRATE } from 'redux-persist';
 
 import { getAuthActivate, logInPatch, refreshToken, setIsLoading, updateProfile } from './actions';
 import { Identity, IIdentityState } from './Identity';
+
+const rehydrateHandler = (state, { payload }) => {
+  return new Identity({
+    ...state,
+    ...(payload?.identity || {}),
+    isLoading: false,
+    isRefreshing: false,
+  });
+};
 
 const getAuthActivateHandler = (state: IIdentityState) => {
   return new Identity({
@@ -98,6 +107,8 @@ const refreshTokenFailHandler = (state: IIdentityState, { payload }) => {
 
 export const identity = handleActions<IIdentityState>(
   {
+    [REHYDRATE]: rehydrateHandler,
+
     [getAuthActivate.toString()]: getAuthActivateHandler,
     [getAuthActivate.success]: getAuthActivateSuccessHandler,
 

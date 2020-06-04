@@ -29,6 +29,11 @@ export const createUserTaskFormInitials = createDeepEqualSelector([selectedProje
   p ? { projectId: p.id } : {}
 );
 
+export const defaultProjectInfo = createDeepEqualSelector(
+  [ownProjectList, defaultProjectId],
+  (list, defId) => list && list.find(el => el.id === defId)
+);
+
 export const projectsExceptDefault = createDeepEqualSelector(
   [ownProjectList, defaultProjectId],
   (list, defProjectId) => {

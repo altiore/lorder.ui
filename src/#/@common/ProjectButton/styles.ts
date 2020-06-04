@@ -2,17 +2,29 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   button: {
+    '&:hover': {
+      backgroundColor: '#313130',
+    },
+    backgroundColor: theme.palette.default.main,
+    height: 38,
     marginLeft: 4,
     padding: theme.spacing(0, 3),
     position: 'relative',
     textTransform: 'none',
+    zIndex: 2,
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
       maxWidth: 158,
       padding: theme.spacing(0, 2),
     },
   },
-  inProgress: {
+  hiddenStyle: {
+    height: 30,
+    marginLeft: '-10%',
+    opacity: 0.65,
+    zIndex: 1,
+  },
+  inProgressStyle: {
     backgroundColor: theme.palette.error.dark,
     borderRadius: 6,
     height: 6,
@@ -24,11 +36,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
       right: 5,
     },
   },
-  inProgressGreen: {
+  inProgressStyleGreen: {
     backgroundColor: '#c2ff38',
-  },
-  projectPopover: {
-    zIndex: 1402,
   },
   text: {
     color: theme.palette.secondary.light,
