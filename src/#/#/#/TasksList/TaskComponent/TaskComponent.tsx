@@ -135,7 +135,6 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
               classes={{ label: classes.projectText }}
               onClick={goToProjectAskCreateTask}
             >
-              <div className={cn(classes.projectLevelIndicator, classes.projectLevelIndicatorColor)} />
               <Typography>{projectShortName}</Typography>
             </Button>
           </Tooltip>
