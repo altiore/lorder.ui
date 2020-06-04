@@ -12,11 +12,15 @@ import {
   TypeText,
 } from '@material-ui/core/styles/createPalette';
 
+import { ACCESS_LEVEL } from '@types';
+
 export const defaultTheme: Theme = createMuiTheme({});
 
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
     // colors
+    access: { [key in ACCESS_LEVEL]: PaletteColor };
+
     default: PaletteColor;
     error: PaletteColor;
     info: PaletteColor;
@@ -48,6 +52,8 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 
   interface PaletteOptions {
+    access?: { [key in ACCESS_LEVEL]?: PaletteColorOptions };
+
     default?: PaletteColorOptions;
     error?: PaletteColorOptions;
     info?: PaletteColorOptions;
@@ -72,6 +78,57 @@ declare module '@material-ui/core/styles/createPalette' {
 
 export const palette: Palette = {
   ...defaultTheme.palette,
+
+  access: {
+    [ACCESS_LEVEL.WHITE]: {
+      contrastText: '#292929',
+      dark: '#fff',
+      light: '#fff',
+      main: '#d1d1d1',
+    },
+    [ACCESS_LEVEL.RED]: {
+      contrastText: '#6a1e10',
+      dark: '#000000',
+      light: '#f0aa9d',
+      main: '#ffa6b1',
+    },
+    [ACCESS_LEVEL.ORANGE]: {
+      contrastText: '#7b3d0e',
+      dark: '#000000',
+      light: '#ffcd7f',
+      main: '#ffe700',
+    },
+    [ACCESS_LEVEL.YELLOW]: {
+      contrastText: '#7b3d0e',
+      dark: '#000000',
+      light: '#ffe87f',
+      main: '#f8c26e',
+    },
+    [ACCESS_LEVEL.GREEN]: {
+      contrastText: '#0f551f',
+      dark: '#000000',
+      light: '#c0e6c9',
+      main: '#9edea1',
+    },
+    [ACCESS_LEVEL.BLUE]: {
+      contrastText: '#1a5c93',
+      dark: '#000000',
+      light: '#c3e3fd',
+      main: '#90dcff',
+    },
+    [ACCESS_LEVEL.INDIGO]: {
+      contrastText: '#031fae',
+      dark: '#000000',
+      light: '#94a5fd',
+      main: '#35b5ef',
+    },
+    [ACCESS_LEVEL.VIOLET]: {
+      contrastText: '#4f145f',
+      dark: '#000000',
+      light: '#c7b8f1',
+      main: '#774ced',
+    },
+  },
 
   background: {
     default: '#EBEEF0',

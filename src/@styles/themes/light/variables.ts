@@ -30,7 +30,7 @@ export const prettyScroll1 = (theme: Theme) => ({
 
 export const prettyScroll2 = (theme: Theme) => ({
   '&::-webkit-scrollbar': {
-    width: theme.spacing(0.75),
+    width: 7,
   },
   '&::-webkit-scrollbar-thumb': {
     backgroundColor: '#FAF0B5',

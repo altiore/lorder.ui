@@ -47,7 +47,7 @@ export const logIn = async (data: { email: string; password: string }, dispatch:
         return;
       }
 
-      dispatch(showError({ message: e.toString() }));
+      dispatch(showError({ message: e?.error?.response?.data?.message || 'Неизвестная ошибка авторизации' }));
     }
   } else {
     try {
