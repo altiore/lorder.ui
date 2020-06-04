@@ -15,8 +15,8 @@ export const ReCaptchaField: React.FC<IReCaptchaField> = ({ input: { onChange },
 
   useReCaptcha(
     process.env.REACT_APP_GOOGLE_reCAPTCHA_TOKEN as string,
-    onChange,
     actionName,
+    onChange,
     Boolean(process.env.REACT_APP_GOOGLE_reCAPTCHA_TOKEN)
   );
 

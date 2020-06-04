@@ -3,16 +3,13 @@ import moment from 'moment';
 import { store } from '#/@store/createStore';
 import { isAuth, refreshToken, userExpiresIn, userIsRefreshing, userRefreshToken } from '#/@store/identity';
 
-const EXCEPT_ROUTES = ['/auth/refresh'];
-
 const isShouldCheck = action => {
   return (
     action &&
     action.payload &&
     action.payload.request &&
     [undefined, 'api'].includes(action.payload.client) &&
-    !action.payload.noAuth &&
-    !EXCEPT_ROUTES.includes(action.payload.request.url)
+    !action.payload.noAuth
   );
 };
 
