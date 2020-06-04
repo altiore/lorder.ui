@@ -17,16 +17,16 @@ import { Project } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
 import { IUserWorkData } from '#/@store/user-works';
 
+import ActiveProject from './ActiveProject';
 import CurrentTaskButton from './CurrentTaskButton';
 import Filters from './Filters';
-import ProjectButton from './ProjectButton';
+import HiddenProject from './HiddenProject';
 import ProjectSelect from './ProjectSelect';
 import { useStyles } from './styles';
 
 import { INotification, IProject } from '@types';
 
 export interface IHeaderProps {
-  isPaused: boolean;
   openDialog: any;
   openTaskModal: any;
   push: any;
@@ -37,7 +37,7 @@ export interface IHeaderProps {
 }
 
 export const HeaderTsx: React.FC<IHeaderProps> = memo(
-  ({ isPaused, openDialog, openTaskModal, push, selectedProject, showSuccess, showWarning, startUserWork }) => {
+  ({ openDialog, openTaskModal, push, selectedProject, showSuccess, showWarning, startUserWork }) => {
     const classes = useStyles();
 
     const theme = useTheme();
@@ -87,9 +87,10 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
             <TimerIcon fontSize="large" color="inherit" className={classes.timerIco} />
           </LinkIconButton>
           <div className={classes.buttonBlock}>
-            {Boolean(selectedProject) && (
-              <ProjectButton selectProject={selectProject} createTask={openTaskModal} inProgress={!isPaused} />
-            )}
+            <ActiveProject selectProject={selectProject} />
+            <MediaQuery minWidth={theme.breakpoints.values.md}>
+              <HiddenProject selectProject={selectProject} hidden />
+            </MediaQuery>
             <ProjectSelect openProject={selectProject} />
             <Tooltip title="Создать новый проект" placement="right">
               <IconButton color="secondary" onClick={openCreateProject} className={classes.expandButton}>

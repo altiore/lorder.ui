@@ -76,12 +76,12 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         '& $text': {
           overflow: 'hidden',
-          textOverflow: 'ellipsis',
         },
         backgroundColor: '#37373B',
         boxShadow: theme.shadows[2],
         color: theme.palette.secondary.main,
       },
+      overflow: 'hidden',
       padding: theme.spacing(0, 1, 0, 0),
     },
     openProjectBtn: {

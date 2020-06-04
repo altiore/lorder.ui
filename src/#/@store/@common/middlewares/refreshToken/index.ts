@@ -21,7 +21,10 @@ const isShouldRefresh = (getState): false | string => {
   const expiresDate = moment.unix(expiresIn || 0);
   const diffInSeconds = expiresDate.diff(moment(), 'seconds');
 
-  const isShould = curIsAuth && currentToken && diffInSeconds < 180;
+  const maximumAllowedDiffInSeconds = process.env.REACT_APP_REFRESH_BEFOR
+    ? parseInt(process.env.REACT_APP_REFRESH_BEFOR, 0)
+    : 180;
+  const isShould = curIsAuth && currentToken && diffInSeconds < maximumAllowedDiffInSeconds;
   if (isShould) {
     return currentToken as string;
   }

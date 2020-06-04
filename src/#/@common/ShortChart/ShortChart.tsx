@@ -4,13 +4,13 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { Project } from '#/@store/projects';
-
 import { useStyles } from './styles';
+
+import { IProject } from '@types';
 
 export interface IShortChartProps {
   dense?: boolean;
-  project?: Project;
+  project?: IProject;
 }
 
 export const ShortChartTsx: React.FunctionComponent<IShortChartProps> = ({ dense, project }) => {

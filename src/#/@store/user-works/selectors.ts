@@ -89,3 +89,5 @@ export const isPaused = createDeepEqualSelector(
   [currentUserWork, currentTaskId],
   (uw, taskId) => uw && uw.taskId !== taskId
 );
+
+export const inProgress = createDeepEqualSelector(isPaused, i => !i);
