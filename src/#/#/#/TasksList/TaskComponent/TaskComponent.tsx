@@ -19,7 +19,7 @@ import { TASKS_ROUTE } from '#/@store/router';
 
 import { useStyles } from './styles';
 
-import { IProject, ITask } from '@types';
+import { ACCESS_LEVEL, IProject, ITask } from '@types';
 
 export interface ITaskComponentProps {
   getTaskById: (id: number | string) => ITask;
@@ -46,7 +46,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
   startUserWork,
   taskId,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles(project.accessLevel || ACCESS_LEVEL.WHITE);
   const theme = useTheme();
 
   const task = useMemo(() => {
@@ -135,6 +135,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
               classes={{ label: classes.projectText }}
               onClick={goToProjectAskCreateTask}
             >
+              <div className={cn(classes.projectLevelIndicator, classes.projectLevelIndicatorColor)} />
               <Typography>{projectShortName}</Typography>
             </Button>
           </Tooltip>

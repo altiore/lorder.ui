@@ -6,6 +6,8 @@ import Select from '@material-ui/core/Select';
 import { darken, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+import { palette } from '@styles/themes/light/palette';
+
 import { ACCESS_LEVEL } from '@types';
 
 function filterEnum(t: any) {
@@ -23,28 +25,6 @@ const COLOR_TITLE = {
   [ACCESS_LEVEL.VIOLET]: 'Фиолетовый',
 };
 
-const COLOR_BACK = {
-  [ACCESS_LEVEL.WHITE]: '#fff',
-  [ACCESS_LEVEL.RED]: '#f0aa9d',
-  [ACCESS_LEVEL.ORANGE]: '#ffcd7f',
-  [ACCESS_LEVEL.YELLOW]: '#ffe87f',
-  [ACCESS_LEVEL.GREEN]: '#c0e6c9',
-  [ACCESS_LEVEL.BLUE]: '#c3e3fd',
-  [ACCESS_LEVEL.INDIGO]: '#94a5fd',
-  [ACCESS_LEVEL.VIOLET]: '#c7b8f1',
-};
-
-const COLOR_FONT = {
-  [ACCESS_LEVEL.WHITE]: '#292929',
-  [ACCESS_LEVEL.RED]: '#6a1e10',
-  [ACCESS_LEVEL.ORANGE]: '#7b3d0e',
-  [ACCESS_LEVEL.YELLOW]: '#7b3d0e',
-  [ACCESS_LEVEL.GREEN]: '#0f551f',
-  [ACCESS_LEVEL.BLUE]: '#1a5c93',
-  [ACCESS_LEVEL.INDIGO]: '#031fae',
-  [ACCESS_LEVEL.VIOLET]: '#4f145f',
-};
-
 const useColorItemStyles = makeStyles((theme: Theme) => ({
   root: {
     alignItems: 'center',
@@ -60,7 +40,10 @@ const useColorItemStyles = makeStyles((theme: Theme) => ({
 const ColoredItem = ({ accessLevel }) => {
   const { root } = useColorItemStyles();
   return (
-    <Typography style={{ backgroundColor: COLOR_BACK[accessLevel], color: COLOR_FONT[accessLevel] }} className={root}>
+    <Typography
+      style={{ backgroundColor: palette.access[accessLevel].light, color: palette.access[accessLevel].contrastText }}
+      className={root}
+    >
       {COLOR_TITLE[accessLevel] || 'N/A'}
     </Typography>
   );
@@ -72,56 +55,56 @@ const useSelectStyles = makeStyles((theme: Theme) => ({
       backgroundColor: '#dddddd',
     },
     backgroundColor: '#fff',
-    color: COLOR_FONT[0],
+    color: palette.access[0].contrastText,
   },
   1: {
     '&:hover': {
-      backgroundColor: darken(COLOR_BACK[1], 0.2),
+      backgroundColor: darken(palette.access[1].light, 0.2),
     },
-    backgroundColor: COLOR_BACK[1],
-    color: COLOR_FONT[1],
+    backgroundColor: palette.access[1].light,
+    color: palette.access[1].contrastText,
   },
   2: {
     '&:hover': {
-      backgroundColor: darken(COLOR_BACK[2], 0.2),
+      backgroundColor: darken(palette.access[2].light, 0.2),
     },
-    backgroundColor: COLOR_BACK[2],
-    color: COLOR_FONT[2],
+    backgroundColor: palette.access[2].light,
+    color: palette.access[2].contrastText,
   },
   3: {
     '&:hover': {
-      backgroundColor: darken(COLOR_BACK[3], 0.2),
+      backgroundColor: darken(palette.access[3].light, 0.2),
     },
-    backgroundColor: COLOR_BACK[3],
-    color: COLOR_FONT[3],
+    backgroundColor: palette.access[3].light,
+    color: palette.access[3].contrastText,
   },
   4: {
     '&:hover': {
-      backgroundColor: darken(COLOR_BACK[4], 0.2),
+      backgroundColor: darken(palette.access[4].light, 0.2),
     },
-    backgroundColor: COLOR_BACK[4],
-    color: COLOR_FONT[4],
+    backgroundColor: palette.access[4].light,
+    color: palette.access[4].contrastText,
   },
   5: {
     '&:hover': {
-      backgroundColor: darken(COLOR_BACK[5], 0.2),
+      backgroundColor: darken(palette.access[5].light, 0.2),
     },
-    backgroundColor: COLOR_BACK[5],
-    color: COLOR_FONT[5],
+    backgroundColor: palette.access[5].light,
+    color: palette.access[5].contrastText,
   },
   6: {
     '&:hover': {
-      backgroundColor: darken(COLOR_BACK[6], 0.2),
+      backgroundColor: darken(palette.access[6].light, 0.2),
     },
-    backgroundColor: COLOR_BACK[6],
-    color: COLOR_FONT[6],
+    backgroundColor: palette.access[6].light,
+    color: palette.access[6].contrastText,
   },
   7: {
     '&:hover': {
-      backgroundColor: darken(COLOR_BACK[7], 0.2),
+      backgroundColor: darken(palette.access[7].light, 0.2),
     },
-    backgroundColor: COLOR_BACK[7],
-    color: COLOR_FONT[7],
+    backgroundColor: palette.access[7].light,
+    color: palette.access[7].contrastText,
   },
   select: {
     paddingLeft: 0,

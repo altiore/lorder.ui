@@ -4,21 +4,16 @@ import get from 'lodash/get';
 import toLower from 'lodash/toLower';
 
 import Button from '@material-ui/core/Button';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Popover from '@material-ui/core/Popover';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import SearchIco from '@components/@icons/Search';
-import BigTooltip from '@components/BigTooltip';
 import InputLight from '@components/InputLight';
 
-import CreateTask from './icons/CreateTask';
-import OpenProject from './icons/OpenProject';
-import OpenPublicProject from './icons/OpenPublic';
+import { ProjectItem } from './project-item/project-item';
 
 import { IProject, PROJECT_TYPE } from '@types';
 
@@ -47,50 +42,19 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: 8,
       minWidth: 42,
     },
-    iconWrap: {
-      '&:hover, &:focus': {
-        backgroundColor: theme.palette.default.main,
-        boxShadow: theme.shadow.default,
-      },
-      alignItems: 'center',
-      borderRadius: theme.shape.borderRadius,
-      display: 'flex',
-      height: '100%',
-      justifyContent: 'center',
-      marginRight: 4,
-      opacity: 0,
-      padding: theme.spacing(0.75, 1.25),
-    },
     inputWrap: {
-      padding: '15px 12px 11px 15px',
-    },
-    itemIcons: {
-      alignItems: 'center',
-      display: 'flex',
-      flexFlow: 'row nowrap',
-      justifyContent: 'space-around',
+      padding: '15px 11px 11px 15px',
     },
     list: {
       backgroundColor: 'transparent',
       color: '#9A9A9B',
       maxHeight: 300,
       maxWidth: 360,
-      paddingRight: 5,
+      paddingRight: 4,
       position: 'relative',
       width: '100%',
       ...theme.scroll.secondary,
       overflowY: 'scroll',
-    },
-    listItem: {
-      '&:hover, &:focus-within': {
-        '& $iconWrap': {
-          opacity: 1,
-        },
-        backgroundColor: '#37373B',
-        boxShadow: theme.shadows[2],
-        color: theme.palette.secondary.main,
-      },
-      padding: theme.spacing(0, 1, 0, 0),
     },
     listSection: {
       '&:nth-child(3)': {
@@ -110,28 +74,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     noMatch: {
       alignItems: 'center',
-      backgroundColor: theme.palette.background.paper,
-      color: theme.palette.pause.main,
+      backgroundColor: 'rgb(61, 61, 63)',
+      color: '#dadadb',
       display: 'flex',
-      height: 92,
+      height: 94,
       justifyContent: 'center',
+      marginRight: 10,
       textAlign: 'center',
-    },
-    openProjectBtn: {
-      '& $iconWrap': {
-        marginLeft: 8,
-      },
-      '&:hover, &:focus': {
-        '& $iconWrap': {
-          backgroundColor: theme.palette.default.main,
-          boxShadow: theme.shadow.default,
-        },
-      },
-      justifyContent: 'space-between',
-      paddingBottom: 4,
-      paddingLeft: '47px',
-      paddingTop: 4,
-      width: 200,
     },
     root: {
       backgroundColor: theme.palette.default.main,
@@ -139,13 +88,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: theme.spacing(33),
       overflow: 'hidden',
       padding: theme.spacing(0, 0.5, 0.5, 0),
-    },
-    text: {
-      display: 'block',
-      fontSize: theme.typography.pxToRem(16),
-      overflow: 'hidden',
-      // textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
+      width: 319,
     },
     ul: {
       backgroundColor: 'inherit',
@@ -226,6 +169,7 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({
 
   const handleSelectProject = useCallback(
     event => {
+      event.stopPropagation();
       if (openProject) {
         const pId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 0);
         if (typeof pId === 'number') {
@@ -273,33 +217,19 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({
     [handleClose, push]
   );
 
-  const {
-    button,
-    iconWrap,
-    inputWrap,
-    itemIcons,
-    list,
-    listItem,
-    listSection,
-    listSubheader,
-    noMatch,
-    openProjectBtn,
-    root,
-    text,
-    ul,
-  } = useStyles();
+  const { button, inputWrap, list, listSection, listSubheader, noMatch, root, ul } = useStyles();
 
   const open = Boolean(anchorEl);
-  const id = open ? 'project-select-header-popover' : undefined;
+  const elId = open ? 'project-select-header-popover' : undefined;
   return (
     <div>
-      <Button aria-describedby={id} variant="text" color="secondary" onClick={handleClick} className={button}>
+      <Button aria-describedby={elId} variant="text" color="secondary" onClick={handleClick} className={button}>
         <div />
         <div />
         <div />
       </Button>
       <Popover
-        id={id}
+        id={elId}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
@@ -330,36 +260,15 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({
                 <li key={id} className={listSection}>
                   <ul className={ul}>
                     <ListSubheader className={listSubheader}>{title}</ListSubheader>
-                    {preparedProjects[id].map(({ id: projectId, title, uuid }) => (
-                      <ListItem
-                        data-id={projectId}
-                        disableGutters
-                        classes={{ root: listItem }}
-                        key={`item-${id}-${projectId}`}
-                      >
-                        <ButtonBase data-id={projectId} className={openProjectBtn} onClick={handleSelectProject}>
-                          <Typography className={text}>{title}</Typography>
-                          <BigTooltip title="Открыть проект" placement="top">
-                            <ButtonBase tabIndex={-1} component="span" className={iconWrap}>
-                              <OpenProject />
-                            </ButtonBase>
-                          </BigTooltip>
-                        </ButtonBase>
-                        <div className={itemIcons}>
-                          <BigTooltip data-id={projectId} title="Создать задачу" placement="top">
-                            <ButtonBase className={iconWrap} onClick={handleCreateTask}>
-                              <CreateTask />
-                            </ButtonBase>
-                          </BigTooltip>
-                          {uuid && (
-                            <BigTooltip title="Статистика" placement="top">
-                              <ButtonBase data-uuid={uuid} className={iconWrap} onClick={openProjectStatistic}>
-                                <OpenPublicProject />
-                              </ButtonBase>
-                            </BigTooltip>
-                          )}
-                        </div>
-                      </ListItem>
+                    {preparedProjects[id].map(project => (
+                      <ProjectItem
+                        id={id}
+                        key={`${id}-${project.id}`}
+                        project={project}
+                        onCreateTask={handleCreateTask}
+                        onSelect={handleSelectProject}
+                        onStatistic={openProjectStatistic}
+                      />
                     ))}
                   </ul>
                 </li>
