@@ -91,6 +91,7 @@ export const updateProfile = requestActions('ME/UPDATE', (newUserData: { display
 }));
 
 export const refreshToken = requestActions('ME/REFRESH_TOKEN', (refreshToken: string, device: string) => ({
+  noAuth: true,
   request: {
     data: {
       device,
