@@ -1,7 +1,5 @@
 import { darken, makeStyles, Theme } from '@material-ui/core/styles';
 
-import { ACCESS_LEVEL } from '@types';
-
 export const useStyles = makeStyles((theme: Theme) => ({
   actions: {
     alignItems: 'center',
@@ -143,12 +141,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   projectButton: {
     '&:hover, &:focus': {
-      '& $projectLevelIndicator': {
-        height: 10,
-        right: 5,
-        top: 5,
-        width: 10,
-      },
       '& $projectText': {
         backgroundColor: '#F5F5F5',
         color: theme.palette.pause.dark,
@@ -181,18 +173,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
       backgroundColor: '#EAEBED',
     },
   },
-  projectLevelIndicator: {
-    borderRadius: '50%',
-    height: 6,
-    position: 'absolute',
-    right: 3,
-    top: 3,
-    transition: theme.transitions.create(['height', 'right', 'top', 'width']),
-    width: 6,
-  },
-  projectLevelIndicatorColor: (accessLevel: ACCESS_LEVEL) => ({
-    backgroundColor: theme.palette.access[accessLevel].main,
-  }),
   projectText: {
     alignItems: 'center',
     backgroundColor: '#FCFCFC',
