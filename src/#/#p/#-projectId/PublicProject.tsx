@@ -20,6 +20,7 @@ import { PublicProject } from '#/@store/publicProject';
 
 import FollowProject from './FollowProject';
 import ProjectHead from './ProjectHead';
+import ProjectValues from './ProjectValues/';
 import { StatisticTablesTsx } from './StatisticsTables/StatisticsTables';
 import { useStyles } from './styles';
 
@@ -158,6 +159,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
             </TabPanel>
           </SwipeableViews>
         </Paper>
+        <ProjectValues />
         <Grid container className={classes.content}>
           <Block spacing={10}>
             <Grid item className={classes.profile} xs={12}>
