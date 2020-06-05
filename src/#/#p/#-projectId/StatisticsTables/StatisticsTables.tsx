@@ -70,13 +70,13 @@ export const StatisticTablesTsx = memo(({ timeStatistic, worthPoints }: IStatist
     <Grid container justify="center">
       <div className={classes.tableGroupWrap}>
         <GroupHeader headerTitle="СТАТИСТИКА ПО ВРЕМЕНИ" buttonTitle="Редактировать" buttonRoutePath="/" />
-        <StatisticTable members={filteredTimeTableMembers} unit="h" />
+        <StatisticTable members={filteredTimeTableMembers} unit="h" unitTitle="Время" />
         <GroupFooter members={filteredTimeTableMembers} searchCallback={handleTimeTableMembers} />
       </div>
 
       <div className={classes.tableGroupWrap}>
         <GroupHeader headerTitle="СТАТИСТИКА ПО ЦЕННОСТИ" buttonTitle="Редактировать" buttonRoutePath="/" />
-        <StatisticTable members={filteredPointsTableMembers} />
+        <StatisticTable members={filteredPointsTableMembers} unitTitle="Ценность" />
         <GroupFooter members={membersForTimeTable} searchCallback={handlePointsTableMembers} />
       </div>
     </Grid>

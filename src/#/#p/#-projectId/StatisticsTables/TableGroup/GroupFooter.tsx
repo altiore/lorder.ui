@@ -27,7 +27,7 @@ export const GroupFooter = memo(({ members, searchCallback }: IGroupFooter) => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="end">
-              <SearchIcon />
+              <SearchIcon classes={{ root: classes.searchIcon }} />
             </InputAdornment>
           ),
         }}
