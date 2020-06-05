@@ -71,6 +71,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   sectionWrap: {
     background: '#fff',
+    borderBottom: 0,
     paddingBottom: 170,
   },
   title: {
