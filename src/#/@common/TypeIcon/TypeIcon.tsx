@@ -10,7 +10,9 @@ import DocIcon from '@components/@icons/Doc';
 import MeetingIcon from '@components/@icons/Meeting';
 
 import BugBackEnd from './icons/bug.back-end';
+import BugFrontEnd from './icons/bug.front-end';
 import FeatureBackEnd from './icons/feature.back-end';
+import FeatureFrontEnd from './icons/feature.front-end';
 
 import { ITaskType, TASK_TYPE } from '@types';
 
@@ -26,10 +28,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   [TASK_TYPE.BUG_BACK_END]: {
     color: '#FF6969',
   },
+  [TASK_TYPE.BUG_FRONT_END]: {
+    color: '#FF6969',
+  },
   [TASK_TYPE.FEATURE]: {
     color: '#81D755',
   },
   [TASK_TYPE.FEATURE_BACK_END]: {
+    color: '#81D755',
+  },
+  [TASK_TYPE.FEATURE_FRONT_END]: {
     color: '#81D755',
   },
   [TASK_TYPE.DOCUMENTATION]: {
@@ -46,9 +54,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 const TYPE_COMPONENT = {
   [TASK_TYPE.BUG]: BugIcon,
   [TASK_TYPE.BUG_BACK_END]: BugBackEnd,
+  [TASK_TYPE.BUG_FRONT_END]: BugFrontEnd,
   // [TASK_TYPE.BUG]: BugReportIcon,
   [TASK_TYPE.FEATURE]: ExtensionIcon,
   [TASK_TYPE.FEATURE_BACK_END]: FeatureBackEnd,
+  [TASK_TYPE.FEATURE_FRONT_END]: FeatureFrontEnd,
   [TASK_TYPE.DOCUMENTATION]: DocIcon,
   [TASK_TYPE.ENHANCE]: EnhanceIcon,
   [TASK_TYPE.ORGANIZE]: MeetingIcon,
