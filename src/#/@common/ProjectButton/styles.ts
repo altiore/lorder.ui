@@ -6,6 +6,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
       backgroundColor: '#313130',
     },
     backgroundColor: theme.palette.default.main,
+    boxShadow: '3px 0px 6px rgba(242, 213, 120, 0.5)',
     height: 38,
     marginLeft: 4,
     padding: theme.spacing(0, 3),
@@ -19,6 +20,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   hiddenStyle: {
+    boxShadow: 'none',
     height: 30,
     marginLeft: '-10%',
     opacity: 0.65,

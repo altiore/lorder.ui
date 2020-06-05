@@ -3,14 +3,25 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { isAuth } from '#/@store/identity';
-import { fetchPublicProject, publicProjectData } from '#/@store/publicProject';
+import {
+  fetchPublicProject,
+  publicProjectIsLoaded,
+  publicProjectIsLoading,
+  publicProjectProject,
+  publicProjectUuid,
+} from '#/@store/publicProject';
 import { rolesList } from '#/@store/roles';
 
 import { PublicProjectTsx } from './PublicProject';
 
-const masStateToProps = createStructuredSelector<any, any>({
+import { IState } from '@types';
+
+const masStateToProps = createStructuredSelector<IState, any>({
   isAuth,
-  publicProjectData,
+  isLoaded: publicProjectIsLoaded,
+  isLoading: publicProjectIsLoading,
+  project: publicProjectProject,
+  publicProjectUuid,
   rolesList,
 });
 

@@ -16,27 +16,26 @@ import Person from '@components/Person';
 import PieChart from '#/@common/PieChart';
 import { millisecondsToHours } from '#/@store/@common/helpers';
 import { Member } from '#/@store/projects/members/Member';
-import { PublicProject } from '#/@store/publicProject';
 
 import FollowProject from './FollowProject';
 import ProjectHead from './ProjectHead';
-import ProjectValues from './ProjectValues/';
+import ProjectValues from './ProjectValues';
 import { StatisticTablesTsx } from './StatisticsTables/StatisticsTables';
 import { useStyles } from './styles';
 
+import { IProject } from '@types';
+
 export interface IPublicProjectProps extends RouteComponentProps<{ projectId: string }> {
   isAuth: boolean;
+  isLoaded: boolean;
+  isLoading: boolean;
   fetchPublicProject: any;
-  publicProjectData: PublicProject;
+  project: IProject;
+  publicProjectUuid: string;
   team: Array<{
     image: string;
     name: string;
   }>;
-}
-
-export interface IState {
-  height: number;
-  width: number;
 }
 
 interface TabPanelProps {
@@ -61,136 +60,124 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-export const PublicProjectTsx: React.FC<IPublicProjectProps> = React.memo(
-  ({ fetchPublicProject, publicProjectData, isAuth, location, match }) => {
-    const [value, setValue] = React.useState(0);
+export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
+  fetchPublicProject,
+  isAuth,
+  isLoaded,
+  isLoading,
+  location,
+  match,
+  project,
+  publicProjectUuid,
+}) => {
+  const [value, setValue] = React.useState(0);
 
-    const project = useMemo(() => {
-      return publicProjectData.project;
-    }, [publicProjectData]);
+  const matchProjectUuid = useMemo(() => {
+    return match.params.projectId;
+  }, [match]);
 
-    const title = useMemo(() => {
-      return publicProjectData.title;
-    }, [publicProjectData]);
+  const members: Member[] = useMemo(() => {
+    return (project && project.members ? project.members : []) as Member[];
+  }, [project]);
 
-    const uuid = useMemo(() => {
-      return publicProjectData.uuid;
-    }, [publicProjectData]);
-
-    const isLoading = useMemo(() => {
-      return publicProjectData.isLoading;
-    }, [publicProjectData]);
-
-    const isLoaded = useMemo(() => {
-      return publicProjectData.isLoaded;
-    }, [publicProjectData]);
-
-    const matchProjectUuid = useMemo(() => {
-      return match.params.projectId;
-    }, [match]);
-
-    const members: Member[] = useMemo(() => {
-      return (project && project.members ? project.members : []) as Member[];
-    }, [project]);
-
-    useEffect(() => {
-      if (fetchPublicProject && matchProjectUuid && !uuid) {
-        fetchPublicProject(matchProjectUuid);
-      }
-    }, [fetchPublicProject, matchProjectUuid, uuid]);
-
-    const classes = useStyles();
-
-    const chartData = useMemo(() => {
-      return members.map(el => ({
-        name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
-        y: millisecondsToHours(el.timeSum) || 0.01,
-      }));
-    }, [members]);
-
-    const chartValueData = useMemo(() => {
-      return members.map(el => ({
-        name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
-        y: el.valueSum || 0.1,
-      }));
-    }, [members]);
-
-    const handleChange = useCallback((_, newValue: number) => {
-      setValue(newValue);
-    }, []);
-
-    const handleChangeIndex = useCallback((index: number) => {
-      setValue(index);
-    }, []);
-
-    if (isLoading || !isLoaded || !chartData || !chartValueData) {
-      return <LoadingPage />;
+  useEffect(() => {
+    if (publicProjectUuid !== matchProjectUuid) {
+      console.log('fetch public project info');
+      fetchPublicProject(matchProjectUuid);
     }
-    if (!title) {
-      return <NoMatch location={location} />;
-    }
+  }, [fetchPublicProject, matchProjectUuid, publicProjectUuid]);
 
-    return (
-      <div className={classes.root}>
-        <HeaderFixed brandName="Lorder" brandLink="/" />
+  const classes = useStyles();
 
-        <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
-        <FollowProject project={project} />
-        <Paper square variant="outlined" className={classes.sectionWrap}>
-          <Tabs value={value} onChange={handleChange} indicatorColor="primary" textColor="primary" variant="fullWidth">
-            <Tab label="Таблицы" />
-            <Tab label="Диаграммы" />
-          </Tabs>
-          <SwipeableViews axis={'x-reverse'} index={value} onChangeIndex={handleChangeIndex}>
-            <TabPanel value={value} index={0}>
-              <StatisticTablesTsx timeStatistic={chartData} worthPoints={chartValueData} />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <Grid container className={classes.content}>
-                <Block>
-                  <Grid item lg={6} md={12} sm={12}>
-                    <PieChart key={1} data={chartData} title="Статистика по времени" unit="h" />
-                  </Grid>
-                  <Grid item lg={6} md={12} sm={12}>
-                    <PieChart key={2} data={chartValueData} title="Статистика по ценности" />
-                  </Grid>
-                </Block>
-              </Grid>
-            </TabPanel>
-          </SwipeableViews>
-        </Paper>
-        <ProjectValues />
-        <Grid container className={classes.content}>
-          <Block spacing={10}>
-            <Grid item className={classes.profile} xs={12}>
-              <Typography variant="h4">Команда проекта</Typography>
-              <Typography>Мы дарим людям мир и красоту, но только если это будет добром!</Typography>
-            </Grid>
-            <div className={classes.members}>
-              {members.map(member => (
-                <Grid item key={member.member.email}>
-                  <Person
-                    avatar={get(member, 'member.avatar.url', '')}
-                    name={get(member.member, 'displayName') || get(member.member, 'email', '').replace(/@.*$/, '')}
-                  />
-                </Grid>
-              ))}
-            </div>
-          </Block>
-        </Grid>
-        <AppBar key={'bottom'} position="static" component={'footer'}>
-          <Toolbar className={classes.bottomBar}>
-            <Typography variant="h6" color="inherit">
-              Copyright &copy; Lorder
-            </Typography>
-            <div className={classes.sectionDesktop}>
-              <IconButton color="inherit" href={'https://t.me/joinchat/BmXj_kK5vnoAWdQF7tTc1g'} target={'_blank'}>
-                <TelegramIco />
-              </IconButton>
-            </div>
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
+  const chartData = useMemo(() => {
+    return members.map(el => ({
+      name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
+      y: millisecondsToHours(el.timeSum) || 0.01,
+    }));
+  }, [members]);
+
+  const chartValueData = useMemo(() => {
+    return members.map(el => ({
+      name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
+      y: el.valueSum || 0.1,
+    }));
+  }, [members]);
+
+  const handleChange = useCallback((_, newValue: number) => {
+    setValue(newValue);
+  }, []);
+
+  const handleChangeIndex = useCallback((index: number) => {
+    setValue(index);
+  }, []);
+
+  if (isLoading || !isLoaded || !chartData || !chartValueData) {
+    return <LoadingPage />;
   }
-);
+  if (!project.title) {
+    return <NoMatch location={location} />;
+  }
+
+  return (
+    <div className={classes.root}>
+      <HeaderFixed brandName="Lorder" brandLink="/" />
+
+      <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
+      <FollowProject project={project} />
+      <Paper square variant="outlined" className={classes.sectionWrap}>
+        <Tabs value={value} onChange={handleChange} indicatorColor="primary" textColor="primary" variant="fullWidth">
+          <Tab label="Таблицы" />
+          <Tab label="Диаграммы" />
+        </Tabs>
+        <SwipeableViews axis={'x-reverse'} index={value} onChangeIndex={handleChangeIndex}>
+          <TabPanel value={value} index={0}>
+            <StatisticTablesTsx timeStatistic={chartData} worthPoints={chartValueData} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Grid container className={classes.content}>
+              <Block>
+                <Grid item lg={6} md={12} sm={12}>
+                  <PieChart key={1} data={chartData} title="Статистика по времени" unit="h" />
+                </Grid>
+                <Grid item lg={6} md={12} sm={12}>
+                  <PieChart key={2} data={chartValueData} title="Статистика по ценности" />
+                </Grid>
+              </Block>
+            </Grid>
+          </TabPanel>
+        </SwipeableViews>
+      </Paper>
+      <ProjectValues />
+      <Grid container className={classes.content}>
+        <Block spacing={10}>
+          <Grid item className={classes.profile} xs={12}>
+            <Typography variant="h4">Команда проекта</Typography>
+            <Typography>Мы дарим людям мир и красоту, но только если это будет добром!</Typography>
+          </Grid>
+          <div className={classes.members}>
+            {members.map(member => (
+              <Grid item key={member.member.email}>
+                <Person
+                  avatar={get(member, 'member.avatar.url', '')}
+                  name={get(member.member, 'displayName') || get(member.member, 'email', '').replace(/@.*$/, '')}
+                />
+              </Grid>
+            ))}
+          </div>
+        </Block>
+      </Grid>
+      <AppBar key={'bottom'} position="static" component={'footer'}>
+        <Toolbar className={classes.bottomBar}>
+          <Typography variant="h6" color="inherit">
+            Copyright &copy; Lorder
+          </Typography>
+          <div className={classes.sectionDesktop}>
+            <IconButton color="inherit" href={'https://t.me/joinchat/BmXj_kK5vnoAWdQF7tTc1g'} target={'_blank'}>
+              <TelegramIco />
+            </IconButton>
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+};
