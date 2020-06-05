@@ -12,18 +12,19 @@ import { useStyles } from '../styles';
 interface IStatisticTableProps {
   members: any[];
   unit?: string;
+  unitTitle: string;
 }
 
-export const StatisticTable = memo(({ members, unit = '' }: IStatisticTableProps) => {
+export const StatisticTable = memo(({ members, unit = '', unitTitle }: IStatisticTableProps) => {
   const classes = useStyles();
   return (
-    <TableContainer>
+    <TableContainer className={classes.tableContainer}>
       <Table className={classes.tableWrap} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>№</TableCell>
             <TableCell align="left">Имя участника</TableCell>
-            <TableCell align="right">Время</TableCell>
+            <TableCell align="right">{unitTitle}</TableCell>
             <TableCell align="right">Доля</TableCell>
           </TableRow>
         </TableHead>
