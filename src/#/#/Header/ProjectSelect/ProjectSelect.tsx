@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
         height: 4,
         width: 4,
       },
-      height: '100%',
+      height: 38,
       marginLeft: 8,
       minWidth: 42,
     },
@@ -222,7 +222,7 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({
   const open = Boolean(anchorEl);
   const elId = open ? 'project-select-header-popover' : undefined;
   return (
-    <div>
+    <>
       <Button aria-describedby={elId} variant="text" color="secondary" onClick={handleClick} className={button}>
         <div />
         <div />
@@ -279,6 +279,6 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({
           <Typography className={noMatch}>Нет совпадений</Typography>
         )}
       </Popover>
-    </div>
+    </>
   );
 };

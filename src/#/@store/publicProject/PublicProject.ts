@@ -21,6 +21,10 @@ export class PublicProject implements IPublicProject {
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
+      if (key === 'project') {
+        this[key] = new Project(val);
+        return;
+      }
       this[key] = val;
     });
   }
