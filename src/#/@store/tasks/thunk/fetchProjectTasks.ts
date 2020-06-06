@@ -5,8 +5,8 @@ import { projectTasks } from '../selectorsCombined';
 
 const PER_PAGE_COUNT = 100;
 
-export const fetchProjectTasks = (projectId, skip = 0) => async (dispatch, getState) => {
-  const res = await dispatch(fetchProjectTasksA({ projectId, skip, count: PER_PAGE_COUNT }));
+export const fetchProjectTasks = (projectId, skip = 0, force: boolean = false) => async (dispatch, getState) => {
+  const res = await dispatch(fetchProjectTasksA({ projectId, skip, count: PER_PAGE_COUNT }, force));
   if (projectTasks(getState()).length < get(res, ['payload', 'data', 'total'])) {
     if (!get(res, ['payload', 'data', 'list', 'length'])) {
       console.warn(

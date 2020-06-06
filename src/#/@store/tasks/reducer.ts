@@ -42,10 +42,11 @@ type S = DownloadList<Task>;
 type P<T = any> = AxiosResponse<T> | Array<Partial<Task>>;
 
 const getAllTasksHandler = (state: S, { payload }) => {
-  const projectId = payload?.request?.params?.projectId;
+  const projectId = payload?.projectId;
   const skip = payload?.request?.params?.skip;
-  if (!skip && projectId) {
-    return state.filter(el => el.projectId === projectId).startLoading();
+  const force = payload?.force;
+  if (!skip && projectId && force) {
+    return state.filter(el => el.projectId !== projectId).startLoading();
   }
   return state.startLoading();
 };

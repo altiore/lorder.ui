@@ -31,7 +31,8 @@ export const getAllTasks = requestActions('TASKS/GET_ALL', (): any => ({
 
 export const fetchProjectTasksA = requestActions(
   'TASKS/FETCH_TASKS_BY_PROJECT',
-  ({ projectId, skip = 0, count = 100 }): any => ({
+  ({ projectId, skip = 0, count = 100 }, force: boolean = false): any => ({
+    force,
     projectId,
     request: {
       params: {
