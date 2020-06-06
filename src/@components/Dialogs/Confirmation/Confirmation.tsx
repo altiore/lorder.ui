@@ -14,7 +14,7 @@ export class IConfirmationProps {
 }
 
 export const Confirmation: React.FunctionComponent<IConfirmationProps> = ({ onClose, text, title, onConfirm }) => (
-  <React.Fragment>
+  <>
     <DialogTitle>{title || 'Внимание!'}</DialogTitle>
     <DialogContent>
       <Typography>{text || 'Вы уверены что хотите совершить это действие?'}</Typography>
@@ -27,5 +27,5 @@ export const Confirmation: React.FunctionComponent<IConfirmationProps> = ({ onCl
         Подтвердить
       </Button>
     </DialogActions>
-  </React.Fragment>
+  </>
 );

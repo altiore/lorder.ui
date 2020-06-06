@@ -10,24 +10,31 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import { useStyles } from './styles';
 
-export const ACTION_TYPES = { ERROR: 'error', INFO: 'info' };
+export enum ACTION_TYPE {
+  ERROR = 'error',
+  INFO = 'info',
+}
 
 export interface IConfirmationModalProps {
+  action?: ACTION_TYPE;
+  cancelText?: string;
+  confirmText: string;
   onClose?: any;
   onConfirm: any;
-  confirmText: string;
-  action?: any;
+  text?: string;
   titleText?: string;
-  cancelText?: string;
+  warningText?: string;
 }
 
 export const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
+  action,
+  cancelText,
+  confirmText,
   onClose,
   onConfirm,
-  confirmText,
-  action,
+  text,
   titleText,
-  cancelText,
+  warningText,
 }) => {
   const classes = useStyles();
 
@@ -49,11 +56,11 @@ export const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
             {titleText}
           </Typography>
           <Typography align="center" className={classes.textSure}>
-            Подтвердите действие
+            {text || 'Подтвердите действие'}
           </Typography>
         </div>
         <div className={classes.buttons}>
-          {action === ACTION_TYPES.INFO ? (
+          {action === ACTION_TYPE.INFO ? (
             <Button variant="outlined" onClick={handleConfirm}>
               {confirmText}
             </Button>
@@ -63,12 +70,12 @@ export const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
             </Button>
           )}
           <Button variant="outlined" onClick={onClose}>
-            {cancelText}
+            {cancelText || 'Отмена'}
           </Button>
         </div>
       </DialogContent>
       <DialogActions className={classes.actions}>
-        <Typography className={classes.warningText}>Это действие не может быть отменено!</Typography>
+        <Typography className={classes.warningText}>{warningText || 'Это действие не может быть отменено!'}</Typography>
       </DialogActions>
     </Fragment>
   );

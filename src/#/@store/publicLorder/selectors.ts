@@ -16,9 +16,13 @@ export const lorderProject = createDeepEqualSelector(publicLorderData, s => s.pr
 export const lorderMembers = createDeepEqualSelector(lorderProject, s => get(s, 'members', []) as Member[]);
 
 export const lorderHighLevelMembers = createDeepEqualSelector(lorderMembers, list =>
-  list.filter(el => {
-    return (
-      el.accessLevel > ACCESS_LEVEL.RED && get(el, ['member', 'avatar', 'url']) && get(el, ['member', 'displayName'])
-    );
-  })
+  Array.isArray(list)
+    ? list.filter(el => {
+        return (
+          el.accessLevel > ACCESS_LEVEL.RED &&
+          get(el, ['member', 'avatar', 'url']) &&
+          get(el, ['member', 'displayName'])
+        );
+      })
+    : []
 );

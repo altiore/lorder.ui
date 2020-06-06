@@ -15,7 +15,7 @@ export const dialogProps = createDeepEqualSelector(
   (state: IDialogState): Partial<DialogProps> | undefined => state.dialogProps
 );
 
-export const restProps = createDeepEqualSelector(
+export const internalProps = createDeepEqualSelector(
   baseState,
   (state: IDialogState): Partial<DialogProps> | undefined => state.props
 );

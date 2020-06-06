@@ -8,6 +8,7 @@ import { Theme } from '@material-ui/core/styles';
 import { CurrentDialog } from '#/@store/dialog/actions';
 
 export interface IDialogTsx {
+  internalProps?: object;
   isWidthLg: boolean;
   isWidthMd: boolean;
   isWidthSm: boolean;
@@ -20,8 +21,9 @@ export const DialogTsx: React.FunctionComponent<DialogProps & IDialogTsx> = prop
   if (!CurrentDialog) {
     return null;
   }
-  const { isWidthSm, open } = props;
+  const { internalProps, isWidthSm, open } = props;
   const rest = omit(props, [
+    'internalProps',
     'scrollHeight',
     'scrollWidth',
     'getRef',
@@ -35,8 +37,8 @@ export const DialogTsx: React.FunctionComponent<DialogProps & IDialogTsx> = prop
   return (
     <Dialog open={open || false} fullScreen={isWidthSm} {...rest} aria-labelledby="scroll-dialog-title">
       {React.isValidElement(CurrentDialog)
-        ? React.cloneElement<any>(CurrentDialog, { onClose: props.onClose })
-        : React.createElement(CurrentDialog as any, { onClose: props.onClose })}
+        ? React.cloneElement<any>(CurrentDialog, { ...(internalProps || {}), onClose: props.onClose })
+        : React.createElement(CurrentDialog as any, { ...(internalProps || {}), onClose: props.onClose })}
     </Dialog>
   );
 };

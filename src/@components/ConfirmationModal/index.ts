@@ -1,1 +1,1 @@
-export { ConfirmationModal as default } from './ConfirmationModal';
+export { ACTION_TYPE, ConfirmationModal as default } from './ConfirmationModal';

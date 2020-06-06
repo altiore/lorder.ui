@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { DialogProps } from '@material-ui/core/Dialog';
 import { withTheme } from '@material-ui/core/styles';
 
-import { closeDialog, dialogProps, isDialogOpened, restProps } from '#/@store/dialog';
+import { closeDialog, dialogProps, internalProps, isDialogOpened } from '#/@store/dialog';
 
 import { DialogTsx } from './DialogTsx';
 
@@ -15,13 +15,13 @@ interface IMappedState {
   component: any;
   dialogProps: Partial<DialogProps>;
   open: boolean;
-  restProps?: any;
+  internalProps?: any;
 }
 
 const mapStateToProps = createStructuredSelector<any, any>({
   dialogProps,
+  internalProps,
   open: isDialogOpened,
-  restProps,
 });
 
 interface IMappedDispatch {
@@ -32,7 +32,11 @@ const mapDispatchToProps = {
   closeDialog,
 };
 
-const mergeProps = ({ component, dialogProps, open, restProps }: IMappedState, { closeDialog }: IMappedDispatch) => ({
+const mergeProps = (
+  { component, dialogProps, open, internalProps }: IMappedState,
+  { closeDialog }: IMappedDispatch
+) => ({
+  internalProps,
   onClose: closeDialog,
   open,
   scroll: 'paper',

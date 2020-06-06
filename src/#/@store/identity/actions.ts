@@ -101,3 +101,15 @@ export const refreshToken = requestActions('ME/REFRESH_TOKEN', (refreshToken: st
     url: `/auth/refresh`,
   },
 }));
+
+export const updatePasswordAct = requestActions(
+  'IDENTITY/UPDATE_PASSWORD',
+  (data: { email: string; password: string }) => ({
+    noAuth: true,
+    request: {
+      data,
+      method: 'patch',
+      url: `/auth/update-password`,
+    },
+  })
+);

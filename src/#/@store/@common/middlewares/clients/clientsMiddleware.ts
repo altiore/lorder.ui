@@ -86,7 +86,7 @@ export default multiClientMiddleware(
           }
 
           const url = req.url || '';
-          if (url.match('auth/login') || url.match('/auth/refresh')) {
+          if (url.match('auth/login') || url.match('/auth/refresh') || url.match('/auth/update-password')) {
             req.data.device = getUuid();
           }
           if (url.match('auth/activate')) {
