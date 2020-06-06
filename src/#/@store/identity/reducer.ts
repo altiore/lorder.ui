@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import omit from 'lodash/omit';
 import pick from 'lodash/pick';
 import { Action, handleActions } from 'redux-actions';
 import { PURGE, REHYDRATE } from 'redux-persist';
@@ -25,7 +26,7 @@ const getAuthActivateHandler = (state: IIdentityState) => {
 const logInPatchSuccessHandler = (state: IIdentityState, { payload, meta }: any): IIdentityState => {
   return new Identity({
     ...state,
-    ...payload.data,
+    ...omit(payload.data, ['bearerKey']),
     isAuth: true,
     isLoading: false,
   });
@@ -38,7 +39,7 @@ const logInPatchFailHandler = (): IIdentityState => {
 const getAuthActivateSuccessHandler = (state: IIdentityState, { payload, meta }: any): IIdentityState => {
   return new Identity({
     ...state,
-    ...payload.data,
+    ...omit(payload.data, ['bearerKey']),
     isAuth: true,
   });
 };
@@ -96,8 +97,8 @@ const refreshTokenHandler = (state: IIdentityState) => {
 const refreshTokenSuccessHandler = (state: IIdentityState, { payload }) => {
   return new Identity({
     ...state,
+    ...omit(payload.data, ['bearerKey']),
     isRefreshing: false,
-    ...payload.data,
   });
 };
 

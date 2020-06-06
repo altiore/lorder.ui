@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { identifier, projectIdSearchParam } from '#/@store/router';
 
 import { getAuthActivate, IGetAuthActivateData, setIsLoading } from '../actions';
-import { userBearerKey } from '../selectors';
+import { userRefreshToken } from '../selectors';
 import { loadInitialData } from './loadInitialData';
 import { logOut } from './logOut';
 
@@ -25,8 +25,8 @@ export const activateUser = () => async (dispatch: Dispatch<any>, getState: () =
     if (projectId) {
       activateParams.project = projectId;
     }
-    const currentBearerKey = userBearerKey(state);
-    if (currentBearerKey) {
+    const currentRefreshToken = userRefreshToken(state);
+    if (currentRefreshToken) {
       await dispatch(logOut());
     }
     await dispatch(getAuthActivate(activateParams));

@@ -12,8 +12,6 @@ export const userRole = createDeepEqualSelector<any, any, ROLE>([baseIdentitySta
 
 export const userId = createDeepEqualSelector([baseIdentityState], state => state.id);
 
-export const userBearerKey = createDeepEqualSelector([baseIdentityState], state => state.bearerKey);
-
 export const userRefreshToken = createDeepEqualSelector([baseIdentityState], state => state.refreshToken);
 
 export const userExpiresIn = createDeepEqualSelector([baseIdentityState], state => state.expiresIn);

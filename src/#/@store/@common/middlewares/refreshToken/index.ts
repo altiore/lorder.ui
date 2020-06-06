@@ -3,6 +3,8 @@ import moment from 'moment';
 import { store } from '#/@store/createStore';
 import { isAuth, refreshToken, userExpiresIn, userIsRefreshing, userRefreshToken } from '#/@store/identity';
 
+import { SESSION_BEARER_KEY_FIELD } from '../clients/clientsMiddleware';
+
 const isShouldCheck = action => {
   return (
     action &&
@@ -24,7 +26,9 @@ const isShouldRefresh = (getState): false | string => {
   const maximumAllowedDiffInSeconds = process.env.REACT_APP_REFRESH_BEFOR
     ? parseInt(process.env.REACT_APP_REFRESH_BEFOR, 0)
     : 180;
-  const isShould = curIsAuth && currentToken && diffInSeconds < maximumAllowedDiffInSeconds;
+
+  const bearerKey = window.sessionStorage.getItem(SESSION_BEARER_KEY_FIELD);
+  const isShould = curIsAuth && currentToken && (diffInSeconds < maximumAllowedDiffInSeconds || !bearerKey);
   if (isShould) {
     return currentToken as string;
   }

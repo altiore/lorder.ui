@@ -5,7 +5,7 @@ import get from 'lodash/get';
 import { multiClientMiddleware } from 'redux-axios-middleware';
 import { stopAsyncValidation } from 'redux-form';
 
-import { logOut, userBearerKey } from '#/@store/identity';
+import { logOut } from '#/@store/identity';
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
@@ -22,6 +22,8 @@ export interface IStoreInfo {
   dispatch: (fn: any) => any;
   getSourceAction: () => any;
 }
+
+export const SESSION_BEARER_KEY_FIELD = 'bearer-key';
 
 function getError(action: any, status: number): false | Notification {
   const errorFromAction =
@@ -67,6 +69,18 @@ function getSuccess(action: any): false | Notification {
   }
 }
 
+const checkAuthReq = (req: { url?: string }): string | false => {
+  const url = req.url || '';
+  if (url.match('auth/login') || url.match('/auth/refresh') || url.match('/auth/update-password')) {
+    return 'data';
+  }
+  if (url.match('auth/activate')) {
+    return 'params';
+  }
+
+  return false;
+};
+
 export default multiClientMiddleware(
   {
     default: {
@@ -80,17 +94,14 @@ export default multiClientMiddleware(
     interceptors: {
       request: [
         ({ getState, dispatch, getSourceAction }: IStoreInfo, req: AxiosRequestConfig) => {
-          const bearerKey = userBearerKey(getState());
+          const bearerKey = window.sessionStorage.getItem(SESSION_BEARER_KEY_FIELD);
           if (bearerKey) {
             req.headers.Authorization = 'Bearer ' + bearerKey;
           }
 
-          const url = req.url || '';
-          if (url.match('auth/login') || url.match('/auth/refresh') || url.match('/auth/update-password')) {
-            req.data.device = getUuid();
-          }
-          if (url.match('auth/activate')) {
-            req.params.device = getUuid();
+          const reqField = checkAuthReq(req);
+          if (reqField) {
+            req[reqField].device = getUuid();
           }
 
           return req;
@@ -105,6 +116,10 @@ export default multiClientMiddleware(
       ],
       response: [
         ({ getState, dispatch, getSourceAction }: IStoreInfo, res: AxiosResponse) => {
+          if (checkAuthReq(res.config)) {
+            window.sessionStorage.setItem(SESSION_BEARER_KEY_FIELD, res?.data?.bearerKey);
+          }
+
           return res;
         },
       ],

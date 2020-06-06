@@ -6,7 +6,6 @@ export interface IIdentityState {
   // fields from Back End
   id?: number;
   avatar?: string;
-  bearerKey?: string;
   defaultProjectId?: number;
   displayName?: string;
   email?: string;
@@ -24,7 +23,6 @@ export interface IIdentityState {
 export class Identity implements IIdentityState {
   readonly id?: number;
   readonly avatar?: string;
-  readonly bearerKey: string;
   readonly defaultProjectId?: number;
   readonly displayName?: string;
   readonly email: string;
