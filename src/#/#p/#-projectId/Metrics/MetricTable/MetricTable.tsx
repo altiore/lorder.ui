@@ -36,7 +36,7 @@ export const MetricTableTsx: React.FC<IProjectMetric & { title: string }> = ({
   }, [days, membersCount, timeSumIn8hoursDays]);
 
   const valueProductivity = useMemo(() => {
-    if (!membersCount || !days || !value) {
+    if (!days || !value) {
       return 0;
     }
 
