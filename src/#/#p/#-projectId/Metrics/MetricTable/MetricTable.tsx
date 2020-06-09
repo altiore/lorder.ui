@@ -17,6 +17,15 @@ const useStyles = makeStyles({
   },
 });
 
+const currencyFormatter = new Intl.NumberFormat('ru-RU', {
+  currency: 'USD',
+  style: 'currency',
+});
+
+const percentFormatter = new Intl.NumberFormat('ru-RU', {
+  style: 'percent',
+});
+
 export const MetricTableTsx: React.FC<IProjectMetric & { title: string }> = ({
   count,
   days,
@@ -40,7 +49,7 @@ export const MetricTableTsx: React.FC<IProjectMetric & { title: string }> = ({
       return 0;
     }
 
-    return Math.round((value * 100) / days) / 100;
+    return currencyFormatter.format(Math.round((value * 100 * 30.4375) / days) / 100);
   }, [days, value]);
 
   return (
@@ -55,6 +64,12 @@ export const MetricTableTsx: React.FC<IProjectMetric & { title: string }> = ({
         <TableBody>
           <TableRow>
             <TableCell component="th" scope="row">
+              Активных пользователей
+            </TableCell>
+            <TableCell align="right">{membersCount}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row">
               Задач выполнено
             </TableCell>
             <TableCell align="right">{count}</TableCell>
@@ -63,19 +78,19 @@ export const MetricTableTsx: React.FC<IProjectMetric & { title: string }> = ({
             <TableCell component="th" scope="row">
               Загруженность
             </TableCell>
-            <TableCell align="right">{timeProductivity} %</TableCell>
+            <TableCell align="right">{percentFormatter.format(timeProductivity)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row">
               Продуктивность
             </TableCell>
-            <TableCell align="right">{valueProductivity} sp/day</TableCell>
+            <TableCell align="right">&asymp; {valueProductivity}/мес</TableCell>
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row">
-              Ценность
+              Добавленная Ценность
             </TableCell>
-            <TableCell align="right">{value * 45} $</TableCell>
+            <TableCell align="right">&asymp; {currencyFormatter.format(value * 45)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
