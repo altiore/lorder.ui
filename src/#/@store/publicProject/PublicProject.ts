@@ -4,12 +4,10 @@ import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 
 import { Project } from '../projects';
 
-import { IPublicProject } from '@types';
+import { IProject, IPublicProject } from '@types';
 
 export class PublicProject implements IPublicProject {
   uuid: string;
-  isLoading: boolean = false;
-  isLoaded: boolean = false;
   title: string;
   projectId: number;
   monthlyBudget?: number;
@@ -17,7 +15,11 @@ export class PublicProject implements IPublicProject {
   timeSum?: number;
   /** ценность всех задач в этом проекте */
   valueSum?: number;
-  project: Project;
+  project: IProject;
+  statistic?: object;
+
+  isLoading: boolean = false;
+  isLoaded: boolean = false;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

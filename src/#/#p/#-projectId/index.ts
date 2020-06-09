@@ -8,6 +8,7 @@ import {
   publicProjectIsLoaded,
   publicProjectIsLoading,
   publicProjectProject,
+  publicProjectStatistic,
   publicProjectUuid,
 } from '#/@store/publicProject';
 import { rolesList } from '#/@store/roles';
@@ -23,6 +24,7 @@ const masStateToProps = createStructuredSelector<IState, any>({
   project: publicProjectProject,
   publicProjectUuid,
   rolesList,
+  statistic: publicProjectStatistic,
 });
 
 const mapDispatch = {

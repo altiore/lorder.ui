@@ -23,3 +23,8 @@ export const publicProjectUuid = createDeepEqualSelector(
   publicProjectData,
   (pp: IPublicProject | undefined) => pp && pp.uuid
 );
+
+export const publicProjectStatistic = createDeepEqualSelector(
+  publicProjectData,
+  (pp: IPublicProject | undefined) => pp && pp.statistic
+);

@@ -1,9 +1,7 @@
-import { Project } from '../#/@store/projects';
+import { IProject } from './IProject';
 
 export interface IPublicProject {
   uuid: string;
-  isLoading: boolean;
-  isLoaded: boolean;
   title: string;
   projectId: number;
   monthlyBudget?: number;
@@ -11,5 +9,10 @@ export interface IPublicProject {
   timeSum?: number;
   /** ценность всех задач в этом проекте */
   valueSum?: number;
-  project?: Project;
+  project?: IProject;
+  statistic?: object;
+
+  // added by UI
+  isLoading: boolean;
+  isLoaded: boolean;
 }

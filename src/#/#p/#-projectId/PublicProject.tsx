@@ -18,6 +18,7 @@ import { millisecondsToHours } from '#/@store/@common/helpers';
 import { Member } from '#/@store/projects/members/Member';
 
 import FollowProject from './FollowProject';
+import ProjectMetrics from './Metrics';
 import ProjectHead from './ProjectHead';
 import ProjectValues from './ProjectValues';
 import { StatisticTablesTsx } from './StatisticsTables/StatisticsTables';
@@ -32,6 +33,7 @@ export interface IPublicProjectProps extends RouteComponentProps<{ projectId: st
   fetchPublicProject: any;
   project: IProject;
   publicProjectUuid: string;
+  statistic: any;
   team: Array<{
     image: string;
     name: string;
@@ -69,6 +71,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
   match,
   project,
   publicProjectUuid,
+  statistic,
 }) => {
   const [value, setValue] = React.useState(0);
 
@@ -123,6 +126,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
       <HeaderFixed brandName="Lorder" brandLink="/" />
 
       <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
+      <ProjectMetrics statistic={statistic} />
       <FollowProject project={project} />
       <Paper square variant="outlined" className={classes.sectionWrap}>
         <Tabs value={value} onChange={handleChange} indicatorColor="primary" textColor="primary" variant="fullWidth">
