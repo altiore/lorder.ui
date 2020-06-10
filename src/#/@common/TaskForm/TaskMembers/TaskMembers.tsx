@@ -19,6 +19,10 @@ export const TaskMembersTsx: React.FC<ITaskMembers> = ({ getTaskUsersByTaskId, t
     return [];
   }, [getTaskUsersByTaskId, taskId]);
 
+  if (!members || !members.length) {
+    return null;
+  }
+
   return (
     <table>
       <thead>
