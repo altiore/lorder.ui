@@ -10,9 +10,10 @@ import Block from '#/#hi/#/@common/Block';
 import BlockContent from '#/#hi/#/@common/BlockContent';
 import ScreenTitle from '#/#hi/#/@common/ScreenTitle';
 import SubTitle from '#/#hi/#/@common/SubTitle';
-import { IMember } from '#/@store/projects/members/Member';
 
 import { useStyles } from './styles';
+
+import { IMember } from '@types';
 
 interface ScreenTeamI {
   isPublicLorderLoaded: boolean;

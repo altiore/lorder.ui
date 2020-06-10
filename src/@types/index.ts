@@ -4,6 +4,8 @@ export * from './IExternalLibraries';
 export * from './IRoute';
 export * from './ISelectedProject';
 export * from './IListDto';
+export * from './IListDto';
+export * from './IMember';
 export * from './IMeta';
 export * from './IOther';
 export * from './IProject';

@@ -22,6 +22,7 @@ import ProjectPartsField from './ProjectPartsField';
 import StatusField from './StatusField';
 import { useStyles } from './styles';
 import TaskHistory from './TaskHistory';
+import TaskMembers from './TaskMembers';
 
 export interface ITaskFormData {
   isDetailsLoaded: boolean;
@@ -196,6 +197,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = ({
                 <TaskDuration taskId={initialValues.id} />
               </div>
             )}
+            <TaskMembers taskId={initialValues.id} />
             <Field
               name="projectParts"
               label="Части проекта"

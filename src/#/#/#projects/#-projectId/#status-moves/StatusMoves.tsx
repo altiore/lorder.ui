@@ -24,11 +24,11 @@ export interface IStatusMovesProps extends RouteComponentProps {
 }
 
 const COLUMNS: ICrudColumn[] = [
-  { title: 'Id', path: 'id' },
-  { title: 'Роль', path: 'projectRoleId', name: 'projectRoleId', isNumber: true },
+  { title: 'Id', path: 'id', isNumber: true },
+  { title: 'Роль', path: 'projectRoleId', name: 'projectRoleId' },
   { title: 'Тип', path: 'type', allowed: invert(TASK_STATUS_MOVE_TYPE), name: 'type' },
-  { title: 'Из Статуса', path: 'fromId', name: 'fromId', isNumber: true },
-  { title: 'В Статус', path: 'toId', name: 'toId', isNumber: true },
+  { title: 'Из Статуса', path: 'fromId', name: 'fromId' },
+  { title: 'В Статус', path: 'toId', name: 'toId' },
 ];
 
 export const StatusMovesJsx: React.FC<IStatusMovesProps> = ({

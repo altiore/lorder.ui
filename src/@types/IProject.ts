@@ -1,4 +1,6 @@
 import { ACCESS_LEVEL } from './ACCESS_LEVEL';
+import { IDownloadList } from './IDownloadList';
+import { IMember } from './IMember';
 import { PROJECT_TYPE } from './PROJECT_TYPE';
 
 export interface IProject {
@@ -12,7 +14,7 @@ export interface IProject {
   owner?: any;
   ownerId?: number;
   phases?: any[];
-  members: any;
+  members: IDownloadList<IMember>;
   tasks: any;
   projectTaskTypes: any;
   /** время в секундах, потраченное всеми пользователями на этот проект */

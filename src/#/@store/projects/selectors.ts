@@ -4,10 +4,9 @@ import { defaultProjectId } from '#/@store/identity';
 import { routeProjectId } from '#/@store/router';
 import { currentProjectId } from '#/@store/timer';
 
-import { IMember } from './members/Member';
 import { Project } from './Project';
 
-import { IProject, IState, IUser } from '@types';
+import { IMember, IProject, IState, IUser } from '@types';
 
 const baseState = (state: IState) => state.projects;
 

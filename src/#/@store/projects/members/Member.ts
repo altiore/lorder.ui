@@ -2,15 +2,7 @@ import map from 'lodash/map';
 
 import { User } from '#/#/@store/users';
 
-import { IUser } from '@types';
-
-export interface IMember {
-  accessLevel: number;
-  roles: string[];
-  member: IUser;
-  timeSum: number;
-  valueSum: number;
-}
+import { IMember, IUser } from '@types';
 
 export class Member implements IMember {
   accessLevel: number;

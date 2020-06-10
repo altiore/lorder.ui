@@ -1,9 +1,8 @@
 import get from 'lodash/get';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
-import { Member } from '#/@store/projects/members/Member';
 
-import { ACCESS_LEVEL, IPublicProject, IState } from '@types';
+import { ACCESS_LEVEL, IDownloadList, IMember, IPublicProject, IState } from '@types';
 
 export const publicLorderData = (state: IState): IPublicProject => state.publicLorder;
 
@@ -13,11 +12,14 @@ export const isPublicLorderLoading = createDeepEqualSelector(publicLorderData, s
 
 export const lorderProject = createDeepEqualSelector(publicLorderData, s => s.project);
 
-export const lorderMembers = createDeepEqualSelector(lorderProject, s => get(s, 'members', []) as Member[]);
+export const lorderMembers = createDeepEqualSelector(
+  lorderProject,
+  s => get(s, 'members', []) as IDownloadList<IMember>
+);
 
 export const lorderHighLevelMembers = createDeepEqualSelector(lorderMembers, list =>
-  Array.isArray(list)
-    ? list.filter(el => {
+  Array.isArray(list && list.list)
+    ? list.list.filter(el => {
         return (
           el.accessLevel > ACCESS_LEVEL.RED &&
           get(el, ['member', 'avatar', 'url']) &&
