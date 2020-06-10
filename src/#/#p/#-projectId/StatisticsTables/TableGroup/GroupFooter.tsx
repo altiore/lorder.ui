@@ -1,9 +1,8 @@
 import React, { memo } from 'react';
 
 import Grid from '@material-ui/core/Grid';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import TextField from '@material-ui/core/TextField';
-import SearchIcon from '@material-ui/icons/Search';
+
+import InputSeach from '@components/InputSeach';
 
 import { useStyles } from '../styles';
 
@@ -19,19 +18,7 @@ export const GroupFooter = memo(({ members, searchCallback }: IGroupFooter) => {
       <span>
         <b>{members.length}</b>
       </span>
-      <TextField
-        className={classes.searchInput}
-        variant="standard"
-        onChange={searchCallback}
-        placeholder="Найти участника по имени"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="end">
-              <SearchIcon classes={{ root: classes.searchIcon }} />
-            </InputAdornment>
-          ),
-        }}
-      />
+      <InputSeach searchCallback={searchCallback} placeholder={'Найти участника по имени'} />
     </Grid>
   );
 });

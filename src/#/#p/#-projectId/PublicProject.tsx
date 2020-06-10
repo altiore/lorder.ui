@@ -20,6 +20,7 @@ import { Member } from '#/@store/projects/members/Member';
 import FollowProject from './FollowProject';
 import ProjectMetrics from './Metrics';
 import ProjectHead from './ProjectHead';
+import ProjectTeam from './ProjectTeam';
 import ProjectValues from './ProjectValues';
 import { StatisticTablesTsx } from './StatisticsTables/StatisticsTables';
 import { useStyles } from './styles';
@@ -152,12 +153,9 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
         </SwipeableViews>
       </Paper>
       <ProjectValues />
+      <ProjectTeam />
       <Grid container className={classes.content}>
         <Block spacing={10}>
-          <Grid item className={classes.profile} xs={12}>
-            <Typography variant="h4">Команда проекта</Typography>
-            <Typography>Мы дарим людям мир и красоту, но только если это будет добром!</Typography>
-          </Grid>
           <div className={classes.members}>
             {members.map(member => (
               <Grid item key={member.member.email}>

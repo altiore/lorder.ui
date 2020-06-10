@@ -13,6 +13,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   flipCardBack: {
     backfaceVisibility: 'hidden',
     backgroundColor: '#fff',
+    borderRadius: 10,
     boxShadow: '0 5px 30px rgba(232, 234, 237, 0.5)',
     color: 'white',
     height: '100%',
@@ -25,9 +26,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
     fontFamily: 'Roboto',
     fontSize: 16,
     fontWeight: 300,
+    marginBottom: -4,
     marginLeft: 35,
     marginTop: 3,
+    maxHeight: 135,
     maxWidth: 230,
+    minHeight: 135,
+    overflow: 'hidden',
     textAlign: 'left',
   },
   flipCardFront: {
@@ -63,12 +68,15 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: 160,
   },
   linkWrapper: {
+    '&:hover': {
+      backgroundColor: '#fff',
+    },
     color: '#4353ff',
-    display: 'block',
+    display: 'inline-block',
     fontFamily: 'Roboto',
     fontSize: 15,
     fontWeight: 300,
-    marginTop: 30,
+    marginTop: 15,
     textDecoration: 'none',
   },
   name: {
@@ -76,7 +84,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     fontFamily: 'Roboto',
     fontSize: 22,
     fontWeight: 400,
-    marginTop: 47,
+    marginTop: 40,
+    maxHeight: 55,
+    overflow: 'hidden',
   },
   quotesWrap: {
     display: 'flex',
