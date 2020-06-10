@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Popper from '@material-ui/core/Popper';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       position: 'relative',
     },
-    optionalButtonTag: ({ isVisibleBtn }: any) => ({
+    optionalButtonTag: ({ visible }: any) => ({
       '&:hover': {
         cursor: 'pointer',
       },
@@ -33,22 +34,21 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: '50%',
       boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)',
       height: '40px',
-      opacity: isVisibleBtn ? 1 : 0,
+      opacity: visible ? 1 : 0,
       transition: 'all 1s ease-in-out',
       width: '40px',
     }),
-    popperTag: ({ isVisiblePopper }: any) => ({
+    paper: ({}: any) => ({
       alignItems: 'center',
+      backgroundColor: 'none',
       display: 'flex',
       height: '60px',
       justifyContent: 'space-between',
-      left: '-45px',
+      left: '-70px',
       position: 'absolute',
-      top: '-10px',
+      top: '-50px',
       transition: 'all 1s ease-in-out',
-      visibility: isVisiblePopper ? 'visible' : 'hidden',
-      width: '130px',
-      zIndex: 50,
+      width: '140px',
     }),
     rightButtonTag: {
       background: '#8cc759',
@@ -62,18 +62,13 @@ interface Props {
   onClickRight?: () => void;
 }
 export const MegaButton: React.FC<Props> = ({ onClickLeft, onClickCenter, onClickRight }) => {
-  const [state, setState] = useState({
-    isVisibleBtn: false,
-    isVisiblePopper: false,
-  });
-
   const clickLeft = () => {
     if (typeof onClickLeft === 'function') {
       onClickLeft();
     }
   };
 
-  const handleOnClickCenter = () => {
+  const clickCenter = () => {
     onClickCenter();
   };
 
@@ -83,36 +78,48 @@ export const MegaButton: React.FC<Props> = ({ onClickLeft, onClickCenter, onClic
     }
   };
 
-  const { megaButton, optionalButtonTag, centralButtonTag, popperTag } = useStyles({
-    isVisibleBtn: state.isVisibleBtn,
-    isVisiblePopper: state.isVisibleBtn,
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [visible, setVisible] = React.useState(false);
+
+  const { megaButton, optionalButtonTag, centralButtonTag, paper } = useStyles({
+    visible,
   });
 
-  const handleOnMouseLeave = useCallback(() => {
-    setState(s => ({ ...s, isVisiblePopper: false, isVisibleBtn: false }));
-  }, []);
-  const handleOnMouseOver = useCallback(() => {
-    setState(s => ({ ...s, isVisiblePopper: true, isVisibleBtn: true }));
-  }, []);
+  const handleOnMouseOver2 = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+    setVisible(true);
+  };
+  const handleOnMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
+    setVisible(false);
+    setAnchorEl(null);
+  };
+
+  // const open = Boolean(anchorEl);
+  const open = true;
+  // const id = open ? 'simple-popper' : undefined;
+  const id = 'simple-popper';
 
   return (
     <>
       <div className={megaButton}>
-        <ButtonBase onMouseOver={handleOnMouseOver} onClick={handleOnClickCenter} className={centralButtonTag}>
+        <ButtonBase onMouseOver={handleOnMouseOver2} onClick={clickCenter} className={centralButtonTag}>
           <p>ЦК</p>
         </ButtonBase>
-        <div className={popperTag} onMouseLeave={handleOnMouseLeave}>
-          {typeof onClickLeft === 'function' ? (
-            <ButtonBase className={optionalButtonTag} onClick={clickLeft}>
-              <p>ЛК</p>
-            </ButtonBase>
-          ) : null}
-          {typeof onClickRight === 'function' ? (
-            <ButtonBase className={optionalButtonTag} onClick={clickRight}>
-              <p>ПК</p>
-            </ButtonBase>
-          ) : null}
-        </div>
+
+        <Popper id={id} open={open} anchorEl={anchorEl}>
+          <div className={paper} onMouseLeave={handleOnMouseLeave}>
+            {typeof onClickLeft === 'function' ? (
+              <ButtonBase className={optionalButtonTag} onClick={clickLeft}>
+                <p>ЛК</p>
+              </ButtonBase>
+            ) : null}
+            {typeof onClickRight === 'function' ? (
+              <ButtonBase className={optionalButtonTag} onClick={clickRight}>
+                <p>ПК</p>
+              </ButtonBase>
+            ) : null}
+          </div>
+        </Popper>
       </div>
     </>
   );
