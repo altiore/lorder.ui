@@ -2,13 +2,15 @@ import React from 'react';
 
 import CenterDecorator from '../../../.storybook/decor/Center';
 import RouterDecorator from '../../../.storybook/decor/RouterDecorator';
+import StoreDecorator from '../../../.storybook/decor/StoreDecorator';
 import { FlippingCard } from './FlippingCard';
 
 import { storiesOf } from '@storybook/react';
 
 storiesOf('FlippingCard', module)
-  .addDecorator(RouterDecorator)
   .addDecorator(CenterDecorator)
+  .addDecorator(StoreDecorator)
+  .addDecorator(RouterDecorator)
   .add('default', () => {
     return (
       <FlippingCard
@@ -16,10 +18,12 @@ storiesOf('FlippingCard', module)
         userName="Разван Ломов"
         userRole="Архитектор"
         userProfileLink="/"
-        profileLinkTitle="Ссылка на профиль "
+        profileLinkTitle="Ссылка на профиль"
       >
         Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum
-        используют потому, что тот обеспечивает стандартное заполнение шаблона
+        используют потому, что тот обеспечивает стандартное заполнение шаблона Давно выяснено, что при оценке дизайна и
+        композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает
+        стандартное заполнение шаблона
       </FlippingCard>
     );
   });

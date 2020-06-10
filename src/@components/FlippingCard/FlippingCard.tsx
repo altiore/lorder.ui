@@ -1,7 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 import SvgIcon from '@material-ui/core/SvgIcon';
+
+import { LinkButton } from '#/@common/LinkButton';
 
 import { useStyles } from './styles';
 
@@ -57,9 +58,9 @@ export const FlippingCard = ({
           <h2 className={name}>{userName}</h2>
           <p className={role}>{userRole}</p>
           <p>
-            <NavLink className={linkWrapper} to={userProfileLink}>
+            <LinkButton className={linkWrapper} to={userProfileLink}>
               {profileLinkTitle}
-            </NavLink>
+            </LinkButton>
           </p>
         </div>
       </div>
