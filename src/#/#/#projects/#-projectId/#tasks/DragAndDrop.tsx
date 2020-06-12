@@ -18,10 +18,12 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 
 import { PatchTaskForm } from '#/@common/TaskForm';
 import { TASKS_ROUTE } from '#/@store/router';
-import { STATUS_NAMES, Task } from '#/@store/tasks';
+import { Task } from '#/@store/tasks';
 
 import { useStyles } from './styles';
 import { TaskCard } from './TaskCard';
+
+import { ITaskColumn } from '@types';
 
 const CARD_WIDTH = 296;
 
@@ -33,6 +35,7 @@ const getListStyle = (isDraggingOver: boolean, height: number) => ({
 });
 
 export interface IDragAndDropProps {
+  columns: ITaskColumn[];
   fetchProjectTasks: any;
   height: number;
   items: Task[];
@@ -41,11 +44,19 @@ export interface IDragAndDropProps {
   openedStatuses: number[];
   projectId: number;
   push: any;
-  statuses: number[];
   toggleOpenedTab: any;
 }
 
+const STATUS_NAMES = {
+  DONE: 'Готово',
+  IN_PROGRESS: 'В процессе',
+  IN_TESTING: 'Обзор',
+  JUST_CREATED: 'Резерв',
+  TO_DO: 'Сделать',
+};
+
 export const DragAndDrop: React.FC<IDragAndDropProps> = ({
+  columns,
   fetchProjectTasks,
   height,
   items,
@@ -54,7 +65,6 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   openedStatuses,
   projectId,
   push,
-  statuses,
   toggleOpenedTab,
 }) => {
   const classes = useStyles();
@@ -127,13 +137,13 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   return (
     <div className={classes.root}>
       <DragDropContext onDragEnd={onDragEnd}>
-        {statuses.map(status => {
-          const filteredItems = items.filter(el => el.status === status);
+        {columns.map(({ id: status, name, statusFrom, statusTo }) => {
+          const filteredItems = items.filter(el => el.status >= statusFrom && el.status <= statusTo);
           const filteredItemsLength = filteredItems.length;
           return (
             <div className={classes.column} key={status}>
               <Typography variant="h6" className={classes.columnTitle}>
-                <span>{STATUS_NAMES[status]}</span>
+                <span>{STATUS_NAMES[name] || name}</span>
                 {!!filteredItemsLength && (
                   <ButtonBase value={status} className={classes.arrowWrap} onClick={handleToggleOpened}>
                     <KeyboardArrowDown
@@ -191,8 +201,4 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
       </DragDropContext>
     </div>
   );
-};
-
-DragAndDrop.defaultProps = {
-  statuses: [0, 1, 2, 3, 4],
 };

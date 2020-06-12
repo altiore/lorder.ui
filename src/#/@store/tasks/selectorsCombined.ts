@@ -158,7 +158,3 @@ export const canStartTask = createDeepEqualSelector(
     return false;
   }
 );
-
-export const STATUS_NAMES = ['Резерв', 'Сделать', 'В процессе', 'Обзор', 'Готово'];
-
-export const allStatuses = () => STATUS_NAMES;

@@ -69,6 +69,7 @@ export const initialUpdateProject = createDeepEqualSelector(
       desc: p.desc,
       monthlyBudget: p.monthlyBudget,
       slogan: p.slogan,
+      strategy: p.strategy,
       title: p.title,
     }
 );
@@ -106,3 +107,5 @@ export const projectTaskTypes = createDeepEqualSelector(
 export const getProjectById = createDeepEqualSelector(allProjectList, (list: Project[]) => (id: number): Project =>
   list.find(e => e.id === id) || new Project()
 );
+
+export const openedTaskColumns = createDeepEqualSelector([openedProject], pr => (pr ? pr.taskColumns : []));

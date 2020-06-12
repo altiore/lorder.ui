@@ -14,9 +14,9 @@ import PerformerField from './PerformerField';
 import StatusField from './StatusField';
 import { useStyles } from './styles';
 
-import { ITask, IUser } from '@types';
+import { ITask, ITaskStatus, IUser } from '@types';
 
-interface ITaskStatus {
+interface ITaskStatusProps {
   assignees: IUser[];
   canStartTask: (sequenceNumber: number, projectId: number) => boolean;
   getTaskBySequenceNumber: (sequenceNumber: number, projectId: number) => undefined | ITask;
@@ -27,7 +27,7 @@ interface ITaskStatus {
   onStop: (_: any) => void;
   projectId: number;
   sequenceNumber: number;
-  statuses: string[];
+  statusColumns: ITaskStatus[];
 }
 
 enum POPPER_TYPE {
@@ -40,7 +40,7 @@ type IPopperType = POPPER_TYPE | null;
 let lastPopperType: IPopperType = null;
 let nextPopperType: IPopperType = null;
 
-export const TaskStatus: React.FC<ITaskStatus> = React.memo(
+export const TaskStatus: React.FC<ITaskStatusProps> = React.memo(
   ({
     assignees,
     canStartTask,
@@ -50,7 +50,7 @@ export const TaskStatus: React.FC<ITaskStatus> = React.memo(
     onStart,
     onStop,
     sequenceNumber,
-    statuses,
+    statusColumns,
     projectId,
   }) => {
     const classes = useStyles();
@@ -97,6 +97,10 @@ export const TaskStatus: React.FC<ITaskStatus> = React.memo(
     const handleClose = useCallback(() => {
       setPopperType(null);
     }, [setPopperType]);
+
+    const statuses = useMemo<number[]>(() => {
+      return statusColumns.map(el => el.id);
+    }, [statusColumns]);
 
     const open = Boolean(popperType);
     return (
