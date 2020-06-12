@@ -95,5 +95,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     borderRadius: '50%',
     height: '100%',
     maxWidth: '100%',
+    objectFit: 'cover',
   },
 }));
