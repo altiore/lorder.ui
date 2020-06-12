@@ -9,7 +9,16 @@ import { TaskType } from '../task-types';
 import { Member } from './members/Member';
 import { ProjectTaskType } from './taskTypes/project-task-type';
 
-import { ACCESS_LEVEL, IDownloadList, IProject, IProjectPart, IProjectTaskType, PROJECT_TYPE } from '@types';
+import {
+  ACCESS_LEVEL,
+  IDownloadList,
+  IProject,
+  IProjectPart,
+  IProjectTaskType,
+  ITaskColumn,
+  PROJECT_STRATEGY,
+  PROJECT_TYPE,
+} from '@types';
 
 export class Project implements IProject {
   id?: number;
@@ -18,6 +27,7 @@ export class Project implements IProject {
   title: string;
   desc?: string;
   slogan?: string;
+  strategy: PROJECT_STRATEGY = PROJECT_STRATEGY.SIMPLE;
   monthlyBudget?: number;
   owner?: any;
   ownerId?: number;
@@ -31,6 +41,7 @@ export class Project implements IProject {
   /** ценность всех задач в этом проекте */
   valueSum?: number;
   type: PROJECT_TYPE;
+  taskColumns: ITaskColumn[] = [];
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

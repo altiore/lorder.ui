@@ -4,14 +4,18 @@ import { Field, InjectedFormProps } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import InputField from '@components/InputField';
+import { SelectField } from '@components/SelectField';
+
+import { PROJECT_STRATEGY, ROLE } from '@types';
 
 const parseNumber = i => parseFloat(i);
 const formatNumber = i => (typeof i === 'number' ? i.toString() : '');
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   button: {
     marginLeft: 'auto',
   },
@@ -22,7 +26,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const ProfileForm: React.FC<InjectedFormProps> = ({ submitting, pristine, handleSubmit }) => {
+interface IProjectForm {
+  userRole: ROLE;
+}
+
+export const ProjectFormTsx: React.FC<InjectedFormProps & IProjectForm> = ({
+  handleSubmit,
+  pristine,
+  submitting,
+  userRole,
+}) => {
   const classes = useStyles();
 
   return (
@@ -47,6 +60,18 @@ export const ProfileForm: React.FC<InjectedFormProps> = ({ submitting, pristine,
           format={formatNumber}
         />
       </ListItem>
+      <Tooltip title="В разработке. Скоро будет доступно">
+        <ListItem>
+          <Field
+            name="strategy"
+            // TODO: удалить, когда функционал будет готов
+            disabled={userRole !== ROLE.SUPER_ADMIN}
+            component={SelectField}
+            items={PROJECT_STRATEGY}
+            label="Стратегия перемещения задач"
+          />
+        </ListItem>
+      </Tooltip>
       <ListItem>
         <Button
           className={classes.button}

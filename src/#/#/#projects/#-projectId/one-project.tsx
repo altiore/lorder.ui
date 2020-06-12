@@ -31,13 +31,14 @@ export const PROJECT_ROUTES: IRoute[] = [
     title: 'Участники',
   },
   {
-    access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+    access: [ROLES.USERS, ACCESS_LEVEL.VIOLET],
     component: lazy(() => import('./#roles')),
     path: '/projects/:projectId/roles',
     title: 'Роли Проекта',
   },
   {
-    access: [ROLES.USERS, ACCESS_LEVEL.VIOLET],
+    // TODO: изменить, чтоб было доступно пользователям, когда функционал будет готов
+    access: [ROLES.SUPER_ADMINS, ACCESS_LEVEL.VIOLET],
     component: lazy(() => import('./#status-moves')),
     path: '/projects/:projectId/status-moves',
     title: 'Разрешенные перемещения',
@@ -49,13 +50,13 @@ export const PROJECT_ROUTES: IRoute[] = [
     title: 'Части проекта',
   },
   {
-    access: [ROLES.USERS, ACCESS_LEVEL.BLUE],
+    access: [ROLES.USERS, ACCESS_LEVEL.VIOLET],
     component: lazy(() => import('./#task-types')),
     path: '/projects/:projectId/task-types',
     title: 'Типы задач',
   },
   {
-    access: [ROLES.USERS, ACCESS_LEVEL.INDIGO],
+    access: [ROLES.USERS, ACCESS_LEVEL.VIOLET],
     component: lazy(() => import('./#settings')),
     path: '/projects/:projectId/settings',
     title: 'Настройки',

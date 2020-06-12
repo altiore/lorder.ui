@@ -28,14 +28,22 @@ export const SelectField = ({
   ...custom
 }: ISelectFieldProps) => {
   const id = uniqueId();
+  const labelId = `${input.name}-${id}-select-field-label`;
   return (
     <FormControl variant="outlined" error={touched && error} fullWidth={fullWidth}>
-      <InputLabel htmlFor={id}>{label}</InputLabel>
+      {label && (
+        <InputLabel htmlFor={id} id={labelId}>
+          {label}
+        </InputLabel>
+      )}
       <Select
         {...(input as any)}
         value={input.value || ''}
         error={touched && error}
         onChange={onChange(input) as any}
+        labelId={labelId}
+        label={label}
+        id={id}
         {...(custom as any)}
       >
         {(Array.isArray(items) ? items : Object.keys(items).map(key => ({ name: items[key], id: key }))).map(item => (

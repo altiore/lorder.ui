@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
+import { userRole } from '#/@store/identity';
 import { initialUpdateProject, updateProject } from '#/@store/projects';
 
-import { ProfileForm } from './ProfileForm';
+import { ProjectFormTsx } from './ProjectForm';
 
-const mapState = createStructuredSelector<any, any>({
+import { IState, ROLE } from '@types';
+
+const mapState = createStructuredSelector<IState, { initialValues: any; userRole: ROLE }>({
   initialValues: initialUpdateProject,
+  userRole,
 });
 
 const mapDispatch = {
@@ -22,5 +26,5 @@ export default connect(
   reduxForm({
     enableReinitialize: true,
     form: 'UpdateProjectForm',
-  })(ProfileForm as any)
+  })(ProjectFormTsx as any)
 );
