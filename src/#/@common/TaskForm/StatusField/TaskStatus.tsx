@@ -98,8 +98,11 @@ export const TaskStatus: React.FC<ITaskStatusProps> = React.memo(
       setPopperType(null);
     }, [setPopperType]);
 
-    const statuses = useMemo<number[]>(() => {
-      return statusColumns.map(el => el.id);
+    const statusToName = useMemo<{ [key in number]: string }>(() => {
+      return statusColumns.reduce((res, el) => {
+        res[el.id] = el.name;
+        return res;
+      }, {});
     }, [statusColumns]);
 
     const open = Boolean(popperType);
@@ -107,7 +110,7 @@ export const TaskStatus: React.FC<ITaskStatusProps> = React.memo(
       <div className={classes.wrapper}>
         <ClickAwayListener onClickAway={handleClose}>
           <div className={classes.taskStatus} ref={anchorRef}>
-            <Field name="status" component={StatusField} statuses={statuses} />
+            <Field name="status" component={StatusField} statusToName={statusToName} />
             <Field
               name="performerId"
               component={PerformerField}

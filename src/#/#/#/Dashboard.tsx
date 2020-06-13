@@ -10,7 +10,7 @@ import { TIME_LINE_HEIGHT } from '@components/TimeLine';
 import { DailyRoutine } from './DailyRoutine';
 import { LastEvents } from './LastEvents';
 import { StartForm } from './StartForm';
-import { TasksList } from './TasksList';
+import TasksList from './TasksList';
 
 export interface IDashboardProps extends RouteComponentProps<{}> {
   getAllTasks?: any;

@@ -2,15 +2,28 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { getProjectById } from '#/@store/projects';
+import { fetchProjectsDetails, getProjectById } from '#/@store/projects';
 import { allTaskLength, isTasksLoaded, isTasksLoading, sortedByFilterTasksWithActive } from '#/@store/tasks';
 import { searchTerm } from '#/@store/tasksFilter';
 import { isTimerStarted } from '#/@store/timer';
 import { currentTaskId } from '#/@store/timer';
 
-import { ITasksListProps, TasksListJsx } from './TasksList';
+import { TasksListJsx } from './TasksList';
 
-const mapStateToProps = createStructuredSelector({
+import { IProject, IState } from '@types';
+
+interface ITaskListMapped {
+  allTaskLength: number;
+  currentTaskId?: number | string;
+  getProjectById: (p: number) => IProject;
+  isTasksLoaded: boolean;
+  isTasksLoading: boolean;
+  isTimerStarted: boolean;
+  searchTerm?: string;
+  tasks: any[];
+}
+
+const mapStateToProps = createStructuredSelector<IState, ITaskListMapped>({
   allTaskLength,
   currentTaskId,
   getProjectById,
@@ -19,8 +32,10 @@ const mapStateToProps = createStructuredSelector({
   isTimerStarted,
   searchTerm,
   tasks: sortedByFilterTasksWithActive,
-} as any);
+});
 
-export const TasksList = connect<Partial<ITasksListProps>, Partial<ITasksListProps>, {}>(mapStateToProps as any)(
-  TasksListJsx as any
-);
+const mapDispatch = {
+  fetchProjectsDetails,
+};
+
+export default connect(mapStateToProps, mapDispatch)(TasksListJsx);

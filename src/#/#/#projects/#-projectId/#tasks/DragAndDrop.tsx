@@ -18,7 +18,7 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 
 import { PatchTaskForm } from '#/@common/TaskForm';
 import { TASKS_ROUTE } from '#/@store/router';
-import { Task } from '#/@store/tasks';
+import { STATUS_NAMES, Task } from '#/@store/tasks';
 
 import { useStyles } from './styles';
 import { TaskCard } from './TaskCard';
@@ -46,14 +46,6 @@ export interface IDragAndDropProps {
   push: any;
   toggleOpenedTab: any;
 }
-
-const STATUS_NAMES = {
-  DONE: 'Готово',
-  IN_PROGRESS: 'В процессе',
-  IN_TESTING: 'Обзор',
-  JUST_CREATED: 'Резерв',
-  TO_DO: 'Сделать',
-};
 
 export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   columns,

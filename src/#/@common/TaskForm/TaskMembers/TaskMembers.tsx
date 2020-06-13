@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 
-// import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import { IUserTask } from '@types';
@@ -26,7 +25,11 @@ export const TaskMembersTsx: React.FC<ITaskMembers> = ({ getTaskUsersByTaskId, t
   return (
     <table>
       <thead>
-        <Typography variant="subtitle2">Участники</Typography>
+        <tr>
+          <td colSpan={2}>
+            <Typography variant="subtitle2">Участники</Typography>
+          </td>
+        </tr>
       </thead>
       <tbody>
         {members.map(({ benefitPart, user, userId }) => (

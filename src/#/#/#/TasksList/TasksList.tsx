@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import FlipMove from 'react-flip-move';
 
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import isEqual from 'lodash/isEqual';
 
-import { Project } from '#/@store/projects';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import EmptyList from './EmptyList';
 import { Filter } from './Filter';
@@ -12,12 +12,13 @@ import Pagination from './Pagination';
 import PlaceHolder from './PlaceHolder';
 import TaskComponent from './TaskComponent';
 
-import { ITask } from '@types';
+import { IProject, ITask } from '@types';
 
 export interface ITasksListProps {
   allTaskLength: number;
   currentTaskId?: number | string;
-  getProjectById: (id: number | string) => Project;
+  fetchProjectsDetails: (ids: number[]) => Promise<void>;
+  getProjectById: (id: number) => IProject;
   isTasksLoaded: boolean;
   isTasksLoading: boolean;
   isTimerStarted: boolean;
@@ -37,24 +38,43 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const TasksListJsx = ({
+export const TasksListJsx: React.FC<ITasksListProps> = ({
   allTaskLength,
   currentTaskId,
+  fetchProjectsDetails,
   getProjectById,
   isTasksLoaded,
   isTasksLoading,
   isTimerStarted,
   tasks,
-}) => {
+}): JSX.Element => {
   const [page, setPage] = useState<number>(0);
   const [perPage] = useState<number>(5);
   const resetPage = useCallback(() => setPage(0), [setPage]);
 
   const isOnlyOneTask = useMemo(() => allTaskLength === 1, [allTaskLength]);
 
-  const pageTasks = useMemo(() => {
+  const pageTasks = useMemo<Array<ITask | 'filter'>>(() => {
     return [...tasks.slice(0, 2), ...tasks.slice(2 + page * perPage, 2 + (page + 1) * perPage)];
   }, [page, perPage, tasks]);
+
+  const [projectIds, setProjectIds] = useState<number[]>([]);
+  useEffect(() => {
+    const ids = pageTasks.reduce<number[]>((res, el: ITask | 'filter') => {
+      if (typeof el === 'object') {
+        if (res.indexOf(el.projectId) === -1) {
+          res.push(el.projectId);
+        }
+      }
+
+      return res;
+    }, []);
+    setProjectIds(prevIds => (isEqual(ids, prevIds) ? prevIds : ids));
+  }, [pageTasks]);
+
+  useEffect(() => {
+    fetchProjectsDetails(projectIds);
+  }, [fetchProjectsDetails, projectIds]);
 
   const isNoMatch = useMemo(() => {
     return !tasks || tasks.length <= 2;
@@ -90,7 +110,7 @@ export const TasksListJsx = ({
   const { root } = useStyles();
 
   if (allTaskLength === 0 || (allTaskLength && !isTimerStarted)) {
-    return <PlaceHolder loading={(!isTasksLoaded && isTasksLoading) || (allTaskLength && !isTimerStarted)} />;
+    return <PlaceHolder loading={Boolean((!isTasksLoaded && isTasksLoading) || (allTaskLength && !isTimerStarted))} />;
   }
 
   return (
