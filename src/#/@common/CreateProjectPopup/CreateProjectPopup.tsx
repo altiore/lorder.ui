@@ -1,20 +1,72 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
+import cn from 'classnames';
 import { Field, InjectedFormProps } from 'redux-form';
 import { required } from 'redux-form-validators';
 
 import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Collapse from '@material-ui/core/Collapse';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import { SwitchField } from '@components/SwitchField';
+import { ProjectIco } from '@components/@icons/Project';
+import InputField from '@components/InputField';
+import RadioButtonField from '@components/RadioButtonField';
+import { SelectField } from '@components/SelectField';
 import { TextField } from '@components/TextField';
 
-import { useStyles } from './styles';
+import { PROJECT_STRATEGY, PROJECT_TYPE } from '@types';
 
-import { PROJECT_TYPE } from '@types';
+const parseNumber = i => parseFloat(i);
+const formatNumber = i => (typeof i === 'number' ? i.toString() : '');
 
-export class IProjectFormProps {
+const useStyles = makeStyles((theme: Theme) => ({
+  content: {
+    backgroundColor: '#F4F5F7',
+    paddingBottom: theme.spacing(2),
+  },
+  details: {
+    '& > *': {
+      margin: theme.spacing(1, 0),
+    },
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    paddingTop: theme.spacing(1),
+  },
+  expandBtn: {
+    '& > svg': {
+      transition: theme.transitions.create(['transform']),
+    },
+    alignItems: 'center',
+    borderRadius: 4,
+    display: 'flex',
+    height: 44,
+    justifyContent: 'space-between',
+    padding: '0 8px 0 2px',
+    width: '100%',
+  },
+  expandBtnOpen: {
+    '& > svg': {
+      transform: 'rotate(180deg)',
+    },
+  },
+  panel: {
+    width: '100%',
+  },
+  titleStyle: {
+    paddingLeft: 11,
+  },
+}));
+
+interface IProjectFormProps extends InjectedFormProps<{}, IProjectFormProps> {
   goToPage: any;
   onClose: any;
   title?: string;
@@ -22,42 +74,83 @@ export class IProjectFormProps {
   buttonText?: string;
 }
 
-export const CreateProjectPopupJsx: React.FunctionComponent<IProjectFormProps &
-  InjectedFormProps<{}, IProjectFormProps>> = ({ handleSubmit, onClose }) => {
-  const classes = useStyles();
+const typeVariants = [
+  {
+    title: 'Социальный',
+    value: PROJECT_TYPE.SOCIALLY_USEFUL,
+  },
+  {
+    title: 'Личный',
+    value: PROJECT_TYPE.PERSONALLY_USEFUL,
+  },
+];
+
+export const CreateProjectPopupJsx: React.FunctionComponent<IProjectFormProps> = ({ handleSubmit, onClose }) => {
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  const toggleExpanded = useCallback(() => {
+    setExpanded(o => !o);
+  }, []);
+
+  const { content, details, expandBtn, expandBtnOpen, panel, titleStyle } = useStyles();
 
   return (
-    <React.Fragment>
-      <DialogContent>
+    <>
+      <DialogTitle disableTypography>
+        <Typography className={titleStyle}>Создать Проект</Typography>
+        <IconButton onClick={onClose}>
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent className={content}>
         <form onSubmit={handleSubmit}>
           <Field
             autoFocus
             name="title"
             component={TextField}
             margin="normal"
-            // icon={<ProjectIco />}
+            icon={<ProjectIco />}
             label="Название проекта"
             validate={[required({ msg: 'Обязательное поле' })]}
           />
-          <div className={classes.textRight}>
-            <Field
-              name="type"
-              component={SwitchField}
-              label="Личный"
-              on={PROJECT_TYPE.PERSONALLY_USEFUL}
-              off={PROJECT_TYPE.SOCIALLY_USEFUL}
-            />
+          <Field name="type" component={RadioButtonField} label="Тип проекта:" items={typeVariants} />
+          <div className={panel}>
+            <ButtonBase className={cn(expandBtn, { [expandBtnOpen]: expanded })} onClick={toggleExpanded}>
+              <span>Расширенные настройки</span>
+              <ExpandMoreIcon />
+            </ButtonBase>
+            <Collapse in={expanded}>
+              <div className={details}>
+                <Field name="desc" component={InputField} label="Описание" />
+                <Field name="slogan" component={InputField} label="Призыв присоединиться" />
+                <Field
+                  name="monthlyBudget"
+                  component={InputField}
+                  label="Месячный бюджет"
+                  parse={parseNumber}
+                  format={formatNumber}
+                />
+                <Field
+                  name="strategy"
+                  // TODO: удалить, когда функционал будет готов
+                  disabled
+                  component={SelectField}
+                  items={PROJECT_STRATEGY}
+                  label="Стратегия перемещения задач"
+                />
+              </div>
+            </Collapse>
           </div>
         </form>
       </DialogContent>
       <DialogActions>
-        <Button color="primary" onClick={onClose}>
+        <Button color="default" onClick={onClose}>
           Отмена
         </Button>
-        <Button color="primary" onClick={handleSubmit}>
+        <Button color="primary" variant="contained" onClick={handleSubmit}>
           Создать проект
         </Button>
       </DialogActions>
-    </React.Fragment>
+    </>
   );
 };
