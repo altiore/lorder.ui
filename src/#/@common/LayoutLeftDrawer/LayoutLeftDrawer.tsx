@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { match, Route, RouteComponentProps } from 'react-router-dom';
 
 import cn from 'classnames';
@@ -25,13 +25,11 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SyncAltIcon from '@material-ui/icons/SyncAlt';
 
 import { LinkButton } from '#/@common/LinkButton';
-import { Project } from '#/@store/projects';
-
-import { TASKS_ROUTE } from '../../@store/router';
+import { TASKS_ROUTE } from '#/@store/router';
 
 import { useStyles } from './styles';
 
-import { IRoute } from '@types';
+import { IProject, IRoute } from '@types';
 
 export interface ILayoutLeftDrawerProps {
   children?: React.ReactNode;
@@ -41,9 +39,8 @@ export interface ILayoutLeftDrawerProps {
   isWidthSm: boolean;
   match: match<any>;
   routes?: IRoute[];
-  openedProject?: Project;
+  openedProject?: IProject;
   refreshProjectTasks: any;
-  selectProject?: Project;
   showFooter?: boolean;
   theme: Theme;
   toggleUiSetting: any;
@@ -66,18 +63,13 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
   isWidthSm,
   match,
   routes,
-  openedProject,
+  openedProject: project,
   refreshProjectTasks,
-  selectProject,
   showFooter,
   theme,
   toggleUiSetting,
 }) => {
   const classes = useStyles();
-
-  const project = useMemo(() => {
-    return openedProject || selectProject;
-  }, [openedProject, selectProject]);
 
   const handleDrawerToggle = useCallback(() => {
     toggleUiSetting('isLeftBarOpen');
@@ -112,8 +104,13 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
               {project.title}
             </LinkButton>
           )}
-          {project && project.uuid && project.title && (
-            <LinkButton to={`/p/${project.uuid}`} color="primary" variant="contained" className={classes.projectPublic}>
+          {project && project.pub && project.title && (
+            <LinkButton
+              to={`/p/${project?.pub?.uuid || project.uuid}`}
+              color="primary"
+              variant="contained"
+              className={classes.projectPublic}
+            >
               Публичный
             </LinkButton>
           )}

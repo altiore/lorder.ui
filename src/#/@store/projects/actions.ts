@@ -87,6 +87,7 @@ export const publishProject = requestActions<number>('PROJECT/PUBLISH', (project
     message: 'Возможно, у вас нет прав на это',
     title: 'Не удалось опубликовать проект',
   },
+  projectId,
   request: {
     method: 'POST',
     url: `/projects/${projectId}/publish`,

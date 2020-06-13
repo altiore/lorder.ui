@@ -5,7 +5,6 @@ import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
 import { closeDialog, openDialog } from '#/@store/dialog';
-import { selectProject } from '#/@store/project';
 import { openedProject } from '#/@store/projects';
 import { isTasksLoading, refreshProjectTasks } from '#/@store/tasks';
 import { isLeftBarOpen, toggleUiSetting } from '#/@store/ui';
@@ -18,7 +17,6 @@ const mapState = createStructuredSelector({
   isLeftBarOpen,
   isTasksLoading,
   openedProject,
-  selectProject,
 } as any);
 
 const mapDispatch = {

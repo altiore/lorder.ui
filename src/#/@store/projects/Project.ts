@@ -42,6 +42,7 @@ export class Project implements IProject {
   valueSum?: number;
   type: PROJECT_TYPE;
   taskColumns: ITaskColumn[] = [];
+  pub?: any;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

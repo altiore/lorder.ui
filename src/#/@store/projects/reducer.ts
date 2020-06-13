@@ -17,6 +17,7 @@ import {
   getAllProjectTaskTypes,
   postProject,
   postProjectMember,
+  publishProject,
   removeProject,
   removeProjectByAdmin,
   updateProjectAct,
@@ -121,6 +122,14 @@ const postProjectMemberFailHandler = (state: S, { meta }: ActionMeta<P, M>) => {
   const projectIndex = state.list.findIndex(el => meta.previousAction.payload.projectId === el.id);
   return state.updateItem(projectIndex, {
     members: state.list[projectIndex].members.removeItem(-1),
+  });
+};
+
+const publishProjectHandler = (state, { payload, meta }) => {
+  const projectIndex = state.list.findIndex(el => meta.previousAction.payload.projectId === el.id);
+  return state.updateItem(projectIndex, {
+    ...payload.data,
+    uuid: get(payload, ['data', 'pub', 'uuid']),
   });
 };
 
@@ -235,6 +244,8 @@ export const projects: any = handleActions<S, any, any>(
     [postProjectMember.toString()]: postProjectMemberHandler,
     [postProjectMember.success]: postProjectMemberSuccessHandler,
     [postProjectMember.fail]: postProjectMemberFailHandler,
+
+    [publishProject.success]: publishProjectHandler,
 
     [updateProjectMemberAccessLevel.toString()]: updateProjectMemberAccessLevelHandler,
     [updateProjectMemberAccessLevel.success]: updateProjectMemberAccessLevelSuccessHandler,
