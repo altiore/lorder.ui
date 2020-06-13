@@ -7,13 +7,23 @@ import { reduxForm } from 'redux-form';
 import { onSubmitForm } from '#/@store/@common/helpers';
 import { IPostProjectData, postProject } from '#/@store/projects';
 
-import { CreateProjectPopupJsx, IProjectFormProps } from './CreateProjectPopup';
+import { CreateProjectPopupJsx } from './CreateProjectPopup';
 
-const CreateProjectPopup = connect(undefined, {
+import { PROJECT_TYPE } from '@types';
+
+const mapDispatch = {
   goToPage: push,
-})(
-  reduxForm<{}, IProjectFormProps>({
+};
+
+const CreateProjectPopup = connect(
+  undefined,
+  mapDispatch
+)(
+  reduxForm<{}, any>({
     form: 'ProjectForm',
+    initialValues: {
+      type: PROJECT_TYPE.SOCIALLY_USEFUL,
+    },
     onSubmit: onSubmitForm<IPostProjectData>(postProject),
     onSubmitFail: () => true,
     onSubmitSuccess: (res, dispatch, { onClose, goToPage }) =>
@@ -21,4 +31,4 @@ const CreateProjectPopup = connect(undefined, {
   })(CreateProjectPopupJsx) as any
 );
 
-export { CreateProjectPopup, IProjectFormProps };
+export { CreateProjectPopup };

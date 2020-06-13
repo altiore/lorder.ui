@@ -30,6 +30,11 @@ export default createMuiTheme({
         backgroundColor: palette.default.main,
       },
     },
+    MuiButton: {
+      containedPrimary: {
+        color: '#ffffff',
+      },
+    },
     MuiChip: {
       outlined: {
         '&:hover': {

@@ -43,7 +43,7 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
     const theme = useTheme();
 
     const openCreateProject = useCallback(() => {
-      openDialog(CreateProjectPopup, { scroll: 'body' });
+      openDialog(CreateProjectPopup, { fullWidth: true, maxWidth: 'sm', scroll: 'body' });
     }, [openDialog]);
 
     const selectProject = useCallback(
