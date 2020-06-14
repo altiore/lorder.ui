@@ -6,7 +6,7 @@ import moment from 'moment';
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { defaultProjectId, userId } from '#/@store/identity/selectors';
 import { getProjectById } from '#/@store/projects/selectors';
-import { routeProjectId } from '#/@store/router';
+import { routeProjectId, routeTaskSequenceNumber } from '#/@store/router';
 import { Task } from '#/@store/tasks/Task';
 import { filteredMembers, projectId, projectPart, searchTerm, tasksFilter } from '#/@store/tasksFilter';
 import { currentTask, currentTaskId } from '#/@store/timer';
@@ -83,8 +83,10 @@ export const sortedByFilterTasksWithActive = createDeepEqualSelector(
   }
 );
 
-export const checkIsCurrent = createDeepEqualSelector([currentTaskId, isPaused], (cTaskId, taskIsPaused) => taskId =>
-  cTaskId === taskId && !taskIsPaused
+export const isCurrent = createDeepEqualSelector(
+  [currentTask, isPaused, routeProjectId, routeTaskSequenceNumber],
+  (curTask, taskIsPaused, curPrId, curTaskSeqNum) =>
+    curTask && curTask.projectId === curPrId && curTask.sequenceNumber === curTaskSeqNum && !taskIsPaused
 );
 
 export const events = createDeepEqualSelector(
@@ -109,26 +111,26 @@ export const events = createDeepEqualSelector(
 
 export const projectTasks = createDeepEqualSelector(
   [allTaskList, routeProjectId],
-  (list, projectId: number | undefined): Task[] => (projectId ? list.filter(el => el.projectId === projectId) : [])
+  (list, prId: number | undefined): Task[] => (prId ? list.filter(el => el.projectId === prId) : [])
 );
 
 export const filteredProjectTasks = createDeepEqualSelector(
   [projectTasks, searchTerm, filteredMembers, projectPart],
-  (list, sTerm = '', members = [], projectPart = '') => {
+  (list, sTerm = '', members = [], prPart = '') => {
     if (!list || !list.length) {
       return [];
     }
     let res = list;
 
-    if (projectPart === 0) {
+    if (prPart === 0) {
       res = res.filter(({ projectParts }) => {
         return !projectParts || !projectParts.length;
       });
     }
 
-    if (projectPart) {
+    if (prPart) {
       res = res.filter(({ projectParts }) => {
-        return projectParts.map(({ id }) => id).includes(projectPart as number);
+        return projectParts.map(({ id }) => id).includes(prPart as number);
       });
     }
 
@@ -145,16 +147,16 @@ export const filteredProjectTasks = createDeepEqualSelector(
 
 export const canStartTask = createDeepEqualSelector(
   [getTaskBySequenceNumber, getProjectById, userId],
-  (getTask, getProject, userId) => (sequenceNumber: number, projectId: number) => {
-    const task: ITask = getTask(sequenceNumber, projectId) as ITask;
+  (getTask, getProject, uId) => (sequenceNumber: number, prId: number) => {
+    const task: ITask = getTask(sequenceNumber, prId) as ITask;
     if (task) {
       const project = getProject(task.projectId);
       return (
-        task.performerId === userId ||
+        task.performerId === uId ||
         Boolean(project && project.accessLevel && project.accessLevel >= ACCESS_LEVEL.YELLOW)
       );
     }
 
-    return false;
+    return true;
   }
 );

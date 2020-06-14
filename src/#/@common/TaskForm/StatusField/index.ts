@@ -3,26 +3,24 @@ import { connect } from 'react-redux';
 import { change } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { openedTaskColumns, projectMembersAsUsers } from '#/@store/projects';
+import { projectMembersAsUsers } from '#/@store/projects';
 import { canStartTask, EDIT_TASK_FORM, getTaskBySequenceNumber } from '#/@store/tasks';
 import { stopUserWork } from '#/@store/user-works';
 
 import { TaskStatus } from './TaskStatus';
 
-import { IState, ITask, ITaskStatus, IUser } from '@types';
+import { IState, ITask, IUser } from '@types';
 
 interface IStatusFieldState {
   assignees: IUser[];
   canStartTask: (a: number, b: number) => boolean;
   getTaskBySequenceNumber: (a: number, b: number) => undefined | ITask;
-  statusColumns: ITaskStatus[];
 }
 
 const mapState = createStructuredSelector<IState, IStatusFieldState>({
   assignees: projectMembersAsUsers,
   canStartTask,
   getTaskBySequenceNumber,
-  statusColumns: openedTaskColumns,
 });
 
 const onChangeAssignee = value => change(EDIT_TASK_FORM, 'performerId', value);

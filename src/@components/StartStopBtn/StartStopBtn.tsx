@@ -21,7 +21,8 @@ export interface IStartStopBtnProps {
   isLarge?: boolean;
   isStarted: boolean;
   theme: Theme;
-  onStart: (task: { projectId?: number; taskId: number | string }) => any;
+  onStart: (task: { projectId?: number; taskId?: number | string }) => any;
+  onStartNew: any;
   onStop: (event: React.SyntheticEvent<any>) => any;
   onStopPaused: (...a: any) => any;
   onPause: (event: React.SyntheticEvent<any>) => any;
@@ -80,6 +81,7 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
   isLarge,
   theme,
   onStart,
+  onStartNew,
   onStop,
   onStopPaused,
   onPause,
@@ -90,7 +92,7 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
   const [open, setOpen] = useState(false);
 
   const isCurrent = useMemo(() => {
-    return !task || task.id === currentTaskId;
+    return task && task.id === currentTaskId;
   }, [currentTaskId, task]);
 
   const handleClose = useCallback(() => {
@@ -103,17 +105,21 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
 
   const handleStart = useCallback(
     event => {
-      if (!task) {
-        return;
-      }
-      const { id, projectId } = task;
       event.stopPropagation();
-      onStart({
-        projectId,
-        taskId: id,
-      });
+      if (task) {
+        const { id, projectId } = task;
+        onStart({
+          projectId,
+          taskId: id,
+        });
+        return;
+      } else {
+        if (typeof onStartNew === 'function') {
+          onStartNew();
+        }
+      }
     },
-    [onStart, task]
+    [onStart, onStartNew, task]
   );
 
   const handlePause = useCallback(

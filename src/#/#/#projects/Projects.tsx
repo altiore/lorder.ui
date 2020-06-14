@@ -12,7 +12,7 @@ import { Confirmation } from '@components/Dialogs/Confirmation';
 import { Page } from '@components/Page';
 import TableVirtualized, { ColumnType } from '@components/TableVirtualized';
 
-import { CreateProjectPopup } from '#/@common/CreateProjectPopup';
+import { createProjectDialogProps, CreateProjectPopup } from '#/@common/CreateProjectPopup';
 import { Project } from '#/@store/projects';
 
 import { ACCESS_LEVEL, IUser, PROJECT_TYPE, ROLE } from '@types';
@@ -156,7 +156,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     }
   };
 
-  private createProject = () => this.props.openDialog(CreateProjectPopup, { scroll: 'body' });
+  private createProject = () => this.props.openDialog(CreateProjectPopup, createProjectDialogProps);
 
   private handleRowClick = async ({ rowData, event }: any) => {
     event.stopPropagation();

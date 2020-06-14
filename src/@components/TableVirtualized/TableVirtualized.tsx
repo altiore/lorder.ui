@@ -72,11 +72,11 @@ export class TableVirtualized extends React.Component<ITableVirtualizedProps, IT
     return (
       <div style={{ height, width: '100%' }} className={className}>
         <AutoSizer>
-          {({ height, width }) => {
+          {({ height: autoSizerHeight, width }) => {
             return (
               <Table
                 className={classes.table}
-                height={height}
+                height={autoSizerHeight}
                 {...tableProps}
                 width={width}
                 rowCount={rows.length}

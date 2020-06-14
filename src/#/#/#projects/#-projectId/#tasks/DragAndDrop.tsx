@@ -120,8 +120,8 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   );
 
   const createTask = useCallback(
-    (projectId: number | string, status: number) => () => {
-      openDialog(<PatchTaskForm projectId={projectId} initialValues={{ status }} />, { maxWidth: 'lg' });
+    (pId: number | string, status: number) => () => {
+      openDialog(<PatchTaskForm projectId={pId} initialValues={{ status }} />, { maxWidth: 'lg' });
     },
     [openDialog]
   );
@@ -160,10 +160,10 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                             index={index}
                             type={'div'}
                           >
-                            {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
+                            {(draggableProvided: DraggableProvided, draggableStateSnapshot: DraggableStateSnapshot) => (
                               <TaskCard
-                                provided={provided}
-                                snapshot={snapshot}
+                                provided={draggableProvided}
+                                snapshot={draggableStateSnapshot}
                                 {...item}
                                 onClick={handleTaskClick(item.sequenceNumber)}
                               />

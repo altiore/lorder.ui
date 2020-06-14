@@ -90,12 +90,12 @@ export const updateProfile = requestActions('ME/UPDATE', (newUserData: { display
   },
 }));
 
-export const refreshToken = requestActions('ME/REFRESH_TOKEN', (refreshToken: string, device: string) => ({
+export const refreshToken = requestActions('ME/REFRESH_TOKEN', (token: string, device: string) => ({
   noAuth: true,
   request: {
     data: {
       device,
-      refreshToken,
+      refreshToken: token,
     },
     method: 'patch',
     url: `/auth/refresh`,

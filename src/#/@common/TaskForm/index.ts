@@ -10,11 +10,11 @@ import { onSubmitFail } from '#/@store/@common/helpers';
 import { changeSettings } from '#/@store/dialog';
 import { routeProjectId, routeTaskSequenceNumber } from '#/@store/router';
 import {
-  checkIsCurrent,
   EDIT_TASK_FORM,
   EDIT_TASK_FORM_PROPS,
   fetchTaskDetails,
   getEditTaskInitialValues,
+  isCurrent,
   patchProjectTask,
   postProjectTask,
 } from '#/@store/tasks';
@@ -23,11 +23,11 @@ import { isPaused, startUserWork } from '#/@store/user-works';
 import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
-  checkIsCurrent,
   getEditTaskInitialValues,
+  isCurrent,
   isPaused,
-  routeProjectId,
-  routeTaskSequenceNumber,
+  projectId: routeProjectId,
+  sequenceNumber: routeTaskSequenceNumber,
 } as any);
 
 const mapDispatchToProps = {
@@ -38,49 +38,13 @@ const mapDispatchToProps = {
   startUserWork,
 };
 
-const mergeProps = (
-  {
-    checkIsCurrent,
-    getEditTaskInitialValues,
-    getTaskProjectParts,
-    routeProjectId,
-    routeTaskSequenceNumber,
-    ...restState
-  }: any,
-  { ...restDispatch }: any,
-  { sequenceNumber, projectId, initialValues, ...restOwn }: any
-) => {
-  const localSequenceNumber = sequenceNumber || routeTaskSequenceNumber;
-  const localProjectId = projectId || routeProjectId;
-  const preparedInitialValues =
-    initialValues || (localSequenceNumber ? getEditTaskInitialValues(localProjectId, localSequenceNumber) : {});
-  return {
-    ...restState,
-    initialValues: preparedInitialValues,
-    isCurrent: checkIsCurrent(get(preparedInitialValues, 'id')),
-    projectId: localProjectId,
-    sequenceNumber: localSequenceNumber,
-    ...restDispatch,
-    ...restOwn,
-  };
-};
-
-export const PatchTaskForm = connect<
-  any,
-  any,
-  {
-    buttonText?: string;
-    taskId?: number | string;
-    projectId?: number | string;
-    initialValues?: Partial<ITaskFormData>;
-  }
->(
+export const PatchTaskForm = connect(
   mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
+  mapDispatchToProps
 )(
   reduxForm<ITaskFormData, ITaskFormProps>({
-    enableReinitialize: true,
+    destroyOnUnmount: false,
+    enableReinitialize: false,
     form: EDIT_TASK_FORM,
     onSubmit: async (values, dispatch, { projectId }: any) => {
       const val = { ...values, projectId };
@@ -91,9 +55,9 @@ export const PatchTaskForm = connect<
     onSubmitSuccess: (result, dispatch) => {
       const actionType = get(result, 'meta.previousAction.type');
       const data = get(result, 'payload.data');
-      if (actionType === patchProjectTask.toString() || actionType === postProjectTask.toString()) {
+      if (actionType === postProjectTask.toString()) {
         dispatch(initialize(EDIT_TASK_FORM, pick(data, EDIT_TASK_FORM_PROPS), false));
       }
     },
   })(TaskFormJsx) as any
-);
+) as any;

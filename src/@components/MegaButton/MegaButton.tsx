@@ -89,10 +89,10 @@ export const MegaButton: React.FC<Props> = ({ onClickLeft, onClickCenter, onClic
   });
 
   const handleOnMouseLeave = useCallback(() => {
-    setState(state => ({ ...state, isVisiblePopper: false, isVisibleBtn: false }));
+    setState(s => ({ ...s, isVisiblePopper: false, isVisibleBtn: false }));
   }, []);
   const handleOnMouseOver = useCallback(() => {
-    setState(state => ({ ...state, isVisiblePopper: true, isVisibleBtn: true }));
+    setState(s => ({ ...s, isVisiblePopper: true, isVisibleBtn: true }));
   }, []);
 
   return (

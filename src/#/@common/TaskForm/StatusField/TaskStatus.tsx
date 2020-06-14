@@ -14,7 +14,7 @@ import PerformerField from './PerformerField';
 import StatusField from './StatusField';
 import { useStyles } from './styles';
 
-import { ITask, ITaskStatus, IUser } from '@types';
+import { ITask, IUser } from '@types';
 
 interface ITaskStatusProps {
   assignees: IUser[];
@@ -27,7 +27,6 @@ interface ITaskStatusProps {
   onStop: (_: any) => void;
   projectId: number;
   sequenceNumber: number;
-  statusColumns: ITaskStatus[];
 }
 
 enum POPPER_TYPE {
@@ -50,7 +49,6 @@ export const TaskStatus: React.FC<ITaskStatusProps> = React.memo(
     onStart,
     onStop,
     sequenceNumber,
-    statusColumns,
     projectId,
   }) => {
     const classes = useStyles();
@@ -98,19 +96,12 @@ export const TaskStatus: React.FC<ITaskStatusProps> = React.memo(
       setPopperType(null);
     }, [setPopperType]);
 
-    const statusToName = useMemo<{ [key in number]: string }>(() => {
-      return statusColumns.reduce((res, el) => {
-        res[el.id] = el.name;
-        return res;
-      }, {});
-    }, [statusColumns]);
-
     const open = Boolean(popperType);
     return (
       <div className={classes.wrapper}>
         <ClickAwayListener onClickAway={handleClose}>
           <div className={classes.taskStatus} ref={anchorRef}>
-            <Field name="status" component={StatusField} statusToName={statusToName} />
+            <Field name="status" component={StatusField} projectId={projectId} />
             <Field
               name="performerId"
               component={PerformerField}
@@ -137,7 +128,7 @@ export const TaskStatus: React.FC<ITaskStatusProps> = React.memo(
             </Popper>
           </div>
         </ClickAwayListener>
-        {task && isCanStart && <StartStopBtn task={task} />}
+        {isCanStart && <StartStopBtn task={task} onStartNew={onStart} />}
       </div>
     );
   }

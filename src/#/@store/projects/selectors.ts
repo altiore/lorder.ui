@@ -108,4 +108,13 @@ export const getProjectById = createDeepEqualSelector(allProjectList, (list: Pro
   list.find(e => e.id === id) || new Project()
 );
 
+export const getTaskColumnsByProjectId = createDeepEqualSelector(getProjectById, getPr => (id: number) => {
+  const pr = getPr(id);
+  if (pr && pr.taskColumns) {
+    return pr.taskColumns;
+  }
+
+  return [];
+});
+
 export const openedTaskColumns = createDeepEqualSelector([openedProject], pr => (pr ? pr.taskColumns : []));

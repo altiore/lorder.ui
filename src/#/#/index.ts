@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 
 import { push } from 'connected-react-router';
+import { destroy } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
-import { closeDialog, openDialog } from '#/@store/dialog';
+import { openDialog } from '#/@store/dialog';
 import { userRole } from '#/@store/identity';
 import { prevLocation } from '#/@store/router';
 import { getAllTasks } from '#/@store/tasks';
@@ -18,7 +19,7 @@ const mapState = createStructuredSelector<IState, any>({
 });
 
 const mapDispatchToProps = {
-  closeDialog,
+  destroy,
   getAllTasks,
   openDialog,
   push,

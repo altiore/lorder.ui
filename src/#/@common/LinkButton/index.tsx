@@ -8,18 +8,18 @@ const mapDispatchToProps = {
   push,
 };
 
-function handleClick(push: any, to: string) {
+function handleClick(goTo: any, to: string) {
   return function(e: any) {
     e.preventDefault();
-    push(to);
+    goTo(to);
   };
 }
 
-const mergeProps = (state: any, { push, ...restDispatch }: any, { to, ...restOwn }: any) => ({
+const mergeProps = (state: any, { push: localPush, ...restDispatch }: any, { to, ...restOwn }: any) => ({
   ...restDispatch,
   ...restOwn,
   href: to,
-  onClick: handleClick(push, to),
+  onClick: handleClick(localPush, to),
 });
 
 export const LinkButton: React.ComponentType<ButtonProps & { to: string }> = connect(

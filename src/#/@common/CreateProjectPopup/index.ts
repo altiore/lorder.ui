@@ -2,10 +2,14 @@ import { connect } from 'react-redux';
 
 import { push } from 'connected-react-router';
 import get from 'lodash/get';
-import { reduxForm } from 'redux-form';
+import { destroy, reduxForm } from 'redux-form';
+
+import { DialogProps } from '@material-ui/core';
 
 import { onSubmitForm } from '#/@store/@common/helpers';
-import { IPostProjectData, postProject } from '#/@store/projects';
+import { store } from '#/@store/createStore';
+import { DEFAULT_TRANSITION_DURATION } from '#/@store/dialog';
+import { CREATE_PROJECT_FORM, IPostProjectData, postProject } from '#/@store/projects';
 
 import { CreateProjectPopupJsx } from './CreateProjectPopup';
 
@@ -20,7 +24,8 @@ const CreateProjectPopup = connect(
   mapDispatch
 )(
   reduxForm<{}, any>({
-    form: 'ProjectForm',
+    destroyOnUnmount: false,
+    form: CREATE_PROJECT_FORM,
     initialValues: {
       type: PROJECT_TYPE.SOCIALLY_USEFUL,
     },
@@ -31,4 +36,15 @@ const CreateProjectPopup = connect(
   })(CreateProjectPopupJsx) as any
 );
 
-export { CreateProjectPopup };
+const createProjectDialogProps: Partial<DialogProps> = {
+  fullWidth: true,
+  maxWidth: 'sm',
+  onClose: () => {
+    setTimeout(() => {
+      store.dispatch(destroy(CREATE_PROJECT_FORM));
+    }, DEFAULT_TRANSITION_DURATION);
+  },
+  scroll: 'body',
+};
+
+export { CreateProjectPopup, createProjectDialogProps };

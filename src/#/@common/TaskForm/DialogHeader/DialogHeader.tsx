@@ -39,7 +39,6 @@ export interface IDialogHeaderProps {
   projectId: number;
   sequenceNumber: number;
   showSuccess: (args: INotification) => any;
-  typeId: number;
 }
 
 export const DialogHeader: React.FC<IDialogHeaderProps> = ({

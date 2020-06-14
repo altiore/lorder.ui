@@ -201,20 +201,20 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({ onChange, projects, pr
                 <b>Все</b>
               </Typography>
             </ListItem>
-            {PROJECT_TYPES.map(({ id, title }) => {
-              return preparedProjects[id].length ? (
-                <li key={id} className={listSection}>
+            {PROJECT_TYPES.map(({ id: prTypeId, title }) => {
+              return preparedProjects[prTypeId].length ? (
+                <li key={prTypeId} className={listSection}>
                   <ul className={ul}>
                     <ListSubheader className={listSubheader}>{title}</ListSubheader>
-                    {preparedProjects[id].map(({ id: projectId, title }) => (
+                    {preparedProjects[prTypeId].map(({ id: localProjectId, title: localTitle }) => (
                       <ListItem
-                        data-id={projectId}
+                        data-id={localProjectId}
                         onClick={handleSelectProject}
                         classes={{ gutters: listGutters }}
                         button
-                        key={`item-${id}-${projectId}`}
+                        key={`item-${prTypeId}-${localProjectId}`}
                       >
-                        <Typography className={text}>{title}</Typography>
+                        <Typography className={text}>{localTitle}</Typography>
                       </ListItem>
                     ))}
                   </ul>
