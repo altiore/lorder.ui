@@ -9,10 +9,10 @@ const mapDispatchToProps = {
   push,
 };
 
-const mergeProps = (state: any, { push, ...restDispatch }: any, { to, ...restOwn }: any) => ({
+const mergeProps = (state: any, { push: localPush, ...restDispatch }: any, { to, ...restOwn }: any) => ({
   ...restDispatch,
   ...restOwn,
-  onClick: () => push(to),
+  onClick: () => localPush(to),
 });
 
 export const LinkIconButton: React.ComponentType<IconButtonProps & { to: string }> = connect(

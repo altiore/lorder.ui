@@ -4,9 +4,13 @@ import { RouteComponentProps, Switch } from 'react-router-dom';
 import { Location } from 'history';
 import get from 'lodash/get';
 
+import { DialogProps } from '@material-ui/core/Dialog';
+
 import NestedRoute from '#/@common/#NestedRoute';
 import { PatchTaskForm } from '#/@common/TaskForm';
+import { DEFAULT_TRANSITION_DURATION } from '#/@store/dialog/consts';
 import { ROLES } from '#/@store/roles';
+import { EDIT_TASK_FORM } from '#/@store/tasks';
 
 import { Header } from './Header';
 import { useStyles } from './styles';
@@ -51,7 +55,7 @@ export const MAIN_USER_ROUTES: IRoute[] = [
 ];
 
 export interface IMainProps {
-  closeDialog: () => any;
+  destroy: (form: string) => void;
   getAllTasks: () => any;
   openDialog: (comp: any, props: any, location: any) => any;
   prevLocation?: Location;
@@ -61,7 +65,7 @@ export interface IMainProps {
 }
 
 export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
-  closeDialog,
+  destroy,
   getAllTasks,
   location,
   openDialog,
@@ -80,20 +84,25 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
   }, [getAllTasks]);
 
   const handleCloseDialog = useCallback(() => {
-    closeDialog();
     if (prevLocation) {
       push(prevLocation);
+      setTimeout(() => {
+        destroy(EDIT_TASK_FORM);
+      }, DEFAULT_TRANSITION_DURATION);
+    } else {
+      push('/');
+      destroy(EDIT_TASK_FORM);
     }
-  }, [closeDialog, prevLocation, push]);
+  }, [destroy, prevLocation, push]);
 
   useEffect(() => {
-    if (isModal && get(location, 'pathname') !== get(prevLocation, 'pathname')) {
+    if (isModal && location?.pathname !== prevLocation?.pathname) {
       openDialog(
         <PatchTaskForm taskId={get(location, ['state', 'taskId'])} projectId={get(location, ['state', 'projectId'])} />,
         {
           maxWidth: 'lg',
           onClose: handleCloseDialog,
-        },
+        } as Partial<DialogProps>,
         prevLocation
       );
     }

@@ -11,6 +11,7 @@ import { ITask } from '@types';
 
 interface ITaskDurationOwn {
   afterStop?: any;
+  onStartNew?: any;
   task?: ITask;
 }
 

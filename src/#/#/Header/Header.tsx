@@ -11,7 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 import TimerIcon from '@material-ui/icons/Timer';
 
 import { AccountMenu } from '#/@common/account-menu';
-import { CreateProjectPopup } from '#/@common/CreateProjectPopup';
+import { createProjectDialogProps, CreateProjectPopup } from '#/@common/CreateProjectPopup';
 import { LinkIconButton } from '#/@common/LinkIconButton';
 import { Project } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
@@ -43,7 +43,7 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
     const theme = useTheme();
 
     const openCreateProject = useCallback(() => {
-      openDialog(CreateProjectPopup, { fullWidth: true, maxWidth: 'sm', scroll: 'body' });
+      openDialog(CreateProjectPopup, createProjectDialogProps);
     }, [openDialog]);
 
     const selectProject = useCallback(

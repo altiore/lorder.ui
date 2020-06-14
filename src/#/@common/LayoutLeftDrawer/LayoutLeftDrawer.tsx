@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { match, Route, RouteComponentProps } from 'react-router-dom';
+import { match as MatchType, Route, RouteComponentProps } from 'react-router-dom';
 
 import cn from 'classnames';
 
@@ -37,7 +37,7 @@ export interface ILayoutLeftDrawerProps {
   isLeftBarOpen: boolean;
   isTasksLoading: boolean;
   isWidthSm: boolean;
-  match: match<any>;
+  match: MatchType<any>;
   routes?: IRoute[];
   openedProject?: IProject;
   refreshProjectTasks: any;

@@ -7,7 +7,6 @@
     "only-arrow-functions": false,
     "no-console": false,
     "no-bitwise": false,
-    "no-shadowed-variable": false,
     "jsx-boolean-value": ["never"],
     "no-var-requires": false,
     "max-classes-per-file": false,

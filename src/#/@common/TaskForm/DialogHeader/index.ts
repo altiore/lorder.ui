@@ -10,4 +10,4 @@ const mapDispatchToProps = {
   showSuccess,
 };
 
-export default connect(undefined, mapDispatchToProps)(DialogHeader) as any;
+export default connect(undefined, mapDispatchToProps)(DialogHeader);

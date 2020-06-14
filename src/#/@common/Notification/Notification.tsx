@@ -8,33 +8,33 @@ export interface INotificationProps {
 
 export const Notification: React.FC<INotificationProps> = props => {
   const { hide, notifications } = props;
-  const notification = useRef<System>(null);
+  const notificationRef = useRef<System>(null);
 
   useEffect(() => {
-    const curNotification = notification.current;
+    const curNotification = notificationRef.current;
     if (curNotification) {
-      const notificationIds = notifications.map((notification: any) => notification.uid);
+      const notificationIds = notifications.map((n: any) => n.uid);
       const systemNotifications = curNotification.state.notifications || [];
 
       if (notifications.length > 0) {
         // Get all active notifications from react-notification-system
         // and remove all where uid is not found in the reducer
-        systemNotifications.forEach((notification: any) => {
-          if (notificationIds.indexOf(notification.uid) < 0) {
+        systemNotifications.forEach((n: any) => {
+          if (notificationIds.indexOf(n.uid) < 0) {
             if (curNotification && curNotification.removeNotification) {
-              curNotification.removeNotification(notification.uid);
+              curNotification.removeNotification(n.uid);
             }
           }
         });
 
-        notifications.forEach((notification: any) => {
+        notifications.forEach((n: any) => {
           if (curNotification && curNotification.addNotification) {
             curNotification.addNotification({
-              ...notification,
+              ...n,
               onRemove: () => {
-                hide(notification.uid);
-                if (notification.onRemove) {
-                  notification.onRemove();
+                hide(n.uid);
+                if (n.onRemove) {
+                  n.onRemove();
                 }
               },
             });
@@ -42,7 +42,7 @@ export const Notification: React.FC<INotificationProps> = props => {
         });
       }
     }
-  }, [hide, notification, notifications]);
+  }, [hide, notificationRef, notifications]);
 
   // Optional styling
   const style = {
@@ -55,5 +55,5 @@ export const Notification: React.FC<INotificationProps> = props => {
     },
   };
 
-  return <NotifySystem ref={notification} style={style} {...props} />;
+  return <NotifySystem ref={notificationRef} style={style} {...props} />;
 };

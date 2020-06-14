@@ -46,9 +46,9 @@ export const FollowProjectTsx = ({ project, roles }: IfollowProject) => {
           onChange={handleSelect}
         >
           <MenuItem value="role">Выбрать роль</MenuItem>
-          {roles.map(role => (
-            <MenuItem value={role.id} key={role.id}>
-              {role.name}
+          {roles.map(r => (
+            <MenuItem value={r.id} key={r.id}>
+              {r.name}
             </MenuItem>
           ))}
         </Select>

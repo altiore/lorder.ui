@@ -14,8 +14,8 @@ const mapState = createStructuredSelector({
 
 const mapDispatch = {};
 
-const mergeProps = ({ getProjectMemberById }, restProps, { createdBy, ...restOwnProps }) => {
-  const user = getProjectMemberById(createdBy);
+const mergeProps = ({ getProjectMemberById: getMember }, restProps, { createdBy, ...restOwnProps }) => {
+  const user = getMember(createdBy);
   return {
     user,
     ...restProps,

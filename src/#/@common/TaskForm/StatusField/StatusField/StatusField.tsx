@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { WrappedFieldProps } from 'redux-form';
 
@@ -7,8 +7,11 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { STATUS_NAMES } from '#/@store/tasks';
 
+import { ITaskStatus } from '@types';
+
 interface IStatusField extends WrappedFieldProps {
-  statusToName: { [key in number]: string };
+  getTaskColumnsByProjectId: (id: number) => ITaskStatus[];
+  projectId: number;
 }
 
 export const useStyles = makeStyles((theme: Theme) => ({
@@ -18,12 +21,31 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const StatusField: React.FC<IStatusField> = ({ statusToName, input }) => {
-  const classes = useStyles();
+export const StatusField: React.FC<IStatusField> = ({ input, getTaskColumnsByProjectId, projectId }) => {
+  const statusColumns = useMemo<ITaskStatus[]>(() => {
+    if (getTaskColumnsByProjectId && projectId) {
+      return getTaskColumnsByProjectId(projectId);
+    }
+    return [];
+  }, [getTaskColumnsByProjectId, projectId]);
 
+  const [statusToName, setStatusToName] = useState<{ [key in number]: string }>({});
+
+  useEffect(() => {
+    if (statusColumns && statusColumns.length) {
+      setStatusToName(
+        statusColumns.reduce((res, el) => {
+          res[el.id] = el.name;
+          return res;
+        }, {})
+      );
+    }
+  }, [statusColumns]);
+
+  const { button } = useStyles();
   return (
-    <Button className={classes.button} variant="outlined" aria-label="status button">
-      {STATUS_NAMES[statusToName[input.value]] || '...???...'}
+    <Button className={button} variant="outlined" aria-label="status button">
+      {STATUS_NAMES[statusToName[input.value]] || input.value}
     </Button>
   );
 };

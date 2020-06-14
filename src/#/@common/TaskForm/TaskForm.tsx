@@ -38,10 +38,9 @@ export interface ITaskFormData {
 
 export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFormProps> {
   buttonText?: string;
-  changeSettings?: any;
-  classes?: any;
   fetchTaskDetails: any;
-  isCurrent?: boolean;
+  getEditTaskInitialValues: (p: number, seqN: number) => object;
+  isCurrent: boolean;
   isPaused: boolean;
   location: any;
   onClose: any;
@@ -57,172 +56,200 @@ const titleValidate = [
   length({ max: 140, msg: 'Превышен максимум 140 символов' }),
 ];
 
-export const TaskFormJsx: React.FC<ITaskFormProps> = ({
-  buttonText = 'Сохранить',
-  fetchTaskDetails,
-  handleSubmit,
-  initialValues,
-  isCurrent,
-  isPaused,
-  location,
-  onClose,
-  pristine,
-  projectId,
-  push,
-  sequenceNumber,
-  startUserWork,
-  submitting,
-}) => {
-  const [currentSequenceNumber, setSequenceNumber] = useState(sequenceNumber);
+export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
+  ({
+    buttonText = 'Сохранить',
+    fetchTaskDetails,
+    getEditTaskInitialValues,
+    handleSubmit,
+    initialValues,
+    initialize,
+    isCurrent,
+    isPaused,
+    location,
+    onClose,
+    pristine,
+    projectId,
+    push,
+    sequenceNumber,
+    startUserWork,
+    submitting,
+  }) => {
+    const [currentSequenceNumber, setSequenceNumber] = useState(sequenceNumber);
 
-  const [isCurrentState, setIsCurrentState] = useState(isCurrent);
+    const [isCurrentState, setIsCurrentState] = useState(isCurrent);
 
-  const [disabledSaveBtn, setDisabledSaveBtn] = useState(true);
+    const [disabledSaveBtn, setDisabledSaveBtn] = useState(true);
 
-  useEffect(() => {
-    if (currentSequenceNumber) {
-      fetchTaskDetails({ projectId, sequenceNumber: currentSequenceNumber });
-    }
-  }, [fetchTaskDetails, projectId, currentSequenceNumber]);
+    const [initialD, setInitialD] = useState<Partial<ITaskFormData>>(initialValues);
 
-  // is this separate page or not? true - если это отдельная страница, а не окно
-  const isPage = useMemo(() => {
-    return Boolean(location);
-  }, [location]);
-
-  const handleClose = useCallback(() => {
-    if (isPage) {
-      push('/');
-    } else {
-      onClose();
-    }
-  }, [isPage, onClose, push]);
-
-  const handleSave = useCallback(
-    async (e: React.SyntheticEvent) => {
-      const res: any = await handleSubmit(e);
-      if (res && [postProjectTask.success, patchProjectTask.success].includes(res.type)) {
-        return res;
+    useEffect(() => {
+      if (currentSequenceNumber && fetchTaskDetails && projectId) {
+        fetchTaskDetails({ projectId, sequenceNumber: currentSequenceNumber });
       }
-      return false;
-    },
-    [handleSubmit]
-  );
+    }, [fetchTaskDetails, projectId, currentSequenceNumber]);
 
-  const handleSaveBtnDisable = useCallback(() => {
-    setDisabledSaveBtn(false);
-  }, []);
-
-  const saveAndClose = useCallback(
-    async e => {
-      if (await handleSave(e)) {
-        handleClose();
-      }
-    },
-    [handleClose, handleSave]
-  );
-
-  const handleStartTask = useCallback(
-    async e => {
-      setIsCurrentState(true);
-      if (currentSequenceNumber) {
-        await startUserWork({
-          projectId,
-          sequenceNumber: currentSequenceNumber,
-        });
-      } else {
-        const res = await handleSave(e);
-        if (res) {
-          const newSequenceNumber = get(res, ['payload', 'data', 'sequenceNumber']);
-          const newProjectId = get(res, ['payload', 'data', 'projectId']);
-
-          if (newSequenceNumber && newProjectId) {
-            await startUserWork({
-              projectId: newProjectId,
-              sequenceNumber: newSequenceNumber,
-            });
-            setSequenceNumber(newSequenceNumber);
-          }
+    useEffect(() => {
+      if (projectId && sequenceNumber) {
+        const initialData = getEditTaskInitialValues(projectId, sequenceNumber);
+        if (initialData) {
+          setInitialD(d => {
+            // Только одна инициализация должна быть доступна при запуске.
+            // Остальные избыточны и ухудшают производительность
+            if (d) {
+              return d;
+            }
+            initialize(initialData);
+            return initialData;
+          });
         }
       }
-    },
-    [currentSequenceNumber, handleSave, projectId, setIsCurrentState, setSequenceNumber, startUserWork]
-  );
+    }, [getEditTaskInitialValues, initialize, projectId, sequenceNumber]);
 
-  const { actions, card, cardFirst, cardFirstNotPage, cardForm, cardSecond, grow, valueWrap } = useStyles();
+    // is this separate page or not? true - если это отдельная страница, а не окно
+    const isPage = useMemo(() => {
+      return Boolean(location);
+    }, [location]);
 
-  return (
-    <>
-      <DialogHeader
-        isPage={isPage}
-        handleClose={handleClose}
-        projectId={projectId}
-        sequenceNumber={currentSequenceNumber}
-        typeId={initialValues.typeId}
-      />
-      <DialogContent className={card}>
-        <form onSubmit={handleSave} className={cardForm}>
-          <div className={cn(cardFirst, { [cardFirstNotPage]: !isPage })}>
-            <Field
-              name="title"
-              placeholder="Заголовок задачи..."
-              component={TextField}
-              margin="normal"
-              validate={titleValidate}
-              onSubmit={handleSave}
-            />
-            <Field
-              placeholder="Описание задачи..."
-              // onChangeCb используется для версии TextAreaHtml. Не удалять!!!
-              onChangeCb={handleSaveBtnDisable}
-              name="description"
-              component={TextAreaMarkdown}
-            />
-            {currentSequenceNumber && <TaskHistory />}
-          </div>
-          <div className={cardSecond}>
-            <StatusField
-              onStart={handleStartTask}
-              isCurrent={isCurrentState}
-              projectId={projectId}
-              sequenceNumber={currentSequenceNumber}
-            />
+    const handleClose = useCallback(() => {
+      if (isPage) {
+        push('/');
+      } else {
+        onClose();
+      }
+    }, [isPage, onClose, push]);
 
-            <div className={valueWrap}>
-              <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />
+    const handleSave = useCallback(
+      async (e: React.SyntheticEvent) => {
+        const res: any = await handleSubmit(e);
+        if (res && [postProjectTask.success, patchProjectTask.success].includes(res.type)) {
+          return res;
+        }
+        return false;
+      },
+      [handleSubmit]
+    );
+
+    const handleSaveBtnDisable = useCallback(() => {
+      setDisabledSaveBtn(false);
+    }, []);
+
+    const saveAndClose = useCallback(
+      async e => {
+        if (await handleSave(e)) {
+          if (!isPage) {
+            handleClose();
+          }
+        }
+      },
+      [handleClose, handleSave, isPage]
+    );
+
+    const handleStartTask = useCallback(
+      async e => {
+        setIsCurrentState(true);
+        if (currentSequenceNumber) {
+          await startUserWork({
+            projectId,
+            sequenceNumber: currentSequenceNumber,
+          });
+        } else {
+          const res = await handleSave(e);
+          if (res) {
+            const newSequenceNumber = get(res, ['payload', 'data', 'sequenceNumber']);
+            const newProjectId = get(res, ['payload', 'data', 'projectId']);
+
+            if (newSequenceNumber && newProjectId) {
+              await startUserWork({
+                projectId: newProjectId,
+                sequenceNumber: newSequenceNumber,
+              });
+              setSequenceNumber(newSequenceNumber);
+            }
+          }
+        }
+      },
+      [currentSequenceNumber, handleSave, projectId, setIsCurrentState, setSequenceNumber, startUserWork]
+    );
+
+    const { actions, card, cardFirst, cardFirstNotPage, cardForm, cardSecond, grow, valueWrap } = useStyles();
+
+    if (!initialD) {
+      return null;
+    }
+
+    return (
+      <>
+        <DialogHeader
+          isPage={isPage}
+          handleClose={handleClose}
+          projectId={projectId}
+          sequenceNumber={currentSequenceNumber}
+        />
+        <DialogContent className={card}>
+          <form onSubmit={handleSave} className={cardForm}>
+            <div className={cn(cardFirst, { [cardFirstNotPage]: !isPage })}>
+              <Field
+                name="title"
+                placeholder="Заголовок задачи..."
+                component={TextField}
+                margin="normal"
+                validate={titleValidate}
+                onSubmit={handleSave}
+              />
+              <Field
+                placeholder="Описание задачи..."
+                // onChangeCb используется для версии TextAreaHtml. Не удалять!!!
+                onChangeCb={handleSaveBtnDisable}
+                name="description"
+                component={TextAreaMarkdown}
+              />
+              {currentSequenceNumber && <TaskHistory />}
             </div>
-            {initialValues.id && (
-              <div>
-                {isPaused && 'задача на паузе!'}
-                <TaskDuration taskId={initialValues.id} />
+            <div className={cardSecond}>
+              <StatusField
+                onStart={handleStartTask}
+                isCurrent={isCurrentState}
+                projectId={projectId}
+                sequenceNumber={currentSequenceNumber}
+              />
+
+              <div className={valueWrap}>
+                <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />
               </div>
-            )}
-            <TaskMembers taskId={initialValues.id} />
-            <Field
-              name="projectParts"
-              label="Части проекта"
-              component={ProjectPartsField}
-              projectId={projectId}
-              sequenceNumber={currentSequenceNumber}
-            />
-          </div>
-          <button style={{ display: 'none' }} type="submit">
-            Эта кнопка нужна, чтоб работало сохранение с клавиатуры
-          </button>
-        </form>
-      </DialogContent>
-      <DialogActions key={'actions'} className={actions}>
-        <div className={grow} />
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={saveAndClose}
-          disabled={submitting || (pristine && disabledSaveBtn)}
-        >
-          {buttonText}
-          {submitting && '...'}
-        </Button>
-      </DialogActions>
-    </>
-  );
-};
+              {initialD.id && (
+                <div>
+                  {isPaused && 'задача на паузе!'}
+                  <TaskDuration taskId={initialD.id} />
+                </div>
+              )}
+              <TaskMembers taskId={initialD.id} />
+              <Field
+                name="projectParts"
+                label="Части проекта"
+                component={ProjectPartsField}
+                projectId={projectId}
+                sequenceNumber={currentSequenceNumber}
+              />
+            </div>
+            <button style={{ display: 'none' }} type="submit">
+              Эта кнопка нужна, чтоб работало сохранение с клавиатуры
+            </button>
+          </form>
+        </DialogContent>
+        <DialogActions key={'actions'} className={actions}>
+          <div className={grow} />
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={saveAndClose}
+            disabled={submitting || (pristine && disabledSaveBtn)}
+          >
+            {buttonText}
+            {submitting && '...'}
+          </Button>
+        </DialogActions>
+      </>
+    );
+  }
+);

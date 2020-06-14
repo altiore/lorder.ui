@@ -13,12 +13,12 @@ const mapDispatchToProps = {
 
 const mergeProps = (
   state: any,
-  { patchUserWork, ...restDispatch }: any,
+  { patchUserWork: patchWork, ...restDispatch }: any,
   { projectId, taskId, userWorkId, ...restOwn }: any
 ) => ({
   ...restDispatch,
   ...restOwn,
-  updateDuration: (duration: number) => patchUserWork({ projectId, taskId, userWorkId, duration }),
+  updateDuration: (duration: number) => patchWork({ projectId, taskId, userWorkId, duration }),
 });
 
 export const DurationField = connect(

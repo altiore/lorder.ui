@@ -12,10 +12,10 @@ export const isDialogOpened = createDeepEqualSelector(baseState, (state: IDialog
 
 export const dialogProps = createDeepEqualSelector(
   baseState,
-  (state: IDialogState): Partial<DialogProps> | undefined => state.dialogProps
+  (state: IDialogState): Partial<DialogProps> => state.dialogProps || {}
 );
 
 export const internalProps = createDeepEqualSelector(
   baseState,
-  (state: IDialogState): Partial<DialogProps> | undefined => state.props
+  (state: IDialogState): Partial<DialogProps> => state.props || {}
 );

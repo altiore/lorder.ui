@@ -23,10 +23,10 @@ export const ProjectPartsFieldTsx: React.FC<IProjectPartsField> = props => {
   } = props;
 
   useEffect(() => {
-    if (fetchProjectParts) {
+    if (fetchProjectParts && projectId && !projectParts?.length) {
       fetchProjectParts(projectId);
     }
-  }, [fetchProjectParts, projectId]);
+  }, [fetchProjectParts, projectId, projectParts]);
 
   const items = useMemo(() => {
     if (projectParts && projectParts.length) {
