@@ -1,157 +1,185 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import cn from 'classnames';
 
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Fade from '@material-ui/core/Fade';
 import Popper from '@material-ui/core/Popper';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Zoom from '@material-ui/core/Zoom';
+import PlaySvg from '@material-ui/icons/PlayArrowRounded';
 
-import { ReactComponent as BackSvg } from './back.svg';
-import { ReactComponent as CheckSvg } from './check.svg';
-import { ReactComponent as PlaySvg } from './play.svg';
+import uniqid from 'uniqid';
+
+import BackSvg from './back';
+import CheckSvg from './check';
+import PlayPauseSvg from './play-pause';
+
+const BTN_SIZE = 44;
+const SMALL_BTN_SIZE = 40;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    centralButtonTag: {
+    centralBtn: {
       '&:hover': {
+        boxShadow: theme.shadows[5],
         cursor: 'pointer',
       },
       background: theme.palette.success.main,
       border: 'none',
       borderRadius: '50%',
-      boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)',
-      height: '40px',
-      width: '40px',
+      boxShadow: theme.shadows[1],
+      height: BTN_SIZE,
+      width: BTN_SIZE,
       zIndex: 100,
     },
-    leftButtonTag: {
+    leftBtn: {
       background: theme.palette.error.main,
     },
-    megaButton: {
+    optionalBtn: {
+      '&:hover': {
+        boxShadow: theme.shadows[5],
+        cursor: 'pointer',
+        height: BTN_SIZE,
+        width: BTN_SIZE,
+      },
+      border: 'none',
+      borderRadius: '50%',
+      boxShadow: theme.shadows[1],
+      height: SMALL_BTN_SIZE,
+      transition: theme.transitions.create(['height', 'margin', 'width']),
+      width: SMALL_BTN_SIZE,
+    },
+    optionalBtnWrap: {
+      alignItems: 'center',
+      display: 'flex',
+      height: BTN_SIZE,
+      justifyContent: 'center',
+      width: BTN_SIZE + 16,
+    },
+    rightBtn: {
+      background: theme.palette.success.main,
+    },
+    root: {
+      alignItems: 'center',
       display: 'flex',
       position: 'relative',
     },
-    optionalButtonTag: ({ visible }: any) => ({
-      '&:hover': {
-        cursor: 'pointer',
-      },
-      // background: '#77af6d',
-      border: 'none',
-      borderRadius: '50%',
-      boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)',
-      height: '40px',
-      opacity: visible ? 1 : 0,
-      transition: 'all 1s ease-in-out',
-      width: '40px',
-    }),
-    paper: ({}: any) => ({
-      alignItems: 'center',
-      backgroundColor: 'none',
-      display: 'flex',
-      height: '60px',
-      justifyContent: 'space-between',
-      left: '-70px',
-      position: 'absolute',
-      top: '-50px',
-      transition: 'all 1s ease-in-out',
-      width: '140px',
-    }),
-    rightButtonTag: {
-      background: theme.palette.success.main,
-    },
-    svgCentralButtonTag: {
+    svgStyle: {
       fill: 'white',
-      width: '20px',
+      pointerEvents: 'none',
     },
-    svgOptionalButtonTag: {
+    svgStyleCustom: {
       fill: 'white',
-      width: '20px',
+      pointerEvents: 'none',
+      width: 20,
     },
   })
 );
 
 interface Props {
+  isPaused?: boolean;
   onClickLeft?: () => void;
   onClickCenter: () => void;
   onClickRight?: () => void;
 }
-export const MegaButton: React.FC<Props> = ({ onClickLeft, onClickCenter, onClickRight }) => {
-  const clickLeft = () => {
-    if (typeof onClickLeft === 'function') {
-      onClickLeft();
+
+const timers: { [key in string]: ReturnType<typeof setTimeout> } = {};
+
+export const MegaButton: React.FC<Props> = ({ isPaused, onClickLeft, onClickCenter, onClickRight }) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const uniqId = useMemo(() => uniqid('start-stop-btn'), []);
+
+  const handleCenterOver = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      if (timers[uniqId]) {
+        clearTimeout(timers[uniqId]);
+        delete timers[uniqId];
+      }
+
+      if (!anchorEl) {
+        setAnchorEl(event.currentTarget);
+      }
+    },
+    [anchorEl, setAnchorEl]
+  );
+
+  const handleCenterOut = useCallback(() => {
+    if (timers[uniqId]) {
+      clearTimeout(timers[uniqId]);
     }
-  };
+    timers[uniqId] = setTimeout(() => {
+      setAnchorEl(null);
+    }, 400);
+  }, [setAnchorEl]);
 
-  const clickCenter = () => {
-    onClickCenter();
-  };
-
-  const clickRight = () => {
-    if (typeof onClickRight === 'function') {
-      onClickRight();
+  const handleHiddenOver = useCallback(() => {
+    if (timers[uniqId]) {
+      clearTimeout(timers[uniqId]);
+      delete timers[uniqId];
     }
-  };
+  }, []);
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [visible, setVisible] = React.useState(false);
-
-  const {
-    megaButton,
-    optionalButtonTag,
-    centralButtonTag,
-    paper,
-    svgCentralButtonTag,
-    svgOptionalButtonTag,
-    leftButtonTag,
-    rightButtonTag,
-  } = useStyles({
-    visible,
-  });
-
-  const handleOnMouseOver2 = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-    setVisible(true);
-  };
-  const handleOnMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
-    setVisible(false);
+  const handleHiddenOut = useCallback(() => {
+    if (timers[uniqId]) {
+      clearTimeout(timers[uniqId]);
+      delete timers[uniqId];
+    }
     setAnchorEl(null);
-  };
+  }, [setAnchorEl]);
 
-  const open = Boolean(anchorEl);
-  const checked = open;
-  // const open = true;
-  const id = open ? 'megaButton' : undefined;
-  // const id = 'simple-popper';
+  const id = useMemo(() => {
+    return anchorEl ? uniqId : undefined;
+  }, [anchorEl, uniqId]);
+
+  const { centralBtn, leftBtn, optionalBtn, optionalBtnWrap, rightBtn, root, svgStyle, svgStyleCustom } = useStyles();
 
   return (
-    <>
-      <div className={megaButton}>
-        <ButtonBase onMouseOver={handleOnMouseOver2} onClick={clickCenter} className={centralButtonTag}>
-          <PlaySvg className={svgCentralButtonTag} />
-        </ButtonBase>
-        <Popper id={id} open={open} anchorEl={anchorEl} role={undefined} transition>
-          {({ TransitionProps, placement }) => (
-            <Fade
-              {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <div className={paper} onMouseLeave={handleOnMouseLeave}>
-                {typeof onClickLeft === 'function' ? (
-                  <ButtonBase className={cn(optionalButtonTag, leftButtonTag)} onClick={clickLeft}>
-                    <BackSvg className={svgOptionalButtonTag} />
-                  </ButtonBase>
-                ) : null}
-                {typeof onClickRight === 'function' ? (
-                  <ButtonBase className={cn(optionalButtonTag, rightButtonTag)} onClick={clickRight}>
-                    <CheckSvg className={svgOptionalButtonTag} />
-                  </ButtonBase>
-                ) : null}
+    <div className={root}>
+      <ButtonBase
+        onMouseOver={handleCenterOver}
+        onMouseOut={handleCenterOut}
+        onClick={onClickCenter}
+        className={centralBtn}
+      >
+        {isPaused ? <PlayPauseSvg className={svgStyleCustom} /> : <PlaySvg fontSize="large" className={svgStyle} />}
+      </ButtonBase>
+      {typeof onClickLeft === 'function' && (
+        <Popper id={id + '-left'} open={Boolean(id)} anchorEl={anchorEl} transition placement="left-start">
+          {({ TransitionProps }) => (
+            <Zoom {...TransitionProps}>
+              <div className={optionalBtnWrap}>
+                <ButtonBase
+                  onMouseOver={handleHiddenOver}
+                  onMouseOut={handleHiddenOut}
+                  className={cn(optionalBtn, leftBtn)}
+                  onClick={onClickLeft}
+                >
+                  <BackSvg className={svgStyleCustom} />
+                </ButtonBase>
               </div>
-            </Fade>
+            </Zoom>
           )}
         </Popper>
-      </div>
-    </>
+      )}
+      {typeof onClickRight === 'function' && (
+        <Popper id={id + '-right'} open={Boolean(id)} anchorEl={anchorEl} transition placement="right-start">
+          {({ TransitionProps }) => (
+            <Zoom {...TransitionProps}>
+              <div className={optionalBtnWrap}>
+                <ButtonBase
+                  onMouseOver={handleHiddenOver}
+                  onMouseOut={handleHiddenOut}
+                  className={cn(optionalBtn, rightBtn)}
+                  onClick={onClickRight}
+                >
+                  <CheckSvg className={svgStyleCustom} />
+                </ButtonBase>
+              </div>
+            </Zoom>
+          )}
+        </Popper>
+      )}
+    </div>
   );
 };
