@@ -28,11 +28,11 @@ storiesOf('MegaButton', module)
     return (
       <div className={root}>
         <div className={form}>
-          <MegaButton onClickCenter={action('onClickCenter')} />
+          <MegaButton isPaused onClickCenter={action('onClickCenter')} />
 
           <br />
 
-          <MegaButton onClickCenter={action('onClickCenter')} onClickLeft={action('onClickLeft')} />
+          <MegaButton isPaused onClickCenter={action('onClickCenter')} onClickLeft={action('onClickLeft')} />
 
           <br />
 
