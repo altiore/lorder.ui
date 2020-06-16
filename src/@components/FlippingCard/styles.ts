@@ -7,6 +7,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
     backgroundColor: 'transparent',
     height: 380,
+    margin: '0 auto',
     perspective: 1000,
     width: 290,
   },
@@ -52,16 +53,14 @@ export const useStyles = makeStyles((theme: Theme) => ({
     position: 'relative',
     textAlign: 'center',
     transformStyle: 'preserve-3d',
-    transition: 'transform 0.6s',
-
+    transition: 'transform 0.2s linear',
     width: '100%',
   },
-
   imageWrap: {
     border: '1px solid #ffb200',
     borderRadius: '50%',
     height: 160,
-    marginBottom: -8,
+    marginBottom: 8,
     marginTop: 20,
     padding: 8,
     textAlign: 'center',
@@ -76,7 +75,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     fontFamily: 'Roboto',
     fontSize: 15,
     fontWeight: 300,
-    marginTop: 15,
     textDecoration: 'none',
   },
   name: {

@@ -11,7 +11,6 @@ import { Block } from '@components/Block';
 import HeaderFixed from '@components/HeaderFixed';
 import LoadingPage from '@components/LoadingPage';
 import { NoMatch } from '@components/NoMatch';
-import Person from '@components/Person';
 
 import PieChart from '#/@common/PieChart';
 import { millisecondsToHours } from '#/@store/@common/helpers';
@@ -153,21 +152,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
         </SwipeableViews>
       </Paper>
       <ProjectValues />
-      <ProjectTeam />
-      <Grid container className={classes.content}>
-        <Block spacing={10}>
-          <div className={classes.members}>
-            {members.map(member => (
-              <Grid item key={member.member.email}>
-                <Person
-                  avatar={get(member, 'member.avatar.url', '')}
-                  name={get(member.member, 'displayName') || get(member.member, 'email', '').replace(/@.*$/, '')}
-                />
-              </Grid>
-            ))}
-          </div>
-        </Block>
-      </Grid>
+      <ProjectTeam members={get(members, 'list', [])} />
       <AppBar key={'bottom'} position="static" component={'footer'}>
         <Toolbar className={classes.bottomBar}>
           <Typography variant="h6" color="inherit">
