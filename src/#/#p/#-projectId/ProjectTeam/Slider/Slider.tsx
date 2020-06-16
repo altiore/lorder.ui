@@ -14,7 +14,6 @@ import { useStyles } from '../styles';
 
 const getSliderSettings = (slidesLen: number = 0): Partial<Settings> => ({
   arrows: true,
-
   infinite: slidesLen > 4,
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
@@ -56,7 +55,7 @@ const PrevArrow: React.FC<CustomArrowProps> = ({ onClick }) => {
   const classes = useStyles();
   return (
     <div className={`${classes.control} ${classes.leftControl}`} onClick={onClick}>
-      <ChevronLeftIcon className={classes.prevArrow} />
+      <ChevronLeftIcon className={classes.arrow} />
     </div>
   );
 };
@@ -65,7 +64,7 @@ const NextArrow: React.FC<CustomArrowProps> = ({ onClick }) => {
   const classes = useStyles();
   return (
     <div className={`${classes.control} ${classes.rightControl}`} onClick={onClick}>
-      <ChevronRightIcon fontSize="large" className={classes.nextArrow} />
+      <ChevronRightIcon fontSize="large" className={classes.arrow} />
     </div>
   );
 };
@@ -77,7 +76,7 @@ export const PublicProjectSlider: React.FC<{ members: any[] }> = ({ members }) =
       {members.map(({ id, avatar, displayName, role }, i) => (
         <div key={id} className={classes.slideWrap}>
           <FlippingCard
-            avatarUrl={avatar?.url || ''}
+            avatarUrl={avatar?.url || process.env.PUBLIC_URL + '/d-avatar.png'}
             userName={displayName || 'N/A'}
             userRole={role}
             userProfileLink="/"

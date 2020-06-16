@@ -1,6 +1,11 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
+  arrow: {
+    background: 'ffffff',
+    color: '#c7c7c7',
+    fontSize: 40,
+  },
   control: {
     alignItems: 'center',
     backgroundColor: 'rgb(255, 255, 255)',
@@ -25,15 +30,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
     left: -65,
   },
-  nextArrow: {
-    background: 'ffffff',
-    color: '#c7c7c7',
-  },
-  prevArrow: {
-    background: 'ffffff',
-    color: '#c7c7c7',
-    fontSize: 40,
-  },
+
   rightControl: {
     '&:hover': {
       boxShadow: '-3.886px 3.147px 20px 0px rgb(244, 245, 248)',

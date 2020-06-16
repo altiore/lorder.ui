@@ -59,12 +59,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
   imageWrap: {
     border: '1px solid #ffb200',
     borderRadius: '50%',
-    height: 160,
+    height: 170,
     marginBottom: 8,
     marginTop: 20,
-    padding: 8,
+    padding: 7,
     textAlign: 'center',
-    width: 160,
+    width: 170,
   },
   linkWrapper: {
     '&:hover': {
@@ -102,7 +102,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   userAvatar: {
     borderRadius: '50%',
     height: '100%',
-    maxWidth: '100%',
     objectFit: 'cover',
+    width: '100%',
   },
 }));
