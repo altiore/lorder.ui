@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   followWrap: {
     background: '#fff',
-    paddingBottom: 170,
+    paddingBottom: 120,
   },
   innerSelect: {
     height: 50,

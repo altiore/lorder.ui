@@ -1,34 +1,27 @@
 import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import MetricTable from './MetricTable';
+import { useStyles } from './styles';
 
 interface IProjectMetricsProps {
   statistic: any;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    padding: theme.spacing(6, 0),
-  },
-}));
-
 export const ProjectMetricsTsx = ({ statistic }: IProjectMetricsProps) => {
-  const { root } = useStyles();
+  const { tableWrap, root } = useStyles();
   return (
-    <Grid container className={root}>
-      <Grid item md={1} sm={false} xs={false} />
-      <Grid item md={10} sm={12} xs={12}>
-        <Grid container spacing={6}>
-          <Grid item xs={12} sm={4}>
+    <Grid container justify="center" className={root}>
+      <Grid item md={12} sm={12} xs={12}>
+        <Grid container justify="center" alignItems="center">
+          <Grid item className={tableWrap}>
             <MetricTable title="Неделя" {...(statistic?.metrics?.lastWeek || {})} />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item className={tableWrap}>
             <MetricTable title="Месяц" {...(statistic?.metrics?.lastMonth || {})} />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item className={tableWrap}>
             <MetricTable title="Всего" {...(statistic?.metrics?.all || {})} />
           </Grid>
         </Grid>

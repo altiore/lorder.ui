@@ -13,50 +13,6 @@ declare module 'uniqid' {
   export default function(prefix?: string): string;
 }
 
-declare module 'highcharts' {
-  export const theme: any;
-  export function setOptions(...args: any): any;
-  export function getOptions(...args: any): any;
-  export function map(...args: any): any;
-  export function Color(...args: any): any;
-  // export default : any;
-}
-
-// import React from 'react';
-declare module 'react-jsx-highcharts' {
-  export class Chart extends React.Component<any> {
-    render(): JSX.Element | null;
-  }
-  export class ColumnSeries extends React.Component<any> {
-    render(): JSX.Element | null;
-  }
-  export class HighchartsChart extends React.Component<any> {
-    render(): JSX.Element | null;
-  }
-  export class Legend extends React.Component<any> {
-    render(): JSX.Element | null;
-  }
-  export class PieSeries extends React.Component<any> {
-    render(): JSX.Element | null;
-  }
-  export class SplineSeries extends React.Component<any> {
-    render(): JSX.Element | null;
-  }
-  export class Title extends React.Component<any> {
-    render(): JSX.Element | null;
-  }
-  export class Tooltip extends React.Component<any> {
-    render(): JSX.Element | null;
-  }
-  export function withHighcharts(...args: any): any;
-  export class XAxis extends React.Component<any> {
-    render(): JSX.Element | null;
-  }
-  export class YAxis extends React.Component<any> {
-    render(): JSX.Element | null;
-  }
-}
-
 // import React from 'react';
 declare module 'react-copy-to-clipboard' {
   export class CopyToClipboard extends React.Component<{

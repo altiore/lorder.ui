@@ -38,7 +38,6 @@ export interface IState {
   externalLibraries: IExternalLibraries;
   feedback: DownloadList<Feedback>;
   form: FormStateMap;
-  highcharts: any;
   identity: IIdentityState;
   info: IInfo;
   notifications: any;

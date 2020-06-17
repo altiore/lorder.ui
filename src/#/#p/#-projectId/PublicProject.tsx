@@ -1,18 +1,15 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import SwipeableViews from 'react-swipeable-views';
 
 import get from 'lodash/get';
 
-import { AppBar, Grid, IconButton, Paper, Tab, Tabs, Toolbar, Typography } from '@material-ui/core/';
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core/';
 
 import TelegramIco from '@components/@icons/Telegram';
-import { Block } from '@components/Block';
 import HeaderFixed from '@components/HeaderFixed';
 import LoadingPage from '@components/LoadingPage';
 import { NoMatch } from '@components/NoMatch';
 
-import PieChart from '#/@common/PieChart';
 import { millisecondsToHours } from '#/@store/@common/helpers';
 import { Member } from '#/@store/projects/members/Member';
 
@@ -46,22 +43,6 @@ interface TabPanelProps {
   value: any;
 }
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`wrapped-tabpanel-${index}`}
-      aria-labelledby={`wrapped-tab-${index}`}
-      {...other}
-    >
-      {value === index && <div>{children}</div>}
-    </div>
-  );
-}
-
 export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
   fetchPublicProject,
   isAuth,
@@ -73,8 +54,6 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
   publicProjectUuid,
   statistic,
 }) => {
-  const [value, setValue] = React.useState(0);
-
   const matchProjectUuid = useMemo(() => {
     return match.params.projectId;
   }, [match]);
@@ -106,14 +85,6 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
     }));
   }, [members]);
 
-  const handleChange = useCallback((_, newValue: number) => {
-    setValue(newValue);
-  }, []);
-
-  const handleChangeIndex = useCallback((index: number) => {
-    setValue(index);
-  }, []);
-
   if (isLoading || !isLoaded || !chartData || !chartValueData) {
     return <LoadingPage />;
   }
@@ -124,33 +95,12 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
   return (
     <div className={classes.root}>
       <HeaderFixed brandName="Lorder" brandLink="/" />
-
       <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
       <ProjectMetrics statistic={statistic} />
       <FollowProject project={project} />
-      <Paper square variant="outlined" className={classes.sectionWrap}>
-        <Tabs value={value} onChange={handleChange} indicatorColor="primary" textColor="primary" variant="fullWidth">
-          <Tab label="Таблицы" />
-          <Tab label="Диаграммы" />
-        </Tabs>
-        <SwipeableViews axis={'x-reverse'} index={value} onChangeIndex={handleChangeIndex}>
-          <TabPanel value={value} index={0}>
-            <StatisticTablesTsx timeStatistic={chartData} worthPoints={chartValueData} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <Grid container className={classes.content}>
-              <Block>
-                <Grid item lg={6} md={12} sm={12}>
-                  <PieChart key={1} data={chartData} title="Статистика по времени" unit="h" />
-                </Grid>
-                <Grid item lg={6} md={12} sm={12}>
-                  <PieChart key={2} data={chartValueData} title="Статистика по ценности" />
-                </Grid>
-              </Block>
-            </Grid>
-          </TabPanel>
-        </SwipeableViews>
-      </Paper>
+      <div className={classes.sectionWrap}>
+        <StatisticTablesTsx timeStatistic={chartData} worthPoints={chartValueData} />
+      </div>
       <ProjectValues />
       <ProjectTeam members={get(members, 'list', [])} />
       <AppBar key={'bottom'} position="static" component={'footer'}>
