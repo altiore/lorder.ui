@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { StartStopBtn } from '@components/StartStopBtn';
 
 import { currentTaskId } from '#/@store/timer';
-import { isPaused, pauseWork, startUserWork, stopPausedTask, stopUserWork } from '#/@store/user-works';
+import { isPaused, pauseWork, stopPausedTask, stopUserWork, tryToStartUserWork } from '#/@store/user-works';
 
 import { ITask } from '@types';
 
@@ -22,7 +22,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   onPause: pauseWork,
-  onStart: startUserWork,
+  onStart: tryToStartUserWork,
   onStop: stopUserWork,
   onStopPaused: stopPausedTask,
 };

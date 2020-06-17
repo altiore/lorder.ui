@@ -66,15 +66,8 @@ export const timeSpentByProjectIdInSeconds = createDeepEqualSelector(
     }, 0)
 );
 
-export const timeSpentByProjectId = createDeepEqualSelector(
-  timeSpentByProjectIdInSeconds,
-  getSeconds => (projectId: number) => convertSecondsToDurationWithLocal(getSeconds(projectId), 8)
-);
-
-export const timePercentByProjectId = createDeepEqualSelector(
-  [totalTimeSpentTodayInSeconds, timeSpentByProjectIdInSeconds],
-  (totalSec, getProjectSec) => (projectId: number): string | number =>
-    totalSec ? Math.floor((getProjectSec(projectId) / totalSec) * 100) : '...'
+export const getUserWorkById = createDeepEqualSelector([lastUserWorks], s => (uwId: number) =>
+  s.list.find(el => el.id === uwId)
 );
 
 export const getUserWorksByTaskId = createDeepEqualSelector([lastUserWorks], s => (taskId: number) =>
