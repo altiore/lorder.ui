@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -19,6 +19,7 @@ export interface IConfirmationModalProps {
   action?: ACTION_TYPE;
   cancelText?: string;
   confirmText: string;
+  onCancel?: any;
   onClose?: any;
   onConfirm: any;
   text?: string;
@@ -28,21 +29,38 @@ export interface IConfirmationModalProps {
 
 export const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
   action,
-  cancelText,
+  cancelText = 'Отмена',
   confirmText,
+  onCancel,
   onClose,
   onConfirm,
-  text,
+  text = 'Подтвердите действие',
   titleText,
-  warningText,
+  warningText = 'Это действие не может быть отменено!',
 }) => {
   const classes = useStyles();
+  const [internalState] = useState<any>({
+    _action: action,
+    _cancelText: cancelText,
+    _confirmText: confirmText,
+    _text: text,
+    _titleText: titleText,
+    _warningText: warningText,
+  });
 
   const handleConfirm = useCallback(() => {
     onConfirm();
     onClose();
   }, [onConfirm, onClose]);
 
+  const handleCancel = useCallback(() => {
+    if (onCancel) {
+      onCancel();
+    }
+    onClose();
+  }, [onCancel, onClose]);
+
+  const { _action, _cancelText, _confirmText, _text, _titleText, _warningText } = internalState;
   return (
     <Fragment>
       <DialogTitle disableTypography className={classes.dialogTitle}>
@@ -53,29 +71,27 @@ export const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
       <DialogContent className={classes.dialogContent}>
         <div className={classes.textBlock}>
           <Typography variant="h4" align="center" className={classes.textTitle}>
-            {titleText}
+            {_titleText}
           </Typography>
           <Typography align="center" className={classes.textSure}>
-            {text || 'Подтвердите действие'}
+            {_text}
           </Typography>
         </div>
         <div className={classes.buttons}>
-          {action === ACTION_TYPE.INFO ? (
-            <Button variant="outlined" onClick={handleConfirm}>
-              {confirmText}
-            </Button>
-          ) : (
-            <Button variant="outlined" className={classes.errorButton} onClick={handleConfirm}>
-              {confirmText}
-            </Button>
-          )}
-          <Button variant="outlined" onClick={onClose}>
-            {cancelText || 'Отмена'}
+          <Button
+            variant="outlined"
+            className={_action === ACTION_TYPE.INFO ? '' : classes.errorButton}
+            onClick={handleConfirm}
+          >
+            {_confirmText}
+          </Button>
+          <Button variant="outlined" onClick={handleCancel}>
+            {_cancelText}
           </Button>
         </div>
       </DialogContent>
       <DialogActions className={classes.actions}>
-        <Typography className={classes.warningText}>{warningText || 'Это действие не может быть отменено!'}</Typography>
+        <Typography className={classes.warningText}>{_warningText}</Typography>
       </DialogActions>
     </Fragment>
   );
