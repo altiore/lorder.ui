@@ -13,7 +13,6 @@ import counterReducer from './counter/reducer';
 import { dialog } from './dialog';
 import { externalLibraries } from './externalLibraries/reducer';
 import { feedback } from './feedback/reducer';
-import { highcharts } from './highcharts/reducer';
 import { identity } from './identity';
 import { info } from './info/reducer';
 import { other } from './other/reducer';
@@ -69,7 +68,6 @@ const persistConfig: PersistConfig<Partial<IState>> = {
     'dialog',
     'externalLibraries',
     'form',
-    'highcharts',
     'router',
     'taskActive',
     'timer',
@@ -121,7 +119,6 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
       dialog,
       externalLibraries,
       form,
-      highcharts,
       identity,
       info,
       intl,
