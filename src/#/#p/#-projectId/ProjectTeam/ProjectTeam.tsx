@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 
 import { Container, Grid } from '@material-ui/core';
 
@@ -10,10 +10,18 @@ import { useStyles } from './styles';
 
 import { IUser } from '@types';
 
-const searchCbStub = () => ({});
+export const ProjectTeam: React.FC<{ members: any[] }> = memo(({ members }) => {
+  const [searchName, setSearchName] = useState('');
 
-export const ProjectTeam: React.FC<{ members: any[] }> = ({ members }) => {
-  const membersForSlider: IUser[] = useMemo(() => members.map(({ member }: { member: IUser }) => member), [members]);
+  const membersList: IUser[] = useMemo(() => members.map(({ member }: { member: IUser }) => member), [members]);
+
+  const filteredMembersList = useMemo(() => {
+    return membersList.filter(member => member.displayName && member.displayName.includes(searchName));
+  }, [searchName, membersList]);
+
+  const handleSearch = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchName(value);
+  };
   const classes = useStyles();
 
   return (
@@ -22,12 +30,14 @@ export const ProjectTeam: React.FC<{ members: any[] }> = ({ members }) => {
         <Grid container justify="center">
           <HeaderWithButton title="НАША КОМАНДА" buttonText="Редактировать" />
           <p className={classes.tagline}>Мы дарим людям мир и красоту, но только, если это будет добром!</p>
-          <InputSearch searchCallback={searchCbStub} placeholder="Найти участника по имени" variant="Centered" />
+          <InputSearch searchCallback={handleSearch} placeholder="Найти участника по имени" variant="Centered" />
         </Grid>
       </Container>
       <div className={classes.sliderWrap}>
-        <Slider members={membersForSlider} />
+        {!(searchName && !filteredMembersList.length) && (
+          <Slider members={searchName ? filteredMembersList : membersList} />
+        )}
       </div>
     </section>
   );
-};
+});
