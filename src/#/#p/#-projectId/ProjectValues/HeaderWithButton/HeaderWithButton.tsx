@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import ButtonEdit from '@components/ButtonEdit';
 
@@ -11,7 +11,7 @@ interface IHeaderWithTitleProps {
   marginTop?: number;
 }
 
-export const HeaderWithButton = ({ title, buttonText, marginBottom, marginTop }: IHeaderWithTitleProps) => {
+export const HeaderWithButton = memo(({ title, buttonText, marginBottom, marginTop }: IHeaderWithTitleProps) => {
   const classes = useStyles({ marginBottom, marginTop });
   return (
     <div className={classes.headerTitleWrap}>
@@ -23,4 +23,4 @@ export const HeaderWithButton = ({ title, buttonText, marginBottom, marginTop }:
       </div>
     </div>
   );
-};
+});
