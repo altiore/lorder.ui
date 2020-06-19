@@ -157,13 +157,17 @@ export const MegaButton: React.FC<Props> = ({ isPaused, isCurrent, onClickLeft, 
     console.log('Нажали кнопку запуска задачи');
   };
 
+  const handleReplayTask = () => {
+    console.log('Нажали на кнопку на возобновить задачу');
+  };
+
   const getCentralBtn = () => {
     if (isPaused === true && isCurrent === true) {
       return (
         <ButtonBase
           onMouseOver={handleCenterOver}
           onMouseOut={handleCenterOut}
-          onClick={onClickCenter}
+          onClick={handleReplayTask}
           className={centralBtn}
         >
           <PlayPauseSvg className={svgStyleCustom} />
