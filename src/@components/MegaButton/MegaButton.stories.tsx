@@ -28,19 +28,43 @@ storiesOf('MegaButton', module)
     return (
       <div className={root}>
         <div className={form}>
-          <MegaButton isPaused onClickCenter={action('onClickCenter')} />
-
-          <br />
-
-          <MegaButton isPaused onClickCenter={action('onClickCenter')} onClickLeft={action('onClickLeft')} />
-
-          <br />
-
+          <p>задача на паузе (isPaused=true) и текущая (isCurrent=true)</p>
           <MegaButton
+            isPaused={true}
+            isCurrent={true}
             onClickCenter={action('onClickCenter')}
             onClickLeft={action('onClickLeft')}
             onClickRight={action('onClickRight')}
           />
+
+          <p>задача выполняется (не на паузе) (isPaused=false) и не текущая (isCurrent=false)</p>
+          <MegaButton
+            isPaused={false}
+            isCurrent={false}
+            onClickCenter={action('onClickCenter')}
+            onClickLeft={action('onClickLeft')}
+            onClickRight={action('onClickRight')}
+          />
+
+          <p>задача на паузе (isPaused=true) и не текущая (isCurrent=false)</p>
+          <MegaButton
+            isPaused={true}
+            isCurrent={false}
+            onClickCenter={action('onClickCenter')}
+            onClickLeft={action('onClickLeft')}
+            onClickRight={action('onClickRight')}
+          />
+
+          <p>задача выполняется (не на паузе) (isPaused=false) но текущая (isCurrent=true)</p>
+          <MegaButton
+            isPaused={false}
+            isCurrent={true}
+            onClickCenter={action('onClickCenter')}
+            onClickLeft={action('onClickLeft')}
+            onClickRight={action('onClickRight')}
+          />
+
+          <br />
         </div>
       </div>
     );
