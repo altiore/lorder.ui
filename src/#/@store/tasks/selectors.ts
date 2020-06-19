@@ -26,6 +26,7 @@ export const EDIT_TASK_FORM_PROPS = [
   'source',
   'title',
   'status',
+  'statusTypeName',
   'value',
   'performerId',
   'projectParts',

@@ -16,6 +16,7 @@ export class Task implements ITask {
   sequenceNumber: number;
   source?: string;
   status: number;
+  statusTypeName: string;
   value: number;
   typeId?: number;
   userTasks: IUserTask[] = [];

@@ -15,7 +15,7 @@ const fetchTaskStatusesHandler = s => {
 };
 
 const fetchTaskStatusesSuccessHandler = (s, { payload }) => {
-  return s.finishLoading(payload);
+  return s.finishLoading(payload, 'name');
 };
 
 const fetchTaskStatusesFailHandler = s => {

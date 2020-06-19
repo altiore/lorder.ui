@@ -5,7 +5,7 @@ import { History } from 'history';
 import * as localForage from 'localforage';
 import { combineReducers, Reducer } from 'redux';
 import { reducer as form } from 'redux-form';
-import { createTransform, PersistConfig, persistReducer } from 'redux-persist';
+import { createMigrate, createTransform, PersistConfig, persistReducer } from 'redux-persist';
 
 import { DownloadList } from './@common/entities';
 import { asyncReducersReducer } from './asyncReducers/reducer';
@@ -45,6 +45,23 @@ import { webHooks } from './webhooks/reducer';
 
 import { IState } from '@types';
 
+const migrations = {
+  0: state => {
+    // фильтры задач меняются со строк на числовые значения
+    return {
+      ...state,
+      tasksFilter: { ...state.tasksFilter, openedStatuses: [] },
+    };
+  },
+  1: state => {
+    // фильтры задач меняются с чисел на строковые значения
+    return {
+      ...state,
+      tasksFilter: { ...state.tasksFilter, openedStatuses: [] },
+    };
+  },
+};
+
 localForage.config({
   description: 'Lorder contribution version 1.0',
   name: 'lorder',
@@ -76,6 +93,7 @@ const persistConfig: PersistConfig<Partial<IState>> = {
     'versionHistory',
   ],
   key: 'lorder',
+  migrate: createMigrate(migrations, { debug: false }),
   storage: localForage,
   transforms: [
     createTransform(
@@ -107,6 +125,7 @@ const persistConfig: PersistConfig<Partial<IState>> = {
       }
     ),
   ],
+  version: 1,
 };
 
 export async function createRootReducer(history: History, asyncReducers = {}) {

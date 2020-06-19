@@ -48,8 +48,8 @@ const toggleMemberHandler = (state: ITasksFilter, { payload }: IP2) => {
   });
 };
 
-const toggleOpenedTabHandler = (state: ITasksFilter, { payload }: IP2) => {
-  if (typeof payload !== 'number') {
+const toggleOpenedTabHandler = (state: ITasksFilter, { payload }) => {
+  if (typeof payload !== 'string') {
     throw new Error('Payload MUST be number');
   }
   return new TasksFilter({

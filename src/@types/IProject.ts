@@ -21,7 +21,6 @@ export interface ITaskMove {
 }
 
 export interface ITaskColumn {
-  id: number;
   name: string;
 
   moves: ITaskMove[];

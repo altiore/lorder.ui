@@ -18,7 +18,7 @@ interface IDragAndDropMappedProps {
   columns: ITaskColumn[];
   items: any[];
   projectId?: number;
-  openedStatuses: number[];
+  openedStatuses: string[];
 }
 
 const mapState = createStructuredSelector<IState, IDragAndDropMappedProps>({

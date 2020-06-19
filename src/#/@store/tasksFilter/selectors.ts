@@ -14,7 +14,7 @@ export const filteredMembers = createDeepEqualSelector(baseState, (state): numbe
 
 export const filteredOpenedStatuses = createDeepEqualSelector(
   baseState,
-  (state): number[] => state.openedStatuses || []
+  (state): string[] => state.openedStatuses || []
 );
 
 export const projectPart = createDeepEqualSelector(baseState, s => s.projectPart);
