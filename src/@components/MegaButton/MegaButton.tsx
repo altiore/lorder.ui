@@ -6,6 +6,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Popper from '@material-ui/core/Popper';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Zoom from '@material-ui/core/Zoom';
+import PauseIcon from '@material-ui/icons/Pause';
 import PlaySvg from '@material-ui/icons/PlayArrowRounded';
 
 import uniqid from 'uniqid';
@@ -31,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
       height: BTN_SIZE,
       width: BTN_SIZE,
       zIndex: 100,
+    },
+    grey: {
+      background: theme.palette.grey['500'],
     },
     leftBtn: {
       background: theme.palette.error.main,
@@ -77,7 +81,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  isPaused?: boolean;
+  isPaused: boolean;
+  isCurrent: boolean;
   onClickLeft?: () => void;
   onClickCenter: () => void;
   onClickRight?: () => void;
@@ -85,7 +90,7 @@ interface Props {
 
 const timers: { [key in string]: ReturnType<typeof setTimeout> } = {};
 
-export const MegaButton: React.FC<Props> = ({ isPaused, onClickLeft, onClickCenter, onClickRight }) => {
+export const MegaButton: React.FC<Props> = ({ isPaused, isCurrent, onClickLeft, onClickCenter, onClickRight }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const uniqId = useMemo(() => uniqid('start-stop-btn'), []);
@@ -132,18 +137,77 @@ export const MegaButton: React.FC<Props> = ({ isPaused, onClickLeft, onClickCent
     return anchorEl ? uniqId : undefined;
   }, [anchorEl, uniqId]);
 
-  const { centralBtn, leftBtn, optionalBtn, optionalBtnWrap, rightBtn, root, svgStyle, svgStyleCustom } = useStyles();
+  const {
+    centralBtn,
+    leftBtn,
+    optionalBtn,
+    optionalBtnWrap,
+    rightBtn,
+    root,
+    svgStyle,
+    svgStyleCustom,
+    grey,
+  } = useStyles();
+
+  const handlePauseTask = () => {
+    console.log('Нажали кнопку паузу задачи');
+  };
+
+  const handlePlayTask = () => {
+    console.log('Нажали кнопку запуска задачи');
+  };
+
+  const getCentralBtn = () => {
+    if (isPaused === true && isCurrent === true) {
+      return (
+        <ButtonBase
+          onMouseOver={handleCenterOver}
+          onMouseOut={handleCenterOut}
+          onClick={onClickCenter}
+          className={centralBtn}
+        >
+          <PlayPauseSvg className={svgStyleCustom} />
+        </ButtonBase>
+      );
+    } else if (isPaused === false && isCurrent === false) {
+      return (
+        <ButtonBase
+          onMouseOver={handleCenterOver}
+          onMouseOut={handleCenterOut}
+          onClick={handlePauseTask}
+          className={cn(centralBtn, grey)}
+        >
+          <PauseIcon style={{ color: 'white' }} />
+        </ButtonBase>
+      );
+    } else if (isPaused === true && isCurrent === false) {
+      return (
+        <ButtonBase
+          onMouseOver={handleCenterOver}
+          onMouseOut={handleCenterOut}
+          onClick={handlePlayTask}
+          className={centralBtn}
+        >
+          <PlaySvg fontSize="large" className={svgStyle} />
+        </ButtonBase>
+      );
+    } else if (isPaused === false && isCurrent === true) {
+      return (
+        <ButtonBase
+          onMouseOver={handleCenterOver}
+          onMouseOut={handleCenterOut}
+          onClick={handlePauseTask}
+          className={cn(centralBtn, grey)}
+        >
+          <PauseIcon style={{ color: 'white' }} />
+        </ButtonBase>
+      );
+    }
+  };
 
   return (
     <div className={root}>
-      <ButtonBase
-        onMouseOver={handleCenterOver}
-        onMouseOut={handleCenterOut}
-        onClick={onClickCenter}
-        className={centralBtn}
-      >
-        {isPaused ? <PlayPauseSvg className={svgStyleCustom} /> : <PlaySvg fontSize="large" className={svgStyle} />}
-      </ButtonBase>
+      {getCentralBtn()}
       {typeof onClickLeft === 'function' && (
         <Popper id={id + '-left'} open={Boolean(id)} anchorEl={anchorEl} transition placement="left-start">
           {({ TransitionProps }) => (
