@@ -16,6 +16,7 @@ export interface ITask {
   sequenceNumber: number;
   source?: string;
   status: number;
+  statusTypeName: string;
   value: number;
   typeId?: number;
   userWorks?: IDownloadList<IUserWork>;

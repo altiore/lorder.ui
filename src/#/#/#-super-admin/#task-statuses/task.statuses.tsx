@@ -17,7 +17,6 @@ export interface ITaskStatusesProps extends RouteComponentProps {
 }
 
 const COLUMNS: ICrudColumn[] = [
-  { title: 'Id', path: 'id', isNumber: true },
   { title: 'Name', path: 'name', name: 'name' },
   { title: 'From', path: 'statusFrom', isNumber: true, name: 'statusFrom' },
   { title: 'To', path: 'statusTo', isNumber: true, name: 'statusTo' },

@@ -16,6 +16,6 @@ export interface IStatusMove {
   id: number;
   projectRoleId: number;
   type: TASK_STATUS_MOVE_TYPE;
-  fromId: number;
-  toId: number;
+  fromName: string;
+  toName: string;
 }

@@ -4,5 +4,5 @@ export interface ITasksFilter {
   search?: string;
   projectId: number;
   members: number[];
-  openedStatuses: number[];
+  openedStatuses: string[];
 }

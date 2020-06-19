@@ -198,11 +198,11 @@ const moveProjectTaskHandler = (state: S, { payload }: Action<P>) => {
   const taskIndex = state.list.findIndex(
     el => get(payload, 'sequenceNumber') === el.sequenceNumber && get(payload, 'projectId') === el.projectId
   );
-  const status = get(payload, 'request.data.status');
+  const statusTypeName = get(payload, 'request.data.statusTypeName');
   if (taskIndex !== -1) {
     return state
       .updateItem(taskIndex, {
-        status: parseInt(status, 0),
+        statusTypeName,
       })
       .startLoading();
   }
@@ -220,7 +220,7 @@ const moveProjectTaskFailHandler = (state: S, { payload, meta }: ActionMeta<any,
       meta.previousAction.payload.projectId === el.projectId
   );
   return state.stopLoading().updateItem(taskIndex, {
-    status: meta.previousAction.payload.prevStatus,
+    statusTypeName: meta.previousAction.payload.prevStatusTypeName,
   });
 };
 

@@ -101,7 +101,7 @@ export const TaskStatus: React.FC<ITaskStatusProps> = React.memo(
       <div className={classes.wrapper}>
         <ClickAwayListener onClickAway={handleClose}>
           <div className={classes.taskStatus} ref={anchorRef}>
-            <Field name="status" component={StatusField} projectId={projectId} />
+            <Field name="statusTypeName" component={StatusField} projectId={projectId} />
             <Field
               name="performerId"
               component={PerformerField}

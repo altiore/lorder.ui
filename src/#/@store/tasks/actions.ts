@@ -14,8 +14,8 @@ export interface IProjectTaskData {
   description?: string;
   projectId: number;
   sequenceNumber?: number;
-  status?: number;
-  prevStatus?: number;
+  statusTypeName?: string;
+  prevStatusTypeName?: string;
   taskId?: number;
   title?: string;
   value?: number;
@@ -124,16 +124,16 @@ export const deleteProjectTask = requestActions<IProjectTaskData>(
 
 export const moveProjectTask = requestActions<IProjectTaskData>(
   'PROJECT_TASK/MOVE',
-  ({ projectId, sequenceNumber, status, prevStatus }: IProjectTaskData) => ({
+  ({ projectId, sequenceNumber, statusTypeName, prevStatusTypeName }: IProjectTaskData) => ({
     error: {
       message: 'Не удалось переместить задачу',
       title: 'Упс...',
     },
-    prevStatus,
+    prevStatusTypeName,
     projectId,
     request: {
       data: {
-        status,
+        statusTypeName,
       },
       method: 'PATCH',
       url: `${TASKS_ROUTE(projectId)}/${sequenceNumber}/move`,

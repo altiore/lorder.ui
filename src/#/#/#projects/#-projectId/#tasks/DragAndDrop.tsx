@@ -41,7 +41,7 @@ export interface IDragAndDropProps {
   items: Task[];
   moveProjectTask: any;
   openDialog: any;
-  openedStatuses: number[];
+  openedStatuses: string[];
   projectId: number;
   push: any;
   toggleOpenedTab: any;
@@ -69,8 +69,8 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
 
   const handleToggleOpened = useCallback(
     e => {
-      const toggledStatus = parseInt(e.currentTarget.value, 0);
-      if (typeof toggledStatus === 'number') {
+      const toggledStatus = e.currentTarget.value;
+      if (typeof toggledStatus === 'string') {
         toggleOpenedTab(toggledStatus);
       } else {
         console.log('current target is', e.currentTarget);
@@ -109,10 +109,10 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
         });
       } else {
         moveProjectTask({
-          prevStatus: parseInt(source.droppableId, 0),
+          prevStatusTypeName: source.droppableId,
           projectId,
           sequenceNumber: parseInt(draggableId, 0),
-          status: parseInt(destination.droppableId, 0),
+          statusTypeName: destination.droppableId,
         });
       }
     },
@@ -120,8 +120,10 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   );
 
   const createTask = useCallback(
-    (pId: number | string, status: number) => () => {
-      openDialog(<PatchTaskForm projectId={pId} initialValues={{ status }} />, { maxWidth: 'lg' });
+    (pId: number | string, statusName: string, statusFrom) => () => {
+      openDialog(<PatchTaskForm projectId={pId} initialValues={{ statusTypeName: statusName, status: statusFrom }} />, {
+        maxWidth: 'lg',
+      });
     },
     [openDialog]
   );
@@ -129,29 +131,29 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   return (
     <div className={classes.root}>
       <DragDropContext onDragEnd={onDragEnd}>
-        {columns.map(({ id: status, name, statusFrom, statusTo }) => {
-          const filteredItems = items.filter(el => el.status >= statusFrom && el.status <= statusTo);
+        {columns.map(({ name, statusFrom }) => {
+          const filteredItems = items.filter(el => el.statusTypeName === name);
           const filteredItemsLength = filteredItems.length;
           return (
-            <div className={classes.column} key={status}>
+            <div className={classes.column} key={name}>
               <Typography variant="h6" className={classes.columnTitle}>
                 <span>{STATUS_NAMES[name] || name}</span>
                 {!!filteredItemsLength && (
-                  <ButtonBase value={status} className={classes.arrowWrap} onClick={handleToggleOpened}>
+                  <ButtonBase value={name} className={classes.arrowWrap} onClick={handleToggleOpened}>
                     <KeyboardArrowDown
-                      className={cn(classes.arrow, { [classes.arrowDown]: openedStatuses.indexOf(status) !== -1 })}
+                      className={cn(classes.arrow, { [classes.arrowDown]: openedStatuses.indexOf(name) !== -1 })}
                     />
                   </ButtonBase>
                 )}
               </Typography>
-              <Droppable droppableId={status.toString()}>
+              <Droppable droppableId={name}>
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}
                     style={getListStyle(snapshot.isDraggingOver, height)}
                     className={classes.columnContent}
                   >
-                    {openedStatuses.indexOf(status) !== -1 && filteredItemsLength ? (
+                    {openedStatuses.indexOf(name) !== -1 && filteredItemsLength ? (
                       filteredItems.map((item: Task, index) => {
                         return (
                           <Draggable
@@ -173,7 +175,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                       })
                     ) : (
                       <ButtonBase
-                        value={status}
+                        value={name}
                         className={cn(classes.placeholderCard, { [classes.pointer]: !!filteredItemsLength })}
                         onClick={handleToggleOpened}
                       >
@@ -184,7 +186,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                   </div>
                 )}
               </Droppable>
-              <ButtonBase className={classes.columnFooter} onClick={createTask(projectId, status)}>
+              <ButtonBase className={classes.columnFooter} onClick={createTask(projectId, name, statusFrom)}>
                 <AddIcon fontSize="small" /> Добавить задачу
               </ButtonBase>
             </div>
