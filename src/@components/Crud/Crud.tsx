@@ -177,46 +177,79 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
       [setOrder, setOrderBy, orderBy, order]
     );
 
-    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.checked) {
-        const newSelecteds = rows.map(getId);
-        setSelected(newSelecteds);
-        return;
-      }
-      setSelected([]);
-    };
+    const handleSelectAllClick = useCallback(
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.checked) {
+          const newSelecteds = rows.map(getId);
+          setSelected(newSelecteds);
+          return;
+        }
+        setSelected([]);
+      },
+      [getId, rows]
+    );
 
-    const handleClick = (id: number | string) => (event: React.MouseEvent<unknown>) => {
-      const selectedIndex = selected.indexOf(id);
-      let newSelected: Array<number | string> = [];
+    const handleCheckClick = useCallback(
+      event => {
+        event.stopPropagation();
+        const targetValue = parseInt(event.currentTarget?.value || event.currentTarget?.dataset?.value, 0);
+        const selectedIndex = selected.indexOf(targetValue);
+        let newSelected: Array<number | string> = [];
 
-      if (selectedIndex === -1) {
-        newSelected = newSelected.concat(selected, id);
-      } else if (selectedIndex === 0) {
-        newSelected = newSelected.concat(selected.slice(1));
-      } else if (selectedIndex === selected.length - 1) {
-        newSelected = newSelected.concat(selected.slice(0, -1));
-      } else if (selectedIndex > 0) {
-        newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-      }
+        if (selectedIndex === -1) {
+          newSelected = newSelected.concat(selected, targetValue);
+        } else if (selectedIndex === 0) {
+          newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+          newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+          newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+        }
 
-      setSelected(newSelected);
-    };
+        setSelected(newSelected);
+      },
+      [selected]
+    );
 
-    const handleChangePage = (event: unknown, newPage: number) => {
+    const handleRowClick = useCallback(
+      event => {
+        event.stopPropagation();
+        if (editItem) {
+          const item = rows.find(el => el.id === parseInt(event.currentTarget?.dataset?.value, 0)) || {};
+          openDialog(
+            <CreateForm
+              form={formName}
+              onSubmit={editItem}
+              columns={columns}
+              onSubmitSuccess={closeDialog}
+              createTitle={createTitle}
+              initialValues={item}
+            />,
+            {
+              maxWidth: 'md',
+            }
+          );
+        } else {
+          handleCheckClick(event);
+        }
+      },
+      [closeDialog, columns, createTitle, editItem, formName, handleCheckClick, openDialog, rows]
+    );
+
+    const handleChangePage = useCallback((event: unknown, newPage: number) => {
       setPage(newPage);
-    };
+    }, []);
 
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeRowsPerPage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
       setRowsPerPage(parseInt(event.target.value, 0));
       setPage(0);
-    };
+    }, []);
 
-    const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeDense = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
       setDense(event.target.checked);
-    };
+    }, []);
 
-    const isSelected = (name: string) => selected.indexOf(name) !== -1;
+    const isSelected = useCallback((name: string) => selected.indexOf(name) !== -1, [selected]);
 
     const labelDisplayedRows = useCallback(({ from, to, count }: any) => {
       return ''
@@ -344,17 +377,20 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
                     return (
                       <TableRow
                         hover
-                        onClick={handleClick(elId)}
+                        onClick={handleRowClick}
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
                         key={elId}
+                        data-value={elId}
                         selected={isItemSelected}
                         className={classes.row}
                         classes={{ root: classes.rowRoot, selected: classes.rowSelected }}
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
+                            onClick={handleCheckClick}
+                            value={elId}
                             checked={isItemSelected}
                             inputProps={{ 'aria-labelledby': labelId }}
                             color="primary"

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 
+import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
 import { createProjectPart, deleteProjectPart, fetchProjectParts, projectParts } from '#/@store/project';
@@ -14,6 +15,7 @@ const mapDispatch = {
   createProjectPart,
   deleteProjectPart,
   fetchProjectParts,
+  push,
 };
 
 export default connect(mapState, mapDispatch)(ProjectPartsJsx);

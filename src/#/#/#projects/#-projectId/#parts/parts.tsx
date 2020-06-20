@@ -1,10 +1,13 @@
-import React, { useEffect, useMemo } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 import { ICrudColumn } from '@components/Crud';
 import { Page } from '@components/Page';
+import RadioButton from '@components/RadioButton';
 
 import Crud from '#/@common/Crud';
+
+import TreeView from './tree-view';
 
 import { IProjectPart } from '@types';
 
@@ -13,17 +16,28 @@ export interface IProjectPartsProps extends RouteComponentProps {
   deleteProjectPart: any;
   fetchProjectParts?: any;
   projectParts: any[];
+  push: (path: string) => void;
 }
 
 const COLUMNS: ICrudColumn[] = [
   { title: 'ID', path: 'id', isNumber: true },
   { title: 'Название', path: 'title', name: 'title' },
-  { title: 'Родитель', path: 'parentId', isNumber: true },
+  { title: 'Родитель', path: 'parentId', isNumber: true, name: 'parentId' },
   { title: 'Задач', path: 'tasks.length', isNumber: true },
 ];
 
+enum VIEW {
+  TABLE = 'table',
+  TREE = 'tree',
+}
+
+const items = [
+  { title: 'Таблица', value: VIEW.TABLE },
+  { title: 'Дерево', value: VIEW.TREE },
+];
+
 export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo(
-  ({ createProjectPart, deleteProjectPart, fetchProjectParts, projectParts }) => {
+  ({ createProjectPart, deleteProjectPart, fetchProjectParts, location, match, projectParts, push }) => {
     useEffect(() => {
       if (fetchProjectParts) {
         fetchProjectParts();
@@ -34,17 +48,40 @@ export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo(
       return COLUMNS;
     }, []);
 
+    const { url } = match;
+    const { pathname } = location;
+
+    const page = useMemo(() => {
+      return pathname && pathname.match(VIEW.TREE) ? VIEW.TREE : VIEW.TABLE;
+    }, [pathname]);
+
+    const handleChange = useCallback(
+      value => {
+        push(`${url}/${value}`);
+      },
+      [push, url]
+    );
+
     return (
       <Page>
-        <Crud
-          formName={'CreateProjectPartForm'}
-          entityName="Части проекта"
-          createTitle="Добавить"
-          createItem={createProjectPart}
-          deleteItem={deleteProjectPart}
-          columns={preparedColumns}
-          rows={projectParts}
-        />
+        <RadioButton onChange={handleChange} items={items} value={page} />
+        <Switch>
+          <Redirect to={match.path + '/table'} from={match.path} exact />
+          <Route path={[match.path, VIEW.TABLE].join('/')}>
+            <Crud
+              formName={'CreateProjectPartForm'}
+              entityName="Части проекта"
+              createTitle="Добавить"
+              createItem={createProjectPart}
+              deleteItem={deleteProjectPart}
+              columns={preparedColumns}
+              rows={projectParts}
+            />
+          </Route>
+          <Route path={[match.path, VIEW.TREE].join('/')}>
+            <TreeView />
+          </Route>
+        </Switch>
       </Page>
     );
   }
