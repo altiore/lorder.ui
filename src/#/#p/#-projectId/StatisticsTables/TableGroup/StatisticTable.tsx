@@ -1,5 +1,7 @@
 import React, { memo } from 'react';
 
+import classNames from 'classnames';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -16,29 +18,39 @@ interface IStatisticTableProps {
 }
 
 export const StatisticTable = memo(({ members, unit = '', unitTitle }: IStatisticTableProps) => {
-  const classes = useStyles();
+  const { tableContainer, tableWrap, tableCell, noBorder, light, bold, tableRow } = useStyles();
   return (
-    <TableContainer className={classes.tableContainer}>
-      <Table className={classes.tableWrap} aria-label="simple table">
+    <TableContainer className={tableContainer}>
+      <Table className={tableWrap} aria-label="simple table">
         <TableHead>
-          <TableRow>
-            <TableCell>№</TableCell>
-            <TableCell align="left">Имя участника</TableCell>
-            <TableCell align="right">{unitTitle}</TableCell>
-            <TableCell align="right">Доля</TableCell>
+          <TableRow className={tableRow}>
+            <TableCell className={classNames(tableCell, noBorder, light)}>№</TableCell>
+            <TableCell align="left" className={classNames(tableCell, noBorder, light)}>
+              Имя участника
+            </TableCell>
+            <TableCell align="right" className={classNames(tableCell, noBorder, light)}>
+              {unitTitle}
+            </TableCell>
+            <TableCell align="right" className={classNames(tableCell, noBorder, light)}>
+              Доля
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {members.map((row, i) => (
             <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" className={classNames(tableCell, light)}>
                 <b>{i + 1}.</b>
               </TableCell>
-              <TableCell align="left">{row.name}</TableCell>
-              <TableCell align="right">
+              <TableCell align="left" className={classNames(tableCell, light)}>
+                {row.name}
+              </TableCell>
+              <TableCell align="right" className={classNames(tableCell, bold)}>
                 {row.units} {unit}
               </TableCell>
-              <TableCell align="right">{row.percentage}%</TableCell>
+              <TableCell align="right" className={classNames(tableCell, bold)}>
+                {row.percentage}%
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -46,6 +46,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexFlow: 'column',
     flexWrap: 'wrap',
+    paddingTop: 145,
   },
   sliderWrap: {
     marginBottom: 80,
@@ -61,9 +62,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
     color: 'rgb(35, 35, 35)',
     fontFamily: 'Roboto',
     fontSize: 30,
+    fontWeight: 300,
     lineHeight: 1.133,
-    marginBottom: 50,
-    marginTop: 20,
+    marginBottom: 40,
+    marginTop: 0,
     textAlign: 'center',
   },
 }));

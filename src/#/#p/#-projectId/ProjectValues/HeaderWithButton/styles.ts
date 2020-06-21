@@ -7,6 +7,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     right: 35,
     transform: 'translate(0,50%)',
     [theme.breakpoints.down('md')]: {
+      marginBottom: 15,
       position: 'static',
       transform: 'none',
     },

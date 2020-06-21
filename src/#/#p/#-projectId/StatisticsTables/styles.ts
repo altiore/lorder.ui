@@ -1,11 +1,21 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
+  bold: {
+    fontWeight: 400,
+  },
+
   h2: {
     color: '#29292b',
     fontFamily: 'Roboto',
     fontSize: 24,
     fontWeight: 500,
+  },
+  light: {
+    fontWeight: 300,
+  },
+  noBorder: {
+    borderBottom: 0,
   },
   searchGroupWrap: {
     margin: '15px 0',
@@ -16,11 +26,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginLeft: '-8px',
     marginRight: 5,
   },
-
   searchInput: {
     border: 0,
     maxWidth: 320,
     padding: '5px 0',
+  },
+  tableCell: {
+    '& b': {
+      fontWeight: 400,
+    },
+    fontSize: 18,
   },
   tableContainer: {
     ...theme.mainContent.scroll,
@@ -39,6 +54,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
     padding: '0 15px',
     width: '100%',
   },
+
+  tableRow: {
+    borderBottom: '1px solid #000',
+    fontWeight: 300,
+  },
   tablesWrap: {
     display: 'flex',
     justifyContent: 'center',
@@ -52,5 +72,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.down('xs')]: {
       textAlign: 'center',
     },
+  },
+  usersQuantity: {
+    fontWeight: 500,
+    paddingLeft: 2,
   },
 }));

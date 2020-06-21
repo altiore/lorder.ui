@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
+import classNames from 'classnames';
+
 import { Box, Button, Grid, MenuItem, Select, TextField } from '@material-ui/core';
 
 import { useStyles } from './styles';
@@ -29,7 +31,7 @@ export const FollowProjectTsx = ({ project, roles }: IfollowProject) => {
         <TextField
           className={classes.emailInput}
           name="e-mail"
-          placeholder="email"
+          placeholder="E-mail"
           variant="outlined"
           InputProps={{
             classes: {
@@ -42,10 +44,15 @@ export const FollowProjectTsx = ({ project, roles }: IfollowProject) => {
           value={role}
           placeholder="Выбрать"
           className={classes.select}
-          inputProps={{ className: classes.innerSelect }}
+          inputProps={{
+            className:
+              role === 'role' ? classNames(classes.innerSelectPlaceholder, classes.innerSelect) : classes.innerSelect,
+          }}
           onChange={handleSelect}
         >
-          <MenuItem value="role">Выбрать роль</MenuItem>
+          <MenuItem value="role" disabled>
+            Выбрать роль
+          </MenuItem>
           {roles.map(r => (
             <MenuItem value={r.id} key={r.id}>
               {r.name}
