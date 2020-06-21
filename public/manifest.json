@@ -5,22 +5,22 @@
     {
       "src": "favicon-16x16.png",
       "sizes": "16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
       "src": "favicon-32x32.png",
       "sizes": "32x32",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
-      "src": "24x24.png",
-      "sizes": "24x24",
-      "type": "image/x-icon"
+      "src": "favicon.svg",
+      "sizes": "16x16 24x24",
+      "type": "image/svg+xml"
     },
     {
-      "src": "64x64.png",
-      "sizes": "64x64",
-      "type": "image/x-icon"
+      "src": "48x48.svg",
+      "sizes": "48x48 64x64 72x72 96x96 128x128 256x256",
+      "type": "image/svg+xml"
     },
     {
       "src": "android-chrome-192x192.png",

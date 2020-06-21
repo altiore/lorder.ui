@@ -9,6 +9,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 
+import LorderLogo from '@components/@icons/LorderLogo';
+
 import { AccountMenu } from '#/@common/account-menu';
 import { createProjectDialogProps, CreateProjectPopup } from '#/@common/CreateProjectPopup';
 import { LinkIconButton } from '#/@common/LinkIconButton';
@@ -83,7 +85,7 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
       <AppBar classes={{ root: classes.appBarRoot }} position="static" color="default">
         <Toolbar className={classes.toolbar}>
           <LinkIconButton to="/" color="secondary">
-            <img src={`${process.env.PUBLIC_URL}/48x48.png`} alt="Lorder icon" className={classes.timerIco} />
+            <LorderLogo className={classes.timerIco} />
           </LinkIconButton>
           <div className={classes.buttonBlock}>
             <ActiveProject selectProject={selectProject} />
