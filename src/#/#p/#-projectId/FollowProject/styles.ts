@@ -17,8 +17,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: `100%`,
   },
   followButton: {
+    '&:hover': {
+      backgroundColor: 'rgb(255, 185, 0)',
+    },
     bordeRadius: 5,
+    boxShadow: 'none',
     color: '#fff',
+    fontSize: 18,
     height: 50,
     width: 275,
   },
@@ -29,6 +34,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
   innerSelect: {
     height: 50,
     lineHeight: '34px',
+  },
+  innerSelectPlaceholder: {
+    color: '#c5c5c5',
   },
   select: {
     height: 50,
@@ -42,7 +50,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     fontFamily: 'Roboto',
     fontSize: 48,
     fontWeight: 400,
-    margin: '120px auto 55px auto',
+    lineHeight: '59px',
+    margin: '109px auto 45px auto',
     maxWidth: 650,
     minHeight: 93,
     textAlign: 'center',

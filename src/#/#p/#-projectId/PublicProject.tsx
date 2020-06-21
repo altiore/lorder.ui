@@ -94,7 +94,15 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
 
   return (
     <div className={classes.root}>
-      <HeaderFixed brandName="Lorder" brandLink="/" />
+      <div
+        style={{
+          backgroundColor: 'rgb(41, 41, 43)',
+          boxShadow: '-3.536px 3.536px 9.5px 0.5px rgba(0, 0, 0, 0.15)',
+        }}
+      >
+        <HeaderFixed brandName="Lorder" brandLink="/" />
+      </div>
+
       <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
       <ProjectMetrics statistic={statistic} />
       <FollowProject project={project} />

@@ -11,7 +11,7 @@ export const ProjectValues = (props: any) => {
   return (
     <section className={classes.sectionWrap}>
       <Container maxWidth="lg">
-        <HeaderWithButton title="ЦЕННОСТИ ПРОЕКТА" buttonText="Редактировать" marginBottom={90} />
+        <HeaderWithButton title="ЦЕННОСТИ ПРОЕКТА" buttonText="Редактировать" marginBottom={42} />
         <Grid container justify="center">
           <ValueDescriptionCard title="Заголовок">Главная ценность - это человек!</ValueDescriptionCard>
           <ValueDescriptionCard title="Заголовок">Главная ценность - это человек!</ValueDescriptionCard>

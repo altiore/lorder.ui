@@ -20,7 +20,7 @@ export const ProjectHeadTsx = ({ project, editProjectLink, isAuth }: IprojectHea
   return (
     <Grid container className={classes.projectHeadWrap} alignItems="center" justify="center">
       <Grid container alignItems="center" justify="space-between" className={classes.contentWrap}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} md={8}>
           <div>
             <h1 className={classes.projectName}>{project.title}</h1>
             {project.desc && <p className={classes.projectTagline}>{project.desc}</p>}
