@@ -13,8 +13,13 @@
       "type": "image/x-icon"
     },
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 24x24",
+      "src": "24x24.png",
+      "sizes": "24x24",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "64x64.png",
+      "sizes": "64x64",
       "type": "image/x-icon"
     },
     {
@@ -30,6 +35,6 @@
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "theme_color": "#FFECB3",
-  "background_color": "#24292E"
+  "theme_color": "#faf0b5",
+  "background_color": "#292929"
 }
