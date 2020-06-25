@@ -20,6 +20,7 @@ import ProjectTeam from './ProjectTeam';
 import ProjectValues from './ProjectValues';
 import { StatisticTablesTsx } from './StatisticsTables/StatisticsTables';
 import { useStyles } from './styles';
+import UsersActivity from './UsersActivity';
 
 import { IProject } from '@types';
 
@@ -35,12 +36,6 @@ export interface IPublicProjectProps extends RouteComponentProps<{ projectId: st
     image: string;
     name: string;
   }>;
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
 }
 
 export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
@@ -111,6 +106,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
       </div>
       <ProjectValues />
       <ProjectTeam members={get(members, 'list', [])} />
+      <UsersActivity members={get(members, 'list', [])} project={project} />
       <AppBar key={'bottom'} position="static" component={'footer'}>
         <Toolbar className={classes.bottomBar}>
           <Typography variant="h6" color="inherit">

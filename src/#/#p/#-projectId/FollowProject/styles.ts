@@ -9,11 +9,22 @@ export const useStyles = makeStyles((theme: Theme) => ({
       fontSize: 45,
     },
   },
+  buttonsWrapVertical: {
+    justifyContent: 'unset',
+    margin: 0,
+    [theme.breakpoints.down('sm')]: {
+      flexFlow: 'wrap',
+      justifyContent: 'center',
+    },
+  },
   emailInnerInput: {
     height: '50px',
   },
   emailInput: {
-    maxWidth: 275,
+    width: 275,
+  },
+  emailInputVertical: {
+    maxWidth: 360,
     width: `100%`,
   },
   followButton: {
@@ -27,9 +38,22 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: 50,
     width: 275,
   },
+  followButtonVertical: {
+    maxWidth: 360,
+    width: '100%',
+  },
   followWrap: {
     background: '#fff',
     paddingBottom: 120,
+  },
+  followWrapVertical: {
+    display: 'flex',
+    flexFlow: 'column',
+    marginLeft: 84,
+    maxWidth: 410,
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+    },
   },
   innerSelect: {
     height: 50,
@@ -45,12 +69,17 @@ export const useStyles = makeStyles((theme: Theme) => ({
       margin: '20px 0',
     },
   },
+  selectVertical: {
+    marginBottom: 30,
+    marginTop: 10,
+    maxWidth: 360,
+    width: '100%',
+  },
   taglineHeader: {
     color: '#29292b',
     fontFamily: 'Roboto',
     fontSize: 48,
     fontWeight: 400,
-    lineHeight: '59px',
     margin: '109px auto 45px auto',
     maxWidth: 650,
     minHeight: 93,
@@ -61,5 +90,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
       margin: '60px 5px 25px 5px',
       textAlign: 'center',
     },
+  },
+  taglineHeaderVertical: {
+    fontSize: 36,
+    lineHeight: '46px',
+    margin: '50px auto 30px auto',
+    minHeight: 'auto',
+    textAlign: 'left',
+    textTransform: 'none',
   },
 }));
