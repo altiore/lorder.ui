@@ -2,7 +2,7 @@ import React from 'react';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import MegaButton from '.';
+import StartStopButton from '.';
 import CenterDecorator from '../../../.storybook/decor/Center';
 
 import { action } from '@storybook/addon-actions';
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-storiesOf('MegaButton', module)
+storiesOf('StartStopButton', module)
   .addDecorator(CenterDecorator)
   .add('default', () => {
     const { form, root } = useStyles();
@@ -29,7 +29,7 @@ storiesOf('MegaButton', module)
       <div className={root}>
         <div className={form}>
           <p>задача на паузе (isPaused=true) и текущая (isCurrent=true)</p>
-          <MegaButton
+          <StartStopButton
             isPaused={true}
             isCurrent={true}
             onClickCenter={action('onClickCenter')}
@@ -38,7 +38,7 @@ storiesOf('MegaButton', module)
           />
 
           <p>задача выполняется (не на паузе) (isPaused=false) и не текущая (isCurrent=false)</p>
-          <MegaButton
+          <StartStopButton
             isPaused={false}
             isCurrent={false}
             onClickCenter={action('onClickCenter')}
@@ -47,7 +47,7 @@ storiesOf('MegaButton', module)
           />
 
           <p>задача на паузе (isPaused=true) и не текущая (isCurrent=false)</p>
-          <MegaButton
+          <StartStopButton
             isPaused={true}
             isCurrent={false}
             onClickCenter={action('onClickCenter')}
@@ -56,7 +56,7 @@ storiesOf('MegaButton', module)
           />
 
           <p>задача выполняется (не на паузе) (isPaused=false) но текущая (isCurrent=true)</p>
-          <MegaButton
+          <StartStopButton
             isPaused={false}
             isCurrent={true}
             onClickCenter={action('onClickCenter')}

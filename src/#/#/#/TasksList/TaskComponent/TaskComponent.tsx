@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 import SettingsIcon from '@components/@icons/Settings';
 
-import StartStopBtn from '#/@common/StartStopBtn';
+import StartStopButton from '#/@common/StartStopButton';
 import TaskDuration from '#/@common/TaskDuration';
 import TypeIcon from '#/@common/TypeIcon';
 import { TASKS_ROUTE } from '#/@store/router';
@@ -168,7 +168,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
       <div className={classes.actions}>
         <TaskDuration taskId={taskId} />
         <div className={classes.startBtnDivider} />
-        <StartStopBtn task={task} />
+        <StartStopButton task={task} />
       </div>
     </div>
   );

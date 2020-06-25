@@ -11,9 +11,9 @@ import PlaySvg from '@material-ui/icons/PlayArrowRounded';
 
 import uniqid from 'uniqid';
 
+import PlayPauseSvg from '../StartStopButton/play-pause';
 import BackSvg from './back';
 import CheckSvg from './check';
-import PlayPauseSvg from './play-pause';
 
 const BTN_SIZE = 44;
 const SMALL_BTN_SIZE = 40;
@@ -83,14 +83,15 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   isPaused: boolean;
   isCurrent: boolean;
+  // todo тут аргументы нужны соответствубщие
   onClickLeft?: () => void;
-  onClickCenter: () => void;
-  onClickRight?: () => void;
+  onClickCenter: (e: React.SyntheticEvent<any>) => void;
+  onClickRight?: (e: React.SyntheticEvent<any>) => void;
 }
 
 const timers: { [key in string]: ReturnType<typeof setTimeout> } = {};
 
-export const MegaButton: React.FC<Props> = ({ isPaused, isCurrent, onClickLeft, onClickCenter, onClickRight }) => {
+export const StartStopButton: React.FC<Props> = ({ isPaused, isCurrent, onClickLeft, onClickCenter, onClickRight }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const uniqId = useMemo(() => uniqid('start-stop-btn'), []);
@@ -106,7 +107,7 @@ export const MegaButton: React.FC<Props> = ({ isPaused, isCurrent, onClickLeft, 
         setAnchorEl(event.currentTarget);
       }
     },
-    [anchorEl, setAnchorEl]
+    [anchorEl, uniqId]
   );
 
   const handleCenterOut = useCallback(() => {
@@ -116,14 +117,14 @@ export const MegaButton: React.FC<Props> = ({ isPaused, isCurrent, onClickLeft, 
     timers[uniqId] = setTimeout(() => {
       setAnchorEl(null);
     }, 400);
-  }, [setAnchorEl]);
+  }, [uniqId]);
 
   const handleHiddenOver = useCallback(() => {
     if (timers[uniqId]) {
       clearTimeout(timers[uniqId]);
       delete timers[uniqId];
     }
-  }, []);
+  }, [uniqId]);
 
   const handleHiddenOut = useCallback(() => {
     if (timers[uniqId]) {
@@ -131,11 +132,24 @@ export const MegaButton: React.FC<Props> = ({ isPaused, isCurrent, onClickLeft, 
       delete timers[uniqId];
     }
     setAnchorEl(null);
-  }, [setAnchorEl]);
+  }, [uniqId, setAnchorEl]);
 
   const id = useMemo(() => {
     return anchorEl ? uniqId : undefined;
   }, [anchorEl, uniqId]);
+
+  // Получить иконку центральной кнопки
+  const getCentralButtonIcon = () => {
+    if (isCurrent) {
+      if (isPaused) {
+        return <PlayPauseSvg className={svgStyleCustom} />;
+      } else {
+        return <PauseIcon style={{ color: 'white' }} />;
+      }
+    } else {
+      return <PlaySvg fontSize="large" className={svgStyle} />;
+    }
+  };
 
   const {
     centralBtn,
@@ -149,69 +163,16 @@ export const MegaButton: React.FC<Props> = ({ isPaused, isCurrent, onClickLeft, 
     grey,
   } = useStyles();
 
-  const handlePauseTask = () => {
-    console.log('Нажали кнопку паузу задачи');
-  };
-
-  const handlePlayTask = () => {
-    console.log('Нажали кнопку запуска задачи');
-  };
-
-  const handleReplayTask = () => {
-    console.log('Нажали на кнопку на возобновить задачу');
-  };
-
-  const getCentralBtn = () => {
-    if (isPaused === true && isCurrent === true) {
-      return (
-        <ButtonBase
-          onMouseOver={handleCenterOver}
-          onMouseOut={handleCenterOut}
-          onClick={handleReplayTask}
-          className={centralBtn}
-        >
-          <PlayPauseSvg className={svgStyleCustom} />
-        </ButtonBase>
-      );
-    } else if (isPaused === false && isCurrent === false) {
-      return (
-        <ButtonBase
-          onMouseOver={handleCenterOver}
-          onMouseOut={handleCenterOut}
-          onClick={handlePauseTask}
-          className={cn(centralBtn, grey)}
-        >
-          <PauseIcon style={{ color: 'white' }} />
-        </ButtonBase>
-      );
-    } else if (isPaused === true && isCurrent === false) {
-      return (
-        <ButtonBase
-          onMouseOver={handleCenterOver}
-          onMouseOut={handleCenterOut}
-          onClick={handlePlayTask}
-          className={centralBtn}
-        >
-          <PlaySvg fontSize="large" className={svgStyle} />
-        </ButtonBase>
-      );
-    } else if (isPaused === false && isCurrent === true) {
-      return (
-        <ButtonBase
-          onMouseOver={handleCenterOver}
-          onMouseOut={handleCenterOut}
-          onClick={handlePauseTask}
-          className={cn(centralBtn, grey)}
-        >
-          <PauseIcon style={{ color: 'white' }} />
-        </ButtonBase>
-      );
-    }
-  };
-
   return (
     <div className={root}>
-      {getCentralBtn()}
+      <ButtonBase
+        onMouseOver={handleCenterOver}
+        onMouseOut={handleCenterOut}
+        onClick={onClickCenter}
+        className={cn(centralBtn, grey)}
+      >
+        {getCentralButtonIcon()}
+      </ButtonBase>
       {typeof onClickLeft === 'function' && (
         <Popper id={id + '-left'} open={Boolean(id)} anchorEl={anchorEl} transition placement="left-start">
           {({ TransitionProps }) => (

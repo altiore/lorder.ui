@@ -3,7 +3,7 @@ import React from 'react';
 import PauseSvg from '@material-ui/icons/PauseRounded';
 
 import ConfirmationModal, { ACTION_TYPE } from '@components/ConfirmationModal';
-import CheckSvg from '@components/MegaButton/check';
+import CheckSvg from '@components/StartStopButton/check';
 
 import { openDialog } from '#/@store/dialog';
 import { defaultProjectId } from '#/@store/identity';
