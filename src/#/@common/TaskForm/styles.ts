@@ -39,13 +39,14 @@ export const useStyles = makeStyles((theme: Theme) => ({
     boxSizing: 'border-box',
     flexBasis: '25%',
     flexGrow: 1,
-    marginTop: 12,
+    marginTop: 6,
+    maxWidth: 250,
     paddingLeft: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      maxWidth: '100%',
+    },
   },
   grow: {
     flexGrow: 1,
-  },
-  valueWrap: {
-    marginTop: theme.spacing(2),
   },
 }));
