@@ -11,9 +11,10 @@ import { IProject, IUserRole } from '@types';
 interface IfollowProject {
   project: IProject;
   roles: IUserRole[];
+  verticalDirection?: boolean;
 }
 
-export const FollowProjectTsx = ({ project, roles }: IfollowProject) => {
+export const FollowProjectTsx = ({ project, roles, verticalDirection = false }: IfollowProject) => {
   const [role, setRole] = useState('role');
   const handleSelect = useCallback((e: any) => {
     setRole(e.target.value);
@@ -25,11 +26,28 @@ export const FollowProjectTsx = ({ project, roles }: IfollowProject) => {
   }
 
   return (
-    <Box className={classes.followWrap}>
-      {project.slogan && <h2 className={classes.taglineHeader}>{project.slogan}</h2>}
-      <Grid container justify="space-around" alignItems="center" className={classes.buttonsWrap}>
+    <Box className={verticalDirection ? classes.followWrapVertical : classes.followWrap}>
+      {project.slogan && (
+        <h2
+          className={
+            verticalDirection ? classNames(classes.taglineHeader, classes.taglineHeaderVertical) : classes.taglineHeader
+          }
+        >
+          {project.slogan}
+        </h2>
+      )}
+      <Grid
+        container
+        justify="space-around"
+        alignItems="center"
+        className={
+          verticalDirection ? classNames(classes.buttonsWrap, classes.buttonsWrapVertical) : classes.buttonsWrap
+        }
+      >
         <TextField
-          className={classes.emailInput}
+          className={
+            verticalDirection ? classNames(classes.emailInput, classes.emailInputVertical) : classes.emailInput
+          }
           name="e-mail"
           placeholder="E-mail"
           variant="outlined"
@@ -42,8 +60,7 @@ export const FollowProjectTsx = ({ project, roles }: IfollowProject) => {
         />
         <Select
           value={role}
-          placeholder="Выбрать"
-          className={classes.select}
+          className={verticalDirection ? classNames(classes.select, classes.selectVertical) : classes.select}
           inputProps={{
             className:
               role === 'role' ? classNames(classes.innerSelectPlaceholder, classes.innerSelect) : classes.innerSelect,
@@ -59,7 +76,13 @@ export const FollowProjectTsx = ({ project, roles }: IfollowProject) => {
             </MenuItem>
           ))}
         </Select>
-        <Button color="primary" variant="contained" className={classes.followButton}>
+        <Button
+          color="primary"
+          variant="contained"
+          className={
+            verticalDirection ? classNames(classes.followButton, classes.followButtonVertical) : classes.followButton
+          }
+        >
           Подключиться к проекту
         </Button>
       </Grid>
