@@ -32,6 +32,11 @@ export interface IStartStopBtnProps {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    buttonWrap: {
+      alignItems: 'center',
+      display: 'flex',
+      height: 56,
+    },
     play: {
       '& svg': {
         height: '32px',
@@ -184,7 +189,10 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
           onOpen={handleOpen}
           open={open}
           direction="left"
-          FabProps={{ className: cn(classes.stopOpen, { [classes.play]: open }), size }}
+          FabProps={{
+            className: cn(classes.stopOpen, { [classes.play]: open }),
+            size,
+          }}
         >
           <SpeedDialAction
             icon={<StopIcon />}
@@ -207,7 +215,10 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
           onOpen={handleOpen}
           open={open}
           direction="left"
-          FabProps={{ className: cn(classes.stop, { [classes.stopOpen]: open }), size }}
+          FabProps={{
+            className: cn(classes.stop, { [classes.stopOpen]: open }),
+            size,
+          }}
         >
           <SpeedDialAction
             icon={<StopIcon />}
@@ -221,10 +232,12 @@ export const StartStopBtnTsx: React.FunctionComponent<IStartStopBtnProps> = ({
     }
   }
   return (
-    <Tooltip title="Начать задачу" placement={'right'}>
-      <Fab aria-label="Play button" className={classes.play} onClick={handleStart} size={size as any}>
-        <PlayArrowRounded fontSize={isLarge ? 'large' : 'default'} />
-      </Fab>
-    </Tooltip>
+    <div className={classes.buttonWrap}>
+      <Tooltip title="Начать задачу" placement={'right'}>
+        <Fab aria-label="Play button" className={classes.play} onClick={handleStart} size={size as any}>
+          <PlayArrowRounded fontSize={isLarge ? 'large' : 'default'} />
+        </Fab>
+      </Tooltip>
+    </div>
   );
 };
