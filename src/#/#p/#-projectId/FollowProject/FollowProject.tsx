@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
 import classNames from 'classnames';
 
@@ -8,30 +9,49 @@ import { useStyles } from './styles';
 
 import { IProject, IUserRole } from '@types';
 
-interface IfollowProject {
+interface IFollowProject extends RouteComponentProps {
   project: IProject;
   roles: IUserRole[];
   verticalDirection?: boolean;
+  postRequestMembership: any;
+  projectId: number | undefined;
+  isAuth: boolean;
+  userEmail: string | undefined;
 }
 
-export const FollowProjectTsx = ({ project, roles, verticalDirection = false }: IfollowProject) => {
+export const FollowProjectTsx = ({
+  project,
+  roles,
+  verticalDirection = false,
+  postRequestMembership,
+  projectId,
+  isAuth,
+  userEmail,
+  history,
+}: IFollowProject) => {
   const [role, setRole] = useState('role');
   const handleSelect = useCallback((e: any) => {
     setRole(e.target.value);
   }, []);
-
+  const handleRequestMembership = useCallback(() => {
+    if (isAuth) {
+      postRequestMembership(projectId, role);
+    } else {
+      history.push('/login');
+    }
+  }, [history, isAuth, postRequestMembership, projectId, role]);
   const classes = useStyles();
   if (!project.slogan) {
     return null;
   }
-
   return (
     <Box className={verticalDirection ? classes.followWrapVertical : classes.followWrap}>
       {project.slogan && (
         <h2
-          className={
-            verticalDirection ? classNames(classes.taglineHeader, classes.taglineHeaderVertical) : classes.taglineHeader
-          }
+          className={classNames({
+            [classes.taglineHeader]: true,
+            [classes.taglineHeaderVertical]: verticalDirection,
+          })}
         >
           {project.slogan}
         </h2>
@@ -40,14 +60,18 @@ export const FollowProjectTsx = ({ project, roles, verticalDirection = false }: 
         container
         justify="space-around"
         alignItems="center"
-        className={
-          verticalDirection ? classNames(classes.buttonsWrap, classes.buttonsWrapVertical) : classes.buttonsWrap
-        }
+        className={classNames({
+          [classes.buttonsWrap]: true,
+          [classes.buttonsWrapVertical]: verticalDirection,
+        })}
       >
         <TextField
-          className={
-            verticalDirection ? classNames(classes.emailInput, classes.emailInputVertical) : classes.emailInput
-          }
+          value={userEmail}
+          disabled
+          className={classNames({
+            [classes.emailInput]: true,
+            [classes.emailInputVertical]: verticalDirection,
+          })}
           name="e-mail"
           placeholder="E-mail"
           variant="outlined"
@@ -60,28 +84,36 @@ export const FollowProjectTsx = ({ project, roles, verticalDirection = false }: 
         />
         <Select
           value={role}
-          className={verticalDirection ? classNames(classes.select, classes.selectVertical) : classes.select}
+          className={classNames({
+            [classes.select]: true,
+            [classes.selectVertical]: verticalDirection,
+          })}
           inputProps={{
-            className:
-              role === 'role' ? classNames(classes.innerSelectPlaceholder, classes.innerSelect) : classes.innerSelect,
+            className: classNames({
+              [classes.innerSelectColor]: role === 'role',
+              [classes.innerSelect]: true,
+            }),
           }}
           onChange={handleSelect}
         >
           <MenuItem value="role" disabled>
             Выбрать роль
           </MenuItem>
-          {roles.map(r => (
-            <MenuItem value={r.id} key={r.id}>
-              {r.name}
-            </MenuItem>
-          ))}
+          {roles &&
+            roles.map(({ role: { id, name } }: any) => (
+              <MenuItem value={id} key={id}>
+                {name}
+              </MenuItem>
+            ))}
         </Select>
         <Button
           color="primary"
           variant="contained"
-          className={
-            verticalDirection ? classNames(classes.followButton, classes.followButtonVertical) : classes.followButton
-          }
+          onClick={handleRequestMembership}
+          className={classNames({
+            [classes.followButton]: true,
+            [classes.followButtonVertical]: verticalDirection,
+          })}
         >
           Подключиться к проекту
         </Button>
