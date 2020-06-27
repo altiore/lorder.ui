@@ -1,15 +1,32 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { createStructuredSelector } from 'reselect';
 
-import { rolesList } from '#/@store/roles';
+import { isAuth, userEmail } from '#/@store/identity';
+import { postRequestMembership, PublicProjectProjectId, PublicProjectRoles } from '#/@store/publicProject';
 
 import { FollowProjectTsx } from './FollowProject';
 
-import { IState, IUserRole } from '@types';
+import { IState } from '@types';
 
-const masStateToProps = createStructuredSelector<IState, { roles: IUserRole[] }>({
-  roles: rolesList,
+const mapStateToProps = createStructuredSelector<
+  IState,
+  {
+    roles: any;
+    projectId: number | undefined;
+    isAuth: boolean;
+    userEmail: string | undefined;
+  }
+>({
+  isAuth,
+  projectId: PublicProjectProjectId,
+  roles: PublicProjectRoles,
+  userEmail,
 });
 
-export default connect(masStateToProps)(FollowProjectTsx);
+const mapDispatchToProps = {
+  postRequestMembership,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FollowProjectTsx));

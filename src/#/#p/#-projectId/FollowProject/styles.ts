@@ -59,7 +59,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: 50,
     lineHeight: '34px',
   },
-  innerSelectPlaceholder: {
+  innerSelectColor: {
     color: '#c5c5c5',
   },
   select: {

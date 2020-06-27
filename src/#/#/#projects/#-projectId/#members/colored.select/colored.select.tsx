@@ -41,7 +41,10 @@ const ColoredItem = ({ accessLevel }) => {
   const { root } = useColorItemStyles();
   return (
     <Typography
-      style={{ backgroundColor: palette.access[accessLevel].light, color: palette.access[accessLevel].contrastText }}
+      style={{
+        backgroundColor: palette.access[accessLevel].light,
+        color: palette.access[accessLevel].contrastText,
+      }}
       className={root}
     >
       {COLOR_TITLE[accessLevel] || 'N/A'}

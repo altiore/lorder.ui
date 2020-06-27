@@ -21,7 +21,11 @@ const fetchPublicProjectHandler = () => {
 };
 
 const fetchPublicProjectSuccessHandler = (state: S, { payload }: any) => {
-  return new PublicProject({ ...payload.data, isLoaded: true, isLoading: false });
+  return new PublicProject({
+    ...payload.data,
+    isLoaded: true,
+    isLoading: false,
+  });
 };
 
 const fetchPublicProjectFailHandler = () => {
