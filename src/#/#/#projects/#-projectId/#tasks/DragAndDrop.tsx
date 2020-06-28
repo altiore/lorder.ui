@@ -131,29 +131,29 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   return (
     <div className={classes.root}>
       <DragDropContext onDragEnd={onDragEnd}>
-        {columns.map(({ name, statusFrom }) => {
-          const filteredItems = items.filter(el => el.statusTypeName === name);
+        {columns.map(({ column }, statusFrom) => {
+          const filteredItems = items.filter(el => el.statusTypeName === column);
           const filteredItemsLength = filteredItems.length;
           return (
-            <div className={classes.column} key={name}>
+            <div className={classes.column} key={column}>
               <Typography variant="h6" className={classes.columnTitle}>
-                <span>{STATUS_NAMES[name] || name}</span>
+                <span>{STATUS_NAMES[column] || column}</span>
                 {!!filteredItemsLength && (
-                  <ButtonBase value={name} className={classes.arrowWrap} onClick={handleToggleOpened}>
+                  <ButtonBase value={column} className={classes.arrowWrap} onClick={handleToggleOpened}>
                     <KeyboardArrowDown
-                      className={cn(classes.arrow, { [classes.arrowDown]: openedStatuses.indexOf(name) !== -1 })}
+                      className={cn(classes.arrow, { [classes.arrowDown]: openedStatuses.indexOf(column) !== -1 })}
                     />
                   </ButtonBase>
                 )}
               </Typography>
-              <Droppable droppableId={name}>
+              <Droppable droppableId={column}>
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}
                     style={getListStyle(snapshot.isDraggingOver, height)}
                     className={classes.columnContent}
                   >
-                    {openedStatuses.indexOf(name) !== -1 && filteredItemsLength ? (
+                    {openedStatuses.indexOf(column) !== -1 && filteredItemsLength ? (
                       filteredItems.map((item: Task, index) => {
                         return (
                           <Draggable
@@ -175,7 +175,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                       })
                     ) : (
                       <ButtonBase
-                        value={name}
+                        value={column}
                         className={cn(classes.placeholderCard, { [classes.pointer]: !!filteredItemsLength })}
                         onClick={handleToggleOpened}
                       >
@@ -186,7 +186,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                   </div>
                 )}
               </Droppable>
-              <ButtonBase className={classes.columnFooter} onClick={createTask(projectId, name, statusFrom)}>
+              <ButtonBase className={classes.columnFooter} onClick={createTask(projectId, column, statusFrom)}>
                 <AddIcon fontSize="small" /> Добавить задачу
               </ButtonBase>
             </div>

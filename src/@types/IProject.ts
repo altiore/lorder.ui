@@ -22,12 +22,10 @@ export interface ITaskMove {
 }
 
 export interface ITaskColumn {
-  name: string;
+  column: string;
 
   moves: ITaskMove[];
-
-  statusFrom: number;
-  statusTo: number;
+  statuses: string[];
 }
 
 export interface IProject {
