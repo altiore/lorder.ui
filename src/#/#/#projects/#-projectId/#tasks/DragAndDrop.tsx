@@ -131,8 +131,8 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   return (
     <div className={classes.root}>
       <DragDropContext onDragEnd={onDragEnd}>
-        {columns.map(({ column }, statusFrom) => {
-          const filteredItems = items.filter(el => el.statusTypeName === column);
+        {columns.map(({ column, statuses }, statusFrom) => {
+          const filteredItems = items.filter(el => statuses.includes(el.statusTypeName));
           const filteredItemsLength = filteredItems.length;
           return (
             <div className={classes.column} key={column}>
