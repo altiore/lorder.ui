@@ -23,14 +23,6 @@ export interface IPostData {
   userId?: number;
 }
 
-export interface IUpdateUserWork {
-  projectId: number;
-  taskId: number | string;
-  userWorkId: number;
-  duration?: number;
-  description?: number;
-}
-
 export interface IUserWorkDelete {
   projectId: number | string;
   taskId: number | string;
@@ -108,20 +100,6 @@ export const pauseUserWork = requestActions(
       method: 'PATCH',
       url: `/user-works/${userWorkId}/pause`,
     },
-    taskId,
-    userWorkId,
-  })
-);
-
-export const deleteUserWork = requestActions<IUserWorkDelete>(
-  'USER_WORK/DELETE',
-  ({ projectId, taskId, userWorkId }: IUserWorkDelete): any => ({
-    projectId,
-    request: {
-      method: 'DELETE',
-      url: `/user-works/${userWorkId}`,
-    },
-    success: 'Задача успешно удалена',
     taskId,
     userWorkId,
   })
