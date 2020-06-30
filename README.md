@@ -1,8 +1,8 @@
-# Lorder UI [Storybook](https://altiore.github.io/altiore.ui)
+# Lorder UI [Storybook](https://altiore.github.io/lorder.ui)
 
 ## Трекер задач и времени
 
-![Auto-тесты](https://github.com//altiore/altiore.ui/workflows/CI/badge.svg) ![Staging Deployment](https://github.com//altiore/altiore.ui/workflows/Staging%20Deployment/badge.svg) ![Production Deployment](https://github.com//altiore/altiore.ui/workflows/Production%20Deployment/badge.svg)
+![Auto-тесты](https://github.com//altiore/lorder.ui/workflows/CI/badge.svg) ![Staging Deployment](https://github.com//altiore/lorder.ui/workflows/Staging%20Deployment/badge.svg) ![Production Deployment](https://github.com//altiore/lorder.ui/workflows/Production%20Deployment/badge.svg)
 
 ### Установка
 
@@ -28,7 +28,7 @@ $ npm start
 
 ##### 5. Приложение должно автоматически открыться в браузере и автоматически обновляться при любом изменении кода
 
-[Независимому члену команды](https://github.com/altiore/altiore.ui/wiki/Start)
+[Независимому члену команды](https://github.com/altiore/lorder.ui/wiki/Start)
 
 ### Именование файлов и папок
 
@@ -52,6 +52,6 @@ $ npm start
 5. _@types_ - общие типы данных в проекте
 6. _@utils_ - полезные утилиты, используемые в проекте
 
-#### [Участие в разработке](https://github.com/altiore/altiore.ui/wiki/Start)
-#### [Начать решать задачи проекта](https://github.com/altiore/altiore.ui/wiki/Start)
-#### [Приступить к работе](https://github.com/altiore/altiore.ui/wiki/NoRabota)
+#### [Участие в разработке](https://github.com/altiore/lorder.ui/wiki/Start)
+#### [Начать решать задачи проекта](https://github.com/altiore/lorder.ui/wiki/Start)
+#### [Приступить к работе](https://github.com/altiore/lorder.ui/wiki/NoRabota)
