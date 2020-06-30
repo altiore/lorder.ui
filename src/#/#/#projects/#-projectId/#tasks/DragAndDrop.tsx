@@ -137,7 +137,12 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
           return (
             <div className={classes.column} key={column}>
               <Typography variant="h6" className={classes.columnTitle}>
-                <span>{STATUS_NAMES[column] || column}</span>
+                <span>
+                  {STATUS_NAMES[column] || column} -{' '}
+                  {filteredItems.reduce((res, cur) => {
+                    return res + cur.value;
+                  }, 0)}
+                </span>
                 {!!filteredItemsLength && (
                   <ButtonBase value={column} className={classes.arrowWrap} onClick={handleToggleOpened}>
                     <KeyboardArrowDown
