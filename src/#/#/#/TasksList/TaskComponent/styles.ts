@@ -11,10 +11,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   buttonTitle: {
     '&:hover': {
-      '& $buttonTitleLabel': {
+      '& $buttonTitleLabel:after': {
         backgroundColor: '#F5F5F5',
         color: theme.palette.pause.dark,
-        minHeight: theme.taskCard.outerHeight,
+        height: theme.taskCard.outerHeight,
       },
       '& $buttonTitleSetting': {
         opacity: 1,
@@ -36,8 +36,17 @@ export const useStyles = makeStyles((theme: Theme) => ({
       color: theme.palette.pause.dark,
     },
     '&:hover': {
-      '& $buttonTitleLabel': {
+      ' $projectButtonCurrent': {
+        backgroundColor: 'red',
+        border: '2px solid red',
+        color: 'red',
+        height: theme.taskCard.outerHeight,
+        zIndex: 0,
+      },
+      '& $buttonTitleLabel:after': {
         backgroundColor: theme.palette.pause.light,
+        height: theme.taskCard.outerHeight,
+        zIndex: 0,
       },
     },
   },
@@ -53,11 +62,23 @@ export const useStyles = makeStyles((theme: Theme) => ({
       paddingTop: 2,
       textOverflow: 'ellipsis',
     },
+    '&:after': {
+      backgroundColor: 'transparent',
+      borderRadius: 6,
+      content: "''",
+      height: theme.taskCard.innerHeight,
+      left: '0',
+      position: 'absolute',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      transition: theme.transitions.create(['background-color', 'height']),
+      width: '100%',
+    },
     alignItems: 'center',
     borderRadius: 6,
     color: theme.palette.pause.main,
     display: 'flex',
-    height: theme.taskCard.innerHeight,
+    height: theme.taskCard.outerHeight,
     justifyContent: 'flex-start',
     minHeight: theme.taskCard.innerHeight,
     padding: theme.spacing(0.5, 3, 0.5, 5),
@@ -96,6 +117,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
   listItem: {
     '&:hover': {
       '& $projectText': {
+        backgroundColor: 'transparent',
+      },
+      '& $projectText:after': {
         backgroundColor: 'transparent',
       },
       borderColor: 'rgba(0, 0, 0, 0.2)',
@@ -141,7 +165,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   projectButton: {
     '&:hover, &:focus': {
-      '& $projectText': {
+      '& $projectText:after': {
         backgroundColor: '#F5F5F5',
         color: theme.palette.pause.dark,
         height: theme.taskCard.outerHeight,
@@ -162,8 +186,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
       backgroundColor: '#F8F4E4',
       color: theme.palette.pause.dark,
     },
+    '& $projectText:after': {
+      backgroundColor: 'transparent',
+    },
     '&:hover': {
-      '& $projectText': {
+      '& $projectText:after': {
         backgroundColor: theme.palette.pause.light,
       },
     },
@@ -174,8 +201,19 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   projectText: {
+    '&:after': {
+      backgroundColor: '#FCFCFC',
+      borderRadius: 6,
+      content: "''",
+      height: theme.taskCard.innerHeight,
+      left: '50%',
+      position: 'absolute',
+      top: '50%',
+      transform: 'translate(-50%,-50%)',
+      transition: theme.transitions.create(['background-color', 'height', 'width']),
+      width: theme.taskCard.innerHeight + 4,
+    },
     alignItems: 'center',
-    backgroundColor: '#FCFCFC',
     borderRadius: '6px',
     color: '#9d9d9d',
     display: 'flex',
@@ -184,7 +222,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     position: 'relative',
     textTransform: 'none',
-    transition: theme.transitions.create(['background-color', 'color', 'height', 'width']),
+    transition: theme.transitions.create(['background-color', 'color', 'height', 'width'], { duration: '0.3s' }),
     whiteSpace: 'nowrap',
     width: theme.taskCard.innerHeight + 4,
   },
