@@ -21,6 +21,7 @@ import DialogHeader from './DialogHeader';
 import ProjectPartsField from './ProjectPartsField';
 import StatusField from './StatusField';
 import { useStyles } from './styles';
+import TaskComments from './TaskComments';
 import TaskHistory from './TaskHistory';
 import TaskMembers from './TaskMembers';
 
@@ -49,6 +50,9 @@ export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFo
   sequenceNumber: number;
   startUserWork?: any;
   stopUserWork: any;
+  fetchTaskComments: (projectId: number, taskId: number) => any;
+  getTaskIdBySequenceNumber: any;
+  addTaskComment: any;
 }
 
 const titleValidate = [
@@ -76,11 +80,8 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
     submitting,
   }) => {
     const [currentSequenceNumber, setSequenceNumber] = useState(sequenceNumber);
-
     const [isCurrentState, setIsCurrentState] = useState(isCurrent);
-
     const [disabledSaveBtn, setDisabledSaveBtn] = useState(true);
-
     const [initialD, setInitialD] = useState<Partial<ITaskFormData>>(initialValues);
 
     useEffect(() => {
@@ -238,7 +239,9 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
               Эта кнопка нужна, чтоб работало сохранение с клавиатуры
             </button>
           </form>
+          <TaskComments />
         </DialogContent>
+
         <DialogActions key={'actions'} className={actions}>
           <div className={grow} />
           <Button

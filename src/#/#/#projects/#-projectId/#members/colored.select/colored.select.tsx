@@ -42,8 +42,8 @@ const ColoredItem = ({ accessLevel }) => {
   return (
     <Typography
       style={{
-        backgroundColor: palette.access[accessLevel].light,
-        color: palette.access[accessLevel].contrastText,
+        backgroundColor: palette?.access?.[accessLevel]?.light,
+        color: palette?.access?.[accessLevel]?.contrastText,
       }}
       className={root}
     >

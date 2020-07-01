@@ -71,6 +71,10 @@ export const getTaskBySequenceNumber = createDeepEqualSelector([allTaskList], li
   list.find(el => el.sequenceNumber === sequenceNumber && el.projectId === projectId)
 );
 
+export const getTaskIdBySequenceNumber = createDeepEqualSelector([allTaskList], list => (sequenceNumber, projectId) =>
+  list.find(el => el.sequenceNumber === sequenceNumber && el.projectId === projectId)?.id
+);
+
 export const getTaskById = createDeepEqualSelector([allTaskList], list => taskId => list.find(el => el.id === taskId));
 
 export const getTaskUsersByTaskId = createDeepEqualSelector([getTaskById], getTask => taskId => {
