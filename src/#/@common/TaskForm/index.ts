@@ -14,6 +14,7 @@ import {
   EDIT_TASK_FORM_PROPS,
   fetchTaskDetails,
   getEditTaskInitialValues,
+  getTaskIdBySequenceNumber,
   isCurrent,
   patchProjectTask,
   postProjectTask,
@@ -24,6 +25,7 @@ import { ITaskFormData, ITaskFormProps, TaskFormJsx } from './TaskForm';
 
 const mapStateToProps = createStructuredSelector({
   getEditTaskInitialValues,
+  getTaskIdBySequenceNumber,
   isCurrent,
   isPaused,
   projectId: routeProjectId,
