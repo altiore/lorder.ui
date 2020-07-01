@@ -209,19 +209,26 @@ const moveProjectTaskHandler = (state: S, { payload }: Action<P>) => {
   return state.startLoading();
 };
 
-const moveProjectTaskSuccessHandler = (state: S) => {
-  return state.stopLoading();
+const moveProjectTaskSuccessHandler = (state: S, { payload }) => {
+  const index = state.list.findIndex(el => el.id === payload?.data?.id);
+  if (index === -1) {
+    return state.startLoading();
+  }
+  return state.updateItem(index, payload?.data).stopLoading();
 };
 
-const moveProjectTaskFailHandler = (state: S, { payload, meta }: ActionMeta<any, { previousAction: { payload } }>) => {
+const moveProjectTaskFailHandler = (state: S, { meta }: ActionMeta<any, { previousAction: { payload } }>) => {
   const taskIndex = state.list.findIndex(
     el =>
       meta.previousAction.payload.sequenceNumber === el.sequenceNumber &&
       meta.previousAction.payload.projectId === el.projectId
   );
-  return state.stopLoading().updateItem(taskIndex, {
-    statusTypeName: meta.previousAction.payload.prevStatusTypeName,
-  });
+  const prevStatusTypeName = meta.previousAction.payload.prevStatusTypeName;
+  return state
+    .updateItem(taskIndex, {
+      statusTypeName: prevStatusTypeName,
+    })
+    .stopLoading();
 };
 
 const deleteProjectTaskHandler = (state: S, { payload }: Action<P>) => {

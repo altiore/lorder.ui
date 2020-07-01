@@ -94,7 +94,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   );
 
   const onDragEnd = useCallback(
-    (result: DropResult) => {
+    async (result: DropResult) => {
       const { source, destination, draggableId } = result;
 
       // dropped outside the list
@@ -108,15 +108,25 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
           source,
         });
       } else {
-        moveProjectTask({
-          prevStatusTypeName: source.droppableId,
-          projectId,
-          sequenceNumber: parseInt(draggableId, 0),
-          statusTypeName: destination.droppableId,
-        });
+        try {
+          const taskSN = parseInt(draggableId, 0);
+          const task = items.find(el => el.projectId === projectId && el.sequenceNumber === taskSN);
+          if (task) {
+            await moveProjectTask({
+              prevStatusTypeName: task.statusTypeName,
+              projectId,
+              sequenceNumber: parseInt(draggableId, 0),
+              statusTypeName: destination.droppableId,
+            });
+          }
+        } catch (e) {
+          if (process.env.NODE_ENV === 'development') {
+            console.log(e);
+          }
+        }
       }
     },
-    [moveProjectTask, projectId]
+    [items, moveProjectTask, projectId]
   );
 
   const createTask = useCallback(
