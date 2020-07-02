@@ -117,4 +117,21 @@ export const getTaskColumnsByProjectId = createDeepEqualSelector(getProjectById,
   return [];
 });
 
+export const getPushForwardStatusesByProjectId = createDeepEqualSelector(
+  getTaskColumnsByProjectId,
+  getColumns => (id: number) => {
+    const columns = getColumns(id);
+    if (columns && columns.length) {
+      return columns.reduce((res, col: any) => {
+        if (col.moves.find(el => el.type === 'push_forward')) {
+          return res.concat(col.statuses);
+        }
+        return res;
+      }, []);
+    }
+
+    return [];
+  }
+);
+
 export const openedTaskColumns = createDeepEqualSelector([openedProject], pr => (pr ? pr.taskColumns : []));

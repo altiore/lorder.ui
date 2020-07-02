@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { defaultProjectId, userId } from '#/@store/identity/selectors';
-import { getProjectById } from '#/@store/projects/selectors';
+import { getProjectById, getPushForwardStatusesByProjectId } from '#/@store/projects/selectors';
 import { routeProjectId, routeTaskSequenceNumber } from '#/@store/router';
 import { Task } from '#/@store/tasks/Task';
 import { filteredMembers, projectId, projectPart, searchTerm, tasksFilter } from '#/@store/tasksFilter';
@@ -66,15 +66,15 @@ export const sortedByFilterTasks = createDeepEqualSelector(
 );
 
 export const sortedByFilterTasksWithActive = createDeepEqualSelector(
-  [sortedByFilterTasks, searchTerm, currentTask, projectId, defaultProjectId],
-  (tasks = [], sTerm = '', curTask, pId, defPId): Array<ITask | 'filter' | string | undefined> => {
+  [sortedByFilterTasks, searchTerm, currentTask, projectId, getPushForwardStatusesByProjectId, defaultProjectId],
+  (tasks = [], sTerm = '', curTask, pId, getStatuses, defPId): Array<ITask | 'filter' | string | undefined> => {
     return [
       curTask,
       'filter',
       ...tasks.filter(
         t =>
           t.id !== get(curTask, 'id') &&
-          includes([1, 2, 3], t.status) &&
+          includes(getStatuses(t.projectId), t.statusTypeName) &&
           ~t.title.toLowerCase().indexOf(sTerm.trim().toLowerCase()) &&
           t.projectId !== defPId &&
           (!pId || t.projectId === pId)
