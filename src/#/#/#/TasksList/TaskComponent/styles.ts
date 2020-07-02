@@ -61,6 +61,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
       overflow: 'hidden',
       paddingTop: 2,
       textOverflow: 'ellipsis',
+      zIndex: 1,
     },
     '&:after': {
       backgroundColor: 'transparent',
@@ -102,6 +103,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     right: 4,
     top: 4,
     transition: theme.transitions.create(['opacity']),
+    zIndex: 1,
   },
   duration: {
     '& > button': {
@@ -241,6 +243,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     right: -3,
     transition: theme.transitions.create(['opacity']),
     width: theme.spacing(5),
+    zIndex: 1,
     [theme.breakpoints.down('sm')]: {
       opacity: 1,
     },
@@ -257,6 +260,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   taskIcon: {
     left: 10,
     position: 'absolute',
+    zIndex: 1,
   },
   title: {
     alignItems: 'center',
