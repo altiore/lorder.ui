@@ -28,3 +28,13 @@ export const publicProjectStatistic = createDeepEqualSelector(
   publicProjectData,
   (pp: IPublicProject | undefined) => pp && pp.statistic
 );
+
+export const PublicProjectRoles = createDeepEqualSelector(
+  publicProjectData,
+  (pp: IPublicProject | undefined) => pp?.project?.roles
+);
+
+export const PublicProjectProjectId = createDeepEqualSelector(
+  publicProjectData,
+  (pp: IPublicProject | undefined) => pp?.project?.id
+);

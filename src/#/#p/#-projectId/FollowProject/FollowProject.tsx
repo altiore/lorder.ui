@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
 import classNames from 'classnames';
 
@@ -8,28 +9,69 @@ import { useStyles } from './styles';
 
 import { IProject, IUserRole } from '@types';
 
-interface IfollowProject {
+interface IFollowProject extends RouteComponentProps {
   project: IProject;
   roles: IUserRole[];
+  verticalDirection?: boolean;
+  postRequestMembership: any;
+  projectId: number | undefined;
+  isAuth: boolean;
+  userEmail: string | undefined;
 }
 
-export const FollowProjectTsx = ({ project, roles }: IfollowProject) => {
+export const FollowProjectTsx = ({
+  project,
+  roles,
+  verticalDirection = false,
+  postRequestMembership,
+  projectId,
+  isAuth,
+  userEmail,
+  history,
+}: IFollowProject) => {
   const [role, setRole] = useState('role');
   const handleSelect = useCallback((e: any) => {
     setRole(e.target.value);
   }, []);
-
+  const handleRequestMembership = useCallback(() => {
+    if (isAuth) {
+      postRequestMembership(projectId, role);
+    } else {
+      history.push('/login');
+    }
+  }, [history, isAuth, postRequestMembership, projectId, role]);
   const classes = useStyles();
   if (!project.slogan) {
     return null;
   }
-
   return (
-    <Box className={classes.followWrap}>
-      {project.slogan && <h2 className={classes.taglineHeader}>{project.slogan}</h2>}
-      <Grid container justify="space-around" alignItems="center" className={classes.buttonsWrap}>
+    <Box className={verticalDirection ? classes.followWrapVertical : classes.followWrap}>
+      {project.slogan && (
+        <h2
+          className={classNames({
+            [classes.taglineHeader]: true,
+            [classes.taglineHeaderVertical]: verticalDirection,
+          })}
+        >
+          {project.slogan}
+        </h2>
+      )}
+      <Grid
+        container
+        justify="space-around"
+        alignItems="center"
+        className={classNames({
+          [classes.buttonsWrap]: true,
+          [classes.buttonsWrapVertical]: verticalDirection,
+        })}
+      >
         <TextField
-          className={classes.emailInput}
+          value={userEmail}
+          disabled
+          className={classNames({
+            [classes.emailInput]: true,
+            [classes.emailInputVertical]: verticalDirection,
+          })}
           name="e-mail"
           placeholder="E-mail"
           variant="outlined"
@@ -42,24 +84,37 @@ export const FollowProjectTsx = ({ project, roles }: IfollowProject) => {
         />
         <Select
           value={role}
-          placeholder="Выбрать"
-          className={classes.select}
+          className={classNames({
+            [classes.select]: true,
+            [classes.selectVertical]: verticalDirection,
+          })}
           inputProps={{
-            className:
-              role === 'role' ? classNames(classes.innerSelectPlaceholder, classes.innerSelect) : classes.innerSelect,
+            className: classNames({
+              [classes.innerSelectColor]: role === 'role',
+              [classes.innerSelect]: true,
+            }),
           }}
           onChange={handleSelect}
         >
           <MenuItem value="role" disabled>
             Выбрать роль
           </MenuItem>
-          {roles.map(r => (
-            <MenuItem value={r.id} key={r.id}>
-              {r.name}
-            </MenuItem>
-          ))}
+          {roles &&
+            roles.map(({ role: { id, name } }: any) => (
+              <MenuItem value={id} key={id}>
+                {name}
+              </MenuItem>
+            ))}
         </Select>
-        <Button color="primary" variant="contained" className={classes.followButton}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={handleRequestMembership}
+          className={classNames({
+            [classes.followButton]: true,
+            [classes.followButtonVertical]: verticalDirection,
+          })}
+        >
           Подключиться к проекту
         </Button>
       </Grid>

@@ -138,7 +138,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
               classes={{ label: classes.projectText }}
               onClick={goToProjectAskCreateTask}
             >
-              <Typography>{projectShortName}</Typography>
+              <Typography style={{ zIndex: 1 }}>{projectShortName}</Typography>
             </Button>
           </Tooltip>
         </MediaQuery>
@@ -153,17 +153,19 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
             href={isShown ? `${TASKS_ROUTE(project.id)}/${task.sequenceNumber}` : '#'}
             onClick={isShown ? openEditTaskForm(task.sequenceNumber, project.id as number) : undefined}
           >
-            <Typography className={classes.sequenceNumber}>
-              <b>#</b>
-              {task.sequenceNumber}
-            </Typography>
-            <MediaQuery minWidth={theme.breakpoints.values.sm}>
-              {<TypeIcon className={classes.taskIcon} typeId={isShown ? task.typeId : undefined} />}
-            </MediaQuery>
-            {isShown ? <span>{task.title}</span> : <span>...</span>}
-            <MediaQuery minWidth={theme.breakpoints.values.md}>
-              <SettingsIcon className={classes.buttonTitleSetting} />
-            </MediaQuery>
+            <div style={{ zIndex: 1 }}>
+              <Typography className={classes.sequenceNumber}>
+                <b>#</b>
+                {task.sequenceNumber}
+              </Typography>
+              <MediaQuery minWidth={theme.breakpoints.values.sm}>
+                {<TypeIcon className={classes.taskIcon} typeId={isShown ? task.typeId : undefined} />}
+              </MediaQuery>
+              {isShown ? <span>{task.title}</span> : <span>...</span>}
+              <MediaQuery minWidth={theme.breakpoints.values.md}>
+                <SettingsIcon className={classes.buttonTitleSetting} />
+              </MediaQuery>
+            </div>
           </Button>
         </Tooltip>
         <div className={classes.verticalDivider} />

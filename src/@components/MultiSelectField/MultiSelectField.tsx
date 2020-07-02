@@ -16,13 +16,18 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme: Theme) => ({
   chip: {
     margin: 2,
+    maxWidth: 200,
+    [theme.breakpoints.down('md')]: {
+      maxWidth: '100%',
+    },
   },
   chips: {
     display: 'flex',
     flexWrap: 'wrap',
   },
   formControl: {
-    margin: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
     minWidth: 120,
   },
   menuItem: {

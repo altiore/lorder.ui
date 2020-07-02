@@ -172,7 +172,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
       [currentSequenceNumber, handleSave, projectId, setIsCurrentState, setSequenceNumber, startUserWork]
     );
 
-    const { actions, card, cardFirst, cardFirstNotPage, cardForm, cardSecond, grow, valueWrap } = useStyles();
+    const { actions, card, cardFirst, cardFirstNotPage, cardForm, cardSecond, grow } = useStyles();
 
     if (!initialD) {
       return null;
@@ -190,11 +190,13 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
           <form onSubmit={handleSave} className={cardForm}>
             <div className={cn(cardFirst, { [cardFirstNotPage]: !isPage })}>
               <Field
-                name="title"
                 placeholder="Заголовок задачи..."
                 component={TextField}
+                noLabel
+                name="title"
                 margin="normal"
                 validate={titleValidate}
+                variant="outlined"
                 onSubmit={handleSave}
               />
               <Field
@@ -214,7 +216,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
                 sequenceNumber={currentSequenceNumber}
               />
 
-              <div className={valueWrap}>
+              <div>
                 <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />
               </div>
               {initialD.id && (

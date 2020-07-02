@@ -73,7 +73,7 @@ export class Project implements IProject {
   get shortName(): string {
     if (this.title) {
       const titleParts = this.title.split(' ');
-      if (titleParts.length > 1) {
+      if (titleParts.length > 1 && titleParts[1].length) {
         return titleParts[0][0].toUpperCase() + titleParts[1][0].toUpperCase();
       } else {
         const firstChar = this.title[0];

@@ -56,13 +56,15 @@
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
     "husky": "4.2.1",
+    "progress-bar-webpack-plugin": "2.1.0",
     "react-scripts": "3.4.1",
     "release-it": "13.5.8",
     "storybook-addon-material-ui": "0.9.0-alpha.21",
     "tslint": "5.18.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-react": "4.0.0",
-    "typescript": "3.9.2"
+    "typescript": "3.9.2",
+    "webpack-bundle-analyzer": "3.8.0"
   },
   "dependencies": {
     "@babel/core": "7.5.4",
@@ -125,7 +127,7 @@
     "uniqid": "5.0.3"
   },
   "scripts": {
-    "analyze": "source-map-explorer build/static/js/vendors.*",
+    "analyze": "node .bin/analize.js",
     "start": "react-scripts start",
     "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
     "test": "REACT_APP_VERSION=$npm_package_version react-scripts test",
