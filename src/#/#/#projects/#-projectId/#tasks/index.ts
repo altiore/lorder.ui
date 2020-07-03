@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import { push } from 'connected-react-router';
+import { destroy } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { openDialog } from '#/@store/dialog';
@@ -29,6 +30,7 @@ const mapState = createStructuredSelector<IState, IDragAndDropMappedProps>({
 });
 
 const mapDispatch = {
+  destroy,
   fetchProjectTasks,
   moveProjectTask,
   openDialog,
