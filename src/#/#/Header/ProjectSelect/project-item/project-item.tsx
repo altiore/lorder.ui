@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import BigTooltip from '@components/BigTooltip';
+import TooltipBig from '@components/TooltipBig';
 
 import CreateTask from './icons/CreateTask';
 import OpenProject from './icons/OpenProject';
@@ -153,24 +153,24 @@ export const ProjectItem: React.FC<IProjectItem> = ({ id, project, onCreateTask,
           </div>
           <Typography className={text}>{title}</Typography>
         </div>
-        <BigTooltip title="Открыть проект" placement="top">
+        <TooltipBig title="Открыть проект" placement="top">
           <ButtonBase data-id={projectId} onClick={onSelect} component="span" className={iconWrap}>
             <OpenProject />
           </ButtonBase>
-        </BigTooltip>
+        </TooltipBig>
       </ButtonBase>
       <div className={itemIcons}>
-        <BigTooltip title="Создать задачу" placement="top">
+        <TooltipBig title="Создать задачу" placement="top">
           <ButtonBase data-id={projectId} className={iconWrap} onClick={onCreateTask}>
             <CreateTask />
           </ButtonBase>
-        </BigTooltip>
+        </TooltipBig>
         {uuid && (
-          <BigTooltip title="Статистика" placement="top">
+          <TooltipBig title="Статистика" placement="top">
             <ButtonBase data-uuid={uuid} className={iconWrap} onClick={onStatistic}>
               <OpenPublicProject />
             </ButtonBase>
-          </BigTooltip>
+          </TooltipBig>
         )}
       </div>
     </ListItem>

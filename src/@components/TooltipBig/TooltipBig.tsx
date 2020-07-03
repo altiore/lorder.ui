@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const BigTooltipTsx: React.FC<TooltipProps> = props => {
+export const TooltipBigTsx: React.FC<TooltipProps> = props => {
   const classes = useStyles();
 
   return <Tooltip classes={classes} arrow {...props} />;

@@ -32,36 +32,43 @@ storiesOf('StartStopButton', module)
           <StartStopButton
             isPaused={true}
             isCurrent={true}
-            onClickCenter={action('onClickCenter')}
-            onClickLeft={action('onClickLeft')}
-            onClickRight={action('onClickRight')}
+            onComplete={action('onComplete')}
+            onPause={action('onPause')}
+            onStart={action('onStart')}
+            onResume={action('onResume')}
           />
 
           <p>задача выполняется (не на паузе) (isPaused=false) и не текущая (isCurrent=false)</p>
           <StartStopButton
             isPaused={false}
             isCurrent={false}
-            onClickCenter={action('onClickCenter')}
-            onClickLeft={action('onClickLeft')}
-            onClickRight={action('onClickRight')}
+            onBringBack={action('onBringBack')}
+            onComplete={action('onComplete')}
+            onPause={action('onPause')}
+            onStart={action('onStart')}
+            onResume={action('onResume')}
           />
 
           <p>задача на паузе (isPaused=true) и не текущая (isCurrent=false)</p>
           <StartStopButton
             isPaused={true}
             isCurrent={false}
-            onClickCenter={action('onClickCenter')}
-            onClickLeft={action('onClickLeft')}
-            onClickRight={action('onClickRight')}
+            onBringBack={action('onBringBack')}
+            onComplete={action('onComplete')}
+            onPause={action('onPause')}
+            onStart={action('onStart')}
+            onResume={action('onResume')}
           />
 
           <p>задача выполняется (не на паузе) (isPaused=false) но текущая (isCurrent=true)</p>
           <StartStopButton
             isPaused={false}
             isCurrent={true}
-            onClickCenter={action('onClickCenter')}
-            onClickLeft={action('onClickLeft')}
-            onClickRight={action('onClickRight')}
+            onBringBack={action('onBringBack')}
+            onComplete={action('onComplete')}
+            onPause={action('onPause')}
+            onStart={action('onStart')}
+            onResume={action('onResume')}
           />
 
           <br />

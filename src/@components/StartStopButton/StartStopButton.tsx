@@ -3,74 +3,134 @@ import React, { useCallback, useMemo, useState } from 'react';
 import cn from 'classnames';
 
 import ButtonBase from '@material-ui/core/ButtonBase';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Popper from '@material-ui/core/Popper';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Zoom from '@material-ui/core/Zoom';
-import PauseIcon from '@material-ui/icons/Pause';
+import PauseIcon from '@material-ui/icons/PauseRounded';
 import PlaySvg from '@material-ui/icons/PlayArrowRounded';
+import StopSvg from '@material-ui/icons/StopRounded';
+
+import TooltipBig from '@components/TooltipBig';
 
 import uniqid from 'uniqid';
 
-import PlayPauseSvg from '../StartStopButton/play-pause';
-import BackSvg from './back';
-import CheckSvg from './check';
+import BackSvg from './svg/back';
+import CheckSvg from './svg/check';
+import PlayPauseSvg from './svg/play-pause';
 
 const BTN_SIZE = 44;
-const SMALL_BTN_SIZE = 40;
+const BTN_SIZE_HOVERED = 52;
+const BTN_SIZE_SMALL = 40;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     centralBtn: {
-      '&:hover': {
-        boxShadow: theme.shadows[5],
-        cursor: 'pointer',
+      '& > svg': {
+        zIndex: 1,
       },
-      background: theme.palette.success.main,
-      border: 'none',
-      borderRadius: '50%',
-      boxShadow: theme.shadows[1],
-      height: BTN_SIZE,
-      width: BTN_SIZE,
-      zIndex: 100,
-    },
-    grey: {
-      background: theme.palette.grey['500'],
-    },
-    leftBtn: {
-      background: theme.palette.error.main,
-    },
-    optionalBtn: {
-      '&:hover': {
-        boxShadow: theme.shadows[5],
-        cursor: 'pointer',
+      '&:before': {
+        backgroundColor: theme.palette.success.main,
+        borderRadius: '50%',
+        boxShadow:
+          '0px 3px 5px -1px rgba(98, 197, 49,0.2), 0px 6px 10px 0px rgba(98, 197, 49,0.14), 0px 1px 18px 0px rgba(98, 197, 49,0.12)',
+        content: '""',
         height: BTN_SIZE,
+        left: '50%',
+        pointerEvents: 'none',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%) translateX(-50%)',
+        transition: theme.transitions.create(['box-shadow', 'color', 'height', 'width']),
         width: BTN_SIZE,
       },
+      '&:hover:before': {
+        boxShadow: theme.shadows[5],
+        cursor: 'pointer',
+        height: BTN_SIZE_HOVERED,
+        width: BTN_SIZE_HOVERED,
+      },
+      backgroundColor: 'transparent',
       border: 'none',
       borderRadius: '50%',
-      boxShadow: theme.shadows[1],
-      height: SMALL_BTN_SIZE,
-      transition: theme.transitions.create(['height', 'margin', 'width']),
-      width: SMALL_BTN_SIZE,
+      height: BTN_SIZE_HOVERED,
+      width: BTN_SIZE_HOVERED,
+    },
+    centralGrey: {
+      '&:before': {
+        backgroundColor: theme.palette.grey[400],
+        boxShadow:
+          '0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)',
+      },
+    },
+    centralRed: {
+      '&:before': {
+        backgroundColor: theme.palette.error.main,
+        boxShadow:
+          '0px 3px 5px -1px rgba(230, 57, 15,0.2), 0px 6px 10px 0px rgba(230, 57, 15,0.14), 0px 1px 18px 0px rgba(230, 57, 15,0.12)',
+      },
+    },
+    leftBtn: {
+      '&:before': {
+        backgroundColor: theme.palette.error.main,
+      },
+    },
+    optionalBtn: {
+      '& > svg': {
+        zIndex: 1,
+      },
+      '&:before': {
+        border: 'none',
+        borderRadius: '50%',
+        boxShadow: theme.shadows[1],
+        content: '""',
+        height: BTN_SIZE_SMALL,
+        left: '50%',
+        pointerEvents: 'none',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%) translateX(-50%)',
+        transition: theme.transitions.create(['height', 'width']),
+        width: BTN_SIZE_SMALL,
+      },
+      border: 'none',
+      borderRadius: '50%',
+      height: BTN_SIZE_HOVERED,
+      width: BTN_SIZE_HOVERED,
+      zIndex: 1,
     },
     optionalBtnWrap: {
+      '&:hover $optionalBtn:before': {
+        boxShadow: theme.shadows[5],
+        cursor: 'pointer',
+        height: BTN_SIZE_HOVERED,
+        width: BTN_SIZE_HOVERED,
+      },
       alignItems: 'center',
+      backgroundColor: 'transparent',
       display: 'flex',
-      height: BTN_SIZE,
+      height: BTN_SIZE_HOVERED,
       justifyContent: 'center',
-      width: BTN_SIZE + 16,
+      position: 'relative',
+      width: BTN_SIZE_HOVERED,
     },
     rightBtn: {
-      background: theme.palette.success.main,
+      '&:before': {
+        background: theme.palette.success.main,
+      },
     },
     root: {
       alignItems: 'center',
       display: 'flex',
+      height: BTN_SIZE_HOVERED,
       position: 'relative',
+      width: BTN_SIZE_HOVERED,
     },
     svgStyle: {
       fill: 'white',
+      height: 32,
       pointerEvents: 'none',
+      width: 32,
     },
     svgStyleCustom: {
       fill: 'white',
@@ -82,19 +142,45 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   isPaused: boolean;
-  isCurrent: boolean;
-  // todo тут аргументы нужны соответствубщие
-  onClickLeft?: () => void;
-  onClickCenter: (e: React.SyntheticEvent<any>) => void;
-  onClickRight?: (e: React.SyntheticEvent<any>) => void;
+  isCurrent?: boolean;
+
+  onBringBack?: (e: React.SyntheticEvent<any>) => void;
+  onComplete?: (e: React.SyntheticEvent<any>) => void;
+  onResume: (e: React.SyntheticEvent<any>) => void;
+  onStart: (e: React.SyntheticEvent<any>) => void;
+  onPause: (e: React.SyntheticEvent<any>) => void;
 }
 
 const timers: { [key in string]: ReturnType<typeof setTimeout> } = {};
 
-export const StartStopButton: React.FC<Props> = ({ isPaused, isCurrent, onClickLeft, onClickCenter, onClickRight }) => {
+export const StartStopButton: React.FC<Props> = ({
+  isPaused,
+  isCurrent,
+  onBringBack,
+  onComplete,
+  onResume,
+  onStart,
+  onPause,
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const uniqId = useMemo(() => uniqid('start-stop-btn'), []);
+
+  const fastClose = useCallback(() => {
+    if (timers[uniqId]) {
+      clearTimeout(timers[uniqId]);
+    }
+    setAnchorEl(null);
+  }, [setAnchorEl, uniqId]);
+
+  const delayedClose = useCallback(() => {
+    if (timers[uniqId]) {
+      clearTimeout(timers[uniqId]);
+    }
+    timers[uniqId] = setTimeout(() => {
+      setAnchorEl(null);
+    }, 400);
+  }, [setAnchorEl, uniqId]);
 
   const handleCenterOver = useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
@@ -107,52 +193,23 @@ export const StartStopButton: React.FC<Props> = ({ isPaused, isCurrent, onClickL
         setAnchorEl(event.currentTarget);
       }
     },
-    [anchorEl, uniqId]
+    [anchorEl, setAnchorEl, uniqId]
   );
-
-  const handleCenterOut = useCallback(() => {
-    if (timers[uniqId]) {
-      clearTimeout(timers[uniqId]);
-    }
-    timers[uniqId] = setTimeout(() => {
-      setAnchorEl(null);
-    }, 400);
-  }, [uniqId]);
 
   const handleHiddenOver = useCallback(() => {
     if (timers[uniqId]) {
       clearTimeout(timers[uniqId]);
-      delete timers[uniqId];
     }
   }, [uniqId]);
-
-  const handleHiddenOut = useCallback(() => {
-    if (timers[uniqId]) {
-      clearTimeout(timers[uniqId]);
-      delete timers[uniqId];
-    }
-    setAnchorEl(null);
-  }, [uniqId, setAnchorEl]);
 
   const id = useMemo(() => {
     return anchorEl ? uniqId : undefined;
   }, [anchorEl, uniqId]);
 
-  // Получить иконку центральной кнопки
-  const getCentralButtonIcon = () => {
-    if (isCurrent) {
-      if (isPaused) {
-        return <PlayPauseSvg className={svgStyleCustom} />;
-      } else {
-        return <PauseIcon style={{ color: 'white' }} />;
-      }
-    } else {
-      return <PlaySvg fontSize="large" className={svgStyle} />;
-    }
-  };
-
   const {
     centralBtn,
+    centralGrey,
+    centralRed,
     leftBtn,
     optionalBtn,
     optionalBtnWrap,
@@ -160,55 +217,84 @@ export const StartStopButton: React.FC<Props> = ({ isPaused, isCurrent, onClickL
     root,
     svgStyle,
     svgStyleCustom,
-    grey,
   } = useStyles();
 
+  const open = Boolean(id);
+
   return (
-    <div className={root}>
-      <ButtonBase
-        onMouseOver={handleCenterOver}
-        onMouseOut={handleCenterOut}
-        onClick={onClickCenter}
-        className={cn(centralBtn, grey)}
-      >
-        {getCentralButtonIcon()}
-      </ButtonBase>
-      {typeof onClickLeft === 'function' && (
-        <Popper id={id + '-left'} open={Boolean(id)} anchorEl={anchorEl} transition placement="left-start">
-          {({ TransitionProps }) => (
-            <Zoom {...TransitionProps}>
-              <div className={optionalBtnWrap}>
-                <ButtonBase
-                  onMouseOver={handleHiddenOver}
-                  onMouseOut={handleHiddenOut}
-                  className={cn(optionalBtn, leftBtn)}
-                  onClick={onClickLeft}
-                >
-                  <BackSvg className={svgStyleCustom} />
-                </ButtonBase>
-              </div>
-            </Zoom>
-          )}
-        </Popper>
-      )}
-      {typeof onClickRight === 'function' && (
-        <Popper id={id + '-right'} open={Boolean(id)} anchorEl={anchorEl} transition placement="right-start">
-          {({ TransitionProps }) => (
-            <Zoom {...TransitionProps}>
-              <div className={optionalBtnWrap}>
-                <ButtonBase
-                  onMouseOver={handleHiddenOver}
-                  onMouseOut={handleHiddenOut}
-                  className={cn(optionalBtn, rightBtn)}
-                  onClick={onClickRight}
-                >
-                  <CheckSvg className={svgStyleCustom} />
-                </ButtonBase>
-              </div>
-            </Zoom>
-          )}
-        </Popper>
-      )}
-    </div>
+    <ClickAwayListener onClickAway={fastClose}>
+      <div className={root}>
+        {isCurrent ? (
+          isPaused ? (
+            <TooltipBig title="Возобновить" placement="top">
+              <ButtonBase
+                onMouseOver={handleCenterOver}
+                onMouseOut={delayedClose}
+                onClick={onResume}
+                className={centralBtn}
+              >
+                <PlayPauseSvg className={svgStyleCustom} />
+              </ButtonBase>
+            </TooltipBig>
+          ) : (
+            <TooltipBig title="Поставить на паузу" placement="top">
+              <ButtonBase
+                onMouseEnter={handleCenterOver}
+                onMouseOut={delayedClose}
+                onClick={onPause}
+                className={cn(centralBtn, {
+                  [centralRed]: !open,
+                  [centralGrey]: open,
+                })}
+              >
+                {open ? <PauseIcon className={svgStyle} /> : <StopSvg className={svgStyle} />}
+              </ButtonBase>
+            </TooltipBig>
+          )
+        ) : (
+          <TooltipBig title="Начать" placement="top">
+            <ButtonBase
+              onMouseEnter={handleCenterOver}
+              onMouseOut={delayedClose}
+              onClick={onStart}
+              className={centralBtn}
+            >
+              <PlaySvg className={svgStyle} />
+            </ButtonBase>
+          </TooltipBig>
+        )}
+
+        {typeof onBringBack === 'function' && (
+          <Popper id={id + '-left'} open={open} anchorEl={anchorEl} transition placement="left-start">
+            {({ TransitionProps }) => (
+              <Zoom {...TransitionProps}>
+                <div className={optionalBtnWrap} onMouseEnter={handleHiddenOver} onMouseLeave={delayedClose}>
+                  <TooltipBig title={'Вернуть назад'} placement="top">
+                    <ButtonBase className={cn(optionalBtn, leftBtn)} onClick={onBringBack}>
+                      <BackSvg className={svgStyleCustom} />
+                    </ButtonBase>
+                  </TooltipBig>
+                </div>
+              </Zoom>
+            )}
+          </Popper>
+        )}
+        {typeof onComplete === 'function' && (
+          <Popper id={id + '-right'} open={open} anchorEl={anchorEl} transition placement="right-start">
+            {({ TransitionProps }) => (
+              <Zoom {...TransitionProps}>
+                <div className={optionalBtnWrap} onMouseEnter={handleHiddenOver} onMouseLeave={delayedClose}>
+                  <TooltipBig title={'Завершить'} placement="top">
+                    <ButtonBase className={cn(optionalBtn, rightBtn)} onClick={onComplete}>
+                      <CheckSvg className={svgStyleCustom} />
+                    </ButtonBase>
+                  </TooltipBig>
+                </div>
+              </Zoom>
+            )}
+          </Popper>
+        )}
+      </div>
+    </ClickAwayListener>
   );
 };

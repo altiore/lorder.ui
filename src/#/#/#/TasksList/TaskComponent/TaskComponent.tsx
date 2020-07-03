@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 import SettingsIcon from '@components/@icons/Settings';
 
-import StartStopButton from '#/@common/StartStopButton';
+import StartStopButton from '#/@common/StartStopBtn';
 import TaskDuration from '#/@common/TaskDuration';
 import TypeIcon from '#/@common/TypeIcon';
 import { TASKS_ROUTE } from '#/@store/router';

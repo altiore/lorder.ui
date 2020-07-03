@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import manImg from '../MemberCard/d-avatar.png';
+import manImg from './d-avatar.png';
 
 const IMAGE_SIZE = 180;
 
