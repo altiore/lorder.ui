@@ -17,8 +17,9 @@ import AddIcon from '@material-ui/icons/Add';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 
 import { PatchTaskForm } from '#/@common/TaskForm';
+import { DEFAULT_TRANSITION_DURATION } from '#/@store/dialog';
 import { TASKS_ROUTE } from '#/@store/router';
-import { STATUS_NAMES, Task } from '#/@store/tasks';
+import { EDIT_TASK_FORM, STATUS_NAMES, Task } from '#/@store/tasks';
 
 import { useStyles } from './styles';
 import { TaskCard } from './TaskCard';
@@ -36,6 +37,7 @@ const getListStyle = (isDraggingOver: boolean, height: number) => ({
 
 export interface IDragAndDropProps {
   columns: ITaskColumn[];
+  destroy: any;
   fetchProjectTasks: any;
   height: number;
   items: Task[];
@@ -49,6 +51,7 @@ export interface IDragAndDropProps {
 
 export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   columns,
+  destroy,
   fetchProjectTasks,
   height,
   items,
@@ -129,13 +132,23 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
     [items, moveProjectTask, projectId]
   );
 
+  /**
+   * Удаление формы должно быть ручное, потому что мы не удаляем данные, чтоб отображать их в момент закрытия формы
+   */
+  const handleCloseTaskFrom = useCallback(() => {
+    setTimeout(() => {
+      destroy(EDIT_TASK_FORM);
+    }, DEFAULT_TRANSITION_DURATION);
+  }, [destroy]);
+
   const createTask = useCallback(
     (pId: number | string, statusName: string, statusFrom) => () => {
       openDialog(<PatchTaskForm projectId={pId} initialValues={{ statusTypeName: statusName, status: statusFrom }} />, {
         maxWidth: 'lg',
+        onClose: handleCloseTaskFrom,
       });
     },
-    [openDialog]
+    [handleCloseTaskFrom, openDialog]
   );
 
   return (
