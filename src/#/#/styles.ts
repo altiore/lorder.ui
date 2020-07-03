@@ -28,4 +28,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     minHeight: '100%',
     position: 'relative',
   },
+  scrollBody: {
+    overflowY: 'hidden',
+  },
 }));

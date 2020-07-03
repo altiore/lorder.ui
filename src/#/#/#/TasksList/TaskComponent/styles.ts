@@ -136,7 +136,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: 60,
     justifyContent: 'space-between',
     marginBottom: theme.spacing(2),
-    padding: theme.spacing(1, 2, 1, 0.75),
+    padding: theme.spacing(1, 1.5, 1, 0.75),
     position: 'relative',
     transition: theme.transitions.create(['background-color', 'border-color', 'box-shadow']),
     [theme.breakpoints.down('sm')]: {
@@ -251,10 +251,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   startBtnDivider: {
     borderLeft: '1px dashed #eecf6d',
     height: theme.taskCard.innerHeight,
-    margin: theme.spacing(0, 1.5 + theme.taskCard.padding, 0, theme.taskCard.padding),
+    margin: theme.spacing(0, 1 + theme.taskCard.padding, 0, theme.taskCard.padding),
     width: 0,
     [theme.breakpoints.down('sm')]: {
-      margin: theme.spacing(0, 0.5, 0, 0),
+      margin: 0,
     },
   },
   taskIcon: {

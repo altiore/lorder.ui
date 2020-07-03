@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useCallback, useEffect, useMemo } from 'react';
+import { Helmet } from 'react-helmet';
 import { RouteComponentProps, Switch } from 'react-router-dom';
 
 import { Location } from 'history';
@@ -116,6 +117,9 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
 
   return (
     <div className={classes.root}>
+      <Helmet>
+        <body className={classes.scrollBody} />
+      </Helmet>
       <Header />
       <div className={classes.background} />
       <div className={classes.background2} />

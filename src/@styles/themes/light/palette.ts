@@ -165,4 +165,10 @@ export const palette: Palette = {
     light: '#f9edad',
     main: '#FAF0B5',
   },
+  success: {
+    contrastText: '#fff',
+    dark: '#62C531',
+    light: '#62C531',
+    main: '#62C531',
+  },
 };
