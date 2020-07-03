@@ -4,8 +4,8 @@ import { Box, Grid } from '@material-ui/core';
 
 import ButtonEdit from '@components/ButtonEdit';
 
-import ProjectLogo from '../data/time.png';
 import { useStyles } from './styles';
+import ProjectLogo from './time.png';
 
 import { IProject } from '@types';
 
