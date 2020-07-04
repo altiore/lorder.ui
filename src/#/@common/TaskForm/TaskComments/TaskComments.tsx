@@ -29,7 +29,7 @@ export const TaskComments = ({
   const [commentInput, setCommentInput] = useState('');
 
   useEffect(() => {
-    if (currentSequenceNumber && projectId) {
+    if (getTaskIdBySequenceNumber(currentSequenceNumber, projectId)) {
       fetchTaskComments(projectId, getTaskIdBySequenceNumber(currentSequenceNumber, projectId)).then(setTaskComments);
     }
   }, [currentSequenceNumber, fetchTaskComments, getTaskIdBySequenceNumber, projectId]);
