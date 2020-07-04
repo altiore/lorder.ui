@@ -114,6 +114,9 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
       width: BTN_SIZE_HOVERED,
     },
+    popper: {
+      zIndex: 1300,
+    },
     rightBtn: {
       '&:before': {
         background: theme.palette.success.main,
@@ -213,6 +216,7 @@ export const StartStopButton: React.FC<Props> = ({
     leftBtn,
     optionalBtn,
     optionalBtnWrap,
+    popper,
     rightBtn,
     root,
     svgStyle,
@@ -265,7 +269,14 @@ export const StartStopButton: React.FC<Props> = ({
         )}
 
         {typeof onBringBack === 'function' && (
-          <Popper id={id + '-left'} open={open} anchorEl={anchorEl} transition placement="left-start">
+          <Popper
+            className={popper}
+            id={id + '-left'}
+            open={open}
+            anchorEl={anchorEl}
+            transition
+            placement="left-start"
+          >
             {({ TransitionProps }) => (
               <Zoom {...TransitionProps}>
                 <div className={optionalBtnWrap} onMouseEnter={handleHiddenOver} onMouseLeave={delayedClose}>
@@ -280,7 +291,14 @@ export const StartStopButton: React.FC<Props> = ({
           </Popper>
         )}
         {typeof onComplete === 'function' && (
-          <Popper id={id + '-right'} open={open} anchorEl={anchorEl} transition placement="right-start">
+          <Popper
+            className={popper}
+            id={id + '-right'}
+            open={open}
+            anchorEl={anchorEl}
+            transition
+            placement="right-start"
+          >
             {({ TransitionProps }) => (
               <Zoom {...TransitionProps}>
                 <div className={optionalBtnWrap} onMouseEnter={handleHiddenOver} onMouseLeave={delayedClose}>
