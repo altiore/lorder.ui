@@ -57,6 +57,9 @@ function getSorting<K extends keyof any>(
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    formControlLabel: {
+      marginLeft: 0,
+    },
     paper: {
       marginBottom: theme.spacing(2),
       width: '100%',
@@ -81,6 +84,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     table: {
       minWidth: 750,
+    },
+    tableContainer: {
+      height: 500,
+      ...theme.mainContent.scroll,
     },
     visuallyHidden: {
       border: 0,
@@ -348,7 +355,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
             numSelected={selected.length}
             deleteBulk={handleDeleteBulk}
           />
-          <TableContainer>
+          <TableContainer className={classes.tableContainer}>
             <Table
               stickyHeader
               className={classes.table}
@@ -385,7 +392,10 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
                         data-value={elId}
                         selected={isItemSelected}
                         className={classes.row}
-                        classes={{ root: classes.rowRoot, selected: classes.rowSelected }}
+                        classes={{
+                          root: classes.rowRoot,
+                          selected: classes.rowSelected,
+                        }}
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
@@ -451,7 +461,11 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
             labelDisplayedRows={labelDisplayedRows}
           />
         </Paper>
-        <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Плотно" />
+        <FormControlLabel
+          className={classes.formControlLabel}
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Плотно"
+        />
       </div>
     );
   }
