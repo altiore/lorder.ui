@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: theme.palette.success.main,
         borderRadius: '50%',
         boxShadow:
-          '0px 3px 5px -1px rgba(98, 197, 49,0.2), 0px 6px 10px 0px rgba(98, 197, 49,0.14), 0px 1px 18px 0px rgba(98, 197, 49,0.12)',
+          '0px 3px 5px -1px rgba(102, 204, 51,0.2), 0px 6px 10px 0px rgba(102, 204, 51,0.14), 0px 1px 18px 0px rgba(102, 204, 51,0.12)',
         content: '""',
         height: BTN_SIZE,
         left: '50%',
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     centralGrey: {
       '&:before': {
-        backgroundColor: theme.palette.grey[400],
+        backgroundColor: '#D8D8D8',
         boxShadow:
           '0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)',
       },
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:before': {
         backgroundColor: theme.palette.error.main,
         boxShadow:
-          '0px 3px 5px -1px rgba(230, 57, 15,0.2), 0px 6px 10px 0px rgba(230, 57, 15,0.14), 0px 1px 18px 0px rgba(230, 57, 15,0.12)',
+          '0px 3px 5px -1px rgba(255, 51, 0,0.2), 0px 6px 10px 0px rgba(255, 51, 0,0.14), 0px 1px 18px 0px rgba(255, 51, 0,0.12)',
       },
     },
     leftBtn: {

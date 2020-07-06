@@ -146,50 +146,53 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
     <div className={cn(classes.root, { [classes.rootOpen]: isBoardFilterOpened })}>
       {isBoardFilterOpened ? (
         <>
-          <FormControl className={classes.formControl}>
-            <Select
-              value={projectPart}
-              onChange={handleSelectProjectPart}
-              displayEmpty
-              inputProps={{ 'aria-label': 'Without label' }}
-              placeholder={'По частям'}
-            >
-              <MenuItem value="" disabled>
-                По частям
-              </MenuItem>
-              <MenuItem value={0}>Без частей</MenuItem>
-              {projectParts.length &&
-                projectParts.map(({ title, id }) => {
+          {Boolean(projectParts && projectParts.length) && (
+            <FormControl className={classes.formControl}>
+              <Select
+                value={projectPart}
+                onChange={handleSelectProjectPart}
+                displayEmpty
+                inputProps={{ 'aria-label': 'Without label' }}
+                placeholder={'По частям'}
+              >
+                <MenuItem value="" disabled>
+                  По частям
+                </MenuItem>
+                <MenuItem value={0}>Без частей</MenuItem>
+                {projectParts.map(({ title, id }) => {
                   return (
                     <MenuItem key={id} value={id}>
                       {title}
                     </MenuItem>
                   );
                 })}
-              {typeof projectPart === 'number' && (
-                <MenuItem value="clear">
-                  <b>Все</b>
-                </MenuItem>
-              )}
-            </Select>
-          </FormControl>
-          <div className={classes.members}>
-            {shownMembers.map(member => {
-              const isSelected = !!~filteredMembers.indexOf(member.id as number);
-              return (
-                <Tooltip key={member.id} title={get(member, 'userName', (member.email || '').replace(/@.*$/, ''))}>
-                  <Avatar
-                    value={member.id}
-                    isSelected={isSelected}
-                    onClick={handleToggleMember}
-                    src={get(member, ['avatar', 'url'])}
-                  >
-                    {member.email}
-                  </Avatar>
-                </Tooltip>
-              );
-            })}
-          </div>
+                {typeof projectPart === 'number' && (
+                  <MenuItem value="clear">
+                    <b>Все</b>
+                  </MenuItem>
+                )}
+              </Select>
+            </FormControl>
+          )}
+          {Boolean(shownMembers && shownMembers.length) && (
+            <div className={classes.members}>
+              {shownMembers.map(member => {
+                const isSelected = !!~filteredMembers.indexOf(member.id as number);
+                return (
+                  <Tooltip key={member.id} title={get(member, 'userName', (member.email || '').replace(/@.*$/, ''))}>
+                    <Avatar
+                      value={member.id}
+                      isSelected={isSelected}
+                      onClick={handleToggleMember}
+                      src={get(member, ['avatar', 'url'])}
+                    >
+                      {member.email}
+                    </Avatar>
+                  </Tooltip>
+                );
+              })}
+            </div>
+          )}
           {dropDownMembers.length && (
             <ClickAwayListener onClickAway={closeDropDownOpen}>
               <div ref={anchorRef}>
