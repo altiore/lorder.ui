@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { currentTaskId } from '#/@store/timer';
+import { currentTask } from '#/@store/timer';
 import { isPaused, pauseWork, stopPausedTask, stopUserWork, tryToStartUserWork } from '#/@store/user-works';
 
 import { StartStopBtnTsx } from './start-stop-btn';
@@ -16,7 +16,7 @@ interface ITaskDurationOwn {
 }
 
 const mapStateToProps = createStructuredSelector<IState, any>({
-  currentTaskId,
+  currentTask,
   isPaused,
 });
 

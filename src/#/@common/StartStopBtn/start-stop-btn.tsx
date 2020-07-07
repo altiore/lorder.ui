@@ -6,11 +6,11 @@ import { ITask } from '@types';
 
 interface Props {
   afterStop?: any;
-  currentTaskId: number;
+  currentTask: ITask;
   isPaused: boolean;
   isLarge?: boolean;
   isStarted: boolean;
-  onStart: (task: { projectId?: number; taskId?: number | string }) => any;
+  onStart: (task: { projectId: number; sequenceNumber: number }) => any;
   onStartNew: any;
   onComplete: (event: React.SyntheticEvent<any>) => any;
   onCompletePaused: (...a: any) => any;
@@ -21,7 +21,7 @@ interface Props {
 
 export const StartStopBtnTsx: React.FC<Props> = ({
   afterStop,
-  currentTaskId,
+  currentTask,
   isPaused,
   onStart,
   onStartNew,
@@ -31,17 +31,17 @@ export const StartStopBtnTsx: React.FC<Props> = ({
   task,
 }): JSX.Element => {
   const isCurrent = useMemo(() => {
-    return task && task.id === currentTaskId;
-  }, [currentTaskId, task]);
+    return task && task.id === (currentTask && currentTask.id);
+  }, [currentTask, task]);
 
   const handleStart = useCallback(
     event => {
       event.stopPropagation();
       if (task) {
-        const { id, projectId } = task;
+        const { projectId, sequenceNumber } = task;
         onStart({
           projectId,
-          taskId: id,
+          sequenceNumber,
         });
         return;
       } else {
@@ -91,9 +91,12 @@ export const StartStopBtnTsx: React.FC<Props> = ({
   const handleResume = useCallback(
     event => {
       event.stopPropagation();
-      onStart({ taskId: currentTaskId });
+      onStart({
+        projectId: currentTask.projectId,
+        sequenceNumber: currentTask.sequenceNumber,
+      });
     },
-    [currentTaskId, onStart]
+    [currentTask, onStart]
   );
 
   const handleBringBack = useCallback(event => {

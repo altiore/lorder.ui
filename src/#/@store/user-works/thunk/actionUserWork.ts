@@ -2,7 +2,6 @@ import get from 'lodash/get';
 import moment from 'moment';
 import { change } from 'redux-form';
 
-import { defaultProjectId } from '#/@store/identity';
 import { selectProject } from '#/@store/project';
 import { fetchProjectDetails, getProjectById, Project, projectMembers } from '#/@store/projects';
 import { getTaskById, getTaskBySequenceNumber } from '#/@store/tasks';
@@ -60,45 +59,24 @@ export const startTimer = (userWork: Partial<UserWork>, projectProp?: IProject) 
 export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getState: () => IState) => {
   try {
     const preparedData = { ...data };
-    const startedTask = getTaskById(getState())(preparedData.taskId);
-    // Если есть sequenceNumber, то его нужно поменять на taskId
-    if (data.sequenceNumber) {
-      preparedData.taskId = get(getTaskBySequenceNumber(getState())(data.sequenceNumber, data.projectId), 'id');
-      if (!preparedData.taskId) {
-        throw new Error('Задача имеет порядковый номер, но ее не удалось найти в списке задач');
-      }
-      delete preparedData.sequenceNumber;
-    }
-    if (!preparedData.projectId) {
-      preparedData.projectId = get(startedTask, 'projectId') as number;
-      if (!preparedData.projectId) {
-        preparedData.projectId = defaultProjectId(getState()) as number;
-        preparedData.title = 'Знакомство с системой';
-      }
-    }
-    if (startedTask && startedTask.projectId !== preparedData.projectId) {
-      throw new Error('Проект начинаемой задачи указан неверно!');
-    }
+
+    const startedTask = getTaskBySequenceNumber(getState())(preparedData.sequenceNumber, preparedData.projectId);
     const project: Project = getProjectById(getState())(preparedData.projectId);
-    if (!preparedData.title) {
-      if (preparedData.description) {
-        preparedData.title = preparedData.description;
-      } else {
-        preparedData.title = `Работа над "${project.title}" ` + moment().format('DD-MM-YYYY');
-      }
+
+    if (startedTask && startedTask.projectId !== preparedData.projectId) {
+      throw new Error('Проект задачи для старта указан неверно!');
     }
+
+    if (!preparedData.description) {
+      preparedData.description = `Работа над "${project.title}" ` + moment().format('DD-MM-YYYY');
+    }
+
     dispatch(selectProject(preparedData.projectId));
     dispatch(change(CREATE_USER_WORK_FORM_NAME, 'projectId', preparedData.projectId));
 
-    const res = await dispatch(
-      postAndStartUserWork({
-        project,
-        userWork: preparedData,
-      })
-    );
+    const res = await dispatch(postAndStartUserWork(project, preparedData));
 
-    const userWorkData = get(res, 'payload.data.started');
-    const userWork = new UserWork(userWorkData);
+    const userWork = new UserWork(res?.payload?.data?.started || {});
 
     return await dispatch(startTimer(userWork, project) as any);
   } catch (e) {

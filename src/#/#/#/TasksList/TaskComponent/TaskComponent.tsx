@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import MediaQuery from 'react-responsive';
 
 import cn from 'classnames';
-import moment from 'moment';
+// import moment from 'moment';
 
 import Button from '@material-ui/core/Button';
 import { DialogProps } from '@material-ui/core/Dialog';
@@ -84,23 +84,25 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
 
       push(`/projects/${project.id}`);
 
-      const taskTitle = `Обзор проекта "${project.title}" ` + moment().format('DD-MM-YYYY');
+      // const taskTitle = `Обзор проекта "${project.title}" ` + moment().format('DD-MM-YYYY');
       showWarning({
         action: {
           // callback: this.props.openTaskModal,
           callback: async () => {
-            await startUserWork({
-              projectId: project.id as number,
-              title: taskTitle,
-            });
-            showWarning({
-              action: {
-                callback: openTaskModal,
-                label: 'Редактировать',
-              },
-              message: `Хотите ее отредактировать?`,
-              title: `Задача для обзора проекта "${project.title}" успешно создана!`,
-            });
+            // TODO: добавить функционал создания задачи
+            alert('TODO: добавить функционал создания задачи');
+            // await startUserWork({
+            //   projectId: project.id as number,
+            //   title: taskTitle,
+            // });
+            // showWarning({
+            //   action: {
+            //     callback: openTaskModal,
+            //     label: 'Редактировать',
+            //   },
+            //   message: `Хотите ее отредактировать?`,
+            //   title: `Задача для обзора проекта "${project.title}" успешно создана!`,
+            // });
           },
           label: 'Создать задачу',
         },
@@ -108,7 +110,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
         title: `Вы перешли к обзору проекта "${project.title}"`,
       });
     },
-    [openTaskModal, project, push, showWarning, startUserWork]
+    [project, push, showWarning /*, startUserWork, openTaskModal*/]
   );
 
   if (!task) {

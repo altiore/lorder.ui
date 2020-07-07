@@ -54,17 +54,19 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
           showSuccess({
             action: {
               callback: async () => {
-                await startUserWork({
-                  projectId,
-                });
-                showWarning({
-                  action: {
-                    callback: openTaskModal,
-                    label: 'Редактировать',
-                  },
-                  message: 'Хотите редактировать созданную задачу?',
-                  title: `Задача для проекта "${project.title}" успешно создана!`,
-                });
+                // TODO: добавить функционал создания задачи
+                alert('TODO: добавить функционал создания задачи');
+                // await startUserWork({
+                //   projectId,
+                // });
+                // showWarning({
+                //   action: {
+                //     callback: openTaskModal,
+                //     label: 'Редактировать',
+                //   },
+                //   message: 'Хотите редактировать созданную задачу?',
+                //   title: `Задача для проекта "${project.title}" успешно создана!`,
+                // });
               },
               label: 'Создать',
             },
@@ -76,7 +78,7 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
           push(`/projects/${project.id}`);
         }
       },
-      [openTaskModal, push, selectedProject, showSuccess, showWarning, startUserWork]
+      [push, selectedProject, showSuccess /*, showWarning, openTaskModal, startUserWork*/]
     );
 
     const nullComponent = useCallback(() => null, []);

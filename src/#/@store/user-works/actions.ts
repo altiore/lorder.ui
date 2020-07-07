@@ -10,17 +10,10 @@ import { CREATE_USER_WORK_FORM_NAME, EDIT_USER_WORK_DESCRIPTION_FORM } from './c
 import { IUserWork } from '@types';
 
 export interface IUserWorkData {
-  description?: string;
-  projectId?: number;
-  taskId?: number | string;
-  sequenceNumber?: number | string;
-  title?: string;
-}
+  projectId: number;
+  sequenceNumber: number;
 
-export interface IPostData {
-  project: Project;
-  userWork: IUserWorkData;
-  userId?: number;
+  description?: string;
 }
 
 export interface IUserWorkDelete {
@@ -63,11 +56,10 @@ export const patchUserWork = requestActions('USER_WORK/PATCH', (userWork: Partia
   userWorkId: userWork.id,
 }));
 
-export const postAndStartUserWork = requestActions<IPostData>(
+export const postAndStartUserWork = requestActions(
   'USER_WORK/POST_AND_START',
-  ({ project, userWork }: IPostData): any => ({
+  (project: Project, userWork: IUserWorkData) => ({
     form: CREATE_USER_WORK_FORM_NAME,
-    project,
     // projectId required here because of nested reducers!!!
     projectId: project.id,
     request: {
@@ -75,7 +67,7 @@ export const postAndStartUserWork = requestActions<IPostData>(
       method: 'POST',
       url: '/user-works',
     },
-    taskId: userWork.taskId,
+    sequenceNumber: userWork.sequenceNumber,
   })
 );
 
