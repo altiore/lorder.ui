@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
 
-import { CrudJsx, ICrudColumn } from '@components/Crud';
+import CrudJsx from '@components/Crud';
+import { ICrudColumn } from '@components/Crud/Crud';
 
 import { closeDialog, openDialog } from '#/@store/dialog';
 
 interface IOwnProps {
   formName?: string;
   entityName: string;
+  createTitle?: string;
   createItem?: any;
   deleteItem?: (id: number) => void;
   deleteBulk?: (ids: Array<number | string>) => any;

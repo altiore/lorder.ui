@@ -3,9 +3,9 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import get from 'lodash/get';
 
-import { ICrudColumn } from '@components/Crud';
 import MultiSelectCell from '@components/Crud/@cells/multi-select';
 import SelectCell from '@components/Crud/@cells/select';
+import { ICrudColumn } from '@components/Crud/Crud';
 import { Page } from '@components/Page';
 
 import Crud from '#/@common/Crud';

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 
 import get from 'lodash/get';
 import invert from 'lodash/invert';
@@ -55,6 +55,8 @@ function getSorting<K extends keyof any>(
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
+const MIN_HEIGHT = 208;
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControlLabel: {
@@ -86,7 +88,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: 750,
     },
     tableContainer: {
-      height: 500,
+      minHeight: MIN_HEIGHT,
       ...theme.mainContent.scroll,
     },
     visuallyHidden: {
@@ -129,6 +131,7 @@ export interface ICrudProps<IItem = {}> {
   entityName: string;
   formName?: string;
   getId?: (item: IItem) => number | string;
+  height: number;
   openDialog: (el: JSX.Element, props?: Partial<DialogProps>) => void;
   rows: any[];
   createTitle?: string;
@@ -149,6 +152,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
     entityName,
     formName,
     getId = defGetId,
+    height,
     openDialog,
     rows,
     useId = true,
@@ -166,6 +170,21 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
     const [dense, setDense] = React.useState(true);
 
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const tableHeight = useMemo(() => {
+      const calcHeight = height - 360;
+      if (calcHeight < MIN_HEIGHT) {
+        return MIN_HEIGHT;
+      }
+
+      return calcHeight;
+    }, [height]);
+
+    useEffect(() => {
+      if (tableHeight === MIN_HEIGHT && rowsPerPage !== 5) {
+        setRowsPerPage(5);
+      }
+    }, [rowsPerPage, setRowsPerPage, tableHeight]);
 
     const rowsLength = useMemo(() => {
       return get(rows, 'length', 0);
@@ -355,7 +374,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
             numSelected={selected.length}
             deleteBulk={handleDeleteBulk}
           />
-          <TableContainer className={classes.tableContainer}>
+          <TableContainer className={classes.tableContainer} style={{ height: tableHeight }}>
             <Table
               stickyHeader
               className={classes.table}

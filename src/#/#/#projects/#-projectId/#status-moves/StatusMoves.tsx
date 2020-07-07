@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import invert from 'lodash/invert';
 
-import { ICrudColumn } from '@components/Crud';
+import { ICrudColumn } from '@components/Crud/Crud';
 import { Page } from '@components/Page';
 
 import Crud from '#/@common/Crud';

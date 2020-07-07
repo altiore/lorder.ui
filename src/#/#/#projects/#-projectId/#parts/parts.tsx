@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
-import { ICrudColumn } from '@components/Crud';
+import { ICrudColumn } from '@components/Crud/Crud';
 import { Page } from '@components/Page';
 import RadioButton from '@components/RadioButton';
 
