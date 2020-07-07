@@ -1,18 +1,14 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { TableCellProps } from 'react-virtualized';
 
 import Button from '@material-ui/core/Button';
-import Chip from '@material-ui/core/Chip';
-import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
-import ClearIcon from '@material-ui/icons/Clear';
 
-import { Confirmation } from '@components/Dialogs/Confirmation';
+import { ICrudColumn } from '@components/Crud/Crud';
 import { Page } from '@components/Page';
-import TableVirtualized, { ColumnType } from '@components/TableVirtualized';
 
 import { createProjectDialogProps, CreateProjectPopup } from '#/@common/CreateProjectPopup';
+import Crud from '#/@common/Crud';
 import { Project } from '#/@store/projects';
 
 import { ACCESS_LEVEL, IUser, PROJECT_TYPE, ROLE } from '@types';
@@ -23,10 +19,9 @@ const GET_PROJECT_TYPE = {
 };
 
 export interface IProjectsProps {
-  closeDialog: any;
   defaultProjectId: number;
   findUserById: (id: number) => IUser | undefined;
-  getProjects: any;
+  getProjects: any; // не используется
   goToProject: any;
   hasRole: any;
   openDialog: any;
@@ -36,8 +31,6 @@ export interface IProjectsProps {
   removeProjectByAdmin: any;
   showError: any;
   userRole: ROLE;
-  height: number;
-  isWidthSm: boolean;
 }
 
 export interface IProjectsState {
@@ -46,55 +39,35 @@ export interface IProjectsState {
 }
 
 export class Projects extends React.Component<RouteComponentProps<{}> & IProjectsProps, IProjectsState> {
-  state = {
-    sortBy: 'title',
-    sortDirection: 'ASC',
-  };
-
   render() {
-    const { hasRole, ownOnly, projectList, height: pHeight, isWidthSm } = this.props;
+    const { hasRole, ownOnly, projectList } = this.props;
 
-    let columns: ColumnType[] = [
-      { label: `Название (${projectList.length})`, order: 1, isShown: true, dataKey: 'title' },
-      { label: '', order: 20, isShown: true, dataKey: 'id', width: 100, component: this.renderRemove },
+    const COLUMNS: ICrudColumn[] = [
+      { name: 'title', path: 'title', title: 'Название' },
+      {
+        name: 'timeSum',
+        path: 'timeSum',
+        title: 'Потрачено Времени',
+      },
+      { name: 'uuid', path: 'uuid', title: 'Публичный' },
+      { name: 'type', path: 'type', title: 'Тип' },
     ];
-    if (!isWidthSm) {
-      columns = columns.concat([
-        // { label: 'Бюджет', order: 3, isShown: hasRole(ROLE.SUPER_ADMIN), dataKey: 'monthlyBudget' },
-        { label: 'Потрачено Времени', order: 4, isShown: true, dataKey: 'fullProjectTimeHumanize' },
-        {
-          component: this.renderValue,
-          dataKey: 'valueSum',
-          isShown: hasRole(ROLE.SUPER_ADMIN),
-          label: 'Ценность',
-          order: 5,
-        },
-        { label: 'Публичный', order: 8, isShown: true, dataKey: 'uuid', width: 140, component: this.renderPublished },
-        { label: 'Тип', order: 11, isShown: true, dataKey: 'type', width: 140, component: this.renderType },
-      ]);
+
+    if (!ownOnly && hasRole(ROLE.SUPER_ADMIN)) {
+      COLUMNS.push({ name: 'ownerId', path: 'ownerId', title: 'Владелец' });
     }
-    if (!ownOnly && hasRole(ROLE.SUPER_ADMIN) && !isWidthSm) {
-      columns.push({
-        component: this.renderUser,
-        dataKey: 'ownerId',
-        isShown: true,
-        label: 'Владелец',
-        order: 2,
-      });
+
+    if (hasRole(ROLE.SUPER_ADMIN)) {
+      COLUMNS.push({ name: 'valueSum', path: 'valueSum', title: 'Ценность' });
     }
-    const rows = projectList.sort(this.sortState());
-    const { sortBy, sortDirection } = this.state;
-    const height = pHeight - 69.6 - (isWidthSm ? 0 : 32) - (ownOnly ? 37 : 0);
+
     return (
       <Page>
-        <TableVirtualized
-          columns={columns}
-          rows={rows}
-          height={height}
-          sortBy={sortBy}
-          sortDirection={sortDirection}
-          sort={this.sortTable}
-          onRowClick={ownOnly ? this.handleRowClick : undefined}
+        <Crud
+          entityName="Проекты"
+          deleteItem={this.handleRemoveClickNew}
+          columns={COLUMNS}
+          rows={this.rowsToDisplay(projectList)}
         />
         <div
           style={{
@@ -115,63 +88,25 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
       </Page>
     );
   }
-
-  private renderType = ({ cellData }: TableCellProps) => {
-    return GET_PROJECT_TYPE[cellData] || 'N/A';
-  };
-
-  private renderPublished = ({ cellData }: TableCellProps) => {
-    return cellData ? 'Да' : 'Нет';
-  };
-
-  private renderUser = ({ cellData }: TableCellProps): any => {
-    return this.getUserEmail(cellData);
-  };
-
-  private sortTable = ({ sortBy, sortDirection }: any, w: any) => {
-    this.setState({ sortBy, sortDirection });
-  };
-
-  private sortState = () => {
-    let { sortBy } = this.state;
-    if (sortBy === 'ownerId') {
-      return (a: Project, b: Project) => {
-        const aU = this.getUserEmail(a.ownerId as number);
-        const bU = this.getUserEmail(b.ownerId as number);
-        return this.getSortFunctionFromDirection(aU, bU);
-      };
-    }
-    if (sortBy === 'fullProjectTimeHumanize') {
-      sortBy = 'timeSum';
-    }
-    return (a: Project, b: Project) => this.getSortFunctionFromDirection(a[sortBy], b[sortBy]);
-  };
-
-  private getSortFunctionFromDirection = (a: any, b: any) => {
-    const { sortDirection } = this.state;
-    if (sortDirection === 'ASC') {
-      return a > b ? 1 : -1;
-    } else {
-      return a < b ? 1 : -1;
-    }
+  // TODO: Фильтрация по потраченному времени
+  private rowsToDisplay = (rows: Project[]) => {
+    return rows.map((project: Project) => ({
+      ...project,
+      ownerId: this.getUserEmail(project.ownerId),
+      timeSum: project.fullProjectTimeHumanize,
+      type: GET_PROJECT_TYPE[project.type] || 'N/A',
+      uuid: project.uuid ? 'Да' : 'Нет',
+      valueSum: `${(project.valueSum ? project.valueSum * 50 : 0).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}$`,
+    }));
   };
 
   private createProject = () => this.props.openDialog(CreateProjectPopup, createProjectDialogProps);
 
-  private handleRowClick = async ({ rowData, event }: any) => {
-    event.stopPropagation();
-    if (rowData) {
-      if (rowData.accessLevel === ACCESS_LEVEL.WHITE && typeof rowData.id === 'number') {
-        this.props.goToProject(rowData.id);
-      } else {
-        this.props.goToProject(rowData.id);
-      }
-    }
-  };
-
-  private handleRemoveClick = (id: number | undefined, accessLevel?: ACCESS_LEVEL) => (e: any) => {
-    e.stopPropagation();
-    if (id === this.props.defaultProjectId) {
+  private handleRemoveClickNew = (projectId: number | undefined) => {
+    const accessLevel: ACCESS_LEVEL | undefined = this.props.projectList.filter(
+      (prj: Project) => prj.id === projectId
+    )?.[0]?.accessLevel;
+    if (projectId === this.props.defaultProjectId) {
       this.props.showError({
         message: 'Этот проект нельзя удалить',
         title: 'Недостаточно прав',
@@ -179,12 +114,7 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
       return;
     }
     if (accessLevel === ACCESS_LEVEL.VIOLET || this.props.userRole === ROLE.SUPER_ADMIN) {
-      this.props.openDialog(
-        <Confirmation
-          text="Это действие нельзя будет отменить! Вы уверены, что хотите удалить проект безвозвратно?"
-          onConfirm={this.removeProjectById(id)}
-        />
-      );
+      this.removeProjectById(projectId);
     } else {
       this.props.showError({
         message: 'Только владелец может удалить проект!',
@@ -193,13 +123,12 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     }
   };
 
-  private removeProjectById = (id: any) => async () => {
+  private removeProjectById = async (id: any) => {
     if (this.props.ownOnly) {
       await this.props.removeProject(id);
     } else {
       await this.props.removeProjectByAdmin(id);
     }
-    this.props.closeDialog();
   };
 
   private getUserEmail = (id?: number): number | string => {
@@ -212,14 +141,4 @@ export class Projects extends React.Component<RouteComponentProps<{}> & IProject
     }
     return id;
   };
-
-  private renderRemove = ({ cellData, rowData }: TableCellProps) => (
-    <Fab size="small" color="primary" onClick={this.handleRemoveClick(cellData, rowData && rowData.accessLevel)}>
-      <ClearIcon />
-    </Fab>
-  );
-
-  private renderValue = ({ cellData, rowData }: TableCellProps) => (
-    <Chip color="secondary" label={`${(cellData * 50).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}$`} />
-  );
 }
