@@ -99,10 +99,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProjectSelect {
   openProject: (pId: IProject) => Promise<void>;
-  openTaskModal: any;
+  // openTaskModal: any;
   push: any;
-  showSuccess: any;
-  startUserWork: any;
+  // showSuccess: any;
+  // startUserWork: any;
   projectId?: number;
   projects: IProject[];
 }
@@ -121,10 +121,10 @@ const PROJECT_TYPES = [
 export const ProjectSelect: React.FC<IProjectSelect> = ({
   projects,
   openProject,
-  openTaskModal,
+  // openTaskModal,
   push,
-  showSuccess,
-  startUserWork,
+  // showSuccess,
+  // startUserWork,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -188,22 +188,24 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({
     event => {
       const projectId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 0);
       if (projectId) {
-        startUserWork({ projectId });
-        const project = projects.find(el => el.id === projectId);
-        if (project) {
-          showSuccess({
-            action: {
-              callback: openTaskModal,
-              label: 'Редактировать',
-            },
-            message: 'Хотите редактировать созданную задачу?',
-            title: `Задача для проекта "${project.title}" успешно создана!`,
-          });
-        }
+        // TODO: добавить функционал создания задачи
+        alert('TODO: добавить функционал создания задачи');
+        // startUserWork({ projectId });
+        // const project = projects.find(el => el.id === projectId);
+        // if (project) {
+        //   showSuccess({
+        //     action: {
+        //       callback: openTaskModal,
+        //       label: 'Редактировать',
+        //     },
+        //     message: 'Хотите редактировать созданную задачу?',
+        //     title: `Задача для проекта "${project.title}" успешно создана!`,
+        //   });
+        // }
       }
       handleClose();
     },
-    [handleClose, openTaskModal, projects, showSuccess, startUserWork]
+    [handleClose /*, openTaskModal, projects, showSuccess, startUserWork*/]
   );
 
   const openProjectStatistic = useCallback(

@@ -60,13 +60,10 @@ const getAllTasksFailHandler = (state: S) => {
 };
 
 const postAndStartUserWorkHandler = (state: S, action: ActionMeta<any, any>) => {
-  let taskId: number;
-  if (action.meta) {
-    taskId = get(action.meta, 'previousAction.payload.taskId');
-  } else {
-    taskId = get(action.payload, 'taskId');
-  }
-  const index = state.list.findIndex(el => taskId === el.id);
+  const sequenceNumber: number = get(action.payload, 'sequenceNumber');
+  const projectId: number = get(action.payload, 'projectId');
+
+  const index = state.list.findIndex(el => projectId === el.projectId && el.sequenceNumber === sequenceNumber);
   if (~index) {
     return state.startLoading();
   }
@@ -82,12 +79,12 @@ const postAndStartUserWorkHandler = (state: S, action: ActionMeta<any, any>) => 
 
 const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, any>) => {
   let resState = state;
-  let taskId: number;
+  let sequenceNumber: number;
+  let projectId: number;
   // if meta exists get taskId from meta
   if (action.meta) {
-    taskId = get(action.meta, 'previousAction.payload.taskId');
-  } else {
-    taskId = get(action.payload, ['data', 'started', 'taskId']);
+    projectId = get(action.meta, 'previousAction.payload.projectId');
+    sequenceNumber = get(action.meta, 'previousAction.payload.sequenceNumber');
   }
   const task: Partial<Task> = get(action, 'payload.data.started.task');
   const finishedTasks = get(action, ['payload', 'data', 'finished'], []);
@@ -97,7 +94,7 @@ const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
       resState = resState.updateItem(finishedIndex, finishedUserWork.task);
     }
   });
-  const index = state.list.findIndex(el => taskId === el.id);
+  const index = state.list.findIndex(el => projectId === el.projectId && sequenceNumber === el.sequenceNumber);
   if (~index) {
     return resState.stopLoading().updateItem(index, task);
   }
@@ -105,14 +102,13 @@ const postAndStartUserWorkSuccessHandler = (state: S, action: ActionMeta<any, an
 };
 
 const postAndStartUserWorkFailHandler = (state: S, action: ActionMeta<any, any>) => {
-  let taskId: number;
-  // if meta exists get taskId from meta
+  let sequenceNumber: number;
+  let projectId: number;
   if (action.meta) {
-    taskId = get(action.meta, 'previousAction.payload.taskId');
-  } else {
-    taskId = get(action.payload, 'taskId');
+    projectId = get(action.meta, 'previousAction.payload.projectId');
+    sequenceNumber = get(action.meta, 'previousAction.payload.sequenceNumber');
   }
-  const index = state.list.findIndex(el => taskId === el.id);
+  const index = state.list.findIndex(el => projectId === el.projectId && sequenceNumber === el.sequenceNumber);
   if (~index) {
     return state.stopLoading();
   }
