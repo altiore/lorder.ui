@@ -172,7 +172,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const tableHeight = useMemo(() => {
-      const calcHeight = height - 360;
+      const calcHeight = height - 380;
       if (calcHeight < MIN_HEIGHT) {
         return MIN_HEIGHT;
       }
@@ -293,7 +293,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
           openDialog(
             <ConfirmationModal
               onConfirm={handleConfirm}
-              titleText={`Удалить ${entityName} "${item.name || item.title || getId(item)}" из проетка?`}
+              titleText={`Удалить ${entityName} "${item.name || item.title || getId(item)}" из проекта?`}
               confirmText="Удалить"
               cancelText="Отмена"
             />,
@@ -313,7 +313,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
           openDialog(
             <ConfirmationModal
               onConfirm={handleConfirm}
-              titleText={`Удалить ${selected.length} ${entityName} из проетка?`}
+              titleText={`Удалить ${selected.length} ${entityName} из проекта?`}
               confirmText="Удалить"
               cancelText="Отмена"
             />,
