@@ -235,7 +235,7 @@ const deleteProjectTaskSuccessHandler = (state: S, { meta }) => {
   const seqNumber = meta?.previousAction?.payload?.sequenceNumber;
   const index = state.list.findIndex(t => t.projectId === projectId && t.sequenceNumber === seqNumber);
   if (index !== -1) {
-    return state.stopLoading().updateItem(index, { isArchived: false });
+    return state.stopLoading().updateItem(index, { isArchived: true });
   }
 
   return state.stopLoading();
