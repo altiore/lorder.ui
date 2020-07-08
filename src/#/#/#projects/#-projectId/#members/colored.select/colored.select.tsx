@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 
+import Button from '@material-ui/core/Button';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -14,7 +15,10 @@ function filterEnum(t: any) {
   return isNaN(parseInt(t, 0));
 }
 
+const REQUEST_TITLE = 'Запрос';
+
 const COLOR_TITLE = {
+  [-1]: REQUEST_TITLE,
   [ACCESS_LEVEL.WHITE]: 'Белый',
   [ACCESS_LEVEL.RED]: 'Красный',
   [ACCESS_LEVEL.ORANGE]: 'Оранжевый',
@@ -115,6 +119,14 @@ const useSelectStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+interface IProps {
+  allowed: boolean;
+  editable: boolean;
+  name: string;
+  onChange: (event: any) => void;
+  value: ACCESS_LEVEL;
+}
+
 export const ColoredSelect: React.FC<any> = ({ allowed, editable, name, onChange, value }) => {
   const classes = useSelectStyles();
 
@@ -127,6 +139,24 @@ export const ColoredSelect: React.FC<any> = ({ allowed, editable, name, onChange
   const handleCloseSelect = useCallback((event: any) => {
     event.stopPropagation();
   }, []);
+
+  const submitRequest = useCallback(
+    event => {
+      event.persist();
+      event.target.name = name;
+      event.target.value = ACCESS_LEVEL.RED;
+      onChange(event);
+    },
+    [name, onChange]
+  );
+
+  if (editable && value === -1) {
+    return (
+      <Button variant="outlined" onClick={submitRequest}>
+        Принять запрос
+      </Button>
+    );
+  }
 
   if (!editable) {
     return <ColoredItem accessLevel={value} />;
