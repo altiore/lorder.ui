@@ -32,7 +32,7 @@ export const tryToStartUserWork = (data: IUserWorkData) => async (dispatch: any,
   const state = getState();
   const task: ITask = currentTask(state);
   const userWork = getUserWorkById(state)(currentUserWorkId(state) as number);
-  if (task.id === userWork.taskId) {
+  if (task && task?.id === userWork?.taskId) {
     // задача НЕ на паузе
     if (task.projectId !== defaultProjectId(state)) {
       // текущая задача не завершена

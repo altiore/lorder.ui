@@ -106,22 +106,6 @@ export const patchProjectTask = requestActions<Partial<ITask>>(
   }
 );
 
-export const deleteProjectTask = requestActions<IProjectTaskData>(
-  'PROJECT_TASK/DELETE',
-  ({ projectId, sequenceNumber }: IProjectTaskData) => ({
-    form: PROJECT_TASK_FORM_NAME,
-    projectId,
-    request: {
-      method: 'DELETE',
-      url: `${TASKS_ROUTE(projectId)}/${sequenceNumber}`,
-    },
-    sequenceNumber,
-    success: {
-      message: `Задача удалена из проекта`,
-    },
-  })
-);
-
 export const moveProjectTask = requestActions<IProjectTaskData>(
   'PROJECT_TASK/MOVE',
   ({ projectId, sequenceNumber, statusTypeName, prevStatusTypeName }: IProjectTaskData) => ({

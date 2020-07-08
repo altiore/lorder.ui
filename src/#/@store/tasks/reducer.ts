@@ -20,7 +20,6 @@ import { IRequestAction } from '../@common/requestActions';
 import {
   archiveTaskA,
   clearAllProjectTask,
-  deleteProjectTask,
   fetchProjectTasksA,
   fetchTaskDetailsA,
   getAllTasks,
@@ -227,22 +226,22 @@ const moveProjectTaskFailHandler = (state: S, { meta }: ActionMeta<any, { previo
     .stopLoading();
 };
 
-const deleteProjectTaskHandler = (state: S, { payload }: Action<P>) => {
-  const index = state.list.findIndex(
-    el => el.projectId === get(payload, 'projectId') && el.sequenceNumber === get(payload, 'sequenceNumber')
-  );
-  if (index === -1) {
-    return state.startLoading();
-  }
-  return state.startLoading().updateItem(index, { isArchived: true });
+const deleteProjectTaskHandler = (state: S) => {
+  return state.startLoading();
 };
 
-const deleteProjectTaskSuccessHandler = (state: S) => {
+const deleteProjectTaskSuccessHandler = (state: S, { meta }) => {
+  const projectId = meta?.previousAction?.payload?.projectId;
+  const seqNumber = meta?.previousAction?.payload?.sequenceNumber;
+  const index = state.list.findIndex(t => t.projectId === projectId && t.sequenceNumber === seqNumber);
+  if (index !== -1) {
+    return state.stopLoading().updateItem(index, { isArchived: false });
+  }
+
   return state.stopLoading();
 };
 
 const deleteProjectTaskFailHandler = (state: S) => {
-  // TODO: implement revert back to previous state
   return state.stopLoading();
 };
 
@@ -338,10 +337,6 @@ export const tasks: any = handleActions<S, any, any>(
     [moveProjectTask.toString()]: moveProjectTaskHandler,
     [moveProjectTask.success]: moveProjectTaskSuccessHandler,
     [moveProjectTask.fail]: moveProjectTaskFailHandler,
-
-    [deleteProjectTask.toString()]: deleteProjectTaskHandler,
-    [deleteProjectTask.success]: deleteProjectTaskSuccessHandler,
-    [deleteProjectTask.fail]: deleteProjectTaskFailHandler,
 
     [archiveTaskA.toString()]: deleteProjectTaskHandler,
     [archiveTaskA.success]: deleteProjectTaskSuccessHandler,
