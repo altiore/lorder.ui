@@ -143,10 +143,19 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
 
   const createTask = useCallback(
     (pId: number | string, statusName: string, statusFrom) => () => {
-      openDialog(<PatchTaskForm projectId={pId} initialValues={{ statusTypeName: statusName, status: statusFrom }} />, {
-        maxWidth: 'lg',
-        onClose: handleCloseTaskFrom,
-      });
+      openDialog(
+        <PatchTaskForm
+          projectId={pId}
+          initialValues={{
+            status: statusFrom,
+            statusTypeName: statusName,
+          }}
+        />,
+        {
+          maxWidth: 'lg',
+          onClose: handleCloseTaskFrom,
+        }
+      );
     },
     [handleCloseTaskFrom, openDialog]
   );

@@ -1,10 +1,11 @@
 import get from 'lodash/get';
 import moment from 'moment';
-import { change } from 'redux-form';
+import { change, stopAsyncValidation } from 'redux-form';
 
+import { parseFormErrorsFromResponse } from '#/@store/@common/helpers';
 import { selectProject } from '#/@store/project';
 import { fetchProjectDetails, getProjectById, Project, projectMembers } from '#/@store/projects';
-import { getTaskById, getTaskBySequenceNumber } from '#/@store/tasks';
+import { EDIT_TASK_FORM, getTaskById, getTaskBySequenceNumber } from '#/@store/tasks';
 import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from '#/@store/timer';
 import {
   CREATE_USER_WORK_FORM_NAME,
@@ -87,8 +88,15 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
 };
 
 export const stopUserWork = () => async (dispatch: any, getState: any) => {
-  const data: IUserWorkDelete = currentUserWorkData(getState());
-  return await dispatch(patchAndStopUserWork(data));
+  try {
+    const data: IUserWorkDelete = currentUserWorkData(getState());
+    return await dispatch(patchAndStopUserWork(data));
+  } catch (e) {
+    const status = e?.error?.response?.status;
+    if (status === 422) {
+      dispatch(stopAsyncValidation(EDIT_TASK_FORM, parseFormErrorsFromResponse(e)));
+    }
+  }
 };
 
 export const pauseWork = () => async (dispatch: any, getState: any) => {

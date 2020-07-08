@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const TextAreaMarkdownTsx: React.FC<ITextAreaMarkdownProps> = ({ input, placeholder }) => {
+export const TextAreaMarkdownTsx: React.FC<ITextAreaMarkdownProps> = ({ input, placeholder, meta }) => {
   const { edit, editHovered, root, toolbarStyle, toolbarStyleHidden } = useStyles();
 
   const editor = useRef<SimpleMDEEditor>(null);
@@ -216,6 +216,7 @@ export const TextAreaMarkdownTsx: React.FC<ITextAreaMarkdownProps> = ({ input, p
             </IconButton>
           </Tooltip>
         )}
+        {meta.error && <div style={{ color: 'red' }}>{meta.error}</div>}
       </div>
     </ClickAwayListener>
   );
