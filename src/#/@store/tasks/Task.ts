@@ -8,6 +8,7 @@ export class Task implements ITask {
   isArchived: boolean;
   isDetailsLoaded: boolean;
   id: number;
+  inProgress: boolean;
   title: string;
   description: string;
   performerId?: number;
