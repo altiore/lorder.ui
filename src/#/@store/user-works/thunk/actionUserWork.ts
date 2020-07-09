@@ -1,11 +1,19 @@
 import get from 'lodash/get';
 import moment from 'moment';
-import { change, stopAsyncValidation } from 'redux-form';
+import { change, getFormValues, initialize, isDirty, stopAsyncValidation } from 'redux-form';
 
 import { parseFormErrorsFromResponse } from '#/@store/@common/helpers';
+import { isFormMount } from '#/@store/form';
 import { selectProject } from '#/@store/project';
 import { fetchProjectDetails, getProjectById, Project, projectMembers } from '#/@store/projects';
-import { EDIT_TASK_FORM, getTaskById, getTaskBySequenceNumber } from '#/@store/tasks';
+import {
+  EDIT_TASK_FORM,
+  getTaskById,
+  getTaskBySequenceNumber,
+  getTaskInitialsFromTask,
+  ITaskFormData,
+  submitEditTaskForm,
+} from '#/@store/tasks';
 import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from '#/@store/timer';
 import {
   CREATE_USER_WORK_FORM_NAME,
@@ -89,8 +97,21 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
 
 export const stopUserWork = () => async (dispatch: any, getState: any) => {
   try {
-    const data: IUserWorkDelete = currentUserWorkData(getState());
-    return await dispatch(patchAndStopUserWork(data));
+    const state = getState();
+    const isFormOnThePage = isFormMount(EDIT_TASK_FORM)(state);
+    const isUnsavedChanges = isDirty(EDIT_TASK_FORM)(state);
+    const formValues: ITaskFormData = getFormValues(EDIT_TASK_FORM)(state) as ITaskFormData;
+    if (isFormOnThePage && isUnsavedChanges) {
+      await dispatch(submitEditTaskForm(formValues));
+    }
+
+    const userWorkDelete: IUserWorkDelete = currentUserWorkData(getState());
+    const res = await dispatch(patchAndStopUserWork(userWorkDelete));
+    const newTaskData = getTaskInitialsFromTask({
+      ...(res?.payload?.data?.previous?.task || {}),
+      projectParts: formValues.projectParts,
+    });
+    dispatch(initialize(EDIT_TASK_FORM, newTaskData));
   } catch (e) {
     const status = e?.error?.response?.status;
     if (status === 422) {

@@ -4,3 +4,4 @@ export * from './fetchTaskDetails';
 export * from './onSubmitTaskForm';
 export * from './openTaskModal';
 export * from './refreshProjectTasks';
+export * from './submitEditTaskForm';

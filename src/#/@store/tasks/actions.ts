@@ -6,9 +6,7 @@ import { requestActions } from '#/@store/@common/requestActions';
 import { PROJECT_TASK_FORM_NAME } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
 
-import { EDIT_TASK_FORM } from './consts';
-
-import { ITask } from '@types';
+import { EDIT_TASK_FORM, ITaskFormData } from './consts';
 
 export interface IProjectTaskData {
   description?: string;
@@ -69,9 +67,9 @@ export const archiveTaskA = requestActions(
   })
 );
 
-export const postProjectTask = requestActions<Partial<ITask>>(
+export const postProjectTask = requestActions<Partial<ITaskFormData>>(
   'TASKS/POST_PROJECT_TASK',
-  ({ projectId, ...data }: Partial<ITask>): any => ({
+  ({ projectId, ...data }: Partial<ITaskFormData>): any => ({
     form: PROJECT_TASK_FORM_NAME,
     projectId,
     request: {
@@ -86,9 +84,9 @@ export const postProjectTask = requestActions<Partial<ITask>>(
   })
 );
 
-export const patchProjectTask = requestActions<Partial<ITask>>(
+export const patchProjectTask = requestActions<Partial<ITaskFormData>>(
   'PROJECT_TASK/PATCH',
-  ({ projectId, sequenceNumber, ...rest }: Partial<ITask>): any => {
+  ({ projectId, sequenceNumber, ...rest }: Partial<ITaskFormData>): any => {
     return {
       form: EDIT_TASK_FORM,
       projectId,

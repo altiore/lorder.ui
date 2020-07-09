@@ -7,7 +7,7 @@ import { IProjectPart, ITask, IUser, IUserTask } from '@types';
 export class Task implements ITask {
   isArchived: boolean;
   isDetailsLoaded: boolean;
-  id: number | string;
+  id: number;
   title: string;
   description: string;
   performerId?: number;

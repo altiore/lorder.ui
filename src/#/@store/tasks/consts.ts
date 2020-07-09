@@ -1,5 +1,23 @@
 export const EDIT_TASK_FORM = 'EditTaskForm';
 
+export interface ITaskFormData {
+  id?: number;
+
+  sequenceNumber: number;
+  projectId: number;
+
+  isDetailsLoaded: boolean;
+  title: string;
+  description?: string;
+  value: number;
+  typeId?: number;
+  status: number;
+  performerId?: number;
+  statusTypeName: string;
+  source?: string;
+  projectParts?: number[];
+}
+
 // TODO: перенести в переводы
 export const STATUS_NAMES = {
   assigning_responsible: 'Пред-оценка (ответственный)',
