@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   DragDropContext,
   Draggable,
@@ -20,11 +20,12 @@ import { PatchTaskForm } from '#/@common/TaskForm';
 import { DEFAULT_TRANSITION_DURATION } from '#/@store/dialog';
 import { TASKS_ROUTE } from '#/@store/router';
 import { EDIT_TASK_FORM, STATUS_NAMES, Task } from '#/@store/tasks';
+import { STATUS_TYPE_NAME } from '#/@store/tasksFilter/TasksFilter';
 
 import { useStyles } from './styles';
 import { TaskCard } from './TaskCard';
 
-import { ITaskColumn } from '@types';
+import { ITaskColumn, PROJECT_STRATEGY } from '@types';
 
 const CARD_WIDTH = 296;
 
@@ -47,6 +48,7 @@ export interface IDragAndDropProps {
   projectId: number;
   push: any;
   toggleOpenedTab: any;
+  getProjectStrategyByProjectId: (projectId: number) => string;
 }
 
 export const DragAndDrop: React.FC<IDragAndDropProps> = ({
@@ -61,6 +63,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   projectId,
   push,
   toggleOpenedTab,
+  getProjectStrategyByProjectId,
 }) => {
   const classes = useStyles();
 
@@ -161,11 +164,33 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
     [handleCloseTaskFrom, openDialog, projectId]
   );
 
+  const isSimpleStrategy = getProjectStrategyByProjectId(projectId) === PROJECT_STRATEGY.SIMPLE;
+  const columnsToRender = useMemo(() => {
+    const columnsCopy = [...columns];
+    if (isSimpleStrategy) {
+      columnsCopy.splice(2, 0, {
+        column: STATUS_TYPE_NAME.IN_PROGRESS,
+        moves: [],
+        statuses: [STATUS_TYPE_NAME.IN_PROGRESS],
+      });
+      return columnsCopy;
+    }
+    return columns;
+  }, [isSimpleStrategy, columns]);
+
   return (
     <div className={classes.root}>
       <DragDropContext onDragEnd={onDragEnd}>
-        {columns.map(({ column, statuses }, statusFrom) => {
-          const filteredItems = items.filter(el => statuses.includes(el.statusTypeName));
+        {columnsToRender.map(({ column, statuses }, statusFrom) => {
+          const filteredItems = items.filter(el => {
+            if (isSimpleStrategy && column === STATUS_TYPE_NAME.IN_PROGRESS) {
+              return el.inProgress;
+            }
+            if (isSimpleStrategy) {
+              return statuses.includes(el.statusTypeName) && !el.inProgress;
+            }
+            return statuses.includes(el.statusTypeName);
+          });
           const filteredItemsLength = filteredItems.length;
           return (
             <div className={classes.column} key={column}>
@@ -179,7 +204,9 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                 {!!filteredItemsLength && (
                   <ButtonBase value={column} className={classes.arrowWrap} onClick={handleToggleOpened}>
                     <KeyboardArrowDown
-                      className={cn(classes.arrow, { [classes.arrowDown]: openedStatuses.indexOf(column) !== -1 })}
+                      className={cn(classes.arrow, {
+                        [classes.arrowDown]: openedStatuses.indexOf(column) !== -1,
+                      })}
                     />
                   </ButtonBase>
                 )}
@@ -214,7 +241,9 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                     ) : (
                       <ButtonBase
                         value={column}
-                        className={cn(classes.placeholderCard, { [classes.pointer]: !!filteredItemsLength })}
+                        className={cn(classes.placeholderCard, {
+                          [classes.pointer]: !!filteredItemsLength,
+                        })}
                         onClick={handleToggleOpened}
                       >
                         {filteredItemsLength} задач

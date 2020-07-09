@@ -117,6 +117,14 @@ export const getTaskColumnsByProjectId = createDeepEqualSelector(getProjectById,
   return [];
 });
 
+export const getProjectStrategyByProjectId = createDeepEqualSelector(getProjectById, getPr => (id: number) => {
+  const currentProject = getPr(id);
+  if (currentProject && currentProject.strategy) {
+    return currentProject.strategy;
+  }
+  return '';
+});
+
 export const getPushForwardStatusesByProjectId = createDeepEqualSelector(
   getTaskColumnsByProjectId,
   getColumns => (id: number) => {
