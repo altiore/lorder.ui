@@ -4,6 +4,7 @@ import pick from 'lodash/pick';
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { routeProjectId, routeTaskSequenceNumber } from '#/@store/router/selectors';
 
+import { ITaskFormData } from './consts';
 import { Task } from './Task';
 
 import { IState, ITask } from '@types';
@@ -18,20 +19,30 @@ export const isTasksLoading = createDeepEqualSelector(allTasks, a => a.isLoading
 
 export const filteredTaskList = createDeepEqualSelector(allTaskList, tasks => tasks);
 
-export const EDIT_TASK_FORM_PROPS = [
-  'description',
-  'id',
-  'sequenceNumber',
-  'isDetailsLoaded',
-  'source',
-  'title',
-  'status',
-  'statusTypeName',
-  'value',
-  'performerId',
-  'projectParts',
-  'typeId',
-];
+export enum EDIT_TASK_FORM_PROPS {
+  description = 'description',
+  id = 'id',
+  sequenceNumber = 'sequenceNumber',
+  isDetailsLoaded = 'isDetailsLoaded',
+  source = 'source',
+  title = 'title',
+  status = 'status',
+  statusTypeName = 'statusTypeName',
+  value = 'value',
+  performerId = 'performerId',
+  projectId = 'projectId',
+  typeId = 'typeId',
+}
+
+export const getTaskInitialsFromTask = (task: ITask): ITaskFormData => {
+  const initialValues: ITaskFormData =
+    pick<ITask, EDIT_TASK_FORM_PROPS>(task, Object.values(EDIT_TASK_FORM_PROPS)) || {};
+  const taskProjectParts = task.projectParts;
+  initialValues.projectParts = taskProjectParts
+    ? taskProjectParts.slice(0).map((el: any) => (typeof el === 'number' ? el : el.id))
+    : [];
+  return initialValues;
+};
 
 export const getEditTaskInitialValues = createDeepEqualSelector(
   [allTaskList],
@@ -39,13 +50,11 @@ export const getEditTaskInitialValues = createDeepEqualSelector(
     const curTask: ITask | undefined = list.find(
       (el: Task) => el.projectId === projectId && el.sequenceNumber === sequenceNumber
     );
-    const initialValues = pick<any>(curTask || {}, EDIT_TASK_FORM_PROPS) || {};
-    if (initialValues.projectParts) {
-      initialValues.projectParts = (initialValues.projectParts as any)
-        .slice(0)
-        .map(el => (typeof el === 'number' ? el : el.id));
+    if (curTask) {
+      return getTaskInitialsFromTask(curTask);
     }
-    return initialValues;
+
+    return {};
   }
 );
 

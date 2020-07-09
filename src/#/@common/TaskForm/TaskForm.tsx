@@ -15,7 +15,7 @@ import { TextField } from '@components/TextField';
 
 import TaskDuration from '#/@common/TaskDuration';
 import { parseNumber } from '#/@store/@common/helpers';
-import { patchProjectTask, postProjectTask } from '#/@store/tasks';
+import { ITaskFormData, patchProjectTask, postProjectTask } from '#/@store/tasks';
 
 import DialogHeader from './DialogHeader';
 import ProjectPartsField from './ProjectPartsField';
@@ -24,18 +24,6 @@ import { useStyles } from './styles';
 import TaskComments from './TaskComments';
 import TaskHistory from './TaskHistory';
 import TaskMembers from './TaskMembers';
-
-export interface ITaskFormData {
-  isDetailsLoaded: boolean;
-  id?: number;
-  description?: string;
-  title?: string;
-  typeId?: number;
-  projectId: number;
-  value: number;
-  sequenceNumber: number;
-  status: number;
-}
 
 export interface ITaskFormProps extends InjectedFormProps<ITaskFormData, ITaskFormProps> {
   buttonText?: string;

@@ -7,7 +7,7 @@ import { IUserWork } from './IUserWork';
 export interface ITask {
   isArchived: boolean;
   isDetailsLoaded: boolean;
-  id: number | string;
+  id: number;
   title: string;
   description: string;
   performerId?: number;

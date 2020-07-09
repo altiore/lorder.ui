@@ -147,6 +147,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
         <PatchTaskForm
           projectId={pId}
           initialValues={{
+            projectId,
             status: statusFrom,
             statusTypeName: statusName,
           }}
@@ -157,7 +158,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
         }
       );
     },
-    [handleCloseTaskFrom, openDialog]
+    [handleCloseTaskFrom, openDialog, projectId]
   );
 
   return (

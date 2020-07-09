@@ -14,7 +14,6 @@ import {
 } from '#/@store/user-works';
 
 import { AxiosResponse } from 'axios';
-import uniqid from 'uniqid';
 
 import { IRequestAction } from '../@common/requestActions';
 import {
@@ -69,7 +68,7 @@ const postAndStartUserWorkHandler = (state: S, action: ActionMeta<any, any>) => 
   const data: Partial<Task> = get(action, 'payload.request.data');
   return state.startLoading().addItem({
     description: data.description,
-    id: uniqid('Task'),
+    id: 0,
     projectId: data.projectId,
     status: 2,
     title: data.title,
@@ -116,16 +115,25 @@ const postAndStartUserWorkFailHandler = (state: S, action: ActionMeta<any, any>)
 
 const postProjectTaskHandler = (state: S, { payload }: Action<IProjectRequest>) => {
   const data = payload && payload.request.data;
-  return state.startLoading().addItem(new Task({ id: uniqid(), userTasks: [], ...data }));
+  return state.startLoading().addItem(new Task({ id: 0, userTasks: [], ...data }));
 };
 
 const postProjectTaskSuccessHandler = (state: S, { payload }: Action<AxiosResponse>) => {
-  // TODO: find index before updateItem, because we can change logic for showing data
-  return state.stopLoading().updateItem(0, payload && payload.data);
+  const index = state.list.findIndex(el => el.id === 0);
+  if (index !== -1) {
+    return state.stopLoading().updateItem(index, payload && payload.data);
+  }
+
+  return state.stopLoading();
 };
 
 const postProjectTaskFailHandler = (state: S) => {
-  return state.stopLoading().removeItem(0);
+  const index = state.list.findIndex(el => el.id === 0);
+  if (index !== -1) {
+    state.stopLoading().removeItem(index);
+  }
+
+  return state.stopLoading();
 };
 
 const patchAndStopUserWorkHandler = (state: S, action: ActionMeta<any, any>) => {
