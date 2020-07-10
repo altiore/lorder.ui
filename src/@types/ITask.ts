@@ -22,6 +22,7 @@ export interface ITask {
   userWorks?: IDownloadList<IUserWork>;
   userTasks?: IUserTask[];
   projectParts: IProjectPart[];
+  inProgress: boolean;
 
   duration: string;
   durationInSeconds: number;

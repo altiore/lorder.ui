@@ -4,17 +4,16 @@ import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import get from 'lodash/get';
 
 import grey from '@material-ui/core/colors/grey';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import Avatar from '@components/Avatar';
+import TooltipBig from '@components/TooltipBig';
 
 import TypeIcon from '#/@common/TypeIcon';
-import { Task } from '#/@store/tasks';
 
-import { IUser } from '@types';
+import { ITask, IUser } from '@types';
 
-export interface ITaskCard extends Partial<Task> {
+export interface ITaskCard extends ITask {
   classes: any;
   getProjectMemberById: (_: any) => IUser;
   provided: DraggableProvided;
@@ -34,6 +33,7 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
 export const TaskCardTsx: React.FC<ITaskCard> = ({
   classes,
   getProjectMemberById,
+  inProgress,
   onClick,
   title,
   typeId,
@@ -60,20 +60,37 @@ export const TaskCardTsx: React.FC<ITaskCard> = ({
         <Typography gutterBottom component="span">
           {title}
         </Typography>
+        {inProgress && (
+          <TooltipBig title="В процессе" placement="top">
+            <div className={classes.progressIndicator}>
+              <span />
+            </div>
+          </TooltipBig>
+        )}
       </span>
       <div className={classes.footer}>
         <div className={classes.row}>
-          <div className={classes.value}>
-            <Typography component="span" variant="caption" className={classes.valueText}>
-              {value || '-'}
-            </Typography>
-          </div>
+          <TooltipBig
+            title={
+              <span>
+                Ценность задачи
+                <br /> (может изменяться в процессе)
+              </span>
+            }
+            placement="bottom"
+          >
+            <div className={classes.value}>
+              <Typography component="span" variant="caption" className={classes.valueText}>
+                {value || '-'}
+              </Typography>
+            </div>
+          </TooltipBig>
         </div>
-        <Tooltip title={get(taskPerformer, 'userName', 'N/A')}>
+        <TooltipBig title={get(taskPerformer, 'userName', 'N/A')} placement="bottom">
           <Avatar size="sm" src={get(taskPerformer, ['avatar', 'url'])}>
             {get(taskPerformer, ['email'], '--')}
           </Avatar>
-        </Tooltip>
+        </TooltipBig>
       </div>
     </div>
   );

@@ -42,6 +42,7 @@ export const AvatarTsx: React.FC<IAvatarProps> = React.forwardRef<any, IAvatarPr
         {...rest}
         className={cn(classes.avatarBorder, {
           [classes.avatarSelected]: isSelected,
+          [classes.avatarBorderSmall]: size === 'sm',
         })}
       >
         <ButtonBase ref={ref} className={classes.avatarWrapper} onClick={handleClick}>

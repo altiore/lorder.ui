@@ -19,13 +19,13 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import { PatchTaskForm } from '#/@common/TaskForm';
 import { DEFAULT_TRANSITION_DURATION } from '#/@store/dialog';
 import { TASKS_ROUTE } from '#/@store/router';
-import { EDIT_TASK_FORM, STATUS_NAMES, Task } from '#/@store/tasks';
+import { EDIT_TASK_FORM, STATUS_NAMES } from '#/@store/tasks';
 import { STATUS_TYPE_NAME } from '#/@store/tasksFilter/TasksFilter';
 
 import { useStyles } from './styles';
 import { TaskCard } from './TaskCard';
 
-import { ITaskColumn, PROJECT_STRATEGY } from '@types';
+import { ITask, ITaskColumn, PROJECT_STRATEGY } from '@types';
 
 const CARD_WIDTH = 296;
 
@@ -41,7 +41,7 @@ export interface IDragAndDropProps {
   destroy: any;
   fetchProjectTasks: any;
   height: number;
-  items: Task[];
+  items: ITask[];
   moveProjectTask: any;
   openDialog: any;
   openedStatuses: string[];
@@ -219,7 +219,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                     className={classes.columnContent}
                   >
                     {openedStatuses.indexOf(column) !== -1 && filteredItemsLength ? (
-                      filteredItems.map((item: Task, index) => {
+                      filteredItems.map((item: ITask, index) => {
                         return (
                           <Draggable
                             key={item.id}

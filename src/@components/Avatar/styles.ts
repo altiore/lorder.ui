@@ -16,6 +16,16 @@ export const useStyles = makeStyles((theme: Theme) =>
       pointerEvents: 'none',
       zIndex: 1,
     },
+    avatarBorderSmall: {
+      '& > button': {
+        margin: 0,
+      },
+      '&:last-child': {
+        marginRight: 0,
+      },
+      border: 'none',
+      marginLeft: 0,
+    },
     avatarSelected: {
       border: `2px solid ${theme.palette.secondary.dark}`,
       cursor: 'pointer',
