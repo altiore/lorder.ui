@@ -23,4 +23,4 @@ const mapDispatchToProps = {
   removeTaskComment,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskComments);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskComments as any);

@@ -17,7 +17,7 @@ export const postTaskComment = requestActions(
   `${BASE_ACTION}/ADD_TASK_COMMENT`,
   (projectId: number, taskId: number, comment: string) => {
     return {
-      fail: { message: `Ошибка при добавлении`, title: 'Провал!' },
+      fail: { message: `Минимальная длинна - 3 символа`, title: 'Провал!' },
       request: {
         data: {
           text: comment,
