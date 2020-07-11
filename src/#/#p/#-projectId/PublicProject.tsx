@@ -95,7 +95,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
           boxShadow: '-3.536px 3.536px 9.5px 0.5px rgba(0, 0, 0, 0.15)',
         }}
       >
-        <HeaderFixed brandName="Lorder" brandLink="/" />
+        <HeaderFixed />
       </div>
 
       <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />

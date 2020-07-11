@@ -88,7 +88,7 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
   const { formatMessage } = useIntl();
 
   return (
-    <HeaderFixed brandName={brandName} brandLink="/">
+    <HeaderFixed>
       {showTabs && (
         <Tabs
           classes={{ indicator: MuiTabsIndicator }}

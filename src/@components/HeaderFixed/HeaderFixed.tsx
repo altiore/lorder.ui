@@ -6,12 +6,11 @@ import cn from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
+import LorderLogoWithText from '@components/@icons/lorder-logo-with-text';
+
 export interface IHeaderFixedProps {
-  brandName: string;
-  brandLink: string;
   children?: React.ReactNode | false;
 }
 
@@ -23,7 +22,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: 'rgba(37, 36, 38, 0.6)',
   },
   brand: {
-    textDecoration: 'none',
+    height: 45,
+    marginTop: 6,
+    width: 99,
   },
   firstToolbar: {
     justifyContent: 'space-between',
@@ -50,7 +51,7 @@ function ElevationScroll({ children, classes }: ElevationScrollProps) {
   });
 }
 
-export const HeaderFixedTsx: React.FC<IHeaderFixedProps> = ({ brandName, brandLink, children }) => {
+export const HeaderFixedTsx: React.FC<IHeaderFixedProps> = ({ children }) => {
   const classes = useStyles();
 
   return (
@@ -58,9 +59,12 @@ export const HeaderFixedTsx: React.FC<IHeaderFixedProps> = ({ brandName, brandLi
       <ElevationScroll classes={classes}>
         <AppBar key={'top'} position="fixed" color="default">
           <Toolbar className={classes.firstToolbar}>
-            <Typography className={classes.brand} variant="h4" color="secondary" component={Link} to={brandLink || '#'}>
-              {brandName}
-            </Typography>
+            <Link to="/">
+              <LorderLogoWithText className={classes.brand} />
+            </Link>
+            {/*<Typography className={classes.brand} variant="h4" color="secondary" component={Link} to="/">*/}
+            {/*  {brandName}*/}
+            {/*</Typography>*/}
             {children}
           </Toolbar>
         </AppBar>
