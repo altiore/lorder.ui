@@ -24,6 +24,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   timerIco: {
     color: theme.palette.secondary.main,
+    height: 42,
+    width: 42,
   },
   toolbar: {
     [theme.breakpoints.down('sm')]: {
