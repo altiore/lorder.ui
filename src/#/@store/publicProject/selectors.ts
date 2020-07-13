@@ -19,6 +19,11 @@ export const publicProjectProject = createDeepEqualSelector(
   (pp: IPublicProject | undefined) => pp && pp.project
 );
 
+export const PublicProjectMembers = createDeepEqualSelector(
+  publicProjectData,
+  (pp: IPublicProject | undefined) => pp?.project?.members?.list
+);
+
 export const publicProjectUuid = createDeepEqualSelector(
   publicProjectData,
   (pp: IPublicProject | undefined) => pp && pp.uuid

@@ -17,7 +17,7 @@ import { PublicProjectTsx } from './PublicProject';
 
 import { IState } from '@types';
 
-const masStateToProps = createStructuredSelector<IState, any>({
+const mapStateToProps = createStructuredSelector<IState, any>({
   isAuth,
   isLoaded: publicProjectIsLoaded,
   isLoading: publicProjectIsLoading,
@@ -31,4 +31,4 @@ const mapDispatch = {
   fetchPublicProject,
 };
 
-export default connect(masStateToProps, mapDispatch)(PublicProjectTsx);
+export default connect(mapStateToProps, mapDispatch)(PublicProjectTsx);
