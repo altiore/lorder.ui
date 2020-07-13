@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import classNames from 'classnames';
@@ -7,7 +7,13 @@ import { Box, Button, Grid, MenuItem, Select, TextField } from '@material-ui/cor
 
 import { useStyles } from './styles';
 
+import { IMember } from '@types';
 import { IProject, IUserRole } from '@types';
+
+interface IPublicProjectMember extends IMember {
+  memberId: number;
+  projectId: number;
+}
 
 interface IFollowProject extends RouteComponentProps {
   project: IProject;
@@ -15,8 +21,10 @@ interface IFollowProject extends RouteComponentProps {
   verticalDirection?: boolean;
   postRequestMembership: any;
   projectId: number | undefined;
+  members: IPublicProjectMember[];
   isAuth: boolean;
   userEmail: string | undefined;
+  userId: number;
 }
 
 export const FollowProjectTsx = ({
@@ -25,11 +33,16 @@ export const FollowProjectTsx = ({
   verticalDirection = false,
   postRequestMembership,
   projectId,
+  members,
   isAuth,
   userEmail,
+  userId,
   history,
 }: IFollowProject) => {
   const [role, setRole] = useState('role');
+  const isMemberConnected = useMemo(() => {
+    return members.map(({ memberId }) => memberId).includes(userId);
+  }, [members, userId]);
   const handleSelect = useCallback((e: any) => {
     setRole(e.target.value);
   }, []);
@@ -44,6 +57,11 @@ export const FollowProjectTsx = ({
   if (!project.slogan) {
     return null;
   }
+
+  if (isMemberConnected) {
+    return null;
+  }
+
   return (
     <Box className={verticalDirection ? classes.followWrapVertical : classes.followWrap}>
       {project.slogan && (

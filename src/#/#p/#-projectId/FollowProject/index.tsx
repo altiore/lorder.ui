@@ -3,8 +3,13 @@ import { withRouter } from 'react-router-dom';
 
 import { createStructuredSelector } from 'reselect';
 
-import { isAuth, userEmail } from '#/@store/identity';
-import { postRequestMembership, PublicProjectProjectId, PublicProjectRoles } from '#/@store/publicProject';
+import { isAuth, userEmail, userId } from '#/@store/identity';
+import {
+  postRequestMembership,
+  PublicProjectMembers,
+  PublicProjectProjectId,
+  PublicProjectRoles,
+} from '#/@store/publicProject';
 
 import { FollowProjectTsx } from './FollowProject';
 
@@ -17,12 +22,16 @@ const mapStateToProps = createStructuredSelector<
     projectId: number | undefined;
     isAuth: boolean;
     userEmail: string | undefined;
+    userId: any;
+    members: any;
   }
 >({
   isAuth,
+  members: PublicProjectMembers,
   projectId: PublicProjectProjectId,
   roles: PublicProjectRoles,
   userEmail,
+  userId,
 });
 
 const mapDispatchToProps = {
