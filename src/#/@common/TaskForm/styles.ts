@@ -46,6 +46,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
       maxWidth: '100%',
     },
   },
+  durationBlock: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingTop: theme.spacing(1),
+  },
   grow: {
     flexGrow: 1,
   },

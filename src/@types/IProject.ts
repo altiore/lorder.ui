@@ -12,13 +12,13 @@ export enum PROJECT_STRATEGY {
 }
 
 export interface ITaskMove {
-  id: number;
-  title: string;
+  from: string;
   type: TASK_STATUS_MOVE_TYPE;
-
-  projectRoleId: number;
-  fromId: number;
-  toId: number;
+  to: string;
+  requirements?: {
+    fields?: string[];
+    transit?: true;
+  };
 }
 
 export interface ITaskColumn {

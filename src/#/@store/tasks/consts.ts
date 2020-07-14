@@ -1,3 +1,5 @@
+import { COMPLEXITY } from '@types';
+
 export const EDIT_TASK_FORM = 'EditTaskForm';
 
 export interface ITaskFormData {
@@ -16,6 +18,8 @@ export interface ITaskFormData {
   statusTypeName: string;
   source?: string;
   projectParts?: number[];
+
+  complexity?: COMPLEXITY;
 }
 
 // TODO: перенести в переводы

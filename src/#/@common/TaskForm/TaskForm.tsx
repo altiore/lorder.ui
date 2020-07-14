@@ -18,6 +18,7 @@ import { parseNumber } from '#/@store/@common/helpers';
 import { ITaskFormData, patchProjectTask, postProjectTask } from '#/@store/tasks';
 
 import DialogHeader from './DialogHeader';
+import DurationAdditionalField from './duration-additional-field';
 import ProjectPartsField from './ProjectPartsField';
 import StatusField from './StatusField';
 import { useStyles } from './styles';
@@ -161,7 +162,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
       [currentSequenceNumber, handleSave, projectId, setIsCurrentState, setSequenceNumber, startUserWork]
     );
 
-    const { actions, card, cardFirst, cardFirstNotPage, cardForm, cardSecond, grow } = useStyles();
+    const { actions, card, cardFirst, cardFirstNotPage, cardForm, cardSecond, durationBlock, grow } = useStyles();
 
     if (!initialD) {
       return null;
@@ -209,9 +210,10 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
                 <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />
               </div>
               {initialD.id && (
-                <div>
+                <div className={durationBlock}>
                   {isPaused && 'задача на паузе!'}
                   <TaskDuration taskId={initialD.id} />
+                  <DurationAdditionalField projectId={projectId} />
                 </div>
               )}
               <TaskMembers taskId={initialD.id} />
