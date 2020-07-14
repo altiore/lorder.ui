@@ -1,15 +1,7 @@
 export enum TASK_STATUS_MOVE_TYPE {
-  PREPARE = 'prepare',
-  ASK_IMPROVE = 'ask_improve',
-
-  START = 'start',
-  ASK_PREPARE = 'ask_prepare',
-
-  COMPLETE = 'complete',
-  ASK_RESTART = 'ask_restart',
-
-  ESTIMATE = 'estimate',
-  ASK_RECHECK = 'ask_recheck',
+  PUSH_FORWARD = 'push_forward',
+  BRING_BACK = 'bring_back',
+  JUMP = 'JUMP',
 }
 
 export interface IStatusMove {

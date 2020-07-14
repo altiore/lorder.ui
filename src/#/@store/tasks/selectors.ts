@@ -34,13 +34,19 @@ export enum EDIT_TASK_FORM_PROPS {
   typeId = 'typeId',
 }
 
-export const getTaskInitialsFromTask = (task: ITask): ITaskFormData => {
+export const getTaskInitialsFromTask = (task: ITask, userId?: number): ITaskFormData => {
   const initialValues: ITaskFormData =
     pick<ITask, EDIT_TASK_FORM_PROPS>(task, Object.values(EDIT_TASK_FORM_PROPS)) || {};
   const taskProjectParts = task.projectParts;
   initialValues.projectParts = taskProjectParts
     ? taskProjectParts.slice(0).map((el: any) => (typeof el === 'number' ? el : el.id))
     : [];
+  if (userId && task.userTasks) {
+    const curUserTask = task.userTasks.find(ut => ut.userId === userId);
+    if (curUserTask && curUserTask.complexity) {
+      initialValues.complexity = curUserTask.complexity;
+    }
+  }
   return initialValues;
 };
 
