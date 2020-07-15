@@ -35,6 +35,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
       overflowX: 'hidden',
       padding: theme.spacing(1, 0),
     },
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
     [theme.breakpoints.up('lg')]: {
       width: theme.mainContent.width,
     },
@@ -45,6 +48,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
   contentWrap: {},
   duration: {
     width: 100,
+  },
+  lastEvents: {
+    [theme.breakpoints.down('sm')]: {
+      margin: '0 10px',
+      maxWidth: '100%',
+    },
   },
   listRoot: {
     '& > li:last-child': {
@@ -96,7 +105,7 @@ export const DashboardJsx: React.FC<IDashboardProps> = () => {
           <StartForm />
         </Grid>
         <MediaQuery minDeviceWidth={theme.breakpoints.values.sm}>
-          <Grid item lg={4} md={5} sm={12}>
+          <Grid item lg={4} md={5} sm={12} xs={12} className={classes.lastEvents}>
             <LastEvents />
           </Grid>
         </MediaQuery>
