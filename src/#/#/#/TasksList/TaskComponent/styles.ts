@@ -62,6 +62,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
       paddingTop: 2,
       textOverflow: 'ellipsis',
       zIndex: 1,
+      [theme.breakpoints.down('sm')]: {
+        paddingRight: 25,
+      },
     },
     '&:after': {
       backgroundColor: 'transparent',
@@ -261,6 +264,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
     left: 10,
     position: 'absolute',
     zIndex: 1,
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 15,
+      position: 'relative',
+    },
   },
   title: {
     alignItems: 'center',
