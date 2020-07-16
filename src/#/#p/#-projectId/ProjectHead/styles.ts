@@ -1,30 +1,20 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
-  contentWrap: {
-    margin: '5px 5px 0 5px',
-    marginLeft: -70,
-    maxWidth: 760,
-    padding: 1,
-    width: '100%',
-    [theme.breakpoints.down('sm')]: {
-      justifyContent: 'center',
-      marginLeft: 0,
+  firstBlockContent: {
+    paddingLeft: 180,
+    [theme.breakpoints.down('md')]: {
+      paddingLeft: 16,
+    },
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: 0,
     },
   },
   imageWrap: {
     height: 228,
     width: 226,
     [theme.breakpoints.down('xs')]: {
-      margin: '45px 0',
-    },
-  },
-  projectHeadWrap: {
-    backgroundImage: 'linear-gradient(45deg, #29292b 0%, #424247 52%, #29292b 100%)',
-    minHeight: 295,
-    paddingBottom: 30,
-    [theme.breakpoints.down('xs')]: {
-      textAlign: 'center',
+      margin: '45px auto',
     },
   },
   projectInfoWrap: {

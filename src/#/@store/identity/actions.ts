@@ -77,18 +77,24 @@ export const uploadAvatar = requestActions('USER/UPLOAD_AVATAR', file => ({
   },
 }));
 
-export const updateProfile = requestActions('ME/UPDATE', (newUserData: { displayName?: string; tel?: string }) => ({
-  form: 'ProfileForm',
-  request: {
-    data: newUserData,
-    method: 'patch',
-    url: `/me`,
-  },
-  success: {
-    message: 'Данные успешна обновлены',
-    title: 'Успех!',
-  },
-}));
+export const updateProfile = requestActions(
+  'ME/UPDATE',
+  ({ displayName, tel }: { displayName?: string; tel?: string }) => ({
+    form: 'ProfileForm',
+    request: {
+      data: {
+        displayName,
+        tel: tel || null,
+      },
+      method: 'patch',
+      url: `/me`,
+    },
+    success: {
+      message: 'Данные успешна обновлены',
+      title: 'Успех!',
+    },
+  })
+);
 
 export const refreshToken = requestActions('ME/REFRESH_TOKEN', (token: string, device: string) => ({
   noAuth: true,
