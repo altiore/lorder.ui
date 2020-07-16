@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import classNames from 'classnames';
+import cn from 'classnames';
 
-import { Typography } from '@material-ui/core';
+import { Button, ButtonProps, Typography } from '@material-ui/core';
 
 import SettingsIcon from '@components/@icons/Settings';
 
@@ -10,26 +10,21 @@ import { LinkButton } from '#/@common/LinkButton';
 
 import { useStyles } from './styles';
 
-interface IButtonEditProps {
+interface IProps extends ButtonProps {
   children: string;
-  routePath: string;
-  variant?: 'Gray';
+  routePath?: string;
 }
 
-export const ButtonEdit = ({ children, routePath, variant }: IButtonEditProps) => {
-  const classes = useStyles();
+export const ButtonEdit: React.FC<IProps> = ({ children, routePath, variant, ...rest }) => {
+  const { editButton, editButtonText, editButtonTextGray, settingsIcon, settingsIconGray } = useStyles();
+  const BaseComponent: any = useMemo(() => (routePath ? LinkButton : Button), [routePath]);
+
   return (
-    <LinkButton to={routePath} className={classes.editButton}>
-      <SettingsIcon
-        className={variant ? classNames(classes[`settingsIcon${variant}`], classes.settingsIcon) : classes.settingsIcon}
-      />
-      <Typography
-        className={
-          variant ? classNames(classes[`editButtonText${variant}`], classes.editButtonText) : classes.editButtonText
-        }
-      >
+    <BaseComponent {...rest} className={editButton}>
+      <SettingsIcon className={cn(settingsIcon, { [settingsIconGray]: variant === 'contained' })} />
+      <Typography className={cn(editButtonText, { [editButtonTextGray]: variant === 'contained' })}>
         {children}
       </Typography>
-    </LinkButton>
+    </BaseComponent>
   );
 };

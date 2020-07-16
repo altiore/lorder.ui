@@ -17,7 +17,7 @@ export const GroupHeader = memo(({ headerTitle, buttonTitle, buttonRoutePath = '
   return (
     <Grid container justify="space-between" alignItems="center" className={classes.tableGroupHeader}>
       <h2 className={classes.h2}>{headerTitle}</h2>
-      <ButtonEdit routePath={buttonRoutePath} variant="Gray">
+      <ButtonEdit routePath={buttonRoutePath} variant="contained">
         {buttonTitle}
       </ButtonEdit>
     </Grid>

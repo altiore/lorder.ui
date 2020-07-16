@@ -17,7 +17,7 @@ export const HeaderWithButton = memo(({ title, buttonText, marginBottom, marginT
     <div className={classes.headerTitleWrap}>
       <h1 className={classes.headerTitle}>{title}</h1>
       <div className={classes.editButtonWrap}>
-        <ButtonEdit routePath="/" variant="Gray">
+        <ButtonEdit routePath="/" variant="contained">
           {buttonText}
         </ButtonEdit>
       </div>

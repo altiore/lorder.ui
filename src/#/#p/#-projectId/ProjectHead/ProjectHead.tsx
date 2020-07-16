@@ -3,6 +3,7 @@ import React from 'react';
 import { Box, Grid } from '@material-ui/core';
 
 import ButtonEdit from '@components/ButtonEdit';
+import GradientHead from '@components/gradient-head';
 
 import { useStyles } from './styles';
 import ProjectLogo from './time.png';
@@ -16,21 +17,21 @@ interface IprojectHeadProps {
 }
 
 export const ProjectHeadTsx = ({ project, editProjectLink, isAuth }: IprojectHeadProps) => {
-  const classes = useStyles();
+  const { firstBlockContent, imageWrap, projectName, projectTagline } = useStyles();
   return (
-    <Grid container className={classes.projectHeadWrap} alignItems="center" justify="center">
-      <Grid container alignItems="center" justify="space-between" className={classes.contentWrap}>
-        <Grid item xs={12} sm={6} md={8}>
-          <div>
-            <h1 className={classes.projectName}>{project.title}</h1>
-            {project.desc && <p className={classes.projectTagline}>{project.desc}</p>}
-            {isAuth && <ButtonEdit routePath={editProjectLink}>Редактировать</ButtonEdit>}
-          </div>
-        </Grid>
-        <Box className={classes.imageWrap}>
+    <GradientHead>
+      <Grid item xs={12} sm={6} md={8}>
+        <div className={firstBlockContent}>
+          <h1 className={projectName}>{project.title}</h1>
+          {project.desc && <p className={projectTagline}>{project.desc}</p>}
+          {isAuth && <ButtonEdit routePath={editProjectLink}>Редактировать</ButtonEdit>}
+        </div>
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <Box className={imageWrap}>
           <img src={ProjectLogo} alt={project.title} />
         </Box>
       </Grid>
-    </Grid>
+    </GradientHead>
   );
 };
