@@ -4,7 +4,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   bold: {
     fontWeight: 400,
   },
-
+  currentUserCell: {
+    backgroundColor: '#f6f8fa',
+    borderBottom: 0,
+  },
   h2: {
     color: '#29292b',
     fontFamily: 'Roboto',
@@ -36,6 +39,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
       fontWeight: 400,
     },
     fontSize: 18,
+  },
+  tableCellInHeader: {
+    background: '#fff',
+    borderBottom: '1px solid #000',
   },
   tableContainer: {
     ...theme.mainContent.scroll,
