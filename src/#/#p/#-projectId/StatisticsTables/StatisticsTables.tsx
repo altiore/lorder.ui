@@ -8,17 +8,20 @@ import { GroupFooter, GroupHeader, StatisticTable } from './TableGroup/';
 interface IMember {
   name: string;
   y: number;
+  id?: number;
 }
 
 interface IStatisticsTablesProps {
   timeStatistic: IMember[];
   worthPoints: IMember[];
+  userId: number;
 }
 
 const getMembersToDisplay = (usersList: IMember[], totalUnitsValue: number) =>
   usersList
-    .map(({ name, y = 0 }) => {
+    .map(({ name, id, y = 0 }) => {
       return {
+        id,
         name,
         percentage: ((100 * y) / totalUnitsValue).toFixed(2),
         units: y,
@@ -30,7 +33,8 @@ const calculateUnitsSum = (members: IMember[]) => {
   return members.reduce((acum: number, member: IMember) => member.y + acum, 0);
 };
 
-export const StatisticTablesTsx = memo(({ timeStatistic, worthPoints }: IStatisticsTablesProps) => {
+export const StatisticTablesTsx = memo(({ timeStatistic, worthPoints, userId }: IStatisticsTablesProps) => {
+  console.log(timeStatistic);
   const timePointsSum = useMemo(() => {
     return calculateUnitsSum(timeStatistic);
   }, [timeStatistic]);
@@ -66,17 +70,18 @@ export const StatisticTablesTsx = memo(({ timeStatistic, worthPoints }: IStatist
   );
 
   const classes = useStyles();
+  console.log(userId);
   return (
     <Grid container justify="center">
       <div className={classes.tableGroupWrap}>
         <GroupHeader headerTitle="СТАТИСТИКА ПО ВРЕМЕНИ" buttonTitle="Редактировать" buttonRoutePath="/" />
-        <StatisticTable members={filteredTimeTableMembers} unit="h" unitTitle="Время" />
+        <StatisticTable members={filteredTimeTableMembers} unit="h" unitTitle="Время" userId={userId} />
         <GroupFooter members={filteredTimeTableMembers} searchCallback={handleTimeTableMembers} />
       </div>
 
       <div className={classes.tableGroupWrap}>
         <GroupHeader headerTitle="СТАТИСТИКА ПО ЦЕННОСТИ" buttonTitle="Редактировать" buttonRoutePath="/" />
-        <StatisticTable members={filteredPointsTableMembers} unitTitle="Ценность" />
+        <StatisticTable members={filteredPointsTableMembers} unitTitle="Ценность" userId={userId} />
         <GroupFooter members={membersForTimeTable} searchCallback={handlePointsTableMembers} />
       </div>
     </Grid>

@@ -36,6 +36,7 @@ export interface IPublicProjectProps extends RouteComponentProps<{ projectId: st
     image: string;
     name: string;
   }>;
+  userId: number;
 }
 
 export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
@@ -48,6 +49,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
   project,
   publicProjectUuid,
   statistic,
+  userId,
 }) => {
   const matchProjectUuid = useMemo(() => {
     return match.params.projectId;
@@ -68,6 +70,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
 
   const chartData = useMemo(() => {
     return members.map(el => ({
+      id: el.member.id,
       name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
       y: millisecondsToHours(el.timeSum) || 0.01,
     }));
@@ -75,6 +78,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
 
   const chartValueData = useMemo(() => {
     return members.map(el => ({
+      id: el.member.id,
       name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
       y: el.valueSum || 0.1,
     }));
@@ -102,7 +106,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
       <ProjectMetrics statistic={statistic} />
       <FollowProject project={project} />
       <div className={classes.sectionWrap}>
-        <StatisticTablesTsx timeStatistic={chartData} worthPoints={chartValueData} />
+        <StatisticTablesTsx timeStatistic={chartData} worthPoints={chartValueData} userId={userId} />
       </div>
       <ProjectValues />
       <ProjectTeam members={get(members, 'list', [])} />

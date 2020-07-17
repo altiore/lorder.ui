@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { isAuth } from '#/@store/identity';
+import { isAuth, userId } from '#/@store/identity';
 import {
   fetchPublicProject,
   publicProjectIsLoaded,
@@ -25,6 +25,7 @@ const mapStateToProps = createStructuredSelector<IState, any>({
   publicProjectUuid,
   rolesList,
   statistic: publicProjectStatistic,
+  userId,
 });
 
 const mapDispatch = {

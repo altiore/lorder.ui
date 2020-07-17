@@ -15,44 +15,90 @@ interface IStatisticTableProps {
   members: any[];
   unit?: string;
   unitTitle: string;
+  userId: number;
 }
 
-export const StatisticTable = memo(({ members, unit = '', unitTitle }: IStatisticTableProps) => {
-  const { tableContainer, tableWrap, tableCell, noBorder, light, bold, tableRow } = useStyles();
+export const StatisticTable = memo(({ members, unit = '', unitTitle, userId }: IStatisticTableProps) => {
+  const {
+    currentUserCell,
+    tableContainer,
+    tableWrap,
+    tableCell,
+    noBorder,
+    light,
+    bold,
+    tableRow,
+    tableCellInHeader,
+  } = useStyles();
+  const tableHeadCells = classNames(tableCell, noBorder, light, tableCellInHeader);
+
   return (
     <TableContainer className={tableContainer}>
-      <Table className={tableWrap} aria-label="simple table">
+      <Table className={tableWrap} aria-label="simple table" stickyHeader>
         <TableHead>
           <TableRow className={tableRow}>
-            <TableCell className={classNames(tableCell, noBorder, light)}>№</TableCell>
-            <TableCell align="left" className={classNames(tableCell, noBorder, light)}>
+            <TableCell className={tableHeadCells}>№</TableCell>
+            <TableCell align="left" className={tableHeadCells}>
               Имя участника
             </TableCell>
-            <TableCell align="right" className={classNames(tableCell, noBorder, light)}>
+            <TableCell align="right" className={tableHeadCells}>
               {unitTitle}
             </TableCell>
-            <TableCell align="right" className={classNames(tableCell, noBorder, light)}>
+            <TableCell align="right" className={tableHeadCells}>
               Доля
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {members.map((row, i) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row" className={classNames(tableCell, light)}>
-                <b>{i + 1}.</b>
-              </TableCell>
-              <TableCell align="left" className={classNames(tableCell, light)}>
-                {row.name}
-              </TableCell>
-              <TableCell align="right" className={classNames(tableCell, bold)}>
-                {row.units} {unit}
-              </TableCell>
-              <TableCell align="right" className={classNames(tableCell, bold)}>
-                {row.percentage}%
-              </TableCell>
-            </TableRow>
-          ))}
+          {members.map((row, i) => {
+            const isCurrentUser = row.id === userId;
+            return (
+              <TableRow key={row.name}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  className={classNames({
+                    [tableCell]: true,
+                    [light]: true,
+                    [currentUserCell]: isCurrentUser,
+                  })}
+                >
+                  <b>{i + 1}.</b>
+                </TableCell>
+                <TableCell
+                  align="left"
+                  className={classNames({
+                    [tableCell]: true,
+                    [currentUserCell]: isCurrentUser,
+                    [light]: !isCurrentUser,
+                    [bold]: isCurrentUser,
+                  })}
+                >
+                  {row.name}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  className={classNames({
+                    [tableCell]: true,
+                    [bold]: true,
+                    [currentUserCell]: isCurrentUser,
+                  })}
+                >
+                  {row.units} {unit}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  className={classNames({
+                    [tableCell]: true,
+                    [bold]: true,
+                    [currentUserCell]: isCurrentUser,
+                  })}
+                >
+                  {row.percentage}%
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>
