@@ -4,3 +4,8 @@ export enum CARD_COLOR {
   GREEN = 'green',
   VIOLET = 'violet',
 }
+
+export enum LOGO_TYPE {
+  ANGLE = 'angle',
+  ROUND = 'round',
+}
