@@ -292,7 +292,7 @@ export const ProjectCardTsx: React.FC<IProps> = ({
             [logoWrapRound]: logoVariant === LOGO_TYPE.ROUND,
           })}
         >
-          <img src={logoSrc || `${process.env.PUBLIC_URL}logo_patreon.png`} alt={`${title} logo`} />
+          <img src={logoSrc || `${process.env.PUBLIC_URL}/logo_patreon.png`} alt={`${title} logo`} />
         </div>
       </div>
       <div className={titleWrap}>
