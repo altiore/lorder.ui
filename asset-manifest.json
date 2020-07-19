@@ -1,25 +1,33 @@
 {
   "files": {
     "main.css": "/static/css/main.59f08aeb.chunk.css",
-    "main.js": "/main.28dcea3d6e58b2ffee58.bundle.js",
+    "main.js": "/main.8d2981a2292ce635435d.bundle.js",
     "main.css.map": "/static/css/main.59f08aeb.chunk.css.map",
-    "main.js.map": "/main.28dcea3d6e58b2ffee58.bundle.js.map",
-    "runtime~main.js": "/runtime~main.28dcea3d6e58b2ffee58.bundle.js",
-    "runtime~main.js.map": "/runtime~main.28dcea3d6e58b2ffee58.bundle.js.map",
+    "main.js.map": "/main.8d2981a2292ce635435d.bundle.js.map",
+    "runtime~main.js": "/runtime~main.8d2981a2292ce635435d.bundle.js",
+    "runtime~main.js.map": "/runtime~main.8d2981a2292ce635435d.bundle.js.map",
     "vendors~main.css": "/static/css/vendors~main.fc8b9f32.chunk.css",
-    "vendors~main.js": "/vendors~main.28dcea3d6e58b2ffee58.bundle.js",
+    "vendors~main.js": "/vendors~main.8d2981a2292ce635435d.bundle.js",
     "vendors~main.css.map": "/static/css/vendors~main.fc8b9f32.chunk.css.map",
-    "vendors~main.js.map": "/vendors~main.28dcea3d6e58b2ffee58.bundle.js.map",
+    "vendors~main.js.map": "/vendors~main.8d2981a2292ce635435d.bundle.js.map",
     "iframe.html": "/iframe.html",
-    "precache-manifest.da5efe211e3b38414dfecd10999f22a0.js": "/precache-manifest.da5efe211e3b38414dfecd10999f22a0.js",
+    "precache-manifest.080e3c09b5b93cad7d2d41c5a2707f3f.js": "/precache-manifest.080e3c09b5b93cad7d2d41c5a2707f3f.js",
     "service-worker.js": "/service-worker.js",
-    "vendors~main.28dcea3d6e58b2ffee58.bundle.js.LICENSE.txt": "/vendors~main.28dcea3d6e58b2ffee58.bundle.js.LICENSE.txt"
+    "static/media/pie_black.png": "/static/media/pie_black.6c3d564b.png",
+    "static/media/pie_black_v2.svg": "/static/media/pie_black_v2.4b446fa9.svg",
+    "static/media/pie_blue.png": "/static/media/pie_blue.b2eeb201.png",
+    "static/media/pie_blue_v2.svg": "/static/media/pie_blue_v2.0d1961f5.svg",
+    "static/media/pie_green.png": "/static/media/pie_green.874bd157.png",
+    "static/media/pie_green_v2.svg": "/static/media/pie_green_v2.7edf8651.svg",
+    "static/media/pie_violet.png": "/static/media/pie_violet.626b0ab5.png",
+    "static/media/pie_violet_v2.svg": "/static/media/pie_violet_v2.e69f6b47.svg",
+    "vendors~main.8d2981a2292ce635435d.bundle.js.LICENSE.txt": "/vendors~main.8d2981a2292ce635435d.bundle.js.LICENSE.txt"
   },
   "entrypoints": [
-    "runtime~main.28dcea3d6e58b2ffee58.bundle.js",
+    "runtime~main.8d2981a2292ce635435d.bundle.js",
     "static/css/vendors~main.fc8b9f32.chunk.css",
-    "vendors~main.28dcea3d6e58b2ffee58.bundle.js",
+    "vendors~main.8d2981a2292ce635435d.bundle.js",
     "static/css/main.59f08aeb.chunk.css",
-    "main.28dcea3d6e58b2ffee58.bundle.js"
+    "main.8d2981a2292ce635435d.bundle.js"
   ]
 }
