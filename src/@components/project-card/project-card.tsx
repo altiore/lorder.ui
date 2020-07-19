@@ -19,7 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@components/Avatar';
 import TooltipBig from '@components/TooltipBig';
 
-import { CARD_COLOR } from './consts';
+import { CARD_COLOR, LOGO_TYPE } from './consts';
 import CommentSvg from './icons/comment';
 import ContributingSvg from './icons/contributing';
 import MaskSvg from './icons/mask';
@@ -46,11 +46,6 @@ const SIZE = {
 enum TAB {
   PROJECT,
   MEMBER,
-}
-
-enum LOGO_TYPE {
-  ANGLE = 'angle',
-  ROUND = 'round',
 }
 
 const MAP_CARD_IMG = {

@@ -1,24 +1,17 @@
 import React, { useCallback, useState } from 'react';
 
-import Collapse from '@material-ui/core/Collapse';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 
 import TelegramIco from '@components/@icons/Telegram';
 import ButtonEdit from '@components/ButtonEdit';
 import GradientHead from '@components/gradient-head';
+import ProjectCard, { CARD_COLOR, LOGO_TYPE } from '@components/project-card';
 
 import { Project } from '#/@store/projects';
 
@@ -28,6 +21,7 @@ import LinkedInIco from './icons/linkedin';
 import ProfileForm from './ProfileForm';
 
 import { ROLE } from '@types';
+import getRandEnum from '@utils/get-rand-enum';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   avatarGrid: {
@@ -61,11 +55,19 @@ export const useStyles = makeStyles((theme: Theme) => ({
     minWidth: 20,
     paddingLeft: 40,
   },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
   profileForm: {
     position: 'relative',
+  },
+  projectList: {
+    margin: '0 auto',
+    maxWidth: 1290,
+    padding: '60px 0',
+  },
+  scrollBody: {
+    backgroundColor: 'white',
+    maxHeight: 'calc(100vh - 56px)',
+    overflowY: 'auto',
+    ...theme.scroll.secondary,
   },
   userNameStyle: {
     color: 'white',
@@ -86,36 +88,30 @@ interface IProfile {
 }
 
 export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayName, userRole }) => {
-  const {
-    avatarGrid,
-    closeIcon,
-    contactIcon,
-    iconColored,
-    lastBlock,
-    nested,
-    profileForm,
-    userNameStyle,
-    userRoleStyle,
-  } = useStyles();
-
-  const [open, setOpen] = useState(false);
-
   const [isEdit, setIsEdit] = useState(false);
 
   const toggleEdit = useCallback(() => {
     setIsEdit(isE => !isE);
   }, [setIsEdit]);
 
-  const handleClick = useCallback(() => {
-    setOpen(o => !o);
-  }, [setOpen]);
-
   const handleConnect = useCallback(() => {
     alert('Not Implemented (');
   }, []);
 
+  const {
+    avatarGrid,
+    closeIcon,
+    contactIcon,
+    iconColored,
+    lastBlock,
+    profileForm,
+    projectList,
+    scrollBody,
+    userNameStyle,
+    userRoleStyle,
+  } = useStyles();
   return (
-    <div>
+    <div className={scrollBody}>
       <GradientHead>
         <Grid item xs={12} md={4} className={avatarGrid}>
           <Avatar avatar={userAvatar} email={userDisplayName} />
@@ -138,7 +134,7 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
             </>
           )}
         </Grid>
-        <Grid item xs={12} md={4} alignItems="center" className={lastBlock}>
+        <Grid item xs={12} md={4} className={lastBlock}>
           <Fab className={contactIcon} onClick={handleConnect}>
             <TelegramIco />
           </Fab>
@@ -150,25 +146,20 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
           </Fab>
         </Grid>
       </GradientHead>
-      <div>
-        <List>
-          <ListItem button onClick={handleClick}>
-            <ListItemText primary={`Активных проектов - ${projects.length}`} />
-            {open ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {projects.map(project => (
-                <ListItem key={project.id} button className={nested}>
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary={project.title} secondary={`${project.shareValue}sp (${project.shareTime})`} />
-                </ListItem>
-              ))}
-            </List>
-          </Collapse>
-        </List>
+      <div className={projectList}>
+        <Grid alignItems="center" justify="center" container spacing={3}>
+          {projects.map(project => (
+            <Grid key={project.id} item>
+              <ProjectCard
+                color={getRandEnum(CARD_COLOR)}
+                logoVariant={getRandEnum(LOGO_TYPE)}
+                title={project.title}
+                membersCount={project.members.length}
+                value={project.shareValue}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </div>
     </div>
   );
