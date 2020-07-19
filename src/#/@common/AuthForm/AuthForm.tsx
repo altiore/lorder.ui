@@ -76,7 +76,7 @@ export const AuthForm: React.FC<ILoginProps> = ({ autoFocus, clearErrors, isMagi
       <Button type="button" className={classes.toggleButton} onClick={changeToMagic} color="secondary">
         {isMagicLoginForm
           ? `${isLogin ? 'Вход' : 'Регистрация'} по паролю`
-          : `${isLogin ? 'Вход по ссылке' : 'Регистрация по ссылки'}`}
+          : `${isLogin ? 'Вход по ссылке' : 'Регистрация по ссылке'}`}
       </Button>
     </div>
   );
