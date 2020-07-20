@@ -188,8 +188,10 @@ export default createMuiTheme({
       fontWeight: 400,
     },
     h5: {
+      color: '#29292b',
       fontSize: theme.typography.pxToRem(18),
       fontWeight: 500,
+      lineHeight: '24px',
     },
     h6: {
       fontSize: theme.typography.pxToRem(13),

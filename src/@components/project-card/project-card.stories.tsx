@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexFlow: 'row nowrap',
     justifyContent: 'space-between',
+    marginBottom: 16,
     width: '100%',
   },
   root: {

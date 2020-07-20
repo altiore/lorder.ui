@@ -10,7 +10,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
@@ -80,9 +79,26 @@ const useStyles = makeStyles((theme: Theme) => ({
     top: -14,
     zIndex: 1,
   },
+  digitStyle: {
+    color: theme.palette.default.main,
+    fontFamily: theme.typography.fontFamily,
+    fontSize: 16,
+    fontWeight: 700,
+  },
   header: {
     height: 180,
     position: 'relative',
+  },
+  iconStyle: {
+    color: '#c5c5c5',
+  },
+  listStyle: {
+    marginTop: 16,
+  },
+  listText: {
+    color: '#232323',
+    fontFamily: theme.typography.fontFamily,
+    fontSize: 14,
   },
   logoWrap: {
     '& > img': {
@@ -238,7 +254,11 @@ export const ProjectCardTsx: React.FC<IProps> = ({
   const {
     cardStyle,
     commentStyle,
+    digitStyle,
     header,
+    iconStyle,
+    listStyle,
+    listText,
     logoWrap,
     logoWrapAngle,
     logoWrapRound,
@@ -296,7 +316,7 @@ export const ProjectCardTsx: React.FC<IProps> = ({
         </div>
       </div>
       <div className={titleWrap}>
-        <Typography variant="h4">{title}</Typography>
+        <Typography variant="h5">{title}</Typography>
       </div>
       <div className={tabsWrap}>
         <Tabs
@@ -323,21 +343,21 @@ export const ProjectCardTsx: React.FC<IProps> = ({
           onChangeIndex={handleChangeIndex}
         >
           <TabPanel value={curTab} index={TAB.PROJECT} dir={theme.direction}>
-            <List component="nav" aria-label="main mailbox folders">
+            <List className={listStyle} component="nav" aria-label="Информация о проекте">
               <ListItem button>
-                <ListItemIcon>
-                  <TeamSvg fontSize="small" />
+                <ListItemIcon className={iconStyle}>
+                  <TeamSvg color="inherit" fontSize="small" />
                 </ListItemIcon>
-                <ListItemText primary="Участников" />
-                <ListItemSecondaryAction>{formatNumber(membersCount)}</ListItemSecondaryAction>
+                <span className={listText}>Участников</span>
+                <ListItemSecondaryAction className={digitStyle}>{formatNumber(membersCount)}</ListItemSecondaryAction>
               </ListItem>
               <ListItem button>
-                <ListItemIcon>
-                  <ValueSvg fontSize="small" />
+                <ListItemIcon className={iconStyle}>
+                  <ValueSvg color="inherit" fontSize="small" />
                 </ListItemIcon>
-                <ListItemText primary="Ценность" />
-                <ListItemSecondaryAction>
-                  {formatNumber(value, {
+                <span className={listText}>Ценность</span>
+                <ListItemSecondaryAction className={digitStyle}>
+                  {formatNumber(value * 50, {
                     currency: 'USD',
                     style: 'currency',
                   })}
@@ -347,21 +367,21 @@ export const ProjectCardTsx: React.FC<IProps> = ({
           </TabPanel>
           <TabPanel value={curTab} index={TAB.MEMBER} dir={theme.direction}>
             {userInfo && (
-              <List component="nav" aria-label="main mailbox folders">
+              <List className={listStyle} component="nav" aria-label="Пользовательский вклад">
                 <ListItem button>
-                  <ListItemIcon>
-                    <MaskSvg fontSize="small" />
+                  <ListItemIcon className={iconStyle}>
+                    <MaskSvg color="inherit" fontSize="small" />
                   </ListItemIcon>
-                  <ListItemText primary="Роль" />
-                  <ListItemSecondaryAction>{userInfo.mainRole}</ListItemSecondaryAction>
+                  <span className={listText}>Роль</span>
+                  <ListItemSecondaryAction className={digitStyle}>{userInfo.mainRole}</ListItemSecondaryAction>
                 </ListItem>
                 <ListItem button>
-                  <ListItemIcon>
-                    <ContributingSvg fontSize="small" />
+                  <ListItemIcon className={iconStyle}>
+                    <ContributingSvg color="inherit" fontSize="small" />
                   </ListItemIcon>
-                  <ListItemText primary="Вклад" />
-                  <ListItemSecondaryAction>
-                    {formatNumber(userInfo.value, {
+                  <span className={listText}>Вклад</span>
+                  <ListItemSecondaryAction className={digitStyle}>
+                    {formatNumber(userInfo.value * 50, {
                       currency: 'USD',
                       style: 'currency',
                     })}
