@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   cardStyle: {
     backgroundColor: 'transparent',
     borderRadius: 8,
-    boxShadow: theme.shadows[3],
+    boxShadow: '0 10px 10px #f1f2f6, 0 -4px 15px #f1f2f6, 10px 0 10px #f1f2f6, -4px 0 15px #f1f2f6',
     height: SIZE.HEIGHT,
     width: SIZE.WIDTH,
   },
