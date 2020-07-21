@@ -1,15 +1,11 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
+import { FixedSizeList as List } from 'react-window';
 
 import classNames from 'classnames';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
 import { useStyles } from '../styles';
+import CurrentUserBlock from './CurrentUserBlock';
+import TableHead from './TableHead';
 
 interface IStatisticTableProps {
   members: any[];
@@ -18,89 +14,110 @@ interface IStatisticTableProps {
   userId: number;
 }
 
+const USERS_TO_DISPLAY = 8;
+type userBlockPosition = 'top' | 'bottom';
+
 export const StatisticTable = memo(({ members, unit = '', unitTitle, userId }: IStatisticTableProps) => {
-  const {
-    currentUserCell,
-    tableContainer,
-    tableWrap,
-    tableCell,
-    noBorder,
-    light,
-    bold,
-    tableRow,
-    tableCellInHeader,
-  } = useStyles();
-  const tableHeadCells = classNames(tableCell, noBorder, light, tableCellInHeader);
+  const currentUserIndex = useMemo(() => {
+    return members.map(m => m.id).indexOf(userId);
+  }, [userId, members]);
+
+  const hideCurrentUserBlock: boolean =
+    members.length < USERS_TO_DISPLAY || (currentUserIndex < USERS_TO_DISPLAY && members.length < USERS_TO_DISPLAY);
+
+  const [UserBlockPosition, setPosition] = useState<userBlockPosition>('bottom');
+  const [IsHidden, setIsHidden] = useState(hideCurrentUserBlock);
+
+  const onItemsRendered = useCallback(
+    ({ visibleStartIndex, visibleStopIndex }) => {
+      if (hideCurrentUserBlock) {
+        return;
+      }
+      setIsHidden(false);
+      if (visibleStartIndex + 1 > currentUserIndex) {
+        setPosition('top');
+      }
+      if (visibleStopIndex < currentUserIndex) {
+        setPosition('bottom');
+      }
+      if (visibleStartIndex < currentUserIndex && visibleStopIndex > currentUserIndex) {
+        setIsHidden(true);
+      }
+    },
+    [currentUserIndex, hideCurrentUserBlock]
+  );
+
+  const { currentUserCell, tableContainer, tableCell, light, bold, listWrap, listRowWrap } = useStyles();
+
+  const Row = ({ index, style }) => {
+    const row = members[index];
+    const isCurrentUser = currentUserIndex === index;
+
+    return (
+      <div
+        key={row.name}
+        className={listRowWrap}
+        style={{
+          ...style,
+        }}
+      >
+        <div
+          style={{ width: '10%' }}
+          className={classNames(tableCell, light, {
+            [currentUserCell]: isCurrentUser,
+          })}
+        >
+          <b>{index + 1}.</b>
+        </div>
+        <div
+          style={{ width: '70%' }}
+          className={classNames({
+            [tableCell]: true,
+            [currentUserCell]: isCurrentUser,
+            [light]: !isCurrentUser,
+            [bold]: isCurrentUser,
+          })}
+        >
+          {row.name}
+        </div>
+        <div
+          className={classNames(tableCell, bold, {
+            [currentUserCell]: isCurrentUser,
+          })}
+        >
+          {row.units} {unit}
+        </div>
+        <div
+          className={classNames(tableCell, bold, {
+            [currentUserCell]: isCurrentUser,
+          })}
+        >
+          {row.percentage}%
+        </div>
+      </div>
+    );
+  };
 
   return (
-    <TableContainer className={tableContainer}>
-      <Table className={tableWrap} aria-label="simple table" stickyHeader>
-        <TableHead>
-          <TableRow className={tableRow}>
-            <TableCell className={tableHeadCells}>№</TableCell>
-            <TableCell align="left" className={tableHeadCells}>
-              Имя участника
-            </TableCell>
-            <TableCell align="right" className={tableHeadCells}>
-              {unitTitle}
-            </TableCell>
-            <TableCell align="right" className={tableHeadCells}>
-              Доля
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {members.map((row, i) => {
-            const isCurrentUser = row.id === userId;
-            return (
-              <TableRow key={row.name}>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  className={classNames({
-                    [tableCell]: true,
-                    [light]: true,
-                    [currentUserCell]: isCurrentUser,
-                  })}
-                >
-                  <b>{i + 1}.</b>
-                </TableCell>
-                <TableCell
-                  align="left"
-                  className={classNames({
-                    [tableCell]: true,
-                    [currentUserCell]: isCurrentUser,
-                    [light]: !isCurrentUser,
-                    [bold]: isCurrentUser,
-                  })}
-                >
-                  {row.name}
-                </TableCell>
-                <TableCell
-                  align="right"
-                  className={classNames({
-                    [tableCell]: true,
-                    [bold]: true,
-                    [currentUserCell]: isCurrentUser,
-                  })}
-                >
-                  {row.units} {unit}
-                </TableCell>
-                <TableCell
-                  align="right"
-                  className={classNames({
-                    [tableCell]: true,
-                    [bold]: true,
-                    [currentUserCell]: isCurrentUser,
-                  })}
-                >
-                  {row.percentage}%
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div className={tableContainer}>
+      <TableHead unitTitle={unitTitle} />
+      <List
+        height={440}
+        itemCount={members.length}
+        itemSize={49}
+        width={530}
+        className={listWrap}
+        onItemsRendered={onItemsRendered}
+      >
+        {Row}
+      </List>
+      <CurrentUserBlock
+        index={currentUserIndex}
+        user={members[currentUserIndex]}
+        hide={IsHidden}
+        direction={UserBlockPosition}
+        unit={unit}
+      />
+    </div>
   );
 });

@@ -34,7 +34,6 @@ const calculateUnitsSum = (members: IMember[]) => {
 };
 
 export const StatisticTablesTsx = memo(({ timeStatistic, worthPoints, userId }: IStatisticsTablesProps) => {
-  console.log(timeStatistic);
   const timePointsSum = useMemo(() => {
     return calculateUnitsSum(timeStatistic);
   }, [timeStatistic]);
@@ -70,7 +69,6 @@ export const StatisticTablesTsx = memo(({ timeStatistic, worthPoints, userId }: 
   );
 
   const classes = useStyles();
-  console.log(userId);
   return (
     <Grid container justify="center">
       <div className={classes.tableGroupWrap}>
