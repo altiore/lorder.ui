@@ -11,13 +11,14 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   currentUserWrap: {
     bottom: 0,
+    height: 49,
     left: 29,
     lineHeight: '49px',
     position: 'absolute',
     width: '90%',
   },
   currentUserWrapTop: {
-    top: 70,
+    top: 79,
   },
   h2: {
     color: '#29292b',
