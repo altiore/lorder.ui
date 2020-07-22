@@ -14,6 +14,7 @@ import {
   IDownloadList,
   IProject,
   IProjectPart,
+  IProjectStrategyInfo,
   IProjectTaskType,
   ITaskColumn,
   PROJECT_STRATEGY,
@@ -36,6 +37,7 @@ export class Project implements IProject {
   tasks: DownloadList<Task> = new DownloadList(Task);
   projectTaskTypes: IDownloadList<IProjectTaskType> = new DownloadList(ProjectTaskType);
   parts: DownloadList<IProjectPart> = new DownloadList(ProjectPart);
+  strategyInfo: IProjectStrategyInfo;
   /** время в секундах, потраченное всеми пользователями на этот проект */
   timeSum?: number;
   /** ценность всех задач в этом проекте */

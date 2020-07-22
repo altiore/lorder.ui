@@ -60,7 +60,14 @@ export const openedProject = createDeepEqualSelector([ownProjectList, routeProje
   }
 });
 
+export const openedProjectStrategyInfo = createDeepEqualSelector([openedProject], p => p?.strategyInfo);
+
 export const openedAccessLevel = createDeepEqualSelector([openedProject], p => p && p.accessLevel);
+
+export const openedProjectUserRoles = createDeepEqualSelector(
+  [openedProjectStrategyInfo],
+  strategy => strategy?.userRoles
+);
 
 export const initialUpdateProject = createDeepEqualSelector(
   openedProject,

@@ -32,3 +32,5 @@ export * from './IUserWork';
 export * from './IDownloadList';
 export * from './PROJECT_TYPE';
 export * from './ROLE';
+export * from './IProjectStrategyInfo';
+export * from './IProjectRole';
