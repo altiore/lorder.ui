@@ -14,10 +14,10 @@ interface IGroupFooter {
 }
 
 export const GroupFooter = memo(({ members, searchCallback }: IGroupFooter) => {
-  const classes = useStyles();
+  const { rowCell, usersQuantity, searchGroupWrap } = useStyles();
   return (
-    <Grid container justify="space-between" alignItems="center" className={classes.searchGroupWrap}>
-      <span className={classNames(classes.tableCell, classes.usersQuantity)}>{members.length}</span>
+    <Grid container justify="space-between" alignItems="center" className={searchGroupWrap}>
+      <span className={classNames(rowCell, usersQuantity)}>{members.length}</span>
       <InputSeach searchCallback={searchCallback} placeholder={'Найти участника по имени'} />
     </Grid>
   );
