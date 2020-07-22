@@ -5,7 +5,8 @@ import { createStructuredSelector } from 'reselect';
 import { withStyles } from '@material-ui/core/styles';
 
 import { fetchProjectParts, projectParts } from '#/@store/project';
-import { projectMembersAsUsers } from '#/@store/projects';
+import { openedProjectUserRoles, projectMembersAsUsers } from '#/@store/projects';
+import { rolesList } from '#/@store/roles';
 import { changeFilter, filteredMembers, searchTerm, toggleMember, toggleProjectPart } from '#/@store/tasksFilter';
 import { projectPart } from '#/@store/tasksFilter';
 import { isBoardFilterOpened, toggleUiSetting } from '#/@store/ui';
@@ -17,8 +18,10 @@ const mapState = createStructuredSelector({
   filteredMembers,
   isBoardFilterOpened,
   members: projectMembersAsUsers,
+  openedProjectUserRoles,
   projectPart,
   projectParts,
+  rolesList,
   searchTerm,
 } as any);
 

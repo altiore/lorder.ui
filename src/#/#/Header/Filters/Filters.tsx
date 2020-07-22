@@ -26,7 +26,9 @@ import Avatar from '@components/Avatar';
 
 import AssigneeList from '#/@common/TaskForm/StatusField/AssigneeList';
 
-import { IProjectPart, IUser } from '@types';
+import RolesFilter from './RolesFilter';
+
+import { IProjectPart, IProjectRole, IUser } from '@types';
 
 interface IFiltersProps {
   changeFilter: any;
@@ -35,12 +37,14 @@ interface IFiltersProps {
   filteredMembers: number[];
   isBoardFilterOpened: boolean;
   members: IUser[];
+  rolesList: IProjectRole[];
   searchTerm: string;
   toggleMember: any;
   toggleProjectPart: any;
   toggleUiSetting: any;
   projectPart: string | number;
   projectParts: IProjectPart[];
+  openedProjectUserRoles: any;
 }
 
 const SHOWN_MEMBERS = 7;
@@ -55,10 +59,13 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
   searchTerm,
   projectPart,
   projectParts,
+  rolesList,
   toggleMember,
   toggleProjectPart,
   toggleUiSetting,
+  openedProjectUserRoles,
 }) => {
+  const [select, setSelect] = useState('default');
   useEffect(() => {
     if (fetchProjectParts) {
       fetchProjectParts();
@@ -128,6 +135,7 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
       changeFilter('search', '');
       changeFilter('members', []);
       changeFilter('projectPart', '');
+      setSelect('default');
     }
     toggleUiSetting('isBoardFilterOpened');
   };
@@ -137,11 +145,12 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
   const handleSelectProjectPart = ({ target: { value } }) => {
     if (value === 'clear') {
       changeFilter('projectPart', '');
+      setSelect('default');
       return;
     }
     toggleProjectPart(value);
+    setSelect(value);
   };
-
   return (
     <div className={cn(classes.root, { [classes.rootOpen]: isBoardFilterOpened })}>
       {isBoardFilterOpened ? (
@@ -149,13 +158,12 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
           {Boolean(projectParts && projectParts.length) && (
             <FormControl className={classes.formControl}>
               <Select
-                value={projectPart}
+                value={select}
                 onChange={handleSelectProjectPart}
                 displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}
-                placeholder={'По частям'}
               >
-                <MenuItem value="" disabled>
+                <MenuItem value="default" disabled>
                   По частям
                 </MenuItem>
                 <MenuItem value={0}>Без частей</MenuItem>
@@ -251,13 +259,16 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
           </Paper>
         </>
       ) : (
-        <Tooltip title={`Открыть фильтр задач`}>
-          <IconButton color="secondary" onClick={toggleOpen()}>
-            <Badge classes={{ badge: classes.filterBadge }} badgeContent={isFiltered ? '!' : ''}>
-              <FilterIcon />
-            </Badge>
-          </IconButton>
-        </Tooltip>
+        <>
+          <RolesFilter projectRoles={openedProjectUserRoles} roles={rolesList} />
+          <Tooltip title={`Открыть фильтр задач`}>
+            <IconButton color="secondary" onClick={toggleOpen()}>
+              <Badge classes={{ badge: classes.filterBadge }} badgeContent={isFiltered ? '!' : ''}>
+                <FilterIcon />
+              </Badge>
+            </IconButton>
+          </Tooltip>
+        </>
       )}
     </div>
   );
