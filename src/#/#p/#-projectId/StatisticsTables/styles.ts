@@ -4,10 +4,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   bold: {
     fontWeight: 400,
   },
-
-  currentUserCell: {
+  currentUserRow: {
     backgroundColor: '#f6f8fa',
-    borderBottom: 0,
   },
   currentUserWrap: {
     bottom: 0,
@@ -29,12 +27,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   light: {
     fontWeight: 300,
   },
-  listRowWrap: {
-    borderBottom: '1px solid rgba(224, 224, 224, 1)',
-    display: 'flex',
-    justifyContent: 'space-around',
-  },
   listWrap: {
+    '& $currentUserRow': {
+      borderBottom: 0,
+    },
     '&::-webkit-scrollbar': {
       display: 'none',
     },
@@ -43,8 +39,25 @@ export const useStyles = makeStyles((theme: Theme) => ({
     maxWidth: 530,
     position: 'relative',
   },
-  noBorder: {
-    borderBottom: 0,
+  rowCell: { fontSize: 18 },
+  rowWrap: {
+    '& $rowCell:first-child': {
+      flexBasis: '50px',
+      textAlign: 'center',
+    },
+    '& $rowCell:nth-child(2)': {
+      flexBasis: 295,
+      paddingLeft: 12,
+    },
+    '& $rowCell:nth-child(3)': {
+      flexBasis: 100,
+    },
+    borderBottom: '1px solid rgba(224, 224, 224, 1)',
+    display: 'flex',
+    fontSize: 18,
+    height: 49,
+    lineHeight: '49px',
+    width: '100%',
   },
   searchGroupWrap: {
     lineHeight: '49px',
@@ -71,6 +84,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     verticalAlign: 'center',
     width: '25%',
   },
+
   tableCellInHeader: {
     background: '#fff',
     borderBottom: '1px solid #000',

@@ -5,9 +5,10 @@ import classNames from 'classnames';
 import { useStyles } from '../styles';
 
 const TableHead: React.FC<{ unitTitle: string }> = ({ unitTitle }) => {
-  const { tableCell, noBorder, light, tableRow, tableCellInHeader } = useStyles();
+  const { tableCell, light, tableRow, tableCellInHeader } = useStyles();
 
-  const tableHeadCells = classNames(tableCell, noBorder, light, tableCellInHeader);
+  const tableHeadCells = classNames(tableCell, light, tableCellInHeader);
+  // TODO: Переписать чтобы не было стыдно.Убрать лишний css.
   return (
     <div className={tableRow}>
       <div className={tableHeadCells} style={{ width: '10%' }}>

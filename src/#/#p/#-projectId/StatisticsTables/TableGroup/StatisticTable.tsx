@@ -1,11 +1,10 @@
 import React, { memo, useCallback, useMemo, useState } from 'react';
 import { FixedSizeList as List } from 'react-window';
 
-import classNames from 'classnames';
-
 import { useStyles } from '../styles';
 import CurrentUserBlock from './CurrentUserBlock';
 import TableHead from './TableHead';
+import TableRow from './TableRow';
 
 interface IStatisticTableProps {
   members: any[];
@@ -47,55 +46,12 @@ export const StatisticTable = memo(({ members, unit = '', unitTitle, userId }: I
     [currentUserIndex, hideCurrentUserBlock]
   );
 
-  const { currentUserCell, tableContainer, tableCell, light, bold, listWrap, listRowWrap } = useStyles();
+  const { tableContainer, listWrap } = useStyles();
 
   const Row = ({ index, style }) => {
     const row = members[index];
     const isCurrentUser = currentUserIndex === index;
-
-    return (
-      <div
-        key={row.name}
-        className={listRowWrap}
-        style={{
-          ...style,
-        }}
-      >
-        <div
-          style={{ width: '10%' }}
-          className={classNames(tableCell, light, {
-            [currentUserCell]: isCurrentUser,
-          })}
-        >
-          <b>{index + 1}.</b>
-        </div>
-        <div
-          style={{ width: '70%' }}
-          className={classNames({
-            [tableCell]: true,
-            [currentUserCell]: isCurrentUser,
-            [light]: !isCurrentUser,
-            [bold]: isCurrentUser,
-          })}
-        >
-          {row.name}
-        </div>
-        <div
-          className={classNames(tableCell, bold, {
-            [currentUserCell]: isCurrentUser,
-          })}
-        >
-          {row.units} {unit}
-        </div>
-        <div
-          className={classNames(tableCell, bold, {
-            [currentUserCell]: isCurrentUser,
-          })}
-        >
-          {row.percentage}%
-        </div>
-      </div>
-    );
+    return <TableRow member={row} isCurrentUser={isCurrentUser} style={style} index={index} unit={unit} />;
   };
 
   return (
