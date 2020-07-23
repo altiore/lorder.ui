@@ -29,8 +29,9 @@ export const SelectField = ({
 }: ISelectFieldProps) => {
   const id = uniqueId();
   const labelId = `${input.name}-${id}-select-field-label`;
+  const isError = Boolean(touched && error);
   return (
-    <FormControl variant="outlined" error={touched && error} fullWidth={fullWidth}>
+    <FormControl variant="outlined" error={isError} fullWidth={fullWidth}>
       {label && (
         <InputLabel htmlFor={id} id={labelId}>
           {label}
@@ -39,7 +40,7 @@ export const SelectField = ({
       <Select
         {...(input as any)}
         value={input.value || ''}
-        error={touched && error}
+        error={isError}
         onChange={onChange(input) as any}
         labelId={labelId}
         label={label}

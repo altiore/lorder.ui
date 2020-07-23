@@ -2,6 +2,7 @@ import get from 'lodash/get';
 import pick from 'lodash/pick';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
+import { userId } from '#/@store/identity/selectors';
 import { routeProjectId, routeTaskSequenceNumber } from '#/@store/router/selectors';
 
 import { ITaskFormData } from './consts';
@@ -34,30 +35,35 @@ export enum EDIT_TASK_FORM_PROPS {
   typeId = 'typeId',
 }
 
-export const getTaskInitialsFromTask = (task: ITask, userId?: number): ITaskFormData => {
+export const getTaskInitialsFromTask = (task: ITask, uId?: number): ITaskFormData => {
   const initialValues: ITaskFormData =
     pick<ITask, EDIT_TASK_FORM_PROPS>(task, Object.values(EDIT_TASK_FORM_PROPS)) || {};
   const taskProjectParts = task.projectParts;
   initialValues.projectParts = taskProjectParts
     ? taskProjectParts.slice(0).map((el: any) => (typeof el === 'number' ? el : el.id))
     : [];
-  if (userId && task.userTasks) {
-    const curUserTask = task.userTasks.find(ut => ut.userId === userId);
-    if (curUserTask && curUserTask.complexity) {
-      initialValues.complexity = curUserTask.complexity;
+  if (uId && task.userTasks) {
+    const curUserTask = task.userTasks.find(ut => ut.userId === uId);
+    if (curUserTask) {
+      if (curUserTask.urgency) {
+        initialValues.urgency = curUserTask.urgency;
+      }
+      if (curUserTask.complexity) {
+        initialValues.complexity = curUserTask.complexity;
+      }
     }
   }
   return initialValues;
 };
 
 export const getEditTaskInitialValues = createDeepEqualSelector(
-  [allTaskList],
-  (list: Task[]) => (projectId: number, sequenceNumber: number) => {
+  [allTaskList, userId],
+  (list: Task[], uId) => (projectId: number, sequenceNumber: number) => {
     const curTask: ITask | undefined = list.find(
       (el: Task) => el.projectId === projectId && el.sequenceNumber === sequenceNumber
     );
     if (curTask) {
-      return getTaskInitialsFromTask(curTask);
+      return getTaskInitialsFromTask(curTask, uId);
     }
 
     return {};

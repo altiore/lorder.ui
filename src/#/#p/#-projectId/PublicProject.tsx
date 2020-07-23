@@ -61,7 +61,6 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
 
   useEffect(() => {
     if (publicProjectUuid !== matchProjectUuid) {
-      console.log('fetch public project info');
       fetchPublicProject(matchProjectUuid);
     }
   }, [fetchPublicProject, matchProjectUuid, publicProjectUuid]);

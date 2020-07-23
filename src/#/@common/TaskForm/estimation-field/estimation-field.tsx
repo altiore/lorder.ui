@@ -2,14 +2,25 @@ import React, { useMemo } from 'react';
 
 import intersection from 'lodash/intersection';
 import { Field } from 'redux-form';
+import { required } from 'redux-form-validators';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import InputField from '@components/InputField';
 import { SelectField } from '@components/SelectField';
+import ValueField from '@components/value-field';
+import { SIZE } from '@components/value/value';
 
-import { ITaskMove, TASK_STATUS_MOVE_TYPE } from '@types';
+import { parseNumber } from '#/@store/@common/helpers';
+
+import { COMPLEXITY, ITaskMove, PROJECT_STRATEGY, TASK_STATUS_MOVE_TYPE, URGENCY } from '@types';
 
 const useStyles = makeStyles(() => ({
+  inputStyle: {
+    '& > input': {
+      minWidth: 'unset',
+    },
+  },
   root: {
     maxWidth: 152,
     overflow: 'hidden',
@@ -17,36 +28,26 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export interface IDurationAdditionalField {
+export interface IProps {
   getMovesByStatus: (projectId: number, status: string) => ITaskMove[];
   projectId?: number;
   statusTypeName?: string;
+  strategy?: PROJECT_STRATEGY;
 }
 
-const TASK_ESTIMATION_FIELDS = ['complexity'];
-
-enum COMPLEXITY_NAME {
-  JUNIOR = 'JUNIOR',
-  MIDDLE = 'MIDDLE',
-  SENIOR = 'SENIOR',
-  ARCHITECT = 'ARCHITECT',
-  DISCUSSION = 'DISCUSSION',
-  COMMUNITY = 'COMMUNITY',
-}
+const TASK_ESTIMATION_FIELDS = ['urgency', 'complexity'];
 
 const MAP_FIELD_TO_ITEMS = {
-  complexity: COMPLEXITY_NAME,
+  complexity: COMPLEXITY,
+  urgency: URGENCY,
 };
 
 const MAP_LABEL = {
   complexity: 'Сложность',
+  urgency: 'Важность',
 };
 
-export const DurationAdditionalField: React.FC<IDurationAdditionalField> = ({
-  getMovesByStatus,
-  projectId,
-  statusTypeName,
-}) => {
+export const EstimationField: React.FC<IProps> = ({ getMovesByStatus, projectId, statusTypeName, strategy }) => {
   const moves = useMemo(() => {
     if (getMovesByStatus && projectId && statusTypeName) {
       return getMovesByStatus(projectId, statusTypeName);
@@ -63,10 +64,33 @@ export const DurationAdditionalField: React.FC<IDurationAdditionalField> = ({
 
   const allowedFields = useMemo(() => intersection(requiredFields, TASK_ESTIMATION_FIELDS), [requiredFields]);
 
-  const { root } = useStyles();
+  const { inputStyle, root } = useStyles();
 
-  if (!statusTypeName || !projectId || !allowedFields || !allowedFields.length) {
+  if (!statusTypeName || !projectId) {
     return null;
+  }
+
+  if (!allowedFields || !allowedFields.length) {
+    if (strategy === PROJECT_STRATEGY.SIMPLE) {
+      return (
+        <div>
+          <Field
+            name="value"
+            className={inputStyle}
+            component={InputField}
+            parse={parseNumber}
+            label="Оценка задачи"
+            type="number"
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Field name="value" component={ValueField} label="Оценка задачи" size={SIZE.LARGE} />
+        </div>
+      );
+    }
   }
 
   return (
@@ -78,6 +102,7 @@ export const DurationAdditionalField: React.FC<IDurationAdditionalField> = ({
           component={SelectField}
           label={MAP_LABEL[field]}
           items={MAP_FIELD_TO_ITEMS[field]}
+          validate={required()}
         />
       ))}
     </div>

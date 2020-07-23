@@ -32,6 +32,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
   changeSettings,
   fetchTaskDetails,
+  onSubmit: submitEditTaskForm,
   push,
   replace,
   startUserWork,
@@ -45,9 +46,6 @@ export const PatchTaskForm = connect(
     destroyOnUnmount: false,
     enableReinitialize: false,
     form: EDIT_TASK_FORM,
-    onSubmit: async (values, dispatch) => {
-      await submitEditTaskForm(values)(dispatch);
-    },
     onSubmitFail,
   })(TaskFormJsx) as any
 ) as any;
