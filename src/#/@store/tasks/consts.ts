@@ -1,4 +1,4 @@
-import { COMPLEXITY } from '@types';
+import { COMPLEXITY, URGENCY } from '@types';
 
 export const EDIT_TASK_FORM = 'EditTaskForm';
 
@@ -20,6 +20,7 @@ export interface ITaskFormData {
   projectParts?: number[];
 
   complexity?: COMPLEXITY;
+  urgency?: URGENCY;
 }
 
 // TODO: перенести в переводы

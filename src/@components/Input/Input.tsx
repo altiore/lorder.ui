@@ -14,7 +14,6 @@ export const Input: React.FC<TextFieldProps & { icon?: React.ReactNode }> = ({
   InputProps = {},
   ...rest
 }): JSX.Element => {
-  console.log(rest);
   const { helperTextDefaultError, helperText } = useStyles();
   return (
     <TextFieldBase

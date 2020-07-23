@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 import Avatar from '@components/Avatar';
 import TooltipBig from '@components/TooltipBig';
+import ValueField from '@components/value';
 
 import TypeIcon from '#/@common/TypeIcon';
 
@@ -70,21 +71,7 @@ export const TaskCardTsx: React.FC<ITaskCard> = ({
       </span>
       <div className={classes.footer}>
         <div className={classes.row}>
-          <TooltipBig
-            title={
-              <span>
-                Ценность задачи
-                <br /> (может изменяться в процессе)
-              </span>
-            }
-            placement="bottom"
-          >
-            <div className={classes.value}>
-              <Typography component="span" variant="caption" className={classes.valueText}>
-                {value || '-'}
-              </Typography>
-            </div>
-          </TooltipBig>
+          <ValueField>{value}</ValueField>
         </div>
         <TooltipBig title={get(taskPerformer, 'userName', 'N/A')} placement="bottom">
           <Avatar size="sm" src={get(taskPerformer, ['avatar', 'url'])}>

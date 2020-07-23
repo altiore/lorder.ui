@@ -9,6 +9,14 @@ export enum COMPLEXITY {
   COMMUNITY = 'COMMUNITY',
 }
 
+export enum URGENCY {
+  LOW = 'LOW',
+  REGULAR = 'REGULAR',
+  HIGH = 'HIGH',
+  CRITICAL = 'CRITICAL',
+  ULTRA = 'ULTRA',
+}
+
 export interface IUserTask {
   userId: number;
   taskId: number;
@@ -17,4 +25,5 @@ export interface IUserTask {
   user: IUser;
 
   complexity?: COMPLEXITY;
+  urgency?: URGENCY;
 }

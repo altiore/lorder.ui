@@ -9,16 +9,14 @@ import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 
-import InputField from '@components/InputField';
 import TextAreaMarkdown from '@components/TextAreaMarkdown';
 import { TextField } from '@components/TextField';
 
 import TaskDuration from '#/@common/TaskDuration';
-import { parseNumber } from '#/@store/@common/helpers';
 import { ITaskFormData, patchProjectTask, postProjectTask } from '#/@store/tasks';
 
 import DialogHeader from './DialogHeader';
-import DurationAdditionalField from './duration-additional-field';
+import EstimationField from './estimation-field';
 import ProjectPartsField from './ProjectPartsField';
 import StatusField from './StatusField';
 import { useStyles } from './styles';
@@ -164,7 +162,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
 
     const { actions, card, cardFirst, cardFirstNotPage, cardForm, cardSecond, durationBlock, grow } = useStyles();
 
-    if (!initialD) {
+    if (!initialD || !projectId) {
       return null;
     }
 
@@ -206,17 +204,17 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
                 sequenceNumber={currentSequenceNumber}
               />
 
-              <div>
-                <Field name="value" component={InputField} parse={parseNumber} label="Оценка задачи" type="number" />
-              </div>
               {initialD.id && (
                 <div className={durationBlock}>
-                  {isPaused && 'задача на паузе!'}
                   <TaskDuration taskId={initialD.id} />
-                  <DurationAdditionalField projectId={projectId} />
+                  <EstimationField projectId={projectId} />
                 </div>
               )}
+
+              {initialD.id && isPaused && <span>задача на паузе!</span>}
+
               <TaskMembers taskId={initialD.id} />
+
               <Field
                 name="projectParts"
                 label="Части проекта"

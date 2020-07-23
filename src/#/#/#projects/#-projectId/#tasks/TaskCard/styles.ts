@@ -1,4 +1,3 @@
-import valueColor from '@material-ui/core/colors/green';
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme): any => ({
@@ -48,18 +47,5 @@ export const styles = (theme: Theme): any => ({
   row: {
     display: 'flex',
     flexFlow: 'row nowrap',
-  },
-  value: {
-    alignItems: 'center',
-    backgroundColor: '#dfe3e6',
-    borderRadius: theme.spacing(2),
-    display: 'flex',
-    height: 20,
-    justifyContent: 'center',
-    minWidth: 20,
-    padding: '0 4px',
-  },
-  valueText: {
-    color: valueColor[700],
   },
 });

@@ -4,6 +4,7 @@ import { change, getFormValues, initialize, isDirty, stopAsyncValidation } from 
 
 import { parseFormErrorsFromResponse } from '#/@store/@common/helpers';
 import { isFormMount } from '#/@store/form';
+import { userId } from '#/@store/identity';
 import { selectProject } from '#/@store/project';
 import { fetchProjectDetails, getProjectById, Project, projectMembers } from '#/@store/projects';
 import {
@@ -107,10 +108,13 @@ export const stopUserWork = () => async (dispatch: any, getState: any) => {
 
     const userWorkDelete: IUserWorkDelete = currentUserWorkData(getState());
     const res = await dispatch(patchAndStopUserWork(userWorkDelete));
-    const newTaskData = getTaskInitialsFromTask({
-      ...(res?.payload?.data?.previous?.task || {}),
-      projectParts: formValues.projectParts,
-    });
+    const newTaskData = getTaskInitialsFromTask(
+      {
+        ...(res?.payload?.data?.previous?.task || {}),
+        projectParts: formValues.projectParts,
+      },
+      userId(getState())
+    );
     dispatch(initialize(EDIT_TASK_FORM, newTaskData));
   } catch (e) {
     const status = e?.error?.response?.status;
