@@ -161,7 +161,7 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
                   mainRole: 'Разработчик',
                   // message?: string;
                   shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
-                  value: (valueSum || 0) * 50,
+                  value: valueSum || 0,
                 }}
                 value={shareValue}
               />
