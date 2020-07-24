@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   cardStyle: {
     backgroundColor: 'transparent',
     borderRadius: 8,
-    boxShadow: '0 10px 10px #f1f2f6, 0 -4px 15px #f1f2f6, 10px 0 10px #f1f2f6, -4px 0 15px #f1f2f6',
+    boxShadow: '0 10px 20px #f1f2f6, -10px 0 20px #f1f2f6',
     height: SIZE.HEIGHT,
     width: SIZE.WIDTH,
   },
@@ -86,14 +86,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontWeight: 700,
   },
   header: {
-    height: 180,
+    height: 182,
     position: 'relative',
   },
   iconStyle: {
+    '& > svg': {
+      fontSize: 16,
+    },
     color: '#c5c5c5',
+    minWidth: 30,
   },
   listStyle: {
-    marginTop: 16,
+    marginTop: 11,
   },
   listText: {
     color: '#232323',
@@ -116,8 +120,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: SIZE.LOGO,
   },
   logoWrapAngle: {
-    left: 160,
-    top: 16,
+    left: 158,
+    top: 17,
   },
   logoWrapRound: {
     '& > img': {
@@ -134,6 +138,8 @@ const useStyles = makeStyles((theme: Theme) => ({
       marginLeft: 2,
     },
     borderBottom: `1px solid rgba(216, 216, 216, .4)`,
+    fontSize: 12,
+    minHeight: 44,
     minWidth: 149,
   },
   tabRootSingle: {
@@ -157,20 +163,18 @@ const useStyles = makeStyles((theme: Theme) => ({
       width: 0,
     },
     height: 1,
-    marginBottom: SIZE.CURSOR,
+    marginBottom: 4,
   },
   tabsWrap: {
+    marginTop: 6,
     position: 'relative',
   },
   titleWrap: {
-    '& > h4': {
-      lineHeight: '1.5em',
-    },
     alignItems: 'center',
     display: 'flex',
-    height: 74,
+    height: 80,
     justifyContent: 'center',
-    padding: '3px 8px',
+    padding: '3px 10px',
     textAlign: 'center',
   },
   valueLabel: {
@@ -272,33 +276,29 @@ export const ProjectCardTsx: React.FC<IProps> = ({
   } = useStyles();
 
   const tabs = useMemo(() => {
-    const tabsLocal = [
+    const tabsLocal: any = [
       {
         id: TAB.PROJECT,
-        label: (
-          <TooltipBig title={`Информация о проекте "${title}"`} placement="top">
-            <span>Инфо</span>
-          </TooltipBig>
-        ),
+        label: 'Инфо',
+        // tooltip: `Информация о проекте`,
       },
     ];
     if (isMember) {
       tabsLocal.push({
         id: TAB.MEMBER,
         label: (
-          <TooltipBig title={(userInfo?.displayName || 'N/A') + ' вклад'} placement="top">
-            <div className={valueLabel}>
-              <span>Вклад</span>
-              <Avatar size="sm" src={userInfo?.logoSrc}>
-                {userInfo?.shortName}
-              </Avatar>
-            </div>
-          </TooltipBig>
+          <div className={valueLabel}>
+            <span>Вклад</span>
+            <Avatar size="sm" src={userInfo?.logoSrc}>
+              {userInfo?.shortName}
+            </Avatar>
+          </div>
         ),
+        tooltip: (userInfo?.displayName || 'N/A') + ' вклад',
       });
     }
     return tabsLocal;
-  }, [isMember, title, userInfo, valueLabel]);
+  }, [isMember, userInfo, valueLabel]);
 
   const { formatNumber } = useIntl();
 
@@ -327,15 +327,26 @@ export const ProjectCardTsx: React.FC<IProps> = ({
           onChange={changeTab}
           aria-label="Project Info"
         >
-          {tabs.map(({ id, label }, index) => (
-            <Tab
-              disableRipple={!isMember}
-              classes={{ root: cn(tabRoot, { [tabRootSingle]: !isMember }) }}
-              key={id}
-              value={index}
-              label={label}
-            />
-          ))}
+          {tabs.map(({ id, label, tooltip }, index) => {
+            const tooltipDisabled = !tooltip;
+            return (
+              <TooltipBig
+                key={id}
+                title={tooltip || ''}
+                placement="top"
+                disableFocusListener={tooltipDisabled}
+                disableHoverListener={tooltipDisabled}
+                disableTouchListener={tooltipDisabled}
+              >
+                <Tab
+                  disableRipple={!isMember}
+                  classes={{ root: cn(tabRoot, { [tabRootSingle]: !isMember }) }}
+                  value={index}
+                  label={label}
+                />
+              </TooltipBig>
+            );
+          })}
         </Tabs>
         <SwipeableViews
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -355,7 +366,7 @@ export const ProjectCardTsx: React.FC<IProps> = ({
                 <ListItemIcon className={iconStyle}>
                   <ValueSvg color="inherit" fontSize="small" />
                 </ListItemIcon>
-                <span className={listText}>Ценность</span>
+                <span className={listText}>Ценность проекта</span>
                 <ListItemSecondaryAction className={digitStyle}>
                   {formatNumber(value * 50, {
                     currency: 'USD',
@@ -379,7 +390,7 @@ export const ProjectCardTsx: React.FC<IProps> = ({
                   <ListItemIcon className={iconStyle}>
                     <ContributingSvg color="inherit" fontSize="small" />
                   </ListItemIcon>
-                  <span className={listText}>Вклад</span>
+                  <span className={listText}>Вклад в проект</span>
                   <ListItemSecondaryAction className={digitStyle}>
                     {formatNumber(userInfo.value * 50, {
                       currency: 'USD',

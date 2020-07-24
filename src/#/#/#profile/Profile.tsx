@@ -148,14 +148,22 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
       </GradientHead>
       <div className={projectList}>
         <Grid alignItems="center" justify="center" container spacing={3}>
-          {projects.map(project => (
-            <Grid key={project.id} item>
+          {projects.map(({ id, members, shareValue, title, valueSum }) => (
+            <Grid key={id} item>
               <ProjectCard
                 color={getRandEnum(CARD_COLOR)}
                 logoVariant={getRandEnum(LOGO_TYPE)}
-                title={project.title}
-                membersCount={project.members.length}
-                value={project.shareValue}
+                title={title}
+                membersCount={members.length}
+                userInfo={{
+                  displayName: userDisplayName,
+                  logoSrc: userAvatar,
+                  mainRole: 'Разработчик',
+                  // message?: string;
+                  shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
+                  value: (valueSum || 0) * 50,
+                }}
+                value={shareValue}
               />
             </Grid>
           ))}
