@@ -1,4 +1,4 @@
 export interface IUserRole {
-  id: number;
+  id: string;
   name: string;
 }

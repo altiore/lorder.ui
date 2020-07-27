@@ -5,7 +5,7 @@ import { destroy } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { openDialog } from '#/@store/dialog';
-import { getProjectStrategyByProjectId, openedTaskColumns } from '#/@store/projects';
+import { getProjectStrategyByProjectId, projectRoleColumns } from '#/@store/projects';
 import { routeProjectId } from '#/@store/router';
 import { fetchProjectTasks, filteredProjectTasks, moveProjectTask } from '#/@store/tasks';
 import { filteredOpenedStatuses, toggleOpenedTab } from '#/@store/tasksFilter';
@@ -24,7 +24,7 @@ interface IDragAndDropMappedProps {
 }
 
 const mapState = createStructuredSelector<IState, IDragAndDropMappedProps>({
-  columns: openedTaskColumns,
+  columns: projectRoleColumns,
   getProjectStrategyByProjectId,
   items: filteredProjectTasks,
   openedStatuses: filteredOpenedStatuses,
