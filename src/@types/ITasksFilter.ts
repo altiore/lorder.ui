@@ -5,4 +5,5 @@ export interface ITasksFilter {
   projectId: number;
   members: number[];
   openedStatuses: string[];
+  selectedRole?: string;
 }

@@ -18,3 +18,5 @@ export const filteredOpenedStatuses = createDeepEqualSelector(
 );
 
 export const projectPart = createDeepEqualSelector(baseState, s => s.projectPart);
+
+export const selectedProjectRole = createDeepEqualSelector(baseState, s => s.selectedRole);

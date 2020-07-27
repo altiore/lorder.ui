@@ -23,6 +23,7 @@ export class TasksFilter implements ITasksFilter {
   members: number[] = [];
   openedStatuses: string[] = [STATUS_TYPE_NAME.TO_DO, STATUS_TYPE_NAME.IN_PROGRESS, STATUS_TYPE_NAME.TESTING];
   projectId: number = 0;
+  selectedRole?: string;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {
