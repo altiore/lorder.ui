@@ -167,6 +167,7 @@ export default createMuiTheme({
     },
     fontFamily: "'Roboto', sans-serif",
     h1: {
+      fontFamily: "'Montserrat', sans-serif",
       fontSize: theme.typography.pxToRem(55),
       fontWeight: 'bold',
       [theme.breakpoints.down('md')]: {
@@ -174,6 +175,7 @@ export default createMuiTheme({
       },
     },
     h2: {
+      fontFamily: "'Montserrat', sans-serif",
       fontSize: theme.typography.pxToRem(50),
       fontWeight: 'bold',
       [theme.breakpoints.down('md')]: {
@@ -181,14 +183,17 @@ export default createMuiTheme({
       },
     },
     h3: {
+      fontFamily: "'Montserrat', sans-serif",
       fontSize: theme.typography.pxToRem(30),
     },
     h4: {
+      fontFamily: "'Montserrat', sans-serif",
       fontSize: theme.typography.pxToRem(24),
       fontWeight: 400,
     },
     h5: {
       color: '#29292b',
+      fontFamily: "'Montserrat', sans-serif",
       fontSize: theme.typography.pxToRem(18),
       fontWeight: 500,
       lineHeight: '24px',
