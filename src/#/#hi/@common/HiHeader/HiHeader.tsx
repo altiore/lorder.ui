@@ -125,7 +125,7 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks = defBlocks }) =>
       )}
       <Route path="/">
         <Switch>
-          <Route path="/login" exact>
+          <Route path="/auth">
             <span />
           </Route>
           <Route path="/" component={AccountMenu} />

@@ -1,13 +1,16 @@
 import { Theme } from '@material-ui/core/styles';
 import { Overrides } from '@material-ui/core/styles/overrides';
 
-export default function(theme: Theme): Partial<Overrides> {
+export default function(theme: Theme, hideScrollbar): Partial<Overrides> {
   return {
     MuiFormHelperText: {
       root: {
+        ...hideScrollbar,
         backgroundColor: 'transparent',
         bottom: theme.typography.pxToRem(-13),
         left: 0,
+        maxHeight: 12,
+        overflowY: 'auto',
         position: 'absolute',
       },
     },

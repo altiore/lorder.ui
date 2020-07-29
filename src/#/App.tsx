@@ -32,8 +32,8 @@ export const APP_MAIN_ROUTES: IRoute[] = [
   },
   {
     access: [ROLES.GUESTS],
-    component: lazy(() => import('./#login')),
-    path: '/login',
+    component: lazy(() => import('./#auth')),
+    path: '/auth',
   },
   {
     access: [ROLES.USERS],
@@ -54,7 +54,7 @@ export const AppJsx: React.FC<IAppProps> = ({ userRole }) => {
           <NestedRoute key={route.path} {...route} />
         ))}
         <Redirect from="/" to="/hi" exact />
-        <Redirect to="/login" />
+        <Redirect to="/auth" />
       </Switch>
     </Suspense>
   );

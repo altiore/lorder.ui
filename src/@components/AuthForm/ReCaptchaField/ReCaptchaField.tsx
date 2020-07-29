@@ -4,8 +4,8 @@ import { useReCaptcha } from 'react-use-recaptcha-v3';
 import { WrappedFieldProps } from 'redux-form';
 
 interface IReCaptchaField extends WrappedFieldProps {
-  isLogin: boolean;
-  isMagic: boolean;
+  isLogin?: boolean;
+  isMagic?: boolean;
 }
 
 export const ReCaptchaField: React.FC<IReCaptchaField> = ({ input: { onChange }, isLogin, isMagic }) => {

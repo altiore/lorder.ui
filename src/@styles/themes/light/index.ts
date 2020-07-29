@@ -8,10 +8,19 @@ import { prettyScroll1, prettyScroll2, SECONDARY_DARKEN } from './variables';
 const SHADOW_DEFAULT = '0 2px 10px #d8d8d8';
 const SHADOW_SECONDARY = '0 4px 10px rgba(242, 213, 120, 0.5)';
 
+const hideScrollbar = {
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
+  '-ms-overflow-style': 'none',
+  scrollbarWidth: 'none',
+};
+
 export default createMuiTheme({
   themeName: 'LIGHT',
 
   gradient: ['linear-gradient(45deg, #29292b 0%, #424247 50%, #29292b 100%)'],
+  hideScrollbar,
   mainContent: {
     bigWidth: 1360,
     scroll: prettyScroll1(theme),
@@ -24,13 +33,20 @@ export default createMuiTheme({
   },
   overrides: {
     ...MuiDialog(theme),
-    ...MuiTextField(theme),
+    ...MuiTextField(theme, hideScrollbar),
     MuiAppBar: {
       colorDefault: {
         backgroundColor: palette.default.main,
       },
     },
     MuiButton: {
+      contained: {
+        '&:hover': {
+          backgroundColor: '#5F5F5F',
+        },
+        backgroundColor: '#3F3F3F',
+        color: '#ffffff',
+      },
       containedPrimary: {
         color: '#ffffff',
       },
@@ -167,7 +183,6 @@ export default createMuiTheme({
     },
     fontFamily: "'Roboto', sans-serif",
     h1: {
-      fontFamily: "'Montserrat', sans-serif",
       fontSize: theme.typography.pxToRem(55),
       fontWeight: 'bold',
       [theme.breakpoints.down('md')]: {
@@ -175,7 +190,6 @@ export default createMuiTheme({
       },
     },
     h2: {
-      fontFamily: "'Montserrat', sans-serif",
       fontSize: theme.typography.pxToRem(50),
       fontWeight: 'bold',
       [theme.breakpoints.down('md')]: {
@@ -183,17 +197,14 @@ export default createMuiTheme({
       },
     },
     h3: {
-      fontFamily: "'Montserrat', sans-serif",
       fontSize: theme.typography.pxToRem(30),
     },
     h4: {
-      fontFamily: "'Montserrat', sans-serif",
       fontSize: theme.typography.pxToRem(24),
       fontWeight: 400,
     },
     h5: {
       color: '#29292b',
-      fontFamily: "'Montserrat', sans-serif",
       fontSize: theme.typography.pxToRem(18),
       fontWeight: 500,
       lineHeight: '24px',
@@ -225,6 +236,7 @@ declare module '@material-ui/core/styles/shape' {
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
     gradient: string[];
+    hideScrollbar: object;
     mainContent: {
       bigWidth: number;
       scroll: object;
@@ -250,6 +262,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
   // allow configuration using `createMuiTheme`
   interface ThemeOptions {
     gradient?: string[];
+    hideScrollbar?: object;
     mainContent?: {
       bigWidth?: number;
       scroll?: object;

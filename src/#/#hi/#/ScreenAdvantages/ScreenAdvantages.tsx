@@ -9,10 +9,10 @@ import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+import SignInForm from '#/#auth/#signin';
 import Block from '#/#hi/#/@common/Block';
 import BlockContent from '#/#hi/#/@common/BlockContent';
 import ScreenTitle from '#/#hi/#/@common/ScreenTitle';
-import AuthForm from '#/@common/AuthForm';
 
 import StarItem from './StarItem';
 import { useStyles } from './styles';
@@ -58,7 +58,7 @@ const ScreenAdvantages: React.FC<ScreenAdvantagesI> = ({ name }) => {
                 <Typography gutterBottom color="secondary" className={classes.loginTitle} variant="h5">
                   Присоединитесь к нашей команде просто сейчас
                 </Typography>
-                <AuthForm />
+                <SignInForm />
               </Paper>
             </Grid>
           </Grid>

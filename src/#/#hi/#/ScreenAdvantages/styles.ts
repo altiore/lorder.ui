@@ -23,13 +23,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
   loginBlock: {
     alignItems: 'center',
     backgroundColor: theme.palette.default.light,
+    borderRadius: 8,
     boxShadow: theme.shadows[6],
     display: 'flex',
     flexFlow: 'column nowrap',
     justifyContent: 'center',
-    padding: theme.spacing(2),
-    paddingTop: theme.spacing(4),
+    padding: theme.spacing(5),
     width: 'fit-content',
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(2),
+    },
   },
   loginTitle: {
     textAlign: 'center',

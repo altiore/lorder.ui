@@ -143,9 +143,9 @@ export const palette: Palette = {
   },
   error: {
     contrastText: '#ffffff',
-    dark: darken('#ec3b0f', 0.1),
-    light: lighten('#ec3b0f', 0.1),
-    main: '#ec3b0f',
+    dark: darken('#EB5757', 0.1),
+    light: lighten('#EB5757', 0.1),
+    main: '#EB5757',
   },
   pause: {
     contrastText: '#000',
