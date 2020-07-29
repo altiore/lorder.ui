@@ -9,7 +9,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
     },
     filled: {
-      border: '1px solid #FFB200',
+      border: '2px solid #FFB200',
       borderRadius: theme.shape.borderRadius,
       boxSizing: 'border-box',
       position: 'relative',
@@ -49,7 +49,8 @@ export const useStyles = makeStyles((theme: Theme) =>
       top: 0,
     },
     text: {
-      fill: '#87A082',
+      fill: '#757575',
+      fontSize: 12,
     },
   })
 );

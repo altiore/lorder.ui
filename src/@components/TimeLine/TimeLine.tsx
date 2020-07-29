@@ -5,7 +5,6 @@ import get from 'lodash/get';
 import minBy from 'lodash/minBy';
 import moment from 'moment';
 
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
 import Paper from '@material-ui/core/Paper';
@@ -22,18 +21,30 @@ export interface IDailyRoutineProps {
   getRef: any;
   patchUserWork: (values: object) => Promise<any>;
   width: number;
+  onTimelineClick: () => void;
+  fullSize?: boolean;
 }
 
-export const Y_HEIGHT_BIG = 82;
+export const Y_HEIGHT_BIG = 65;
 const Y_HEIGHT_LITTLE = 8;
 const X_OFFSET = 24;
 const LABEL_HEIGHT = 12;
 
-let heightTimer: any = null;
+const heightTimer: any = null;
 let updateInterval: any = null;
 let leaveTimer: any = null;
 
-export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patchUserWork, width }) => {
+const timelineStub = () => null;
+
+export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({
+  events,
+  getRef,
+  patchUserWork,
+  width,
+  onTimelineClick = timelineStub,
+  fullSize,
+}) => {
+  const timelineOpen = true;
   const getStartAt = useCallback((): number => {
     const current = moment();
     const first = minBy(events, (ev: IEvent) =>
@@ -50,23 +61,10 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
 
   const [startAt, setStartAt] = useState(getStartAt);
   const [finishAt, setFinishAt] = useState(getFinishAt);
-  const [height, setHeight] = useState(Y_HEIGHT_LITTLE);
+  const [height] = useState(fullSize ? Y_HEIGHT_BIG : Y_HEIGHT_LITTLE);
   const [hoveredEl, setHoveredEl] = useState<any>(null);
   const [hoveredEvent, setHoveredEvent] = useState<IEvent>();
   const [editedEvent, setEditedEvent] = useState<IEvent>();
-
-  const clearTimer = useCallback(() => {
-    if (heightTimer) {
-      clearInterval(heightTimer);
-    }
-  }, []);
-
-  const decreaseHeightNow = useCallback(() => {
-    if (!editedEvent) {
-      clearTimer();
-      setHeight(Y_HEIGHT_LITTLE);
-    }
-  }, [clearTimer, editedEvent]);
 
   const handleEditEventClose = useCallback(
     (e: any) => {
@@ -77,34 +75,11 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
     },
     [setEditedEvent]
   );
-
-  const increaseHeight = useCallback(
-    (e?: React.SyntheticEvent) => {
-      if (e) {
-        e.stopPropagation();
-      }
-      setHeight(Y_HEIGHT_BIG);
-      clearTimer();
-    },
-    [clearTimer, setHeight]
-  );
-
-  const handleMouseEnter = useCallback(() => {
-    clearTimer();
-    heightTimer = setTimeout(() => {
-      increaseHeight();
-    }, 500);
-  }, [clearTimer, increaseHeight]);
-
-  const decreaseHeight = useCallback(() => {
-    if (!editedEvent) {
-      clearTimer();
-      heightTimer = setTimeout(() => {
-        setHeight(Y_HEIGHT_LITTLE);
-        clearTimer();
-      }, 10000);
+  const handleClick = useCallback(() => {
+    if (!fullSize) {
+      onTimelineClick();
     }
-  }, [clearTimer, editedEvent, setHeight]);
+  }, [fullSize, onTimelineClick]);
 
   const handlePopoverClose = useCallback(() => {
     leaveTimer = setTimeout(() => {
@@ -134,8 +109,8 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
     [cleanLeaveTimer, editedEvent, events]
   );
 
-  const getStyle = useCallback((el: IEvent) => {
-    if (el.isActive) {
+  const getStyle = useCallback((taskInfo: IEvent) => {
+    if (taskInfo.isActive) {
       return {
         backgroundColor: '#FFF0B5',
         borderBottomWidth: 1,
@@ -173,8 +148,8 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
   );
 
   const getPosition = useCallback(
-    (el?: moment.Moment | null) => {
-      const res = ((getHours(el) - startAt) * svgWidth) / (finishAt - startAt);
+    (time?: moment.Moment | null) => {
+      const res = ((getHours(time) - startAt) * svgWidth) / (finishAt - startAt);
       return res >= 0 ? res + X_OFFSET : X_OFFSET;
     },
     [finishAt, getHours, startAt, svgWidth]
@@ -256,98 +231,93 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({ events, getRef, patc
       projectId: get(editedEvent, ['userWork', 'projectId'], get(editedEvent, ['task', 'projectId'])),
     };
   }, [editedEvent]);
-
   return (
-    <ClickAwayListener onClickAway={decreaseHeightNow}>
-      <Popover
-        style={{ zIndex: 1 }}
-        preferPlace="below"
-        isOpen={Boolean(editedEvent)}
-        tipSize={0.01}
-        body={
-          <Paper className={classes.popoverPaper}>
-            <EditWork
-              event={editedEvent}
-              initialValues={formInitialValues}
-              onClose={handleEditEventClose}
-              patchUserWork={patchUserWork}
-            />
-          </Paper>
-        }
+    <Popover
+      style={{ zIndex: 1400 }}
+      preferPlace="below"
+      isOpen={Boolean(editedEvent)}
+      tipSize={0.01}
+      body={
+        <Paper className={classes.popoverPaper}>
+          <EditWork
+            event={editedEvent}
+            initialValues={formInitialValues}
+            onClose={handleEditEventClose}
+            patchUserWork={patchUserWork}
+          />
+        </Paper>
+      }
+    >
+      <div
+        ref={getRef}
+        className={classes.root}
+        style={{
+          height,
+          zIndex: isExpended ? 1200 : 0,
+        }}
+        onClick={handleClick}
       >
         <div
-          ref={getRef}
-          className={classes.root}
+          className={classes.filled}
           style={{
-            height,
-            zIndex: isExpended ? 1200 : 0,
+            boxShadow: isExpended ? theme.shadows[1] : 'none',
+            flexBasis: isExpended ? '76%' : '100%',
           }}
-          onClick={isExpended ? undefined : increaseHeight}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={decreaseHeight}
         >
-          <div
-            className={classes.filled}
-            style={{
-              boxShadow: isExpended ? theme.shadows[1] : 'none',
-              flexBasis: isExpended ? '76%' : '100%',
-            }}
-          >
-            {preparedEvents.map((event, i) => {
-              return (
-                <Popover
-                  key={event.userWork.id}
-                  preferPlace="below"
-                  tipSize={0.01}
-                  className={classes.popover}
-                  isOpen={get(hoveredEvent, 'userWork.id') === event.userWork.id && !!hoveredEvent}
-                  target={hoveredEl as any}
-                  onOuterAction={handlePopoverClose}
-                  body={<HoverInfo onOver={handleHover} onLeave={handlePopoverClose} hoveredEvent={event} />}
-                >
-                  <div
-                    aria-owns={`popover-body-${event.userWork.id}`}
-                    data-id={event.userWork.id}
-                    className={classes.block}
-                    style={{
-                      ...getStyle(event),
-                      left: getPosition(event.userWork.startAt),
-                      width: getWidth(event),
-                    }}
-                    onClick={handleEventClick}
-                    onMouseOver={handleHover}
-                    onMouseLeave={handlePopoverClose}
-                  />
-                </Popover>
-              );
-            })}
-          </div>
-          <svg height={height} width={width} className={classes.svg}>
-            {getLines().map(({ x, isHour, label }) => (
-              <React.Fragment key={x}>
-                {label && height === Y_HEIGHT_BIG && (
-                  <text x={x + X_OFFSET} y={LABEL_HEIGHT} className={classes.text}>
-                    <tspan x={x + X_OFFSET} textAnchor="middle">
-                      {label}
-                      :00
-                    </tspan>
-                  </text>
-                )}
-                {isExpended && (
-                  <line
-                    // stroke="#FAB203"
-                    stroke={orange[300]}
-                    x1={x + X_OFFSET}
-                    y1={LABEL_HEIGHT + 2}
-                    x2={x + X_OFFSET}
-                    y2={LABEL_HEIGHT + 8}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </svg>
+          {preparedEvents.map((taskInfo, i) => {
+            return (
+              <Popover
+                key={taskInfo.userWork.id}
+                preferPlace="below"
+                tipSize={0.01}
+                className={classes.popover}
+                isOpen={get(hoveredEvent, 'userWork.id') === taskInfo.userWork.id && !!hoveredEvent}
+                target={hoveredEl as any}
+                onOuterAction={handlePopoverClose}
+                body={<HoverInfo onOver={handleHover} onLeave={handlePopoverClose} hoveredEvent={taskInfo} />}
+              >
+                <div
+                  aria-owns={`popover-body-${taskInfo.userWork.id}`}
+                  data-id={taskInfo.userWork.id}
+                  className={classes.block}
+                  style={{
+                    ...getStyle(taskInfo),
+                    left: getPosition(taskInfo.userWork.startAt),
+                    width: getWidth(taskInfo),
+                  }}
+                  onClick={handleEventClick}
+                  onMouseOver={handleHover}
+                  onMouseLeave={handlePopoverClose}
+                />
+              </Popover>
+            );
+          })}
         </div>
-      </Popover>
-    </ClickAwayListener>
+        <svg height={timelineOpen ? 80 : height} width={width} className={classes.svg}>
+          {getLines().map(({ x, isHour, label }) => (
+            <React.Fragment key={x}>
+              {label && height === Y_HEIGHT_BIG && (
+                <text x={x + X_OFFSET} y={10} className={classes.text}>
+                  <tspan x={x + X_OFFSET} textAnchor="middle">
+                    {label}
+                    :00
+                  </tspan>
+                </text>
+              )}
+              {isExpended && (
+                <line
+                  // stroke="#FAB203"
+                  stroke={orange[300]}
+                  x1={x + X_OFFSET}
+                  y1={LABEL_HEIGHT + 6}
+                  x2={x + X_OFFSET}
+                  y2={LABEL_HEIGHT - 4}
+                />
+              )}
+            </React.Fragment>
+          ))}
+        </svg>
+      </div>
+    </Popover>
   );
 };

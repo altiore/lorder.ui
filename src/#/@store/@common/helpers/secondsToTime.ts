@@ -5,7 +5,7 @@ interface TimeUnits {
   seconds: number;
 }
 
-export function secondsToTime(seconds: number, hoursPerDay: number): TimeUnits {
+export function secondsToTime(seconds: number, hoursPerDay: number = 24): TimeUnits {
   let minutes = Math.floor(seconds / 60);
   seconds = seconds % 60;
   let hours = Math.floor(minutes / 60);
