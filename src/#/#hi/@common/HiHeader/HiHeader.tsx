@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { Route, Switch } from 'react-router-dom';
 import { Events, Link, scrollSpy } from 'react-scroll';
 
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
@@ -12,8 +13,8 @@ import HeaderFixed from '@components/HeaderFixed';
 import { AccountMenu } from '#/@common/account-menu';
 
 export interface IHiHeaderProps {
-  blocks: { [key: string]: { menu?: boolean; name: string; title: string } };
-  brandName: string;
+  blocks?: { [key: string]: { menu?: boolean; name: string; title: string } };
+  brandName?: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -39,7 +40,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => {
+const defBlocks = {
+  start: {
+    menu: false,
+    name: 'start',
+    title: 'Начать',
+  },
+};
+
+export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks = defBlocks }) => {
   const { MuiTabRoot, MuiTabsIndicator } = useStyles();
 
   const [value, setValue] = useState(blocks.start.name);
@@ -114,7 +123,14 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks, brandName }) => 
           ))}
         </Tabs>
       )}
-      <AccountMenu />
+      <Route path="/">
+        <Switch>
+          <Route path="/login" exact>
+            <span />
+          </Route>
+          <Route path="/" component={AccountMenu} />
+        </Switch>
+      </Route>
     </HeaderFixed>
   );
 };
