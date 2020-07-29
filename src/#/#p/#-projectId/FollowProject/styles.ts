@@ -77,7 +77,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   taglineHeader: {
     color: '#29292b',
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     fontSize: 48,
     fontWeight: 400,
     margin: '109px auto 45px auto',

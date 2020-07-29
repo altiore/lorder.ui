@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   boardTitle: {
     color: '#29292b',
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     fontSize: 24,
     fontWeight: 500,
     marginBottom: 45,

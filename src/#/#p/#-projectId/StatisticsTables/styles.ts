@@ -20,7 +20,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   h2: {
     color: '#29292b',
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     fontSize: 24,
     fontWeight: 500,
   },

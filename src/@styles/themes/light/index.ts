@@ -165,7 +165,7 @@ export default createMuiTheme({
       fontSize: theme.typography.pxToRem(12),
       lineHeight: theme.typography.pxToRem(12),
     },
-    fontFamily: "'Roboto', sans-serif",
+    fontFamily: "'Montserrat', sans-serif",
     h1: {
       fontSize: theme.typography.pxToRem(55),
       fontWeight: 'bold',
