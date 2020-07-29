@@ -58,10 +58,10 @@ export const HiTsx: React.FC<IHiProps> = ({ userRole, brandName, classes }) => {
 
       <AppBar key={'bottom'} position="static" component={'footer'} color="default">
         <Toolbar className={classes.bottomBar}>
-          <Typography variant="h5" color="primary">
+          <Typography variant="h5" color="secondary">
             Copyright &copy; {brandName}
           </Typography>
-          <Typography className={classes.altiore} variant="h6" color="primary">
+          <Typography className={classes.altiore} variant="h6" color="secondary">
             Открытое сообщество разработчиков &copy;{' '}
             <a href="https://github.com/altiore" target="_blank" rel="noopener noreferrer">
               Altiore

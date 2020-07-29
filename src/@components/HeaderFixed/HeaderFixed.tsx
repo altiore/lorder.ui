@@ -62,9 +62,6 @@ export const HeaderFixedTsx: React.FC<IHeaderFixedProps> = ({ children }) => {
             <Link to="/">
               <LorderLogoWithText className={classes.brand} />
             </Link>
-            {/*<Typography className={classes.brand} variant="h4" color="secondary" component={Link} to="/">*/}
-            {/*  {brandName}*/}
-            {/*</Typography>*/}
             {children}
           </Toolbar>
         </AppBar>
