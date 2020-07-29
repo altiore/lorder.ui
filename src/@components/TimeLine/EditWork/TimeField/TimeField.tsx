@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     time: {
-      width: theme.spacing(30.25),
+      width: theme.spacing(62),
       zIndex: 4000,
     },
   })
@@ -18,7 +18,7 @@ interface ITimeFieldProps {
   label: string;
 }
 
-export const TimeFieldTsx: React.FC<WrappedFieldProps & ITimeFieldProps> = ({ input, label, meta }) => {
+export const TimeFieldTsx: React.FC<WrappedFieldProps & ITimeFieldProps> = ({ input, label }) => {
   const classes = useStyles();
 
   return (

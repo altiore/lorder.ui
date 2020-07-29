@@ -1,12 +1,11 @@
 import React from 'react';
 
-import cn from 'classnames';
 import moment from 'moment';
 import { Field, InjectedFormProps } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
 
 import { IEditWorkData } from './@common';
 import { useStyles } from './styles';
@@ -41,20 +40,24 @@ export const EditWorkTsx: React.FC<InjectedFormProps<IEditWorkData, IEditWorkPro
   return (
     <ClickAwayListener onClickAway={onClose}>
       <form className={classes.root} onSubmit={handleSubmit}>
-        <Typography variant="h5" className={classes.title}>
-          {event.name}
-        </Typography>
+        <CloseIcon className={classes.closeIcon} onClick={onClose} />
+        <p className={classes.noMarginBottom}>Задача:</p>
+        <h2 className={classes.noMargin}>{event.name}</h2>
+        <p className={classes.noMarginBottom}>Затрачено:</p>
+        <div className={classes.workedHoursToday}>
+          <TimeDiff />
+        </div>
         <div className={classes.rowSpaceBetween}>
           <div className={classes.col}>
-            <span>Начало</span>
+            <span>Начало задачи</span>
             <Field name="startAt" component={TimeField} format={formatter} parse={parser} />
           </div>
-          <div className={cn(classes.col, classes.end)}>
-            <span>Конец</span>
+          <div className={classes.col}>
+            <span>Конец задачи</span>
             <Field name="finishAt" component={TimeField} format={formatter} parse={parser} />
           </div>
         </div>
-        <TimeDiff />
+
         <div className={classes.grow} />
         <Button color="primary" variant="contained" type="submit" disabled={pristine || submitting}>
           Сохранить

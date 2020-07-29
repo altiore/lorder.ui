@@ -12,18 +12,20 @@ export interface ITimeDiff {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  hoursClass: {},
-  minutesClass: {},
+  hoursClass: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
   root: {
     alignItems: 'center',
     display: 'flex',
-    justifyContent: 'center',
-    marginBottom: theme.spacing(2),
+    marginBottom: 0,
   },
 }));
 
 export const TimeDiffTsx: React.FC<ITimeDiff> = ({ formValues }) => {
-  const { root, hoursClass, minutesClass } = useStyles();
+  const { root, hoursClass } = useStyles();
 
   const hours = useMemo(() => {
     return (formValues.finishAt || moment()).diff(formValues.startAt, 'hours');
@@ -35,11 +37,11 @@ export const TimeDiffTsx: React.FC<ITimeDiff> = ({ formValues }) => {
 
   return (
     <div className={root}>
-      <Typography className={hoursClass} variant="h4">
-        {hours}ч.
+      <Typography className={hoursClass} variant="h3">
+        {hours}ч
       </Typography>
-      <Typography className={minutesClass} variant="h4">
-        {minutes}мин.
+      <Typography className={hoursClass} variant="h3">
+        {minutes}м
       </Typography>
     </div>
   );

@@ -2,17 +2,14 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { TimeLine } from '@components/TimeLine';
+import { currentTask } from '#/@store/timer';
+import { totalTimeSpentToday } from '#/@store/user-works';
 
-import { events } from '#/@store/tasks';
-import { patchUserWork } from '#/@store/user-works';
+import DailyRoutineMain from './DailyRoutineMain';
 
 const mapStateToProps = createStructuredSelector({
-  events,
+  currentTask,
+  hoursWorkedToday: totalTimeSpentToday,
 } as any);
 
-const mapDispatch = {
-  patchUserWork,
-};
-
-export const DailyRoutine = connect(mapStateToProps, mapDispatch)(TimeLine);
+export default connect(mapStateToProps)(DailyRoutineMain) as any;

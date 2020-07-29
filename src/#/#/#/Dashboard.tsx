@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import MediaQuery from 'react-responsive';
 import { RouteComponentProps } from 'react-router-dom';
 
-import Grid from '@material-ui/core/Grid';
+import { Grid } from '@material-ui/core';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 
 import { TIME_LINE_HEIGHT } from '@components/TimeLine';
 
-import { DailyRoutine } from './DailyRoutine';
+import { ActivityTimeline } from './ActivityTimeline';
+import DailyRoutineDialog from './DailyRoutine/';
 import { LastEvents } from './LastEvents';
 import { StartForm } from './StartForm';
 import TasksList from './TasksList';
@@ -91,14 +92,20 @@ export const useStyles = makeStyles((theme: Theme) => ({
 
 export const DashboardJsx: React.FC<IDashboardProps> = () => {
   const classes = useStyles();
-
   const theme = useTheme();
+  const [showDialog, setShowDialog] = useState(false);
+
+  const toggleDailyRoutine = useCallback(() => {
+    setShowDialog(!showDialog);
+  }, [showDialog]);
 
   return (
     <div className={classes.content2}>
       <div className={classes.timeLine}>
-        <DailyRoutine />
+        <ActivityTimeline onTimelineClick={toggleDailyRoutine} fullSize={false} />
+        <DailyRoutineDialog open={showDialog} onClose={toggleDailyRoutine} />
       </div>
+
       <Grid container spacing={4} className={classes.contentWrap}>
         <Grid item lg={8} md={7} sm={12} className={classes.content}>
           <TasksList />
