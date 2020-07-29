@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { userId } from '#/@store/identity';
-import { fetchProjectMembers, projectRoles } from '#/@store/project';
+import { fetchProjectMembers, fetchProjectRoles, projectRoles } from '#/@store/project';
 import { openedAccessLevel, projectMembers } from '#/@store/projects';
 import { addProjectMember, deleteProjectMember, updateMemberLevel } from '#/@store/projects/members';
 import { routeProjectId } from '#/@store/router';
@@ -22,6 +22,7 @@ const mapDispatchToProps = {
   createItem: addProjectMember,
   deleteItem: deleteProjectMember,
   fetchItems: fetchProjectMembers,
+  fetchProjectRoles,
   updateMemberLevel,
 };
 
