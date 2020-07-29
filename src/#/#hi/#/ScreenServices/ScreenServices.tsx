@@ -11,15 +11,7 @@ import { useStyles } from './styles';
 
 interface ScreenServicesI {
   name: string;
-  texts: {
-    adv1: string;
-    adv2: string;
-    adv3: string;
-    adv4: string;
-    adv5: string;
-    adv6: string;
-    adv7: string;
-  };
+  texts: string[];
 }
 
 const ScreenServices: React.FC<ScreenServicesI> = ({ name, texts }) => {
@@ -33,13 +25,9 @@ const ScreenServices: React.FC<ScreenServicesI> = ({ name, texts }) => {
         <LorderSvg />
       </Grid>
       <Grid item className={classes.blockTexts} md={5} xs={12}>
-        <Item key={1}>{texts.adv1}</Item>
-        <Item key={2}>{texts.adv2}</Item>
-        <Item key={3}>{texts.adv3}</Item>
-        <Item key={4}>{texts.adv4}</Item>
-        <Item key={5}>{texts.adv5}</Item>
-        <Item key={6}>{texts.adv6}</Item>
-        <Item key={7}>{texts.adv7}</Item>
+        {texts.map((itemText, index) => (
+          <Item key={index}>{itemText}</Item>
+        ))}
       </Grid>
       <Grid item md={1} xs={false} />
       <div className={classes.backTitle}>LORDER</div>
