@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 
 import { showError, showWarning } from '#/@store/notifications';
 
-import { logInPatch } from '../actions';
+import { logInPatch, postAuthMagic } from '../actions';
 import { loadInitialData } from './loadInitialData';
 
 import { INotification } from '@types';
@@ -25,9 +25,10 @@ const savePasswordToBrowser = () => {
 
 let wrongCount = 0;
 
-export const loginProcess = (data: { email: string; password: string; isLogin: boolean }) => async (
-  dispatch: Dispatch
-) => {
+export const loginWithPassword = async (data: { email: string; password: string }, dispatch: Dispatch<any>) => {
+  if (!data.password) {
+    return dispatch(postAuthMagic(data));
+  }
   try {
     await dispatch(logInPatch({ email: data.email, password: data.password }));
     dispatch(push('/'));
