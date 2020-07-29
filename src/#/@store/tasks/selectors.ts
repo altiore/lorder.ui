@@ -51,6 +51,9 @@ export const getTaskInitialsFromTask = (task: ITask, uId?: number): ITaskFormDat
       if (curUserTask.complexity) {
         initialValues.complexity = curUserTask.complexity;
       }
+      if (curUserTask.userValue) {
+        initialValues.userValue = curUserTask.userValue;
+      }
     }
   }
   return initialValues;
