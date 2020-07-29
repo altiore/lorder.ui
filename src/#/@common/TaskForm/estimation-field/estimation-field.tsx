@@ -15,6 +15,8 @@ import { parseNumber } from '#/@store/@common/helpers';
 
 import { COMPLEXITY, ITaskMove, PROJECT_STRATEGY, TASK_STATUS_MOVE_TYPE, URGENCY } from '@types';
 
+const formatNumber = i => (typeof i === 'number' ? i.toString() : '');
+
 const useStyles = makeStyles(() => ({
   inputStyle: {
     '& > input': {
@@ -35,16 +37,23 @@ export interface IProps {
   strategy?: PROJECT_STRATEGY;
 }
 
-const TASK_ESTIMATION_FIELDS = ['urgency', 'complexity'];
+const TASK_ESTIMATION_FIELDS = ['urgency', 'complexity', 'userValue'];
 
 const MAP_FIELD_TO_ITEMS = {
   complexity: COMPLEXITY,
   urgency: URGENCY,
 };
 
+const MAP_COMPONENT = {
+  complexity: SelectField,
+  urgency: SelectField,
+  userValue: InputField,
+};
+
 const MAP_LABEL = {
   complexity: 'Сложность',
   urgency: 'Важность',
+  userValue: 'Ценность',
 };
 
 export const EstimationField: React.FC<IProps> = ({ getMovesByStatus, projectId, statusTypeName, strategy }) => {
@@ -99,9 +108,11 @@ export const EstimationField: React.FC<IProps> = ({ getMovesByStatus, projectId,
         <Field
           key={field}
           name={field}
-          component={SelectField}
+          component={MAP_COMPONENT[field]}
           label={MAP_LABEL[field]}
           items={MAP_FIELD_TO_ITEMS[field]}
+          parse={field === 'userValue' ? parseNumber : undefined}
+          format={field === 'userValue' ? formatNumber : undefined}
           validate={required()}
         />
       ))}

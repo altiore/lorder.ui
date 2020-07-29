@@ -1,1 +1,1 @@
-export const parseNumber = (value: string) => (typeof value === 'string' && value ? parseInt(value, 0) : null);
+export const parseNumber = (value: string) => (typeof value === 'string' && value ? parseFloat(value) : null);

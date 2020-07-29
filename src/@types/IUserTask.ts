@@ -26,4 +26,5 @@ export interface IUserTask {
 
   complexity?: COMPLEXITY;
   urgency?: URGENCY;
+  userValue?: number;
 }
