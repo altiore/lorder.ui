@@ -19,7 +19,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   font: {
     color: '#29292b',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Roboto',
     fontSize: '16px',
     fontWeight: 300,
   },
@@ -46,7 +46,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   linkButton: {
     color: '#c5c5c5',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Roboto',
     fontSize: 15,
     fontWeight: 400,
     marginLeft: -7,
@@ -57,7 +57,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   userName: {
     color: '#29292b',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Roboto',
     fontSize: '18px',
     fontWeight: 400,
     margin: 0,

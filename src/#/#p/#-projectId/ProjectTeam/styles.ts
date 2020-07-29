@@ -60,7 +60,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   tagline: {
     color: 'rgb(35, 35, 35)',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Roboto',
     fontSize: 30,
     fontWeight: 300,
     lineHeight: 1.133,

@@ -22,7 +22,7 @@ export const styles = (theme: Theme) =>
       borderRadius: ADD_BTN_SIZE / 2,
       boxShadow: 'none',
       color: theme.palette.background.paper,
-      fontFamily: 'Montserrat',
+      fontFamily: 'Roboto',
       fontSize: theme.typography.pxToRem(14),
       fontWeight: 500,
       height: ADD_BTN_SIZE,

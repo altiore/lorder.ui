@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: 170,
   },
   editButtonText: {
-    fontFamily: 'Montserrat',
+    fontFamily: 'Roboto',
     fontSize: 14,
     fontWeight: 300,
     marginLeft: 13,

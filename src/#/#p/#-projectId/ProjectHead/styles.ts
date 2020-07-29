@@ -25,7 +25,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   projectName: {
     color: 'rgb(239, 221, 147)',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Roboto',
     fontSize: 65,
     fontWeight: 'bold',
     marginBottom: 0,
@@ -36,7 +36,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   projectTagline: {
     color: 'rgb(255, 255, 255)',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Roboto',
     fontSize: 30,
     fontWeight: 200,
     marginBottom: 38,

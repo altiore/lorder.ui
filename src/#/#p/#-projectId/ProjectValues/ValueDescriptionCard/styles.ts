@@ -2,7 +2,7 @@ import { makeStyles, Theme } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   cardDescription: {
-    fontFamily: 'Montserrat',
+    fontFamily: 'Roboto',
     fontSize: 18,
     fontWeight: 300,
     marginBottom: 60,
@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   cardTitle: {
     color: '#29292b',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Roboto',
     fontSize: 24,
     fontWeight: 500,
     marginBottom: 20,

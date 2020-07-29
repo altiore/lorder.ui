@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   headerTitle: {
     color: '#29292b',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Roboto',
     fontSize: 48,
     fontWeight: 500,
     textAlign: 'center',
