@@ -14,7 +14,7 @@ export interface IGetAuthActivateData {
 }
 
 export const postAuthMagic = requestActions<IPostAuthMagicData>('USER/SEND_MAGIC_LINK', (data: IPostAuthMagicData) => ({
-  fail: false,
+  error: false,
   form: MAGIC_FORM_NAME,
   noAuth: true,
   request: {
@@ -39,7 +39,7 @@ export const getAuthActivate = requestActions<IGetAuthActivateData>(
 );
 
 export const logInPatch = requestActions('USER/LOGIN', (data: { email: string; password: string }) => ({
-  fail: false,
+  error: false,
   form: LOGIN_FORM_NAME,
   noAuth: true,
   request: {
@@ -54,7 +54,7 @@ export const logInPatch = requestActions('USER/LOGIN', (data: { email: string; p
 }));
 
 export const registerPost = requestActions('USER/REGISTER', (data: { email: string; password: string }) => ({
-  fail: false,
+  error: false,
   form: LOGIN_FORM_NAME,
   noAuth: true,
   request: {

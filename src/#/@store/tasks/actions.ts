@@ -1,25 +1,11 @@
 import omit from 'lodash/omit';
 import { createAction } from 'redux-actions';
 
-import { User } from '#/#/@store/users';
 import { requestActions } from '#/@store/@common/requestActions';
 import { PROJECT_TASK_FORM_NAME } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
 
 import { EDIT_TASK_FORM, ITaskFormData } from './consts';
-
-export interface IProjectTaskData {
-  description?: string;
-  projectId: number;
-  sequenceNumber?: number;
-  statusTypeName?: string;
-  prevStatusTypeName?: string;
-  taskId?: number;
-  title?: string;
-  value?: number;
-  users?: User[];
-  projectParts?: number[];
-}
 
 export const getAllTasks = requestActions('TASKS/GET_ALL', (): any => ({
   request: {
@@ -104,17 +90,23 @@ export const patchProjectTask = requestActions<Partial<ITaskFormData>>(
   }
 );
 
-export const moveProjectTask = requestActions<IProjectTaskData>(
+interface IMoveReqData {
+  projectId: number;
+  sequenceNumber: number;
+  statusTypeName: string;
+  prevStatusTypeName: string;
+  selectedRole: string;
+}
+
+export const moveProjectTaskAct = requestActions<IMoveReqData>(
   'PROJECT_TASK/MOVE',
-  ({ projectId, sequenceNumber, statusTypeName, prevStatusTypeName }: IProjectTaskData) => ({
-    error: {
-      message: 'Не удалось переместить задачу',
-      title: 'Упс...',
-    },
+  ({ prevStatusTypeName, projectId, selectedRole, sequenceNumber, statusTypeName }) => ({
+    error: false,
     prevStatusTypeName,
     projectId,
     request: {
       data: {
+        selectedRole,
         statusTypeName,
       },
       method: 'PATCH',

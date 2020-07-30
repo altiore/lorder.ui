@@ -17,7 +17,7 @@ export const postTaskComment = requestActions(
   `${BASE_ACTION}/ADD_TASK_COMMENT`,
   (projectId: number, taskId: number, comment: string) => {
     return {
-      fail: { message: `Минимальная длинна - 3 символа`, title: 'Провал!' },
+      error: { message: `Минимальная длинна - 3 символа`, title: 'Провал!' },
       request: {
         data: {
           text: comment,
@@ -36,7 +36,7 @@ export const postTaskComment = requestActions(
 export const deleteTaskComments = requestActions(
   `${BASE_ACTION}/DELETE_TASK_COMMENT`,
   (projectId: number, taskId: number, commentId: number) => ({
-    fail: { message: `Ошибка при удалении`, title: 'Провал!' },
+    error: { message: `Ошибка при удалении`, title: 'Провал!' },
     request: {
       method: 'DELETE',
       params: {},
