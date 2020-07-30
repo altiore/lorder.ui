@@ -3,27 +3,31 @@ import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import LorderIco from '@components/@icons/lorder';
+import LorderPoints from '@components/@icons/lorder-points';
 import TooltipBig from '@components/TooltipBig';
 
 const useValueStyle = makeStyles((theme: Theme) => ({
   icon: {
     color: theme.palette.primary.dark,
-    fontSize: 14,
-    marginTop: -3,
+    fontSize: 24,
   },
   value: {
     alignItems: 'center',
-    backgroundColor: '#eeeeee',
+    background: 'rgba(230, 215, 186, 0.32)',
     borderRadius: theme.spacing(2),
     display: 'flex',
     justifyContent: 'center',
-    minHeight: 20,
-    minWidth: 20,
+    minHeight: 26,
+    minWidth: 46,
     padding: '0 4px',
   },
   valueText: {
-    color: theme.palette.default.main,
+    color: '#757575',
+    fontFamily: 'Montserrat',
+    fontSize: 13,
+    fontWeight: 700,
+    letterSpacing: '1px',
+    lineHeight: '13px',
   },
 }));
 
@@ -50,10 +54,10 @@ export const ValueTsx: React.FC<IValueProps> = ({ children, size = SIZE.SMALL })
       placement="bottom"
     >
       <div className={value}>
+        <LorderPoints color="inherit" className={icon} viewBox="0 0 17 14" />
         <Typography component="span" variant={size === SIZE.SMALL ? 'caption' : 'body2'} className={valueText}>
           {children || '--'}
         </Typography>
-        <LorderIco color="inherit" className={icon} />
       </div>
     </TooltipBig>
   );
