@@ -26,8 +26,7 @@ export interface IStoreInfo {
 export const SESSION_BEARER_KEY_FIELD = 'bearer-key';
 
 function getError(action: any, status: number): false | Notification {
-  const errorFromAction =
-    get(action, 'meta.previousAction.payload.error') || get(action, 'meta.previousAction.payload.fail');
+  const errorFromAction = action?.meta?.previousAction?.payload?.error;
   if (typeof errorFromAction === 'object') {
     return {
       level: 'error',

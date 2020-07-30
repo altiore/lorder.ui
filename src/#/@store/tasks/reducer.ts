@@ -22,7 +22,7 @@ import {
   fetchProjectTasksA,
   fetchTaskDetailsA,
   getAllTasks,
-  moveProjectTask,
+  moveProjectTaskAct,
   patchProjectTask,
   postProjectTask,
   updateProjectTask,
@@ -342,9 +342,9 @@ export const tasks: any = handleActions<S, any, any>(
     [patchProjectTask.success]: patchProjectTaskSuccessHandler,
     [patchProjectTask.fail]: patchProjectTaskFailHandler,
 
-    [moveProjectTask.toString()]: moveProjectTaskHandler,
-    [moveProjectTask.success]: moveProjectTaskSuccessHandler,
-    [moveProjectTask.fail]: moveProjectTaskFailHandler,
+    [moveProjectTaskAct.toString()]: moveProjectTaskHandler,
+    [moveProjectTaskAct.success]: moveProjectTaskSuccessHandler,
+    [moveProjectTaskAct.fail]: moveProjectTaskFailHandler,
 
     [archiveTaskA.toString()]: deleteProjectTaskHandler,
     [archiveTaskA.success]: deleteProjectTaskSuccessHandler,
