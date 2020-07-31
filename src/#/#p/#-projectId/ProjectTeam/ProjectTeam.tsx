@@ -16,7 +16,7 @@ export const ProjectTeam: React.FC<{ members: any[] }> = memo(({ members }) => {
   const membersList: IUser[] = useMemo(() => members.map(({ member }: { member: IUser }) => member), [members]);
 
   const filteredMembersList = useMemo(() => {
-    return membersList.filter(member => member.displayName && member.displayName.includes(searchName));
+    return membersList.filter(member => member?.displayName && member.displayName.includes(searchName));
   }, [searchName, membersList]);
 
   const handleSearch = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {

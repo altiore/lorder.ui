@@ -34,7 +34,7 @@ export const TaskMembersTsx: React.FC<ITaskMembers> = ({ getTaskUsersByTaskId, t
       <tbody>
         {members.map(({ benefitPart, user, userId }) => (
           <tr key={userId}>
-            <td>{user.displayName}</td>
+            <td>{user?.displayName}</td>
             <td>
               {new Intl.NumberFormat('ru-RU', {
                 style: 'percent',

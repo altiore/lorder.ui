@@ -115,7 +115,7 @@ export const TaskComments = ({
                     />
                   </ListItemAvatar>
                   <ListItemText
-                    primary={comment.user.displayName || 'N/A'}
+                    primary={comment?.user?.displayName || 'N/A'}
                     secondary={
                       <React.Fragment>
                         <Typography component="span" variant="body2" className={classes.inline} color="textPrimary">

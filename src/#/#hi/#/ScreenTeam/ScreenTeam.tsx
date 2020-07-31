@@ -27,7 +27,7 @@ const ScreenTeam: React.FC<ScreenTeamI> = ({ isPublicLorderLoaded, isPublicLorde
 
   const preparedTeam = useMemo(() => {
     if (team) {
-      return team.filter(m => !!m.member.displayName);
+      return team.filter(m => !!m?.member?.displayName);
     }
     return [];
   }, [team]);

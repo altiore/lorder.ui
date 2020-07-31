@@ -27,7 +27,7 @@ export const loadInitialData = () => async (dispatch: Dispatch<any>, getState: (
         scope.setUser({
           email: user.email,
           id: toString(user.id),
-          username: user.displayName,
+          username: user?.displayName,
         });
         scope.setTag('defaultProjectId', toString(user.defaultProjectId));
         scope.setTag('role', toString(user.role));
