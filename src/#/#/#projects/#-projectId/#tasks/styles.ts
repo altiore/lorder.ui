@@ -54,6 +54,20 @@ export const useStyles = makeStyles((theme: Theme) => ({
     position: 'relative',
     width: '100%',
   },
+  columnTitleSum: {
+    '& > svg': {
+      marginLeft: 4,
+      marginRight: 4,
+    },
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+  },
+  columnTitleText: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+  },
   placeholderCard: {
     alignItems: 'center',
     borderRadius: theme.spacing(1 / 2),
