@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
 import moment from 'moment';
 import 'moment/locale/ru';
@@ -27,18 +27,22 @@ const Transition = React.forwardRef(function TransitionInner(
 
 const BUTTONS = [
   {
+    id: 1,
     isActive: false,
-    title: 'Месяц ',
+    title: 'Месяц',
   },
   {
+    id: 2,
     isActive: false,
-    title: 'Неделя',
+    title: 'Неделю',
   },
   {
+    id: 3,
     isActive: false,
     title: 'Вчера',
   },
   {
+    id: 4,
     isActive: true,
     title: 'Сегодня',
   },
@@ -54,6 +58,16 @@ const DailyRoutineMain = ({ currentTask, hoursWorkedToday, onClose, open }: Dail
     infoBlock,
     infoBlockInner,
   } = useStyles();
+
+  const [activeIndex, setActiveIndex] = useState(3);
+  const handleClick = useCallback(
+    (clickedBtnInd: number) => () => {
+      BUTTONS[activeIndex].isActive = false;
+      setActiveIndex(clickedBtnInd);
+      BUTTONS[clickedBtnInd].isActive = true;
+    },
+    [activeIndex]
+  );
   return (
     <Dialog open={open} style={{ maxHeight: 400 }} fullScreen TransitionComponent={Transition} onClose={onClose}>
       <div className={dialogContentWrap}>
@@ -64,32 +78,27 @@ const DailyRoutineMain = ({ currentTask, hoursWorkedToday, onClose, open }: Dail
               .format('D MMMM YYYY')}
           </h2>
           <Grid container justify="space-around">
-            <Grid item lg={4} md={4} container justify="space-around">
-              {/* TODO: Придумать какие даты отображать в двух нижних параграфах
-               *  ,склоняюсь ко дню рождению пользователя
-               *  и дню рождения того кто разрешил писать комменты в jsx   */}
+            <Grid item lg={6} md={4} sm={12} container justify="center">
               <p className={infoBlock}>
-                <span className={infoBlockInner}>Начало:</span>
-                Чт 02.05.2019 1:00
-              </p>
-              <p className={infoBlock}>
-                <span className={infoBlockInner}>Конец:</span>
-                Чт 02.05.2019 3:20
-              </p>
-            </Grid>
-            <Grid item lg={3} md={4} sm={12} container justify="center">
-              <p className={infoBlock}>
-                <span className={infoBlockInner}>Трудовая нагрузка за сегодня:</span>
+                <span className={infoBlockInner}>Времени затрачено за {BUTTONS[activeIndex].title.toLowerCase()}:</span>
                 {hoursWorkedToday}
               </p>
             </Grid>
-            <Grid item lg={4} md={4} container alignItems="center" justify="center" wrap="nowrap">
-              {/*Добавить обработчик переключения активной кнопки */}
-              {BUTTONS.map(({ title, isActive }) => (
-                <Button key={title} className={button} color={isActive ? 'primary' : 'default'} variant="contained">
-                  {title}
-                </Button>
-              ))}
+            <Grid item lg={6} md={4} container alignItems="center" justify="center" wrap="nowrap" direction="column">
+              <p className={infoBlockInner}>Просмотр трудовой нагрузки за:</p>
+              <div>
+                {BUTTONS.map(({ title, isActive }, i) => (
+                  <Button
+                    key={title}
+                    className={button}
+                    color={isActive ? 'primary' : 'default'}
+                    variant="contained"
+                    onClick={handleClick(i)}
+                  >
+                    {title}
+                  </Button>
+                ))}
+              </div>
             </Grid>
           </Grid>
           <hr />
