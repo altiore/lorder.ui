@@ -1,16 +1,21 @@
 import React, { useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
+import { CheckboxCell } from '@components/Crud/@cells/checkbox/checkbox.cell';
 import { ICrudColumn } from '@components/Crud/Crud';
 import { Page } from '@components/Page';
 
 import Crud from '#/@common/Crud';
 
+import { ACCESS_LEVEL } from '@types';
+
 export interface IProjectMembersProps extends RouteComponentProps {
   createProjectRole: (data: { roleId: string; allowedMoveIds: number[]; name?: string }) => any;
   deleteProjectRole: any;
+  editProjectRole: any;
   fetchProjectRoles?: any;
   fetchRoles: () => void;
+  openedAccessLevel?: ACCESS_LEVEL;
   projectRoles: any[];
   rolesList: any[];
 }
@@ -18,11 +23,20 @@ export interface IProjectMembersProps extends RouteComponentProps {
 const COLUMNS: ICrudColumn[] = [
   { title: 'ID', path: 'id' },
   { title: 'Название', path: 'role.id', name: 'roleId' },
-  { title: 'Разрешия', path: 'allowedMoveIds' },
+  { title: 'Публичная', path: 'isPublic', name: 'isPublic', isBoolean: true, component: CheckboxCell },
 ];
 
 export const ProjectRolesJsx: React.FC<IProjectMembersProps> = React.memo(
-  ({ createProjectRole, deleteProjectRole, fetchProjectRoles, fetchRoles, projectRoles, rolesList }) => {
+  ({
+    createProjectRole,
+    deleteProjectRole,
+    editProjectRole,
+    fetchProjectRoles,
+    fetchRoles,
+    openedAccessLevel,
+    projectRoles,
+    rolesList,
+  }) => {
     useEffect(() => {
       if (fetchProjectRoles) {
         fetchProjectRoles();
@@ -40,13 +54,15 @@ export const ProjectRolesJsx: React.FC<IProjectMembersProps> = React.memo(
         res[cur.id] = cur.name;
         return res;
       }, {});
+      COLUMNS[2].editable = Boolean(openedAccessLevel && openedAccessLevel >= ACCESS_LEVEL.GREEN);
       return COLUMNS;
-    }, [rolesList]);
+    }, [openedAccessLevel, rolesList]);
 
     return (
       <Page>
         <Crud
           formName={'CreateProjectRoleForm'}
+          editItem={editProjectRole}
           entityName="Роли Проекта"
           createTitle="Добавить"
           createItem={createProjectRole}

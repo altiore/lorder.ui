@@ -9,7 +9,7 @@ import { Page } from '@components/Page';
 import Crud from '#/@common/Crud';
 import { CREATE_TASK_STATUS_MOVE_FORM } from '#/@store/project-status-moves';
 
-import { TASK_STATUS_MOVE_TYPE } from '@types';
+import { IProjectRole, TASK_STATUS_MOVE_TYPE } from '@types';
 
 export interface IStatusMovesProps extends RouteComponentProps {
   createItem: any;
@@ -19,7 +19,7 @@ export interface IStatusMovesProps extends RouteComponentProps {
   fetchProjectRoles: any;
   list: any[];
   projectId: number;
-  projectRoles: any[];
+  projectRoles: IProjectRole[];
   taskStatusesList: any[];
 }
 

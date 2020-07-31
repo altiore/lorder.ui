@@ -27,6 +27,18 @@ export const createProjectRoleAct = requestActions(
   })
 );
 
+export const editProjectRoleAct = requestActions(
+  'CURRENT_PROJECT/EDIT_ROLE',
+  (projectId: number, roleId: number, data: { isPublic: boolean }) => ({
+    form: 'CreateProjectRoleForm',
+    request: {
+      data,
+      method: 'PATCH',
+      url: `/projects/${projectId}/roles/${roleId}`,
+    },
+  })
+);
+
 export const deleteProjectRoleAct = requestActions(
   'CURRENT_PROJECT/DELETE_ROLE',
   (projectId: number, roleId: string) => ({

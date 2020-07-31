@@ -110,6 +110,7 @@ export interface ICrudColumn {
   path: any;
   name?: string;
   isNumber?: boolean;
+  isBoolean?: boolean;
   emptyElement?: any;
   allowed?: object;
   editable?: boolean;
@@ -248,8 +249,8 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
               onSubmit={editItem}
               columns={columns}
               onSubmitSuccess={closeDialog}
-              createTitle={createTitle}
               initialValues={item}
+              submitTitle="Изменить"
             />,
             {
               maxWidth: 'md',
@@ -259,7 +260,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
           handleCheckClick(event);
         }
       },
-      [closeDialog, columns, createTitle, editItem, formName, handleCheckClick, openDialog, rows]
+      [closeDialog, columns, editItem, formName, handleCheckClick, openDialog, rows]
     );
 
     const handleChangePage = useCallback((event: unknown, newPage: number) => {
@@ -332,7 +333,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
             onSubmit={createItem}
             columns={columns}
             onSubmitSuccess={closeDialog}
-            createTitle={createTitle}
+            submitTitle={createTitle}
           />,
           {
             maxWidth: 'md',
@@ -344,9 +345,10 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
     const handleChangeComponentField = useCallback(
       (elId, event) => {
         event.stopPropagation();
+        const value = typeof event.target.checked === 'boolean' ? event.target.checked : event.target.value;
         if (editItem) {
           editItem(elId, {
-            [event.target.name]: event.target.value,
+            [event.target.name]: value,
           });
         }
       },
@@ -438,7 +440,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
                               <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
                                 {React.createElement(component, {
                                   allowed,
-                                  editable: allowed && editItem && editable && (!skip || !skip(item)),
+                                  editable: editItem && editable && (!skip || !skip(item)),
                                   name: name || path,
                                   onChange: getChangeFunc(elId),
                                   value,

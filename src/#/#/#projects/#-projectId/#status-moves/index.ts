@@ -13,11 +13,19 @@ import { taskStatusesList } from '#/@store/task-statuses';
 
 import { StatusMovesJsx } from './StatusMoves';
 
-const mapStateToProps = createStructuredSelector({
+import { IProjectRole, IState } from '@types';
+
+interface IMappedProps {
+  list: any;
+  projectRoles: IProjectRole[];
+  taskStatusesList: any;
+}
+
+const mapStateToProps = createStructuredSelector<IState, IMappedProps>({
   list: taskStatusMoves,
   projectRoles,
   taskStatusesList,
-} as any);
+});
 
 const mapDispatchToProps = {
   createItem: createProjectStatusMove,

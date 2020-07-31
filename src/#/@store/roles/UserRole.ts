@@ -1,10 +1,10 @@
 import map from 'lodash/map';
 
-import { IUserRole } from '@types';
+import { IUserRole, ROLE_FLOW } from '@types';
 
 export class UserRole implements IUserRole {
   id: string;
-  name: string;
+  name: ROLE_FLOW;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

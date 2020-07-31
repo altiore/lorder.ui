@@ -14,7 +14,7 @@ import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 
 import ColoredSelect from './colored.select';
 
-import { ACCESS_LEVEL } from '@types';
+import { ACCESS_LEVEL, IProjectRole } from '@types';
 
 export interface IProjectMembersProps extends RouteComponentProps {
   createItem: any;
@@ -22,12 +22,12 @@ export interface IProjectMembersProps extends RouteComponentProps {
   deleteManyItems: any;
   fetchItems?: any;
   fetchProjectRoles: any;
-  openedAccessLevel: any;
-  projectId: number | string;
-  projectRoles: any[];
+  openedAccessLevel?: ACCESS_LEVEL;
+  projectId?: number;
+  projectRoles: IProjectRole[];
   list: any[];
   updateMemberLevel: (id, value) => any;
-  userId: number;
+  userId?: number;
 }
 
 const getUserId = el => get(el, ['member', 'id'], get(el, ['member', 'email']));
@@ -85,19 +85,18 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
     }, [list]);
 
     const preparedColumns = useMemo(() => {
-      COLUMNS[5].editable = openedAccessLevel >= ACCESS_LEVEL.VIOLET;
+      COLUMNS[5].editable = Boolean(openedAccessLevel && openedAccessLevel >= ACCESS_LEVEL.VIOLET);
       COLUMNS[5].allowed = projectRoles.reduce((res, cur) => {
         res[cur.name || cur.role.name] = cur.role.id;
         return res;
       }, {});
-      COLUMNS[5].emptyElement =
-        openedAccessLevel >= ACCESS_LEVEL.INDIGO ? (
-          <LinkButton to={`/projects/${projectId}/roles`}>Добавить роли в проект</LinkButton>
-        ) : (
-          undefined
-        );
+      COLUMNS[5].emptyElement = Boolean(openedAccessLevel && openedAccessLevel >= ACCESS_LEVEL.INDIGO) ? (
+        <LinkButton to={`/projects/${projectId}/roles`}>Добавить роли в проект</LinkButton>
+      ) : (
+        undefined
+      );
       // только человек с максимальным уровнем доступа к проекту может редактировать accessLevel Других пользовтаелей
-      COLUMNS[6].editable = openedAccessLevel >= ACCESS_LEVEL.VIOLET;
+      COLUMNS[6].editable = Boolean(openedAccessLevel && openedAccessLevel >= ACCESS_LEVEL.VIOLET);
       // нельзя редактировать свой уровень доступа или уровень доступа человека, у которого максимальный уровень доступа
       COLUMNS[6].skip = item => {
         if (item) {

@@ -9,6 +9,7 @@ import {
   createProjectRoleAct,
   deleteProjectPartAct,
   deleteProjectRoleAct,
+  editProjectRoleAct,
   fetchProjectPartsAct,
   fetchProjectRolesAct,
   selectProject,
@@ -52,6 +53,21 @@ const createProjectRoleSuccessHandler = (state: IS, { payload }) => {
   };
 };
 
+const editProjectRoleSuccessHandler = (state: IS, { payload }) => {
+  const roleIndex = state.roles.findIndex(el => el.id === payload?.data?.id);
+  return {
+    ...state,
+    roles: [
+      ...state.roles.slice(0, roleIndex),
+      {
+        ...state.roles[roleIndex],
+        ...payload.data,
+      },
+      ...state.roles.slice(roleIndex + 1),
+    ],
+  };
+};
+
 const fetchProjectPartsSuccessHandler = (state: IS, { payload }) => {
   return {
     ...state,
@@ -78,6 +94,10 @@ export const projectReducer: any = handleActions<IS, any, any>(
     [createProjectRoleAct.toString()]: nothing,
     [createProjectRoleAct.success]: createProjectRoleSuccessHandler,
     [createProjectRoleAct.fail]: nothing,
+
+    [editProjectRoleAct.toString()]: nothing,
+    [editProjectRoleAct.success]: editProjectRoleSuccessHandler,
+    [editProjectRoleAct.fail]: nothing,
 
     [deleteProjectRoleAct.toString()]: nothing,
     [deleteProjectRoleAct.success]: removeFromList('roles'),

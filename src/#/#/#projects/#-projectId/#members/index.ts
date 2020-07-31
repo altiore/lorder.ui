@@ -10,13 +10,23 @@ import { routeProjectId } from '#/@store/router';
 
 import { ProjectMembersJsx } from './project.members';
 
-const mapStateToProps = createStructuredSelector({
+import { ACCESS_LEVEL, IProjectRole, IState } from '@types';
+
+interface IMappedProps {
+  list: any[];
+  openedAccessLevel?: ACCESS_LEVEL;
+  projectId?: number;
+  projectRoles: IProjectRole[];
+  userId?: number;
+}
+
+const mapStateToProps = createStructuredSelector<IState, IMappedProps>({
   list: projectMembers,
   openedAccessLevel,
   projectId: routeProjectId,
   projectRoles,
   userId,
-} as any);
+});
 
 const mapDispatchToProps = {
   createItem: addProjectMember,
