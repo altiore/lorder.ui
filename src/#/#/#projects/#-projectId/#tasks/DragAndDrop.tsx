@@ -16,6 +16,10 @@ import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 
+import SumIcon from '@components/@icons/sum';
+import TooltipBig from '@components/TooltipBig';
+import ValueField from '@components/value';
+
 import { PatchTaskForm } from '#/@common/TaskForm';
 import { DEFAULT_TRANSITION_DURATION } from '#/@store/dialog';
 import { TASKS_ROUTE } from '#/@store/router';
@@ -192,15 +196,24 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
             return statuses.includes(el.statusTypeName);
           });
           const filteredItemsLength = filteredItems.length;
+          const valueSum = filteredItems.reduce((res, cur) => {
+            return res + cur.value;
+          }, 0);
           return (
             <div className={classes.column} key={column}>
               <Typography variant="h6" className={classes.columnTitle}>
-                <span>
-                  {STATUS_NAMES[column] || column} -{' '}
-                  {filteredItems.reduce((res, cur) => {
-                    return res + cur.value;
-                  }, 0)}
-                </span>
+                <div className={classes.columnTitleText}>
+                  <span>{STATUS_NAMES[column] || column}</span>
+                  {Boolean(valueSum) && (
+                    <TooltipBig title="Сумма ценности задач в статусе" placement="top">
+                      <span className={classes.columnTitleSum}>
+                        <span>&nbsp;-&nbsp;</span>
+                        <SumIcon fontSize="small" />
+                        <ValueField disableTooltip>{valueSum}</ValueField>
+                      </span>
+                    </TooltipBig>
+                  )}
+                </div>
                 {!!filteredItemsLength && (
                   <ButtonBase value={column} className={classes.arrowWrap} onClick={handleToggleOpened}>
                     <KeyboardArrowDown
