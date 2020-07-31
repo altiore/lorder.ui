@@ -26,7 +26,7 @@ export const addTaskTypeToProject = requestActions(
 export const deleteTaskTypeFromProject = requestActions(
   'PROJECTS/TASK_TYPES/DELETE',
   ({ projectId, taskTypeId }: { projectId: number; taskTypeId: number }) => ({
-    error: 'Все задачи удалены!',
+    error: false,
     projectId,
     request: {
       data: { taskTypeId },

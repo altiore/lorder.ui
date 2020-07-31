@@ -1,14 +1,13 @@
 import { Action, handleActions } from 'redux-actions';
 
 import { DownloadList } from '#/@store/@common/entities';
-import { TaskType } from '#/@store/task-types';
 
 import { AxiosResponse } from 'axios';
 
-import { addTaskTypeToProject, getAllProjectTaskTypes } from './actions';
+import { addTaskTypeToProject, deleteTaskTypeFromProject, getAllProjectTaskTypes } from './actions';
 import { ProjectTaskType } from './project-task-type';
 
-type S = DownloadList<TaskType>;
+type S = DownloadList<ProjectTaskType>;
 
 const getAllProjectTaskTypesHandler = (state: S) => {
   return state.startLoading();
@@ -34,6 +33,22 @@ const postTaskTypeToProjectFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
+const deleteTaskTypeFromProjectHandler = (state: S) => {
+  return state.startLoading();
+};
+
+const deleteTaskTypeFromProjectSuccessHandler = (state: S, { meta }: any) => {
+  const taskTypeIndex = state.list.findIndex(el => meta?.previousAction?.payload?.taskTypeId === el.taskTypeId);
+  if (taskTypeIndex !== -1) {
+    return state.stopLoading().removeItem(taskTypeIndex);
+  }
+  return state.stopLoading();
+};
+
+const deleteTaskTypeFromProjectFailHandler = (state: S) => {
+  return state.stopLoading();
+};
+
 export const projectTaskTypes = handleActions<S, any, any>(
   {
     [getAllProjectTaskTypes.toString()]: getAllProjectTaskTypesHandler,
@@ -43,6 +58,10 @@ export const projectTaskTypes = handleActions<S, any, any>(
     [addTaskTypeToProject.toString()]: postTaskTypeToProjectHandler,
     [addTaskTypeToProject.success]: postTaskTypeToProjectSuccessHandler,
     [addTaskTypeToProject.fail]: postTaskTypeToProjectFailHandler,
+
+    [deleteTaskTypeFromProject.toString()]: deleteTaskTypeFromProjectHandler,
+    [deleteTaskTypeFromProject.success]: deleteTaskTypeFromProjectSuccessHandler,
+    [deleteTaskTypeFromProject.fail]: deleteTaskTypeFromProjectFailHandler,
   },
   new DownloadList(ProjectTaskType)
 );
