@@ -8,11 +8,11 @@ import Crud from '#/@common/Crud';
 
 export interface IProjectTaskTypesProps extends RouteComponentProps {
   addTaskTypeToProject: any;
-  deleteTaskTypeFromProject: any;
   getAllTaskTypes?: any;
   getAllProjectTaskTypes?: any;
   projectId: number;
   projectTaskTypes: any[];
+  removeTaskTypeFromProject: any;
   taskTypeList: any[];
 }
 
@@ -26,7 +26,7 @@ const getId = el => (el ? el.taskTypeId : 0);
 export const ProjectTaskTypesJsx: React.FC<IProjectTaskTypesProps> = React.memo(
   ({
     addTaskTypeToProject,
-    deleteTaskTypeFromProject,
+    removeTaskTypeFromProject,
     getAllProjectTaskTypes,
     getAllTaskTypes,
     projectId,
@@ -48,10 +48,10 @@ export const ProjectTaskTypesJsx: React.FC<IProjectTaskTypesProps> = React.memo(
     const deleteTaskType = useCallback(
       taskTypeId => {
         if (typeof taskTypeId === 'number') {
-          deleteTaskTypeFromProject({ projectId, taskTypeId });
+          removeTaskTypeFromProject({ projectId, taskTypeId });
         }
       },
-      [deleteTaskTypeFromProject, projectId]
+      [removeTaskTypeFromProject, projectId]
     );
 
     const preparedColumns = useMemo(() => {

@@ -72,17 +72,6 @@ const removeProjectSuccessHandler = (state: S, { meta }: ActionMeta<P, M>) => {
   return state.removeItem(index);
 };
 
-const deleteTaskTypeFromProjectHandler = (state: S, { payload }: Action<P>) => {
-  const projectIndex = state.list.findIndex(el => get(payload, 'projectId') === el.id);
-  const taskTypeIndex = state.list[projectIndex].projectTaskTypes.list.findIndex(
-    el => get(payload, 'taskTypeId') === el.taskTypeId
-  );
-  const newTaskTypes = state.list[projectIndex].projectTaskTypes.removeItem(taskTypeIndex);
-  return state.updateItem(projectIndex, {
-    projectTaskTypes: newTaskTypes,
-  });
-};
-
 const fetchProjectDetailsSuccessHandler = (state: S, { payload }: Action<P>) => {
   const data = get(payload, 'data');
   const index = state.list.findIndex(el => el.id === data.id);
@@ -240,7 +229,6 @@ export const projects: any = handleActions<S, any, any>(
     ).toString()]: getOwnProjectsFailHandler,
     [combineActionsRedux(removeProject.success, removeProjectByAdmin.success).toString()]: removeProjectSuccessHandler,
     [fetchProjectDetails.success]: fetchProjectDetailsSuccessHandler,
-    [deleteTaskTypeFromProject.toString()]: deleteTaskTypeFromProjectHandler,
     [postProjectMember.toString()]: postProjectMemberHandler,
     [postProjectMember.success]: postProjectMemberSuccessHandler,
     [postProjectMember.fail]: postProjectMemberFailHandler,
@@ -251,7 +239,7 @@ export const projects: any = handleActions<S, any, any>(
     [updateProjectMemberAccessLevel.success]: updateProjectMemberAccessLevelSuccessHandler,
 
     [deleteProjectMemberAct.toString()]: deleteProjectMemberHandler,
-    [combineActions(getAllProjectTaskTypes, addTaskTypeToProject)]: projectTaskTypeHandler,
+    [combineActions(getAllProjectTaskTypes, addTaskTypeToProject, deleteTaskTypeFromProject)]: projectTaskTypeHandler,
 
     [updateProjectAct.success]: updateProjectHandler,
     [PURGE]: logOutHandler,

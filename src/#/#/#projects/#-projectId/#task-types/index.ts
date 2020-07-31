@@ -4,9 +4,9 @@ import { createStructuredSelector } from 'reselect';
 
 import {
   addTaskTypeToProject,
-  deleteTaskTypeFromProject,
   getAllProjectTaskTypes,
   projectTaskTypes,
+  removeTaskTypeFromProject,
 } from '#/@store/projects';
 import { routeProjectId } from '#/@store/router';
 import { getAllTaskTypes, getTaskTypeById, taskTypeList } from '#/@store/task-types';
@@ -22,9 +22,9 @@ const mapState = createStructuredSelector({
 
 const mapDispatch = {
   addTaskTypeToProject,
-  deleteTaskTypeFromProject,
   getAllProjectTaskTypes,
   getAllTaskTypes,
+  removeTaskTypeFromProject,
 };
 
 export default connect(mapState, mapDispatch)(ProjectTaskTypesJsx);

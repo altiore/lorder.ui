@@ -135,3 +135,4 @@ export const updateProjectAct = requestActions<number, any>(
 
 export * from './members/actions';
 export * from './taskTypes/actions';
+export * from './taskTypes/thunk';
