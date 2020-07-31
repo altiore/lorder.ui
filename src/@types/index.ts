@@ -13,6 +13,7 @@ export * from './INotification';
 export * from './IProjectMember';
 export * from './IProjectMetric';
 export * from './IProjectPart';
+export * from './IProjectRole';
 export * from './IProjectTaskType';
 export * from './IPublicProject';
 export * from './ISockets';

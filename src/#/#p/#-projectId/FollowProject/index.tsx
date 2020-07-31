@@ -6,30 +6,29 @@ import { createStructuredSelector } from 'reselect';
 import { isAuth, userEmail, userId } from '#/@store/identity';
 import {
   postRequestMembership,
-  PublicProjectMembers,
-  PublicProjectProjectId,
-  PublicProjectRoles,
+  publicProjectMembers,
+  publicProjectProjectId,
+  publicProjectRoles,
 } from '#/@store/publicProject';
 
 import { FollowProjectTsx } from './FollowProject';
 
 import { IState } from '@types';
 
-const mapStateToProps = createStructuredSelector<
-  IState,
-  {
-    roles: any;
-    projectId: number | undefined;
-    isAuth: boolean;
-    userEmail: string | undefined;
-    userId: any;
-    members: any;
-  }
->({
+interface IMappedProps {
+  roles: any;
+  projectId: number | undefined;
+  isAuth: boolean;
+  userEmail: string | undefined;
+  userId: any;
+  members: any;
+}
+
+const mapStateToProps = createStructuredSelector<IState, IMappedProps>({
   isAuth,
-  members: PublicProjectMembers,
-  projectId: PublicProjectProjectId,
-  roles: PublicProjectRoles,
+  members: publicProjectMembers,
+  projectId: publicProjectProjectId,
+  roles: publicProjectRoles,
   userEmail,
   userId,
 });

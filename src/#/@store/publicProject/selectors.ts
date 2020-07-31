@@ -19,7 +19,7 @@ export const publicProjectProject = createDeepEqualSelector(
   (pp: IPublicProject | undefined) => pp && pp.project
 );
 
-export const PublicProjectMembers = createDeepEqualSelector(
+export const publicProjectMembers = createDeepEqualSelector(
   publicProjectData,
   (pp: IPublicProject | undefined) => pp?.project?.members?.list
 );
@@ -34,12 +34,11 @@ export const publicProjectStatistic = createDeepEqualSelector(
   (pp: IPublicProject | undefined) => pp && pp.statistic
 );
 
-export const PublicProjectRoles = createDeepEqualSelector(
-  publicProjectData,
-  (pp: IPublicProject | undefined) => pp?.project?.roles
+export const publicProjectRoles = createDeepEqualSelector(publicProjectData, (pp: IPublicProject | undefined) =>
+  (pp?.project?.roles || []).filter(r => r.isPublic)
 );
 
-export const PublicProjectProjectId = createDeepEqualSelector(
+export const publicProjectProjectId = createDeepEqualSelector(
   publicProjectData,
   (pp: IPublicProject | undefined) => pp?.project?.id
 );

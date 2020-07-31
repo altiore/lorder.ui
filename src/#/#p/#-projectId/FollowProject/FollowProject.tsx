@@ -100,30 +100,31 @@ export const FollowProjectTsx = ({
             },
           }}
         />
-        <Select
-          value={role}
-          className={classNames({
-            [classes.select]: true,
-            [classes.selectVertical]: verticalDirection,
-          })}
-          inputProps={{
-            className: classNames({
-              [classes.innerSelectColor]: role === 'role',
-              [classes.innerSelect]: true,
-            }),
-          }}
-          onChange={handleSelect}
-        >
-          <MenuItem value="role" disabled>
-            Выбрать роль
-          </MenuItem>
-          {roles &&
-            roles.map(({ role: { id, name } }: any) => (
+        {Boolean(roles && roles.length) && (
+          <Select
+            value={role}
+            className={classNames({
+              [classes.select]: true,
+              [classes.selectVertical]: verticalDirection,
+            })}
+            inputProps={{
+              className: classNames({
+                [classes.innerSelectColor]: role === 'role',
+                [classes.innerSelect]: true,
+              }),
+            }}
+            onChange={handleSelect}
+          >
+            <MenuItem value="role" disabled>
+              Выбрать роль
+            </MenuItem>
+            {roles.map(({ role: { id, name } }: any) => (
               <MenuItem value={id} key={id}>
                 {name}
               </MenuItem>
             ))}
-        </Select>
+          </Select>
+        )}
         <Button
           color="primary"
           variant="contained"

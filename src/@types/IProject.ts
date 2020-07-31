@@ -1,8 +1,8 @@
 import { ACCESS_LEVEL } from './ACCESS_LEVEL';
 import { IDownloadList } from './IDownloadList';
 import { IMember } from './IMember';
+import { IProjectRole } from './IProjectRole';
 import { TASK_STATUS_MOVE_TYPE } from './IStatusMove';
-import { IUserRole } from './IUserRole';
 import { PROJECT_TYPE } from './PROJECT_TYPE';
 
 export enum PROJECT_STRATEGY {
@@ -40,7 +40,7 @@ export interface IProject {
   owner?: any;
   ownerId?: number;
   phases?: any[];
-  roles?: { id: number; name: any; projectId: number; role: IUserRole };
+  roles?: IProjectRole[];
   members: IDownloadList<IMember>;
   tasks: any;
   projectTaskTypes: any;
