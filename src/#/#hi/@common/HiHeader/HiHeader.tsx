@@ -10,7 +10,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import HeaderFixed from '@components/HeaderFixed';
 
-import { AccountMenu } from '#/@common/account-menu';
+import AccountMenu from '#/@common/account-menu';
 
 export interface IHiHeaderProps {
   blocks?: { [key: string]: { menu?: boolean; name: string; title: string } };
@@ -128,7 +128,9 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks = defBlocks }) =>
           <Route path="/auth">
             <span />
           </Route>
-          <Route path="/" component={AccountMenu} />
+          <Route path="/">
+            <AccountMenu menuId="hi-header-menu" />
+          </Route>
         </Switch>
       </Route>
     </HeaderFixed>

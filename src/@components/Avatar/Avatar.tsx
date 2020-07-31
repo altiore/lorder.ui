@@ -45,7 +45,12 @@ export const AvatarTsx: React.FC<IAvatarProps> = React.forwardRef<any, IAvatarPr
           [classes.avatarBorderSmall]: size === 'sm',
         })}
       >
-        <ButtonBase ref={ref} className={classes.avatarWrapper} onClick={handleClick}>
+        <ButtonBase
+          component={onClick ? 'button' : 'div'}
+          ref={ref}
+          className={classes.avatarWrapper}
+          onClick={handleClick}
+        >
           <Avatar
             className={cn(classes.avatar, {
               [classes.avatarSmall]: size === 'sm',

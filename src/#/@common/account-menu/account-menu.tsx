@@ -93,12 +93,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface IAccountMenuTsx {
   isAuth: boolean;
   menuId: string;
-  isMenuOpen: boolean;
-  onClose: () => void;
   logOut: () => void;
   userAvatar?: string;
-  userEmail: string;
-  userRole: string;
+  userEmail?: string;
+  userRole?: string;
   push: (v: string) => void;
 }
 

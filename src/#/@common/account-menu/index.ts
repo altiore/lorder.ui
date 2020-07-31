@@ -9,7 +9,14 @@ import { AccountMenuTsx } from './account-menu';
 
 import { IState } from '@types';
 
-const mapStateToProps = createStructuredSelector<IState, any>({
+interface IMappedProps {
+  isAuth: boolean;
+  userAvatar?: string;
+  userEmail?: string;
+  userRole: string;
+}
+
+const mapStateToProps = createStructuredSelector<IState, IMappedProps>({
   isAuth,
   userAvatar,
   userEmail,
@@ -21,4 +28,4 @@ const mapDispatchToProps = {
   push,
 };
 
-export const AccountMenu = connect<any, any, any, any>(mapStateToProps, mapDispatchToProps)(AccountMenuTsx);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountMenuTsx);

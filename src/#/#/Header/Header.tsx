@@ -11,7 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import LorderLogo from '@components/@icons/LorderLogo';
 
-import { AccountMenu } from '#/@common/account-menu';
+import AccountMenu from '#/@common/account-menu';
 import { createProjectDialogProps, CreateProjectPopup } from '#/@common/CreateProjectPopup';
 import { LinkIconButton } from '#/@common/LinkIconButton';
 import { Project } from '#/@store/projects';
@@ -111,7 +111,7 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(
             <CurrentTaskButton />
           </MediaQuery>
           <div>
-            <AccountMenu />
+            <AccountMenu menuId="header-menu" />
           </div>
         </Toolbar>
       </AppBar>
