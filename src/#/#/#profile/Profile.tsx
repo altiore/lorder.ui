@@ -20,7 +20,6 @@ import GitHubIco from './icons/github';
 import LinkedInIco from './icons/linkedin';
 import ProfileForm from './ProfileForm';
 
-import { ROLE } from '@types';
 import getRandEnum from '@utils/get-rand-enum';
 
 export const useStyles = makeStyles((theme: Theme) => ({
@@ -69,13 +68,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
     overflowY: 'auto',
     ...theme.scroll.secondary,
   },
-  userNameStyle: {
-    color: 'white',
-    paddingLeft: theme.spacing(1),
-  },
-  userRoleStyle: {
+  userEmailStyle: {
     color: theme.palette.pause.main,
     margin: '8px 0 16px',
+    paddingLeft: theme.spacing(1),
+  },
+  userNameStyle: {
+    color: 'white',
     paddingLeft: theme.spacing(1),
   },
 }));
@@ -84,10 +83,10 @@ interface IProfile {
   projects: Project[];
   userAvatar?: string;
   userDisplayName: string;
-  userRole: ROLE;
+  userEmail: string;
 }
 
-export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayName, userRole }) => {
+export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayName, userEmail }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const toggleEdit = useCallback(() => {
@@ -107,8 +106,8 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
     profileForm,
     projectList,
     scrollBody,
+    userEmailStyle,
     userNameStyle,
-    userRoleStyle,
   } = useStyles();
   return (
     <div className={scrollBody}>
@@ -129,7 +128,7 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
               <Typography variant="h3" className={userNameStyle}>
                 {userDisplayName}
               </Typography>
-              <Typography className={userRoleStyle}>{userRole}</Typography>
+              <Typography className={userEmailStyle}>{userEmail}</Typography>
               <ButtonEdit onClick={toggleEdit}>Редактировать</ButtonEdit>
             </>
           )}
