@@ -1,7 +1,23 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
+  '@keyframes HoverAndRotate': {
+    '0%': {
+      transform: 'rotate(0deg)',
+    },
+    '100%': {
+      transform: 'rotate(0deg)',
+    },
+    '50%': {
+      transform: 'rotate(180deg)',
+    },
+  },
   editButton: {
+    '&:hover': {
+      '& > span > svg': {
+        animation: '$HoverAndRotate 0.3s',
+      },
+    },
     backgroundColor: 'transparent',
     borderColor: 'rgb(197, 197, 197)',
     borderRadius: 18,
