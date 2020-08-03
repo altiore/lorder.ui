@@ -19,7 +19,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flexFlow: 'column nowrap',
     flexGrow: 1,
     height: 'calc(100vh - 56px)',
-    zIndex: 1208,
+    zIndex: 0,
   },
   root: {
     display: 'flex',
