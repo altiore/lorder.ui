@@ -42,6 +42,11 @@ export const useStyles = makeStyles((theme: Theme) =>
       }),
       width: '100%',
     },
+    rootWrap: {
+      cursor: 'pointer',
+      position: 'relative',
+      width: '100%',
+    },
     svg: {
       left: 0,
       pointerEvents: 'none',

@@ -253,12 +253,7 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({
         </Paper>
       }
     >
-      <div
-        style={{
-          position: 'relative',
-          width: '100%',
-        }}
-      >
+      <div className={classes.rootWrap} onClick={handleClick}>
         <CurrentTimeIndicator fullSize={fullSize} left={getPosition(moment())} />
 
         <div
@@ -268,7 +263,6 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({
             height,
             zIndex: isExpended ? 1200 : 0,
           }}
-          onClick={handleClick}
         >
           <div
             className={classes.filled}

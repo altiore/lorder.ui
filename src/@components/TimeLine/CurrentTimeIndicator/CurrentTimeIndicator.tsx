@@ -1,5 +1,6 @@
 import React from 'react';
 
+import cn from 'classnames';
 import moment from 'moment';
 
 import ArrowTop from '@components/@icons/arrow-top';
@@ -8,7 +9,7 @@ import ClocksIcon from '@components/@icons/clocks';
 import { useStyles } from './styles';
 
 const OPENED_HEIGHT = 74;
-const CLOSED_HEIGHT = 17;
+const CLOSED_HEIGHT = 10;
 
 interface ICurrentTimeIndicatorProps {
   left: number;
@@ -16,7 +17,16 @@ interface ICurrentTimeIndicatorProps {
 }
 
 const CurrentTimeIndicator: React.FC<ICurrentTimeIndicatorProps> = ({ left, fullSize = false }) => {
-  const classes = useStyles();
+  const {
+    arrowTopIcon,
+    arrowTopIconSmall,
+    clocksIcon,
+    clocksIconSmall,
+    currentTimeWrap,
+    currentTimeWrapSmall,
+    indicatorWrap,
+    indicatorWrapSmall,
+  } = useStyles();
 
   return (
     <div
@@ -24,11 +34,11 @@ const CurrentTimeIndicator: React.FC<ICurrentTimeIndicatorProps> = ({ left, full
         height: !fullSize ? CLOSED_HEIGHT : OPENED_HEIGHT,
         left,
       }}
-      className={classes.indicatorWrap}
+      className={cn(indicatorWrap, { [indicatorWrapSmall]: !fullSize })}
     >
-      <span className={classes.currentTimeWrap}>{moment().format('HH:mm')}</span>
-      <ClocksIcon className={classes.clocksIcon} />
-      <ArrowTop className={classes.ArrowTopIcon} />
+      <span className={cn(currentTimeWrap, { [currentTimeWrapSmall]: !fullSize })}>{moment().format('HH:mm')}</span>
+      <ClocksIcon className={cn(clocksIcon, { [clocksIconSmall]: !fullSize })} />
+      <ArrowTop className={cn(arrowTopIcon, { [arrowTopIconSmall]: !fullSize })} />
     </div>
   );
 };
