@@ -10,6 +10,7 @@ import orange from '@material-ui/core/colors/orange';
 import Paper from '@material-ui/core/Paper';
 import { Theme, useTheme } from '@material-ui/core/styles';
 
+import CurrentTimeIndicator from './CurrentTimeIndicator/CurrentTimeIndicator';
 import EditWork from './EditWork';
 import HoverInfo from './HoverInfo';
 import { useStyles } from './styles';
@@ -44,7 +45,6 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({
   onTimelineClick = timelineStub,
   fullSize,
 }) => {
-  const timelineOpen = true;
   const getStartAt = useCallback((): number => {
     const current = moment();
     const first = minBy(events, (ev: IEvent) =>
@@ -86,6 +86,10 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({
       setHoveredEl(null);
       setHoveredEvent(undefined);
     }, 500);
+
+    return () => {
+      clearTimeout(leaveTimer);
+    };
   }, [setHoveredEl, setHoveredEvent]);
 
   const cleanLeaveTimer = useCallback(() => {
@@ -182,6 +186,7 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({
   );
 
   const getLines = useCallback(() => {
+    // Узнаем разницу между текущим моментом и моментом начала задачи
     const parts = (finishAt - startAt) * 4;
     if (parts <= 0) {
       return [];
@@ -249,74 +254,83 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({
       }
     >
       <div
-        ref={getRef}
-        className={classes.root}
         style={{
-          height,
-          zIndex: isExpended ? 1200 : 0,
+          position: 'relative',
+          width: '100%',
         }}
-        onClick={handleClick}
       >
+        <CurrentTimeIndicator fullSize={fullSize} left={getPosition(moment())} />
+
         <div
-          className={classes.filled}
+          ref={getRef}
+          className={classes.root}
           style={{
-            boxShadow: isExpended ? theme.shadows[1] : 'none',
-            flexBasis: isExpended ? '76%' : '100%',
+            height,
+            zIndex: isExpended ? 1200 : 0,
           }}
+          onClick={handleClick}
         >
-          {preparedEvents.map((taskInfo, i) => {
-            return (
-              <Popover
-                key={taskInfo.userWork.id}
-                preferPlace="below"
-                tipSize={0.01}
-                className={classes.popover}
-                isOpen={get(hoveredEvent, 'userWork.id') === taskInfo.userWork.id && !!hoveredEvent}
-                target={hoveredEl as any}
-                onOuterAction={handlePopoverClose}
-                body={<HoverInfo onOver={handleHover} onLeave={handlePopoverClose} hoveredEvent={taskInfo} />}
-              >
-                <div
-                  aria-owns={`popover-body-${taskInfo.userWork.id}`}
-                  data-id={taskInfo.userWork.id}
-                  className={classes.block}
-                  style={{
-                    ...getStyle(taskInfo),
-                    left: getPosition(taskInfo.userWork.startAt),
-                    width: getWidth(taskInfo),
-                  }}
-                  onClick={handleEventClick}
-                  onMouseOver={handleHover}
-                  onMouseLeave={handlePopoverClose}
-                />
-              </Popover>
-            );
-          })}
+          <div
+            className={classes.filled}
+            style={{
+              boxShadow: isExpended ? theme.shadows[1] : 'none',
+              flexBasis: isExpended ? '76%' : '100%',
+            }}
+          >
+            {preparedEvents.map((taskInfo, i) => {
+              return (
+                <Popover
+                  key={taskInfo.userWork.id}
+                  preferPlace="below"
+                  tipSize={0.01}
+                  className={classes.popover}
+                  isOpen={get(hoveredEvent, 'userWork.id') === taskInfo.userWork.id && !!hoveredEvent}
+                  target={hoveredEl as any}
+                  onOuterAction={handlePopoverClose}
+                  body={<HoverInfo onOver={handleHover} onLeave={handlePopoverClose} hoveredEvent={taskInfo} />}
+                >
+                  <div
+                    aria-owns={`popover-body-${taskInfo.userWork.id}`}
+                    data-id={taskInfo.userWork.id}
+                    className={classes.block}
+                    style={{
+                      ...getStyle(taskInfo),
+                      left: getPosition(taskInfo.userWork.startAt),
+                      width: getWidth(taskInfo),
+                    }}
+                    onClick={handleEventClick}
+                    onMouseOver={handleHover}
+                    onMouseLeave={handlePopoverClose}
+                  />
+                </Popover>
+              );
+            })}
+          </div>
+          <svg height={fullSize ? 80 : height} width={width} className={classes.svg}>
+            {getLines().map(({ x, isHour, label }) => (
+              <React.Fragment key={x}>
+                {label && height === Y_HEIGHT_BIG && (
+                  <text x={x + X_OFFSET} y={10} className={classes.text}>
+                    <tspan x={x + X_OFFSET} textAnchor="middle">
+                      {label}
+                      :00
+                    </tspan>
+                  </text>
+                )}
+                {isExpended && (
+                  <line
+                    // stroke="#FAB203"
+                    stroke={orange[300]}
+                    x1={x + X_OFFSET}
+                    y1={LABEL_HEIGHT + 6}
+                    x2={x + X_OFFSET}
+                    y2={LABEL_HEIGHT - 4}
+                  />
+                )}
+              </React.Fragment>
+            ))}
+          </svg>
         </div>
-        <svg height={timelineOpen ? 80 : height} width={width} className={classes.svg}>
-          {getLines().map(({ x, isHour, label }) => (
-            <React.Fragment key={x}>
-              {label && height === Y_HEIGHT_BIG && (
-                <text x={x + X_OFFSET} y={10} className={classes.text}>
-                  <tspan x={x + X_OFFSET} textAnchor="middle">
-                    {label}
-                    :00
-                  </tspan>
-                </text>
-              )}
-              {isExpended && (
-                <line
-                  // stroke="#FAB203"
-                  stroke={orange[300]}
-                  x1={x + X_OFFSET}
-                  y1={LABEL_HEIGHT + 6}
-                  x2={x + X_OFFSET}
-                  y2={LABEL_HEIGHT - 4}
-                />
-              )}
-            </React.Fragment>
-          ))}
-        </svg>
       </div>
     </Popover>
   );
