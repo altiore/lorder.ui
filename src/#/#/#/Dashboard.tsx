@@ -28,7 +28,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   content2: {
     flexGrow: 1,
-    margin: '32px auto 24px',
+    margin: '40px auto 24px',
     maxWidth: theme.mainContent.width,
     padding: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
@@ -79,7 +79,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(2),
     padding: theme.spacing(0, 4),
     position: 'absolute',
-    top: (theme.mixins.toolbar.height as number) + 4,
+    top: (theme.mixins.toolbar.height as number) + 8,
     width: '100%',
     [theme.breakpoints.down('md')]: {
       display: 'none',
