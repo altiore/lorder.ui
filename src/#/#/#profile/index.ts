@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { userAvatar, userDisplayName, userEmail } from '#/@store/identity';
 import { projectsExceptDefault } from '#/@store/projects';
 
-import { Profile } from './Profile';
+import { Profile } from './profile';
 
 import { IState } from '@types';
 

@@ -10,7 +10,7 @@ import Avatar from '@components/Avatar';
 import TooltipBig from '@components/TooltipBig';
 import ValueField from '@components/value';
 
-import TypeIcon from '#/@common/TypeIcon';
+import TypeIcon from '#/@common/type-icon';
 
 import { ITask, IUser } from '@types';
 

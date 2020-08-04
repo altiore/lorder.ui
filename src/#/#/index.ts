@@ -9,11 +9,16 @@ import { userRole } from '#/@store/identity';
 import { prevLocation } from '#/@store/router';
 import { getAllTasks } from '#/@store/tasks';
 
-import { MainJsx } from './Main';
+import { MainJsx } from './main';
 
-import { IState } from '@types';
+import { IState, ROLE } from '@types';
 
-const mapState = createStructuredSelector<IState, any>({
+interface IMappedProps {
+  prevLocation: any;
+  userRole: ROLE;
+}
+
+const mapState = createStructuredSelector<IState, IMappedProps>({
   prevLocation,
   userRole,
 });

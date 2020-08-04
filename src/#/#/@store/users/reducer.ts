@@ -6,7 +6,7 @@ import { DownloadList } from '#/@store/@common/entities';
 import { AxiosResponse } from 'axios';
 
 import { deleteUser, fetchUsers, patchUser } from './actions';
-import { User } from './User';
+import { User } from './user';
 
 import { IDownloadList, IMeta, IUser } from '@types';
 

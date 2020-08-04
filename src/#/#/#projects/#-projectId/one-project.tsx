@@ -1,8 +1,8 @@
 import React, { lazy, Suspense, useEffect, useMemo } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
-import NestedRoute from '#/@common/#NestedRoute';
-import { LayoutLeftDrawer } from '#/@common/LayoutLeftDrawer';
+import NestedRoute from '#/@common/#nested-route';
+import { LayoutLeftDrawer } from '#/@common/layout-left-drawer';
 import { Project } from '#/@store/projects';
 import { ROLES } from '#/@store/roles';
 import { TASKS_ROUTE } from '#/@store/router';

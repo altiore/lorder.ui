@@ -1,3 +1,1 @@
-import { SuperAdminLayoutJsx } from './SuperAdminLayout';
-
-export default SuperAdminLayoutJsx;
+export { SuperAdminLayoutJsx as default } from './super-admin-layout';

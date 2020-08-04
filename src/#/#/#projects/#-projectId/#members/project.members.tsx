@@ -8,8 +8,8 @@ import SelectCell from '@components/Crud/@cells/select';
 import { ICrudColumn } from '@components/Crud/Crud';
 import { Page } from '@components/Page';
 
-import Crud from '#/@common/Crud';
-import { LinkButton } from '#/@common/LinkButton';
+import Crud from '#/@common/crud';
+import { LinkButton } from '#/@common/link-button';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 
 import ColoredSelect from './colored.select';

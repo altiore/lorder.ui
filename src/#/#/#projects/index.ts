@@ -9,7 +9,7 @@ import { closeDialog, openDialog } from '#/@store/dialog';
 import { defaultProjectId, hasRole, userRole } from '#/@store/identity';
 import { fetchAllParticipantProjects, ownProjectList, removeProject, removeProjectByAdmin } from '#/@store/projects';
 
-import { Projects as ProjectsJsx } from './Projects';
+import { Projects as ProjectsJsx } from './projects';
 
 import { withResize } from '@hooks/withResize';
 

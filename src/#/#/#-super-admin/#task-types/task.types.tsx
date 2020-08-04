@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { Page } from '@components/Page';
 
-import Crud from '#/@common/Crud';
+import Crud from '#/@common/crud';
 import { CREATE_ROLE_FORM } from '#/@store/roles';
 
 export interface ITaskTypesProps extends RouteComponentProps {

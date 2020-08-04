@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { feedbackList, fetchFeedbackList } from '#/@store/feedback';
 
-import { Feedback as FeedbackJsx } from './Feedback';
+import { Feedback as FeedbackJsx } from './feedback';
 import { styles } from './styles';
 
 import { withResize } from '@hooks/withResize';

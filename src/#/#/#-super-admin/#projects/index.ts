@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
+import { Projects as ProjectsJsx } from '#/#/#projects/projects';
 import { findUserById } from '#/#/@store/users';
 import { closeDialog, openDialog } from '#/@store/dialog';
 import { defaultProjectId, hasRole, userRole } from '#/@store/identity';
 import { allProjectList, getAllProjects, removeProject, removeProjectByAdmin } from '#/@store/projects';
-
-import { Projects as ProjectsJsx } from '../../#projects/Projects';
 
 import { withResize } from '@hooks/withResize';
 

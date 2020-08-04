@@ -2,7 +2,7 @@ import React from 'react';
 
 import SvgIcon from '@material-ui/core/SvgIcon';
 
-import { LinkButton } from '#/@common/LinkButton';
+import { LinkButton } from '#/@common/link-button';
 
 import { useStyles } from './styles';
 

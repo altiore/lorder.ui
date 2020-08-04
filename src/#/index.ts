@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { userRole } from '#/@store/identity';
 
-import { AppJsx } from './App';
+import { AppJsx } from './app';
 
 import { IState, ROLE } from '@types';
 

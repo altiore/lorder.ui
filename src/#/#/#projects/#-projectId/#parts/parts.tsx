@@ -5,7 +5,7 @@ import { ICrudColumn } from '@components/Crud/Crud';
 import { Page } from '@components/Page';
 import RadioButton from '@components/RadioButton';
 
-import Crud from '#/@common/Crud';
+import Crud from '#/@common/crud';
 
 import TreeView from './tree-view';
 

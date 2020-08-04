@@ -5,7 +5,7 @@ import { CheckboxCell } from '@components/Crud/@cells/checkbox/checkbox.cell';
 import { ICrudColumn } from '@components/Crud/Crud';
 import { Page } from '@components/Page';
 
-import Crud from '#/@common/Crud';
+import Crud from '#/@common/crud';
 
 import { ACCESS_LEVEL } from '@types';
 
