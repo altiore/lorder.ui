@@ -1,10 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 
 import cn from 'classnames';
 
 import Box from '@material-ui/core/Box';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -170,12 +172,22 @@ const useStyles = makeStyles((theme: Theme) => ({
     position: 'relative',
   },
   titleWrap: {
+    '&:hover': {
+      '& > h5': {
+        color: theme.palette.primary.main,
+      },
+      textDecoration: 'underline',
+      textDecorationColor: theme.palette.primary.main,
+    },
     alignItems: 'center',
+    cursor: 'pointer',
     display: 'flex',
     height: 80,
     justifyContent: 'center',
     padding: '3px 10px',
     textAlign: 'center',
+    textDecoration: 'none',
+    width: '100%',
   },
   valueLabel: {
     '& > span': {
@@ -215,6 +227,7 @@ interface IProps {
   logoSrc?: string;
   logoVariant?: 'angle' | 'round';
   membersCount: number;
+  projectLink: string;
   title: string;
   userInfo?: {
     displayName: string;
@@ -232,6 +245,7 @@ export const ProjectCardTsx: React.FC<IProps> = ({
   logoSrc,
   logoVariant = LOGO_TYPE.ANGLE,
   membersCount,
+  projectLink,
   title,
   userInfo,
   value,
@@ -315,9 +329,9 @@ export const ProjectCardTsx: React.FC<IProps> = ({
           <img src={logoSrc || `${process.env.PUBLIC_URL}/logo_patreon.png`} alt={`${title} logo`} />
         </div>
       </div>
-      <div className={titleWrap}>
+      <Link className={titleWrap} to={projectLink}>
         <Typography variant="h5">{title}</Typography>
-      </div>
+      </Link>
       <div className={tabsWrap}>
         <Tabs
           classes={{ flexContainer: tabsFlexContainer, indicator: tabsIndicator }}
@@ -368,10 +382,12 @@ export const ProjectCardTsx: React.FC<IProps> = ({
                 </ListItemIcon>
                 <span className={listText}>Ценность проекта</span>
                 <ListItemSecondaryAction className={digitStyle}>
-                  {formatNumber(value * 50, {
-                    currency: 'USD',
-                    style: 'currency',
-                  })}
+                  {value
+                    ? formatNumber(value, {
+                        currency: 'USD',
+                        style: 'currency',
+                      })
+                    : 'скрыто'}
                 </ListItemSecondaryAction>
               </ListItem>
             </List>
@@ -390,13 +406,26 @@ export const ProjectCardTsx: React.FC<IProps> = ({
                   <ListItemIcon className={iconStyle}>
                     <ContributingSvg color="inherit" fontSize="small" />
                   </ListItemIcon>
-                  <span className={listText}>Вклад в проект</span>
-                  <ListItemSecondaryAction className={digitStyle}>
-                    {formatNumber(userInfo.value * 50, {
-                      currency: 'USD',
-                      style: 'currency',
-                    })}
-                  </ListItemSecondaryAction>
+                  <span className={listText}>Доля в проекте</span>
+                  <TooltipBig
+                    title={
+                      userInfo.value
+                        ? formatNumber(userInfo.value, {
+                            currency: 'USD',
+                            style: 'currency',
+                          })
+                        : 'скрыто'
+                    }
+                  >
+                    <ListItemSecondaryAction className={digitStyle}>
+                      {value
+                        ? formatNumber(userInfo.value / value, {
+                            maximumFractionDigits: 2,
+                            style: 'percent',
+                          })
+                        : 'скрыто'}
+                    </ListItemSecondaryAction>
+                  </TooltipBig>
                 </ListItem>
               </List>
             )}

@@ -13,13 +13,14 @@ import ButtonEdit from '@components/ButtonEdit';
 import GradientHead from '@components/gradient-head';
 import ProjectCard, { CARD_COLOR, LOGO_TYPE } from '@components/project-card';
 
-import { Project } from '#/@store/projects';
+import { Project, VALUE_MULTIPLIER } from '#/@store/projects';
 
 import Avatar from './Avatar';
 import GitHubIco from './icons/github';
 import LinkedInIco from './icons/linkedin';
 import ProfileForm from './ProfileForm';
 
+import { IPublicProject } from '@types';
 import getRandEnum from '@utils/get-rand-enum';
 
 export const useStyles = makeStyles((theme: Theme) => ({
@@ -97,6 +98,18 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
     alert('Not Implemented (');
   }, []);
 
+  const getProjectLink = useCallback((id?: number, pub?: IPublicProject) => {
+    if (pub && pub.uuid) {
+      return `/p/${pub.uuid}`;
+    } else {
+      if (id) {
+        return `/projects/${id}`;
+      }
+    }
+
+    return '/';
+  }, []);
+
   const {
     avatarGrid,
     closeIcon,
@@ -147,22 +160,23 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
       </GradientHead>
       <div className={projectList}>
         <Grid alignItems="center" justify="center" container spacing={3}>
-          {projects.map(({ id, members, shareValue, title, valueSum }) => (
+          {projects.map(({ id, members, pub, shareValue, roles, title }) => (
             <Grid key={id} item>
               <ProjectCard
                 color={getRandEnum(CARD_COLOR)}
                 logoVariant={getRandEnum(LOGO_TYPE)}
                 title={title}
                 membersCount={members.length}
+                projectLink={getProjectLink(id, pub)}
                 userInfo={{
                   displayName: userDisplayName,
                   logoSrc: userAvatar,
-                  mainRole: 'Разработчик',
+                  mainRole: roles?.[0]?.role?.name || 'Участник',
                   // message?: string;
                   shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
-                  value: valueSum || 0,
+                  value: shareValue * VALUE_MULTIPLIER,
                 }}
-                value={shareValue}
+                value={pub?.statistic?.metrics?.all?.value * VALUE_MULTIPLIER}
               />
             </Grid>
           ))}

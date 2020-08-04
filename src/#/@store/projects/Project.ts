@@ -14,6 +14,7 @@ import {
   IDownloadList,
   IProject,
   IProjectPart,
+  IProjectRole,
   IProjectStrategyInfo,
   IProjectTaskType,
   ITaskColumn,
@@ -45,6 +46,7 @@ export class Project implements IProject {
   type: PROJECT_TYPE;
   taskColumns: ITaskColumn[] = [];
   pub?: any;
+  roles?: IProjectRole[];
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

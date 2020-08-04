@@ -5,7 +5,9 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import ProjectCard, { CARD_COLOR } from '.';
 import CenterDecorator from '../../../.storybook/decor/Center';
 import IntlProvider from '../../../.storybook/decor/IntlProvider';
+import RouterDecorator from '../../../.storybook/decor/RouterDecorator';
 
+import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -32,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 storiesOf('ProjectCard', module)
   .addDecorator(CenterDecorator)
   .addDecorator(IntlProvider)
+  .addDecorator(RouterDecorator)
   .add('default', () => {
     const { cards, root } = useStyles();
     return (
@@ -41,6 +44,7 @@ storiesOf('ProjectCard', module)
             color={CARD_COLOR.BLACK}
             logoSrc={`/logo_patreon.png`}
             membersCount={1}
+            projectLink={'/'}
             title="Lorder"
             userInfo={{
               displayName: 'Разван Ломов',
@@ -57,6 +61,7 @@ storiesOf('ProjectCard', module)
             color={CARD_COLOR.BLUE}
             logoVariant="round"
             membersCount={34}
+            projectLink={'/'}
             title="Open Broadcaster Software Software"
             value={10}
           />
@@ -64,6 +69,7 @@ storiesOf('ProjectCard', module)
           <ProjectCard
             color={CARD_COLOR.GREEN}
             membersCount={134}
+            projectLink={'/'}
             title="Webpack"
             userInfo={{
               displayName: 'Разван Ломов',
@@ -78,6 +84,7 @@ storiesOf('ProjectCard', module)
             color={CARD_COLOR.VIOLET}
             logoVariant="round"
             membersCount={9134}
+            projectLink={'/'}
             title="React.JS"
             value={3120}
           />
@@ -89,6 +96,7 @@ storiesOf('ProjectCard', module)
             logoSrc={`/logo_patreon.png`}
             logoVariant="round"
             membersCount={89134}
+            projectLink={'/'}
             title="Lorder"
             userInfo={{
               displayName: 'Марина',
@@ -103,6 +111,7 @@ storiesOf('ProjectCard', module)
           <ProjectCard
             color={CARD_COLOR.BLUE}
             membersCount={989134}
+            projectLink={'/'}
             title="Open Broadcaster Software Software"
             value={543120}
           />
@@ -111,6 +120,7 @@ storiesOf('ProjectCard', module)
             color={CARD_COLOR.GREEN}
             logoVariant="round"
             membersCount={1989134}
+            projectLink={'/'}
             title="Webpack"
             userInfo={{
               displayName: 'Ростислав',
@@ -122,7 +132,13 @@ storiesOf('ProjectCard', module)
             value={543120.45}
           />
 
-          <ProjectCard color={CARD_COLOR.VIOLET} membersCount={41989134} title="React.JS" value={9543120.45} />
+          <ProjectCard
+            color={CARD_COLOR.VIOLET}
+            membersCount={41989134}
+            projectLink={'/'}
+            title="React.JS"
+            value={9543120.45}
+          />
         </div>
       </div>
     );

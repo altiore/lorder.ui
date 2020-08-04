@@ -9,6 +9,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import { VALUE_MULTIPLIER } from '#/@store/projects';
+
 import { IProjectMetric } from '@types';
 
 const useStyles = makeStyles({
@@ -26,7 +28,6 @@ const percentFormatter = new Intl.NumberFormat('ru-RU', {
   style: 'percent',
 });
 
-const POINT_VALUE = 45;
 const DAYS_IN_MONTH = 30.4375;
 
 export const MetricTableTsx: React.FC<IProjectMetric & { title: string }> = ({
@@ -52,11 +53,13 @@ export const MetricTableTsx: React.FC<IProjectMetric & { title: string }> = ({
       return 0;
     }
 
-    return currencyFormatter.format((Math.round((value * 100) / days) * DAYS_IN_MONTH * POINT_VALUE) / 100) + '/мес';
+    return (
+      currencyFormatter.format((Math.round((value * 100) / days) * DAYS_IN_MONTH * VALUE_MULTIPLIER) / 100) + '/мес'
+    );
   }, [days, value]);
 
   const addedValue = useMemo(() => {
-    return currencyFormatter.format(value * POINT_VALUE);
+    return currencyFormatter.format(value * VALUE_MULTIPLIER);
   }, [value]);
 
   return (
