@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { resetGlobalCache } from '#/@store/other';
 
-import { OtherTsx } from './Other';
+import { OtherTsx } from './other';
 
 const mapState = createStructuredSelector({});
 

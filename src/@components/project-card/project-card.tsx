@@ -6,7 +6,6 @@ import SwipeableViews from 'react-swipeable-views';
 import cn from 'classnames';
 
 import Box from '@material-ui/core/Box';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';

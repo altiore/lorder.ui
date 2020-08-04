@@ -10,8 +10,8 @@ import Typography from '@material-ui/core/Typography';
 
 import TelegramIco from '@components/@icons/Telegram';
 
-import NestedRoute from '#/@common/#NestedRoute';
-import NotFound from '#/@common/NotFoundPage';
+import NestedRoute from '#/@common/#nested-route';
+import NotFound from '#/@common/not-found-page';
 import { ROLES } from '#/@store/roles';
 
 import { IRoute, ROLE } from '@types';

@@ -1,3 +1,3 @@
 export * from './actions';
 export * from './selectors';
-export * from './User';
+export * from './user';

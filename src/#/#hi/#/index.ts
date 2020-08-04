@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchLorder } from '#/@store/publicLorder';
 import { fetchStatistics } from '#/@store/statistics';
 
-import { HiTsx } from './Hi';
+import { HiTsx } from './hi';
 
 import { withResize } from '@hooks/withResize';
 

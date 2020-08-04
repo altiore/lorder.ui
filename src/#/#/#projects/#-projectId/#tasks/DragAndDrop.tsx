@@ -20,7 +20,7 @@ import SumIcon from '@components/@icons/sum';
 import TooltipBig from '@components/TooltipBig';
 import ValueField from '@components/value';
 
-import { PatchTaskForm } from '#/@common/TaskForm';
+import { PatchTaskForm } from '#/@common/task-form';
 import { DEFAULT_TRANSITION_DURATION } from '#/@store/dialog';
 import { TASKS_ROUTE } from '#/@store/router';
 import { EDIT_TASK_FORM, STATUS_NAMES } from '#/@store/tasks';

@@ -11,8 +11,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import App from '#';
-import Dialog from '#/@common/Dialog';
-import Notification from '#/@common/Notification';
+import Dialog from '#/@common/dialog';
+import Notification from '#/@common/notification';
 import { createStore } from '#/@store/createStore';
 
 import '@styles/base.css';

@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { activateUser, userIsLoading } from '#/@store/identity';
 
-import { Start as StartJsx } from './Start';
+import { Start as StartJsx } from './start';
 
 const mapState = createStructuredSelector({
   userIsLoading,

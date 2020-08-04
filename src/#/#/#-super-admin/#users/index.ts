@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { deleteUser, fetchUsers, findUserById, patchUser, userList } from '#/#/@store/users';
 
-import { UsersJsx } from './Users';
+import { UsersJsx } from './users';
 
 import { withResize } from '@hooks/withResize';
 

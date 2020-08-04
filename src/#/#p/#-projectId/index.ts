@@ -13,7 +13,7 @@ import {
 } from '#/@store/publicProject';
 import { rolesList } from '#/@store/roles';
 
-import { PublicProjectTsx } from './PublicProject';
+import { PublicProjectTsx } from './public-project';
 
 import { IState } from '@types';
 

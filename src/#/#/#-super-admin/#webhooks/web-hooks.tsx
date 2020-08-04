@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { IColumnComponent, ICrudColumn } from '@components/Crud/Crud';
 import { Page } from '@components/Page';
 
-import Crud from '#/@common/Crud';
+import Crud from '#/@common/crud';
 
 export interface IWebHooksProps extends RouteComponentProps {
   getAllWebHooks: any;

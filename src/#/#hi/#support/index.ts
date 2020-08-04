@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { Support } from './Support';
+import { Support } from './support';
 
 const masStateToProps = () => ({
   brandName: 'Lorder',

@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 
 import { Page } from '@components/Page';
 
-import { LinkButton } from '#/@common/LinkButton';
+import { LinkButton } from '#/@common/link-button';
 import { Project } from '#/@store/projects';
 
 import ProjectForm from './ProjectForm';

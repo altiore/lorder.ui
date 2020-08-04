@@ -6,7 +6,7 @@ import invert from 'lodash/invert';
 import { ICrudColumn } from '@components/Crud/Crud';
 import { Page } from '@components/Page';
 
-import Crud from '#/@common/Crud';
+import Crud from '#/@common/crud';
 import { CREATE_TASK_STATUS_MOVE_FORM } from '#/@store/project-status-moves';
 
 import { IProjectRole, TASK_STATUS_MOVE_TYPE } from '@types';

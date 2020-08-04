@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import { PatchTaskForm } from '#/@common/TaskForm';
+import { PatchTaskForm } from '#/@common/task-form';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

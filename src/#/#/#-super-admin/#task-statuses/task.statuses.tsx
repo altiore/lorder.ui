@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { ICrudColumn } from '@components/Crud/Crud';
 import { Page } from '@components/Page';
 
-import Crud from '#/@common/Crud';
+import Crud from '#/@common/crud';
 import { CREATE_TASK_STATUS_FORM } from '#/@store/task-statuses';
 
 export interface ITaskStatusesProps extends RouteComponentProps {

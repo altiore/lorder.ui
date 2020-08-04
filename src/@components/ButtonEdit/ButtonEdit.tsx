@@ -6,7 +6,7 @@ import { Button, ButtonProps, Typography } from '@material-ui/core';
 
 import SettingsIcon from '@components/@icons/Settings';
 
-import { LinkButton } from '#/@common/LinkButton';
+import { LinkButton } from '#/@common/link-button';
 
 import { useStyles } from './styles';
 
