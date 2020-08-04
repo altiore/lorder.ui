@@ -22,6 +22,7 @@ export interface ITaskFormData {
   complexity?: COMPLEXITY;
   urgency?: URGENCY;
   userValue?: number;
+  userValueFinal?: number;
 }
 
 // TODO: перенести в переводы

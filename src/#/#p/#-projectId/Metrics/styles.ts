@@ -2,6 +2,7 @@ import { makeStyles, Theme } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   root: {
+    backgroundColor: '#f6f8fa',
     padding: theme.spacing(3, 0),
   },
   tableWrap: {

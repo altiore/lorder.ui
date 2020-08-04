@@ -37,7 +37,8 @@ export interface IProps {
   strategy?: PROJECT_STRATEGY;
 }
 
-const TASK_ESTIMATION_FIELDS = ['urgency', 'complexity', 'userValue'];
+const NUMBER_FIELDS = ['userValue', 'userValueFinal'];
+const TASK_ESTIMATION_FIELDS = ['urgency', 'complexity', ...NUMBER_FIELDS];
 
 const MAP_FIELD_TO_ITEMS = {
   complexity: COMPLEXITY,
@@ -48,12 +49,14 @@ const MAP_COMPONENT = {
   complexity: SelectField,
   urgency: SelectField,
   userValue: InputField,
+  userValueFinal: InputField,
 };
 
 const MAP_LABEL = {
   complexity: 'Сложность',
   urgency: 'Важность',
   userValue: 'Ценность',
+  userValueFinal: 'Пост-ценность',
 };
 
 export const EstimationField: React.FC<IProps> = ({ getMovesByStatus, projectId, statusTypeName, strategy }) => {
@@ -104,6 +107,7 @@ export const EstimationField: React.FC<IProps> = ({ getMovesByStatus, projectId,
 
   return (
     <div className={root}>
+      <Field name="value" component={ValueField} label="Оценка задачи" size={SIZE.LARGE} />
       {allowedFields.map(field => (
         <Field
           key={field}
@@ -111,8 +115,8 @@ export const EstimationField: React.FC<IProps> = ({ getMovesByStatus, projectId,
           component={MAP_COMPONENT[field]}
           label={MAP_LABEL[field]}
           items={MAP_FIELD_TO_ITEMS[field]}
-          parse={field === 'userValue' ? parseNumber : undefined}
-          format={field === 'userValue' ? formatNumber : undefined}
+          parse={NUMBER_FIELDS.includes(field) ? parseNumber : undefined}
+          format={NUMBER_FIELDS.includes(field) ? formatNumber : undefined}
           validate={required()}
         />
       ))}
