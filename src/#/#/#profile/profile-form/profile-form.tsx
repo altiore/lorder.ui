@@ -28,7 +28,7 @@ export const ProfileForm: React.FC<InjectedFormProps> = ({ submitting, pristine,
     <>
       <ListItem>
         <div className={displayNameField}>
-          <Field name="displayName" component={InputField} label="Показываемое имя" parse={parseStrToUndefined} />
+          <Field name="displayName" component={InputField} label="Публичное имя" parse={parseStrToUndefined} />
         </div>
       </ListItem>
       <ListItem>

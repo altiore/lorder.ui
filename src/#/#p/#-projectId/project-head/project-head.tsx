@@ -17,9 +17,9 @@ interface IprojectHeadProps {
 }
 
 export const ProjectHeadTsx = ({ project, editProjectLink, isAuth }: IprojectHeadProps) => {
-  const { firstBlockContent, imageWrap, projectName, projectTagline } = useStyles();
+  const { firstBlockContent, imageWrap, projectName, projectTagline, wrapper } = useStyles();
   return (
-    <GradientHead>
+    <GradientHead className={wrapper}>
       <Grid item xs={12} sm={6} md={8}>
         <div className={firstBlockContent}>
           <h1 className={projectName}>{project.title}</h1>

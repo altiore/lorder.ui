@@ -27,17 +27,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     maxWidth: 360,
     width: `100%`,
   },
-  followButton: {
-    '&:hover': {
-      backgroundColor: 'rgb(255, 185, 0)',
-    },
-    bordeRadius: 5,
-    boxShadow: 'none',
-    color: '#fff',
-    fontSize: 18,
-    height: 50,
-    width: 275,
-  },
   followButtonVertical: {
     maxWidth: 360,
     width: '100%',

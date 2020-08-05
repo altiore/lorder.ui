@@ -50,6 +50,17 @@ export default createMuiTheme({
       containedPrimary: {
         color: '#ffffff',
       },
+      containedSizeLarge: {
+        '&:hover': {
+          backgroundColor: 'rgb(255, 185, 0)',
+        },
+        borderRadius: 5,
+        boxShadow: 'none',
+        color: '#fff',
+        fontSize: 18,
+        height: 50,
+        minWidth: 275,
+      },
     },
     MuiChip: {
       outlined: {

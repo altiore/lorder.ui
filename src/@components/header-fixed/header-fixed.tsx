@@ -12,6 +12,7 @@ import LorderLogoWithText from '@components/@icons/lorder-logo-with-text';
 
 export interface IHeaderFixedProps {
   children?: React.ReactNode | false;
+  hideSecond?: boolean;
 }
 
 export const useStyles = makeStyles((theme: Theme) => ({
@@ -51,7 +52,7 @@ function ElevationScroll({ children, classes }: ElevationScrollProps) {
   });
 }
 
-export const HeaderFixedTsx: React.FC<IHeaderFixedProps> = ({ children }) => {
+export const HeaderFixedTsx: React.FC<IHeaderFixedProps> = ({ children, hideSecond }) => {
   const classes = useStyles();
 
   return (
@@ -66,7 +67,7 @@ export const HeaderFixedTsx: React.FC<IHeaderFixedProps> = ({ children }) => {
           </Toolbar>
         </AppBar>
       </ElevationScroll>
-      <Toolbar className={classes.secondToolbar} />
+      {!hideSecond && <Toolbar className={classes.secondToolbar} />}
     </>
   );
 };
