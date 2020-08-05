@@ -4,7 +4,7 @@ import pick from 'lodash/pick';
 import { Action, handleActions } from 'redux-actions';
 import { PURGE, REHYDRATE } from 'redux-persist';
 
-import { getAuthActivate, logInPatch, refreshToken, setIsLoading, updateProfile } from './actions';
+import { getAuthActivate, logInPatch, refreshToken, setIsLoading, updateProfile, uploadAvatar } from './actions';
 import { Identity, IIdentityState } from './Identity';
 
 const rehydrateHandler = (state, { payload }) => {
@@ -87,6 +87,13 @@ const updateProfileFail = (state: IIdentityState) => {
   });
 };
 
+const uploadAvatarSuccess = (state: IIdentityState, { payload }) => {
+  return new Identity({
+    ...state,
+    avatar: payload?.data?.url,
+  });
+};
+
 const refreshTokenHandler = (state: IIdentityState) => {
   return new Identity({
     ...state,
@@ -120,6 +127,8 @@ export const identity = handleActions<IIdentityState>(
     [updateProfile.toString()]: updateProfileHandler,
     [updateProfile.success]: updateProfileSuccess,
     [updateProfile.fail]: updateProfileFail,
+
+    [uploadAvatar.success]: uploadAvatarSuccess,
 
     [setIsLoading.toString()]: setIsLoadingHandler,
 
