@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useCallback, useEffect, useMemo } from 'react';
+import React, { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Redirect, RouteComponentProps, Switch } from 'react-router-dom';
 
@@ -14,6 +14,7 @@ import { ROLES } from '#/@store/roles';
 import { ROUTE } from '#/@store/router';
 import { EDIT_TASK_FORM } from '#/@store/tasks';
 
+import DefineDisplayNameModal from './define-display-name-first';
 import { Header } from './header';
 import { useStyles } from './styles';
 
@@ -59,7 +60,7 @@ export const MAIN_USER_ROUTES: IRoute[] = [
 export interface IMainProps extends RouteComponentProps {
   destroy: (form: string) => void;
   getAllTasks: () => any;
-  openDialog: (comp: any, props: any, location: any) => any;
+  openDialog: (comp: any, props?: any, location?: any) => any;
   prevLocation?: Location;
   push: (path: string | any) => any;
   routes: IRoute[];
@@ -114,9 +115,15 @@ export const MainJsx: React.FC<IMainProps> = ({
     }
   }, [handleCloseDialog, isModal, prevLocation, location, openDialog, push]);
 
-  useEffect(() => {
-    console.log('pathname is %s', pathname);
-  }, [pathname]);
+  const [showCount, setShowCount] = useState<number>(0);
+  useLayoutEffect(() => {
+    if (!userDisplayName && pathname !== ROUTE.PROFILE) {
+      if (showCount > 0) {
+        openDialog(DefineDisplayNameModal);
+      }
+      setShowCount(i => i + 1);
+    }
+  }, [pathname, showCount, openDialog, userDisplayName]);
 
   const pageLocation = useMemo(() => (isModal && prevLocation ? prevLocation : location), [
     isModal,
@@ -124,7 +131,6 @@ export const MainJsx: React.FC<IMainProps> = ({
     location,
   ]);
 
-  console.log('render page', { isRoutes: Boolean(preparedRoutes) });
   return (
     <div className={classes.root}>
       <Helmet>

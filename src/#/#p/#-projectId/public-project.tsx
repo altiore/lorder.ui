@@ -6,10 +6,10 @@ import get from 'lodash/get';
 import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core/';
 
 import TelegramIco from '@components/@icons/Telegram';
-import HeaderFixed from '@components/header-fixed';
 import LoadingPage from '@components/loading-page';
 import { NoMatch } from '@components/no-match';
 
+import HiHeader from '#/#hi/@common/hi-header';
 import { millisecondsToHours } from '#/@store/@common/helpers';
 import { Member } from '#/@store/projects/members/Member';
 
@@ -92,14 +92,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
 
   return (
     <div className={classes.root}>
-      <div
-        style={{
-          backgroundColor: 'rgb(41, 41, 43)',
-          boxShadow: '-3.536px 3.536px 9.5px 0.5px rgba(0, 0, 0, 0.15)',
-        }}
-      >
-        <HeaderFixed />
-      </div>
+      <HiHeader hideSecond />
 
       <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
       <ProjectMetrics statistic={statistic} />

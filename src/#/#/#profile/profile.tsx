@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from 'react';
 
+import cn from 'classnames';
+
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import T from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 
 import TelegramIco from '@components/@icons/Telegram';
@@ -13,6 +15,7 @@ import ButtonEdit from '@components/button-edit';
 import GradientHead from '@components/gradient-head';
 import ProjectCard, { CARD_COLOR, LOGO_TYPE } from '@components/project-card';
 
+import { LinkButton } from '#/@common/link-button';
 import { Project, VALUE_MULTIPLIER } from '#/@store/projects';
 
 import Avatar from './avatar';
@@ -44,6 +47,15 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
     backgroundColor: 'transparent',
     boxShadow: 'none',
+  },
+  emptyProjects: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    justifyContent: 'center',
+  },
+  emptyProjectsTitle: {
+    marginBottom: 32,
   },
   iconColored: {
     color: theme.palette.secondary.main,
@@ -78,6 +90,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     color: 'white',
     paddingLeft: theme.spacing(1),
   },
+  userNameStyleEmpty: {
+    color: theme.palette.pause.main,
+  },
 }));
 
 interface IProfile {
@@ -110,11 +125,12 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
     return '/';
   }, []);
 
-  console.log('render profile');
   const {
     avatarGrid,
     closeIcon,
     contactIcon,
+    emptyProjects,
+    emptyProjectsTitle,
     iconColored,
     lastBlock,
     profileForm,
@@ -122,6 +138,7 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
     scrollBody,
     userEmailStyle,
     userNameStyle,
+    userNameStyleEmpty,
   } = useStyles();
   return (
     <div className={scrollBody}>
@@ -139,10 +156,10 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
             </Paper>
           ) : (
             <>
-              <Typography variant="h3" className={userNameStyle}>
-                {userDisplayName}
-              </Typography>
-              <Typography className={userEmailStyle}>{userEmail}</Typography>
+              <T variant="h3" className={cn(userNameStyle, { [userNameStyleEmpty]: !userDisplayName })}>
+                {userDisplayName || '[НЕТ ПУБЛИЧНОГО ИМЕНИ]'}
+              </T>
+              <T className={userEmailStyle}>{userEmail}</T>
               <ButtonEdit onClick={toggleEdit}>Редактировать</ButtonEdit>
             </>
           )}
@@ -161,26 +178,37 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
       </GradientHead>
       <div className={projectList}>
         <Grid alignItems="center" justify="center" container spacing={3}>
-          {projects.map(({ id, members, pub, shareValue, roles, title }) => (
-            <Grid key={id} item>
-              <ProjectCard
-                color={getRandEnum(CARD_COLOR)}
-                logoVariant={getRandEnum(LOGO_TYPE)}
-                title={title}
-                membersCount={members.length}
-                projectLink={getProjectLink(id, pub)}
-                userInfo={{
-                  displayName: userDisplayName,
-                  logoSrc: userAvatar,
-                  mainRole: roles?.[0]?.role?.name || 'Участник',
-                  // message?: string;
-                  shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
-                  value: shareValue * VALUE_MULTIPLIER,
-                }}
-                value={pub?.statistic?.metrics?.all?.value * VALUE_MULTIPLIER}
-              />
-            </Grid>
-          ))}
+          {Boolean(projects && projects.length) ? (
+            projects.map(({ id, members, pub, shareValue, roles, title }) => (
+              <Grid key={id} item>
+                <ProjectCard
+                  color={getRandEnum(CARD_COLOR)}
+                  logoVariant={getRandEnum(LOGO_TYPE)}
+                  title={title}
+                  membersCount={members.length}
+                  projectLink={getProjectLink(id, pub)}
+                  userInfo={{
+                    displayName: userDisplayName,
+                    logoSrc: userAvatar,
+                    mainRole: roles?.[0]?.role?.name || 'Участник',
+                    // message?: string;
+                    shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
+                    value: shareValue * VALUE_MULTIPLIER,
+                  }}
+                  value={pub?.statistic?.metrics?.all?.value * VALUE_MULTIPLIER}
+                />
+              </Grid>
+            ))
+          ) : (
+            <div className={emptyProjects}>
+              <T className={emptyProjectsTitle} variant="h2">
+                Здесь появятся интересные тебе проекты
+              </T>
+              <LinkButton to="/projects/list" color="primary" variant="contained" size="large">
+                Перейти к обзору и поиску проектов
+              </LinkButton>
+            </div>
+          )}
         </Grid>
       </div>
     </div>

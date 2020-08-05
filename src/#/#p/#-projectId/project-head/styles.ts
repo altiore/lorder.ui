@@ -45,4 +45,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
       textAlign: 'center',
     },
   },
+  wrapper: {
+    paddingTop: 56,
+  },
 }));

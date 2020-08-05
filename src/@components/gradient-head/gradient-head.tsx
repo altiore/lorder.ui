@@ -1,17 +1,19 @@
 import React from 'react';
 
-import Grid from '@material-ui/core/Grid';
+import cn from 'classnames';
+
+import Grid, { GridProps } from '@material-ui/core/Grid';
 
 import { useStyles } from './styles';
 
-interface IProps {
+interface IProps extends GridProps {
   children: React.ReactNode;
 }
 
-export const GradientHeadTsx: React.FC<IProps> = ({ children }) => {
+export const GradientHeadTsx: React.FC<IProps> = ({ children, className, ...rest }) => {
   const { contentWrap, projectHeadWrap } = useStyles();
   return (
-    <Grid container className={projectHeadWrap} alignItems="center" justify="center">
+    <Grid container className={cn(projectHeadWrap, className)} alignItems="center" justify="center" {...rest}>
       <Grid container justify="space-between" className={contentWrap}>
         {children}
       </Grid>

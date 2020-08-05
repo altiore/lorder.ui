@@ -128,9 +128,9 @@ export const FollowProjectTsx = ({
         <Button
           color="primary"
           variant="contained"
+          size="large"
           onClick={handleRequestMembership}
           className={classNames({
-            [classes.followButton]: true,
             [classes.followButtonVertical]: verticalDirection,
           })}
         >

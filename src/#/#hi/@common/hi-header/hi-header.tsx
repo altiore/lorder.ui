@@ -15,6 +15,7 @@ import AccountMenu from '#/@common/account-menu';
 export interface IHiHeaderProps {
   blocks?: { [key: string]: { menu?: boolean; name: string; title: string } };
   brandName?: string;
+  hideSecond?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -48,7 +49,7 @@ const defBlocks = {
   },
 };
 
-export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks = defBlocks }) => {
+export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks = defBlocks, hideSecond }) => {
   const { MuiTabRoot, MuiTabsIndicator } = useStyles();
 
   const [value, setValue] = useState(blocks.start.name);
@@ -97,7 +98,7 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks = defBlocks }) =>
   const { formatMessage } = useIntl();
 
   return (
-    <HeaderFixed>
+    <HeaderFixed hideSecond={hideSecond}>
       {showTabs && (
         <Tabs
           classes={{ indicator: MuiTabsIndicator }}
