@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import YouTubeVideo from '@components/YouTubeVideo';
+import YouTubeVideo from '@components/youtube-video';
 
 import HiHeader from '#/#hi/@common/hi-header';
 import ScreenSupport from '#/#hi/@common/screen-support';

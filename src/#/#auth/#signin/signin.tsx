@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { InjectedFormProps } from 'redux-form';
 
-import AuthForm from '@components/AuthForm';
+import AuthForm from '@components/auth-form';
 
 interface IProps extends InjectedFormProps<{}, IProps> {
   isMagicLoginForm: boolean;

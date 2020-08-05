@@ -4,8 +4,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import { ICrudColumn } from '@components/Crud/Crud';
-import { Page } from '@components/Page';
+import { ICrudColumn } from '@components/crud/crud';
+import { Page } from '@components/page';
 
 import { createProjectDialogProps, CreateProjectPopup } from '#/@common/create-project-popup';
 import Crud from '#/@common/crud';

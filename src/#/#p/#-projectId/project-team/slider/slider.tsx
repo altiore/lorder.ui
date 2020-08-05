@@ -5,7 +5,7 @@ import { CustomArrowProps, Settings } from 'react-slick';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import { FlippingCard } from '@components/FlippingCard/FlippingCard';
+import { FlippingCard } from '@components/flipping-card/flipping-card';
 
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';

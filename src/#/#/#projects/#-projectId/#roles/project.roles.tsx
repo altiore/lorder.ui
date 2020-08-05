@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { CheckboxCell } from '@components/Crud/@cells/checkbox/checkbox.cell';
-import { ICrudColumn } from '@components/Crud/Crud';
-import { Page } from '@components/Page';
+import { CheckboxCell } from '@components/crud/@cells/checkbox/checkbox.cell';
+import { ICrudColumn } from '@components/crud/crud';
+import { Page } from '@components/page';
 
 import Crud from '#/@common/crud';
 

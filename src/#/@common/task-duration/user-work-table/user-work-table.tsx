@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { Table } from '@components/Table';
+import { Table } from '@components/table';
 
 import StartStopBtn from '#/@common/start-stop-btn';
 

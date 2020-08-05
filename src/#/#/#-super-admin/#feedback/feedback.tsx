@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Theme } from '@material-ui/core/styles';
 
-import { Page } from '@components/Page';
+import { Page } from '@components/page';
 
 export interface IFeedbackProps {
   classes: any;

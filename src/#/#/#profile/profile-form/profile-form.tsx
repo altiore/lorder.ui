@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import InputField from '@components/InputField';
+import InputField from '@components/input-field';
 
 import { parseStrToUndefined } from '@utils/parseFormat';
 

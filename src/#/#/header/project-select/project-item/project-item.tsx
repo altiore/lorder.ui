@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import TooltipBig from '@components/TooltipBig';
+import TooltipBig from '@components/tooltip-big';
 
 import CreateTask from './icons/create-task';
 import OpenProject from './icons/open-project';

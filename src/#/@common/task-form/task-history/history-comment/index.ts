@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import Comment from '@components/Comment';
+import Comment from '@components/comment';
 
 import { getProjectMemberById } from '#/@store/projects';
 

@@ -13,7 +13,7 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import DoneIcon from '@material-ui/icons/Done';
 
-import ProjectSelect from '@components/ProjectSelect';
+import ProjectSelect from '@components/project-select';
 
 import { TASK_FILTER_TYPE } from '#/@store/tasksFilter/TasksFilter';
 

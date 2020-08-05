@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import Person from '@components/Person';
+import Person from '@components/person';
 
 import Block from '#/#hi/#/@common/block';
 import BlockContent from '#/#hi/#/@common/block-content';

@@ -4,7 +4,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import LorderPoints from '@components/@icons/lorder-points';
-import TooltipBig from '@components/TooltipBig';
+import TooltipBig from '@components/tooltip-big';
 
 const useValueStyle = makeStyles((theme: Theme) => ({
   icon: {

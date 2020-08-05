@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import Grid from '@material-ui/core/Grid';
 
-import InputSeach from '@components/InputSeach';
+import InputSeach from '@components/input-search';
 
 import { useStyles } from '../styles';
 

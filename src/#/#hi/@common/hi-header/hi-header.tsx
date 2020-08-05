@@ -8,7 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import HeaderFixed from '@components/HeaderFixed';
+import HeaderFixed from '@components/header-fixed';
 
 import AccountMenu from '#/@common/account-menu';
 

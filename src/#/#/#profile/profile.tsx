@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 
 import TelegramIco from '@components/@icons/Telegram';
-import ButtonEdit from '@components/ButtonEdit';
+import ButtonEdit from '@components/button-edit';
 import GradientHead from '@components/gradient-head';
 import ProjectCard, { CARD_COLOR, LOGO_TYPE } from '@components/project-card';
 

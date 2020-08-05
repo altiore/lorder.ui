@@ -17,7 +17,7 @@ import AddIcon from '@material-ui/icons/Add';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 
 import SumIcon from '@components/@icons/sum';
-import TooltipBig from '@components/TooltipBig';
+import TooltipBig from '@components/tooltip-big';
 import ValueField from '@components/value';
 
 import { PatchTaskForm } from '#/@common/task-form';

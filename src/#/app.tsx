@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
-import LoadingPage from '@components/LoadingPage';
+import LoadingPage from '@components/loading-page';
 
 import NestedRoute from '#/@common/#nested-route';
 

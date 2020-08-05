@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import CrudJsx from '@components/Crud';
-import { ICrudColumn } from '@components/Crud/Crud';
+import CrudJsx from '@components/crud';
+import { ICrudColumn } from '@components/crud/crud';
 
 import { closeDialog, openDialog } from '#/@store/dialog';
 

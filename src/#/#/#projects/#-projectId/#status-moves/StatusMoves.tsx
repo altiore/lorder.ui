@@ -3,8 +3,8 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import invert from 'lodash/invert';
 
-import { ICrudColumn } from '@components/Crud/Crud';
-import { Page } from '@components/Page';
+import { ICrudColumn } from '@components/crud/crud';
+import { Page } from '@components/page';
 
 import Crud from '#/@common/crud';
 import { CREATE_TASK_STATUS_MOVE_FORM } from '#/@store/project-status-moves';

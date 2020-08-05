@@ -11,7 +11,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import SearchIco from '@components/@icons/Search';
-import InputLight from '@components/InputLight';
+import InputLight from '@components/input-light';
 
 import { ProjectItem } from './project-item/project-item';
 

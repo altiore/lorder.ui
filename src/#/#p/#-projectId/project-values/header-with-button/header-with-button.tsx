@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import ButtonEdit from '@components/ButtonEdit';
+import ButtonEdit from '@components/button-edit';
 
 import { useStyles } from './styles';
 

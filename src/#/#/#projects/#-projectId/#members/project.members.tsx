@@ -3,10 +3,10 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import get from 'lodash/get';
 
-import MultiSelectCell from '@components/Crud/@cells/multi-select';
-import SelectCell from '@components/Crud/@cells/select';
-import { ICrudColumn } from '@components/Crud/Crud';
-import { Page } from '@components/Page';
+import MultiSelectCell from '@components/crud/@cells/multi-select';
+import SelectCell from '@components/crud/@cells/select';
+import { ICrudColumn } from '@components/crud/crud';
+import { Page } from '@components/page';
 
 import Crud from '#/@common/crud';
 import { LinkButton } from '#/@common/link-button';

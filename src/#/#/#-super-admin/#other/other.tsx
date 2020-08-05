@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 
-import { Page } from '@components/Page';
+import { Page } from '@components/page';
 
 export interface IOtherProps extends RouteComponentProps {
   resetGlobalCache: any;

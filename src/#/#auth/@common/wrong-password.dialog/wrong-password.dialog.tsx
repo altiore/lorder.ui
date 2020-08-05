@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ConfirmationModal, { ACTION_TYPE } from '@components/ConfirmationModal';
+import ConfirmationModal, { ACTION_TYPE } from '@components/confirmation-modal';
 
 interface IWrongPasswordDialog {
   onClose?: any;

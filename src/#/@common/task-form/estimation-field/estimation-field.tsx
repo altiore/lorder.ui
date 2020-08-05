@@ -6,8 +6,8 @@ import { required } from 'redux-form-validators';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import InputField from '@components/InputField';
-import { SelectField } from '@components/SelectField';
+import InputField from '@components/input-field';
+import { SelectField } from '@components/select-field';
 import ValueField from '@components/value-field';
 import { SIZE } from '@components/value/value';
 

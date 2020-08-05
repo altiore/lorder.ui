@@ -7,8 +7,8 @@ import ListItem from '@material-ui/core/ListItem';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import InputField from '@components/InputField';
-import { SelectField } from '@components/SelectField';
+import InputField from '@components/input-field';
+import { SelectField } from '@components/select-field';
 
 import { PROJECT_STRATEGY, ROLE } from '@types';
 
