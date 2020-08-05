@@ -29,9 +29,9 @@ export const NestedRoute = ({
 
   useEffect(() => {
     if (getReducers) {
-      getReducers.then(reducers => {
+      getReducers.then(async reducers => {
         if (asyncReducersList && !asyncReducersList[Object.keys(reducers)[0]]) {
-          injectAsyncReducers(reducers);
+          await injectAsyncReducers(reducers);
         }
         setIsRouteLoaded(true);
       });
@@ -40,9 +40,9 @@ export const NestedRoute = ({
     }
     return () => {
       if (getReducers) {
-        getReducers.then(reducers => {
+        getReducers.then(async reducers => {
           if (asyncReducersList && asyncReducersList[Object.keys(reducers)[0]]) {
-            removeAsyncReducers(reducers);
+            await removeAsyncReducers(reducers);
           }
         });
       }
@@ -65,7 +65,7 @@ export const NestedRoute = ({
   }
 
   if (!isRouteLoaded) {
-    return <Route exact={exact} path={path} component={LoadingPage} />;
+    return <Route exact={exact} path={path} component={LoadingPage} location={location} />;
   }
 
   return <Route exact={exact} path={path} render={renderRoute} location={location} />;

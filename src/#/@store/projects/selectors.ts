@@ -19,18 +19,16 @@ export const ownProjectList = createDeepEqualSelector([baseState], (state: Downl
   state.list.filter(el => el && typeof el.accessLevel === 'number')
 );
 
-export const selectedProject: any = createDeepEqualSelector(
-  [ownProjectList, currentProjectId],
-  (projects, id) => id && projects.find(el => el.id === id)
+export const selectedProject: any = createDeepEqualSelector([ownProjectList, currentProjectId], (projects, id) =>
+  id ? projects.find(el => el.id === id) : undefined
 );
 
 export const createUserTaskFormInitials = createDeepEqualSelector([selectedProject], (p: IProject) =>
   p ? { projectId: p.id } : {}
 );
 
-export const defaultProjectInfo = createDeepEqualSelector(
-  [ownProjectList, defaultProjectId],
-  (list, defId) => list && list.find(el => el.id === defId)
+export const defaultProjectInfo = createDeepEqualSelector([ownProjectList, defaultProjectId], (list, defId) =>
+  list ? list.find(el => el.id === defId) : undefined
 );
 
 export const projectsExceptDefault = createDeepEqualSelector(

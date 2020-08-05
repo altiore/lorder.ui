@@ -8,7 +8,11 @@ import { AppJsx } from './app';
 
 import { IState, ROLE } from '@types';
 
-const mapStateToProps = createStructuredSelector<IState, { userRole: ROLE }>({
+interface IMappedProps {
+  userRole: ROLE;
+}
+
+const mapStateToProps = createStructuredSelector<IState, IMappedProps>({
   userRole,
 });
 

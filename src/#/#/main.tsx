@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useCallback, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
-import { RouteComponentProps, Switch } from 'react-router-dom';
+import { Redirect, RouteComponentProps, Switch } from 'react-router-dom';
 
 import { Location } from 'history';
 import get from 'lodash/get';
@@ -11,6 +11,7 @@ import NestedRoute from '#/@common/#nested-route';
 import { PatchTaskForm } from '#/@common/task-form';
 import { DEFAULT_TRANSITION_DURATION } from '#/@store/dialog/consts';
 import { ROLES } from '#/@store/roles';
+import { ROUTE } from '#/@store/router';
 import { EDIT_TASK_FORM } from '#/@store/tasks';
 
 import { Header } from './header';
@@ -36,7 +37,7 @@ export const MAIN_USER_ROUTES: IRoute[] = [
   {
     access: [ROLES.USERS],
     component: lazy(() => import('./#profile')),
-    path: '/profile',
+    path: ROUTE.PROFILE,
     title: 'Настройки пользователя',
   },
   {
@@ -55,30 +56,34 @@ export const MAIN_USER_ROUTES: IRoute[] = [
   },
 ];
 
-export interface IMainProps {
+export interface IMainProps extends RouteComponentProps {
   destroy: (form: string) => void;
   getAllTasks: () => any;
   openDialog: (comp: any, props: any, location: any) => any;
   prevLocation?: Location;
   push: (path: string | any) => any;
   routes: IRoute[];
+  userDisplayName?: string;
   userRole: ROLE;
 }
 
-export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
+export const MainJsx: React.FC<IMainProps> = ({
   destroy,
   getAllTasks,
   location,
   openDialog,
   prevLocation,
   push,
+  userDisplayName,
   userRole,
 }) => {
   const classes = useStyles();
 
   const preparedRoutes = useAllowedRoutes(MAIN_USER_ROUTES, userRole);
 
-  const isModal = useMemo(() => get(location, ['state', 'modal']), [location]);
+  const { pathname, state: locationState } = location;
+
+  const isModal = useMemo(() => locationState?.modal, [locationState]);
 
   useEffect(() => {
     getAllTasks();
@@ -109,12 +114,17 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
     }
   }, [handleCloseDialog, isModal, prevLocation, location, openDialog, push]);
 
+  useEffect(() => {
+    console.log('pathname is %s', pathname);
+  }, [pathname]);
+
   const pageLocation = useMemo(() => (isModal && prevLocation ? prevLocation : location), [
     isModal,
     prevLocation,
     location,
   ]);
 
+  console.log('render page', { isRoutes: Boolean(preparedRoutes) });
   return (
     <div className={classes.root}>
       <Helmet>
@@ -124,15 +134,16 @@ export const MainJsx: React.FC<IMainProps & RouteComponentProps> = ({
       <div className={classes.background} />
       <div className={classes.background2} />
       <main className={classes.main}>
-        <Suspense fallback={<div />}>
-          {Boolean(preparedRoutes) && (
+        {Boolean(preparedRoutes) && (
+          <Suspense fallback={<div />}>
             <Switch location={pageLocation}>
+              {!userDisplayName && pathname !== ROUTE.PROFILE && <Redirect from={pathname} to={ROUTE.PROFILE} />}
               {preparedRoutes.map((route: IRoute) => {
                 return <NestedRoute key={route.path} {...route} routes={MAIN_USER_ROUTES} location={pageLocation} />;
               })}
             </Switch>
-          )}
-        </Suspense>
+          </Suspense>
+        )}
       </main>
     </div>
   );
