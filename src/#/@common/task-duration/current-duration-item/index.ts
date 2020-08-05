@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import TaskDuration from '@components/TaskDuration';
+import TaskDuration from '@components/task-duration';
 
 import { currentTimerTime } from '#/@store/timer';
 

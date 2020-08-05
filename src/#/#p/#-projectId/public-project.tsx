@@ -6,9 +6,9 @@ import get from 'lodash/get';
 import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core/';
 
 import TelegramIco from '@components/@icons/Telegram';
-import HeaderFixed from '@components/HeaderFixed';
-import LoadingPage from '@components/LoadingPage';
-import { NoMatch } from '@components/NoMatch';
+import HeaderFixed from '@components/header-fixed';
+import LoadingPage from '@components/loading-page';
+import { NoMatch } from '@components/no-match';
 
 import { millisecondsToHours } from '#/@store/@common/helpers';
 import { Member } from '#/@store/projects/members/Member';

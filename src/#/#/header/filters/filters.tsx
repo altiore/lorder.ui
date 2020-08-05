@@ -22,7 +22,7 @@ import FilterIcon from '@material-ui/icons/FilterList';
 import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-import Avatar from '@components/Avatar';
+import Avatar from '@components/avatar';
 
 import AssigneeList from '#/@common/task-form/status-field/assignee-list';
 

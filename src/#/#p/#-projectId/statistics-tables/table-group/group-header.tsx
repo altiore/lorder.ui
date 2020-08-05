@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
-import ButtonEdit from '@components/ButtonEdit';
+import ButtonEdit from '@components/button-edit';
 
 import { useStyles } from '../styles';
 

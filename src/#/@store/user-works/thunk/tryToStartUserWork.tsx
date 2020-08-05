@@ -2,8 +2,8 @@ import React from 'react';
 
 import PauseSvg from '@material-ui/icons/PauseRounded';
 
-import ConfirmationModal, { ACTION_TYPE } from '@components/ConfirmationModal';
-import CheckSvg from '@components/StartStopButton/svg/check';
+import ConfirmationModal, { ACTION_TYPE } from '@components/confirmation-modal';
+import CheckSvg from '@components/start-stop-button/svg/check';
 
 import { openDialog } from '#/@store/dialog';
 import { defaultProjectId } from '#/@store/identity';

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Redirect, Route, RouteComponentProps } from 'react-router-dom';
 
-import LoadingPage from '@components/LoadingPage';
+import LoadingPage from '@components/loading-page';
 
 import NotFound from '#/@common/not-found-page';
 import { injectAsyncReducers, removeAsyncReducers } from '#/@store/createStore';

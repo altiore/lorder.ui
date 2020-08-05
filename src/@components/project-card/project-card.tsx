@@ -16,8 +16,8 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 
-import Avatar from '@components/Avatar';
-import TooltipBig from '@components/TooltipBig';
+import Avatar from '@components/avatar';
+import TooltipBig from '@components/tooltip-big';
 
 import { CARD_COLOR, LOGO_TYPE } from './consts';
 import CommentSvg from './icons/comment';

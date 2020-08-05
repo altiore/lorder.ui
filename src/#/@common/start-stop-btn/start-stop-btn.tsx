@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 
-import StartStopButton from '@components/StartStopButton';
+import StartStopButton from '@components/start-stop-button';
 
 import { ITask } from '@types';
 

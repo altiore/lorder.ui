@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 
-import { IMultiSelectField, MultipleSelectField } from '@components/MultiSelectField/MultiSelectField';
+import { IMultiSelectField, MultipleSelectField } from '@components/multi-select-field/multi-select-field';
 
 import { IProjectPart } from '@types';
 

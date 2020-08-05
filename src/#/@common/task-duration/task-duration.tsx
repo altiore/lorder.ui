@@ -3,7 +3,7 @@ import Popover from 'react-popover';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import TaskDuration from '@components/TaskDuration';
+import TaskDuration from '@components/task-duration';
 
 import CurrentDurationItem from './current-duration-item';
 import { UserWorkTable } from './user-work-table';

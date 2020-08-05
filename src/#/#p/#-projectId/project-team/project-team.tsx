@@ -2,7 +2,7 @@ import React, { memo, useMemo, useState } from 'react';
 
 import { Container, Grid } from '@material-ui/core';
 
-import InputSearch from '@components/InputSeach';
+import InputSearch from '@components/input-search';
 
 import HeaderWithButton from '../project-values/header-with-button';
 import Slider from './slider';

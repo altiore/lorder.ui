@@ -6,8 +6,8 @@ import get from 'lodash/get';
 import grey from '@material-ui/core/colors/grey';
 import Typography from '@material-ui/core/Typography';
 
-import Avatar from '@components/Avatar';
-import TooltipBig from '@components/TooltipBig';
+import Avatar from '@components/avatar';
+import TooltipBig from '@components/tooltip-big';
 import ValueField from '@components/value';
 
 import TypeIcon from '#/@common/type-icon';

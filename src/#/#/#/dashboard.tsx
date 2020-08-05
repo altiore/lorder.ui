@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 
-import { TIME_LINE_HEIGHT } from '@components/TimeLine';
+import { TIME_LINE_HEIGHT } from '@components/time-line';
 
 import { ActivityTimeline } from './activity-time-line';
 import DailyRoutineDialog from './daily-routine';

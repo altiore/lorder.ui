@@ -10,8 +10,8 @@ import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 
-import TextAreaMarkdown from '@components/TextAreaMarkdown';
-import { TextField } from '@components/TextField';
+import TextAreaMarkdown from '@components/text-area-markdown';
+import { TextField } from '@components/text-field';
 
 import TaskDuration from '#/@common/task-duration';
 import { ITaskFormData, patchProjectTask, postProjectTask } from '#/@store/tasks';

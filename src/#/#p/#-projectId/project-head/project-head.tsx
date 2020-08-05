@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box, Grid } from '@material-ui/core';
 
-import ButtonEdit from '@components/ButtonEdit';
+import ButtonEdit from '@components/button-edit';
 import GradientHead from '@components/gradient-head';
 
 import { useStyles } from './styles';

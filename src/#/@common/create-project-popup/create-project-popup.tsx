@@ -17,10 +17,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { ProjectIco } from '@components/@icons/Project';
-import InputField from '@components/InputField';
-import RadioButtonField from '@components/RadioButtonField';
-import { SelectField } from '@components/SelectField';
-import { TextField } from '@components/TextField';
+import InputField from '@components/input-field';
+import RadioButtonField from '@components/radio-button-field';
+import { SelectField } from '@components/select-field';
+import { TextField } from '@components/text-field';
 
 import { PROJECT_STRATEGY, PROJECT_TYPE } from '@types';
 
