@@ -10,11 +10,16 @@ import { isPaused } from '#/@store/user-works';
 
 import { IProject, IState } from '@types';
 
-const project = createDeepEqualSelector([currentProjectId, defaultProjectInfo], (curId, defProject) =>
-  curId === defProject?.id ? undefined : defProject
-);
+const project = createDeepEqualSelector([currentProjectId, defaultProjectInfo], (curId, defProject) => {
+  return curId ? (curId === defProject?.id ? undefined : defProject) : undefined;
+});
 
-const mapStateToProps = createStructuredSelector<IState, { project?: IProject; inProgress: boolean }>({
+interface IMappedProps {
+  inProgress: boolean;
+  project?: IProject;
+}
+
+const mapStateToProps = createStructuredSelector<IState, IMappedProps>({
   inProgress: isPaused,
   project,
 });

@@ -7,13 +7,16 @@ import { isAuth } from '#/@store/identity';
 
 import { NestedRoute } from './nested-route';
 
-const mapState = createStructuredSelector({
+import { IState } from '@types';
+
+interface IMappedProps {
+  asyncReducersList: any;
+  isAuth: boolean;
+}
+
+const mapState = createStructuredSelector<IState, IMappedProps>({
   asyncReducersList,
   isAuth,
-} as any);
+});
 
-const mapDispatch = {
-  // loadDomainIntl,
-};
-
-export default connect(mapState, mapDispatch)(NestedRoute);
+export default connect(mapState)(NestedRoute);

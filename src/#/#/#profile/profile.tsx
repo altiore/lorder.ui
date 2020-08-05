@@ -65,7 +65,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   scrollBody: {
     backgroundColor: 'white',
-    maxHeight: 'calc(100vh - 56px)',
+    height: 'calc(100vh - 56px)',
     overflowY: 'auto',
     ...theme.scroll.secondary,
   },
@@ -110,6 +110,7 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
     return '/';
   }, []);
 
+  console.log('render profile');
   const {
     avatarGrid,
     closeIcon,

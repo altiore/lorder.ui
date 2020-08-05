@@ -10,10 +10,6 @@ import { ROLES } from './@store/roles';
 import { IRoute, ROLE } from '@types';
 import { useAllowedRoutes } from '@utils/useAllowedRoutes';
 
-interface IAppProps {
-  userRole: ROLE;
-}
-
 export const APP_MAIN_ROUTES: IRoute[] = [
   {
     access: [ROLES.ALL],
@@ -42,6 +38,10 @@ export const APP_MAIN_ROUTES: IRoute[] = [
     path: '/',
   },
 ];
+
+interface IAppProps {
+  userRole: ROLE;
+}
 
 export const AppJsx: React.FC<IAppProps> = ({ userRole }) => {
   const preparedRoutes = useAllowedRoutes(APP_MAIN_ROUTES, userRole);
