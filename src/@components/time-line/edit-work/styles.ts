@@ -16,7 +16,11 @@ export const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       margin: '10px 0',
     },
-
+    fieldTitle: {
+      display: 'inline-block',
+      fontWeight: 'bold',
+      marginBottom: 5,
+    },
     grow: {
       flexGrow: 1,
     },
@@ -40,8 +44,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       display: 'flex',
       flexBasis: 50,
-      flexFlow: 'column',
-      justifyContent: 'center',
+      justifyContent: 'space-between',
     },
     title: {
       marginBottom: theme.spacing(2),
