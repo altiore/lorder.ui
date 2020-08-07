@@ -10,14 +10,18 @@ import CloseIcon from '@material-ui/icons/Close';
 import { IEditWorkData } from './@common';
 import { useStyles } from './styles';
 import TimeDiff from './time-diff';
-import TimeField from './time-field';
+import CustomDatepickerInput from './time-field';
 
 import { IEvent } from '@types';
 
-const FORMAT = 'YYYY-MM-DDTHH:mm';
+const formatter = (value: moment.Moment) => {
+  if (value) {
+    return value.toDate();
+  }
+  return '';
+};
 
-const formatter = (value: moment.Moment) => (value ? value.format(FORMAT) : '');
-const parser = (value: string) => (value ? moment(value, FORMAT) : null);
+const normalize = (value: string): moment.Moment => moment(value);
 
 interface IEditWorkProps {
   event: IEvent;
@@ -48,12 +52,12 @@ export const EditWorkTsx: React.FC<InjectedFormProps<IEditWorkData, IEditWorkPro
         </div>
         <div className={classes.rowSpaceBetween}>
           <div className={classes.col}>
-            <span>Начало задачи</span>
-            <Field name="startAt" component={TimeField} format={formatter} parse={parser} />
+            <span className={classes.fieldTitle}>Начало задачи</span>
+            <Field name="startAt" component={CustomDatepickerInput} format={formatter} normalize={normalize} />
           </div>
           <div className={classes.col}>
-            <span>Конец задачи</span>
-            <Field name="finishAt" component={TimeField} format={formatter} parse={parser} />
+            <span className={classes.fieldTitle}>Конец задачи</span>
+            <Field name="finishAt" component={CustomDatepickerInput} format={formatter} normalize={normalize} />
           </div>
         </div>
 
