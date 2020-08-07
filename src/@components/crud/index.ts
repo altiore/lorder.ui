@@ -1,5 +1,5 @@
 import { CrudJsx } from './crud';
 
-import { withResize } from '@hooks/withResize';
+import { withResize } from '@hooks/with-resize';
 
 export default withResize(CrudJsx);

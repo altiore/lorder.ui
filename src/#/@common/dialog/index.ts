@@ -8,7 +8,7 @@ import { closeDialog, dialogProps, internalProps, isDialogOpened } from '#/@stor
 
 import { DialogTsx } from './dialog';
 
-import { withResize } from '@hooks/withResize';
+import { withResize } from '@hooks/with-resize';
 import { IState } from '@types';
 
 interface IMappedState {

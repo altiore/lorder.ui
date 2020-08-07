@@ -9,7 +9,7 @@ import { feedbackList, fetchFeedbackList } from '#/@store/feedback';
 import { Feedback as FeedbackJsx } from './feedback';
 import { styles } from './styles';
 
-import { withResize } from '@hooks/withResize';
+import { withResize } from '@hooks/with-resize';
 
 export default connect(
   createStructuredSelector({

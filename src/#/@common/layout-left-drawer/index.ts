@@ -11,7 +11,7 @@ import { isLeftBarOpen, toggleUiSetting } from '#/@store/ui';
 
 import { LayoutLeftDrawerTsx } from './layout-left-drawer';
 
-import { withResize } from '@hooks/withResize';
+import { withResize } from '@hooks/with-resize';
 
 const mapState = createStructuredSelector({
   isLeftBarOpen,

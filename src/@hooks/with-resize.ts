@@ -35,12 +35,16 @@ export const withResize = <P>(
       }
 
       componentDidMount(): void {
-        window.addEventListener('resize', this.handleResize, false);
-        this.setState(this.getDimensions());
+        if (typeof window !== 'undefined') {
+          window.addEventListener('resize', this.handleResize, false);
+          this.setState(this.getDimensions());
+        }
       }
 
       componentWillUnmount(): void {
-        window.removeEventListener('resize', this.handleResize);
+        if (typeof window !== 'undefined') {
+          window.removeEventListener('resize', this.handleResize);
+        }
       }
 
       render() {
@@ -59,30 +63,32 @@ export const withResize = <P>(
         let width;
         let scrollHeight;
         let scrollWidth;
-        if (this.state) {
-          const { getRef } = this.state;
-          if (getRef && getRef.current) {
-            let element = getRef.current;
-            if (getNode) {
-              element = getNode(element);
-            }
 
-            width = element.offsetWidth;
-            height = element.offsetHeight;
-            scrollHeight = element.clientHeight;
-            scrollWidth = element.clientWidth;
+        // 1. если была передана ссылка на елемент - используем ее. В противном случае, используем window
+        const element = this?.state?.getRef?.current;
+        if (element) {
+          let nodeEl = element;
+          if (getNode) {
+            nodeEl = getNode(element);
+          }
+
+          width = nodeEl.offsetWidth;
+          height = nodeEl.offsetHeight;
+          scrollHeight = nodeEl.clientHeight;
+          scrollWidth = nodeEl.clientWidth;
+        } else {
+          if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+            const w = window;
+            const d = document;
+            const e = d.documentElement;
+            const g = d.getElementsByTagName('body')[0];
+            width = w.innerWidth || (e && e.clientWidth) || g.clientWidth;
+            height = w.innerHeight || (e && e.clientHeight) || g.clientHeight;
+            scrollHeight = (e && e.clientHeight) || g.clientHeight;
+            scrollWidth = (e && e.clientWidth) || g.clientWidth;
           }
         }
-        if (width === undefined) {
-          const w = window;
-          const d = document;
-          const e = d.documentElement;
-          const g = d.getElementsByTagName('body')[0];
-          width = w.innerWidth || (e && e.clientWidth) || g.clientWidth;
-          height = w.innerHeight || (e && e.clientHeight) || g.clientHeight;
-          scrollHeight = (e && e.clientHeight) || g.clientHeight;
-          scrollWidth = (e && e.clientWidth) || g.clientWidth;
-        }
+
         const { theme } = this.props;
         return {
           height,

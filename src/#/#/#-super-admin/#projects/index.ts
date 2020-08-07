@@ -10,7 +10,7 @@ import { closeDialog, openDialog } from '#/@store/dialog';
 import { defaultProjectId, hasRole, userRole } from '#/@store/identity';
 import { allProjectList, getAllProjects, removeProject, removeProjectByAdmin } from '#/@store/projects';
 
-import { withResize } from '@hooks/withResize';
+import { withResize } from '@hooks/with-resize';
 
 const mapToState = (ownOnly: boolean = true) =>
   createStructuredSelector({

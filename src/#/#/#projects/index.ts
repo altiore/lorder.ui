@@ -11,7 +11,7 @@ import { fetchAllParticipantProjects, ownProjectList, removeProject, removeProje
 
 import { Projects as ProjectsJsx } from './projects';
 
-import { withResize } from '@hooks/withResize';
+import { withResize } from '@hooks/with-resize';
 
 const mapToState = (ownOnly: boolean = true) =>
   createStructuredSelector({

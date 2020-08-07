@@ -11,7 +11,7 @@ import { isPaused, startUserWork } from '#/@store/user-works';
 
 import { HeaderTsx } from './header';
 
-import { withResize } from '@hooks/withResize';
+import { withResize } from '@hooks/with-resize';
 import { IState } from '@types';
 
 const mapStateToProps = createStructuredSelector<IState, any>({

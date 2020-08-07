@@ -6,7 +6,7 @@ import { deleteUser, fetchUsers, findUserById, patchUser, userList } from '#/#/@
 
 import { UsersJsx } from './users';
 
-import { withResize } from '@hooks/withResize';
+import { withResize } from '@hooks/with-resize';
 
 export default connect(
   createStructuredSelector({

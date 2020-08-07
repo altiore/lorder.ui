@@ -12,7 +12,7 @@ import { filteredOpenedStatuses, toggleOpenedTab } from '#/@store/tasksFilter';
 
 import { DragAndDrop } from './DragAndDrop';
 
-import { withResize } from '@hooks/withResize';
+import { withResize } from '@hooks/with-resize';
 import { IState, ITaskColumn } from '@types';
 
 interface IDragAndDropMappedProps {

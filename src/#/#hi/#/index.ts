@@ -5,7 +5,7 @@ import { fetchStatistics } from '#/@store/statistics';
 
 import { HiTsx } from './hi';
 
-import { withResize } from '@hooks/withResize';
+import { withResize } from '@hooks/with-resize';
 
 const masStateToProps = () => ({
   brandName: 'Lorder',
