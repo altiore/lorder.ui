@@ -13,6 +13,11 @@ import { useAllowedRoutes } from '@utils/useAllowedRoutes';
 export const APP_MAIN_ROUTES: IRoute[] = [
   {
     access: [ROLES.ALL],
+    component: lazy(() => import('./#public-projects')),
+    path: '/public-projects',
+  },
+  {
+    access: [ROLES.ALL],
     component: lazy(() => import('./#p/#-projectId')),
     path: '/p/:projectId',
   },
