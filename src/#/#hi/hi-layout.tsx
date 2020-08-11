@@ -45,6 +45,7 @@ export const HiTsx: React.FC<IHiProps> = ({ userRole, brandName, classes }) => {
     <Grid container direction="column" className={classes.root}>
       <Helmet>
         <body className={classes.hiBody} />
+        <title>Lorder - приложение для учета времени и регистрации доли в проекте</title>
       </Helmet>
 
       <Suspense fallback={<div />}>
