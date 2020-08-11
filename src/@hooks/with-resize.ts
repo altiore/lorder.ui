@@ -23,10 +23,10 @@ export const withResize = <P>(
   getNode: (el: any) => any | boolean = (el: any) => el
 ): any => {
   return withTheme(
-    class WithResize extends React.Component<WithTheme, IState> {
+    class WithResize extends React.PureComponent<WithTheme, IState> {
       private handleResize = debounce(() => this.setState(this.getDimensions()), 200);
 
-      constructor(props: any) {
+      constructor(props: WithTheme) {
         super(props);
         this.state = {
           ...this.getDimensions(),
