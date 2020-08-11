@@ -16,6 +16,7 @@ export interface IProjectPartsProps extends RouteComponentProps {
   deleteProjectPart: any;
   fetchProjectParts?: any;
   projectParts: any[];
+  projectPartsTree: any[];
   push: (path: string) => void;
 }
 
@@ -37,7 +38,16 @@ const items = [
 ];
 
 export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo(
-  ({ createProjectPart, deleteProjectPart, fetchProjectParts, location, match, projectParts, push }) => {
+  ({
+    createProjectPart,
+    deleteProjectPart,
+    fetchProjectParts,
+    location,
+    match,
+    projectParts,
+    projectPartsTree,
+    push,
+  }) => {
     useEffect(() => {
       if (fetchProjectParts) {
         fetchProjectParts();
@@ -79,7 +89,7 @@ export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo(
             />
           </Route>
           <Route path={[match.path, VIEW.TREE].join('/')}>
-            <TreeView />
+            <TreeView data={projectPartsTree} />
           </Route>
         </Switch>
       </Page>
