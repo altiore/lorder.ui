@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import includes from 'lodash/includes';
+import intersection from 'lodash/intersection';
 import uniq from 'lodash/uniq';
 import moment from 'moment';
 
@@ -8,7 +9,13 @@ import { defaultProjectId, userId } from '#/@store/identity/selectors';
 import { getProjectById, getPushForwardStatusesByProjectId } from '#/@store/projects/selectors';
 import { routeProjectId, routeTaskSequenceNumber } from '#/@store/router';
 import { Task } from '#/@store/tasks/Task';
-import { filteredMembers, projectId, projectPart, searchTerm, tasksFilter } from '#/@store/tasksFilter';
+import {
+  filteredMembers,
+  projectId,
+  projectParts as selectedProjectParts,
+  searchTerm,
+  tasksFilter,
+} from '#/@store/tasksFilter';
 import { currentTask, currentTaskId } from '#/@store/timer';
 import { isPaused, lastUserWorks } from '#/@store/user-works/selectors';
 
@@ -115,22 +122,27 @@ export const projectTasks = createDeepEqualSelector(
 );
 
 export const filteredProjectTasks = createDeepEqualSelector(
-  [projectTasks, searchTerm, filteredMembers, projectPart],
-  (list, sTerm = '', members = [], prPart = '') => {
+  [projectTasks, searchTerm, filteredMembers, selectedProjectParts],
+  (list, sTerm = '', members = [], prParts = []) => {
     if (!list || !list.length) {
       return [];
     }
     let res = list;
 
-    if (prPart === 0) {
+    if (prParts.length === 0) {
       res = res.filter(({ projectParts }) => {
         return !projectParts || !projectParts.length;
       });
     }
 
-    if (prPart) {
+    if (prParts.length) {
       res = res.filter(({ projectParts }) => {
-        return projectParts.map(({ id }) => id).includes(prPart as number);
+        return Boolean(
+          intersection(
+            projectParts.map(({ id }) => id),
+            prParts
+          ).length
+        );
       });
     }
 

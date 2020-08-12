@@ -1,6 +1,6 @@
 export interface ITasksFilter {
   filter: string;
-  projectPart?: number | string;
+  projectParts: number[];
   search?: string;
   projectId: number;
   members: number[];

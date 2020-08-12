@@ -6,7 +6,7 @@ const baseState = (state: IState) => state.tasksFilter;
 
 export const tasksFilter = createDeepEqualSelector(baseState, state => state.filter);
 
-export const searchTerm = createDeepEqualSelector(baseState, state => state.search);
+export const searchTerm = createDeepEqualSelector(baseState, state => state.search || '');
 
 export const projectId = createDeepEqualSelector(baseState, state => state.projectId);
 
@@ -17,6 +17,6 @@ export const filteredOpenedStatuses = createDeepEqualSelector(
   (state): string[] => state.openedStatuses || []
 );
 
-export const projectPart = createDeepEqualSelector(baseState, s => s.projectPart);
+export const projectParts = createDeepEqualSelector(baseState, s => s.projectParts);
 
 export const selectedProjectRole = createDeepEqualSelector(baseState, s => s.selectedRole);

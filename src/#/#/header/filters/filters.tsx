@@ -8,14 +8,11 @@ import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Divider from '@material-ui/core/Divider';
-import FormControl from '@material-ui/core/FormControl';
 import Grow from '@material-ui/core/Grow';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
-import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
-import Select from '@material-ui/core/Select';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
 import FilterIcon from '@material-ui/icons/FilterList';
@@ -23,6 +20,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import Avatar from '@components/avatar';
+import SelectTree from '@components/select-tree';
 
 import AssigneeList from '#/@common/task-form/status-field/assignee-list';
 
@@ -39,10 +37,9 @@ interface IFiltersProps {
   members: IUser[];
   searchTerm: string;
   toggleMember: any;
-  toggleProjectPart: any;
   toggleUiSetting: any;
-  projectPart: string | number;
   projectParts: IProjectPart[];
+  selectedParts: number[];
 }
 
 const SHOWN_MEMBERS = 7;
@@ -53,14 +50,12 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
   filteredMembers,
   isBoardFilterOpened,
   members,
-  searchTerm,
-  projectPart,
   projectParts,
+  searchTerm,
+  selectedParts,
   toggleMember,
-  toggleProjectPart,
   toggleUiSetting,
 }) => {
-  const [select, setSelect] = useState('default');
   useEffect(() => {
     if (fetchProjectParts) {
       fetchProjectParts();
@@ -113,9 +108,12 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
     setOpen(false);
   }, [setOpen]);
 
-  const handleChangeFilter = (filter: string) => (e: React.ChangeEvent<{ value: any }>) => {
-    changeFilter(filter, e.target.value);
-  };
+  const handleChangeSearch = useCallback(
+    (e: React.ChangeEvent<{ value: any }>) => {
+      changeFilter('search', e.target.value);
+    },
+    [changeFilter]
+  );
 
   const handleToggleMember = useCallback(
     event => {
@@ -125,35 +123,32 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
     [toggleMember]
   );
 
-  const toggleOpen = (nextIsClose = false) => () => {
-    if (nextIsClose) {
-      changeFilter('search', '');
-      changeFilter('members', []);
-      changeFilter('projectPart', '');
-      setSelect('default');
-    }
+  const handleOpen = useCallback(() => {
+    changeFilter('search', '');
+    changeFilter('members', []);
+    changeFilter('projectParts', []);
     toggleUiSetting('isBoardFilterOpened');
-  };
+  }, [changeFilter, toggleUiSetting]);
 
-  const isFiltered = !!((filteredMembers && filteredMembers.length) || searchTerm);
+  const handleClose = useCallback(() => {
+    toggleUiSetting('isBoardFilterOpened');
+  }, [toggleUiSetting]);
 
-  const handleSelectProjectPart = useCallback(
-    ({ target: { value } }) => {
-      if (value === 'clear') {
-        changeFilter('projectPart', '');
-        setSelect('default');
-      } else {
-        toggleProjectPart(value);
-        setSelect(value);
-      }
+  const handleChangeParts = useCallback(
+    values => {
+      changeFilter('projectParts', values);
     },
-    [changeFilter, toggleProjectPart, setSelect]
+    [changeFilter]
   );
+
+  const isFiltered = useMemo(() => !!((filteredMembers && filteredMembers.length) || searchTerm), [
+    filteredMembers,
+    searchTerm,
+  ]);
 
   const {
     divider,
     filterBadge,
-    formControl,
     input,
     iconButton,
     membersStyle,
@@ -168,31 +163,7 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
       {isBoardFilterOpened ? (
         <>
           {Boolean(projectParts && projectParts.length) && (
-            <FormControl className={formControl}>
-              <Select
-                value={select}
-                onChange={handleSelectProjectPart}
-                displayEmpty
-                inputProps={{ 'aria-label': 'Without label' }}
-              >
-                <MenuItem value="default" disabled>
-                  По частям
-                </MenuItem>
-                <MenuItem value={0}>Без частей</MenuItem>
-                {projectParts.map(({ title, id }) => {
-                  return (
-                    <MenuItem key={id} value={id}>
-                      {title}
-                    </MenuItem>
-                  );
-                })}
-                {typeof projectPart === 'number' && (
-                  <MenuItem value="clear">
-                    <b>Все</b>
-                  </MenuItem>
-                )}
-              </Select>
-            </FormControl>
+            <SelectTree value={selectedParts} items={projectParts} onChange={handleChangeParts} />
           )}
           {Boolean(shownMembers && shownMembers.length) && (
             <div className={membersStyle}>
@@ -250,7 +221,7 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
               className={input}
               placeholder="Заголовок задачи..."
               value={searchTerm}
-              onChange={handleChangeFilter('search')}
+              onChange={handleChangeSearch}
             />
             <Tooltip title="Начните вводить заголовок или выберите участника, чтоб отфильтровать задачи">
               <IconButton className={iconButton} aria-label="Поиск">
@@ -259,7 +230,7 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
             </Tooltip>
             <Divider className={divider} />
             <Tooltip title="Закрыть фильтр">
-              <IconButton onClick={toggleOpen(true)} color="primary" className={iconButton} aria-label="Закрыть фильтр">
+              <IconButton onClick={handleOpen} color="primary" className={iconButton} aria-label="Закрыть фильтр">
                 <CloseIcon />
               </IconButton>
             </Tooltip>
@@ -269,7 +240,7 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
         <>
           <RolesFilter />
           <Tooltip title={`Открыть фильтр задач`}>
-            <IconButton color="secondary" onClick={toggleOpen()}>
+            <IconButton color="secondary" onClick={handleClose}>
               <Badge classes={{ badge: filterBadge }} badgeContent={isFiltered ? '!' : ''}>
                 <FilterIcon />
               </Badge>

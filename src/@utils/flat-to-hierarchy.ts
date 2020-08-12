@@ -1,7 +1,11 @@
-export const flatToHierarchy = (flat: any, idName: string = 'id', parentIdName: string = 'parentId') => {
+export const flatToHierarchy = <P>(
+  flat: P,
+  idName: string = 'id',
+  parentIdName: string = 'parentId'
+): P & { children: P[] } => {
   const rootNodes: any = []; // items without parent
 
-  const allNodes = flat.reduce((buffer: any, currentNode: any) => {
+  const allNodes = (flat as any).reduce((buffer: any, currentNode: any) => {
     buffer[currentNode[idName]] = { ...currentNode };
     return buffer;
   }, {});

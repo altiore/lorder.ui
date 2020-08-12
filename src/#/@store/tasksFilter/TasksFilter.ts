@@ -18,7 +18,7 @@ export const STATUS_TYPE_NAME = {
 
 export class TasksFilter implements ITasksFilter {
   filter: TASK_FILTER_TYPE = TASK_FILTER_TYPE.RECENT;
-  projectPart?: '';
+  projectParts: number[];
   search?: string = '';
   members: number[] = [];
   openedStatuses: string[] = [STATUS_TYPE_NAME.TO_DO, STATUS_TYPE_NAME.IN_PROGRESS, STATUS_TYPE_NAME.TESTING];
