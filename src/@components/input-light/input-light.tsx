@@ -10,12 +10,14 @@ const useStyles = makeStyles((theme: Theme) =>
       '& > input': {
         backgroundColor: 'transparent',
         border: 0,
+        borderRadius: 6,
         fontFamily: 'inherit',
         fontSize: 'inherit',
-        lineHeight: 'normal',
-        margin: 0,
+        lineHeight: '30px',
+        margin: '0 0 0 -32px',
         outlineWidth: 0,
-        padding: 0,
+        padding: '0 0 0 32px',
+        width: '100%',
       },
       '& > svg': {
         fontFamily: 'inherit',

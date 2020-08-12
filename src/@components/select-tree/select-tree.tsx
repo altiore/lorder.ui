@@ -1,8 +1,11 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { animated, useSpring } from 'react-spring/web.cjs';
 
 import difference from 'lodash/difference';
+import sortBy from 'lodash/sortBy';
+import toLower from 'lodash/toLower';
 import uniq from 'lodash/uniq';
+import uniqBy from 'lodash/uniqBy';
 
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -15,6 +18,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TreeItem, { TreeItemProps } from '@material-ui/lab/TreeItem';
 import TreeView from '@material-ui/lab/TreeView';
 
+import SearchIco from '@components/@icons/Search';
+import InputLight from '@components/input-light';
+
 import { flatToHierarchy } from '@utils/flat-to-hierarchy';
 import { pluralRu } from '@utils/plural-ru';
 
@@ -23,11 +29,22 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     display: 'flex',
   },
-  root: {
-    flexGrow: 1,
-    height: 400,
-    padding: theme.spacing(2),
+  popoverClass: {
+    height: 360,
+    overflow: 'hidden',
+    padding: theme.spacing(2, 1),
     width: 400,
+    ...theme.scroll.secondary,
+  },
+  treeViewStyle: {
+    flexGrow: 1,
+    height: 300,
+    marginTop: 8,
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    padding: theme.spacing(0, 1),
+    width: 388,
+    ...theme.mainContent.scroll,
   },
 }));
 
@@ -67,7 +84,7 @@ const StyledTreeItem = withStyles((theme: Theme) =>
       },
     },
   })
-)((props: TreeItemProps) => <TreeItem {...props} TransitionComponent={TransitionComponent} />);
+)((props: TreeItemProps) => <TreeItem {...props} tabIndex={-1} TransitionComponent={TransitionComponent} />);
 
 const getChildren = (items, list) => {
   const curChildren = list.filter(el => items && items.includes(el.parentId)).map(el => el.id);
@@ -77,8 +94,35 @@ const getChildren = (items, list) => {
   return uniq([...items, ...curChildren, ...getChildren(curChildren, list)]);
 };
 
+const getParents = (items, list) => {
+  const curParentIds = uniq(items.map(el => el.parentId).filter(el => Boolean(el)));
+
+  if (!curParentIds || !curParentIds?.length) {
+    return items;
+  }
+  const parents = list.filter(el => curParentIds.includes(el.id));
+  return uniqBy([...items, ...parents, ...getParents(parents, list)], 'id');
+};
+
 export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value }) => {
-  const mainChildren = useMemo(() => flatToHierarchy(items), [items]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const handleChangeTerm = useCallback(
+    event => {
+      setSearchTerm(event?.currentTarget?.value);
+    },
+    [setSearchTerm]
+  );
+
+  const filteredItems = useMemo(() => {
+    return Array.isArray(items)
+      ? getParents(
+          items.filter(el => ~toLower(el?.title).search(toLower(searchTerm))),
+          items
+        )
+      : [];
+  }, [items, searchTerm]);
+
+  const mainChildren = useMemo(() => flatToHierarchy(filteredItems), [filteredItems]);
   const mainItem = { children: mainChildren };
 
   const handleLabelClick = useCallback(
@@ -105,14 +149,14 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value }) => {
     [items, onChange, value]
   );
 
-  const { itemStyle, root } = useStyles();
+  const { itemStyle, popoverClass, treeViewStyle } = useStyles();
 
   const renderChildren = useCallback(
     treeItem => {
       if (!treeItem.children || treeItem?.children?.length === 0) {
         return null;
       }
-      return treeItem.children.map((childNode: any) => {
+      return sortBy(treeItem.children, 'title').map((childNode: any) => {
         return (
           <StyledTreeItem
             nodeId={`${childNode.id}`}
@@ -135,16 +179,19 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value }) => {
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    },
+    [setAnchorEl]
+  );
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
 
   const open = Boolean(anchorEl);
-  const id = open ? 'select-tree' : undefined;
+  const id = useMemo(() => (open ? 'select-tree' : undefined), [open]);
 
   return (
     <div>
@@ -161,6 +208,7 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value }) => {
       </Button>
       <Popover
         id={id}
+        PaperProps={{ className: popoverClass }}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
@@ -173,8 +221,15 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value }) => {
           vertical: 'top',
         }}
       >
+        <InputLight
+          autoFocus
+          icon={<SearchIco />}
+          onChange={handleChangeTerm}
+          placeholder="Фильтр частей..."
+          value={searchTerm}
+        />
         <TreeView
-          className={root}
+          className={treeViewStyle}
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}
           multiSelect
