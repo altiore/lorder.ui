@@ -70,7 +70,7 @@ const StyledTreeItem = withStyles((theme: Theme) =>
 )((props: TreeItemProps) => <TreeItem {...props} TransitionComponent={TransitionComponent} />);
 
 const getChildren = (items, list) => {
-  const curChildren = list.filter(el => items.includes(el.parentId)).map(el => el.id);
+  const curChildren = list.filter(el => items && items.includes(el.parentId)).map(el => el.id);
   if (!curChildren || !curChildren?.length) {
     return items;
   }
@@ -87,6 +87,10 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value }) => {
       if (curValue) {
         event.preventDefault();
         event.stopPropagation();
+
+        if (!Array.isArray(value)) {
+          return;
+        }
 
         const idx = value.indexOf(curValue);
         if (idx === -1) {
@@ -116,7 +120,7 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value }) => {
             onLabelClick={handleLabelClick}
             label={
               <div className={itemStyle}>
-                <Checkbox color="default" value={childNode.id} checked={value.includes(childNode.id)} />
+                <Checkbox color="default" value={childNode.id} checked={value && value.includes(childNode.id)} />
                 <span>{childNode.title}</span>
               </div>
             }

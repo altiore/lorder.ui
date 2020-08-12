@@ -129,13 +129,7 @@ export const filteredProjectTasks = createDeepEqualSelector(
     }
     let res = list;
 
-    if (prParts.length === 0) {
-      res = res.filter(({ projectParts }) => {
-        return !projectParts || !projectParts.length;
-      });
-    }
-
-    if (prParts.length) {
+    if (prParts && prParts.length) {
       res = res.filter(({ projectParts }) => {
         return Boolean(
           intersection(
