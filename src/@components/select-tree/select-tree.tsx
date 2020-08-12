@@ -71,7 +71,7 @@ const StyledTreeItem = withStyles((theme: Theme) =>
 
 const getChildren = (items, list) => {
   const curChildren = list.filter(el => items.includes(el.parentId)).map(el => el.id);
-  if (!curChildren || !curChildren.length) {
+  if (!curChildren || !curChildren?.length) {
     return items;
   }
   return uniq([...items, ...curChildren, ...getChildren(curChildren, list)]);
@@ -105,7 +105,7 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value }) => {
 
   const renderChildren = useCallback(
     treeItem => {
-      if (!treeItem.children || treeItem.children.length === 0) {
+      if (!treeItem.children || treeItem?.children?.length === 0) {
         return null;
       }
       return treeItem.children.map((childNode: any) => {
@@ -145,8 +145,14 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value }) => {
   return (
     <div>
       <Button aria-describedby={id} variant="outlined" color="secondary" onClick={handleClick}>
-        {value.length
-          ? pluralRu(value.length, 'Выбрано %d частей', 'Выбрана %d часть', 'Выбрано %d части', 'Выбрано %d частей')
+        {value?.length
+          ? pluralRu(
+              value?.length || 0,
+              'Выбрано %d частей',
+              'Выбрана %d часть',
+              'Выбрано %d части',
+              'Выбрано %d частей'
+            )
           : 'Выбери Части'}
       </Button>
       <Popover
