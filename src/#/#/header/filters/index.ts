@@ -4,26 +4,41 @@ import { createStructuredSelector } from 'reselect';
 
 import { fetchProjectParts, projectParts } from '#/@store/project';
 import { projectMembersAsUsers } from '#/@store/projects';
-import { changeFilter, filteredMembers, searchTerm, toggleMember, toggleProjectPart } from '#/@store/tasksFilter';
-import { projectPart } from '#/@store/tasksFilter';
+import {
+  changeFilter,
+  filteredMembers,
+  projectParts as selectedParts,
+  searchTerm,
+  toggleMember,
+} from '#/@store/tasksFilter';
 import { isBoardFilterOpened, toggleUiSetting } from '#/@store/ui';
 
 import { FiltersTsx } from './filters';
 
-const mapState = createStructuredSelector({
+import { IProjectPart, IState, IUser } from '@types';
+
+interface IMappedProps {
+  filteredMembers: any;
+  isBoardFilterOpened: boolean;
+  members: IUser[];
+  projectParts: IProjectPart[];
+  searchTerm: string;
+  selectedParts: number[];
+}
+
+const mapState = createStructuredSelector<IState, IMappedProps>({
   filteredMembers,
   isBoardFilterOpened,
   members: projectMembersAsUsers,
-  projectPart,
   projectParts,
   searchTerm,
-} as any);
+  selectedParts,
+});
 
 const mapDispatch = {
   changeFilter,
   fetchProjectParts,
   toggleMember,
-  toggleProjectPart,
   toggleUiSetting,
 };
 

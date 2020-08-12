@@ -1,14 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import {
-  changeFilter,
-  changeTasksFilter,
-  IChangeFilterP,
-  refreshAll,
-  toggleMemberA,
-  toggleOpenedTab,
-  toggleProjectPart,
-} from './actions';
+import { changeFilter, changeTasksFilter, IChangeFilterP, refreshAll, toggleMemberA, toggleOpenedTab } from './actions';
 import { TasksFilter } from './TasksFilter';
 
 import { ITasksFilter } from '@types';
@@ -58,16 +50,6 @@ const toggleOpenedTabHandler = (state: ITasksFilter, { payload }) => {
   });
 };
 
-const toggleProjectPartHandler = (state: ITasksFilter, { payload }: any) => {
-  if (typeof payload !== 'number') {
-    throw new Error('Payload MUST be number');
-  }
-  return new TasksFilter({
-    ...state,
-    projectPart: payload,
-  });
-};
-
 const refreshAllHandler = (state: ITasksFilter) => {
   return new TasksFilter({ openedStatuses: state.openedStatuses });
 };
@@ -78,7 +60,6 @@ export const tasksFilter: any = handleActions<any, any, any>(
     [changeTasksFilter.toString()]: changeTasksFilterHandler,
     [toggleMemberA.toString()]: toggleMemberHandler,
     [toggleOpenedTab.toString()]: toggleOpenedTabHandler,
-    [toggleProjectPart.toString()]: toggleProjectPartHandler,
     [refreshAll.toString()]: refreshAllHandler,
   },
   new TasksFilter()
