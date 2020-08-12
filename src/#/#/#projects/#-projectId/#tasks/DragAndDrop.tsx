@@ -16,7 +16,6 @@ import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 
-import SumIcon from '@components/@icons/sum';
 import TooltipBig from '@components/tooltip-big';
 import ValueField from '@components/value';
 
@@ -208,8 +207,9 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                     <TooltipBig title="Сумма ценности задач в статусе" placement="top">
                       <span className={classes.columnTitleSum}>
                         <span>&nbsp;-&nbsp;</span>
-                        <SumIcon fontSize="small" />
-                        <ValueField disableTooltip>{valueSum}</ValueField>
+                        <ValueField disableTooltip showSumIcon={true}>
+                          {valueSum}
+                        </ValueField>
                       </span>
                     </TooltipBig>
                   )}
