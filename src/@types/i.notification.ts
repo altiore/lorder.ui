@@ -3,6 +3,6 @@ export interface INotification {
     label: string;
     callback: () => void;
   };
-  message?: string;
+  message?: string | JSX.Element;
   title?: string;
 }

@@ -56,20 +56,28 @@ export const patchUserWork = requestActions('USER_WORK/PATCH', (userWork: Partia
   userWorkId: userWork.id,
 }));
 
-export const postAndStartUserWork = requestActions(
-  'USER_WORK/POST_AND_START',
-  (project: Project, userWork: IUserWorkData) => ({
-    form: CREATE_USER_WORK_FORM_NAME,
-    // projectId required here because of nested reducers!!!
-    projectId: project.id,
-    request: {
-      data: userWork,
-      method: 'POST',
-      url: '/user-works',
-    },
-    sequenceNumber: userWork.sequenceNumber,
-  })
-);
+export const startUserWorkAct = requestActions('USER_WORK/START', (project: Project, userWork: IUserWorkData) => ({
+  form: CREATE_USER_WORK_FORM_NAME,
+  // projectId required here because of nested reducers!!!
+  projectId: project.id,
+  request: {
+    data: userWork,
+    method: 'POST',
+    url: '/user-works',
+  },
+  sequenceNumber: userWork.sequenceNumber,
+}));
+
+export const createAndStartUserWork = requestActions('USER_WORK/CREATE_AND_START', (projectId: number) => ({
+  error: false,
+  // projectId required here because of nested reducers!!!
+  projectId,
+  request: {
+    data: { projectId },
+    method: 'POST',
+    url: '/user-works/create-and-start',
+  },
+}));
 
 export const patchAndStopUserWork = requestActions<IUserWorkDelete>(
   'USER_WORK/PATCH_AND_STOP',

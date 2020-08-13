@@ -5,6 +5,7 @@ import { change, getFormValues, initialize, isDirty, stopAsyncValidation } from 
 import { parseFormErrorsFromResponse } from '#/@store/@common/helpers';
 import { isFormMount } from '#/@store/form';
 import { userId } from '#/@store/identity';
+import { showError, showSuccess } from '#/@store/notifications';
 import { selectProject } from '#/@store/project';
 import { fetchProjectDetails, getProjectById, Project, projectMembers } from '#/@store/projects';
 import {
@@ -13,18 +14,20 @@ import {
   getTaskBySequenceNumber,
   getTaskInitialsFromTask,
   ITaskFormData,
+  openTaskModal,
   submitEditTaskForm,
 } from '#/@store/tasks';
 import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from '#/@store/timer';
 import {
   CREATE_USER_WORK_FORM_NAME,
+  createAndStartUserWork,
   IUserWorkData,
   IUserWorkDelete,
   patchAndStopUserWork,
   UserWork,
 } from '#/@store/user-works';
 
-import { pauseUserWork, postAndStartUserWork } from '../actions';
+import { pauseUserWork, startUserWorkAct } from '../actions';
 
 import { IProject, IState } from '@types';
 
@@ -84,7 +87,7 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
     dispatch(selectProject(preparedData.projectId));
     dispatch(change(CREATE_USER_WORK_FORM_NAME, 'projectId', preparedData.projectId));
 
-    const res = await dispatch(postAndStartUserWork(project, preparedData));
+    const res = await dispatch(startUserWorkAct(project, preparedData));
 
     const userWork = new UserWork(res?.payload?.data?.started || {});
 
@@ -92,6 +95,51 @@ export const startUserWork = (data: IUserWorkData) => async (dispatch: any, getS
   } catch (e) {
     if (process.env.NODE_ENV === 'development') {
       console.log(e);
+    }
+  }
+};
+
+export const createAndStart = (projectId: number) => async (dispatch: any, getState: () => IState) => {
+  try {
+    const res = await dispatch(createAndStartUserWork(projectId));
+
+    const startedData = res?.payload?.data?.started;
+    if (startedData) {
+      const userWork = new UserWork(startedData || {});
+      const project = getProjectById(getState())(projectId);
+
+      await dispatch(startTimer(userWork, project));
+
+      const callback = () => dispatch(openTaskModal());
+      dispatch(
+        showSuccess({
+          action: {
+            callback,
+            label: 'Редактировать',
+          },
+          message: 'Хотите редактировать созданную задачу?',
+          title: `Задача для проекта "${project.title}" успешно создана!`,
+        })
+      );
+    }
+  } catch (e) {
+    const statusCode = e?.error?.response?.data?.statusCode;
+    if (statusCode === 422) {
+      const messageObj = parseFormErrorsFromResponse(e);
+      delete messageObj._error;
+      dispatch(
+        showError({
+          message: Object.values(messageObj).join(', '),
+          title: 'Не удалось завершить предыдущую задачу',
+        })
+      );
+    } else {
+      dispatch(
+        showError({
+          message: e?.error?.response?.data?.message || 'Не удалось создать задачу',
+          title: 'Ошибка создания',
+        })
+      );
     }
   }
 };
