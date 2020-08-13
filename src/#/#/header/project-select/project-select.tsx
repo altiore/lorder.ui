@@ -97,12 +97,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface IProjectSelect {
+interface IProps {
+  createAndStart: any;
   openProject: (pId: IProject) => Promise<void>;
-  // openTaskModal: any;
   push: any;
-  // showSuccess: any;
-  // startUserWork: any;
   projectId?: number;
   projects: IProject[];
 }
@@ -118,14 +116,7 @@ const PROJECT_TYPES = [
   },
 ];
 
-export const ProjectSelect: React.FC<IProjectSelect> = ({
-  projects,
-  openProject,
-  // openTaskModal,
-  push,
-  // showSuccess,
-  // startUserWork,
-}) => {
+export const ProjectSelect: React.FC<IProps> = ({ createAndStart, projects, openProject, push }) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
   const handleClick = useCallback(
@@ -168,14 +159,14 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({
   );
 
   const handleSelectProject = useCallback(
-    event => {
+    async event => {
       event.stopPropagation();
       if (openProject) {
         const pId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 0);
         if (typeof pId === 'number') {
           const project = projects.find(el => el.id === pId);
           if (project) {
-            openProject(project);
+            await openProject(project);
           }
         }
       }
@@ -185,27 +176,16 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({
   );
 
   const handleCreateTask = useCallback(
-    event => {
+    async event => {
       const projectId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 0);
       if (projectId) {
-        // TODO: добавить функционал создания задачи
-        alert('TODO: добавить функционал создания задачи');
-        // startUserWork({ projectId });
-        // const project = projects.find(el => el.id === projectId);
-        // if (project) {
-        //   showSuccess({
-        //     action: {
-        //       callback: openTaskModal,
-        //       label: 'Редактировать',
-        //     },
-        //     message: 'Хотите редактировать созданную задачу?',
-        //     title: `Задача для проекта "${project.title}" успешно создана!`,
-        //   });
-        // }
+        await createAndStart(projectId);
+      } else {
+        throw new Error('handleCreateTask не может определить id проекта');
       }
       handleClose();
     },
-    [handleClose /*, openTaskModal, projects, showSuccess, startUserWork*/]
+    [createAndStart, handleClose]
   );
 
   const openProjectStatistic = useCallback(

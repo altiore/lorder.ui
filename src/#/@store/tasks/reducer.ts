@@ -6,11 +6,12 @@ import { User } from '#/#/@store/users';
 import { DownloadList } from '#/@store/@common/entities';
 import { combineActions } from '#/@store/@common/helpers';
 import {
+  createAndStartUserWork,
   getUserWorks,
   patchAndStopUserWork,
   patchUserWork,
   pauseUserWork,
-  postAndStartUserWork,
+  startUserWorkAct,
 } from '#/@store/user-works';
 
 import { AxiosResponse } from 'axios';
@@ -326,9 +327,9 @@ export const tasks: any = handleActions<S, any, any>(
     [combineActions(getAllTasks.success, fetchProjectTasksA.success)]: getAllTasksSuccessHandler,
     [combineActions(getAllTasks.fail, fetchProjectTasksA.fail)]: getAllTasksFailHandler,
 
-    [postAndStartUserWork.toString()]: postAndStartUserWorkHandler,
-    [postAndStartUserWork.success]: postAndStartUserWorkSuccessHandler,
-    [postAndStartUserWork.fail]: postAndStartUserWorkFailHandler,
+    [combineActions(createAndStartUserWork.toString(), startUserWorkAct.toString())]: postAndStartUserWorkHandler,
+    [combineActions(createAndStartUserWork.success, startUserWorkAct.success)]: postAndStartUserWorkSuccessHandler,
+    [combineActions(createAndStartUserWork.fail, startUserWorkAct.fail)]: postAndStartUserWorkFailHandler,
 
     [postProjectTask.toString()]: postProjectTaskHandler,
     [postProjectTask.success]: postProjectTaskSuccessHandler,

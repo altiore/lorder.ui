@@ -3,11 +3,9 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
-import { showSuccess } from '#/@store/notifications';
 import { ownProjectListWithoutDefault } from '#/@store/projects';
-import { openTaskModal } from '#/@store/tasks';
 import { currentProjectId } from '#/@store/timer';
-import { startUserWork } from '#/@store/user-works';
+import { createAndStart, startUserWork } from '#/@store/user-works';
 
 import { ProjectSelect } from './project-select';
 
@@ -24,9 +22,8 @@ const mapStateToProps = createStructuredSelector<IState, IMappedProjectSelectSta
 });
 
 const mapDispatchToProps = {
-  openTaskModal,
+  createAndStart,
   push,
-  showSuccess,
   startUserWork,
 };
 

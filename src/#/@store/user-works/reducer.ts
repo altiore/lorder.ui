@@ -1,9 +1,16 @@
 import get from 'lodash/get';
-import { Action, combineActions, handleActions } from 'redux-actions';
+import { Action, handleActions } from 'redux-actions';
 import { PURGE } from 'redux-persist';
 
 import { DownloadList } from '#/@store/@common/entities';
-import { patchAndStopUserWork, pauseUserWork, postAndStartUserWork, UserWork } from '#/@store/user-works';
+import { combineActions } from '#/@store/@common/helpers';
+import {
+  createAndStartUserWork,
+  patchAndStopUserWork,
+  pauseUserWork,
+  startUserWorkAct,
+  UserWork,
+} from '#/@store/user-works';
 
 import { AxiosResponse } from 'axios';
 
@@ -110,24 +117,21 @@ const postAndStartUserWorkFailHandler = (state: S) => {
 
 export const userWorks: any = handleActions<S, P>(
   {
-    [combineActions(getUserWorks.toString(), getUserWorksBySequenceNumber.toString()).toString()]: getUserWorksHandler,
-    [combineActions(getUserWorks.success, getUserWorksBySequenceNumber.success).toString()]: getUserWorksSuccessHandler,
-    [combineActions(getUserWorks.fail, getUserWorksBySequenceNumber.fail).toString()]: getUserWorksFailHandler,
+    [combineActions(getUserWorks, getUserWorksBySequenceNumber)]: getUserWorksHandler,
+    [combineActions(getUserWorks.success, getUserWorksBySequenceNumber.success)]: getUserWorksSuccessHandler,
+    [combineActions(getUserWorks.fail, getUserWorksBySequenceNumber.fail)]: getUserWorksFailHandler,
 
     [patchUserWork.toString()]: patchUserWorkHandler,
     [patchUserWork.success]: patchUserWorkSuccessHandler,
     [patchUserWork.fail]: patchUserWorkFailHandler,
 
-    [combineActions(patchAndStopUserWork.toString(), pauseUserWork.toString()).toString()]: patchAndStopUserWorkHandler,
-    [combineActions(
-      patchAndStopUserWork.success,
-      pauseUserWork.success
-    ).toString()]: patchAndStopUserWorkSuccessHandler,
+    [combineActions(patchAndStopUserWork, pauseUserWork)]: patchAndStopUserWorkHandler,
+    [combineActions(patchAndStopUserWork.success, pauseUserWork.success)]: patchAndStopUserWorkSuccessHandler,
     [combineActions(patchAndStopUserWork.fail, pauseUserWork.fail).toString()]: patchAndStopUserWorkFailHandler,
 
-    [postAndStartUserWork.toString()]: postAndStartUserWorkHandler,
-    [postAndStartUserWork.success]: postAndStartUserWorkSuccessHandler,
-    [postAndStartUserWork.fail]: postAndStartUserWorkFailHandler,
+    [combineActions(createAndStartUserWork, startUserWorkAct)]: postAndStartUserWorkHandler,
+    [combineActions(createAndStartUserWork.success, startUserWorkAct.success)]: postAndStartUserWorkSuccessHandler,
+    [combineActions(createAndStartUserWork.fail, startUserWorkAct.fail)]: postAndStartUserWorkFailHandler,
 
     [PURGE]: logOutHandler,
   },
