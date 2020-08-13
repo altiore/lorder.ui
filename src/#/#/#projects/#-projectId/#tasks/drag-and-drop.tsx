@@ -26,7 +26,7 @@ import { EDIT_TASK_FORM, STATUS_NAMES } from '#/@store/tasks';
 import { STATUS_TYPE_NAME } from '#/@store/tasksFilter/TasksFilter';
 
 import { useStyles } from './styles';
-import { TaskCard } from './TaskCard';
+import { TaskCard } from './task-card';
 
 import { ITask, ITaskColumn, PROJECT_STRATEGY } from '@types';
 

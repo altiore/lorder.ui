@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { getProjectMemberById } from '#/@store/projects';
 
 import { styles } from './styles';
-import { TaskCardTsx } from './TaskCard';
+import { TaskCardTsx } from './task-card';
 
 const mapState = createStructuredSelector({
   getProjectMemberById,

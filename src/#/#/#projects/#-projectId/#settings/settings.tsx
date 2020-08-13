@@ -10,7 +10,7 @@ import { Page } from '@components/page';
 import { LinkButton } from '#/@common/link-button';
 import { Project } from '#/@store/projects';
 
-import ProjectForm from './ProjectForm';
+import ProjectForm from './project-form';
 
 export interface ISettingsProps {
   openedProject?: Project;

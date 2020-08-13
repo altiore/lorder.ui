@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { openedProject, Project, publishProject, updateStatistic } from '#/@store/projects';
 import { routeProjectId } from '#/@store/router';
 
-import { SettingsTsx } from './Settings';
+import { SettingsTsx } from './settings';
 
 import { IState } from '@types';
 

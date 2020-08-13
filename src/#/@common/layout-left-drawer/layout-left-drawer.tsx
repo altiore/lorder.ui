@@ -24,7 +24,10 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SyncAltIcon from '@material-ui/icons/SyncAlt';
 
+import TooltipBig from '@components/tooltip-big';
+
 import { LinkButton } from '#/@common/link-button';
+import { isSuperAdmin } from '#/@store/roles';
 import { TASKS_ROUTE } from '#/@store/router';
 
 import { useStyles } from './styles';
@@ -139,6 +142,11 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
                   <ListItem key={route.path} button onClick={goToPage(route.path)}>
                     <ListItemIcon>{route.icon || <CurIcon />}</ListItemIcon>
                     <ListItemText primary={route.title} />
+                    {isSuperAdmin(route.access) && (
+                      <TooltipBig title={'Недоступно для пользователей!'}>
+                        <div className={classes.isSuperAdminStyle} />
+                      </TooltipBig>
+                    )}
                   </ListItem>
                 );
               })}

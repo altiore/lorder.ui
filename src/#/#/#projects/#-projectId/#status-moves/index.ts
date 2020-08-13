@@ -11,7 +11,7 @@ import {
 } from '#/@store/project-status-moves';
 import { taskStatusesList } from '#/@store/task-statuses';
 
-import { StatusMovesJsx } from './StatusMoves';
+import { StatusMovesJsx } from './status-moves';
 
 import { IProjectRole, IState } from '@types';
 

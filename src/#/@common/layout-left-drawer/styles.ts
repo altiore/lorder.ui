@@ -69,6 +69,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
   hide: {
     display: 'none',
   },
+  isSuperAdminStyle: {
+    backgroundColor: theme.palette.error.main,
+    borderRadius: '50%',
+    boxShadow: theme.shadows[3],
+    height: 8,
+    width: 8,
+  },
   menuButton: {
     marginLeft: 12,
     marginRight: 20,

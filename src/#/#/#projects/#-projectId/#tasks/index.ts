@@ -10,7 +10,7 @@ import { routeProjectId } from '#/@store/router';
 import { fetchProjectTasks, filteredProjectTasks, moveProjectTask } from '#/@store/tasks';
 import { filteredOpenedStatuses, toggleOpenedTab } from '#/@store/tasksFilter';
 
-import { DragAndDrop } from './DragAndDrop';
+import { DragAndDrop } from './drag-and-drop';
 
 import { withResize } from '@hooks/with-resize';
 import { IState, ITaskColumn } from '@types';

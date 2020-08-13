@@ -1,4 +1,4 @@
-import { ROLE } from '@types';
+import { ACCESS_LEVEL, ROLE } from '@types';
 
 export const ROLES = {
   ADMINS: [ROLE.ADMIN, ROLE.SUPER_ADMIN],
@@ -9,3 +9,15 @@ export const ROLES = {
 };
 
 export const CREATE_ROLE_FORM = 'CreateRoleForm';
+
+export const isSuperAdmin = (
+  access?: [ROLE | ROLE[], ACCESS_LEVEL, boolean] | [ROLE | ROLE[], ACCESS_LEVEL] | [ROLE | ROLE[]]
+) => {
+  if (Array.isArray(access) && access[0].length === 1) {
+    if (access[0][0] === ROLE.SUPER_ADMIN) {
+      return true;
+    }
+  }
+
+  return false;
+};

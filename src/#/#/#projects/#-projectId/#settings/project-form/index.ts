@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { userRole } from '#/@store/identity';
 import { initialUpdateProject, updateProject } from '#/@store/projects';
 
-import { ProjectFormTsx } from './ProjectForm';
+import { ProjectFormTsx } from './project-form';
 
 import { IState, ROLE } from '@types';
 
