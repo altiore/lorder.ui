@@ -107,7 +107,7 @@ const getParents = (items, list) => {
   return uniqBy([...items, ...parents, ...getParents(parents, list)], 'id');
 };
 
-export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value }) => {
+export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value = [] }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const handleChangeTerm = useCallback(
     event => {
@@ -142,7 +142,8 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value }) => {
         const idx = value.indexOf(curValue);
         if (idx === -1) {
           const allChildren = getChildren([curValue], items);
-          onChange(uniq([...value, ...allChildren]));
+          const newValue = uniq([...value, ...allChildren]);
+          onChange(newValue);
         } else {
           const allChildren = getChildren([curValue], items);
           onChange(difference(value, allChildren));
