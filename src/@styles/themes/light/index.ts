@@ -76,6 +76,13 @@ export default createMuiTheme({
         fontWeight: 400,
       },
     },
+    MuiContainer: {
+      maxWidthLg: {
+        [theme.breakpoints.up('lg')]: {
+          maxWidth: 1290,
+        },
+      },
+    },
     MuiExpansionPanel: {
       rounded: {
         '&:first-child': {

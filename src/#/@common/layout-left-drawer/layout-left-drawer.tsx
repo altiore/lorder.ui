@@ -28,7 +28,7 @@ import TooltipBig from '@components/tooltip-big';
 
 import { LinkButton } from '#/@common/link-button';
 import { isSuperAdmin } from '#/@store/roles';
-import { TASKS_ROUTE } from '#/@store/router';
+import { ROUTE, TASKS_ROUTE } from '#/@store/router';
 
 import { useStyles } from './styles';
 
@@ -109,7 +109,7 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
           )}
           {project && project.pub && project.title && (
             <LinkButton
-              to={`/p/${project?.pub?.uuid || project.uuid}`}
+              to={ROUTE.PUBLIC.ONE(project?.pub?.uuid || project.uuid)}
               color="primary"
               variant="contained"
               className={classes.projectPublic}

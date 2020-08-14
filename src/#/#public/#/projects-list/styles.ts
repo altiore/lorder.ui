@@ -10,9 +10,4 @@ export const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'space-between',
     marginTop: 40,
   },
-  container: {
-    margin: '0 auto',
-    maxWidth: 1360,
-    padding: '0 10px',
-  },
 }));

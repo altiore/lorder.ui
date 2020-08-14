@@ -4,8 +4,8 @@ import { Redirect, Switch } from 'react-router-dom';
 import LoadingPage from '@components/loading-page';
 
 import NestedRoute from '#/@common/#nested-route';
-
-import { ROLES } from './@store/roles';
+import { ROLES } from '#/@store/roles';
+import { ROUTE } from '#/@store/router';
 
 import { IRoute, ROLE } from '@types';
 import { useAllowedRoutes } from '@utils/useAllowedRoutes';
@@ -13,13 +13,8 @@ import { useAllowedRoutes } from '@utils/useAllowedRoutes';
 export const APP_MAIN_ROUTES: IRoute[] = [
   {
     access: [ROLES.ALL],
-    component: lazy(() => import('./#public-projects')),
-    path: '/public-projects',
-  },
-  {
-    access: [ROLES.ALL],
-    component: lazy(() => import('./#p/#-projectId')),
-    path: '/p/:projectId',
+    component: lazy(() => import('./#public')),
+    path: ROUTE.PUBLIC.LIST,
   },
   {
     access: [ROLES.ALL],

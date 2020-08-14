@@ -9,6 +9,7 @@ import { Page } from '@components/page';
 
 import { LinkButton } from '#/@common/link-button';
 import { Project } from '#/@store/projects';
+import { ROUTE } from '#/@store/router';
 
 import ProjectForm from './project-form';
 
@@ -49,7 +50,7 @@ export const SettingsTsx: React.FunctionComponent<ISettingsProps> = ({
         </Grid>
         <Grid item xs={12} md={4} style={{ display: 'flex', flexFlow: 'column nowrap' }}>
           {projectUuid ? (
-            <LinkButton to={`/p/${projectUuid}`}>Открыть статистику проекта</LinkButton>
+            <LinkButton to={ROUTE.PUBLIC.ONE(projectUuid)}>Открыть статистику проекта</LinkButton>
           ) : (
             <Button onClick={handlePublishProject}>Опубликовать проект</Button>
           )}

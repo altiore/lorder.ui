@@ -21,6 +21,7 @@ import {
   IDownloadList,
   IExternalLibraries,
   IOther,
+  IProjectPub,
   IPublicProject,
   ISelectedProject,
   ISockets,
@@ -44,6 +45,7 @@ export interface IState {
   other: IOther;
   project: ISelectedProject;
   projects: DownloadList<Project>;
+  projectsPub: IDownloadList<IProjectPub>;
   publicLorder: IPublicProject;
   publicProject: IPublicProject;
   roles: IDownloadList<IUserRole>;

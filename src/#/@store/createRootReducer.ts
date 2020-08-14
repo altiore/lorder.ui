@@ -21,6 +21,8 @@ import { StatusMove } from './project-status-moves/StatusMove';
 import { projectReducer } from './project/reducer';
 import { Project } from './projects';
 import { projects } from './projects';
+import { ProjectPub } from './projects-pub';
+import projectsPub from './projects-pub/reducer';
 import { publicLorder } from './publicLorder/reducer';
 import { publicProject } from './publicProject';
 import { roles } from './roles/reducer';
@@ -60,17 +62,24 @@ const migrations = {
       tasksFilter: { ...state.tasksFilter, openedStatuses: [] },
     };
   },
+  2: state => {
+    return {
+      ...state,
+      projectsPub: new DownloadList(ProjectPub),
+    };
+  },
 };
 
 localForage.config({
-  description: 'Lorder contribution version 1.0',
+  description: 'Lorder contribution version 2.0',
   name: 'lorder',
   storeName: 'contribution',
-  version: 1.0,
+  version: 2.0,
 });
 
 const VARIANT_ENTITY: any = {
   projects: Project,
+  projectsPub: ProjectPub,
   projectStatusMoves: StatusMove,
   roles: UserRole,
   tasks: Task,
@@ -114,6 +123,7 @@ const persistConfig: PersistConfig<Partial<IState>> = {
       {
         whitelist: [
           'projects',
+          'projectsPub',
           'roles',
           'taskStatuses',
           'projectStatusMoves',
@@ -156,6 +166,7 @@ export async function createRootReducer(history: History, asyncReducers = {}) {
       other,
       project: projectReducer,
       projects,
+      projectsPub,
       projectStatusMoves: projectStatusMovesReducer,
       taskActive,
       tasks,

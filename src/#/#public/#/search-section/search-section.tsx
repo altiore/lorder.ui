@@ -1,18 +1,20 @@
 import React from 'react';
 
+import T from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 
 import Input from '@components/input';
 
 import { useStyles } from './styles';
 
-export const SearchSection = (props: any) => {
+export const SearchSection = () => {
   const classes = useStyles();
   return (
     <div>
-      <section style={{ marginTop: 56 }} className={classes.search}>
-        <h1 className={classes.title}>Здесь нужно написать заголовок с призывом</h1>
-        <h2 className={classes.subTitle}>Здесь нужно написать подзаголовок</h2>
+      <section className={classes.search}>
+        <T variant="h1" className={classes.title}>
+          Найди проект и стань его участником
+        </T>
         <div className={classes.inputWrap}>
           <Input
             icon={<SearchIcon />}

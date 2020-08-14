@@ -13,6 +13,7 @@ export * from './i.notification';
 export * from './i.project-member';
 export * from './i.project-metric';
 export * from './i.project-part';
+export * from './i.project-pub';
 export * from './i.project-role';
 export * from './i.project-task-type';
 export * from './i.public-project';
