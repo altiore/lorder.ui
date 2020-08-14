@@ -1,5 +1,7 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
+import BackGroundPng from './public-projects-search-bg.png';
+
 export const useStyles = makeStyles((theme: Theme) => ({
   input: {
     '& > fieldset': {
@@ -12,19 +14,14 @@ export const useStyles = makeStyles((theme: Theme) => ({
     maxWidth: 360,
   },
   search: {
-    background: `url(${process.env.PUBLIC_URL}/public-projects-search-bg.png)`,
-    padding: '35px 0 50px 0',
-  },
-  subTitle: {
-    color: '#fff',
-    fontWeight: 500,
-    marginBottom: 35,
-    textAlign: 'center',
+    background: `url(${BackGroundPng})`,
+    padding: '88px 0 32px 0',
   },
   title: {
     color: '#fff',
-    fontSize: 30,
+    fontSize: theme.typography.pxToRem(30),
     fontWeight: 500,
+    marginBottom: 24,
     textAlign: 'center',
   },
 }));

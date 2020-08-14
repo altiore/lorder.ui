@@ -17,6 +17,7 @@ import ProjectCard, { CARD_COLOR, LOGO_TYPE } from '@components/project-card';
 
 import { LinkButton } from '#/@common/link-button';
 import { Project, VALUE_MULTIPLIER } from '#/@store/projects';
+import { ROUTE } from '#/@store/router';
 
 import Avatar from './avatar';
 import GitHubIco from './icons/github';
@@ -115,7 +116,7 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
 
   const getProjectLink = useCallback((id?: number, pub?: IPublicProject) => {
     if (pub && pub.uuid) {
-      return `/p/${pub.uuid}`;
+      return ROUTE.PUBLIC.ONE(pub.uuid);
     } else {
       if (id) {
         return `/projects/${id}`;

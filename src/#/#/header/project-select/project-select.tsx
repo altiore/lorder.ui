@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import SearchIco from '@components/@icons/Search';
 import InputLight from '@components/input-light';
 
+import { ROUTE } from '#/@store/router';
+
 import { ProjectItem } from './project-item/project-item';
 
 import { IProject, PROJECT_TYPE } from '@types';
@@ -192,7 +194,7 @@ export const ProjectSelect: React.FC<IProps> = ({ createAndStart, projects, open
     event => {
       const prUuid = get(event, ['currentTarget', 'dataset', 'uuid']);
       if (prUuid) {
-        push(`/p/${prUuid}`);
+        push(ROUTE.PUBLIC.ONE(prUuid));
       }
       handleClose();
     },

@@ -3,13 +3,9 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import get from 'lodash/get';
 
-import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core/';
-
-import TelegramIco from '@components/@icons/Telegram';
 import LoadingPage from '@components/loading-page';
 import { NoMatch } from '@components/no-match';
 
-import HiHeader from '#/#hi/@common/hi-header';
 import { millisecondsToHours } from '#/@store/@common/helpers';
 import { Member } from '#/@store/projects/members/Member';
 
@@ -24,7 +20,7 @@ import UsersActivity from './users-activity';
 
 import { IProject } from '@types';
 
-export interface IPublicProjectProps extends RouteComponentProps<{ projectId: string }> {
+export interface IPublicProjectProps extends RouteComponentProps<{ uuid: string }> {
   isAuth: boolean;
   isLoaded: boolean;
   isLoading: boolean;
@@ -52,7 +48,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
   userId,
 }) => {
   const matchProjectUuid = useMemo(() => {
-    return match.params.projectId;
+    return match.params.uuid;
   }, [match]);
 
   const members: Member[] = useMemo(() => {
@@ -91,9 +87,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
   }
 
   return (
-    <div className={classes.root}>
-      <HiHeader hideSecond />
-
+    <>
       <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
       <ProjectMetrics statistic={statistic} />
       <FollowProject project={project} />
@@ -103,18 +97,6 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
       <ProjectValues />
       <ProjectTeam members={get(members, 'list', [])} />
       <UsersActivity members={get(members, 'list', [])} project={project} />
-      <AppBar key={'bottom'} position="static" component={'footer'}>
-        <Toolbar className={classes.bottomBar}>
-          <Typography variant="h6" color="inherit">
-            Copyright &copy; Lorder
-          </Typography>
-          <div className={classes.sectionDesktop}>
-            <IconButton color="inherit" href={'https://t.me/joinchat/BmXj_kK5vnoAWdQF7tTc1g'} target={'_blank'}>
-              <TelegramIco />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
+    </>
   );
 };
