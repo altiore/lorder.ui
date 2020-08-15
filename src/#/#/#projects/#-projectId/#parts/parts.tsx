@@ -72,9 +72,10 @@ export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo(
       [push, url]
     );
 
+    const FilterButtons = () => <RadioButton onChange={handleChange} items={items} value={page} />;
+
     return (
       <Page>
-        <RadioButton onChange={handleChange} items={items} value={page} />
         <Switch>
           <Redirect to={match.path + '/table'} from={match.path} exact />
           <Route path={[match.path, VIEW.TABLE].join('/')}>
@@ -84,11 +85,13 @@ export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo(
               createTitle="Добавить"
               createItem={createProjectPart}
               deleteItem={deleteProjectPart}
+              FilterComponent={FilterButtons}
               columns={preparedColumns}
               rows={projectParts}
             />
           </Route>
           <Route path={[match.path, VIEW.TREE].join('/')}>
+            <RadioButton onChange={handleChange} items={items} value={page} />
             <TreeView data={projectPartsTree} />
           </Route>
         </Switch>

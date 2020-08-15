@@ -13,6 +13,7 @@ interface IOwnProps {
   deleteItem?: (id: number) => void;
   deleteBulk?: (ids: Array<number | string>) => any;
   editItem?: (itemId, itemValue) => any;
+  FilterComponent?: React.FC;
   rows: any[];
   columns: ICrudColumn[];
   getId?: (item: any) => number | string;

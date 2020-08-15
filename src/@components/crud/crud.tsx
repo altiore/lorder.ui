@@ -7,7 +7,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { DialogProps } from '@material-ui/core/Dialog';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import Table from '@material-ui/core/Table';
@@ -130,6 +129,7 @@ export interface ICrudProps<IItem = {}> {
   deleteItem?: (id: number) => void;
   editItem?: (itemId, item: Partial<IItem>) => any;
   entityName: string;
+  FilterComponent?: React.FC;
   formName?: string;
   getId?: (item: IItem) => number | string;
   height: number;
@@ -151,6 +151,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
     deleteBulk,
     editItem,
     entityName,
+    FilterComponent,
     formName,
     getId = defGetId,
     height,
@@ -220,19 +221,13 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
       event => {
         event.stopPropagation();
         const targetValue = parseInt(event.currentTarget?.value || event.currentTarget?.dataset?.value, 0);
-        const selectedIndex = selected.indexOf(targetValue);
         let newSelected: Array<number | string> = [];
-
-        if (selectedIndex === -1) {
-          newSelected = newSelected.concat(selected, targetValue);
-        } else if (selectedIndex === 0) {
-          newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-          newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-          newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+        const isAlreadySelected = selected.includes(targetValue);
+        if (isAlreadySelected) {
+          newSelected = selected.filter(id => targetValue !== id);
+        } else {
+          newSelected = [...selected, targetValue];
         }
-
         setSelected(newSelected);
       },
       [selected]
@@ -241,7 +236,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
     const handleRowClick = useCallback(
       event => {
         event.stopPropagation();
-        if (editItem) {
+        if (editItem && event.target.tagName === 'TD') {
           const item = rows.find(el => el.id === parseInt(event.currentTarget?.dataset?.value, 0)) || {};
           openDialog(
             <CreateForm
@@ -256,11 +251,9 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
               maxWidth: 'md',
             }
           );
-        } else {
-          handleCheckClick(event);
         }
       },
-      [closeDialog, columns, editItem, formName, handleCheckClick, openDialog, rows]
+      [closeDialog, columns, editItem, formName, openDialog, rows]
     );
 
     const handleChangePage = useCallback((event: unknown, newPage: number) => {
@@ -368,108 +361,114 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
 
     return (
       <div className={classes.root}>
-        <Paper className={classes.paper}>
-          <TableToolbar
-            createItem={createItem ? handleOpenCreate : undefined}
-            createTitle={createTitle}
-            entityName={entityName}
-            numSelected={selected.length}
-            deleteBulk={handleDeleteBulk}
-          />
-          <TableContainer className={classes.tableContainer} style={{ height: tableHeight }}>
-            <Table
-              stickyHeader
-              className={classes.table}
-              aria-labelledby="tableTitle"
-              size={dense ? 'small' : 'medium'}
-              aria-label="enhanced table"
-            >
-              <TableHead
-                classes={classes as any}
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onSelectAllClick={handleSelectAllClick}
-                onRequestSort={handleRequestSort}
-                rowCount={rowsLength}
-                columns={columns}
-              />
-              <TableBody>
-                {stableSort(rows, getSorting(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((item, index) => {
-                    const elId = getId(item);
-                    const isItemSelected = isSelected(elId);
-                    const labelId = `enhanced-table-checkbox-${elId}`;
+        <TableToolbar
+          createItem={createItem ? handleOpenCreate : undefined}
+          createTitle={createTitle}
+          entityName={entityName}
+          numSelected={selected.length}
+          deleteBulk={handleDeleteBulk}
+          FilterComponent={FilterComponent}
+        />
+        <TableContainer className={classes.tableContainer} style={{ height: tableHeight }}>
+          <Table
+            stickyHeader
+            className={classes.table}
+            aria-labelledby="tableTitle"
+            size={dense ? 'small' : 'medium'}
+            aria-label="enhanced table"
+          >
+            <TableHead
+              classes={classes as any}
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={handleSelectAllClick}
+              onRequestSort={handleRequestSort}
+              rowCount={rowsLength}
+              columns={columns}
+            />
+            <TableBody>
+              {stableSort(rows, getSorting(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((item, index) => {
+                  const elId = getId(item);
+                  const isItemSelected = isSelected(elId);
+                  const labelId = `enhanced-table-checkbox-${elId}`;
 
-                    return (
-                      <TableRow
-                        hover
-                        onClick={handleRowClick}
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={elId}
-                        data-value={elId}
-                        selected={isItemSelected}
-                        className={classes.row}
-                        classes={{
-                          root: classes.rowRoot,
-                          selected: classes.rowSelected,
-                        }}
-                      >
-                        <TableCell padding="checkbox">
-                          <Checkbox
-                            onClick={handleCheckClick}
-                            value={elId}
-                            checked={isItemSelected}
-                            inputProps={{ 'aria-labelledby': labelId }}
-                            color="primary"
-                          />
-                        </TableCell>
-                        {columns.map(({ allowed, component, editable, name, path, skip }) => {
-                          const value = get(item, path);
-                          const labelValue = allowed
-                            ? Array.isArray(value)
-                              ? value.map(el => invert(allowed)[el]).join(', ')
-                              : allowed[value]
-                            : value;
-                          const isNumber = typeof labelValue === 'number';
-                          if (component) {
-                            return (
-                              <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
-                                {React.createElement(component, {
-                                  allowed,
-                                  editable: editItem && editable && (!skip || !skip(item)),
-                                  name: name || path,
-                                  onChange: getChangeFunc(elId),
-                                  value,
-                                })}
-                              </TableCell>
-                            );
-                          }
+                  return (
+                    <TableRow
+                      hover
+                      onClick={handleRowClick}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={elId}
+                      data-value={elId}
+                      selected={isItemSelected}
+                      className={classes.row}
+                      classes={{
+                        root: classes.rowRoot,
+                        selected: classes.rowSelected,
+                      }}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          onChange={handleCheckClick}
+                          value={elId}
+                          checked={isItemSelected}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                          color="primary"
+                        />
+                      </TableCell>
+                      {columns.map(({ allowed, component, editable, name, path, skip }) => {
+                        const value = get(item, path);
+                        const labelValue = allowed
+                          ? Array.isArray(value)
+                            ? value.map(el => invert(allowed)[el]).join(', ')
+                            : allowed[value]
+                          : value;
+                        const isNumber = typeof labelValue === 'number';
+                        if (component) {
                           return (
                             <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
-                              {labelValue}
+                              {React.createElement(component, {
+                                allowed,
+                                editable: editItem && editable && (!skip || !skip(item)),
+                                name: name || path,
+                                onChange: getChangeFunc(elId),
+                                value,
+                              })}
                             </TableCell>
                           );
-                        })}
-                        <TableCell padding="checkbox">
-                          <IconButton onClick={handleRemoveClick(item)}>
-                            <DeleteIcon />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                    <TableCell colSpan={columns.length + 2} />
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                        }
+                        return (
+                          <TableCell key={`${elId}-${name || path}`} align={isNumber ? 'right' : 'left'}>
+                            {labelValue}
+                          </TableCell>
+                        );
+                      })}
+                      <TableCell padding="checkbox">
+                        <IconButton onClick={handleRemoveClick(item)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                  <TableCell colSpan={columns.length + 2} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <FormControlLabel
+            className={classes.formControlLabel}
+            control={<Switch checked={dense} onChange={handleChangeDense} />}
+            label="Плотно"
+          />
           <TablePagination
             rowsPerPageOptions={[5, 10, 20]}
             component="div"
@@ -481,12 +480,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
             labelRowsPerPage={'Элементов на странице'}
             labelDisplayedRows={labelDisplayedRows}
           />
-        </Paper>
-        <FormControlLabel
-          className={classes.formControlLabel}
-          control={<Switch checked={dense} onChange={handleChangeDense} />}
-          label="Плотно"
-        />
+        </div>
       </div>
     );
   }
