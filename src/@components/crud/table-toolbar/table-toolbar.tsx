@@ -2,6 +2,7 @@ import React from 'react';
 
 import cn from 'classnames';
 
+import { Paper, Slide } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -14,6 +15,15 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 const useStyles = makeStyles((theme: Theme) => ({
   create: {
     marginLeft: theme.spacing(2),
+  },
+  filterWrapper: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'column',
+    height: 40,
+    justifyContent: 'center',
+    marginRight: 15,
+    minWidth: 220,
   },
   highlight:
     theme.palette.type === 'light'
@@ -43,6 +53,7 @@ interface TableToolbarProps {
   createItem: any;
   createTitle: string;
   deleteBulk?: any;
+  FilterComponent?: React.FC;
 }
 
 export const TableToolbarTsx: React.FC<TableToolbarProps> = ({
@@ -51,8 +62,15 @@ export const TableToolbarTsx: React.FC<TableToolbarProps> = ({
   deleteBulk,
   entityName,
   numSelected,
+  FilterComponent,
 }) => {
   const classes = useStyles();
+
+  const [opened, setOpened] = React.useState(false);
+
+  const handleClick = () => {
+    setOpened(prev => !prev);
+  };
 
   return (
     <Toolbar
@@ -83,11 +101,21 @@ export const TableToolbarTsx: React.FC<TableToolbarProps> = ({
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        <>
+          {FilterComponent ? (
+            <Slide direction="left" in={opened} mountOnEnter unmountOnExit>
+              <Paper className={classes.filterWrapper}>
+                <FilterComponent />
+              </Paper>
+            </Slide>
+          ) : null}
+
+          <Tooltip title="Filter list">
+            <IconButton aria-label="filter list" onClick={handleClick}>
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        </>
       )}
     </Toolbar>
   );
