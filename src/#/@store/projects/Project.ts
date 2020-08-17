@@ -12,6 +12,7 @@ import { ProjectTaskType } from './taskTypes/project-task-type';
 import {
   ACCESS_LEVEL,
   IDownloadList,
+  IMedia,
   IProject,
   IProjectPart,
   IProjectRole,
@@ -47,6 +48,8 @@ export class Project implements IProject {
   taskColumns: ITaskColumn[] = [];
   pub?: any;
   roles?: IProjectRole[];
+
+  logo?: IMedia;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

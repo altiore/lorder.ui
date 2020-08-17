@@ -1,12 +1,10 @@
 import map from 'lodash/map';
 
-import { IUser, ROLE } from '@types';
+import { IMedia, IUser, ROLE } from '@types';
 
 export class User implements IUser {
   readonly id?: number;
-  avatar: {
-    url: string;
-  };
+  avatar: IMedia;
   readonly email: string;
   tel: string;
   readonly status: number = 1;

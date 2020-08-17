@@ -115,6 +115,10 @@ export const getProjectById = createDeepEqualSelector(allProjectList, (list: Pro
   list.find(e => e.id === id) || new Project()
 );
 
+export const getProjectByUuid = createDeepEqualSelector(allProjectList, (list: Project[]) => (uuid: string): Project =>
+  list.find(p => p.pub?.uuid === uuid || p.uuid === uuid) || new Project()
+);
+
 export const getTaskColumnsByProjectId = createDeepEqualSelector(getProjectById, getPr => (id: number) => {
   const pr = getPr(id);
   if (pr && pr.taskColumns) {

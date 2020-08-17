@@ -22,6 +22,7 @@ import {
   removeProjectByAdmin,
   updateProjectAct,
   updateProjectMemberAccessLevel,
+  uploadLogoAct,
 } from './actions';
 import { acceptInvitationAct } from './members/actions';
 import { Member } from './members/Member';
@@ -212,6 +213,17 @@ const acceptInvitationHandler = (state: S, { payload }: any) => {
   });
 };
 
+const uploadLogoHandler = (state: S, { payload, meta }: any) => {
+  const index = state.list.findIndex(el => el.id === meta?.previousAction?.payload?.projectId);
+  if (index >= 0) {
+    return state.updateItem(index, {
+      logo: payload.data,
+    });
+  }
+
+  return state;
+};
+
 export const projects: any = handleActions<S, any, any>(
   {
     [postProject.success]: postProjectSuccessHandler,
@@ -245,6 +257,7 @@ export const projects: any = handleActions<S, any, any>(
     [PURGE]: logOutHandler,
 
     [acceptInvitationAct.success]: acceptInvitationHandler,
+    [uploadLogoAct.success]: uploadLogoHandler,
   },
   new DownloadList(Project)
 );

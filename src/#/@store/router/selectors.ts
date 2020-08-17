@@ -7,7 +7,7 @@ import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { getQueryParam } from '#/@store/@common/helpers';
 import { userRole } from '#/@store/identity/selectors';
 
-import { TASKS_ROUTE } from './consts';
+import { ROUTE, TASKS_ROUTE } from './consts';
 
 import { IState } from '@types';
 
@@ -46,3 +46,8 @@ export const routeTaskSequenceNumber = createDeepEqualSelector(
   match(`${TASKS_ROUTE()}/:sequenceNumber`),
   (state): number | undefined => get(state, 'params.sequenceNumber') && parseInt(get(state, 'params.sequenceNumber'), 0)
 );
+
+const UUID_PARAM = 'uuid';
+export const routePublicProjectUuid = createDeepEqualSelector(match(ROUTE.PUBLIC.ONE(`:${UUID_PARAM}`)), (state):
+  | string
+  | undefined => get(state, `params.${UUID_PARAM}`));

@@ -1,9 +1,8 @@
+import { IMedia } from './i.media';
 import { ROLE } from './role';
 
 export interface IUser {
-  avatar?: {
-    url?: string;
-  };
+  avatar?: IMedia;
   readonly id?: number;
   readonly email: string;
   tel: string;

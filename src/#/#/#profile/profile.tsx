@@ -145,7 +145,7 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
     <div className={scrollBody}>
       <GradientHead>
         <Grid item xs={12} md={4} className={avatarGrid}>
-          <Avatar avatar={userAvatar} email={userDisplayName} />
+          <Avatar fileAlt={userDisplayName} fileUrl={userAvatar} isEditable />
         </Grid>
         <Grid item xs={12} md={4}>
           {isEdit ? (
@@ -180,9 +180,10 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
       <div className={projectList}>
         <Grid alignItems="center" justify="center" container spacing={3}>
           {Boolean(projects && projects.length) ? (
-            projects.map(({ id, members, pub, shareValue, roles, title }) => (
+            projects.map(({ id, logo, members, pub, shareValue, roles, title }) => (
               <Grid key={id} item>
                 <ProjectCard
+                  logoSrc={logo?.url}
                   color={getRandEnum(CARD_COLOR)}
                   logoVariant={getRandEnum(LOGO_TYPE)}
                   title={title}

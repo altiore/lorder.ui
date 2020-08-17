@@ -5,13 +5,14 @@ import sortBy from 'lodash/sortBy';
 
 import { Container, MenuItem, Select } from '@material-ui/core';
 
-import ProjectCard, { CARD_COLOR } from '@components/project-card';
+import ProjectCard, { CARD_COLOR, LOGO_TYPE } from '@components/project-card';
 
 import { ROUTE } from '#/@store/router';
 
 import { useStyles } from './styles';
 
 import { IProjectPub } from '@types';
+import getRandEnum from '@utils/get-rand-enum';
 
 interface IProps {
   fetchProjectsPubAct: any;
@@ -69,10 +70,12 @@ export const ProjectsList: React.FC<IProps> = ({ fetchProjectsPubAct, projectPub
         ))}
       </Select>
       <div className={cardsWrap}>
-        {sortedProjectPubList.map(({ statistic, title, uuid }) => (
+        {sortedProjectPubList.map(({ project, statistic, title, uuid }) => (
           <ProjectCard
             key={uuid}
-            color={CARD_COLOR.GREEN}
+            logoSrc={project?.logo?.url}
+            color={getRandEnum(CARD_COLOR)}
+            logoVariant={getRandEnum(LOGO_TYPE)}
             membersCount={statistic.metrics?.all.membersCount || 0}
             projectLink={ROUTE.PUBLIC.ONE(uuid)}
             title={title}

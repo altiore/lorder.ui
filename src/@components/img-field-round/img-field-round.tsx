@@ -9,15 +9,16 @@ import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';
 
 interface IAvatar {
-  avatar?: any;
-  email: string;
-  uploadAvatar: (file: File) => void;
+  fileUrl?: any;
+  fileAlt: string;
+  isEditable?: boolean;
+  uploadFile: (file: File) => void;
 }
 
-export const Avatar: React.FC<IAvatar> = ({ avatar, email, uploadAvatar }) => {
+export const ImgFieldRound: React.FC<IAvatar> = ({ isEditable, fileUrl, fileAlt, uploadFile }) => {
   const classes = useStyles();
 
-  const [src, setSrc] = useState(avatar);
+  const [src, setSrc] = useState(fileUrl);
 
   const [hovered, setHovered] = useState(false);
 
@@ -42,21 +43,23 @@ export const Avatar: React.FC<IAvatar> = ({ avatar, email, uploadAvatar }) => {
 
       reader.readAsDataURL(acceptedFiles[0]);
 
-      uploadAvatar(acceptedFiles[0]);
+      uploadFile(acceptedFiles[0]);
     },
-    [setSrc, uploadAvatar]
+    [setSrc, uploadFile]
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
     <div className={classes.wrapper} onMouseOver={handleOver} onMouseLeave={handleLeave}>
-      <MuiAvatar alt={email} src={src} className={classes.avatar} />
-      <Grow in={hovered}>
-        <ButtonBase {...getRootProps()} className={classes.edit}>
-          <input {...getInputProps()} />
-          <Typography variant="body2">{isDragActive ? 'Отпустите файл здесь ...' : 'Обновить фото'}</Typography>
-        </ButtonBase>
-      </Grow>
+      <MuiAvatar alt={fileAlt} src={src} className={classes.avatar} />
+      {isEditable && (
+        <Grow in={hovered}>
+          <ButtonBase {...getRootProps()} className={classes.edit}>
+            <input {...getInputProps()} />
+            <Typography variant="body2">{isDragActive ? 'Отпустите файл здесь ...' : 'Изменить'}</Typography>
+          </ButtonBase>
+        </Grow>
+      )}
     </div>
   );
 };

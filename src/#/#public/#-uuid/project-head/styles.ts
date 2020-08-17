@@ -1,8 +1,14 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) => ({
+  firstBlock: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'center',
+  },
   firstBlockContent: {
-    paddingLeft: 180,
+    paddingLeft: 32,
     [theme.breakpoints.down('md')]: {
       paddingLeft: 16,
     },

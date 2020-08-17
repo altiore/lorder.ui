@@ -21,12 +21,13 @@ import UsersActivity from './users-activity';
 import { IProject } from '@types';
 
 export interface IPublicProjectProps extends RouteComponentProps<{ uuid: string }> {
+  getProjectByUuid: (uuid: string) => IProject | undefined;
   isAuth: boolean;
-  isLoaded: boolean;
-  isLoading: boolean;
+  isLoaded?: boolean;
+  isLoading?: boolean;
   fetchPublicProject: any;
-  project: IProject;
-  publicProjectUuid: string;
+  publicProject?: IProject;
+  publicProjectUuid?: string;
   statistic: any;
   team: Array<{
     image: string;
@@ -36,13 +37,14 @@ export interface IPublicProjectProps extends RouteComponentProps<{ uuid: string 
 }
 
 export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
+  getProjectByUuid,
   fetchPublicProject,
   isAuth,
   isLoaded,
   isLoading,
   location,
   match,
-  project,
+  publicProject,
   publicProjectUuid,
   statistic,
   userId,
@@ -50,6 +52,17 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
   const matchProjectUuid = useMemo(() => {
     return match.params.uuid;
   }, [match]);
+
+  const project: IProject | undefined = useMemo(() => {
+    if (getProjectByUuid && matchProjectUuid) {
+      const p = getProjectByUuid(matchProjectUuid);
+      if (p?.title) {
+        return p;
+      }
+    }
+
+    return publicProject;
+  }, [getProjectByUuid, matchProjectUuid, publicProject]);
 
   const members: Member[] = useMemo(() => {
     return (project && project.members ? project.members : []) as Member[];
@@ -82,7 +95,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
   if (isLoading || !isLoaded || !chartData || !chartValueData) {
     return <LoadingPage />;
   }
-  if (!project.title) {
+  if (!project?.title) {
     return <NoMatch location={location} />;
   }
 

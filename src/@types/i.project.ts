@@ -1,5 +1,6 @@
 import { ACCESS_LEVEL } from './access-level';
 import { IDownloadList } from './i.download-list';
+import { IMedia } from './i.media';
 import { IMember } from './i.member';
 import { IProjectRole } from './i.project-role';
 import { TASK_STATUS_MOVE_TYPE } from './i.status-move';
@@ -28,15 +29,19 @@ export interface ITaskColumn {
   statuses: string[];
 }
 
-export interface IProject {
+export interface IProjectShort {
   id?: number;
+  monthlyBudget?: number;
+  logo?: IMedia;
+}
+
+export interface IProject extends IProjectShort {
   uuid?: string;
   accessLevel?: ACCESS_LEVEL;
   title: string;
   desc?: string;
   slogan?: string;
   strategy: PROJECT_STRATEGY;
-  monthlyBudget?: number;
   owner?: any;
   ownerId?: number;
   phases?: any[];

@@ -133,6 +133,18 @@ export const updateProjectAct = requestActions<number, any>(
   })
 );
 
+export const uploadLogoAct = requestActions('PROJECTS/UPLOAD_LOGO', (file, projectId) => ({
+  projectId,
+  request: {
+    data: { file },
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    method: 'POST',
+    url: `/projects/${projectId}/logo`,
+  },
+}));
+
 export * from './members/actions';
 export * from './taskTypes/actions';
 export * from './taskTypes/thunk';

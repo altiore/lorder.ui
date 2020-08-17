@@ -4,7 +4,7 @@ export * from './i.external-libraries';
 export * from './i.route';
 export * from './i.selected-project';
 export * from './i.list-dto';
-export * from './i.list-dto';
+export * from './i.media';
 export * from './i.member';
 export * from './i.meta';
 export * from './i.other';

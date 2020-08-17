@@ -1,3 +1,5 @@
+import { IProjectShort } from './i.project';
+
 export interface IStatisticMetric {
   count: number;
   days: number;
@@ -11,6 +13,7 @@ export interface IStatisticMetric {
 export interface IProjectPub {
   uuid: string;
   projectId: number;
+  project: IProjectShort;
   domain?: string;
   title: string;
   isOpen: boolean;

@@ -1,6 +1,6 @@
 import map from 'lodash/map';
 
-import { IProjectPub, IStatisticMetric } from '@types';
+import { IProjectPub, IProjectShort, IStatisticMetric } from '@types';
 
 export class ProjectPub implements IProjectPub {
   uuid: string;
@@ -8,6 +8,7 @@ export class ProjectPub implements IProjectPub {
   domain?: string;
   title: string;
   isOpen: boolean;
+  project: IProjectShort;
   statistic: {
     metrics?: {
       all: IStatisticMetric;
