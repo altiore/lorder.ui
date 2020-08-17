@@ -36,13 +36,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
       color: theme.palette.pause.dark,
     },
     '&:hover': {
-      ' $projectButtonCurrent': {
-        backgroundColor: 'red',
-        border: '2px solid red',
-        color: 'red',
-        height: theme.taskCard.outerHeight,
-        zIndex: 0,
-      },
       '& $buttonTitleLabel:after': {
         backgroundColor: theme.palette.pause.light,
         height: theme.taskCard.outerHeight,
@@ -96,6 +89,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
       color: theme.palette.pause.main,
     },
     '&:hover': {
+      '& $buttonTitleLabel:after': {
+        backgroundColor: '#fcfcfc',
+        height: theme.taskCard.outerHeight,
+        zIndex: 0,
+      },
       backgroundColor: '#EAEBED',
     },
   },
@@ -201,8 +199,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   projectButtonPaused: {
+    '& $projectText': {
+      backgroundColor: '#fcfcfc',
+    },
     '&:hover': {
-      backgroundColor: '#EAEBED',
+      '& $projectText:after': {
+        backgroundColor: '#fcfcfc',
+      },
     },
   },
   projectText: {

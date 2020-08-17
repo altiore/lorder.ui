@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { ownProjectListWithoutDefault } from '#/@store/projects';
 import { currentProjectId } from '#/@store/timer';
-import { createAndStart, startUserWork } from '#/@store/user-works';
+import { startUserWork, tryToCreateAndStart } from '#/@store/user-works';
 
 import { ProjectSelect } from './project-select';
 
@@ -22,9 +22,9 @@ const mapStateToProps = createStructuredSelector<IState, IMappedProjectSelectSta
 });
 
 const mapDispatchToProps = {
-  createAndStart,
   push,
   startUserWork,
+  tryToCreateAndStart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectSelect);

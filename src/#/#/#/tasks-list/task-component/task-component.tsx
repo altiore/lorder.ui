@@ -2,10 +2,8 @@ import React, { useCallback, useMemo } from 'react';
 import MediaQuery from 'react-responsive';
 
 import cn from 'classnames';
-// import moment from 'moment';
 
 import Button from '@material-ui/core/Button';
-import { DialogProps } from '@material-ui/core/Dialog';
 import { useTheme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
@@ -23,27 +21,21 @@ import { ACCESS_LEVEL, IProject, ITask } from '@types';
 
 export interface ITaskComponentProps {
   getTaskById: (id: number | string) => ITask;
+  goToProjectWithAsk: any;
   isCurrent: boolean;
   isPaused: boolean;
   project: IProject;
   push: any;
   taskId: number | string;
-  timerComponent?: React.ReactNode;
-  openDialog: (c: React.ReactNode, d?: Partial<DialogProps>) => any;
-  openTaskModal: any;
-  showWarning: any;
-  startUserWork: any;
 }
 
 export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
   getTaskById,
+  goToProjectWithAsk,
   isCurrent,
   isPaused,
-  openTaskModal,
   project,
   push,
-  showWarning,
-  startUserWork,
   taskId,
 }) => {
   const classes = useStyles(project.accessLevel || ACCESS_LEVEL.WHITE);
@@ -82,35 +74,9 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
       event.preventDefault();
       event.stopPropagation();
 
-      push(`/projects/${project.id}`);
-
-      // const taskTitle = `Обзор проекта "${project.title}" ` + moment().format('DD-MM-YYYY');
-      showWarning({
-        action: {
-          // callback: this.props.openTaskModal,
-          callback: async () => {
-            // TODO: добавить функционал создания задачи
-            alert('TODO: добавить функционал создания задачи');
-            // await startUserWork({
-            //   projectId: project.id as number,
-            //   title: taskTitle,
-            // });
-            // showWarning({
-            //   action: {
-            //     callback: openTaskModal,
-            //     label: 'Редактировать',
-            //   },
-            //   message: `Хотите ее отредактировать?`,
-            //   title: `Задача для обзора проекта "${project.title}" успешно создана!`,
-            // });
-          },
-          label: 'Создать задачу',
-        },
-        message: `Хотите создать новую задачу для обзора?`,
-        title: `Вы перешли к обзору проекта "${project.title}"`,
-      });
+      goToProjectWithAsk(project);
     },
-    [project, push, showWarning /*, startUserWork, openTaskModal*/]
+    [goToProjectWithAsk, project]
   );
 
   if (!task) {
