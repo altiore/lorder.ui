@@ -174,7 +174,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const tableHeight = useMemo(() => {
-      const calcHeight = height - 380;
+      const calcHeight = height - 300;
       if (calcHeight < MIN_HEIGHT) {
         return MIN_HEIGHT;
       }
