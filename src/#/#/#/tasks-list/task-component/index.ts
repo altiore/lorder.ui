@@ -3,30 +3,26 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
-import { openDialog } from '#/@store/dialog';
-import { showWarning } from '#/@store/notifications';
-import { getTaskById, openTaskModal } from '#/@store/tasks';
-import { isPaused, startUserWork } from '#/@store/user-works';
+import { getTaskById } from '#/@store/tasks';
+import { goToProjectWithAsk, isPaused } from '#/@store/user-works';
 
 import { TaskComponentTsx } from './task-component';
 
-interface ITaskComponentOwn {
-  isCurrent: boolean;
-  taskId: number | string;
-  project: any;
+import { IState } from '@types';
+
+interface IMappedProps {
+  getTaskById: any;
+  isPaused: boolean;
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createStructuredSelector<IState, IMappedProps>({
   getTaskById,
   isPaused,
-} as any);
+});
 
 const mapDispatch = {
-  openDialog,
-  openTaskModal,
+  goToProjectWithAsk,
   push,
-  showWarning,
-  startUserWork,
 };
 
-export default connect<any, any, ITaskComponentOwn>(mapStateToProps as any, mapDispatch)(TaskComponentTsx);
+export default connect(mapStateToProps, mapDispatch)(TaskComponentTsx);

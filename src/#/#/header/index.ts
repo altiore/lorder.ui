@@ -1,31 +1,15 @@
 import { connect } from 'react-redux';
 
-import { push } from 'connected-react-router';
-import { createStructuredSelector } from 'reselect';
-
 import { openDialog } from '#/@store/dialog';
-import { showSuccess, showWarning } from '#/@store/notifications';
-import { selectedProject } from '#/@store/projects';
-import { openTaskModal } from '#/@store/tasks';
-import { isPaused, startUserWork } from '#/@store/user-works';
+import { goToProjectWithAsk } from '#/@store/user-works';
 
 import { HeaderTsx } from './header';
 
 import { withResize } from '@hooks/with-resize';
-import { IState } from '@types';
-
-const mapStateToProps = createStructuredSelector<IState, any>({
-  isPaused,
-  selectedProject,
-});
 
 const mapDispatchToProps = {
+  goToProjectWithAsk,
   openDialog,
-  openTaskModal,
-  push,
-  showSuccess,
-  showWarning,
-  startUserWork,
 };
 
-export const Header = connect<any, any, {}, any>(mapStateToProps, mapDispatchToProps)(withResize(HeaderTsx));
+export default connect(undefined, mapDispatchToProps)(withResize(HeaderTsx));

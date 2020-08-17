@@ -32,19 +32,14 @@ export const StartFormJsx: React.FunctionComponent<IInternalProps &
 
   return (
     <form onSubmit={handleSubmit} className={classes.form}>
-      {selectedProject ? (
-        <Tooltip title={`Создать новую задачу в проекте "${selectedProject.title}"`} placement={'top'}>
-          <Fab onClick={handleSubmit} className={classes.add} onMouseOver={onHover} onMouseLeave={onOut} size="large">
-            {hovered ? `Создать новую задачу` : <AddIcon />}
-          </Fab>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Создать новую задачу" placement={'top'}>
-          <Fab onClick={handleSubmit} className={classes.add} onMouseOver={onHover} onMouseLeave={onOut} size="large">
-            {hovered ? `Создать новую задачу` : <AddIcon />}
-          </Fab>
-        </Tooltip>
-      )}
+      <Tooltip
+        title={`Создать новую задачу${selectedProject ? ` в проекте "${selectedProject.title}"` : ''}`}
+        placement="top"
+      >
+        <Fab onClick={handleSubmit} className={classes.add} onMouseOver={onHover} onMouseLeave={onOut} size="large">
+          {hovered ? `Создать новую задачу` : <AddIcon />}
+        </Fab>
+      </Tooltip>
     </form>
   );
 });

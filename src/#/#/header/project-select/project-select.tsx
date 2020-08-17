@@ -100,11 +100,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IProps {
-  createAndStart: any;
   openProject: (pId: IProject) => Promise<void>;
   push: any;
   projectId?: number;
   projects: IProject[];
+  tryToCreateAndStart: any;
 }
 
 const PROJECT_TYPES = [
@@ -118,7 +118,7 @@ const PROJECT_TYPES = [
   },
 ];
 
-export const ProjectSelect: React.FC<IProps> = ({ createAndStart, projects, openProject, push }) => {
+export const ProjectSelect: React.FC<IProps> = ({ projects, openProject, push, tryToCreateAndStart }) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
   const handleClick = useCallback(
@@ -181,13 +181,13 @@ export const ProjectSelect: React.FC<IProps> = ({ createAndStart, projects, open
     async event => {
       const projectId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 0);
       if (projectId) {
-        await createAndStart(projectId);
+        await tryToCreateAndStart(projectId);
       } else {
         throw new Error('handleCreateTask не может определить id проекта');
       }
       handleClose();
     },
-    [createAndStart, handleClose]
+    [tryToCreateAndStart, handleClose]
   );
 
   const openProjectStatistic = useCallback(

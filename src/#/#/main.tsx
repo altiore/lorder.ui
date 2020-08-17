@@ -15,7 +15,7 @@ import { ROUTE } from '#/@store/router';
 import { EDIT_TASK_FORM } from '#/@store/tasks';
 
 import DefineDisplayNameModal from './define-display-name-first';
-import { Header } from './header';
+import Header from './header';
 import { useStyles } from './styles';
 
 import { IRoute, ROLE } from '@types';
