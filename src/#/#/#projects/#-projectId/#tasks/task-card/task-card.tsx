@@ -3,8 +3,10 @@ import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 
 import get from 'lodash/get';
 
+import Badge from '@material-ui/core/Badge';
 import grey from '@material-ui/core/colors/grey';
 import Typography from '@material-ui/core/Typography';
+import MailIcon from '@material-ui/icons/Mail';
 
 import Avatar from '@components/avatar';
 import TooltipBig from '@components/tooltip-big';
@@ -33,6 +35,7 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
 
 export const TaskCardTsx: React.FC<ITaskCard> = ({
   classes,
+  commentsCount,
   getProjectMemberById,
   inProgress,
   onClick,
@@ -73,11 +76,18 @@ export const TaskCardTsx: React.FC<ITaskCard> = ({
         <div className={classes.row}>
           <ValueField>{value}</ValueField>
         </div>
-        <TooltipBig title={get(taskPerformer, 'userName', 'N/A')} placement="bottom">
-          <Avatar size="sm" src={get(taskPerformer, ['avatar', 'url'])}>
-            {get(taskPerformer, ['email'], '--')}
-          </Avatar>
-        </TooltipBig>
+        <div className={classes.rowRight}>
+          {Boolean(commentsCount) && (
+            <Badge color="primary" badgeContent={commentsCount}>
+              <MailIcon />
+            </Badge>
+          )}
+          <TooltipBig title={get(taskPerformer, 'userName', 'N/A')} placement="bottom">
+            <Avatar size="sm" src={get(taskPerformer, ['avatar', 'url'])}>
+              {get(taskPerformer, ['email'], '--')}
+            </Avatar>
+          </TooltipBig>
+        </div>
       </div>
     </div>
   );

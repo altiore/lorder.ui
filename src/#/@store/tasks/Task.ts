@@ -22,6 +22,7 @@ export class Task implements ITask {
   typeId?: number;
   userTasks: IUserTask[] = [];
   projectParts: IProjectPart[] = [];
+  commentsCount: number = 0;
 
   constructor(initial?: any) {
     map(initial, (val: any, key: string) => {

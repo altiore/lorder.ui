@@ -5,6 +5,8 @@ import { PURGE } from 'redux-persist';
 import { User } from '#/#/@store/users';
 import { DownloadList } from '#/@store/@common/entities';
 import { combineActions } from '#/@store/@common/helpers';
+import { IRequestAction } from '#/@store/@common/requestActions';
+import { deleteTaskComments, postTaskComment } from '#/@store/task-comments';
 import {
   createAndStartUserWork,
   getUserWorks,
@@ -16,7 +18,6 @@ import {
 
 import { AxiosResponse } from 'axios';
 
-import { IRequestAction } from '../@common/requestActions';
 import {
   archiveTaskA,
   clearAllProjectTask,
@@ -321,6 +322,22 @@ const getUserWorksSuccess = (state, { payload }) => {
   return state.finishLoading(preparedData);
 };
 
+const addTaskCommentSuccess = (state, { payload }) => {
+  const taskIndex = state.list.findIndex(el => el.id === payload?.data?.taskId);
+  if (!~taskIndex) {
+    return state;
+  }
+  return state.updateItem(taskIndex, { commentsCount: state.list[taskIndex].commentsCount + 1 });
+};
+
+const deleteTaskCommentsSuccess = (state, { payload, meta }) => {
+  const taskIndex = state.list.findIndex(el => el.id === meta?.previousAction?.payload?.taskId);
+  if (!~taskIndex) {
+    return state;
+  }
+  return state.updateItem(taskIndex, { commentsCount: state.list[taskIndex].commentsCount - 1 });
+};
+
 export const tasks: any = handleActions<S, any, any>(
   {
     [combineActions(getAllTasks.toString(), fetchProjectTasksA.toString())]: getAllTasksHandler,
@@ -362,6 +379,9 @@ export const tasks: any = handleActions<S, any, any>(
     [updateProjectTask.toString()]: updateProjectTaskHandler,
 
     [getUserWorks.success]: getUserWorksSuccess,
+
+    [postTaskComment.success]: addTaskCommentSuccess,
+    [deleteTaskComments.success]: deleteTaskCommentsSuccess,
   },
   new DownloadList(Task)
 );

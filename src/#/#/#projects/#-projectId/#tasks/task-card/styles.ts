@@ -48,4 +48,13 @@ export const styles = (theme: Theme): any => ({
     display: 'flex',
     flexFlow: 'row nowrap',
   },
+  rowRight: {
+    '& > span:first-child': {
+      marginRight: 8,
+    },
+    alignItems: 'flex-end',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'center',
+  },
 });

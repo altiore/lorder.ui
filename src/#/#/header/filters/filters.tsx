@@ -57,10 +57,10 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
   toggleUiSetting,
 }) => {
   useEffect(() => {
-    if (fetchProjectParts) {
+    if (fetchProjectParts && !projectParts.length) {
       fetchProjectParts();
     }
-  }, [fetchProjectParts]);
+  }, [fetchProjectParts, projectParts]);
 
   const firstTopMembersIds = useMemo(() => {
     return members ? members.slice(0, SHOWN_MEMBERS).map(el => el.id) : [];

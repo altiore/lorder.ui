@@ -39,12 +39,12 @@ export const deleteTaskComments = requestActions(
     error: { message: `Ошибка при удалении`, title: 'Провал!' },
     request: {
       method: 'DELETE',
-      params: {},
       url: `${TASKS_ROUTE(projectId)}/${taskId}/comments/${commentId}`,
     },
     success: {
       message: `Комментарий успешно удален`,
       title: 'Успех!',
     },
+    taskId,
   })
 );

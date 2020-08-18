@@ -23,6 +23,7 @@ export interface ITask {
   userTasks?: IUserTask[];
   projectParts: IProjectPart[];
   inProgress: boolean;
+  commentsCount: number;
 
   duration: string;
   durationInSeconds: number;
