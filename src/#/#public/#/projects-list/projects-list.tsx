@@ -7,6 +7,7 @@ import { Container, MenuItem, Select } from '@material-ui/core';
 
 import ProjectCard, { CARD_COLOR, LOGO_TYPE } from '@components/project-card';
 
+import { VALUE_MULTIPLIER } from '#/@store/projects';
 import { ROUTE } from '#/@store/router';
 
 import { useStyles } from './styles';
@@ -79,7 +80,7 @@ export const ProjectsList: React.FC<IProps> = ({ fetchProjectsPubAct, projectPub
             membersCount={statistic.metrics?.all.membersCount || 0}
             projectLink={ROUTE.PUBLIC.ONE(uuid)}
             title={title}
-            value={statistic.metrics?.all.value || 0}
+            value={VALUE_MULTIPLIER * (statistic.metrics?.all.value || 0)}
           />
         ))}
       </div>
