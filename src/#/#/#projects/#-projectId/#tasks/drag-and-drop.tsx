@@ -207,7 +207,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                     <TooltipBig title="Сумма ценности задач в статусе" placement="top">
                       <span className={classes.columnTitleSum}>
                         <span>&nbsp;-&nbsp;</span>
-                        <ValueField disableTooltip showSumIcon={true}>
+                        <ValueField disableTooltip showSumIcon>
                           {valueSum}
                         </ValueField>
                       </span>

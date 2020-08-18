@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import LorderPoints from '@components/@icons/lorder-points';
+import CurrencyIcon from '@components/@icons/lorder-points';
 import SumIcon from '@components/@icons/sum';
 import TooltipBig from '@components/tooltip-big';
 
@@ -14,6 +14,11 @@ const useValueStyle = makeStyles((theme: Theme) => ({
     height: 16,
     marginRight: 3,
     width: 16,
+  },
+  sumIcon: {
+    color: '#757575',
+    fontSize: 12,
+    marginRight: 2,
   },
   value: {
     alignItems: 'center',
@@ -49,18 +54,18 @@ export const ValueTsx: React.FC<IValueProps> = ({
   disableTooltip,
   showSumIcon = false,
 }): JSX.Element => {
-  const { icon, value, valueText } = useValueStyle();
+  const { icon, sumIcon, value, valueText } = useValueStyle();
   const renderValue = useCallback(
     () => (
       <div className={value}>
-        <LorderPoints color="inherit" className={icon} viewBox="0 0 17 14" />
-        {showSumIcon && <SumIcon style={{ color: '#757575', fontSize: 12 }} />}
+        {showSumIcon && <SumIcon className={sumIcon} />}
+        <CurrencyIcon color="inherit" className={icon} viewBox="0 0 17 14" />
         <Typography component="span" variant={size === SIZE.SMALL ? 'caption' : 'body2'} className={valueText}>
           {children || '--'}
         </Typography>
       </div>
     ),
-    [children, icon, showSumIcon, size, value, valueText]
+    [children, icon, showSumIcon, size, sumIcon, value, valueText]
   );
 
   if (disableTooltip) {

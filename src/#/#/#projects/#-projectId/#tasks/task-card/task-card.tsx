@@ -6,7 +6,7 @@ import get from 'lodash/get';
 import Badge from '@material-ui/core/Badge';
 import grey from '@material-ui/core/colors/grey';
 import Typography from '@material-ui/core/Typography';
-import MailIcon from '@material-ui/icons/Mail';
+import ChatIcon from '@material-ui/icons/Chat';
 
 import Avatar from '@components/avatar';
 import TooltipBig from '@components/tooltip-big';
@@ -79,7 +79,7 @@ export const TaskCardTsx: React.FC<ITaskCard> = ({
         <div className={classes.rowRight}>
           {Boolean(commentsCount) && (
             <Badge color="primary" badgeContent={commentsCount}>
-              <MailIcon />
+              <ChatIcon />
             </Badge>
           )}
           <TooltipBig title={get(taskPerformer, 'userName', 'N/A')} placement="bottom">
