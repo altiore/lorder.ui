@@ -1,61 +1,114 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import Popover from 'react-popover';
 
+import cn from 'classnames';
 import get from 'lodash/get';
 import minBy from 'lodash/minBy';
 import moment from 'moment';
 
 import Paper from '@material-ui/core/Paper';
-import { Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import CurrentTimeIndicator from './current-time-indicator/current-time-indicator';
+import CurrentTimeIndicator from './current-time-indicator';
 import EditWork from './edit-work';
-import { useStyles } from './styles';
 import { SvgTimeScale } from './svg-time-scale/svg-time-scale';
-import { UserTasks } from './user-tasks/user-tasks';
+import UserTasks from './user-tasks';
 
 import { IEvent } from '@types';
 
-export interface IDailyRoutineProps {
+export interface ITimeLineProps {
+  currentRange: [moment.Moment, moment.Moment];
   events: IEvent[];
-  getRef: any;
-  patchUserWork: (values: object) => Promise<any>;
-  width: number;
-  onTimelineClick: () => void;
   fullSize?: boolean;
+  getRef: any;
+  onTimelineClick?: () => void;
+  patchUserWork: any;
+  currentTime: string;
+  currentTimeCustom?: string;
+  width: number;
 }
 
-export const Y_HEIGHT_BIG = 65;
+const useStyles = makeStyles((theme: Theme) => ({
+  filled: {
+    border: '1px solid #FFB200',
+    borderRadius: theme.shape.borderRadius,
+    boxSizing: 'border-box',
+    position: 'relative',
+    width: '100%',
+  },
+  popoverPaper: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    justifyContent: 'center',
+    padding: `0 ${theme.spacing(1)}px`,
+    pointerEvents: 'auto',
+  },
+  root: {
+    alignItems: 'flex-end',
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: 4,
+    cursor: 'pointer',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+    overflow: 'hidden',
+    position: 'relative',
+    transition: theme.transitions.create(['height', 'z-index'], {
+      duration: theme.transitions.duration.shortest,
+      easing: theme.transitions.easing.easeIn,
+    }),
+    width: '100%',
+  },
+  rootFullSize: {
+    padding: '2px 16px 16px',
+    zIndex: 1200,
+  },
+  rootWrap: {
+    cursor: 'pointer',
+    position: 'relative',
+    width: '100%',
+  },
+}));
+
+export const Y_HEIGHT_BIG = 84;
 const Y_HEIGHT_LITTLE = 8;
-const X_OFFSET = 24;
-let updateInterval: any = null;
+const X_OFFSET = 8;
 
 const timelineStub = () => null;
+const DATE_FORMAT = 'YYYY-MM-DD';
 
-export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({
+export const TimeLineTsx: React.FC<ITimeLineProps> = ({
+  currentRange,
+  currentTime,
+  currentTimeCustom,
   events,
+  fullSize,
   getRef,
+  onTimelineClick = timelineStub,
   patchUserWork,
   width,
-  onTimelineClick = timelineStub,
-  fullSize,
 }) => {
-  const getStartAt = useCallback((): number => {
-    const current = moment();
-    const first = minBy(events, (ev: IEvent) =>
-      ev.userWork.startAt.day() === current.day() ? ev.userWork.startAt.hours() : 24
-    );
+  const startHour = useMemo((): number => {
+    const first = minBy(events, (ev: IEvent) => {
+      if (ev.userWork.finishAt) {
+        return ev.userWork.finishAt.format(DATE_FORMAT) === currentRange[0].format(DATE_FORMAT)
+          ? ev.userWork.startAt.hours()
+          : 24;
+      }
+
+      return 25;
+    });
     const hours = first ? first.userWork.startAt.hours() : 0;
-    return first && hours < current.hours() ? hours : 0;
-  }, [events]);
+    return first && hours < currentRange[0].hours() ? hours : 0;
+  }, [currentRange, events]);
 
-  const getFinishAt = useCallback((): number => {
-    const hours = moment().hours();
+  const finishHour = useMemo((): number => {
+    const hours = currentRange[1].hours();
     return hours < 24 ? (hours < 23 ? hours + 2 : hours + 1) : 24;
-  }, []);
+  }, [currentRange]);
 
-  const [startAt, setStartAt] = useState(getStartAt);
-  const [finishAt, setFinishAt] = useState(getFinishAt);
   const [height] = useState(fullSize ? Y_HEIGHT_BIG : Y_HEIGHT_LITTLE);
   const [editedEvent, setEditedEvent] = useState<IEvent>();
 
@@ -74,44 +127,38 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({
     }
   }, [fullSize, onTimelineClick]);
 
-  const svgWidth = useMemo(() => {
-    return width - 2 * X_OFFSET;
-  }, [width]);
+  const timeLineWidth = useMemo(() => {
+    return width - (fullSize ? 48 : 16);
+  }, [fullSize, width]);
 
   const getHours = useCallback(
     (el?: moment.Moment | null) => {
-      const current = moment();
       return el
-        ? el.day() === current.day()
-          ? el.hours() + el.minutes() / 60
-          : startAt
-        : current.hours() + current.minutes() / 60;
+        ? el.format(DATE_FORMAT) === currentRange[0].format(DATE_FORMAT)
+          ? el.hours() + el.minutes() / 60 + el.seconds() / 3600
+          : el.diff(currentRange[0]) > 0
+          ? finishHour
+          : startHour
+        : currentRange[1].hours() + currentRange[1].minutes() / 60 + currentRange[1].minutes() / 3600;
     },
-    [startAt]
+    [currentRange, finishHour, startHour]
   );
 
   const getPosition = useCallback(
     (time?: moment.Moment | null) => {
-      const res = ((getHours(time) - startAt) * svgWidth) / (finishAt - startAt);
-      return res >= 0 ? res + X_OFFSET : X_OFFSET;
+      const res = Math.round(((getHours(time) - startHour) * timeLineWidth) / (finishHour - startHour));
+      if (res === 0) {
+        return res;
+      }
+      if (res === timeLineWidth) {
+        return res + 2 * X_OFFSET;
+      }
+      return res + X_OFFSET;
     },
-    [finishAt, getHours, startAt, svgWidth]
+    [finishHour, getHours, startHour, timeLineWidth]
   );
 
-  useEffect(() => {
-    updateInterval = setInterval(() => {
-      setStartAt(getStartAt());
-      setFinishAt(getFinishAt());
-    }, 600000);
-    return () => {
-      if (updateInterval) {
-        clearInterval(updateInterval);
-      }
-    };
-  }, [getFinishAt, getStartAt, setStartAt]);
-
-  const classes = useStyles();
-  const theme: Theme = useTheme();
+  const { filled, popoverPaper, root, rootFullSize, rootWrap } = useStyles();
 
   const formInitialValues = useMemo(() => {
     return {
@@ -127,7 +174,7 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({
       isOpen={Boolean(editedEvent)}
       tipSize={0.01}
       body={
-        <Paper className={classes.popoverPaper}>
+        <Paper className={popoverPaper}>
           <EditWork
             event={editedEvent}
             initialValues={formInitialValues}
@@ -137,42 +184,38 @@ export const TimeLineTsx: React.FC<IDailyRoutineProps> = ({
         </Paper>
       }
     >
-      <div className={classes.rootWrap} onClick={handleClick}>
-        <CurrentTimeIndicator fullSize={fullSize} left={getPosition(moment())} />
-        <div
-          ref={getRef}
-          className={classes.root}
-          style={{
-            height,
-            zIndex: fullSize ? 1200 : 0,
-          }}
+      <div className={rootWrap} onClick={handleClick}>
+        <CurrentTimeIndicator
+          fullSize={fullSize}
+          left={
+            moment().isBetween(currentRange[0], currentRange[1].clone().add(2, 'minute'))
+              ? getPosition(moment())
+              : getPosition(currentRange[1])
+          }
         >
-          <div
-            className={classes.filled}
-            style={{
-              boxShadow: fullSize ? theme.shadows[1] : 'none',
-              flexBasis: fullSize ? '76%' : '100%',
-            }}
-          >
+          {currentTimeCustom || currentTime}
+        </CurrentTimeIndicator>
+        <div ref={getRef} className={cn(root, { [rootFullSize]: fullSize })} style={{ height }}>
+          <div className={filled} style={{ flexBasis: fullSize ? '76%' : '100%' }}>
             <UserTasks
               editedEvent={editedEvent}
               events={events}
               height={height}
               getPosition={getPosition}
               setEditedEvent={setEditedEvent}
-              startAt={startAt}
+              startAt={startHour}
               getHours={getHours}
               Y_HEIGHT_BIG={Y_HEIGHT_BIG}
             />
           </div>
           <SvgTimeScale
-            finishAt={finishAt}
+            finishAt={finishHour}
             fullSize={fullSize}
             height={height}
-            startAt={startAt}
-            svgWidth={svgWidth}
+            startAt={startHour}
+            svgWidth={timeLineWidth}
             width={width}
-            X_OFFSET={X_OFFSET}
+            X_OFFSET={24}
             Y_HEIGHT_BIG={Y_HEIGHT_BIG}
           />
         </div>

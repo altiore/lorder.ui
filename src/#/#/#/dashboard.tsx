@@ -7,7 +7,8 @@ import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 
 import { TIME_LINE_HEIGHT } from '@components/time-line';
 
-import { ActivityTimeline } from './activity-time-line';
+import ActivityTimeline from '#/#/#/@common/activity-time-line';
+
 import DailyRoutineDialog from './daily-routine';
 import { LastEvents } from './last-events';
 import { StartForm } from './start-form';
@@ -96,8 +97,8 @@ export const DashboardJsx: React.FC<IDashboardProps> = () => {
   const [showDialog, setShowDialog] = useState(false);
 
   const toggleDailyRoutine = useCallback(() => {
-    setShowDialog(!showDialog);
-  }, [showDialog]);
+    setShowDialog(s => !s);
+  }, []);
 
   return (
     <div className={classes.content2}>

@@ -1,22 +1,71 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import moment from 'moment';
 import 'moment/locale/ru';
 
 import { Button, Grid } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
+import Divider from '@material-ui/core/Divider';
 import Slide from '@material-ui/core/Slide';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import { TransitionProps } from '@material-ui/core/transitions';
+import T from '@material-ui/core/Typography';
 
-import { ActivityTimeline } from '../activity-time-line';
-import { useStyles } from './style';
+import ActivityTimeline from '#/#/#/@common/activity-time-line';
+import { IRangeFilter } from '#/@store/ui';
 
-interface DailyRoutineMainProps {
-  hoursWorkedToday: string;
-  currentTask: any;
-  open: boolean;
-  onClose: () => void;
-}
+export const useStyles = makeStyles((theme: Theme) => ({
+  button: {
+    '&:not(:first-child)': {
+      marginLeft: 4,
+    },
+    '&:not(:last-child)': {
+      marginRight: 4,
+    },
+    width: 100,
+  },
+  buttonsBlock: {
+    minWidth: 424,
+  },
+  currentDate: {
+    fontFamily: 'Roboto',
+    fontSize: 32,
+    fontWeight: 300,
+    margin: '16px 0',
+    textAlign: 'center',
+  },
+  dialogContentWrap: {
+    overflow: 'hidden',
+    padding: '0 32px 32px',
+    [theme.breakpoints.down('md')]: {
+      padding: '0 50px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: '0 20px',
+    },
+  },
+  dialogStyle: {
+    height: 'fit-content',
+  },
+  dividerStyle: {
+    margin: '16px 0 32px',
+  },
+  infoBlock: {
+    fontSize: 18,
+    fontWeight: 500,
+    textAlign: 'center',
+  },
+  severalDays: {
+    height: 84,
+    padding: '0 16px',
+  },
+  topContent: {
+    padding: '0 16px',
+  },
+  workedHoursStyle: {
+    textAlign: 'center',
+  },
+}));
 
 const Transition = React.forwardRef(function TransitionInner(
   props: TransitionProps & { children?: React.ReactElement },
@@ -27,73 +76,124 @@ const Transition = React.forwardRef(function TransitionInner(
 
 const BUTTONS = [
   {
-    id: 1,
-    isActive: false,
+    id: IRangeFilter.LAST_MONTH,
+    start: moment().startOf('month'),
+    text: 'текущий месяц',
     title: 'Месяц',
   },
   {
-    id: 2,
-    isActive: false,
+    id: IRangeFilter.LAST_WEEK,
+    start: moment().startOf('week'),
+    text: 'текущую неделю',
     title: 'Неделю',
   },
   {
-    id: 3,
-    isActive: false,
+    end: moment().startOf('day'),
+    id: IRangeFilter.YESTERDAY,
+    start: moment()
+      .subtract(1, 'day')
+      .startOf('day'),
+    text: 'вчера',
     title: 'Вчера',
   },
   {
-    id: 4,
-    isActive: true,
+    id: IRangeFilter.TODAY,
+    start: moment().startOf('day'),
+    text: 'сегодня',
     title: 'Сегодня',
   },
 ];
 
-const DailyRoutineMain = ({ currentTask, hoursWorkedToday, onClose, open }: DailyRoutineMainProps) => {
+interface IProps {
+  changeRangeFilter: (f: IRangeFilter) => void;
+  curRangeFilter: IRangeFilter;
+  getRangeDuration: (start: moment.Moment, finish?: moment.Moment) => Promise<string>;
+  open: boolean;
+  onClose: () => void;
+}
+
+export const DailyRoutineMain: React.FC<IProps> = ({
+  changeRangeFilter,
+  curRangeFilter,
+  getRangeDuration,
+  onClose,
+  open,
+}): JSX.Element => {
+  const curBtn = useMemo(() => {
+    return BUTTONS.find(el => el.id === curRangeFilter);
+  }, [curRangeFilter]);
+
+  const [spendInCurRange, setSpendInCurRange] = useState('0c');
+
+  useEffect(() => {
+    (async function() {
+      if (curBtn) {
+        setSpendInCurRange(await getRangeDuration(curBtn.start, curBtn.end));
+      }
+    })();
+  }, [curBtn, getRangeDuration]);
+
+  const handleClose = useCallback(() => {
+    onClose();
+    changeRangeFilter(IRangeFilter.TODAY);
+  }, [changeRangeFilter, onClose]);
+
+  useEffect(() => {
+    return () => {
+      changeRangeFilter(IRangeFilter.TODAY);
+    };
+  }, [changeRangeFilter]);
+
+  const handleChangeFilter = useCallback(
+    evt => {
+      const id = parseInt(evt?.currentTarget?.dataset?.id, 0);
+      changeRangeFilter(id);
+    },
+    [changeRangeFilter]
+  );
+
   const {
     button,
+    buttonsBlock,
     currentDate,
-    currentTaskInfo,
-    currentTaskInfoInner,
     dialogContentWrap,
+    dialogStyle,
+    dividerStyle,
     infoBlock,
-    infoBlockInner,
+    severalDays,
+    topContent,
+    workedHoursStyle,
   } = useStyles();
-
-  const [activeIndex, setActiveIndex] = useState(3);
-  const handleClick = useCallback(
-    (clickedBtnInd: number) => () => {
-      BUTTONS[activeIndex].isActive = false;
-      setActiveIndex(clickedBtnInd);
-      BUTTONS[clickedBtnInd].isActive = true;
-    },
-    [activeIndex]
-  );
   return (
-    <Dialog open={open} style={{ maxHeight: 400 }} fullScreen TransitionComponent={Transition} onClose={onClose}>
+    <Dialog open={open} className={dialogStyle} fullScreen TransitionComponent={Transition} onClose={handleClose}>
       <div className={dialogContentWrap}>
-        <div>
-          <h2 className={currentDate}>
+        <div className={topContent}>
+          <T variant="h3" className={currentDate}>
             {moment()
               .locale('ru')
-              .format('D MMMM YYYY')}
-          </h2>
-          <Grid container justify="space-around">
-            <Grid item lg={6} md={4} sm={12} container justify="center">
-              <p className={infoBlock}>
-                <span className={infoBlockInner}>Времени затрачено за {BUTTONS[activeIndex].title.toLowerCase()}:</span>
-                {hoursWorkedToday}
-              </p>
+              .format('D MMMM YYYYг')}
+          </T>
+          <Grid container>
+            <Grid item lg={4} md={2} sm={6} container justify="flex-start" alignItems="center">
+              <T variant="h4" className={infoBlock}>
+                Времени затрачено за {curBtn?.text}:
+              </T>
             </Grid>
-            <Grid item lg={6} md={4} container alignItems="center" justify="center" wrap="nowrap" direction="column">
-              <p className={infoBlockInner}>Просмотр трудовой нагрузки за:</p>
-              <div>
-                {BUTTONS.map(({ title, isActive }, i) => (
+            <Grid item lg={4} md={2} sm={6} container justify="center" alignItems="center">
+              <T variant="h3" className={workedHoursStyle} color="primary">
+                {spendInCurRange}
+              </T>
+            </Grid>
+            <Grid item lg={4} md={8} sm={12} container justify="flex-end" alignItems="center">
+              <div className={buttonsBlock}>
+                {BUTTONS.map(({ id, title }) => (
                   <Button
-                    key={title}
+                    key={id}
                     className={button}
-                    color={isActive ? 'primary' : 'default'}
-                    variant="contained"
-                    onClick={handleClick(i)}
+                    color={id === curRangeFilter ? 'primary' : 'default'}
+                    variant={id === curRangeFilter ? 'contained' : 'outlined'}
+                    onClick={handleChangeFilter}
+                    data-id={id}
                   >
                     {title}
                   </Button>
@@ -101,16 +201,14 @@ const DailyRoutineMain = ({ currentTask, hoursWorkedToday, onClose, open }: Dail
               </div>
             </Grid>
           </Grid>
-          <hr />
-          <h2 className={currentTaskInfo}>
-            Текущая задача:
-            <span className={currentTaskInfoInner}>{currentTask && currentTask.title}</span>
-          </h2>
+          <Divider className={dividerStyle} />
         </div>
-        <ActivityTimeline fullSize={true} />
+        {[IRangeFilter.TODAY, IRangeFilter.YESTERDAY].includes(curRangeFilter) ? (
+          <ActivityTimeline fullSize currentTimeCustom={spendInCurRange} />
+        ) : (
+          <div className={severalDays}>другой элемент</div>
+        )}
       </div>
     </Dialog>
   );
 };
-
-export default DailyRoutineMain;

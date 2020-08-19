@@ -39,7 +39,8 @@ import { Task } from './tasks';
 import { tasks } from './tasks/reducer';
 import { tasksFilter } from './tasksFilter/reducer';
 import { timer } from './timer';
-import { uiReducer } from './ui';
+import { Ui } from './ui';
+import { uiReducer } from './ui/reducer';
 import { UserWork } from './user-works';
 import { userWorks } from './user-works/reducer';
 import { versionHistory } from './versionHistory';
@@ -68,13 +69,19 @@ const migrations = {
       projectsPub: new DownloadList(ProjectPub),
     };
   },
+  3: state => {
+    return {
+      ...state,
+      ui: new Ui(state?.ui),
+    };
+  },
 };
 
 localForage.config({
-  description: 'Lorder contribution version 2.0',
+  description: 'Lorder contribution version 3.0',
   name: 'lorder',
   storeName: 'contribution',
-  version: 2.0,
+  version: 3.0,
 });
 
 const VARIANT_ENTITY: any = {

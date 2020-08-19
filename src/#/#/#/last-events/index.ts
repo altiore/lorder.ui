@@ -2,12 +2,18 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { events } from '#/@store/tasks';
+import { filteredEvents } from '#/@store/user-works';
 
 import { LastEventsTsx } from './last-events';
 
-const mapState = createStructuredSelector({
-  events,
-} as any);
+import { IEvent, IState } from '@types';
 
-export const LastEvents = connect<any, any, any>(mapState)(LastEventsTsx);
+interface IMappedProms {
+  events: IEvent[];
+}
+
+const mapState = createStructuredSelector<IState, IMappedProms>({
+  events: filteredEvents,
+});
+
+export const LastEvents = connect(mapState)(LastEventsTsx);

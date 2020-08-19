@@ -2,7 +2,7 @@ import React from 'react';
 
 import debounce from 'lodash/debounce';
 
-import { WithTheme, withTheme } from '@material-ui/core/styles';
+import { withTheme } from '@material-ui/core/styles';
 
 export interface IDimensions {
   height: number;
@@ -18,15 +18,15 @@ export interface IState extends IDimensions {
   getRef: React.RefObject<any>;
 }
 
-export const withResize = <P>(
-  Component: React.FunctionComponent<P> | React.ComponentClass<P>,
+export const withResize = <P = any>(
+  Component: React.FC<P> | React.ComponentClass<P>,
   getNode: (el: any) => any | boolean = (el: any) => el
-): any => {
+): React.ComponentType<Omit<P, keyof IState>> => {
   return withTheme(
-    class WithResize extends React.PureComponent<WithTheme, IState> {
+    class WithResize extends React.PureComponent<any, IState> {
       private handleResize = debounce(() => this.setState(this.getDimensions()), 200);
 
-      constructor(props: WithTheme) {
+      constructor(props: P) {
         super(props);
         this.state = {
           ...this.getDimensions(),
@@ -48,14 +48,9 @@ export const withResize = <P>(
       }
 
       render() {
-        const { children, ...restProps } = this.props as any;
-        const { getRef, ...restState } = this.state;
-        const componentProps: any = {
-          ...restProps,
-          ...restState,
-        };
-        componentProps.getRef = getRef;
-        return React.createElement(Component as any, componentProps, children);
+        const { theme, ...restProps } = this.props;
+        const componentProps: any = { ...restProps, ...this.state };
+        return React.createElement(Component, componentProps);
       }
 
       private getDimensions = (): IDimensions => {

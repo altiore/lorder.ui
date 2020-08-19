@@ -20,9 +20,9 @@ import { currentTask, currentTaskId } from '#/@store/timer';
 import { isPaused, lastUserWorks } from '#/@store/user-works/selectors';
 
 import { TASK_FILTER_TYPE } from '../tasksFilter/TasksFilter';
-import { allTaskList, getTaskById, getTaskBySequenceNumber } from './selectors';
+import { allTaskList, getTaskBySequenceNumber } from './selectors';
 
-import { ACCESS_LEVEL, IDownloadList, IEvent, ITask, IUserWork } from '@types';
+import { ACCESS_LEVEL, ITask } from '@types';
 
 export const filteredByPerformerTasks = createDeepEqualSelector(
   [allTaskList, userId, currentTaskId],
@@ -94,26 +94,6 @@ export const isCurrent = createDeepEqualSelector(
   [currentTask, isPaused, routeProjectId, routeTaskSequenceNumber],
   (curTask, taskIsPaused, curPrId, curTaskSeqNum) =>
     curTask && curTask.projectId === curPrId && curTask.sequenceNumber === curTaskSeqNum && !taskIsPaused
-);
-
-export const events = createDeepEqualSelector(
-  [lastUserWorks, getTaskById, defaultProjectId],
-  (userWorks: IDownloadList<IUserWork>, getTask, defPrId: number | undefined): IEvent[] => {
-    return userWorks.list
-      .filter(uw => moment().diff(uw.startAt, 'hours') <= 24)
-      .sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1))
-      .map(userWork => {
-        const task = getTask(userWork.taskId) as ITask;
-        return {
-          userWork,
-
-          task,
-
-          isActive: (userWork.projectId || (task && task.projectId)) !== defPrId,
-          name: get(task, 'title', userWork.taskId.toString()),
-        };
-      });
-  }
 );
 
 export const projectTasks = createDeepEqualSelector(
