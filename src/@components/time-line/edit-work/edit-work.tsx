@@ -5,6 +5,7 @@ import { Field, InjectedFormProps } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { IEditWorkData } from './@common';
@@ -43,7 +44,9 @@ export const EditWorkTsx: React.FC<InjectedFormProps<IEditWorkData, IEditWorkPro
   return (
     <ClickAwayListener onClickAway={onClose}>
       <form className={classes.root} onSubmit={handleSubmit}>
-        <CloseIcon className={classes.closeIcon} onClick={onClose} />
+        <IconButton className={classes.closeIcon} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
         <p className={classes.noMarginBottom}>Задача:</p>
         <h2 className={classes.noMargin}>{event.name}</h2>
         <p className={classes.noMarginBottom}>Затрачено:</p>

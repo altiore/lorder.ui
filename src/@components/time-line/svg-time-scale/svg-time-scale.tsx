@@ -48,7 +48,7 @@ export const SvgTimeScale: React.FC<ISvgTimeScaleProps> = ({
 
   return (
     <svg height={fullSize ? FULL_HEIGHT : height} width={width} className={classes.svg}>
-      {getLines().map(({ x, isHour, label }) => (
+      {getLines().map(({ x, label }) => (
         <React.Fragment key={x}>
           {label && height === Y_HEIGHT_BIG && (
             <text x={x + X_OFFSET} y={10} className={classes.text}>

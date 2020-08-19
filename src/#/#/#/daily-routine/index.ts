@@ -2,21 +2,24 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { currentTask } from '#/@store/timer';
-import { totalTimeSpentToday } from '#/@store/user-works';
+import { changeRangeFilter, curRangeFilter, IRangeFilter } from '#/@store/ui';
+import { getRangeDuration } from '#/@store/user-works';
 
-import DailyRoutineMain from './daily-routine-main';
+import { DailyRoutineMain } from './daily-routine-main';
 
-import { IState, ITask } from '@types';
+import { IState } from '@types';
 
 interface IMappedProps {
-  currentTask: ITask;
-  hoursWorkedToday: any;
+  curRangeFilter: IRangeFilter;
 }
 
 const mapStateToProps = createStructuredSelector<IState, IMappedProps>({
-  currentTask,
-  hoursWorkedToday: totalTimeSpentToday,
+  curRangeFilter,
 });
 
-export default connect(mapStateToProps)(DailyRoutineMain);
+const mapDispatch = {
+  changeRangeFilter,
+  getRangeDuration,
+};
+
+export default connect(mapStateToProps, mapDispatch)(DailyRoutineMain);

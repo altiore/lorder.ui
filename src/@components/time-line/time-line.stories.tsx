@@ -47,14 +47,27 @@ const events: IEvent[] = [
   },
 ];
 
-storiesOf('TimeLine', module).add('default', () => (
-  <div style={{ backgroundColor: '#fff', width: '98%', margin: '100px auto', padding: 8 }}>
-    <TimeLine
-      events={events}
-      onChange={action('onEventsChange')}
-      onEventClick={action('onEventClick')}
-      startAt={0}
-      finishAt={23}
-    />
-  </div>
-));
+storiesOf('TimeLine', module)
+  .add('default', () => (
+    <div style={{ backgroundColor: '#fff', width: '98%', margin: '100px auto', padding: 8 }}>
+      <TimeLine
+        currentRange={[moment().startOf('day'), moment()]}
+        currentTime={'22:15'}
+        events={events}
+        onTimelineClick={action('onTimelineClick')}
+        patchUserWork={action('patchUserWork') as any}
+      />
+    </div>
+  ))
+  .add('fullSize', () => (
+    <div style={{ backgroundColor: '#fff', width: '98%', margin: '100px auto', padding: 8 }}>
+      <TimeLine
+        fullSize
+        currentRange={[moment().startOf('day'), moment()]}
+        currentTime={'22:15'}
+        events={events}
+        onTimelineClick={action('onTimelineClick')}
+        patchUserWork={action('patchUserWork') as any}
+      />
+    </div>
+  ));

@@ -48,7 +48,7 @@ export interface IDragAndDropProps {
   moveProjectTask: any;
   openDialog: any;
   openedStatuses: string[];
-  projectId: number;
+  projectId?: number;
   push: any;
   toggleOpenedTab: any;
   getProjectStrategyByProjectId: (projectId: number) => string;
@@ -148,7 +148,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
   }, [destroy]);
 
   const createTask = useCallback(
-    (pId: number | string, statusName: string, statusFrom) => () => {
+    (statusName: string, statusFrom: any, pId?: number | string) => () => {
       openDialog(
         <PatchTaskForm
           projectId={pId}
@@ -167,7 +167,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
     [handleCloseTaskFrom, openDialog, projectId]
   );
 
-  const isSimpleStrategy = getProjectStrategyByProjectId(projectId) === PROJECT_STRATEGY.SIMPLE;
+  const isSimpleStrategy = projectId && getProjectStrategyByProjectId(projectId) === PROJECT_STRATEGY.SIMPLE;
   const columnsToRender = useMemo(() => {
     const columnsCopy = [...columns];
     if (isSimpleStrategy) {
@@ -266,7 +266,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                   </div>
                 )}
               </Droppable>
-              <ButtonBase className={classes.columnFooter} onClick={createTask(projectId, column, statusFrom)}>
+              <ButtonBase className={classes.columnFooter} onClick={createTask(column, statusFrom, projectId)}>
                 <AddIcon fontSize="small" /> Добавить задачу
               </ButtonBase>
             </div>

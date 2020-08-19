@@ -2,16 +2,17 @@ import React, { useMemo } from 'react';
 
 import moment from 'moment';
 
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import { IEditWorkData } from '../@common';
-
 export interface ITimeDiff {
-  formValues: IEditWorkData;
+  formValues: {
+    finishAt: moment.Moment;
+    startAt: moment.Moment;
+  };
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   hoursClass: {
     fontSize: 26,
     fontWeight: 'bold',
@@ -38,10 +39,7 @@ export const TimeDiffTsx: React.FC<ITimeDiff> = ({ formValues }) => {
   return (
     <div className={root}>
       <Typography className={hoursClass} variant="h3">
-        {hours}ч
-      </Typography>
-      <Typography className={hoursClass} variant="h3">
-        {minutes}м
+        {hours}ч&nbsp;{minutes}мин
       </Typography>
     </div>
   );

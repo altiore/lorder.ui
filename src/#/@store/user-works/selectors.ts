@@ -5,15 +5,18 @@ import moment from 'moment';
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { defaultProjectId, userId } from '#/@store/identity';
+import { getTaskById } from '#/@store/tasks';
 import { currentTaskId, currentTimerTime, currentUserWorkId } from '#/@store/timer';
+import { currentRange } from '#/@store/ui';
 
-import { UserWork } from './UserWork';
-
-import { IState, IUserWork } from '@types';
+import { IEvent, IState, ITask, IUserWork } from '@types';
+import { durationFromUserWorkList } from '@utils/duration.from.user-work.list';
 
 const DATE_FORMAT = 'YYYY:MM:DD';
 
 export const lastUserWorks = (state: IState): any => state.userWorks;
+
+export const lastUserWorksList = createDeepEqualSelector(lastUserWorks, s => s.list);
 
 export const currentUserWorks = createDeepEqualSelector([lastUserWorks, userId], (s, currentUserId) =>
   s.list.filter(el => el.userId === currentUserId)
@@ -29,20 +32,17 @@ export const todayUserWorksWithoutDefault = createDeepEqualSelector(
     )
 );
 
+export const getUserWorksInRange = createDeepEqualSelector(
+  [lastUserWorksList, defaultProjectId],
+  (list, defId) => (startTime: moment.Moment, finishTime: moment.Moment = moment()) =>
+    list.filter((el: IUserWork) => {
+      return el.projectId !== defId && (el.finishAt || moment()).diff(startTime) > 0 && finishTime.diff(el.startAt) > 0;
+    })
+);
+
 export const totalTimeSpentTodayInSeconds = createDeepEqualSelector(
   [todayUserWorksWithoutDefault, currentTimerTime],
-  (list, currentTimerSeconds) =>
-    list.reduce((res, userWork: UserWork) => {
-      if (userWork.startAt.format(DATE_FORMAT) === moment().format(DATE_FORMAT)) {
-        return res + get(userWork, 'durationInSeconds', 0);
-      } else {
-        if (userWork.finishAt) {
-          return res + userWork.finishAt.diff(moment().startOf('day'), 'second');
-        } else {
-          return res + currentTimerSeconds;
-        }
-      }
-    }, 0)
+  (list, currentTimerSeconds) => durationFromUserWorkList(list, currentTimerSeconds, moment().startOf('day'), moment())
 );
 
 export const totalTimeSpentToday = createDeepEqualSelector(totalTimeSpentTodayInSeconds, seconds =>
@@ -56,14 +56,6 @@ export const userWorksGroupedByProject = createDeepEqualSelector(currentUserWork
 export const getUserWorksByProjectId = createDeepEqualSelector(
   userWorksGroupedByProject,
   groupedUserWorks => (projectId: number) => groupedUserWorks[projectId] || []
-);
-
-export const timeSpentByProjectIdInSeconds = createDeepEqualSelector(
-  getUserWorksByProjectId,
-  getUserWorks => (projectId: number) =>
-    getUserWorks(projectId).reduce((res: number, userWork: UserWork) => {
-      return res + get(userWork, 'durationInSeconds', 0);
-    }, 0)
 );
 
 export const getUserWorkById = createDeepEqualSelector([lastUserWorks], s => (uwId: number) =>
@@ -84,3 +76,40 @@ export const isPaused = createDeepEqualSelector(
 );
 
 export const inProgress = createDeepEqualSelector(isPaused, i => !i);
+
+export const filteredEvents = createDeepEqualSelector(
+  [lastUserWorksList, getTaskById, defaultProjectId, currentRange],
+  (userWorks: IUserWork[], getTask, defPrId: number | undefined, range): IEvent[] => {
+    return userWorks
+      .filter((uw: IUserWork) => {
+        return (uw.finishAt || moment()).diff(range[0]) > 0 && range[1].diff(uw.startAt) > 0;
+      })
+      .sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1))
+      .map(userWork => {
+        const task = getTask(userWork.taskId) as ITask;
+        return {
+          userWork,
+
+          task,
+
+          isActive: (userWork.projectId || (task && task.projectId)) !== defPrId,
+          name: get(task, 'title', userWork.taskId.toString()),
+        };
+      });
+  }
+);
+
+export const timeSpentCurrentRange = createDeepEqualSelector(
+  [getUserWorksInRange, currentTimerTime, currentRange],
+  (getList, curTime, range) => {
+    return convertSecondsToDurationWithLocal(durationFromUserWorkList(getList(...range), curTime, ...range), 24);
+  }
+);
+
+export const currentTimeDependentOnTimer = createDeepEqualSelector([currentTimerTime], curTime => {
+  if (curTime) {
+    return moment().format('HH:mm');
+  }
+
+  return moment().format('HH:mm');
+});
