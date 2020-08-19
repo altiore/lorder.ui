@@ -8,9 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import { IUserWork } from '@types';
 import { pluralRu } from '@utils/plural-ru';
 
-interface IToday {
+interface IRange {
+  title: string;
   total: string;
-  todayUserWorks?: IUserWork[];
+  rangeUserWorks?: IUserWork[];
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -20,9 +21,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexFlow: 'row nowrap',
     height: theme.spacing(6),
     padding: theme.spacing(0, 2),
-  },
-  freeSpace: {
-    height: theme.spacing(2),
   },
   root: {
     alignItems: 'flex-start',
@@ -37,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.secondary.light,
     display: 'flex',
     flexFlow: 'row nowrap',
-    height: theme.spacing(4),
+    height: theme.spacing(6),
     padding: theme.spacing(0, 2),
     width: '100%',
   },
@@ -55,18 +53,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const TodayTsx: React.FC<IToday> = ({ total, todayUserWorks = [] }): JSX.Element => {
-  const { firstLine, freeSpace, root, secondLine, todayStyle, totalStyle } = useStyles();
+export const RangeTsx: React.FC<IRange> = ({ title, total, rangeUserWorks = [] }): JSX.Element => {
+  const { firstLine, root, secondLine, todayStyle, totalStyle } = useStyles();
 
   const differentTasksCount: string = useMemo(() => {
-    const count = uniqBy(todayUserWorks, el => el.taskId).length;
+    const count = uniqBy(rangeUserWorks, el => el.taskId).length;
     return pluralRu(count, '%d задач', '%d задача', '%d задачи', '%d задач');
-  }, [todayUserWorks]);
+  }, [rangeUserWorks]);
 
   const differentProjectsCount: string = useMemo(() => {
-    const count = uniqBy(todayUserWorks, el => el.projectId).length;
+    const count = uniqBy(rangeUserWorks, el => el.projectId).length;
     return pluralRu(count, 'в %d проектов', 'в %d-ом проекте', 'в %d-х проектах', 'в %d-ти проектах');
-  }, [todayUserWorks]);
+  }, [rangeUserWorks]);
 
   const text: string = useMemo(() => {
     if (differentProjectsCount === 'в 0 проектов') {
@@ -79,7 +77,7 @@ export const TodayTsx: React.FC<IToday> = ({ total, todayUserWorks = [] }): JSX.
   return (
     <div className={root}>
       <div className={firstLine}>
-        <Typography className={todayStyle}>Сегодня:&nbsp;</Typography>
+        <Typography className={todayStyle}>{title}:&nbsp;</Typography>
         <Typography className={totalStyle} variant="h5">
           {total}
         </Typography>
@@ -88,7 +86,6 @@ export const TodayTsx: React.FC<IToday> = ({ total, todayUserWorks = [] }): JSX.
         <div className={todayStyle} />
         <Typography variant="h6">{text}</Typography>
       </div>
-      <div className={freeSpace} />
     </div>
   );
 };

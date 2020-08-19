@@ -11,7 +11,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Theme } from '@material-ui/core/styles';
+import { Theme, useTheme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -69,7 +69,6 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
   openedProject: project,
   refreshProjectTasks,
   showFooter,
-  theme,
   toggleUiSetting,
 }) => {
   const classes = useStyles();
@@ -89,6 +88,8 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
     },
     [handleDrawerToggle, goTo, match, isWidthSm]
   );
+
+  const theme = useTheme();
 
   return (
     <>

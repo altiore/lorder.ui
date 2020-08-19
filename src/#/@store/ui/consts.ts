@@ -12,6 +12,6 @@ export const RANGE_FROM_RANGE_FILTER: { [key in IRangeFilter]: [moment.Moment, m
       .startOf('day')
       .subtract(1, 'second'),
   ],
-  [IRangeFilter.LAST_WEEK]: [moment().startOf('week'), moment()],
+  [IRangeFilter.LAST_WEEK]: [moment().startOf('isoWeek'), moment()],
   [IRangeFilter.LAST_MONTH]: [moment().startOf('month'), moment()],
 };

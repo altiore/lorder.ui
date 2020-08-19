@@ -1,4 +1,4 @@
-import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
+import { convertSecondsToHours } from '#/@store/@common/helpers';
 import { currentTimerTime } from '#/@store/timer';
 import { currentRange } from '#/@store/ui';
 
@@ -12,8 +12,8 @@ export const getRangeDuration = () => async (dispatch: any, getState: any) => {
   const filteredEvents = getUserWorksInRange(state)(...curRange);
   const curTime = currentTimerTime(state);
   if (Array.isArray(filteredEvents)) {
-    return convertSecondsToDurationWithLocal(durationFromUserWorkList(filteredEvents, curTime, ...curRange), 24);
+    return convertSecondsToHours(durationFromUserWorkList(filteredEvents, curTime, ...curRange));
   }
 
-  return '0';
+  return '0c';
 };
