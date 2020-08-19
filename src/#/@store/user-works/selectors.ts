@@ -1,18 +1,15 @@
 import get from 'lodash/get';
-import groupBy from 'lodash/groupBy';
 import moment from 'moment';
 
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
-import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
+import { convertSecondsToHours } from '#/@store/@common/helpers';
 import { defaultProjectId, userId } from '#/@store/identity';
 import { getTaskById } from '#/@store/tasks';
 import { currentTaskId, currentTimerTime, currentUserWorkId } from '#/@store/timer';
-import { currentRange } from '#/@store/ui';
+import { currentRange, IRangeFilter, RANGE_FROM_RANGE_FILTER } from '#/@store/ui';
 
 import { IEvent, IState, ITask, IUserWork } from '@types';
 import { durationFromUserWorkList } from '@utils/duration.from.user-work.list';
-
-const DATE_FORMAT = 'YYYY:MM:DD';
 
 export const lastUserWorks = (state: IState): any => state.userWorks;
 
@@ -22,40 +19,12 @@ export const currentUserWorks = createDeepEqualSelector([lastUserWorks, userId],
   s.list.filter(el => el.userId === currentUserId)
 );
 
-export const todayUserWorksWithoutDefault = createDeepEqualSelector(
-  [currentUserWorks, defaultProjectId],
-  (state, defProjectId) =>
-    state.filter(
-      el =>
-        (el.projectId || get(el, ['task', 'projectId'])) !== defProjectId &&
-        (!el.finishAt || moment().format(DATE_FORMAT) === el.finishAt.format(DATE_FORMAT))
-    )
-);
-
 export const getUserWorksInRange = createDeepEqualSelector(
   [lastUserWorksList, defaultProjectId],
   (list, defId) => (startTime: moment.Moment, finishTime: moment.Moment = moment()) =>
     list.filter((el: IUserWork) => {
       return el.projectId !== defId && (el.finishAt || moment()).diff(startTime) > 0 && finishTime.diff(el.startAt) > 0;
     })
-);
-
-export const totalTimeSpentTodayInSeconds = createDeepEqualSelector(
-  [todayUserWorksWithoutDefault, currentTimerTime],
-  (list, currentTimerSeconds) => durationFromUserWorkList(list, currentTimerSeconds, moment().startOf('day'), moment())
-);
-
-export const totalTimeSpentToday = createDeepEqualSelector(totalTimeSpentTodayInSeconds, seconds =>
-  convertSecondsToDurationWithLocal(seconds, 24)
-);
-
-export const userWorksGroupedByProject = createDeepEqualSelector(currentUserWorks, state =>
-  groupBy(state.list, 'projectId')
-);
-
-export const getUserWorksByProjectId = createDeepEqualSelector(
-  userWorksGroupedByProject,
-  groupedUserWorks => (projectId: number) => groupedUserWorks[projectId] || []
 );
 
 export const getUserWorkById = createDeepEqualSelector([lastUserWorks], s => (uwId: number) =>
@@ -99,12 +68,12 @@ export const filteredEvents = createDeepEqualSelector(
   }
 );
 
-export const timeSpentCurrentRange = createDeepEqualSelector(
-  [getUserWorksInRange, currentTimerTime, currentRange],
-  (getList, curTime, range) => {
-    return convertSecondsToDurationWithLocal(durationFromUserWorkList(getList(...range), curTime, ...range), 24);
-  }
-);
+// export const timeSpentCurrentRange = createDeepEqualSelector(
+//   [getUserWorksInRange, currentTimerTime, currentRange],
+//   (getList, curTime, range) => {
+//     return convertSecondsToDurationWithLocal(durationFromUserWorkList(getList(...range), curTime, ...range), 24);
+//   }
+// );
 
 export const currentTimeDependentOnTimer = createDeepEqualSelector([currentTimerTime], curTime => {
   if (curTime) {
@@ -113,3 +82,27 @@ export const currentTimeDependentOnTimer = createDeepEqualSelector([currentTimer
 
   return moment().format('HH:mm');
 });
+
+export const todayUserWorksWithoutDefault = createDeepEqualSelector([getUserWorksInRange], getList =>
+  getList(...RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY])
+);
+
+export const totalTimeSpentToday = createDeepEqualSelector(
+  [todayUserWorksWithoutDefault, currentTimerTime],
+  (list, currentTimerSeconds) =>
+    convertSecondsToHours(
+      durationFromUserWorkList(list, currentTimerSeconds, ...RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY])
+    )
+);
+
+export const lastWeekUserWorksWithoutDefault = createDeepEqualSelector([getUserWorksInRange], getList =>
+  getList(...RANGE_FROM_RANGE_FILTER[IRangeFilter.LAST_WEEK])
+);
+
+export const lastWeekTimeSpentToday = createDeepEqualSelector(
+  [lastWeekUserWorksWithoutDefault, currentTimerTime],
+  (list, currentTimerSeconds) =>
+    convertSecondsToHours(
+      durationFromUserWorkList(list, currentTimerSeconds, ...RANGE_FROM_RANGE_FILTER[IRangeFilter.LAST_WEEK])
+    )
+);

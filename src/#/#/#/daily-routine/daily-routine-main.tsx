@@ -12,7 +12,7 @@ import { TransitionProps } from '@material-ui/core/transitions';
 import T from '@material-ui/core/Typography';
 
 import ActivityTimeline from '#/#/#/@common/activity-time-line';
-import { IRangeFilter } from '#/@store/ui';
+import { IRangeFilter, RANGE_FROM_RANGE_FILTER } from '#/@store/ui';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   button: {
@@ -77,28 +77,21 @@ const Transition = React.forwardRef(function TransitionInner(
 const BUTTONS = [
   {
     id: IRangeFilter.LAST_MONTH,
-    start: moment().startOf('month'),
     text: 'текущий месяц',
     title: 'Месяц',
   },
   {
     id: IRangeFilter.LAST_WEEK,
-    start: moment().startOf('week'),
     text: 'текущую неделю',
     title: 'Неделю',
   },
   {
-    end: moment().startOf('day'),
     id: IRangeFilter.YESTERDAY,
-    start: moment()
-      .subtract(1, 'day')
-      .startOf('day'),
     text: 'вчера',
     title: 'Вчера',
   },
   {
     id: IRangeFilter.TODAY,
-    start: moment().startOf('day'),
     text: 'сегодня',
     title: 'Сегодня',
   },
@@ -112,6 +105,8 @@ interface IProps {
   onClose: () => void;
 }
 
+const DATE_FORMAT = 'YYYY-MM-DD';
+
 export const DailyRoutineMain: React.FC<IProps> = ({
   changeRangeFilter,
   curRangeFilter,
@@ -123,15 +118,33 @@ export const DailyRoutineMain: React.FC<IProps> = ({
     return BUTTONS.find(el => el.id === curRangeFilter);
   }, [curRangeFilter]);
 
+  const curRange = useMemo(() => curBtn && RANGE_FROM_RANGE_FILTER[curBtn.id], [curBtn]);
+
+  const curDateText = useMemo(() => {
+    if (curRange) {
+      const start = curRange[0].format(DATE_FORMAT);
+      const end = curRange[1].format(DATE_FORMAT);
+      if (start === end) {
+        return curRange[0].locale('ru').format('D MMMM YYYYг');
+      }
+
+      return curRange[0].locale('ru').format('D MMMM') + ` - ${curRange[1].locale('ru').format('D MMMM YYYYг')}`;
+    }
+
+    return moment()
+      .locale('ru')
+      .format('D MMMM YYYYг');
+  }, [curRange]);
+
   const [spendInCurRange, setSpendInCurRange] = useState('0c');
 
   useEffect(() => {
     (async function() {
-      if (curBtn) {
-        setSpendInCurRange(await getRangeDuration(curBtn.start, curBtn.end));
+      if (curRange) {
+        setSpendInCurRange(await getRangeDuration(...curRange));
       }
     })();
-  }, [curBtn, getRangeDuration]);
+  }, [curRange, getRangeDuration]);
 
   const handleClose = useCallback(() => {
     onClose();
@@ -169,9 +182,7 @@ export const DailyRoutineMain: React.FC<IProps> = ({
       <div className={dialogContentWrap}>
         <div className={topContent}>
           <T variant="h3" className={currentDate}>
-            {moment()
-              .locale('ru')
-              .format('D MMMM YYYYг')}
+            {curDateText}
           </T>
           <Grid container>
             <Grid item lg={4} md={2} sm={6} container justify="flex-start" alignItems="center">

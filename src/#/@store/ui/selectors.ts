@@ -1,7 +1,9 @@
+import moment from 'moment';
+
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 
 import { RANGE_FROM_RANGE_FILTER } from './consts';
-import { IUiState } from './Ui';
+import { IRangeFilter, IUiState } from './Ui';
 
 import { IState } from '@types';
 
@@ -18,4 +20,8 @@ export const isBoardFilterOpened = createDeepEqualSelector(baseState, state => s
 
 export const curRangeFilter = createDeepEqualSelector(baseState, state => state.rangeFilter);
 
-export const currentRange = createDeepEqualSelector([curRangeFilter], filter => RANGE_FROM_RANGE_FILTER[filter]);
+export const currentRange = createDeepEqualSelector(
+  [curRangeFilter],
+  (filter): [moment.Moment, moment.Moment] =>
+    RANGE_FROM_RANGE_FILTER[filter] || RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY]
+);

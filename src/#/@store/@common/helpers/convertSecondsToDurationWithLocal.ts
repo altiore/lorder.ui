@@ -31,3 +31,23 @@ export function convertSecondsToDurationWithLocal(seconds: number, hoursPerDay: 
     Math.floor(mUnix / secondsInADay) + 'дн ' + Math.floor((mUnix % secondsInADay) / 3600) + `ч ${m.format('mмин')}`
   );
 }
+
+export function convertSecondsToHours(seconds: number): string {
+  const m = moment.utc(seconds * 1000);
+  const secondsInAMinute = 60;
+  if (seconds < secondsInAMinute) {
+    return m.format('sс');
+  }
+  const secondsInAHour = secondsInAMinute * 60;
+  if (seconds < secondsInAHour) {
+    return m.format('mмин sс');
+  }
+  const mUnix = m.unix();
+
+  const hours = Math.round(mUnix / 360) / 10;
+  if (hours > 23) {
+    return `${hours}ч`;
+  }
+
+  return Math.floor(mUnix / 3600) + `ч ${m.format('mмин')}`;
+}

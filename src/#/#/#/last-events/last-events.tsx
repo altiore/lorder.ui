@@ -15,6 +15,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import Statistics from '@components/@icons/Statistics';
 import TimeIcon from '@components/@icons/Time';
 
+import LastWeek from './last-week';
 import Today from './today';
 
 import { IEvent } from '@types';
@@ -31,6 +32,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   expanded: {
     ...theme.mainContent.scroll,
+    flexFlow: 'column nowrap',
     maxHeight: BLOCK_MAX_HEIGHT,
     overflowX: 'hidden',
     overflowY: 'auto',
@@ -90,6 +92,7 @@ export const LastEventsTsx: React.FC<ILastEventsProps> = ({ events }): JSX.Eleme
         </ExpansionPanelSummary>
         <ExpansionPanelDetails classes={{ root: classes.expanded }}>
           <Today />
+          <LastWeek />
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel expanded={expanded.lastEvents} onChange={toggleLastEvents}>

@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import Range from '@components/range';
 
-import { todayUserWorksWithoutDefault, totalTimeSpentToday } from '#/@store/user-works';
+import { lastWeekTimeSpentToday, lastWeekUserWorksWithoutDefault } from '#/@store/user-works';
 
 import { IState, IUserWork } from '@types';
 
@@ -14,12 +14,12 @@ interface IMappedProps {
   total: string;
 }
 
-const curTitle = () => 'Сегодня';
+const curTitle = () => 'Неделя';
 
 const mapStateToProps = createStructuredSelector<IState, IMappedProps>({
-  rangeUserWorks: todayUserWorksWithoutDefault,
+  rangeUserWorks: lastWeekUserWorksWithoutDefault,
   title: curTitle,
-  total: totalTimeSpentToday,
+  total: lastWeekTimeSpentToday,
 });
 
 export default connect(mapStateToProps)(Range);
