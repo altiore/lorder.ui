@@ -5,82 +5,104 @@ import Grid from '@material-ui/core/Grid';
 import { useStyles } from './styles';
 import { GroupFooter, GroupHeader, StatisticTable } from './table-group/';
 
-interface IMember {
+interface ITimeTableMember {
+  name: string;
+  y: number;
+  id?: number;
+  timeSpent: number;
+  totalPointsEarned: number;
+}
+
+interface IPointsTableMember {
   name: string;
   y: number;
   id?: number;
 }
 
 interface IStatisticsTablesProps {
-  timeStatistic: IMember[];
-  worthPoints: IMember[];
+  timeTableMembers: ITimeTableMember[];
+  pointsTableMembers: IPointsTableMember[];
   userId: number;
 }
 
-const getMembersToDisplay = (usersList: IMember[], totalUnitsValue: number) =>
+const getPointsTableMembers = (usersList: IPointsTableMember[], totalUnitsValue: number) =>
   usersList
-    .map(({ name, id, y = 0 }) => {
-      return {
-        id,
-        name,
-        percentage: ((100 * y) / totalUnitsValue).toFixed(2),
-        units: y,
-      };
-    })
+    .map(({ name, id, y = 0 }) => ({
+      id,
+      name,
+      percentage: ((100 * y) / totalUnitsValue).toFixed(2),
+      units: y,
+    }))
     .sort((a, b) => b.units - a.units);
 
-const calculateUnitsSum = (members: IMember[]) => {
-  return members.reduce((acum: number, member: IMember) => member.y + acum, 0);
-};
+const getTimeTableMembers = (usersList: ITimeTableMember[]) =>
+  usersList
+    .map(({ name, id, y = 0, totalPointsEarned, timeSpent }) => ({
+      id,
+      name,
+      percentage: Math.floor((totalPointsEarned / timeSpent) * 100) || '<1',
+      units: y,
+    }))
+    .sort((a, b) => b.units - a.units);
 
-export const StatisticTablesTsx = memo(({ timeStatistic, worthPoints, userId }: IStatisticsTablesProps) => {
-  const timePointsSum = useMemo(() => {
-    return calculateUnitsSum(timeStatistic);
-  }, [timeStatistic]);
+const calculateUnitsSum = (members: IPointsTableMember[]) =>
+  members.reduce((acum: number, member: IPointsTableMember) => member.y + acum, 0);
 
+export const StatisticTablesTsx = memo(({ timeTableMembers, pointsTableMembers, userId }: IStatisticsTablesProps) => {
   const worthPointsSum = useMemo(() => {
-    return calculateUnitsSum(worthPoints);
-  }, [worthPoints]);
+    return calculateUnitsSum(pointsTableMembers);
+  }, [pointsTableMembers]);
 
-  const membersForTimeTable = useMemo(() => {
-    return getMembersToDisplay(timeStatistic, timePointsSum);
-  }, [timeStatistic, timePointsSum]);
+  const getTimeTable = useMemo(() => {
+    return getTimeTableMembers(timeTableMembers);
+  }, [timeTableMembers]);
 
-  const membersForPointsTable = useMemo(() => {
-    return getMembersToDisplay(worthPoints, worthPointsSum);
-  }, [worthPoints, worthPointsSum]);
+  const getPointsTable = useMemo(() => {
+    return getPointsTableMembers(pointsTableMembers, worthPointsSum);
+  }, [pointsTableMembers, worthPointsSum]);
 
-  const [filteredTimeTableMembers, setfilteredTimeTableMembers] = useState(membersForTimeTable);
+  const [filteredTimeTable, setfilteredTimeTable] = useState(getTimeTable);
 
-  const [filteredPointsTableMembers, setfilteredPointsTableMembers] = useState(membersForPointsTable);
+  const [filteredPointsTable, setfilteredPointsTable] = useState(getPointsTable);
 
-  const handleTimeTableMembers = useCallback(
-    ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-      setfilteredTimeTableMembers(membersForTimeTable.filter(member => member.name.includes(value)));
+  const handleSearch = useCallback(
+    (members: any, setFilteredMembers) => ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+      /*
+         Механизм фильтрации работает следующим образом:
+         1.на вход получаем всех пользователей и set-колбек
+         2.при вводе мы фильтруем копию members ,которая как-раз и отображается в таблице
+         3.Когда пользователь удаляет поисковую строку ,мы опять отображаем все данные 
+         работает благодаря специфике строк ,любая строка включает в себе пустую ->  'b'.includes('')// true
+         */
+      setFilteredMembers(members.filter(member => member.name.toLowerCase().includes(value.toLowerCase())));
     },
-    [membersForTimeTable]
+    []
   );
-
-  const handlePointsTableMembers = useCallback(
-    ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-      setfilteredPointsTableMembers(membersForPointsTable.filter(member => member.name.includes(value)));
-    },
-    [membersForPointsTable]
-  );
-
   const classes = useStyles();
   return (
     <Grid container justify="center">
       <div className={classes.tableGroupWrap}>
         <GroupHeader headerTitle="СТАТИСТИКА ПО ВРЕМЕНИ" buttonTitle="Редактировать" buttonRoutePath="/" />
-        <StatisticTable members={filteredTimeTableMembers} unit="h" unitTitle="Время" userId={userId} />
-        <GroupFooter members={filteredTimeTableMembers} searchCallback={handleTimeTableMembers} />
+        <StatisticTable
+          members={filteredTimeTable}
+          unit="h"
+          unitTitle="Время"
+          userId={userId}
+          showUserAchievementIcon
+          userAchievementTitle="Продуктивность"
+        />
+        <GroupFooter members={filteredTimeTable} searchCallback={handleSearch(getTimeTable, setfilteredTimeTable)} />
       </div>
 
       <div className={classes.tableGroupWrap}>
         <GroupHeader headerTitle="СТАТИСТИКА ПО ЦЕННОСТИ" buttonTitle="Редактировать" buttonRoutePath="/" />
-        <StatisticTable members={filteredPointsTableMembers} unitTitle="Ценность" userId={userId} />
-        <GroupFooter members={membersForTimeTable} searchCallback={handlePointsTableMembers} />
+        <StatisticTable
+          members={filteredPointsTable}
+          unitTitle="Ценность"
+          userId={userId}
+          userAchievementTitle="Доля"
+        />
+        <GroupFooter members={getTimeTable} searchCallback={handleSearch(getPointsTable, setfilteredPointsTable)} />
       </div>
     </Grid>
   );
