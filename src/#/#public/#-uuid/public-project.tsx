@@ -76,15 +76,17 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
 
   const classes = useStyles();
 
-  const chartData = useMemo(() => {
+  const timeTableMembers = useMemo(() => {
     return members.map(el => ({
       id: el.member.id,
       name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
-      y: millisecondsToHours(el.timeSum) || 0.01,
+      timeSpent: millisecondsToHours(el.timeSum) || 0.1,
+      totalPointsEarned: el.valueSum || 0.1,
+      y: millisecondsToHours(el.timeSum) || 0.1,
     }));
   }, [members]);
 
-  const chartValueData = useMemo(() => {
+  const pointsTableUsersMembers = useMemo(() => {
     return members.map(el => ({
       id: el.member.id,
       name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
@@ -92,7 +94,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
     }));
   }, [members]);
 
-  if (isLoading || !isLoaded || !chartData || !chartValueData) {
+  if (isLoading || !isLoaded || !timeTableMembers || !pointsTableUsersMembers) {
     return <LoadingPage />;
   }
   if (!project?.title) {
@@ -105,7 +107,11 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
       <ProjectMetrics statistic={statistic} />
       <FollowProject project={project} />
       <div className={classes.sectionWrap}>
-        <StatisticTablesTsx timeStatistic={chartData} worthPoints={chartValueData} userId={userId} />
+        <StatisticTablesTsx
+          timeTableMembers={timeTableMembers}
+          pointsTableMembers={pointsTableUsersMembers}
+          userId={userId}
+        />
       </div>
       <ProjectValues />
       <ProjectTeam members={get(members, 'list', [])} />

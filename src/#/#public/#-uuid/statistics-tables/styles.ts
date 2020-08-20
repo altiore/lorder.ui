@@ -128,6 +128,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
       textAlign: 'center',
     },
   },
+  trendingIcon: {
+    color: 'rgb(255, 178, 0)',
+    fontSize: 35,
+    lineHeight: 45,
+    marginTop: -5,
+  },
   usersQuantity: {
     fontWeight: 500,
     paddingLeft: 2,
