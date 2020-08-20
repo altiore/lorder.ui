@@ -16,6 +16,12 @@ import UserTasks from './user-tasks';
 
 import { IEvent } from '@types';
 
+export const Y_HEIGHT_BIG = 84;
+const Y_HEIGHT_LITTLE = 8;
+const X_OFFSET = 8;
+const timelineStub = () => null;
+const DATE_FORMAT = 'YYYY-MM-DD';
+
 export interface ITimeLineProps {
   currentRange: [moment.Moment, moment.Moment];
   events: IEvent[];
@@ -27,57 +33,6 @@ export interface ITimeLineProps {
   currentTimeCustom?: string;
   width: number;
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-  filled: {
-    border: '1px solid #FFB200',
-    borderRadius: theme.shape.borderRadius,
-    boxSizing: 'border-box',
-    position: 'relative',
-    width: '100%',
-  },
-  popoverPaper: {
-    alignItems: 'center',
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    justifyContent: 'center',
-    padding: `0 ${theme.spacing(1)}px`,
-    pointerEvents: 'auto',
-  },
-  root: {
-    alignItems: 'flex-end',
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: 4,
-    cursor: 'pointer',
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    flexGrow: 1,
-    justifyContent: 'flex-end',
-    overflow: 'hidden',
-    position: 'relative',
-    transition: theme.transitions.create(['height', 'z-index'], {
-      duration: theme.transitions.duration.shortest,
-      easing: theme.transitions.easing.easeIn,
-    }),
-    width: '100%',
-  },
-  rootFullSize: {
-    padding: '2px 16px 16px',
-    zIndex: 1200,
-  },
-  rootWrap: {
-    cursor: 'pointer',
-    position: 'relative',
-    width: '100%',
-  },
-}));
-
-export const Y_HEIGHT_BIG = 84;
-const Y_HEIGHT_LITTLE = 8;
-const X_OFFSET = 8;
-
-const timelineStub = () => null;
-const DATE_FORMAT = 'YYYY-MM-DD';
 
 export const TimeLineTsx: React.FC<ITimeLineProps> = ({
   currentRange,
@@ -203,8 +158,6 @@ export const TimeLineTsx: React.FC<ITimeLineProps> = ({
               height={height}
               getPosition={getPosition}
               setEditedEvent={setEditedEvent}
-              startAt={startHour}
-              getHours={getHours}
               Y_HEIGHT_BIG={Y_HEIGHT_BIG}
             />
           </div>
@@ -223,3 +176,47 @@ export const TimeLineTsx: React.FC<ITimeLineProps> = ({
     </Popover>
   );
 };
+
+const useStyles = makeStyles((theme: Theme) => ({
+  filled: {
+    border: '1px solid #FFB200',
+    borderRadius: theme.shape.borderRadius,
+    boxSizing: 'border-box',
+    position: 'relative',
+    width: '100%',
+  },
+  popoverPaper: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    justifyContent: 'center',
+    padding: `0 ${theme.spacing(1)}px`,
+    pointerEvents: 'auto',
+  },
+  root: {
+    alignItems: 'flex-end',
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: 4,
+    cursor: 'pointer',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+    overflow: 'hidden',
+    position: 'relative',
+    transition: theme.transitions.create(['height', 'z-index'], {
+      duration: theme.transitions.duration.shortest,
+      easing: theme.transitions.easing.easeIn,
+    }),
+    width: '100%',
+  },
+  rootFullSize: {
+    padding: '2px 16px 16px',
+    zIndex: 1200,
+  },
+  rootWrap: {
+    cursor: 'pointer',
+    position: 'relative',
+    width: '100%',
+  },
+}));

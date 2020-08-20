@@ -21,7 +21,10 @@ export const isBoardFilterOpened = createDeepEqualSelector(baseState, state => s
 export const curRangeFilter = createDeepEqualSelector(baseState, state => state.rangeFilter);
 
 export const currentRange = createDeepEqualSelector(
-  [curRangeFilter],
-  (filter): [moment.Moment, moment.Moment] =>
-    RANGE_FROM_RANGE_FILTER[filter] || RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY]
+  [baseState],
+  (s): [moment.Moment, moment.Moment] => s.customRange || RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY]
+);
+
+export const lastDayOfCustomRange = createDeepEqualSelector([currentRange], range =>
+  range ? range[1] : RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY][1]
 );

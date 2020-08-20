@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import moment from 'moment';
-import 'moment/locale/ru';
 
 import { Button, Grid } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,60 +11,11 @@ import { TransitionProps } from '@material-ui/core/transitions';
 import T from '@material-ui/core/Typography';
 
 import ActivityTimeline from '#/#/#/@common/activity-time-line';
-import { IRangeFilter, RANGE_FROM_RANGE_FILTER } from '#/@store/ui';
+import { IRangeFilter } from '#/@store/ui';
 
-export const useStyles = makeStyles((theme: Theme) => ({
-  button: {
-    '&:not(:first-child)': {
-      marginLeft: 4,
-    },
-    '&:not(:last-child)': {
-      marginRight: 4,
-    },
-    width: 100,
-  },
-  buttonsBlock: {
-    minWidth: 424,
-  },
-  currentDate: {
-    fontFamily: 'Roboto',
-    fontSize: 32,
-    fontWeight: 300,
-    margin: '16px 0',
-    textAlign: 'center',
-  },
-  dialogContentWrap: {
-    overflow: 'hidden',
-    padding: '0 32px 32px',
-    [theme.breakpoints.down('md')]: {
-      padding: '0 50px',
-    },
-    [theme.breakpoints.down('sm')]: {
-      padding: '0 20px',
-    },
-  },
-  dialogStyle: {
-    height: 'fit-content',
-  },
-  dividerStyle: {
-    margin: '16px 0 32px',
-  },
-  infoBlock: {
-    fontSize: 18,
-    fontWeight: 500,
-    textAlign: 'center',
-  },
-  severalDays: {
-    height: 84,
-    padding: '0 16px',
-  },
-  topContent: {
-    padding: '0 16px',
-  },
-  workedHoursStyle: {
-    textAlign: 'center',
-  },
-}));
+import CustomWeek from './custom-week';
+import MonthRange from './month-range';
+import WeekRange from './week-range';
 
 const Transition = React.forwardRef(function TransitionInner(
   props: TransitionProps & { children?: React.ReactElement },
@@ -97,19 +47,21 @@ const BUTTONS = [
   },
 ];
 
+const DATE_FORMAT = 'YYYY-MM-DD';
+
 interface IProps {
   changeRangeFilter: (f: IRangeFilter) => void;
   curRangeFilter: IRangeFilter;
+  currentRange: [moment.Moment, moment.Moment];
   getRangeDuration: (start: moment.Moment, finish?: moment.Moment) => Promise<string>;
   open: boolean;
   onClose: () => void;
 }
 
-const DATE_FORMAT = 'YYYY-MM-DD';
-
 export const DailyRoutineMain: React.FC<IProps> = ({
   changeRangeFilter,
   curRangeFilter,
+  currentRange,
   getRangeDuration,
   onClose,
   open,
@@ -118,33 +70,33 @@ export const DailyRoutineMain: React.FC<IProps> = ({
     return BUTTONS.find(el => el.id === curRangeFilter);
   }, [curRangeFilter]);
 
-  const curRange = useMemo(() => curBtn && RANGE_FROM_RANGE_FILTER[curBtn.id], [curBtn]);
-
   const curDateText = useMemo(() => {
-    if (curRange) {
-      const start = curRange[0].format(DATE_FORMAT);
-      const end = curRange[1].format(DATE_FORMAT);
+    if (currentRange && currentRange[0] && currentRange[1]) {
+      const start = currentRange[0].format(DATE_FORMAT);
+      const end = currentRange[1].format(DATE_FORMAT);
       if (start === end) {
-        return curRange[0].locale('ru').format('D MMMM YYYYг');
+        return currentRange[0].locale('ru').format('D MMMM YYYYг');
       }
 
-      return curRange[0].locale('ru').format('D MMMM') + ` - ${curRange[1].locale('ru').format('D MMMM YYYYг')}`;
+      return (
+        currentRange[0].locale('ru').format('D MMMM') + ` - ${currentRange[1].locale('ru').format('D MMMM YYYYг')}`
+      );
     }
 
     return moment()
       .locale('ru')
       .format('D MMMM YYYYг');
-  }, [curRange]);
+  }, [currentRange]);
 
   const [spendInCurRange, setSpendInCurRange] = useState('0c');
 
   useEffect(() => {
     (async function() {
-      if (curRange) {
-        setSpendInCurRange(await getRangeDuration(...curRange));
+      if (currentRange) {
+        setSpendInCurRange(await getRangeDuration(...currentRange));
       }
     })();
-  }, [curRange, getRangeDuration]);
+  }, [currentRange, getRangeDuration]);
 
   const handleClose = useCallback(() => {
     onClose();
@@ -173,7 +125,6 @@ export const DailyRoutineMain: React.FC<IProps> = ({
     dialogStyle,
     dividerStyle,
     infoBlock,
-    severalDays,
     topContent,
     workedHoursStyle,
   } = useStyles();
@@ -214,12 +165,65 @@ export const DailyRoutineMain: React.FC<IProps> = ({
           </Grid>
           <Divider className={dividerStyle} />
         </div>
-        {[IRangeFilter.TODAY, IRangeFilter.YESTERDAY].includes(curRangeFilter) ? (
+        {[IRangeFilter.TODAY, IRangeFilter.YESTERDAY, IRangeFilter.CUSTOM_DAY].includes(curRangeFilter) ? (
           <ActivityTimeline fullSize currentTimeCustom={spendInCurRange} />
         ) : (
-          <div className={severalDays}>другой элемент</div>
+          {
+            [IRangeFilter.LAST_WEEK]: <WeekRange lastDay={moment()} />,
+            [IRangeFilter.CUSTOM_WEEK]: <CustomWeek />,
+            [IRangeFilter.LAST_MONTH]: <MonthRange lastDay={moment()} />,
+          }[curRangeFilter]
         )}
       </div>
     </Dialog>
   );
 };
+
+const useStyles = makeStyles((theme: Theme) => ({
+  button: {
+    '&:not(:first-child)': {
+      marginLeft: 4,
+    },
+    '&:not(:last-child)': {
+      marginRight: 4,
+    },
+    width: 100,
+  },
+  buttonsBlock: {
+    minWidth: 424,
+  },
+  currentDate: {
+    fontFamily: 'Roboto',
+    fontSize: 32,
+    fontWeight: 300,
+    margin: '16px 0',
+    textAlign: 'center',
+  },
+  dialogContentWrap: {
+    overflow: 'hidden',
+    padding: '0 32px 32px',
+    [theme.breakpoints.down('md')]: {
+      padding: '0 50px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: '0 20px',
+    },
+  },
+  dialogStyle: {
+    height: 'fit-content',
+  },
+  dividerStyle: {
+    margin: '16px 0 32px',
+  },
+  infoBlock: {
+    fontSize: 18,
+    fontWeight: 500,
+    textAlign: 'center',
+  },
+  topContent: {
+    padding: '0 16px',
+  },
+  workedHoursStyle: {
+    textAlign: 'center',
+  },
+}));
