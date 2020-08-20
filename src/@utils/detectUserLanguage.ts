@@ -2,7 +2,7 @@ import get from 'lodash/get';
 import intersectionBy from 'lodash/intersectionBy';
 import toLower from 'lodash/toLower';
 
-enum LOCALE {
+export enum LOCALE {
   RU = 'ru',
   EN = 'en',
 }

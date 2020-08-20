@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Popover from 'react-popover';
 
 import cn from 'classnames';
@@ -8,89 +8,31 @@ import moment from 'moment';
 import grey from '@material-ui/core/colors/grey';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import HoverInfo from '../hover-info';
+import HoverInfo from './hover-info';
 
 import { IEvent } from '@types';
+
 let leaveTimer: any = null;
 
-interface IUsersTask {
+interface IProps {
+  editedEvent?: IEvent;
   events: IEvent[];
   getPosition: (time: moment.Moment | null) => number;
-  getHours: (time: moment.Moment) => any;
-  startAt: number;
-  editedEvent?: IEvent;
+  height: number;
   setEditedEvent: (task: IEvent | undefined) => void;
   Y_HEIGHT_BIG: number;
-  height: number;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  '@keyframes ActiveWave': {
-    '0%': {
-      boxShadow: '0 8px 10px rgba(255, 199, 0, 0.3), 0 0 0 0 rgba(255, 191, 0, 0.2), 0 0 0 0 rgba(252, 209, 56, 0.2)',
-    },
-    '40%': {
-      boxShadow:
-        '0 8px 10px rgba(255, 199, 0, 0.3), 0 0 0 15px rgba(255, 191, 0, 0.2), 0 0 0 0 rgba(252, 209, 56, 0.2)',
-    },
-    '80%': {
-      boxShadow:
-        '0 8px 10px rgba(255, 199, 0, 0.3), 0 0 0 30px rgba(255, 191, 0, 0), 0 0 0 26.7px rgba(252, 209, 56, 0.07)',
-    },
-    '99%': {
-      boxShadow: '0 8px 10px rgba(255, 199, 0, 0.3), 0 0 0 30px rgba(255, 191, 0, 0), 0 0 0 40px rgba(252, 209, 56, 0)',
-    },
-  },
-  block: {
-    backgroundColor: '#D5D5D5',
-    borderColor: grey[400],
-    borderRadius: 4,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    boxSizing: 'border-box',
-    height: '100%',
-    position: 'absolute',
-  },
-  blockActive: {
-    backgroundColor: '#FFF0B5',
-    borderColor: '#FFB200',
-    borderRadius: 4,
-    borderStyle: 'solid',
-  },
-  editedStyle: {
-    animation: '$ActiveWave 1.2s linear infinite',
-    borderBottomWidth: 2,
-    borderLeftWidth: 3,
-    borderRightWidth: 3,
-    borderTopWidth: 2,
-    boxShadow: theme.shadow.secondary,
-    zIndex: 1400,
-  },
-  popover: {
-    zIndex: 1300,
-  },
-}));
-
-export const UserTasks: React.FC<IUsersTask> = ({
-  getPosition,
-  getHours,
-  startAt,
-  events,
+export const UserTasks: React.FC<IProps> = ({
   editedEvent,
-  setEditedEvent,
+  events,
+  getPosition,
   height,
+  setEditedEvent,
   Y_HEIGHT_BIG,
 }) => {
   const [hoveredEvent, setHoveredEvent] = useState<IEvent>();
   const [hoveredEl, setHoveredEl] = useState<any>(null);
-  const preparedEvents = useMemo(() => {
-    return events.filter((el: IEvent) => {
-      return (
-        !el.userWork.finishAt ||
-        (el.userWork.finishAt.day() === moment().day() && getHours(el.userWork.finishAt) > startAt)
-      );
-    });
-  }, [events, getHours, startAt]);
   const cleanLeaveTimer = useCallback(() => {
     if (leaveTimer) {
       clearTimeout(leaveTimer);
@@ -161,7 +103,7 @@ export const UserTasks: React.FC<IUsersTask> = ({
   const { block, blockActive, editedStyle, popover } = useStyles();
   return (
     <>
-      {preparedEvents.map((taskInfo, i) => {
+      {events.map(taskInfo => {
         return (
           <Popover
             key={taskInfo.userWork.id}
@@ -194,3 +136,50 @@ export const UserTasks: React.FC<IUsersTask> = ({
     </>
   );
 };
+
+const useStyles = makeStyles((theme: Theme) => ({
+  '@keyframes ActiveWave': {
+    '0%': {
+      boxShadow: '0 8px 10px rgba(255, 199, 0, 0.3), 0 0 0 0 rgba(255, 191, 0, 0.2), 0 0 0 0 rgba(252, 209, 56, 0.2)',
+    },
+    '40%': {
+      boxShadow:
+        '0 8px 10px rgba(255, 199, 0, 0.3), 0 0 0 15px rgba(255, 191, 0, 0.2), 0 0 0 0 rgba(252, 209, 56, 0.2)',
+    },
+    '80%': {
+      boxShadow:
+        '0 8px 10px rgba(255, 199, 0, 0.3), 0 0 0 30px rgba(255, 191, 0, 0), 0 0 0 26.7px rgba(252, 209, 56, 0.07)',
+    },
+    '99%': {
+      boxShadow: '0 8px 10px rgba(255, 199, 0, 0.3), 0 0 0 30px rgba(255, 191, 0, 0), 0 0 0 40px rgba(252, 209, 56, 0)',
+    },
+  },
+  block: {
+    backgroundColor: '#D5D5D5',
+    borderColor: grey[400],
+    borderRadius: 4,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    boxSizing: 'border-box',
+    height: '100%',
+    position: 'absolute',
+  },
+  blockActive: {
+    backgroundColor: '#FFF0B5',
+    borderColor: '#FFB200',
+    borderRadius: 4,
+    borderStyle: 'solid',
+  },
+  editedStyle: {
+    animation: '$ActiveWave 1.2s linear infinite',
+    borderBottomWidth: 2,
+    borderLeftWidth: 3,
+    borderRightWidth: 3,
+    borderTopWidth: 2,
+    boxShadow: theme.shadow.secondary,
+    zIndex: 1400,
+  },
+  popover: {
+    zIndex: 1300,
+  },
+}));

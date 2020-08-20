@@ -1,4 +1,7 @@
 import map from 'lodash/map';
+import { Moment } from 'moment';
+
+import { RANGE_FROM_RANGE_FILTER } from './consts';
 
 export type IUiProperty = 'isMagicLoginForm' | 'isLeftBarOpen';
 
@@ -7,6 +10,8 @@ export enum IRangeFilter {
   YESTERDAY,
   LAST_WEEK,
   LAST_MONTH,
+  CUSTOM_DAY,
+  CUSTOM_WEEK,
 }
 
 export interface IUiState {
@@ -14,6 +19,7 @@ export interface IUiState {
   isMagicLoginForm: boolean;
   isLeftBarOpen: boolean;
   rangeFilter: IRangeFilter;
+  customRange: [Moment, Moment];
 }
 
 export class Ui implements IUiState {
@@ -21,6 +27,7 @@ export class Ui implements IUiState {
   readonly isMagicLoginForm: boolean = false;
   readonly isLeftBarOpen: boolean = true;
   rangeFilter: IRangeFilter = IRangeFilter.TODAY;
+  customRange: [Moment, Moment] = RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY];
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

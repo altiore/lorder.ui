@@ -14,4 +14,6 @@ export const RANGE_FROM_RANGE_FILTER: { [key in IRangeFilter]: [moment.Moment, m
   ],
   [IRangeFilter.LAST_WEEK]: [moment().startOf('isoWeek'), moment()],
   [IRangeFilter.LAST_MONTH]: [moment().startOf('month'), moment()],
+  [IRangeFilter.CUSTOM_DAY]: [moment().startOf('day'), moment()],
+  [IRangeFilter.CUSTOM_WEEK]: [moment().startOf('isoWeek'), moment()],
 };
