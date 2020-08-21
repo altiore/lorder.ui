@@ -35,9 +35,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
 interface PersonI {
   avatar?: string;
   name?: string;
+  role: string;
 }
 
-export const Person: React.FC<PersonI> = ({ avatar, name }) => {
+export const Person: React.FC<PersonI> = ({ avatar, name, role }) => {
   const { avatarStyle, avatarWrapper, item } = useStyles();
 
   return (
@@ -47,6 +48,9 @@ export const Person: React.FC<PersonI> = ({ avatar, name }) => {
       </ButtonBase>
       <Typography noWrap align="center" color="textPrimary" variant="h4">
         {name || 'N/A'}
+      </Typography>
+      <Typography noWrap align="center" color="textPrimary">
+        {role}
       </Typography>
     </Grid>
   );

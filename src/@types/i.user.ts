@@ -12,7 +12,7 @@ export interface IUser {
   readonly updatedAt: string;
   role: ROLE;
   projectsCount: number;
-  displayName?: string;
+  displayName: string;
   defaultProjectId: number;
 
   // calculated fields

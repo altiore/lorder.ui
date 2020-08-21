@@ -2,8 +2,12 @@ import React, { memo, useCallback, useMemo, useState } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
+import { millisecondsToHours } from '#/@store/@common/helpers';
+
 import { useStyles } from './styles';
 import { GroupFooter, GroupHeader, StatisticTable } from './table-group/';
+
+import { IMember } from '@types';
 
 interface ITimeTableMember {
   name: string;
@@ -20,8 +24,7 @@ interface IPointsTableMember {
 }
 
 interface IStatisticsTablesProps {
-  timeTableMembers: ITimeTableMember[];
-  pointsTableMembers: IPointsTableMember[];
+  members: IMember[];
   userId: number;
 }
 
@@ -30,7 +33,7 @@ const getPointsTableMembers = (usersList: IPointsTableMember[], totalUnitsValue:
     .map(({ name, id, y = 0 }) => ({
       id,
       name,
-      percentage: ((100 * y) / totalUnitsValue).toFixed(2),
+      percentage: totalUnitsValue ? ((100 * y) / totalUnitsValue).toFixed(2) : 0,
       units: y,
     }))
     .sort((a, b) => b.units - a.units);
@@ -40,7 +43,7 @@ const getTimeTableMembers = (usersList: ITimeTableMember[]) =>
     .map(({ name, id, y = 0, totalPointsEarned, timeSpent }) => ({
       id,
       name,
-      percentage: Math.floor((totalPointsEarned / timeSpent) * 100) || '<1',
+      percentage: timeSpent ? Math.floor((totalPointsEarned / timeSpent) * 100) || '<1' : '0',
       units: y,
     }))
     .sort((a, b) => b.units - a.units);
@@ -48,7 +51,25 @@ const getTimeTableMembers = (usersList: ITimeTableMember[]) =>
 const calculateUnitsSum = (members: IPointsTableMember[]) =>
   members.reduce((acum: number, member: IPointsTableMember) => member.y + acum, 0);
 
-export const StatisticTablesTsx = memo(({ timeTableMembers, pointsTableMembers, userId }: IStatisticsTablesProps) => {
+export const StatisticTablesTsx = memo(({ members, userId }: IStatisticsTablesProps) => {
+  const timeTableMembers = useMemo(() => {
+    return members.map(el => ({
+      id: el.member.id,
+      name: el.member.userName,
+      timeSpent: millisecondsToHours(el.timeSum) || 0,
+      totalPointsEarned: el.valueSum || 0,
+      y: millisecondsToHours(el.timeSum) || 0,
+    }));
+  }, [members]);
+
+  const pointsTableMembers = useMemo(() => {
+    return members.map(el => ({
+      id: el.member.id,
+      name: el.member.userName,
+      y: el.valueSum || 0,
+    }));
+  }, [members]);
+
   const worthPointsSum = useMemo(() => {
     return calculateUnitsSum(pointsTableMembers);
   }, [pointsTableMembers]);
@@ -66,7 +87,7 @@ export const StatisticTablesTsx = memo(({ timeTableMembers, pointsTableMembers, 
   const [filteredPointsTable, setfilteredPointsTable] = useState(getPointsTable);
 
   const handleSearch = useCallback(
-    (members: any, setFilteredMembers) => ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+    (curMembers: any, setFilteredMembers) => ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
       /*
          Механизм фильтрации работает следующим образом:
          1.на вход получаем всех пользователей и set-колбек
@@ -74,7 +95,7 @@ export const StatisticTablesTsx = memo(({ timeTableMembers, pointsTableMembers, 
          3.Когда пользователь удаляет поисковую строку ,мы опять отображаем все данные 
          работает благодаря специфике строк ,любая строка включает в себе пустую ->  'b'.includes('')// true
          */
-      setFilteredMembers(members.filter(member => member.name.toLowerCase().includes(value.toLowerCase())));
+      setFilteredMembers(curMembers.filter(member => member.name.toLowerCase().includes(value.toLowerCase())));
     },
     []
   );

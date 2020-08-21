@@ -6,18 +6,18 @@ import { isPublicLorderLoaded, isPublicLorderLoading, lorderHighLevelMembers } f
 
 import ScreenTeam from './screen-team';
 
-import { IState } from '@types';
+import { IMember, IState } from '@types';
 
 interface IMappedProps {
   isPublicLorderLoaded: boolean;
   isPublicLorderLoading: boolean;
-  team: any[];
+  team: IMember[];
 }
 
 const mapState = createStructuredSelector<IState, IMappedProps>({
   isPublicLorderLoaded,
   isPublicLorderLoading,
   team: lorderHighLevelMembers,
-} as any);
+});
 
 export default connect(mapState)(ScreenTeam);

@@ -1,13 +1,8 @@
 import React, { useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import get from 'lodash/get';
-
 import LoadingPage from '@components/loading-page';
 import { NoMatch } from '@components/no-match';
-
-import { millisecondsToHours } from '#/@store/@common/helpers';
-import { Member } from '#/@store/projects/members/Member';
 
 import FollowProject from './follow-project';
 import ProjectMetrics from './metrics';
@@ -18,7 +13,7 @@ import { StatisticTablesTsx } from './statistics-tables/statistics-tables';
 import { useStyles } from './styles';
 import UsersActivity from './users-activity';
 
-import { IProject } from '@types';
+import { IMember, IProject } from '@types';
 
 export interface IPublicProjectProps extends RouteComponentProps<{ uuid: string }> {
   getProjectByUuid: (uuid: string) => IProject | undefined;
@@ -53,6 +48,12 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
     return match.params.uuid;
   }, [match]);
 
+  useEffect(() => {
+    if (publicProjectUuid !== matchProjectUuid) {
+      fetchPublicProject(matchProjectUuid);
+    }
+  }, [fetchPublicProject, matchProjectUuid, publicProjectUuid]);
+
   const project: IProject | undefined = useMemo(() => {
     if (getProjectByUuid && matchProjectUuid) {
       const p = getProjectByUuid(matchProjectUuid);
@@ -64,37 +65,21 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
     return publicProject;
   }, [getProjectByUuid, matchProjectUuid, publicProject]);
 
-  const members: Member[] = useMemo(() => {
-    return (project && project.members ? project.members : []) as Member[];
+  const members = useMemo<IMember[]>(() => {
+    return (project && project.members ? project.members.list : []).slice(0).sort((a, b) => {
+      if (a.valueSum === b.valueSum) {
+        return 0;
+      }
+      if (a.valueSum > b.valueSum) {
+        return -1;
+      }
+      return 1;
+    });
   }, [project]);
 
-  useEffect(() => {
-    if (publicProjectUuid !== matchProjectUuid) {
-      fetchPublicProject(matchProjectUuid);
-    }
-  }, [fetchPublicProject, matchProjectUuid, publicProjectUuid]);
+  const { sectionWrap } = useStyles();
 
-  const classes = useStyles();
-
-  const timeTableMembers = useMemo(() => {
-    return members.map(el => ({
-      id: el.member.id,
-      name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
-      timeSpent: millisecondsToHours(el.timeSum) || 0.1,
-      totalPointsEarned: el.valueSum || 0.1,
-      y: millisecondsToHours(el.timeSum) || 0.1,
-    }));
-  }, [members]);
-
-  const pointsTableUsersMembers = useMemo(() => {
-    return members.map(el => ({
-      id: el.member.id,
-      name: get(el.member, 'displayName') || get(el.member, 'email', '').replace(/@.*$/, ''),
-      y: el.valueSum || 0.1,
-    }));
-  }, [members]);
-
-  if (isLoading || !isLoaded || !timeTableMembers || !pointsTableUsersMembers) {
+  if (isLoading || !isLoaded || !members?.length) {
     return <LoadingPage />;
   }
   if (!project?.title) {
@@ -106,16 +91,12 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
       <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
       <ProjectMetrics statistic={statistic} />
       <FollowProject project={project} />
-      <div className={classes.sectionWrap}>
-        <StatisticTablesTsx
-          timeTableMembers={timeTableMembers}
-          pointsTableMembers={pointsTableUsersMembers}
-          userId={userId}
-        />
+      <div className={sectionWrap}>
+        <StatisticTablesTsx members={members} userId={userId} />
       </div>
       <ProjectValues />
-      <ProjectTeam members={get(members, 'list', [])} />
-      <UsersActivity members={get(members, 'list', [])} project={project} />
+      <ProjectTeam members={members} />
+      <UsersActivity members={members} project={project} />
     </>
   );
 };

@@ -1,22 +1,23 @@
 import React from 'react';
 import Slider from 'react-slick';
-import { CustomArrowProps, Settings } from 'react-slick';
+import { Settings } from 'react-slick';
 
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { FlippingCard } from '@components/flipping-card/flipping-card';
 
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
-import { useStyles } from '../styles';
+import Arrow from './arrow';
+
+import { IMember } from '@types';
 
 const getSliderSettings = (slidesLen: number = 0): Partial<Settings> => ({
-  arrows: true,
+  arrows: slidesLen > 1,
   infinite: slidesLen > 4,
-  nextArrow: <NextArrow />,
-  prevArrow: <PrevArrow />,
+  nextArrow: <Arrow type="next" />,
+  prevArrow: <Arrow type="prev" />,
   responsive: [
     {
       breakpoint: 1260,
@@ -51,44 +52,30 @@ const getSliderSettings = (slidesLen: number = 0): Partial<Settings> => ({
   slidesToShow: 4,
 });
 
-const PrevArrow: React.FC<CustomArrowProps> = ({ onClick }) => {
-  const classes = useStyles();
-  return (
-    <div className={`${classes.control} ${classes.leftControl}`} onClick={onClick}>
-      <ChevronLeftIcon className={classes.arrow} />
-    </div>
-  );
-};
-
-const NextArrow: React.FC<CustomArrowProps> = ({ onClick }) => {
-  const classes = useStyles();
-  return (
-    <div className={`${classes.control} ${classes.rightControl}`} onClick={onClick}>
-      <ChevronRightIcon fontSize="large" className={classes.arrow} />
-    </div>
-  );
-};
-
-export const PublicProjectSlider: React.FC<{ members: any[] }> = ({ members }) => {
-  const classes = useStyles();
+export const PublicProjectSlider: React.FC<{ members: IMember[] }> = ({ members }) => {
+  const { slideWrap } = useStyles();
   return (
     <Slider {...getSliderSettings(members.length)}>
-      {members.map(({ id, avatar, displayName, role }, i) => (
-        <div key={id} className={classes.slideWrap}>
+      {members.map(({ member: { id, avatar, displayName }, memberRole, opinion }) => (
+        <div key={id} className={slideWrap}>
           <FlippingCard
             avatarUrl={avatar?.url || process.env.PUBLIC_URL + '/d-avatar.png'}
             userName={displayName || 'N/A'}
-            userRole={role}
+            userRole={memberRole}
             userProfileLink="/"
             profileLinkTitle="Ссылка на профиль"
           >
-            Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum
-            используют потому, что тот обеспечивает стандартное заполнение шаблона Давно выяснено, что при оценке
-            дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
-            обеспечивает стандартное заполнение шаблона
+            {opinion || '[пользователь НЕ высказался о проекте]'}
           </FlippingCard>
         </div>
       ))}
     </Slider>
   );
 };
+
+const useStyles = makeStyles((theme: Theme) => ({
+  slideWrap: {
+    outline: 'none',
+    padding: theme.spacing(1, 1, 2),
+  },
+}));

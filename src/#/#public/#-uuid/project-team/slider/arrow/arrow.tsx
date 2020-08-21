@@ -1,8 +1,27 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import React from 'react';
+import { CustomArrowProps } from 'react-slick';
 
-export const useStyles = makeStyles((theme: Theme) => ({
+import ButtonBase from '@material-ui/core/ButtonBase';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+
+interface IProps extends CustomArrowProps {
+  type: 'next' | 'prev';
+}
+
+export const ArrowTsx: React.FC<IProps> = ({ onClick, type }) => {
+  const { arrow, control, leftControl, rightControl } = useStyles();
+  return (
+    <ButtonBase className={`${control} ${{ next: rightControl, prev: leftControl }[type]}`} onClick={onClick}>
+      {type === 'next' ? <ChevronRightIcon className={arrow} /> : <ChevronLeftIcon className={arrow} />}
+    </ButtonBase>
+  );
+};
+
+const useStyles = makeStyles((theme: Theme) => ({
   arrow: {
-    background: 'ffffff',
+    background: theme.palette.background.paper,
     color: '#c7c7c7',
     fontSize: 40,
   },
@@ -30,7 +49,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
     left: -65,
   },
-
   rightControl: {
     '&:hover': {
       boxShadow: '-3.886px 3.147px 20px 0px rgb(244, 245, 248)',
@@ -39,33 +57,5 @@ export const useStyles = makeStyles((theme: Theme) => ({
       color: '#ffb200',
     },
     right: -65,
-  },
-  sectionWrap: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    display: 'flex',
-    flexFlow: 'column',
-    flexWrap: 'wrap',
-    paddingTop: 145,
-  },
-  sliderWrap: {
-    marginBottom: 80,
-    marginTop: 80,
-    maxWidth: 1290,
-    padding: '0 70px',
-    width: '100%',
-  },
-  slideWrap: {
-    marginBottom: 15,
-  },
-  tagline: {
-    color: 'rgb(35, 35, 35)',
-    fontFamily: 'Roboto',
-    fontSize: 30,
-    fontWeight: 300,
-    lineHeight: 1.133,
-    marginBottom: 40,
-    marginTop: 0,
-    textAlign: 'center',
   },
 }));

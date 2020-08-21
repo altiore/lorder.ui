@@ -19,12 +19,22 @@ export const lorderMembers = createDeepEqualSelector(
 
 export const lorderHighLevelMembers = createDeepEqualSelector(lorderMembers, list =>
   Array.isArray(list && list.list)
-    ? list.list.filter(el => {
-        return (
-          el.accessLevel > ACCESS_LEVEL.RED &&
-          get(el, ['member', 'avatar', 'url']) &&
-          get(el, ['member', 'displayName'])
-        );
-      })
+    ? list.list
+        .filter(el => {
+          return (
+            el.accessLevel > ACCESS_LEVEL.RED &&
+            get(el, ['member', 'avatar', 'url']) &&
+            get(el, ['member', 'displayName'])
+          );
+        })
+        .sort((a, b) => {
+          if (a.valueSum === b.valueSum) {
+            return 0;
+          }
+          if (a.valueSum > b.valueSum) {
+            return -1;
+          }
+          return 1;
+        })
     : []
 );

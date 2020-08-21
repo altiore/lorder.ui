@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
@@ -25,13 +25,6 @@ interface ScreenTeamI {
 const ScreenTeam: React.FC<ScreenTeamI> = ({ isPublicLorderLoaded, isPublicLorderLoading, name, team }) => {
   const classes = useStyles();
 
-  const preparedTeam = useMemo(() => {
-    if (team) {
-      return team.filter(m => !!m?.member?.displayName);
-    }
-    return [];
-  }, [team]);
-
   return (
     <Block name={name} className={classes.team}>
       <ScreenTitle black>Команда проекта Lorder</ScreenTitle>
@@ -46,9 +39,9 @@ const ScreenTeam: React.FC<ScreenTeamI> = ({ isPublicLorderLoaded, isPublicLorde
           </div>
         ) : isPublicLorderLoaded ? (
           <Grid className={classes.personsBlock} container justify="space-evenly" spacing={10}>
-            {preparedTeam.map(({ member: { id, avatar, displayName } }) => (
+            {team.map(({ member: { id, avatar, displayName }, memberRole }) => (
               <Grid item key={id}>
-                <Person avatar={avatar ? avatar.url : undefined} name={displayName} />
+                <Person avatar={avatar ? avatar.url : undefined} name={displayName} role={memberRole} />
               </Grid>
             ))}
           </Grid>

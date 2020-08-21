@@ -13,7 +13,7 @@ export class User implements IUser {
   readonly updatedAt: string;
   role: ROLE = ROLE.USER;
   projectsCount: number;
-  displayName?: string;
+  displayName: string;
   defaultProjectId: number;
 
   constructor(initial?: object) {
@@ -27,7 +27,7 @@ export class User implements IUser {
   }
 
   get userName(): string {
-    return this.displayName || (this.email ? this.email.replace(/@.*$/, '') : `[Noname ${this.id}]`);
+    return this.displayName || `[Noname ${this.id}]`;
   }
 
   get shortName(): string {
