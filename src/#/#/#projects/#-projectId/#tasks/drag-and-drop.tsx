@@ -28,7 +28,7 @@ import { STATUS_TYPE_NAME } from '#/@store/tasksFilter/TasksFilter';
 import { useStyles } from './styles';
 import { TaskCard } from './task-card';
 
-import { ITask, ITaskColumn, PROJECT_STRATEGY } from '@types';
+import { IRoleColumn, ITask, PROJECT_STRATEGY } from '@types';
 
 const CARD_WIDTH = 296;
 
@@ -40,7 +40,7 @@ const getListStyle = (isDraggingOver: boolean, height: number) => ({
 });
 
 export interface IDragAndDropProps {
-  columns: ITaskColumn[];
+  columns: IRoleColumn[];
   destroy: any;
   fetchProjectTasks: any;
   height: number;

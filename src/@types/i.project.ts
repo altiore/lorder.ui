@@ -3,30 +3,13 @@ import { IDownloadList } from './i.download-list';
 import { IMedia } from './i.media';
 import { IMember } from './i.member';
 import { IProjectRole } from './i.project-role';
-import { TASK_STATUS_MOVE_TYPE } from './i.status-move';
+import { IRoleColumn } from './i.project-strategy-info';
 import { PROJECT_TYPE } from './project-type';
 
 export enum PROJECT_STRATEGY {
   ADVANCED = 'ADVANCED',
   SIMPLE = 'SIMPLE',
   DOUBLE_CHECK = 'DOUBLE_CHECK',
-}
-
-export interface ITaskMove {
-  from: string;
-  type: TASK_STATUS_MOVE_TYPE;
-  to: string;
-  requirements?: {
-    fields?: string[];
-    transit?: true;
-  };
-}
-
-export interface ITaskColumn {
-  column: string;
-
-  moves: ITaskMove[];
-  statuses: string[];
 }
 
 export interface IProjectShort {
@@ -56,7 +39,7 @@ export interface IProject extends IProjectShort {
   type: PROJECT_TYPE;
   pub?: any;
 
-  taskColumns: ITaskColumn[];
+  taskColumns: IRoleColumn[];
 
   // calculated fields
   fullProjectTimeHumanize: string | undefined;

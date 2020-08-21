@@ -5,6 +5,7 @@ import { PURGE } from 'redux-persist';
 import { DownloadList } from '#/@store/@common/entities';
 import { combineActions } from '#/@store/@common/helpers';
 import {
+  bringBackAct,
   createAndStartUserWork,
   patchAndStopUserWork,
   pauseUserWork,
@@ -110,10 +111,10 @@ const postAndStartUserWorkFailHandler = (state: S) => {
   return state.stopLoading();
 };
 
-// const deleteUserWorkHandler = (state: S, { payload }: Action<IDeleteUserWork>) => {
-//   const index = state.list.findIndex(el => el.id === get(payload, 'userWorkId'));
-//   return state.removeItem(index);
-// };
+const bringBackSuccessHandler = (state: S, { payload }: Action<P>) => {
+  const stopResponse = get(payload, ['data', 'stopResponse'], {});
+  return patchAndStopUserWorkSuccessHandler(state, { payload: { data: stopResponse } } as any);
+};
 
 export const userWorks: any = handleActions<S, P>(
   {
@@ -132,6 +133,8 @@ export const userWorks: any = handleActions<S, P>(
     [combineActions(createAndStartUserWork, startUserWorkAct)]: postAndStartUserWorkHandler,
     [combineActions(createAndStartUserWork.success, startUserWorkAct.success)]: postAndStartUserWorkSuccessHandler,
     [combineActions(createAndStartUserWork.fail, startUserWorkAct.fail)]: postAndStartUserWorkFailHandler,
+
+    [combineActions(bringBackAct.success)]: bringBackSuccessHandler,
 
     [PURGE]: logOutHandler,
   },

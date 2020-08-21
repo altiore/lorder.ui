@@ -13,7 +13,7 @@ import { SIZE } from '@components/value/value';
 
 import { parseNumber } from '#/@store/@common/helpers';
 
-import { COMPLEXITY, ITaskMove, PROJECT_STRATEGY, TASK_STATUS_MOVE_TYPE, URGENCY } from '@types';
+import { COMPLEXITY, IRoleMove, PROJECT_STRATEGY, TASK_STATUS_MOVE_TYPE, URGENCY } from '@types';
 
 const formatNumber = i => (typeof i === 'number' ? i.toString() : '');
 
@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export interface IProps {
-  getMovesByStatus: (projectId: number, status: string) => ITaskMove[];
+  getMovesByStatus: (projectId: number, status: string) => IRoleMove[];
   projectId?: number;
   statusTypeName?: string;
   strategy?: PROJECT_STRATEGY;

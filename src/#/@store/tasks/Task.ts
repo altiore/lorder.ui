@@ -2,7 +2,7 @@ import map from 'lodash/map';
 
 import { convertSecondsToDuration } from '#/@store/@common/helpers';
 
-import { IProjectPart, ITask, IUser, IUserTask } from '@types';
+import { IProjectPart, ITask, IUser, IUserTask, STATUS_NAME } from '@types';
 
 export class Task implements ITask {
   isArchived: boolean;
@@ -17,7 +17,7 @@ export class Task implements ITask {
   sequenceNumber: number;
   source?: string;
   status: number;
-  statusTypeName: string;
+  statusTypeName: STATUS_NAME;
   value: number;
   typeId?: number;
   userTasks: IUserTask[] = [];

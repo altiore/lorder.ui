@@ -7,10 +7,10 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  TextField,
   Tooltip,
   Typography,
 } from '@material-ui/core';
-import { TextField } from '@material-ui/core/';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 
@@ -127,7 +127,10 @@ export const TaskComments: React.FC<IProps> = ({
             <React.Fragment key={comment.id}>
               <ListItem alignItems="flex-start" style={{ position: 'relative' }}>
                 <ListItemAvatar>
-                  <Avatar alt="Remy Sharp" src={comment.user.avatar?.url || process.env.PUBLIC_URL + '/d-avatar.png'} />
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={comment?.user?.avatar?.url || process.env.PUBLIC_URL + '/d-avatar.png'}
+                  />
                 </ListItemAvatar>
                 <ListItemText
                   primary={comment?.user?.displayName || 'N/A'}
@@ -136,7 +139,7 @@ export const TaskComments: React.FC<IProps> = ({
                       <Typography component="span" variant="body2" className={classes.inline} color="textPrimary">
                         {comment.text}
                       </Typography>
-                      {userId === comment.user.id && (
+                      {userId === comment.userId && (
                         <span className={classes.basketWrap}>
                           <Tooltip title="Удалить комментарий" placement="top-end">
                             <DeleteIcon className={classes.basketIcon} data-id={comment.id} onClick={removeComment} />
