@@ -19,6 +19,7 @@ import {
 } from '#/@store/tasks';
 import { currentTimeToString, currentUserWorkData, setCurrentUserWorkId, tickUserWorkTimer } from '#/@store/timer';
 import {
+  bringBackAct,
   CREATE_USER_WORK_FORM_NAME,
   createAndStartUserWork,
   IUserWorkData,
@@ -29,7 +30,7 @@ import {
 
 import { pauseUserWork, startUserWorkAct } from '../actions';
 
-import { IProject, IState } from '@types';
+import { IProject, IState, ITask } from '@types';
 
 export let timer: any;
 
@@ -169,6 +170,25 @@ export const stopUserWork = () => async (dispatch: any, getState: any) => {
     if (status === 422) {
       dispatch(stopAsyncValidation(EDIT_TASK_FORM, parseFormErrorsFromResponse(e)));
     }
+  }
+};
+
+export const bringBack = (task: ITask, reason: string) => async (dispatch: any, getState: any) => {
+  try {
+    const res = await dispatch(
+      bringBackAct({
+        projectId: task.projectId,
+        reason,
+        sequenceNumber: task.sequenceNumber,
+      })
+    );
+    if (res?.payload?.data?.stopResponse?.next) {
+      dispatch(startTimer(res?.payload?.data?.stopResponse?.next));
+    }
+    return res?.payload?.data;
+  } catch (e) {
+    console.log('Error', e);
+    return false;
   }
 };
 

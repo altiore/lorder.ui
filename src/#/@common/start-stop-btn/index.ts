@@ -2,21 +2,24 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
+import { openDialog } from '#/@store/dialog';
+import { getStrategyByProjectId } from '#/@store/projects';
 import { currentTask } from '#/@store/timer';
 import { isPaused, pauseWork, stopPausedTask, stopUserWork, tryToStartUserWork } from '#/@store/user-works';
 
 import { StartStopBtnTsx } from './start-stop-btn';
 
-import { IState, ITask } from '@types';
+import { IProjectStrategyInfo, IState, ITask } from '@types';
 
-interface ITaskDurationOwn {
-  afterStop?: any;
-  onStartNew?: any;
-  task?: ITask;
+interface IMappedProps {
+  currentTask: ITask;
+  getStrategyByProjectId: (prId: number) => IProjectStrategyInfo | undefined;
+  isPaused: boolean;
 }
 
-const mapStateToProps = createStructuredSelector<IState, any>({
+const mapStateToProps = createStructuredSelector<IState, IMappedProps>({
   currentTask,
+  getStrategyByProjectId,
   isPaused,
 });
 
@@ -25,8 +28,7 @@ const mapDispatchToProps = {
   onCompletePaused: stopPausedTask,
   onPause: pauseWork,
   onStart: tryToStartUserWork,
+  openDialog,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(StartStopBtnTsx as any) as (
-  props: ITaskDurationOwn
-) => JSX.Element;
+export default connect(mapStateToProps, mapDispatchToProps)(StartStopBtnTsx);

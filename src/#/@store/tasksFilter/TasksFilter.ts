@@ -8,7 +8,7 @@ export enum TASK_FILTER_TYPE {
   NEW = 'new',
 }
 
-export const STATUS_TYPE_NAME = {
+export const STATUS_TYPE_NAME: { [key in string]: any } = {
   CREATING: 'creating',
   DONE: 'done',
   IN_PROGRESS: 'in-progress',

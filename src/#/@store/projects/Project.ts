@@ -18,7 +18,7 @@ import {
   IProjectRole,
   IProjectStrategyInfo,
   IProjectTaskType,
-  ITaskColumn,
+  IRoleColumn,
   PROJECT_STRATEGY,
   PROJECT_TYPE,
 } from '@types';
@@ -45,7 +45,7 @@ export class Project implements IProject {
   /** ценность всех задач в этом проекте */
   valueSum?: number;
   type: PROJECT_TYPE;
-  taskColumns: ITaskColumn[] = [];
+  taskColumns: IRoleColumn[] = [];
   pub?: any;
   roles?: IProjectRole[];
 

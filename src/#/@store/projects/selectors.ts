@@ -6,7 +6,7 @@ import { currentProjectId } from '#/@store/timer';
 
 import { Project } from './Project';
 
-import { IMember, IProject, IState, IUser } from '@types';
+import { IMember, IProject, IState, IUser, STATUS_NAME } from '@types';
 
 const baseState = (state: IState) => state.projects;
 
@@ -130,7 +130,7 @@ export const getTaskColumnsByProjectId = createDeepEqualSelector(getProjectById,
 
 export const getMovesByStatus = createDeepEqualSelector(
   getTaskColumnsByProjectId,
-  getColumns => (id: number, statusTypeName: string) => {
+  getColumns => (id: number, statusTypeName: STATUS_NAME) => {
     const columns = getColumns(id);
     if (columns) {
       const columnInfo = columns.find(el => el.statuses.includes(statusTypeName));
@@ -147,6 +147,14 @@ export const getProjectStrategyByProjectId = createDeepEqualSelector(getProjectB
     return currentProject.strategy;
   }
   return '';
+});
+
+export const getStrategyByProjectId = createDeepEqualSelector(getProjectById, getPr => (id: number) => {
+  const currentProject = getPr(id);
+  if (currentProject && currentProject.strategyInfo) {
+    return currentProject.strategyInfo;
+  }
+  return undefined;
 });
 
 export const getPushForwardStatusesByProjectId = createDeepEqualSelector(

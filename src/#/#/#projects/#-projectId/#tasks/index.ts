@@ -13,10 +13,10 @@ import { filteredOpenedStatuses, toggleOpenedTab } from '#/@store/tasksFilter';
 import { DragAndDrop } from './drag-and-drop';
 
 import { withResize } from '@hooks/with-resize';
-import { IState, ITaskColumn } from '@types';
+import { IRoleColumn, IState } from '@types';
 
 interface IDragAndDropMappedProps {
-  columns: ITaskColumn[];
+  columns: IRoleColumn[];
   items: any[];
   projectId?: number;
   openedStatuses: string[];

@@ -105,6 +105,24 @@ export const pauseUserWork = requestActions(
   })
 );
 
+export interface IBringBack {
+  projectId: number;
+  sequenceNumber: number;
+  reason: string;
+}
+export const bringBackAct = requestActions(
+  'USER_WORK/BRING_BACK',
+  ({ projectId, sequenceNumber, reason }: IBringBack) => ({
+    projectId,
+    request: {
+      data: { reason },
+      method: 'PATCH',
+      url: `/user-works/${sequenceNumber}/${projectId}/bring-back`,
+    },
+    sequenceNumber,
+  })
+);
+
 export const getUserWorksBySequenceNumber = requestActions(
   'USER_WORK/GET_MANY_BY_TASK_SEQUENCE_NUMBER',
   (projectId, sequenceNumber, { count = 20, skip = 0, orderBy = 'startAt', order = 'desc' } = {}): any => ({

@@ -8,6 +8,7 @@ import { combineActions } from '#/@store/@common/helpers';
 import { IRequestAction } from '#/@store/@common/requestActions';
 import { deleteTaskComments, postTaskComment } from '#/@store/task-comments';
 import {
+  bringBackAct,
   createAndStartUserWork,
   getUserWorks,
   patchAndStopUserWork,
@@ -338,6 +339,20 @@ const deleteTaskCommentsSuccess = (state, { payload, meta }) => {
   return state.updateItem(taskIndex, { commentsCount: state.list[taskIndex].commentsCount - 1 });
 };
 
+const bringBackActSuccess = (state, { payload }) => {
+  const taskIndex = state.list.findIndex(el => el.id === payload?.data?.task?.id);
+  let resState: S = state;
+  if (~taskIndex) {
+    resState = resState.updateItem(taskIndex, payload?.data?.task);
+  }
+  const nextTask = payload?.data?.stopResponse?.next?.task;
+  if (nextTask) {
+    resState = resState.addItem(nextTask);
+  }
+
+  return resState;
+};
+
 export const tasks: any = handleActions<S, any, any>(
   {
     [combineActions(getAllTasks.toString(), fetchProjectTasksA.toString())]: getAllTasksHandler,
@@ -382,6 +397,7 @@ export const tasks: any = handleActions<S, any, any>(
 
     [postTaskComment.success]: addTaskCommentSuccess,
     [deleteTaskComments.success]: deleteTaskCommentsSuccess,
+    [bringBackAct.success]: bringBackActSuccess,
   },
   new DownloadList(Task)
 );
