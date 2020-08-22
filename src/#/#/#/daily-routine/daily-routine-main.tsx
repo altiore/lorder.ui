@@ -125,11 +125,21 @@ export const DailyRoutineMain: React.FC<IProps> = ({
     dialogStyle,
     dividerStyle,
     infoBlock,
+    rootDialog,
     topContent,
     workedHoursStyle,
   } = useStyles();
   return (
-    <Dialog open={open} className={dialogStyle} fullScreen TransitionComponent={Transition} onClose={handleClose}>
+    <Dialog
+      open={open}
+      className={dialogStyle}
+      classes={{
+        container: rootDialog,
+      }}
+      fullScreen
+      TransitionComponent={Transition}
+      onClose={handleClose}
+    >
       <div className={dialogContentWrap}>
         <div className={topContent}>
           <T variant="h3" className={currentDate}>
@@ -219,6 +229,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: 18,
     fontWeight: 500,
     textAlign: 'center',
+  },
+  rootDialog: {
+    height: 'auto',
   },
   topContent: {
     padding: '0 16px',
