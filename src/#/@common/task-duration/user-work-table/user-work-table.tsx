@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
+import moment from 'moment';
+
 import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
@@ -9,7 +11,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import { Table } from '@components/table';
 
-import StartStopBtn from '#/@common/start-stop-btn';
+import { UI_PROP } from '#/@store/ui';
 
 import { DurationField } from './duration-field';
 import { useStyles } from './styles';
@@ -18,20 +20,24 @@ import { TimerCell } from './timer-cell';
 import { ITask, IUserWork } from '@types';
 
 export interface IUserWorkTableProps extends RouteComponentProps<{}> {
+  changeCustomRange: (range: [moment.Moment, moment.Moment], uwId: number) => void;
   currentUserWorkId?: number;
   deleteUserWork?: any;
   getUserWorksByTaskId: any;
   getUserWorksBySequenceNumber: any;
   onClose: any;
   task: ITask;
+  toggleUiSetting: any;
 }
 
 export const UserWorkTableJsx: React.FC<IUserWorkTableProps> = ({
+  changeCustomRange,
   currentUserWorkId,
   getUserWorksByTaskId,
   getUserWorksBySequenceNumber,
   onClose,
   task,
+  toggleUiSetting,
 }) => {
   const classes = useStyles();
 
@@ -46,11 +52,27 @@ export const UserWorkTableJsx: React.FC<IUserWorkTableProps> = ({
     return [];
   }, [getUserWorksByTaskId, task]);
 
+  const handleRowClick = useCallback(
+    evt => {
+      const idStr = evt?.currentTarget?.dataset?.id;
+      if (idStr) {
+        const id = parseInt(idStr, 0);
+        const curUserWork = userWorks.find(el => el.id === id);
+        if (curUserWork) {
+          onClose();
+          toggleUiSetting(UI_PROP.TIME_EDIT);
+          changeCustomRange([curUserWork.startAt.clone().startOf('day'), curUserWork.startAt.clone().endOf('day')], id);
+        }
+      }
+    },
+    [changeCustomRange, onClose, toggleUiSetting, userWorks]
+  );
+
   const renderItem = useCallback(
     ({ id, startAt, finishAt, duration }: IUserWork) => {
       const isCurrent = currentUserWorkId === id;
       return (
-        <TableRow className={classes.row} key={id} hover>
+        <TableRow className={classes.row} key={id} hover onClick={handleRowClick} data-id={id}>
           <TableCell size="small" align="center">
             {startAt && startAt.format('YYYY-MM-DD HH:mm:ss')}
           </TableCell>
@@ -64,13 +86,10 @@ export const UserWorkTableJsx: React.FC<IUserWorkTableProps> = ({
               <DurationField projectId={task.projectId} taskId={task.id} value={duration} userWorkId={id} />
             </TableCell>
           )}
-          <TableCell size="small" align="center">
-            {isCurrent ? <StartStopBtn afterStop={onClose} /> : null}
-          </TableCell>
         </TableRow>
       );
     },
-    [classes, currentUserWorkId, onClose, task]
+    [classes, currentUserWorkId, handleRowClick, task]
   );
 
   if (!userWorks || !userWorks.length) {

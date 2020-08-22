@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Popover from 'react-popover';
 
 import cn from 'classnames';
@@ -31,6 +31,7 @@ export interface ITimeLineProps {
   patchUserWork: any;
   currentTime: string;
   currentTimeCustom?: string;
+  userWorkId?: number;
   width: number;
 }
 
@@ -43,6 +44,7 @@ export const TimeLineTsx: React.FC<ITimeLineProps> = ({
   getRef,
   onTimelineClick = timelineStub,
   patchUserWork,
+  userWorkId,
   width,
 }) => {
   const startHour = useMemo((): number => {
@@ -66,6 +68,17 @@ export const TimeLineTsx: React.FC<ITimeLineProps> = ({
 
   const [height] = useState(fullSize ? Y_HEIGHT_BIG : Y_HEIGHT_LITTLE);
   const [editedEvent, setEditedEvent] = useState<IEvent>();
+
+  useEffect(() => {
+    if (fullSize && userWorkId) {
+      setTimeout(() => {
+        const evt = events.find(e => e?.userWork?.id === userWorkId);
+        if (evt) {
+          setEditedEvent(evt);
+        }
+      }, 200);
+    }
+  }, [events, fullSize, userWorkId]);
 
   const handleEditEventClose = useCallback(
     (e: any) => {

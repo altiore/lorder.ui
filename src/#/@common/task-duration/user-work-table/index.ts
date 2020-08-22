@@ -3,12 +3,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { currentUserWorkId } from '#/@store/timer';
-import {
-  /*deleteUserWork, */ getUserWorksBySequenceNumber,
-  getUserWorksByTaskId,
-  startTimer,
-  stopUserWork,
-} from '#/@store/user-works';
+import { changeCustomRange, toggleUiSetting } from '#/@store/ui';
+import { getUserWorksBySequenceNumber, getUserWorksByTaskId, startTimer, stopUserWork } from '#/@store/user-works';
 
 import { UserWorkTableJsx } from './user-work-table';
 
@@ -18,10 +14,11 @@ const mapStateToProps = createStructuredSelector({
 } as any);
 
 const mapDispatchToProps = {
-  // deleteUserWork,
+  changeCustomRange,
   getUserWorksBySequenceNumber,
   startTimer,
   stopUserWork,
+  toggleUiSetting,
 };
 
 export const UserWorkTable = connect(mapStateToProps, mapDispatchToProps)(UserWorkTableJsx) as any;

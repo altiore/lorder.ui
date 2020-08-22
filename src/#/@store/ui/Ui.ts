@@ -3,7 +3,12 @@ import { Moment } from 'moment';
 
 import { RANGE_FROM_RANGE_FILTER } from './consts';
 
-export type IUiProperty = 'isMagicLoginForm' | 'isLeftBarOpen';
+export enum UI_PROP {
+  MAGIC_LOGIN_FORM = 'isMagicLoginForm',
+  TIME_EDIT = 'isTimeEdit',
+  LEFT_BAR_OPEN = 'isLeftBarOpen',
+  BOARD_FILTER_OPEN = 'isBoardFilterOpened',
+}
 
 export enum IRangeFilter {
   TODAY,
@@ -18,16 +23,20 @@ export interface IUiState {
   isBoardFilterOpened: boolean;
   isMagicLoginForm: boolean;
   isLeftBarOpen: boolean;
+  isTimeEdit: boolean;
   rangeFilter: IRangeFilter;
   customRange: [Moment, Moment];
+  userWorkId?: number;
 }
 
 export class Ui implements IUiState {
   readonly isBoardFilterOpened: boolean = false;
   readonly isMagicLoginForm: boolean = false;
   readonly isLeftBarOpen: boolean = true;
+  readonly isTimeEdit: boolean = false;
   rangeFilter: IRangeFilter = IRangeFilter.TODAY;
   customRange: [Moment, Moment] = RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY];
+  userWorkId?: number;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

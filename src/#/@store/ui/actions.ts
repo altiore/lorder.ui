@@ -1,12 +1,19 @@
 import { Moment } from 'moment';
 import { createAction } from 'redux-actions';
 
-import { IRangeFilter, IUiProperty } from './Ui';
+import { IRangeFilter, UI_PROP } from './Ui';
 
-export const toggleUiSetting = createAction<IUiProperty>('UI/TOGGLE_SETTING');
+export const toggleUiSetting = createAction<UI_PROP>('UI/TOGGLE_SETTING');
 
 export const changeRangeFilter = createAction<IRangeFilter>('UI/CHANGE_RANGE_FILTER');
 
-export const changeCustomRange = createAction<[Moment, Moment]>('UI/CHANGE_CUSTOM_DAY');
+export interface IP {
+  range: [Moment, Moment];
+  userWorkId?: number;
+}
+export const changeCustomRange = createAction<IP, [Moment, Moment], number | undefined>(
+  'UI/CHANGE_CUSTOM_DAY',
+  (range, userWorkId) => ({ range, userWorkId })
+);
 
 export const changeCustomWeek = createAction<[Moment, Moment]>('UI/CHANGE_CUSTOM_WEEK');

@@ -20,6 +20,10 @@ export const isBoardFilterOpened = createDeepEqualSelector(baseState, state => s
 
 export const curRangeFilter = createDeepEqualSelector(baseState, state => state.rangeFilter);
 
+export const isTimeEdit = createDeepEqualSelector(baseState, state => state.isTimeEdit);
+
+export const shownUserWorkId = createDeepEqualSelector(baseState, state => state.userWorkId);
+
 export const currentRange = createDeepEqualSelector(
   [baseState],
   (s): [moment.Moment, moment.Moment] => s.customRange || RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY]

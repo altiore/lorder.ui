@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import MediaQuery from 'react-responsive';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -8,17 +8,49 @@ import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { TIME_LINE_HEIGHT } from '@components/time-line';
 
 import ActivityTimeline from '#/#/#/@common/activity-time-line';
+import { UI_PROP } from '#/@store/ui';
 
 import DailyRoutineDialog from './daily-routine';
 import { LastEvents } from './last-events';
 import { StartForm } from './start-form';
 import TasksList from './tasks-list';
 
-export interface IDashboardProps extends RouteComponentProps<{}> {
-  getAllTasks?: any;
+export interface IProps extends RouteComponentProps<{}> {
+  isTimeEdit: boolean;
+  toggleUiSetting: any;
 }
 
-export const useStyles = makeStyles((theme: Theme) => ({
+export const DashboardJsx: React.FC<IProps> = ({ isTimeEdit, toggleUiSetting }) => {
+  const classes = useStyles();
+  const theme = useTheme();
+
+  const toggleDailyRoutine = useCallback(() => {
+    toggleUiSetting(UI_PROP.TIME_EDIT);
+  }, [toggleUiSetting]);
+
+  return (
+    <div className={classes.content2}>
+      <div className={classes.timeLine}>
+        <ActivityTimeline onTimelineClick={toggleDailyRoutine} fullSize={false} />
+        <DailyRoutineDialog open={isTimeEdit} onClose={toggleDailyRoutine} />
+      </div>
+
+      <Grid container spacing={4} className={classes.contentWrap}>
+        <Grid item lg={8} md={7} sm={12} className={classes.content}>
+          <TasksList />
+          <StartForm />
+        </Grid>
+        <MediaQuery minDeviceWidth={theme.breakpoints.values.sm}>
+          <Grid item lg={4} md={5} sm={12} xs={12} className={classes.lastEvents}>
+            <LastEvents />
+          </Grid>
+        </MediaQuery>
+      </Grid>
+    </div>
+  );
+};
+
+const useStyles = makeStyles((theme: Theme) => ({
   collapse: {
     paddingLeft: 88,
   },
@@ -90,34 +122,3 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: 320,
   },
 }));
-
-export const DashboardJsx: React.FC<IDashboardProps> = () => {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [showDialog, setShowDialog] = useState(false);
-
-  const toggleDailyRoutine = useCallback(() => {
-    setShowDialog(s => !s);
-  }, []);
-
-  return (
-    <div className={classes.content2}>
-      <div className={classes.timeLine}>
-        <ActivityTimeline onTimelineClick={toggleDailyRoutine} fullSize={false} />
-        <DailyRoutineDialog open={showDialog} onClose={toggleDailyRoutine} />
-      </div>
-
-      <Grid container spacing={4} className={classes.contentWrap}>
-        <Grid item lg={8} md={7} sm={12} className={classes.content}>
-          <TasksList />
-          <StartForm />
-        </Grid>
-        <MediaQuery minDeviceWidth={theme.breakpoints.values.sm}>
-          <Grid item lg={4} md={5} sm={12} xs={12} className={classes.lastEvents}>
-            <LastEvents />
-          </Grid>
-        </MediaQuery>
-      </Grid>
-    </div>
-  );
-};

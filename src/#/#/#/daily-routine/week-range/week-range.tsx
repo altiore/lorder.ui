@@ -9,7 +9,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import TooltipBig from '@components/tooltip-big';
 
 interface IProps {
-  changeCustomRange: (range: [moment.Moment, moment.Moment]) => void;
+  changeCustomRange: (range: [moment.Moment, moment.Moment], uwId?: number) => void;
   lastDay: moment.Moment;
 }
 
