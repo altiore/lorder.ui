@@ -66,7 +66,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
   }, [getProjectByUuid, matchProjectUuid, publicProject]);
 
   const members = useMemo<IMember[]>(() => {
-    return (project && project.members ? project.members.list : []).slice(0).sort((a, b) => {
+    return (publicProject && publicProject.members ? publicProject.members.list : []).slice(0).sort((a, b) => {
       if (a.valueSum === b.valueSum) {
         return 0;
       }
@@ -75,11 +75,11 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
       }
       return 1;
     });
-  }, [project]);
+  }, [publicProject]);
 
   const { sectionWrap } = useStyles();
 
-  if (isLoading || !isLoaded || !members?.length) {
+  if (isLoading || !isLoaded) {
     return <LoadingPage />;
   }
   if (!project?.title) {

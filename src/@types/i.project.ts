@@ -45,5 +45,6 @@ export interface IProject extends IProjectShort {
   fullProjectTimeHumanize: string | undefined;
   shareTime: string;
   shortName: string;
+  memberRole: string;
   shareValue: number;
 }

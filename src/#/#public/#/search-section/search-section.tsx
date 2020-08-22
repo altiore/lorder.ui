@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import T from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
@@ -7,20 +7,27 @@ import Input from '@components/input';
 
 import { useStyles } from './styles';
 
-export const SearchSection = () => {
-  const classes = useStyles();
+interface IProps {
+  onChange: any;
+}
+
+export const SearchSection: React.FC<IProps> = ({ onChange }): JSX.Element => {
+  const inputProps = useMemo(() => ({ style: { borderRadius: 15 } }), []);
+
+  const { input, inputWrap, search, title } = useStyles();
   return (
     <div>
-      <section className={classes.search}>
-        <T variant="h1" className={classes.title}>
+      <section className={search}>
+        <T variant="h1" className={title}>
           Найди проект и стань его участником
         </T>
-        <div className={classes.inputWrap}>
+        <div className={inputWrap}>
           <Input
+            onChange={onChange}
             icon={<SearchIcon />}
-            className={classes.input}
+            className={input}
             variant="outlined"
-            inputProps={{ style: { borderRadius: 15 } }}
+            inputProps={inputProps}
             placeholder="Найти проект по названию"
           />
         </div>

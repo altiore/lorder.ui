@@ -11,35 +11,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import HeaderFixed from '@components/header-fixed';
 
 import AccountMenu from '#/@common/account-menu';
-
-export interface IHiHeaderProps {
-  blocks?: { [key: string]: { menu?: boolean; name: string; title: string } };
-  brandName?: string;
-  hideSecond?: boolean;
-}
-
-const useStyles = makeStyles((theme: Theme) => ({
-  MuiTabRoot: {
-    '&:focus': {
-      opacity: 1,
-    },
-    color: '#fff',
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-    marginRight: theme.spacing(1),
-    textTransform: 'none',
-  },
-  MuiTabsIndicator: {
-    '& > div': {
-      backgroundColor: theme.palette.secondary.dark,
-      maxWidth: 40,
-      width: '100%',
-    },
-    backgroundColor: 'transparent',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-}));
+import { LinkButton } from '#/@common/link-button';
+import { ROUTE } from '#/@store/router';
 
 const defBlocks = {
   start: {
@@ -49,8 +22,14 @@ const defBlocks = {
   },
 };
 
-export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks = defBlocks, hideSecond }) => {
-  const { MuiTabRoot, MuiTabsIndicator } = useStyles();
+interface IProps {
+  blocks?: { [key: string]: { menu?: boolean; name: string; title: string } };
+  brandName?: string;
+  hideSecond?: boolean;
+}
+
+export const HiHeaderTsx: React.FC<IProps> = ({ blocks = defBlocks, hideSecond }) => {
+  const { linkButton, muiTabRoot, muiTabsIndicator } = useStyles();
 
   const [value, setValue] = useState(blocks.start.name);
   const [isScroll, setIsScroll] = useState(false);
@@ -99,17 +78,17 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks = defBlocks, hide
 
   return (
     <HeaderFixed hideSecond={hideSecond}>
-      {showTabs && (
-        <Tabs
-          classes={{ indicator: MuiTabsIndicator }}
-          TabIndicatorProps={{ children: <div /> }}
-          onChange={handleChange}
-          value={value}
-          aria-label="link tabs"
-        >
-          {menuBlocks.map(({ name, title }) => (
+      <Tabs
+        classes={{ indicator: muiTabsIndicator }}
+        TabIndicatorProps={{ children: <div /> }}
+        onChange={handleChange}
+        value={value}
+        aria-label="link tabs"
+      >
+        {showTabs &&
+          menuBlocks.map(({ name, title }) => (
             <Tab
-              classes={{ root: MuiTabRoot }}
+              classes={{ root: muiTabRoot }}
               value={name}
               key={name}
               component={Link}
@@ -122,8 +101,15 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks = defBlocks, hide
               onSetActive={handleSetActive}
             />
           ))}
-        </Tabs>
-      )}
+        <Tab
+          classes={{ root: linkButton }}
+          component={LinkButton}
+          to={ROUTE.PUBLIC.LIST}
+          color="secondary"
+          variant="text"
+          label="Все проекты"
+        />
+      </Tabs>
       <Route path="/">
         <Switch>
           <Route path="/auth">
@@ -137,3 +123,31 @@ export const HiHeaderTsx: React.FC<IHiHeaderProps> = ({ blocks = defBlocks, hide
     </HeaderFixed>
   );
 };
+
+const useStyles = makeStyles((theme: Theme) => ({
+  linkButton: {
+    color: theme.palette.secondary.main,
+    fontSize: 16,
+    opacity: 1,
+  },
+  muiTabRoot: {
+    '&:focus': {
+      opacity: 1,
+    },
+    color: '#fff',
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+    marginRight: theme.spacing(1),
+    textTransform: 'none',
+  },
+  muiTabsIndicator: {
+    '& > div': {
+      backgroundColor: theme.palette.secondary.dark,
+      maxWidth: 40,
+      width: '100%',
+    },
+    backgroundColor: 'transparent',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+}));

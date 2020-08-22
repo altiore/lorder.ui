@@ -2,6 +2,7 @@ import map from 'lodash/map';
 
 import { DownloadList } from '#/@store/@common/entities';
 import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
+import { getMemberRole } from '#/@store/@common/helpers/get-member-role';
 import { Task } from '#/@store/tasks';
 
 import { ProjectPart } from '../project';
@@ -110,5 +111,9 @@ export class Project implements IProject {
     }
 
     return 0;
+  }
+
+  get memberRole(): string {
+    return getMemberRole(this.roles);
   }
 }

@@ -4,17 +4,14 @@ import { Settings } from 'react-slick';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import { FlippingCard } from '@components/flipping-card/flipping-card';
-
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
 import Arrow from './arrow';
 
-import { IMember } from '@types';
-
-const getSliderSettings = (slidesLen: number = 0): Partial<Settings> => ({
+const getSliderSettings = (slidesLen: number = 0, override?: Partial<Settings>): Partial<Settings> => ({
   arrows: slidesLen > 1,
+  dots: true,
   infinite: slidesLen > 4,
   nextArrow: <Arrow type="next" />,
   prevArrow: <Arrow type="prev" />,
@@ -50,28 +47,25 @@ const getSliderSettings = (slidesLen: number = 0): Partial<Settings> => ({
   ],
   slidesToScroll: 4,
   slidesToShow: 4,
+  ...(override || {}),
 });
 
-export const PublicProjectSlider: React.FC<{ members: IMember[] }> = ({ members }) => {
+interface IProps extends Partial<Settings> {
+  children: any[];
+}
+
+export function CustomSlider({ children, ...rest }: IProps): JSX.Element {
   const { slideWrap } = useStyles();
   return (
-    <Slider {...getSliderSettings(members.length)}>
-      {members.map(({ member: { id, avatar, displayName }, memberRole, opinion }) => (
-        <div key={id} className={slideWrap}>
-          <FlippingCard
-            avatarUrl={avatar?.url || process.env.PUBLIC_URL + '/d-avatar.png'}
-            userName={displayName || 'N/A'}
-            userRole={memberRole}
-            userProfileLink="/"
-            profileLinkTitle="Ссылка на профиль"
-          >
-            {opinion || '[пользователь НЕ высказался о проекте]'}
-          </FlippingCard>
+    <Slider {...getSliderSettings(children.length, rest)}>
+      {children.map((item, index) => (
+        <div key={index} className={slideWrap}>
+          {item}
         </div>
       ))}
     </Slider>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   slideWrap: {

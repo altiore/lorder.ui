@@ -29,13 +29,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     backgroundColor: 'rgb(255, 255, 255)',
     border: '1px solid rgb(197, 197, 197)',
-    borderRadius: 3,
+    borderRadius: 6,
     cursor: 'pointer',
     display: 'flex',
     height: 78,
     justifyContent: 'center',
     position: 'absolute',
-    top: '30%',
+    top: '45%',
     transform: 'translate(0, -50%)',
     transition: 'all .2s linear',
     width: 55,
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     '&:hover': {
       boxShadow: '-3.886px 3.147px 20px 0px rgb(244, 245, 248)',
     },
-    '&:hover $prevArrow': {
+    '&:hover > $arrow': {
       color: '#ffb200',
     },
     left: -65,
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     '&:hover': {
       boxShadow: '-3.886px 3.147px 20px 0px rgb(244, 245, 248)',
     },
-    '&:hover $nextArrow': {
+    '&:hover > $arrow': {
       color: '#ffb200',
     },
     right: -65,

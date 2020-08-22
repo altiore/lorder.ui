@@ -1,42 +1,53 @@
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo } from 'react';
 
 import { Container, Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
+import { FlippingCard } from '@components/flipping-card/flipping-card';
 import InputSearch from '@components/input-search';
+import Slider from '@components/slider';
 
-import HeaderWithButton from '../project-values/header-with-button';
-import Slider from './slider';
+import HeaderWithButton from '#/#public/#-uuid/project-values/header-with-button';
 
+import { useSearch } from '@hooks/useSearch';
 import { IMember } from '@types';
 
-export const ProjectTeam: React.FC<{ members: any[] }> = memo(({ members }) => {
-  const [searchName, setSearchName] = useState('');
+const getForSearch = m => m?.member?.displayName || '';
 
-  const filteredMembersList = useMemo<IMember[]>(() => {
-    if (searchName && members && members.length) {
-      return members.filter(m => m?.member?.displayName?.toLowerCase().includes((searchName || '').toLowerCase()));
-    }
+interface IProps {
+  members: IMember[];
+}
 
-    return members || [];
-  }, [searchName, members]);
+export const ProjectTeam: React.FC<IProps> = memo<IProps>(({ members }) => {
+  const { onChange, filtered } = useSearch(members, getForSearch);
 
-  const handleSearch = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchName(value);
-  };
   const { sectionWrap, sliderWrap, tagline } = useStyles();
-
   return (
     <section className={sectionWrap}>
       <Container maxWidth="lg">
         <Grid container justify="center">
           <HeaderWithButton title="НАША КОМАНДА" buttonText="Редактировать" />
           <p className={tagline}>Мы дарим людям мир и красоту, но только, если это будет добром!</p>
-          <InputSearch searchCallback={handleSearch} placeholder="Найти участника по имени" variant="Centered" />
+          <InputSearch searchCallback={onChange} placeholder="Найти участника по имени" variant="Centered" />
         </Grid>
       </Container>
       <div className={sliderWrap}>
-        {Boolean(filteredMembersList.length) && <Slider members={filteredMembersList} />}
+        {Boolean(filtered.length) && (
+          <Slider>
+            {members.map(({ member: { id, avatar, displayName }, memberRole, opinion }) => (
+              <FlippingCard
+                key={id}
+                avatarUrl={avatar?.url || process.env.PUBLIC_URL + '/d-avatar.png'}
+                userName={displayName || 'N/A'}
+                userRole={memberRole}
+                userProfileLink="/"
+                profileLinkTitle="Ссылка на профиль"
+              >
+                {opinion || '[пользователь НЕ высказался о проекте]'}
+              </FlippingCard>
+            ))}
+          </Slider>
+        )}
       </div>
     </section>
   );

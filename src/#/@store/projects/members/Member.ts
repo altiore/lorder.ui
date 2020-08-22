@@ -1,8 +1,9 @@
 import map from 'lodash/map';
 
 import { User } from '#/#/@store/users';
+import { getMemberRole } from '#/@store/@common/helpers/get-member-role';
 
-import { IMember, IProjectRole, IUser, MAP_ROLE, ROLE_FLOW } from '@types';
+import { IMember, IProjectRole, IUser } from '@types';
 
 export class Member implements IMember {
   accessLevel: number;
@@ -23,14 +24,6 @@ export class Member implements IMember {
   }
 
   get memberRole(): string {
-    if (!this.roles.length) {
-      return 'Участник';
-    }
-
-    const arch = this.roles.find(el => el.roleId === ROLE_FLOW.ARCHITECT);
-    const mainDev = this.roles.find(el => el.roleId === ROLE_FLOW.DEVELOPER);
-    const designer = this.roles.find(el => el.roleId === ROLE_FLOW.DESIGNER);
-
-    return MAP_ROLE[(arch || mainDev || designer)?.roleId || this.roles[0].roleId];
+    return getMemberRole(this.roles);
   }
 }

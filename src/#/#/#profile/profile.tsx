@@ -16,7 +16,7 @@ import GradientHead from '@components/gradient-head';
 import ProjectCard, { CARD_COLOR, LOGO_TYPE } from '@components/project-card';
 
 import { LinkButton } from '#/@common/link-button';
-import { Project, VALUE_MULTIPLIER } from '#/@store/projects';
+import { VALUE_MULTIPLIER } from '#/@store/projects';
 import { ROUTE } from '#/@store/router';
 
 import Avatar from './avatar';
@@ -24,7 +24,7 @@ import GitHubIco from './icons/github';
 import LinkedInIco from './icons/linkedin';
 import ProfileForm from './profile-form';
 
-import { IPublicProject } from '@types';
+import { IProject, IPublicProject } from '@types';
 import getRandEnum from '@utils/get-rand-enum';
 
 export const useStyles = makeStyles((theme: Theme) => ({
@@ -97,7 +97,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface IProfile {
-  projects: Project[];
+  projects: IProject[];
   userAvatar?: string;
   userDisplayName: string;
   userEmail: string;
@@ -180,7 +180,7 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
       <div className={projectList}>
         <Grid alignItems="center" justify="center" container spacing={3}>
           {Boolean(projects && projects.length) ? (
-            projects.map(({ id, logo, members, pub, shareValue, roles, title }) => (
+            projects.map(({ id, logo, members, pub, shareValue, memberRole, title }) => (
               <Grid key={id} item>
                 <ProjectCard
                   logoSrc={logo?.url}
@@ -192,7 +192,7 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
                   userInfo={{
                     displayName: userDisplayName,
                     logoSrc: userAvatar,
-                    mainRole: roles?.[0]?.role?.name || 'Участник',
+                    mainRole: memberRole,
                     // message?: string;
                     shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
                     value: shareValue * VALUE_MULTIPLIER,
@@ -206,7 +206,7 @@ export const Profile: React.FC<IProfile> = ({ projects, userAvatar, userDisplayN
               <T className={emptyProjectsTitle} variant="h2">
                 Здесь появятся интересные тебе проекты
               </T>
-              <LinkButton to="/projects/list" color="primary" variant="contained" size="large">
+              <LinkButton to={ROUTE.PUBLIC.LIST} color="primary" variant="contained" size="large">
                 Перейти к обзору и поиску проектов
               </LinkButton>
             </div>

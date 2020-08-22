@@ -8,7 +8,11 @@ import Achievement from './achievement';
 
 import { IState } from '@types';
 
-const mapState = createStructuredSelector<IState, { value: number }>({
+interface IMapped {
+  value: number;
+}
+
+const mapState = createStructuredSelector<IState, IMapped>({
   value: activeUsersCount,
 });
 
