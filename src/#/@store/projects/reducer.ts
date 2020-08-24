@@ -26,6 +26,8 @@ import {
 } from './actions';
 import { acceptInvitationAct } from './members/actions';
 import { Member } from './members/Member';
+import { createProjectPartAct, deleteProjectPartAct, fetchProjectPartsAct } from './parts/actions';
+import { projectParts } from './parts/reducer';
 import { Project } from './Project';
 import { projectTaskTypes } from './taskTypes/reducer';
 
@@ -224,6 +226,24 @@ const uploadLogoHandler = (state: S, { payload, meta }: any) => {
   return state;
 };
 
+const projectPartHandler = (state: any, action: ActionMeta<any, any>) => {
+  let index: number;
+  // if meta exists get projectId from meta
+  if (action.meta) {
+    index = state.list.findIndex(el => get(action.meta, 'previousAction.payload.projectId') === el.id);
+  } else {
+    index = state.list.findIndex(el => get(action.payload, 'projectId') === el.id);
+  }
+
+  if (index === -1) {
+    return state;
+  }
+
+  return state.updateItem(index, {
+    parts: projectParts(state.list[index]?.parts, action),
+  });
+};
+
 export const projects: any = handleActions<S, any, any>(
   {
     [postProject.success]: postProjectSuccessHandler,
@@ -258,6 +278,8 @@ export const projects: any = handleActions<S, any, any>(
 
     [acceptInvitationAct.success]: acceptInvitationHandler,
     [uploadLogoAct.success]: uploadLogoHandler,
+
+    [combineActions(fetchProjectPartsAct, createProjectPartAct, deleteProjectPartAct)]: projectPartHandler,
   },
   new DownloadList(Project)
 );

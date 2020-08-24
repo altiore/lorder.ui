@@ -5,9 +5,9 @@ import { convertSecondsToDurationWithLocal } from '#/@store/@common/helpers';
 import { getMemberRole } from '#/@store/@common/helpers/get-member-role';
 import { Task } from '#/@store/tasks';
 
-import { ProjectPart } from '../project';
 import { TaskType } from '../task-types';
 import { Member } from './members/Member';
+import { ProjectPart } from './parts';
 import { ProjectTaskType } from './taskTypes/project-task-type';
 
 import {
@@ -71,7 +71,7 @@ export class Project implements IProject {
         return;
       }
       if (key === 'parts') {
-        this[key] = typeof val === 'number' ? val : val && val.parts;
+        this[key] = new DownloadList(ProjectPart, val, Array.isArray(val));
         return;
       }
       this[key] = val;

@@ -68,13 +68,28 @@ export class DownloadList<T = any> implements IDownloadList<T> {
     });
   }
 
+  replaceAll(payload?: AxiosResponse<T[]> | any, uniqueBy: string = 'id'): DownloadList<T> {
+    let list = get(payload, ['data', 'list'], get(payload, ['data', 'data'], get(payload, 'data')));
+    if (!Array.isArray(list)) {
+      console.error(
+        'В ответе нет массива данных для DownloadList. Убедитесь, что ответ сервера соответсвует стандарту DownloadList'
+      );
+      list = [];
+    }
+    return new DownloadList<T>(this.Entity, {
+      isLoaded: Boolean(list.length || this.list.length),
+      isLoading: false,
+      list: list.map((el: any) => new this.Entity(el)),
+    });
+  }
+
   finishLoading(payload?: AxiosResponse<T[]> | any, uniqueBy: string = 'id'): DownloadList<T> {
     let list = get(payload, ['data', 'list'], get(payload, ['data', 'data'], get(payload, 'data')));
     if (!Array.isArray(list)) {
       console.error(
         'В ответе нет массива данных для DownloadList. Убедитесь, что ответ сервера соответсвует стандарту DownloadList'
       );
-      list = false;
+      list = [];
     }
     return new DownloadList<T>(this.Entity, {
       isLoaded: Boolean(Array.isArray(list) || this.list.length),
@@ -84,7 +99,7 @@ export class DownloadList<T = any> implements IDownloadList<T> {
           ...(list || []).map(
             (el: any) =>
               new this.Entity({
-                ...(this.list.find(e => (e as any).id === el.id) || {}),
+                ...(this.list.find(e => e[uniqueBy] === el[uniqueBy]) || {}),
                 ...el,
               })
           ),

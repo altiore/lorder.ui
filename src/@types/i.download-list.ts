@@ -22,4 +22,5 @@ export interface IDownloadList<T> {
   stopLoading: () => IDownloadList<T>;
   finishLoading(payload?: AxiosResponse<T[]>): IDownloadList<T>;
   filter(a: (el: T) => boolean): IDownloadList<T>;
+  replaceAll(payload?: AxiosResponse<T[]>): IDownloadList<T>;
 }

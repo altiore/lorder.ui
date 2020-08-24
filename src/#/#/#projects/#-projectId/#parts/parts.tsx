@@ -11,12 +11,12 @@ import TreeView from './tree-view';
 
 import { IProjectPart } from '@types';
 
-export interface IProjectPartsProps extends RouteComponentProps {
+export interface IProjectPartsProps extends RouteComponentProps<{ projectId: string }> {
   createProjectPart: (data: Omit<IProjectPart, 'id' | 'projectId'>) => any;
   deleteProjectPart: any;
   fetchProjectParts?: any;
-  projectParts: any[];
-  projectPartsTree: any[];
+  getProjectParts: (pId: number) => IProjectPart[];
+  getProjectPartsTree: (pId: number) => any[];
   push: (path: string) => void;
 }
 
@@ -37,22 +37,30 @@ const items = [
   { title: 'Дерево', value: VIEW.TREE },
 ];
 
-export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo(
+export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo<IProjectPartsProps>(
   ({
     createProjectPart,
     deleteProjectPart,
     fetchProjectParts,
+    getProjectParts,
+    getProjectPartsTree,
     location,
     match,
-    projectParts,
-    projectPartsTree,
     push,
   }) => {
+    const projectId = useMemo(() => {
+      return parseInt(match?.params?.projectId, 0);
+    }, [match]);
+
     useEffect(() => {
       if (fetchProjectParts) {
-        fetchProjectParts();
+        fetchProjectParts(projectId);
       }
-    }, [fetchProjectParts]);
+    }, [fetchProjectParts, projectId]);
+
+    const projectParts = useMemo(() => getProjectParts(projectId), [getProjectParts, projectId]);
+
+    const projectPartsTree = useMemo(() => getProjectPartsTree(projectId), [getProjectPartsTree, projectId]);
 
     const preparedColumns = useMemo(() => {
       return COLUMNS;

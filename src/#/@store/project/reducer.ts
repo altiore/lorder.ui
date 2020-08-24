@@ -1,16 +1,12 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
-import get from 'lodash/get';
 import { Action, handleActions } from 'redux-actions';
 
 import { nothing, removeFromList } from '#/@store/@reducers';
 
 import {
-  createProjectPartAct,
   createProjectRoleAct,
-  deleteProjectPartAct,
   deleteProjectRoleAct,
   editProjectRoleAct,
-  fetchProjectPartsAct,
   fetchProjectRolesAct,
   selectProject,
 } from './actions';
@@ -68,20 +64,6 @@ const editProjectRoleSuccessHandler = (state: IS, { payload }) => {
   };
 };
 
-const fetchProjectPartsSuccessHandler = (state: IS, { payload }) => {
-  return {
-    ...state,
-    parts: get(payload, ['data', 'data'], payload.data || []),
-  };
-};
-
-const createProjectPartActSuccessHandler = (state: IS, { payload }) => {
-  return {
-    ...state,
-    parts: [...state.parts, payload.data],
-  };
-};
-
 export const projectReducer: any = handleActions<IS, any, any>(
   {
     [LOCATION_CHANGE]: locationChangeHandler,
@@ -102,18 +84,6 @@ export const projectReducer: any = handleActions<IS, any, any>(
     [deleteProjectRoleAct.toString()]: nothing,
     [deleteProjectRoleAct.success]: removeFromList('roles'),
     [deleteProjectRoleAct.fail]: nothing,
-
-    [fetchProjectPartsAct.toString()]: nothing,
-    [fetchProjectPartsAct.success]: fetchProjectPartsSuccessHandler,
-    [fetchProjectPartsAct.fail]: nothing,
-
-    [createProjectPartAct.toString()]: nothing,
-    [createProjectPartAct.success]: createProjectPartActSuccessHandler,
-    [createProjectPartAct.fail]: nothing,
-
-    [deleteProjectPartAct.toString()]: nothing,
-    [deleteProjectPartAct.success]: removeFromList('parts'),
-    [deleteProjectPartAct.fail]: nothing,
   },
   new SelectedProject()
 );

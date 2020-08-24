@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { RouteComponentProps } from 'react-router';
 
 import cn from 'classnames';
 import get from 'lodash/get';
@@ -29,7 +30,7 @@ import { useStyles } from './styles';
 
 import { IProjectPart, IUser } from '@types';
 
-interface IFiltersProps {
+interface IFiltersProps extends RouteComponentProps<{ projectId: string }> {
   changeFilter: any;
   fetchProjectParts: any;
   filteredMembers: number[];
@@ -38,7 +39,7 @@ interface IFiltersProps {
   searchTerm: string;
   toggleMember: any;
   toggleUiSetting: any;
-  projectParts: IProjectPart[];
+  getProjectParts: (pId: number) => IProjectPart[];
   selectedParts: number[];
 }
 
@@ -49,18 +50,27 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
   fetchProjectParts,
   filteredMembers,
   isBoardFilterOpened,
+  getProjectParts,
+  match,
   members,
-  projectParts,
   searchTerm,
   selectedParts,
   toggleMember,
   toggleUiSetting,
 }) => {
+  const projectId = useMemo(() => {
+    return parseInt(match?.params?.projectId, 0);
+  }, [match]);
+
+  const projectParts = useMemo(() => {
+    return getProjectParts(projectId);
+  }, [getProjectParts, projectId]);
+
   useEffect(() => {
-    if (fetchProjectParts && !projectParts.length) {
-      fetchProjectParts();
+    if (projectId && fetchProjectParts && !projectParts.length) {
+      fetchProjectParts(projectId);
     }
-  }, [fetchProjectParts, projectParts]);
+  }, [fetchProjectParts, projectId, projectParts]);
 
   const firstTopMembersIds = useMemo(() => {
     return members ? members.slice(0, SHOWN_MEMBERS).map(el => el.id) : [];

@@ -3,15 +3,27 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
-import { createProjectPart, deleteProjectPart, fetchProjectParts, projectParts } from '#/@store/project';
-import { projectPartsTree } from '#/@store/project';
+import {
+  createProjectPart,
+  deleteProjectPart,
+  fetchProjectParts,
+  getProjectParts,
+  getProjectPartsTree,
+} from '#/@store/projects/parts';
 
 import { ProjectPartsJsx } from './parts';
 
-const mapState = createStructuredSelector({
-  projectParts,
-  projectPartsTree,
-} as any);
+import { IProjectPart, IState } from '@types';
+
+interface IMappedProps {
+  getProjectParts: (pId: number) => IProjectPart[];
+  getProjectPartsTree: (pId: number) => any[];
+}
+
+const mapState = createStructuredSelector<IState, IMappedProps>({
+  getProjectParts,
+  getProjectPartsTree,
+});
 
 const mapDispatch = {
   createProjectPart,

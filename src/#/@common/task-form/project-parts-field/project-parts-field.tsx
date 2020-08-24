@@ -6,34 +6,36 @@ import { IProjectPart } from '@types';
 
 interface IProjectPartsField extends IMultiSelectField {
   fetchProjectParts: any;
+  getProjectParts: (pId: number) => IProjectPart[];
   getTaskProjectParts: (p: number, sn: number) => IProjectPart[];
   projectId: number;
-  projectParts: IProjectPart[];
   sequenceNumber: number;
 }
 
 export const ProjectPartsFieldTsx: React.FC<IProjectPartsField> = props => {
   const {
     fetchProjectParts,
+    getProjectParts,
     getTaskProjectParts,
     projectId,
-    projectParts,
     sequenceNumber,
     ...selectFieldProps
   } = props;
 
   useEffect(() => {
-    if (fetchProjectParts && projectId && !projectParts?.length) {
+    const parts = getProjectParts(projectId);
+    if (fetchProjectParts && projectId && !parts?.length) {
       fetchProjectParts(projectId);
     }
-  }, [fetchProjectParts, projectId, projectParts]);
+  }, [fetchProjectParts, projectId, getProjectParts]);
 
   const items = useMemo(() => {
-    if (projectParts && projectParts.length) {
-      return projectParts;
+    const parts = getProjectParts(projectId);
+    if (parts && parts.length) {
+      return parts;
     }
     return getTaskProjectParts(projectId, sequenceNumber) || [];
-  }, [getTaskProjectParts, projectId, projectParts, sequenceNumber]);
+  }, [getTaskProjectParts, projectId, getProjectParts, sequenceNumber]);
 
   if (!items || items.length === 0) {
     return null;

@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { fetchProjectParts, projectParts } from '#/@store/project';
 import { projectMembersAsUsers } from '#/@store/projects';
+import { fetchProjectParts, getProjectParts } from '#/@store/projects/parts';
 import {
   changeFilter,
   filteredMembers,
@@ -20,17 +20,17 @@ import { IProjectPart, IState, IUser } from '@types';
 interface IMappedProps {
   filteredMembers: any;
   isBoardFilterOpened: boolean;
+  getProjectParts: (pId: number) => IProjectPart[];
   members: IUser[];
-  projectParts: IProjectPart[];
   searchTerm: string;
   selectedParts: number[];
 }
 
 const mapState = createStructuredSelector<IState, IMappedProps>({
   filteredMembers,
+  getProjectParts,
   isBoardFilterOpened,
   members: projectMembersAsUsers,
-  projectParts,
   searchTerm,
   selectedParts,
 });
