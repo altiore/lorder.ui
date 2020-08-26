@@ -1,135 +1,104 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import React, { useMemo } from 'react';
 
 import classNames from 'classnames';
+import { Field, InjectedFormProps } from 'redux-form';
+import { email, required } from 'redux-form-validators';
 
-import { Box, Button, Grid, MenuItem, Select, TextField } from '@material-ui/core';
+import { Box, Button, Grid } from '@material-ui/core';
 
+import InputField from '@components/input-field';
+
+import RoleSelect from './role-select';
 import { useStyles } from './styles';
 
-import { IMember } from '@types';
-import { IProject, IUserRole } from '@types';
+import { IMember, IProject } from '@types';
 
-interface IPublicProjectMember extends IMember {
-  memberId: number;
-  projectId: number;
+export interface IFollowProject {
+  isAuth: boolean;
+  members: IMember[];
+  project: IProject;
+  push: any;
+  userId: number;
+  verticalDirection?: boolean;
 }
 
-interface IFollowProject extends RouteComponentProps {
-  project: IProject;
-  roles: IUserRole[];
-  verticalDirection?: boolean;
-  postRequestMembership: any;
-  projectId: number | undefined;
-  members: IPublicProjectMember[];
-  isAuth: boolean;
-  userEmail: string | undefined;
-  userId: number;
+export interface IFollowFormProps {
+  role: string;
 }
 
 export const FollowProjectTsx = ({
-  project,
-  roles,
-  verticalDirection = false,
-  postRequestMembership,
-  projectId,
-  members,
+  handleSubmit,
   isAuth,
-  userEmail,
+  members,
+  project,
   userId,
-  history,
-}: IFollowProject) => {
-  const [role, setRole] = useState('role');
+  verticalDirection = false,
+}: IFollowProject & InjectedFormProps<IFollowFormProps, IFollowProject>) => {
   const isMemberConnected = useMemo(() => {
     return members.map(({ memberId }) => memberId).includes(userId);
   }, [members, userId]);
-  const handleSelect = useCallback((e: any) => {
-    setRole(e.target.value);
-  }, []);
-  const handleRequestMembership = useCallback(() => {
-    if (isAuth) {
-      postRequestMembership(projectId, role);
-    } else {
-      history.push('/login');
-    }
-  }, [history, isAuth, postRequestMembership, projectId, role]);
   const classes = useStyles();
-  if (!project.slogan) {
-    return null;
-  }
 
   if (isMemberConnected) {
     return null;
   }
 
   return (
-    <Box className={verticalDirection ? classes.followWrapVertical : classes.followWrap}>
-      {project.slogan && (
-        <h2
-          className={classNames({
-            [classes.taglineHeader]: true,
-            [classes.taglineHeaderVertical]: verticalDirection,
-          })}
-        >
-          {project.slogan}
-        </h2>
-      )}
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      className={verticalDirection ? classes.followWrapVertical : classes.followWrap}
+    >
+      <h2
+        className={classNames({
+          [classes.taglineHeader]: true,
+          [classes.taglineHeaderVertical]: verticalDirection,
+        })}
+      >
+        {project.slogan || 'Хочешь к нам? Присоединяйся!'}
+      </h2>
       <Grid
         container
-        justify="space-around"
+        justify="center"
         alignItems="center"
-        className={classNames({
-          [classes.buttonsWrap]: true,
+        className={classNames(classes.buttonsWrap, {
           [classes.buttonsWrapVertical]: verticalDirection,
         })}
       >
-        <TextField
-          value={userEmail}
-          disabled
-          className={classNames({
-            [classes.emailInput]: true,
-            [classes.emailInputVertical]: verticalDirection,
-          })}
-          name="e-mail"
-          placeholder="E-mail"
-          variant="outlined"
-          InputProps={{
-            classes: {
-              input: classes.emailInnerInput,
-              root: classes.emailInnerInput,
-            },
-          }}
-        />
-        {Boolean(roles && roles.length) && (
-          <Select
-            value={role}
-            className={classNames({
-              [classes.select]: true,
-              [classes.selectVertical]: verticalDirection,
+        {!isAuth && (
+          <Field
+            name="email"
+            label="Email"
+            component={InputField}
+            className={classNames(classes.emailInput, {
+              [classes.emailInputVertical]: verticalDirection,
             })}
-            inputProps={{
-              className: classNames({
-                [classes.innerSelectColor]: role === 'role',
-                [classes.innerSelect]: true,
-              }),
+            placeholder="E-mail"
+            variant="outlined"
+            InputProps={{
+              classes: {
+                input: classes.emailInnerInput,
+                root: classes.emailInnerInput,
+              },
             }}
-            onChange={handleSelect}
-          >
-            <MenuItem value="role" disabled>
-              Выбрать роль
-            </MenuItem>
-            {roles.map(({ role: { id, name } }: any) => (
-              <MenuItem value={id} key={id}>
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
+            InputLabelProps={{ classes: { outlined: classes.outlinedStyle } }}
+            fullWidth={verticalDirection}
+            validate={email({ msg: 'Должен быть корректный email-адрес' })}
+          />
         )}
+        <Field
+          name="role"
+          component={RoleSelect}
+          fullWidth={verticalDirection}
+          vertical={verticalDirection}
+          validate={required({ msg: 'Обазательное поле' })}
+          labelProps={{ classes: { outlined: classes.outlinedStyle } }}
+        />
         <Button
+          type="submit"
           color="primary"
           variant="contained"
           size="large"
-          onClick={handleRequestMembership}
           className={classNames({
             [classes.followButtonVertical]: verticalDirection,
           })}

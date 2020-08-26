@@ -55,7 +55,7 @@ export const PublicTsx: React.FC<IProps> = () => {
   const { bottomBar, content, root, sectionDesktop } = useStyles();
   return (
     <div className={root}>
-      <HiHeader hideSecond />
+      <HiHeader blocks={{}} hideSecond />
 
       <main className={content}>
         <Suspense fallback={<LoadingPage />}>

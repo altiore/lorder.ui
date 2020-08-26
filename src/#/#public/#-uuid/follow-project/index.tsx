@@ -1,25 +1,20 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
+import { push } from 'connected-react-router';
+import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { isAuth, userEmail, userId } from '#/@store/identity';
-import {
-  postRequestMembership,
-  publicProjectMembers,
-  publicProjectProjectId,
-  publicProjectRoles,
-} from '#/@store/publicProject';
+import { postRequestMembership, publicProjectMembers, publicProjectRoles } from '#/@store/publicProject';
 
-import { FollowProjectTsx } from './follow-project';
+import { FollowProjectTsx, IFollowFormProps } from './follow-project';
 
 import { IState } from '@types';
 
 interface IMappedProps {
   roles: any;
-  projectId: number | undefined;
   isAuth: boolean;
-  userEmail: string | undefined;
+  userEmail?: string;
   userId: any;
   members: any;
 }
@@ -27,14 +22,29 @@ interface IMappedProps {
 const mapStateToProps = createStructuredSelector<IState, IMappedProps>({
   isAuth,
   members: publicProjectMembers,
-  projectId: publicProjectProjectId,
   roles: publicProjectRoles,
   userEmail,
   userId,
 });
 
 const mapDispatchToProps = {
-  postRequestMembership,
+  onSubmit: postRequestMembership,
+  push,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FollowProjectTsx));
+const mergeProps = (s, d, o) => ({
+  ...s,
+  ...d,
+  ...o,
+  initialValues: { projectId: o.project.id },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(
+  reduxForm<IFollowFormProps, any>({
+    form: 'BECOME_A_PROJECT_MEMBER_FORM',
+  })(FollowProjectTsx)
+);

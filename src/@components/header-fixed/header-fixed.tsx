@@ -15,26 +15,6 @@ export interface IHeaderFixedProps {
   hideSecond?: boolean;
 }
 
-export const useStyles = makeStyles((theme: Theme) => ({
-  appBar: {
-    transition: theme.transitions.create('background-color'),
-  },
-  appBarOpacity: {
-    backgroundColor: 'rgba(37, 36, 38, 0.6)',
-  },
-  brand: {
-    height: 45,
-    marginTop: 6,
-    width: 99,
-  },
-  firstToolbar: {
-    justifyContent: 'space-between',
-  },
-  secondToolbar: {
-    pointerEvents: 'none',
-  },
-}));
-
 interface ElevationScrollProps {
   children: React.ReactElement;
   classes: any;
@@ -71,3 +51,23 @@ export const HeaderFixedTsx: React.FC<IHeaderFixedProps> = ({ children, hideSeco
     </>
   );
 };
+
+export const useStyles = makeStyles((theme: Theme) => ({
+  appBar: {
+    transition: theme.transitions.create('background-color'),
+  },
+  appBarOpacity: {
+    backgroundColor: 'rgba(37, 36, 38, 0.6)',
+  },
+  brand: {
+    height: 45,
+    marginTop: 6,
+    width: 99,
+  },
+  firstToolbar: {
+    justifyContent: 'space-between',
+  },
+  secondToolbar: {
+    pointerEvents: 'none',
+  },
+}));

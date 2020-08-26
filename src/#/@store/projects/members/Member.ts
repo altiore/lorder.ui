@@ -12,6 +12,8 @@ export class Member implements IMember {
   timeSum: number;
   valueSum: number;
   opinion?: string;
+  projectId: number;
+  memberId: number;
 
   constructor(initial?: object) {
     map(initial, (val: any, key: string) => {

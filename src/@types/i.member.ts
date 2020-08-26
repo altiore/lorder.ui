@@ -8,6 +8,8 @@ export interface IMember {
   timeSum: number;
   valueSum: number;
   opinion?: string;
+  projectId: number;
+  memberId: number;
 
   // дополнительные поля на фронте
   memberRole: string;

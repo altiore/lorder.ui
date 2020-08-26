@@ -31,7 +31,7 @@ interface IProps {
 export const HiHeaderTsx: React.FC<IProps> = ({ blocks = defBlocks, hideSecond }) => {
   const { linkButton, muiTabRoot, muiTabsIndicator } = useStyles();
 
-  const [value, setValue] = useState(blocks.start.name);
+  const [value, setValue] = useState(blocks?.start?.name);
   const [isScroll, setIsScroll] = useState(false);
 
   const theme = useTheme();
@@ -82,10 +82,10 @@ export const HiHeaderTsx: React.FC<IProps> = ({ blocks = defBlocks, hideSecond }
         classes={{ indicator: muiTabsIndicator }}
         TabIndicatorProps={{ children: <div /> }}
         onChange={handleChange}
-        value={value}
+        value={value || 'project-list'}
         aria-label="link tabs"
       >
-        {showTabs &&
+        {Boolean(showTabs) &&
           menuBlocks.map(({ name, title }) => (
             <Tab
               classes={{ root: muiTabRoot }}
@@ -102,6 +102,7 @@ export const HiHeaderTsx: React.FC<IProps> = ({ blocks = defBlocks, hideSecond }
             />
           ))}
         <Tab
+          value="project-list"
           classes={{ root: linkButton }}
           component={LinkButton}
           to={ROUTE.PUBLIC.LIST}

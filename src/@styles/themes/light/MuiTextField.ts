@@ -64,10 +64,5 @@ export default function(theme: Theme, hideScrollbar): Partial<Overrides> {
         minWidth: 120,
       },
     },
-    MuiTextField: {
-      root: {
-        width: '100%',
-      },
-    },
   };
 }

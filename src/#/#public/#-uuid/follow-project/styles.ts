@@ -2,6 +2,9 @@ import { makeStyles, Theme } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   buttonsWrap: {
+    '& > *': {
+      margin: theme.spacing(0, 1),
+    },
     margin: '0 auto',
     maxWidth: 875,
     [theme.breakpoints.down('sm')]: {
@@ -10,6 +13,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   buttonsWrapVertical: {
+    '& > *': {
+      margin: theme.spacing(2, 0),
+    },
     justifyContent: 'unset',
     margin: 0,
     [theme.breakpoints.down('sm')]: {
@@ -44,25 +50,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
       marginLeft: 0,
     },
   },
-  innerSelect: {
-    height: 50,
-    lineHeight: '34px',
-  },
-  innerSelectColor: {
-    color: '#c5c5c5',
-  },
-  select: {
-    height: 50,
-    width: 275,
-    [theme.breakpoints.down('sm')]: {
-      margin: '20px 0',
-    },
-  },
-  selectVertical: {
-    marginBottom: 30,
-    marginTop: 10,
-    maxWidth: 360,
-    width: '100%',
+  outlinedStyle: {
+    transform: 'translate(14px, 18px) scale(1)',
   },
   taglineHeader: {
     color: '#29292b',

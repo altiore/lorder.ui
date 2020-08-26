@@ -7,24 +7,33 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import Select, { SelectProps } from '@material-ui/core/Select';
 
 const onChange = (input: WrappedFieldInputProps) => (event: React.ChangeEvent<HTMLSelectElement>) =>
   input.onChange(event.target.value);
 
-export interface ISelectFieldProps extends WrappedFieldProps {
-  items: any[];
-  children: React.ReactNode | JSX.Element;
-  label: React.ReactNode | JSX.Element;
+const defGetId = el => el.id;
+const defGetTitle = el => el.name;
+
+export interface ISelectFieldProps extends WrappedFieldProps, SelectProps {
   fullWidth?: boolean;
+  input: any;
+  items: any[];
+  getId: (el: any) => number | string;
+  getTitle: (el: any) => string;
+  label?: React.ReactNode | JSX.Element;
+  labelProps?: object;
 }
 
 export const SelectField = ({
   fullWidth = true,
+  getId = defGetId,
+  getTitle,
   input,
   items,
   meta: { touched, error },
   label,
+  labelProps,
   ...custom
 }: ISelectFieldProps) => {
   const id = uniqueId();
@@ -33,7 +42,7 @@ export const SelectField = ({
   return (
     <FormControl variant="outlined" error={isError} fullWidth={fullWidth}>
       {label && (
-        <InputLabel htmlFor={id} id={labelId}>
+        <InputLabel {...(labelProps || {})} htmlFor={id} id={labelId}>
           {label}
         </InputLabel>
       )}
@@ -47,11 +56,14 @@ export const SelectField = ({
         id={id}
         {...(custom as any)}
       >
-        {(Array.isArray(items) ? items : Object.keys(items).map(key => ({ name: items[key], id: key }))).map(item => (
-          <MenuItem key={item.id} value={item.id}>
-            {item.name}
-          </MenuItem>
-        ))}
+        {(Array.isArray(items) ? items : Object.keys(items).map(key => ({ name: items[key], id: key }))).map(item => {
+          const val = getId(item);
+          return (
+            <MenuItem key={val} value={val}>
+              {(getTitle || defGetTitle)(item)}
+            </MenuItem>
+          );
+        })}
       </Select>
       {touched && error && <FormHelperText>{error}</FormHelperText>}
     </FormControl>

@@ -5,6 +5,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import HiHeader from '#/#hi/@common/hi-header';
+import { ROUTE } from '#/@store/router';
 
 import BackImg from './imgs/back-plannet.png';
 
@@ -50,11 +51,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const Auth: React.FC<IProps> = ({ clearErrors, location, match, push }) => {
+export const Auth: React.FC<IProps> = ({ location }) => {
   const { pathname } = location;
 
   const isLogin = useMemo(() => {
-    return !pathname.match('signup');
+    return !pathname.match(ROUTE.AUTH.REGISTER);
   }, [pathname]);
 
   const title = useMemo(() => {
@@ -76,9 +77,9 @@ export const Auth: React.FC<IProps> = ({ clearErrors, location, match, push }) =
 
           <Suspense fallback={<div />}>
             <Switch>
-              <Route path={`${match.path}/signin`} component={lazy(() => import('./#signin'))} />
-              <Route path={`${match.path}/signup`} component={lazy(() => import('./#signup'))} />
-              <Redirect to={`${match.path}/signin`} />
+              <Route path={ROUTE.AUTH.LOGIN} component={lazy(() => import('./#signin'))} />
+              <Route path={ROUTE.AUTH.REGISTER} component={lazy(() => import('./#signup'))} />
+              <Redirect to={ROUTE.AUTH.LOGIN} />
             </Switch>
           </Suspense>
         </div>

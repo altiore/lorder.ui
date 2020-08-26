@@ -8,6 +8,7 @@ export const Input: React.FC<TextFieldProps & { icon?: React.ReactNode }> = ({
   error,
   icon,
   InputProps = {},
+  InputLabelProps = {},
   ...rest
 }): JSX.Element => {
   return (
@@ -17,6 +18,7 @@ export const Input: React.FC<TextFieldProps & { icon?: React.ReactNode }> = ({
         startAdornment: icon ? <InputAdornment position="start">{icon}</InputAdornment> : undefined,
         ...InputProps,
       }}
+      InputLabelProps={InputLabelProps}
       error={error}
       {...rest}
     />

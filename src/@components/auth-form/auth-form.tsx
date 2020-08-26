@@ -129,6 +129,7 @@ export const AuthForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFo
               <Field
                 id="username"
                 autoComplete="username"
+                fullWidth
                 autoFocus={autoFocus}
                 component={InputField}
                 icon={<UserIco />}
@@ -147,6 +148,7 @@ export const AuthForm: React.FC<ILoginFormProps & InjectedFormProps<{}, ILoginFo
                     </Typography>
                     <Field
                       id="password"
+                      fullWidth
                       autoComplete="current-password"
                       component={InputField}
                       icon={<PassIco />}
