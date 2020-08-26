@@ -115,6 +115,8 @@ export interface ICrudColumn {
   editable?: boolean;
   skip?: (item) => boolean;
   component?: (...a: any) => JSX.Element | null;
+  fieldComponent?: (...a: any) => JSX.Element | null;
+  fieldProps?: any;
 }
 
 export interface IColumnComponent {

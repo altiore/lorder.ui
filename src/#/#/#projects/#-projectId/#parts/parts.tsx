@@ -4,8 +4,10 @@ import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { ICrudColumn } from '@components/crud/crud';
 import { Page } from '@components/page';
 import RadioButton from '@components/radio-button';
+import SelectTreeField from '@components/select-tree-field';
 
 import Crud from '#/@common/crud';
+import { PROJECT_PART_FORM } from '#/@store/projects/parts';
 
 import TreeView from './tree-view';
 
@@ -18,12 +20,13 @@ export interface IProjectPartsProps extends RouteComponentProps<{ projectId: str
   getProjectParts: (pId: number) => IProjectPart[];
   getProjectPartsTree: (pId: number) => any[];
   push: (path: string) => void;
+  updateProjectPart: any;
 }
 
 const COLUMNS: ICrudColumn[] = [
   { title: 'ID', path: 'id', isNumber: true },
   { title: 'Название', path: 'title', name: 'title' },
-  { title: 'Родитель', path: 'parentId', isNumber: true, name: 'parentId' },
+  { title: 'Родитель', path: 'parentId', isNumber: true, name: 'parentId', fieldComponent: SelectTreeField },
   { title: 'Задач', path: 'tasks.length', isNumber: true },
 ];
 
@@ -47,6 +50,7 @@ export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo<IProject
     location,
     match,
     push,
+    updateProjectPart,
   }) => {
     const projectId = useMemo(() => {
       return parseInt(match?.params?.projectId, 0);
@@ -63,8 +67,13 @@ export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo<IProject
     const projectPartsTree = useMemo(() => getProjectPartsTree(projectId), [getProjectPartsTree, projectId]);
 
     const preparedColumns = useMemo(() => {
+      COLUMNS[2].fieldProps = item => ({
+        color: 'default',
+        items: projectParts.filter(el => el.id !== item.id),
+        label: 'Родитель:',
+      });
       return COLUMNS;
-    }, []);
+    }, [projectParts]);
 
     const { url } = match;
     const { pathname } = location;
@@ -88,10 +97,11 @@ export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo<IProject
           <Redirect to={match.path + '/table'} from={match.path} exact />
           <Route path={[match.path, VIEW.TABLE].join('/')}>
             <Crud
-              formName={'CreateProjectPartForm'}
+              formName={PROJECT_PART_FORM}
               entityName="Части проекта"
               createTitle="Добавить"
               createItem={createProjectPart}
+              editItem={updateProjectPart}
               deleteItem={deleteProjectPart}
               FilterComponent={FilterButtons}
               columns={preparedColumns}

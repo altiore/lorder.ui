@@ -26,7 +26,12 @@ import {
 } from './actions';
 import { acceptInvitationAct } from './members/actions';
 import { Member } from './members/Member';
-import { createProjectPartAct, deleteProjectPartAct, fetchProjectPartsAct } from './parts/actions';
+import {
+  createProjectPartAct,
+  deleteProjectPartAct,
+  fetchProjectPartsAct,
+  updateProjectPartAct,
+} from './parts/actions';
 import { projectParts } from './parts/reducer';
 import { Project } from './Project';
 import { projectTaskTypes } from './taskTypes/reducer';
@@ -279,7 +284,12 @@ export const projects: any = handleActions<S, any, any>(
     [acceptInvitationAct.success]: acceptInvitationHandler,
     [uploadLogoAct.success]: uploadLogoHandler,
 
-    [combineActions(fetchProjectPartsAct, createProjectPartAct, deleteProjectPartAct)]: projectPartHandler,
+    [combineActions(
+      fetchProjectPartsAct,
+      createProjectPartAct,
+      deleteProjectPartAct,
+      updateProjectPartAct
+    )]: projectPartHandler,
   },
   new DownloadList(Project)
 );

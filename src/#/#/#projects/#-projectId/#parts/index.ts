@@ -9,6 +9,7 @@ import {
   fetchProjectParts,
   getProjectParts,
   getProjectPartsTree,
+  updateProjectPart,
 } from '#/@store/projects/parts';
 
 import { ProjectPartsJsx } from './parts';
@@ -30,6 +31,7 @@ const mapDispatch = {
   deleteProjectPart,
   fetchProjectParts,
   push,
+  updateProjectPart,
 };
 
 export default connect(mapState, mapDispatch)(ProjectPartsJsx);

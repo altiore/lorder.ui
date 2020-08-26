@@ -32,10 +32,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const doNothing = i => i;
-const parseNumber = i => parseFloat(i);
-const formatNumber = i => (typeof i === 'number' ? i.toString() : '');
+const parseNumber = i => (typeof i === 'string' ? parseFloat(i) : i);
+const formatNumber = i => (typeof i === 'number' ? i.toString() : i);
 
 export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, ICreateFormProps>> = ({
+  initialValues,
   handleSubmit,
   pristine,
   submitting,
@@ -52,14 +53,15 @@ export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, IC
       </Typography>
       {columns
         .filter(el => el.name)
-        .map(({ name, isBoolean, isNumber, allowed }) => (
+        .map(({ name, isBoolean, isNumber, allowed, fieldComponent, fieldProps }) => (
           <Field
             key={name}
             name={name}
-            component={allowed ? SelectField : isBoolean ? CheckboxField : TextField}
+            component={fieldComponent || (allowed ? SelectField : isBoolean ? CheckboxField : TextField)}
             parse={isNumber ? parseNumber : doNothing}
             format={isNumber ? formatNumber : doNothing}
             items={allowed}
+            {...(fieldProps ? (typeof fieldProps === 'function' ? fieldProps(initialValues) : fieldProps) : {})}
           />
         ))}
       <Button type="submit" disabled={pristine || submitting || invalid} color="primary" variant="contained" fullWidth>

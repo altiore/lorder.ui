@@ -173,7 +173,7 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
       {isBoardFilterOpened ? (
         <>
           {Boolean(projectParts && projectParts.length) && (
-            <SelectTree value={selectedParts} items={projectParts} onChange={handleChangeParts} />
+            <SelectTree value={selectedParts} items={projectParts} onChange={handleChangeParts} multiple />
           )}
           {Boolean(shownMembers && shownMembers.length) && (
             <div className={membersStyle}>

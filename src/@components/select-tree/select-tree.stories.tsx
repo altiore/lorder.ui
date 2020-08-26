@@ -86,7 +86,7 @@ storiesOf('SelectTree', module)
     return (
       <div className={root}>
         <div className={form}>
-          <SelectTree value={[]} items={items} onChange={action('onChange')} />
+          <SelectTree value={[]} items={items} onChange={action('onChange')} multiple />
           <br />
         </div>
       </div>

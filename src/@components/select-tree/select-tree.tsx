@@ -7,6 +7,7 @@ import toLower from 'lodash/toLower';
 import uniq from 'lodash/uniq';
 import uniqBy from 'lodash/uniqBy';
 
+import { PropTypes } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import Collapse from '@material-ui/core/Collapse';
@@ -24,37 +25,11 @@ import InputLight from '@components/input-light';
 import { flatToHierarchy } from '@utils/flat-to-hierarchy';
 import { pluralRu } from '@utils/plural-ru';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  itemStyle: {
-    alignItems: 'center',
-    display: 'flex',
-  },
-  popoverClass: {
-    height: 360,
-    overflow: 'hidden',
-    padding: theme.spacing(2, 1),
-    width: 400,
-    ...theme.scroll.secondary,
-  },
-  treeViewStyle: {
-    flexGrow: 1,
-    height: 300,
-    marginTop: 8,
-    overflowX: 'hidden',
-    overflowY: 'auto',
-    padding: theme.spacing(0, 1),
-    width: 388,
-    ...theme.mainContent.scroll,
-  },
-}));
-
 export interface IProps {
-  items: Array<{
-    id: number;
-    parentId?: number | null;
-    [key: string]: any;
-  }>;
+  color?: PropTypes.Color;
+  items: any[];
   onChange: (a: any) => void;
+  multiple?: boolean;
   value: number[];
 }
 
@@ -107,7 +82,7 @@ const getParents = (items, list) => {
   return uniqBy([...items, ...parents, ...getParents(parents, list)], 'id');
 };
 
-export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value = [] }) => {
+export function SelectTreeTsx<IItem>({ color, items, onChange, value = [], multiple }: IProps): JSX.Element {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const handleChangeTerm = useCallback(
     event => {
@@ -135,23 +110,36 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value = [] })
         event.preventDefault();
         event.stopPropagation();
 
-        if (!Array.isArray(value)) {
-          return;
-        }
+        if (multiple) {
+          if (!Array.isArray(value)) {
+            return;
+          }
 
-        const idx = value.indexOf(curValue);
-        if (idx === -1) {
-          const allChildren = getChildren([curValue], items);
-          const newValue = uniq([...value, ...allChildren]);
-          onChange(newValue);
+          const idx = value.indexOf(curValue);
+          if (idx === -1) {
+            const allChildren = getChildren([curValue], items);
+            const newValue = uniq([...value, ...allChildren]);
+            onChange(newValue);
+          } else {
+            const allChildren = getChildren([curValue], items);
+            onChange(difference(value, allChildren));
+          }
         } else {
-          const allChildren = getChildren([curValue], items);
-          onChange(difference(value, allChildren));
+          if (Array.isArray(value)) {
+            return;
+          }
+
+          const newValue = parseInt(value, 0) === curValue ? null : curValue;
+          onChange(newValue);
         }
       }
     },
-    [items, onChange, value]
+    [items, onChange, multiple, value]
   );
+
+  const selectedItem = useMemo<any>(() => {
+    return Array.isArray(value) ? undefined : items.find(el => el.id === parseInt(value, 0));
+  }, [items, value]);
 
   const { itemStyle, popoverClass, treeViewStyle } = useStyles();
 
@@ -199,8 +187,10 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value = [] })
 
   return (
     <div>
-      <Button aria-describedby={id} variant="outlined" color="secondary" onClick={handleClick}>
-        {value?.length
+      <Button fullWidth aria-describedby={id} variant="outlined" color={color || 'secondary'} onClick={handleClick}>
+        {selectedItem?.title
+          ? selectedItem?.title
+          : value?.length
           ? pluralRu(
               value?.length || 0,
               'Выбрано %d частей',
@@ -208,7 +198,9 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value = [] })
               'Выбрано %d части',
               'Выбрано %d частей'
             )
-          : 'Выбери Части'}
+          : multiple
+          ? 'Выбери Части'
+          : '[нет родителя]'}
       </Button>
       <Popover
         id={id}
@@ -243,4 +235,28 @@ export const SelectTreeTsx: React.FC<IProps> = ({ items, onChange, value = [] })
       </Popover>
     </div>
   );
-};
+}
+
+const useStyles = makeStyles((theme: Theme) => ({
+  itemStyle: {
+    alignItems: 'center',
+    display: 'flex',
+  },
+  popoverClass: {
+    height: 360,
+    overflow: 'hidden',
+    padding: theme.spacing(2, 1),
+    width: 400,
+    ...theme.scroll.secondary,
+  },
+  treeViewStyle: {
+    flexGrow: 1,
+    height: 300,
+    marginTop: 8,
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    padding: theme.spacing(0, 1),
+    width: 388,
+    ...theme.mainContent.scroll,
+  },
+}));
