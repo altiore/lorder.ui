@@ -84,7 +84,7 @@ export const MainJsx: React.FC<IMainProps> = ({
 
   const { pathname, state: locationState } = location;
 
-  const isModal = useMemo(() => locationState?.modal, [locationState]);
+  const isModal = useMemo(() => (locationState as any)?.modal, [locationState]);
 
   useEffect(() => {
     getAllTasks();
