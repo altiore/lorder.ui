@@ -82,7 +82,7 @@ const getParents = (items, list) => {
   return uniqBy([...items, ...parents, ...getParents(parents, list)], 'id');
 };
 
-export function SelectTreeTsx<IItem>({ color, items, onChange, value = [], multiple }: IProps): JSX.Element {
+export function SelectTreeTsx<IItem>({ color, items, onChange, value, multiple }: IProps): JSX.Element {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const handleChangeTerm = useCallback(
     event => {
@@ -149,6 +149,11 @@ export function SelectTreeTsx<IItem>({ color, items, onChange, value = [], multi
         return null;
       }
       return sortBy(treeItem.children, 'title').map((childNode: any) => {
+        const checked = value
+          ? Array.isArray(value)
+            ? value.includes(childNode.id)
+            : parseInt(value, 0) === childNode.id
+          : false;
         return (
           <StyledTreeItem
             nodeId={`${childNode.id}`}
@@ -156,7 +161,7 @@ export function SelectTreeTsx<IItem>({ color, items, onChange, value = [], multi
             onLabelClick={handleLabelClick}
             label={
               <div className={itemStyle}>
-                <Checkbox color="default" value={childNode.id} checked={value && value.includes(childNode.id)} />
+                <Checkbox color="default" value={childNode.id} checked={checked} />
                 <span>{childNode.title}</span>
               </div>
             }

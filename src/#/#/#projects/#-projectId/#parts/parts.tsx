@@ -69,7 +69,7 @@ export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo<IProject
     const preparedColumns = useMemo(() => {
       COLUMNS[2].fieldProps = item => ({
         color: 'default',
-        items: projectParts.filter(el => el.id !== item.id),
+        items: projectParts.filter(el => !item || el?.id !== item?.id),
         label: 'Родитель:',
       });
       return COLUMNS;
