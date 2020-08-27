@@ -42,20 +42,21 @@ export const ProjectFormTsx: React.FC<InjectedFormProps & IProjectForm> = ({
     <div>
       <ListItem>
         <div className={classes.displayNameField}>
-          <Field name="title" component={InputField} label="Название" />
+          <Field name="title" component={InputField} label="Название" fullWidth />
         </div>
       </ListItem>
       <ListItem>
-        <Field name="desc" component={InputField} label="Описание" />
+        <Field name="desc" component={InputField} label="Описание" fullWidth />
       </ListItem>
       <ListItem>
-        <Field name="slogan" component={InputField} label="Призыв присоединиться" />
+        <Field name="slogan" component={InputField} label="Призыв присоединиться" fullWidth />
       </ListItem>
       <ListItem>
         <Field
           name="monthlyBudget"
           component={InputField}
           label="Месячный бюджет"
+          fullWidth
           parse={parseNumber}
           format={formatNumber}
         />
