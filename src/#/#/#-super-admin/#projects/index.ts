@@ -4,25 +4,32 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 
-import { Projects as ProjectsJsx } from '#/#/#projects/projects';
 import { findUserById } from '#/#/@store/users';
 import { closeDialog, openDialog } from '#/@store/dialog';
 import { defaultProjectId, hasRole, userRole } from '#/@store/identity';
 import { allProjectList, getAllProjects, removeProject, removeProjectByAdmin } from '#/@store/projects';
 
-import { withResize } from '@hooks/with-resize';
+import { ProjectsTsx } from './projects';
 
-const mapToState = (ownOnly: boolean = true) =>
-  createStructuredSelector({
-    defaultProjectId,
-    findUserById,
-    hasRole,
-    ownOnly: () => ownOnly,
-    projectList: allProjectList,
-    userRole,
-  } as any);
+import { IState } from '@types';
 
-const mapToProps = (ownOnly: boolean = true) => ({
+interface IMapped {
+  defaultProjectId: any;
+  findUserById: any;
+  hasRole: any;
+  projectList: any;
+  userRole: any;
+}
+
+const mapToState = createStructuredSelector<IState, IMapped>({
+  defaultProjectId,
+  findUserById,
+  hasRole,
+  projectList: allProjectList,
+  userRole,
+});
+
+const mapToProps = {
   closeDialog,
   getProjects: getAllProjects,
   goToPage: push,
@@ -30,7 +37,7 @@ const mapToProps = (ownOnly: boolean = true) => ({
   removeProject,
   removeProjectByAdmin,
   showError: error,
-});
+};
 
 const mergeProps = (state: any, { goToPage, ...restDispatch }: any, { match, ...restOwn }: any) => ({
   ...state,
@@ -39,4 +46,4 @@ const mergeProps = (state: any, { goToPage, ...restDispatch }: any, { match, ...
   ...restOwn,
 });
 
-export default connect(mapToState(false), mapToProps(false), mergeProps)(withResize(ProjectsJsx));
+export default connect(mapToState, mapToProps, mergeProps)(ProjectsTsx);
