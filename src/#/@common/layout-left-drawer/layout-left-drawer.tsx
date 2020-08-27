@@ -28,7 +28,7 @@ import TooltipBig from '@components/tooltip-big';
 
 import { LinkButton } from '#/@common/link-button';
 import { isSuperAdmin } from '#/@store/roles';
-import { ROUTE, TASKS_ROUTE } from '#/@store/router';
+import { ROUTE } from '#/@store/router';
 
 import { useStyles } from './styles';
 
@@ -50,12 +50,12 @@ export interface ILayoutLeftDrawerProps {
 }
 
 export const ICONS_MAP = {
-  '/projects/:projectId/board': ExtensionIcon,
-  '/projects/:projectId/members': PeopleOutlineIcon,
-  '/projects/:projectId/parts': LabelIcon,
-  '/projects/:projectId/roles': PeopleOutlinedIcon,
-  '/projects/:projectId/settings': SettingsIcon,
-  '/projects/:projectId/status-moves': SyncAltIcon,
+  [ROUTE.PROJECT.TASKS()]: ExtensionIcon,
+  [ROUTE.PROJECT.MEMBERS()]: PeopleOutlineIcon,
+  [ROUTE.PROJECT.PARTS()]: LabelIcon,
+  [ROUTE.PROJECT.ROLES()]: PeopleOutlinedIcon,
+  [ROUTE.PROJECT.SETTINGS()]: SettingsIcon,
+  [ROUTE.PROJECT.STATUS_MOVES()]: SyncAltIcon,
 };
 
 export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteComponentProps<any>> = ({
@@ -120,7 +120,7 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
           )}
           <div className={classes.grow} />
           {project && project.id && (
-            <Route path={TASKS_ROUTE(project.id)} exact>
+            <Route path={ROUTE.PROJECT.TASKS(project.id)} exact>
               <Tooltip title="Обновить задачи проекта">
                 <IconButton className={classes.refreshBtn} onClick={refreshProjectTasks}>
                   <RefreshIcon className={cn({ [classes.refreshIcon]: isTasksLoading })} />
@@ -138,7 +138,7 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
             {routes
               .filter((el: any) => el.title)
               .map((route: IRoute) => {
-                const CurIcon = ICONS_MAP[route.path] || ICONS_MAP['/projects/:projectId/board'];
+                const CurIcon = ICONS_MAP[route.path] || ICONS_MAP[ROUTE.PROJECT.TASKS()];
                 return (
                   <ListItem key={route.path} button onClick={goToPage(route.path)}>
                     <ListItemIcon>{route.icon || <CurIcon />}</ListItemIcon>
@@ -157,11 +157,11 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
           <>
             <Divider />
             <List>
-              <ListItem button onClick={goToPage('/projects')}>
+              <ListItem button onClick={goToPage(ROUTE.PROFILE)}>
                 <ListItemIcon>
                   <LaptopIcon />
                 </ListItemIcon>
-                <ListItemText primary={'Все Проекты'} />
+                <ListItemText primary={'Мои Проекты'} />
               </ListItem>
             </List>
           </>

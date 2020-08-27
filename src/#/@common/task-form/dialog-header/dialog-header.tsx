@@ -15,7 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
-import { TASKS_ROUTE } from '#/@store/router';
+import { ROUTE } from '#/@store/router';
 
 import SelectTaskType from './select-task-type';
 
@@ -61,7 +61,7 @@ export const DialogHeader: React.FC<IDialogHeaderProps> = ({
 
   const getLink = useCallback(
     (absolute: boolean = false) => {
-      const path = `${TASKS_ROUTE(projectId)}/${sequenceNumber}`;
+      const path = ROUTE.PROJECT.TASK.ONE(projectId, sequenceNumber);
       if (absolute) {
         const port = includes(['443', '80', ''], window.location.port)
           ? window.location.port

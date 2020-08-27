@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
+import { openDialog } from '#/@store/dialog';
 import { userAvatar, userDisplayName, userEmail } from '#/@store/identity';
 import { projectsExceptDefault } from '#/@store/projects';
 
@@ -16,6 +17,8 @@ const mapState = createStructuredSelector<IState, any>({
   userEmail,
 });
 
-const mapDispatch = {};
+const mapDispatch = {
+  openDialog,
+};
 
 export default connect(mapState, mapDispatch)(Profile);
