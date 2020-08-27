@@ -167,13 +167,14 @@ export const TaskComments: React.FC<IProps> = ({
       )}
       <div className={classes.textareaWrap}>
         <TextField
-          id="outlined-multiline-static"
+          id="comment-multiline"
           label="Оставьте комментарий"
           multiline
           rows={4}
           variant="filled"
           onChange={handleInput}
           value={commentInput}
+          fullWidth
         />
         <Button
           variant="contained"
