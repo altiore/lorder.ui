@@ -1,14 +1,12 @@
 import { requestActions } from '#/@store/@common/requestActions';
-import { TASKS_ROUTE } from '#/@store/router';
 
-const BASE_ACTION = 'TASK_COMMENTS/';
+const BASE_ACTION = 'TASK_COMMENTS';
 
 export const getTaskComments = requestActions(
   `${BASE_ACTION}/GET_TASK_COMMENTS`,
   (projectId: number, taskId: number) => ({
     request: {
-      params: {},
-      url: `${TASKS_ROUTE(projectId)}/${taskId}/comments`,
+      url: `/projects/${projectId}/tasks/${taskId}/comments`,
     },
   })
 );
@@ -23,7 +21,7 @@ export const postTaskComment = requestActions(
           text: comment,
         },
         method: 'POST',
-        url: `${TASKS_ROUTE(projectId)}/${taskId}/comments`,
+        url: `/projects/${projectId}/tasks/${taskId}/comments`,
       },
       success: {
         message: `Комментарий успешно добавлен`,
@@ -39,7 +37,7 @@ export const deleteTaskComments = requestActions(
     error: { message: `Ошибка при удалении`, title: 'Провал!' },
     request: {
       method: 'DELETE',
-      url: `${TASKS_ROUTE(projectId)}/${taskId}/comments/${commentId}`,
+      url: `/projects/${projectId}/tasks/${taskId}/comments/${commentId}`,
     },
     success: {
       message: `Комментарий успешно удален`,

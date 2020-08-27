@@ -1,7 +1,6 @@
 import { createAction } from 'redux-actions';
 
 import { requestActions } from '#/@store/@common/requestActions';
-import { TASKS_ROUTE } from '#/@store/router';
 
 import { IListDto } from '@types';
 
@@ -22,7 +21,7 @@ export const fetchTaskLogsAction = requestActions<ITaskLogsListDto>(
         orderBy: 'createdAt',
         ...listDto,
       },
-      url: `${TASKS_ROUTE(projectId)}/${sequenceNumber}/task-logs`,
+      url: `/projects/${projectId}/tasks/${sequenceNumber}/task-logs`,
     },
   })
 );

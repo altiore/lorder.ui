@@ -24,16 +24,8 @@ import { useAllowedRoutes } from '@utils/useAllowedRoutes';
 export const MAIN_USER_ROUTES: IRoute[] = [
   {
     access: [ROLES.USERS],
-    component: lazy(() => import('./#projects')),
-    exact: true,
-    icon: 'assignment',
-    path: '/projects',
-    title: 'Мои Проекты',
-  },
-  {
-    access: [ROLES.USERS],
     component: lazy(() => import('./#projects/#-projectId')),
-    path: '/projects/:projectId',
+    path: ROUTE.PROJECT.ONE(),
   },
   {
     access: [ROLES.USERS],
@@ -46,14 +38,14 @@ export const MAIN_USER_ROUTES: IRoute[] = [
     component: lazy(() => import('./#')),
     exact: true,
     icon: 'home',
-    path: '/',
+    path: ROUTE.MAIN,
     title: 'Дом',
   },
 
   {
     access: [ROLES.SUPER_ADMINS],
     component: lazy(() => import('./#-super-admin')),
-    path: '/',
+    path: ROUTE.MAIN,
   },
 ];
 
