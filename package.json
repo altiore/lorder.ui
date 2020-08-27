@@ -3,7 +3,7 @@
   "version": "0.2.1",
   "private": true,
   "main": "build/index.js",
-  "license": "UNLICENSED",
+  "license": "Altiore",
   "devDependencies": {
     "@storybook/addon-actions": "5.3.19",
     "@storybook/addon-backgrounds": "5.3.19",
@@ -131,15 +131,15 @@
   "scripts": {
     "analyze": "node .bin/analize.js",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "SKIP_PREFLIGHT_CHECK=true react-scripts build",
     "test": "REACT_APP_VERSION=$npm_package_version react-scripts test",
-    "test:ci": "REACT_APP_VERSION=$npm_package_version CI=true react-scripts test",
+    "test:ci": "REACT_APP_VERSION=$npm_package_version CI=true SKIP_PREFLIGHT_CHECK=true react-scripts test",
     "tslint-lint": "tslint -t verbose \"src/**/*.{ts,tsx}\" --fix",
     "prettier-lint": "prettier --write \"src/**/*.{ts,tsx}\" --print-width 120 --single-quote --parser typescript --trailing-comma es5",
     "lint": "npm run prettier-lint && npm run tslint-lint",
     "lint:ci": "prettier \"src/**/*.{ts,tsx}\" --print-width 120 --single-quote --parser typescript --trailing-comma es5 && tslint -t verbose \"src/**/*.{ts,tsx}\"",
     "storybook": "start-storybook -s ./public -p 6006",
-    "build-storybook": "build-storybook -o docs",
+    "build-storybook": "SKIP_PREFLIGHT_CHECK=true build-storybook -o docs",
     "release": "release-it patch commit",
     "ln:aglos": "rm -rf node_modules/aglos && ln -s $PWD/../../aglos $PWD/node_modules/aglos"
   },

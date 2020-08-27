@@ -21,7 +21,7 @@ const GET_PROJECT_TYPE = {
 export interface IProjectsProps {
   defaultProjectId: number;
   findUserById: (id: number) => IUser | undefined;
-  getProjects: any; // не используется
+  getProjects: any;
   goToProject: any;
   hasRole: any;
   openDialog: any;
@@ -38,7 +38,11 @@ export interface IProjectsState {
   sortDirection: string;
 }
 
-export class Projects extends React.Component<RouteComponentProps<{}> & IProjectsProps, IProjectsState> {
+export class ProjectsTsx extends React.Component<RouteComponentProps<{}> & IProjectsProps, IProjectsState> {
+  componentDidMount(): void {
+    this.props.getProjects();
+  }
+
   render() {
     const { hasRole, ownOnly, projectList } = this.props;
 
