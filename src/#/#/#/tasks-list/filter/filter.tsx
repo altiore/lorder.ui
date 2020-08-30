@@ -5,6 +5,7 @@ import get from 'lodash/get';
 
 import Chip from '@material-ui/core/Chip';
 import Grow from '@material-ui/core/Grow';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import InputBase from '@material-ui/core/InputBase';
 import ListItem from '@material-ui/core/ListItem';
 import Radio from '@material-ui/core/Radio';
@@ -12,6 +13,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import DoneIcon from '@material-ui/icons/Done';
+import SearchIcon from '@material-ui/icons/Search';
 
 import ProjectSelect from '@components/project-select';
 
@@ -102,6 +104,11 @@ export const FilterTsx: React.FC<IFilterProps> = ({
           placeholder="Выберите или создайте задачу..."
           value={searchTerm}
           onChange={filterTask}
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          }
         />
       </div>
       <div className={classes.grow} />
