@@ -35,7 +35,7 @@ export const styles = (theme: Theme) =>
     },
     input: {
       '& input': {
-        paddingLeft: 6,
+        paddingLeft: 35,
       },
       backgroundColor: '#fff',
       borderRadius: 6,
