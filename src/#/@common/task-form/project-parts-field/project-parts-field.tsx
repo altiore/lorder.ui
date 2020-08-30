@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 
-import { IMultiSelectField, MultipleSelectField } from '@components/multi-select-field/multi-select-field';
+import { IMultiSelectField } from '@components/multi-select-field/multi-select-field';
+import SelectTreeField from '@components/select-tree-field/';
 
 import { IProjectPart } from '@types';
 
@@ -41,5 +42,5 @@ export const ProjectPartsFieldTsx: React.FC<IProjectPartsField> = props => {
     return null;
   }
 
-  return <MultipleSelectField {...selectFieldProps} items={items} />;
+  return <SelectTreeField {...selectFieldProps} items={items as any} />;
 };

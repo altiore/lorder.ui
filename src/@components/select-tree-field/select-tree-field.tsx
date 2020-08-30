@@ -22,7 +22,7 @@ export function SelectTreeField<IItem = { id: number | string }>({
         items={typeof items === 'function' ? items(input.value) : items}
         value={input.value}
         onChange={input.onChange}
-        multiple={false}
+        multiple={true}
         {...rest}
       />
     </div>
