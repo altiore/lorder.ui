@@ -7,6 +7,7 @@ import SelectTree from '@components/select-tree';
 export interface IProps<IItem> extends WrappedFieldProps {
   items: (a: any) => IItem[] | IItem[];
   label?: string;
+  multiple?: boolean;
 }
 
 export function SelectTreeField<IItem = { id: number | string }>({
@@ -22,7 +23,7 @@ export function SelectTreeField<IItem = { id: number | string }>({
         items={typeof items === 'function' ? items(input.value) : items}
         value={input.value}
         onChange={input.onChange}
-        multiple={true}
+        multiple={false}
         {...rest}
       />
     </div>
