@@ -28,6 +28,7 @@ export const SearchSection: React.FC<IProps> = ({ onChange }): JSX.Element => {
             className={input}
             variant="outlined"
             inputProps={inputProps}
+            fullWidth
             placeholder="Найти проект по названию"
           />
         </div>

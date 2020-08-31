@@ -9,7 +9,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import UserIco from '@material-ui/icons/PermIdentity';
 
-import InputField from '@components/input-field/index';
+import InputField from '@components/input-field';
 
 import GetInTouchImg from './get_in_touch.png';
 
@@ -94,7 +94,8 @@ export const SubscribeForm: React.FC<ISubscribeForm> = ({ handleSubmit }) => {
             name="email"
             placeholder="Введите email..."
             type="email"
-            validate={[email({ msg: 'Введите валидный email-адрес' })]}
+            fullWidth
+            validate={email({ msg: 'Введите валидный email-адрес' })}
           />
           <Button fullWidth type="submit" color="secondary" variant="outlined">
             Подписаться на обновления
