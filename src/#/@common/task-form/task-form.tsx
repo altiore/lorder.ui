@@ -220,7 +220,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
                 label="Части проекта"
                 component={ProjectPartsField}
                 projectId={projectId}
-                color="primary"
+                color="default"
                 sequenceNumber={currentSequenceNumber}
               />
             </div>
