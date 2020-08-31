@@ -18,7 +18,7 @@ const fetchProjectsPubHandler = (state: S) => {
 };
 
 const fetchProjectsPubSuccessHandler = (state: S, { payload }: Action<P>) => {
-  return state.finishLoading(payload, 'uuid');
+  return state.replaceAll(payload, 'uuid');
 };
 
 const fetchProjectsPubFailHandler = (state: S) => {
