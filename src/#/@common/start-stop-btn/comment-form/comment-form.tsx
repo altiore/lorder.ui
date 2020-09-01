@@ -64,6 +64,7 @@ export const CommentForm: React.FC<IProps> = ({ bringBack, onClose, task }) => {
             multiline
             rows={4}
             variant="filled"
+            fullWidth
             onChange={handleInput}
             value={reason}
           />
