@@ -1,59 +1,60 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
-import Dialog, { DialogProps } from '@material-ui/core/Dialog';
+import Dialog from '@material-ui/core/Dialog';
 
-import { CurrentDialog, DEFAULT_TRANSITION_DURATION } from '#/@store/dialog';
+import { DEFAULT_TRANSITION_DURATION, dialogComponents, IDialog } from '#/@store/dialog';
 
 export interface IDialogTsx {
   closeDialog: () => void;
-  dialogProps: Partial<DialogProps>;
-  internalProps: object;
+  dialogsData: IDialog[];
   isWidthSm: boolean;
-  open: boolean;
+  lastProps: any;
 }
 
 export const DialogTsx: React.FunctionComponent<IDialogTsx> = ({
   closeDialog,
-  dialogProps,
-  internalProps,
+  dialogsData,
   isWidthSm,
-  open,
-}) => {
-  const { onClose } = dialogProps || {};
-  const handleClose = useCallback(
-    (event, reason) => {
-      closeDialog();
-      if (typeof onClose === 'function') {
-        onClose(event, reason);
-      }
-    },
-    [closeDialog, onClose]
-  );
-
-  if (!CurrentDialog) {
+  lastProps,
+}): JSX.Element | null => {
+  if (!dialogComponents.length) {
     return null;
   }
 
   return (
-    <Dialog
-      open={Boolean(open)}
-      fullScreen={isWidthSm}
-      scroll="paper"
-      transitionDuration={DEFAULT_TRANSITION_DURATION}
-      {...dialogProps}
-      onClose={handleClose}
-    >
-      {React.isValidElement(CurrentDialog)
-        ? React.cloneElement<any>(CurrentDialog, {
-            ...(internalProps || {}),
-            key: 'dialog-content',
-            onClose: handleClose,
-          })
-        : React.createElement(CurrentDialog as any, {
-            ...(internalProps || {}),
-            key: 'dialog-content',
-            onClose: handleClose,
-          })}
-    </Dialog>
+    <>
+      {dialogComponents.map((CurrentDialog, i) => {
+        const { dialogProps, isOpened, props } = dialogsData[i] || { isOpened: false, dialogProps: lastProps };
+        const handleClose = (event, reason) => {
+          closeDialog();
+          if (typeof dialogProps?.onClose === 'function') {
+            dialogProps.onClose(event, reason);
+          }
+        };
+        return (
+          <Dialog
+            key={i}
+            open={Boolean(isOpened)}
+            fullScreen={isWidthSm}
+            scroll="paper"
+            transitionDuration={DEFAULT_TRANSITION_DURATION}
+            {...dialogProps}
+            onClose={handleClose}
+          >
+            {React.isValidElement(CurrentDialog)
+              ? React.cloneElement<any>(CurrentDialog, {
+                  ...(props || {}),
+                  key: 'dialog-content' + i,
+                  onClose: handleClose,
+                })
+              : React.createElement(CurrentDialog as any, {
+                  ...(props || {}),
+                  key: 'dialog-content' + i,
+                  onClose: handleClose,
+                })}
+          </Dialog>
+        );
+      })}
+    </>
   );
 };

@@ -10,7 +10,7 @@ import { createMigrate, createTransform, PersistConfig, persistReducer } from 'r
 import { DownloadList } from './@common/entities';
 import { asyncReducersReducer } from './asyncReducers/reducer';
 import counterReducer from './counter/reducer';
-import { dialog } from './dialog';
+import { Dialog, dialog } from './dialog';
 import { externalLibraries } from './externalLibraries/reducer';
 import { feedback } from './feedback/reducer';
 import { identity } from './identity';
@@ -75,13 +75,19 @@ const migrations = {
       ui: new Ui(state?.ui),
     };
   },
+  4: state => {
+    return {
+      ...state,
+      dialog: new Dialog(),
+    };
+  },
 };
 
 localForage.config({
   description: 'Lorder contribution version 3.0',
   name: 'lorder',
   storeName: 'contribution',
-  version: 3.0,
+  version: 4.0,
 });
 
 const VARIANT_ENTITY: any = {

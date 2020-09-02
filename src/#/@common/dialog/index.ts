@@ -2,9 +2,7 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { DialogProps } from '@material-ui/core/Dialog';
-
-import { closeDialog, dialogProps, internalProps, isDialogOpened } from '#/@store/dialog';
+import { closeDialog, dialogsData, IDialog, lastProps } from '#/@store/dialog';
 
 import { DialogTsx } from './dialog';
 
@@ -12,19 +10,17 @@ import { withResize } from '@hooks/with-resize';
 import { IState } from '@types';
 
 interface IMappedState {
-  dialogProps: Partial<DialogProps>;
-  open: boolean;
-  internalProps: any;
+  dialogsData: IDialog[];
+  lastProps: any;
 }
 
 const mapStateToProps = createStructuredSelector<IState, IMappedState>({
-  dialogProps,
-  internalProps,
-  open: isDialogOpened,
+  dialogsData,
+  lastProps,
 });
 
 const mapDispatchToProps = {
   closeDialog,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withResize(DialogTsx));
+export default connect(mapStateToProps, mapDispatchToProps)(withResize(DialogTsx) as any);

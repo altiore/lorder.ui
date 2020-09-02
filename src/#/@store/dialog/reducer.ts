@@ -1,59 +1,60 @@
-import { ReactNode } from 'react';
-
 import { LOCATION_CHANGE } from 'connected-react-router';
 import get from 'lodash/get';
 import { ActionMeta, handleActions } from 'redux-actions';
 
 import { DialogProps } from '@material-ui/core/Dialog';
 
-import { changeSettings, closeDialog, openDialog } from './actions';
+import { closeDialog, openDialog } from './actions';
 import { Dialog, IDialogState } from './Dialog';
 
 type S = IDialogState;
-type P = ReactNode;
+type P = any;
 type M = Partial<DialogProps>;
 
 const closeDialogHandler = (state: S): S => {
-  return new Dialog({
-    ...state,
-    isOpened: false,
-    props: null,
-  });
+  const lastIndex = state.dialogs.length - 1;
+  if (lastIndex < 0) {
+    return new Dialog();
+  }
+  return {
+    counter: state.counter - 1,
+    dialogs: state.dialogs.slice(0, lastIndex),
+    lastProps: state.dialogs[lastIndex].dialogProps,
+  };
 };
 
 const openDialogHandler = (state: S, { payload, meta }: ActionMeta<P, M>): S => {
+  if (payload === undefined) {
+    return state;
+  }
+
   return new Dialog({
-    dialogProps: meta,
-    isOpened: true,
-    props: payload,
+    counter: payload.index,
+    dialogs: [
+      ...state.dialogs,
+      {
+        dialogProps: meta,
+        isOpened: true,
+        props: payload.props,
+      },
+    ],
   });
 };
 
 const locationChangeHandler = (state: S, { payload }: any) => {
   const { location } = payload;
   const isModal = get(location, 'state.modal');
-  if (state.isOpened && !isModal) {
-    return new Dialog({
-      ...state,
-      isOpened: false,
-      props: null,
-    });
+  const length = state?.dialogs?.length;
+  if (length && state.dialogs[length - 1].isOpened && !isModal) {
+    return new Dialog();
   }
   return state;
-};
-
-const changeSettingsHandler = (state: S, { payload }: any) => {
-  return new Dialog({
-    ...state,
-    dialogProps: { ...state.dialogProps, ...payload },
-  });
 };
 
 export const dialog = handleActions<S, P, M>(
   {
     [closeDialog.toString()]: closeDialogHandler,
     [openDialog.toString()]: openDialogHandler,
-    [changeSettings.toString()]: changeSettingsHandler,
 
     [LOCATION_CHANGE]: locationChangeHandler,
   },

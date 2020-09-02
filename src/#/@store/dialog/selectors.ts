@@ -1,21 +1,11 @@
-import { DialogProps } from '@material-ui/core/Dialog';
-
 import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 
-import { IDialogState } from './Dialog';
+import { IDialog, IDialogState } from './Dialog';
 
 import { IState } from '@types';
 
 const baseState = (state: IState) => state.dialog;
 
-export const isDialogOpened = createDeepEqualSelector(baseState, (state: IDialogState): boolean => state.isOpened);
+export const dialogsData = createDeepEqualSelector(baseState, (state: IDialogState): IDialog[] => state.dialogs);
 
-export const dialogProps = createDeepEqualSelector(
-  baseState,
-  (state: IDialogState): Partial<DialogProps> => state.dialogProps || {}
-);
-
-export const internalProps = createDeepEqualSelector(
-  baseState,
-  (state: IDialogState): Partial<DialogProps> => state.props || {}
-);
+export const lastProps = createDeepEqualSelector(baseState, (state: IDialogState) => state.lastProps);

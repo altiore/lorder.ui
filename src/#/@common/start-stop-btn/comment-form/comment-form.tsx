@@ -36,6 +36,7 @@ export const CommentForm: React.FC<IProps> = ({ bringBack, onClose, task }) => {
       try {
         await bringBack(task, reason);
         onClose();
+        onClose();
         return;
       } catch (e) {
         // no content

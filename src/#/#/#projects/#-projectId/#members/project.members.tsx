@@ -20,8 +20,8 @@ export interface IProjectMembersProps extends RouteComponentProps {
   createItem: any;
   deleteItem: any;
   deleteManyItems: any;
-  fetchItems?: any;
-  fetchProjectRoles: any;
+  fetchItems: () => any;
+  fetchProjectRoles: () => any;
   openedAccessLevel?: ACCESS_LEVEL;
   projectId?: number;
   projectRoles: IProjectRole[];
@@ -66,16 +66,11 @@ export const ProjectMembersJsx: React.FC<IProjectMembersProps> = React.memo(
     userId,
   }) => {
     useEffect(() => {
-      if (fetchItems) {
-        fetchItems();
-      }
-    }, [fetchItems]);
-
-    useEffect(() => {
-      if (fetchProjectRoles) {
-        fetchProjectRoles();
-      }
-    }, [fetchProjectRoles]);
+      (async function() {
+        await fetchProjectRoles();
+        await fetchItems();
+      })();
+    }, [fetchProjectRoles, fetchItems]);
 
     const preparedList = useMemo(() => {
       return (list || []).map(el => ({

@@ -71,13 +71,13 @@ const patchAndStopUserWorkHandler = (state: S) => {
 const patchAndStopUserWorkSuccessHandler = (state: S, { payload }: Action<P>) => {
   const { next, previous } = get(payload, 'data', {});
   let resState: S = state;
-  const nextIndex = resState.list.findIndex(el => el.id === next.id);
+  const nextIndex = resState.list.findIndex(el => el?.id === next?.id);
   if (~nextIndex) {
     resState = resState.updateItem(nextIndex, next);
   } else {
     resState = resState.addItem(next);
   }
-  const prevIndex = resState.list.findIndex(el => el.id === previous.id);
+  const prevIndex = resState.list.findIndex(el => el?.id === previous?.id);
   if (~prevIndex) {
     resState = resState.updateItem(prevIndex, previous);
   }
