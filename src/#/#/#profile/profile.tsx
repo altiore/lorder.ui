@@ -16,7 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import TelegramIco from '@components/@icons/Telegram';
 import ButtonEdit from '@components/button-edit';
 import GradientHead from '@components/gradient-head';
-import ProjectCard, { CARD_COLOR, LOGO_TYPE } from '@components/project-card';
+import ProjectCard from '@components/project-card';
 import Slider from '@components/slider';
 
 import { createProjectDialogProps, CreateProjectPopup } from '#/@common/create-project-popup';
@@ -30,7 +30,6 @@ import LinkedInIco from './icons/linkedin';
 import ProfileForm from './profile-form';
 
 import { IProject, IPublicProject } from '@types';
-import getRandEnum from '@utils/get-rand-enum';
 
 interface IProfile {
   openDialog: any;
@@ -122,12 +121,12 @@ export const Profile: React.FC<IProfile> = ({ openDialog, projects, userAvatar, 
       <Container id="project-list" className={projectList}>
         {Boolean(projects && projects.length) ? (
           <Slider>
-            {projects.map(({ id, logo, members, pub, shareValue, memberRole, title }) => (
+            {projects.map(({ id, logo, members, pub, shareValue, memberRole, title, viewColor, viewType }) => (
               <ProjectCard
                 key={id}
                 logoSrc={logo?.url}
-                color={getRandEnum(CARD_COLOR)}
-                logoVariant={getRandEnum(LOGO_TYPE)}
+                color={viewColor}
+                logoVariant={viewType}
                 title={title}
                 membersCount={members.length}
                 projectLink={getProjectLink(id, pub)}

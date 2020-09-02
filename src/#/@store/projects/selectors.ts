@@ -72,13 +72,23 @@ export const openedProjectUserRoles = createDeepEqualSelector(
 export const initialUpdateProject = createDeepEqualSelector(
   openedProject,
   p =>
-    p && {
-      desc: p.desc,
-      monthlyBudget: p.monthlyBudget,
-      slogan: p.slogan,
-      strategy: p.strategy,
-      title: p.title,
-    }
+    p &&
+    (p.pub
+      ? {
+          desc: p.desc,
+          monthlyBudget: p.monthlyBudget,
+          slogan: p.slogan,
+          strategy: p.strategy,
+          title: p.title,
+          viewColor: p.viewColor,
+          viewType: p.viewType,
+        }
+      : {
+          desc: p.desc,
+          monthlyBudget: p.monthlyBudget,
+          strategy: p.strategy,
+          title: p.title,
+        })
 );
 
 export const projectMembers = createDeepEqualSelector(

@@ -1,8 +1,9 @@
-import { CARD_COLOR } from '../../@components/project-card';
 import getRandEnum from '../get-rand-enum';
 
+import { PROJECT_COLOR } from '@types';
+
 describe('getRandEnum', () => {
-  it('getRandEnum from CARD_COLOR', () => {
-    expect(Object.values(CARD_COLOR).includes(getRandEnum(CARD_COLOR))).toBeTruthy();
+  it('getRandEnum from PROJECT_COLOR', () => {
+    expect(Object.values(PROJECT_COLOR).includes(getRandEnum(PROJECT_COLOR))).toBeTruthy();
   });
 });

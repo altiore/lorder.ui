@@ -20,8 +20,10 @@ import {
   IProjectStrategyInfo,
   IProjectTaskType,
   IRoleColumn,
+  PROJECT_COLOR,
   PROJECT_STRATEGY,
   PROJECT_TYPE,
+  PROJECT_VIEW_TYPE,
 } from '@types';
 
 export class Project implements IProject {
@@ -49,6 +51,8 @@ export class Project implements IProject {
   taskColumns: IRoleColumn[] = [];
   pub?: any;
   roles?: IProjectRole[];
+  viewColor: PROJECT_COLOR;
+  viewType: PROJECT_VIEW_TYPE;
 
   logo?: IMedia;
 

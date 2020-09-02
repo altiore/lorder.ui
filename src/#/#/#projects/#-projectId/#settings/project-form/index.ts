@@ -4,7 +4,7 @@ import { reduxForm } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 
 import { userRole } from '#/@store/identity';
-import { initialUpdateProject, updateProject } from '#/@store/projects';
+import { initialUpdateProject, UPDATE_PROJECT_FORM, updateProject } from '#/@store/projects';
 
 import { ProjectFormTsx } from './project-form';
 
@@ -25,6 +25,6 @@ export default connect(
 )(
   reduxForm({
     enableReinitialize: true,
-    form: 'UpdateProjectForm',
+    form: UPDATE_PROJECT_FORM,
   })(ProjectFormTsx as any)
 );

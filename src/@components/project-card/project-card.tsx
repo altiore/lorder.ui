@@ -19,7 +19,6 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@components/avatar';
 import TooltipBig from '@components/tooltip-big';
 
-import { CARD_COLOR, LOGO_TYPE } from './consts';
 import CommentSvg from './icons/comment';
 import ContributingSvg from './icons/contributing';
 import MaskSvg from './icons/mask';
@@ -33,6 +32,8 @@ import PieBlackPngV2 from './pie/pie_v2/pie_black_v2.svg';
 import PieBluePngV2 from './pie/pie_v2/pie_blue_v2.svg';
 import PieGreenPngV2 from './pie/pie_v2/pie_green_v2.svg';
 import PieVioletPngV2 from './pie/pie_v2/pie_violet_v2.svg';
+
+import { PROJECT_COLOR, PROJECT_VIEW_TYPE } from '@types';
 
 const SIZE = {
   CURSOR: 4,
@@ -49,18 +50,262 @@ enum TAB {
 }
 
 const MAP_CARD_IMG = {
-  [LOGO_TYPE.ANGLE]: {
-    [CARD_COLOR.BLACK]: PieBlackPng,
-    [CARD_COLOR.BLUE]: PieBluePng,
-    [CARD_COLOR.GREEN]: PieGreenPng,
-    [CARD_COLOR.VIOLET]: PieVioletPng,
+  [PROJECT_VIEW_TYPE.TRIANGLE]: {
+    [PROJECT_COLOR.BLACK]: PieBlackPng,
+    [PROJECT_COLOR.BLUE]: PieBluePng,
+    [PROJECT_COLOR.GREEN]: PieGreenPng,
+    [PROJECT_COLOR.VIOLET]: PieVioletPng,
   },
-  [LOGO_TYPE.ROUND]: {
-    [CARD_COLOR.BLACK]: PieBlackPngV2,
-    [CARD_COLOR.BLUE]: PieBluePngV2,
-    [CARD_COLOR.GREEN]: PieGreenPngV2,
-    [CARD_COLOR.VIOLET]: PieVioletPngV2,
+  [PROJECT_VIEW_TYPE.MEDAL]: {
+    [PROJECT_COLOR.BLACK]: PieBlackPngV2,
+    [PROJECT_COLOR.BLUE]: PieBluePngV2,
+    [PROJECT_COLOR.GREEN]: PieGreenPngV2,
+    [PROJECT_COLOR.VIOLET]: PieVioletPngV2,
   },
+};
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  dir?: string;
+  index: any;
+  value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box style={{ padding: '0 8px' }}>{children}</Box>}
+    </div>
+  );
+}
+
+interface IProps {
+  color: PROJECT_COLOR;
+  logoSrc?: string;
+  logoVariant?: PROJECT_VIEW_TYPE;
+  membersCount: number;
+  projectLink: string;
+  title: string;
+  userInfo?: {
+    displayName: string;
+    logoSrc?: string;
+    mainRole: string;
+    message?: string;
+    shortName?: string;
+    value: number;
+  };
+  value: number;
+}
+
+export const ProjectCardTsx: React.FC<IProps> = ({
+  color,
+  logoSrc,
+  logoVariant = PROJECT_VIEW_TYPE.TRIANGLE,
+  membersCount,
+  projectLink,
+  title,
+  userInfo,
+  value,
+}): JSX.Element => {
+  const isMember = useMemo(() => Boolean(userInfo), [userInfo]);
+
+  const headerSrc = useMemo(() => MAP_CARD_IMG[logoVariant][color], [color, logoVariant]);
+
+  const [curTab, setCurTab] = useState<TAB>(TAB.PROJECT);
+  const changeTab = useCallback(
+    (_, tab) => {
+      setCurTab(tab);
+    },
+    [setCurTab]
+  );
+  const handleChangeIndex = useCallback(
+    nextTab => {
+      setCurTab(nextTab);
+    },
+    [setCurTab]
+  );
+
+  const theme = useTheme();
+  const {
+    cardStyle,
+    commentStyle,
+    digitStyle,
+    header,
+    iconStyle,
+    listStyle,
+    listText,
+    logoWrap,
+    logoWrapAngle,
+    logoWrapRound,
+    tabRoot,
+    tabRootSingle,
+    tabsFlexContainer,
+    tabsIndicator,
+    tabsWrap,
+    titleWrap,
+    valueLabel,
+  } = useStyles();
+
+  const tabs = useMemo(() => {
+    const tabsLocal: any = [
+      {
+        id: TAB.PROJECT,
+        label: 'Инфо',
+        // tooltip: `Информация о проекте`,
+      },
+    ];
+    if (isMember) {
+      tabsLocal.push({
+        id: TAB.MEMBER,
+        label: (
+          <div className={valueLabel}>
+            <span>Вклад</span>
+            <Avatar size="sm" src={userInfo?.logoSrc}>
+              {userInfo?.shortName}
+            </Avatar>
+          </div>
+        ),
+        tooltip: (userInfo?.displayName || 'N/A') + ' вклад',
+      });
+    }
+    return tabsLocal;
+  }, [isMember, userInfo, valueLabel]);
+
+  const { formatNumber } = useIntl();
+
+  return (
+    <div className={cardStyle}>
+      <div className={header}>
+        <img src={headerSrc} alt="Card Pie Colored Header" />
+        <div
+          className={cn(logoWrap, {
+            [logoWrapAngle]: logoVariant === PROJECT_VIEW_TYPE.TRIANGLE,
+            [logoWrapRound]: logoVariant === PROJECT_VIEW_TYPE.MEDAL,
+          })}
+        >
+          <img src={logoSrc || `${process.env.PUBLIC_URL}/logo_patreon.png`} alt={`${title} logo`} />
+        </div>
+      </div>
+      <Link className={titleWrap} to={projectLink}>
+        <Typography variant="h5">{title}</Typography>
+      </Link>
+      <div className={tabsWrap}>
+        <Tabs
+          classes={{ flexContainer: tabsFlexContainer, indicator: tabsIndicator }}
+          value={curTab}
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={changeTab}
+          aria-label="Project Info"
+        >
+          {tabs.map(({ id, label, tooltip }, index) => {
+            const tooltipDisabled = !tooltip;
+            return (
+              <TooltipBig
+                key={id}
+                title={tooltip || ''}
+                placement="top"
+                disableFocusListener={tooltipDisabled}
+                disableHoverListener={tooltipDisabled}
+                disableTouchListener={tooltipDisabled}
+              >
+                <Tab
+                  disableRipple={!isMember}
+                  classes={{ root: cn(tabRoot, { [tabRootSingle]: !isMember }) }}
+                  value={index}
+                  label={label}
+                />
+              </TooltipBig>
+            );
+          })}
+        </Tabs>
+        <SwipeableViews
+          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          index={curTab}
+          onChangeIndex={handleChangeIndex}
+        >
+          <TabPanel value={curTab} index={TAB.PROJECT} dir={theme.direction}>
+            <List className={listStyle} component="nav" aria-label="Информация о проекте">
+              <ListItem button>
+                <ListItemIcon className={iconStyle}>
+                  <TeamSvg color="inherit" fontSize="small" />
+                </ListItemIcon>
+                <span className={listText}>Участников</span>
+                <ListItemSecondaryAction className={digitStyle}>{formatNumber(membersCount)}</ListItemSecondaryAction>
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon className={iconStyle}>
+                  <ValueSvg color="inherit" fontSize="small" />
+                </ListItemIcon>
+                <span className={listText}>Ценность проекта</span>
+                <ListItemSecondaryAction className={digitStyle}>
+                  {value
+                    ? formatNumber(value, {
+                        currency: 'USD',
+                        style: 'currency',
+                      })
+                    : 'скрыто'}
+                </ListItemSecondaryAction>
+              </ListItem>
+            </List>
+          </TabPanel>
+          <TabPanel value={curTab} index={TAB.MEMBER} dir={theme.direction}>
+            {userInfo && (
+              <List className={listStyle} component="nav" aria-label="Пользовательский вклад">
+                <ListItem button>
+                  <ListItemIcon className={iconStyle}>
+                    <MaskSvg color="inherit" fontSize="small" />
+                  </ListItemIcon>
+                  <span className={listText}>Роль</span>
+                  <ListItemSecondaryAction className={digitStyle}>{userInfo.mainRole}</ListItemSecondaryAction>
+                </ListItem>
+                <ListItem button>
+                  <ListItemIcon className={iconStyle}>
+                    <ContributingSvg color="inherit" fontSize="small" />
+                  </ListItemIcon>
+                  <span className={listText}>Доля в проекте</span>
+                  <TooltipBig
+                    title={
+                      userInfo.value
+                        ? formatNumber(userInfo.value, {
+                            currency: 'USD',
+                            style: 'currency',
+                          })
+                        : 'скрыто'
+                    }
+                  >
+                    <ListItemSecondaryAction className={digitStyle}>
+                      {value
+                        ? formatNumber(userInfo.value / value, {
+                            maximumFractionDigits: 2,
+                            style: 'percent',
+                          })
+                        : 'скрыто'}
+                    </ListItemSecondaryAction>
+                  </TooltipBig>
+                </ListItem>
+              </List>
+            )}
+          </TabPanel>
+        </SwipeableViews>
+        {isMember && Boolean(userInfo?.message) && (
+          <TooltipBig title={(userInfo?.displayName || 'N/A') + ' мнение'} placement="top">
+            <IconButton className={commentStyle}>
+              <CommentSvg color="primary" />
+            </IconButton>
+          </TooltipBig>
+        )}
+      </div>
+    </div>
+  );
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -197,247 +442,3 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
   },
 }));
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  dir?: string;
-  index: any;
-  value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box style={{ padding: '0 8px' }}>{children}</Box>}
-    </div>
-  );
-}
-
-interface IProps {
-  color: CARD_COLOR;
-  logoSrc?: string;
-  logoVariant?: 'angle' | 'round';
-  membersCount: number;
-  projectLink: string;
-  title: string;
-  userInfo?: {
-    displayName: string;
-    logoSrc?: string;
-    mainRole: string;
-    message?: string;
-    shortName?: string;
-    value: number;
-  };
-  value: number;
-}
-
-export const ProjectCardTsx: React.FC<IProps> = ({
-  color,
-  logoSrc,
-  logoVariant = LOGO_TYPE.ANGLE,
-  membersCount,
-  projectLink,
-  title,
-  userInfo,
-  value,
-}): JSX.Element => {
-  const isMember = useMemo(() => Boolean(userInfo), [userInfo]);
-
-  const headerSrc = useMemo(() => MAP_CARD_IMG[logoVariant][color], [color, logoVariant]);
-
-  const [curTab, setCurTab] = useState<TAB>(TAB.PROJECT);
-  const changeTab = useCallback(
-    (_, tab) => {
-      setCurTab(tab);
-    },
-    [setCurTab]
-  );
-  const handleChangeIndex = useCallback(
-    nextTab => {
-      setCurTab(nextTab);
-    },
-    [setCurTab]
-  );
-
-  const theme = useTheme();
-  const {
-    cardStyle,
-    commentStyle,
-    digitStyle,
-    header,
-    iconStyle,
-    listStyle,
-    listText,
-    logoWrap,
-    logoWrapAngle,
-    logoWrapRound,
-    tabRoot,
-    tabRootSingle,
-    tabsFlexContainer,
-    tabsIndicator,
-    tabsWrap,
-    titleWrap,
-    valueLabel,
-  } = useStyles();
-
-  const tabs = useMemo(() => {
-    const tabsLocal: any = [
-      {
-        id: TAB.PROJECT,
-        label: 'Инфо',
-        // tooltip: `Информация о проекте`,
-      },
-    ];
-    if (isMember) {
-      tabsLocal.push({
-        id: TAB.MEMBER,
-        label: (
-          <div className={valueLabel}>
-            <span>Вклад</span>
-            <Avatar size="sm" src={userInfo?.logoSrc}>
-              {userInfo?.shortName}
-            </Avatar>
-          </div>
-        ),
-        tooltip: (userInfo?.displayName || 'N/A') + ' вклад',
-      });
-    }
-    return tabsLocal;
-  }, [isMember, userInfo, valueLabel]);
-
-  const { formatNumber } = useIntl();
-
-  return (
-    <div className={cardStyle}>
-      <div className={header}>
-        <img src={headerSrc} alt="Card Pie Colored Header" />
-        <div
-          className={cn(logoWrap, {
-            [logoWrapAngle]: logoVariant === LOGO_TYPE.ANGLE,
-            [logoWrapRound]: logoVariant === LOGO_TYPE.ROUND,
-          })}
-        >
-          <img src={logoSrc || `${process.env.PUBLIC_URL}/logo_patreon.png`} alt={`${title} logo`} />
-        </div>
-      </div>
-      <Link className={titleWrap} to={projectLink}>
-        <Typography variant="h5">{title}</Typography>
-      </Link>
-      <div className={tabsWrap}>
-        <Tabs
-          classes={{ flexContainer: tabsFlexContainer, indicator: tabsIndicator }}
-          value={curTab}
-          indicatorColor="primary"
-          textColor="primary"
-          onChange={changeTab}
-          aria-label="Project Info"
-        >
-          {tabs.map(({ id, label, tooltip }, index) => {
-            const tooltipDisabled = !tooltip;
-            return (
-              <TooltipBig
-                key={id}
-                title={tooltip || ''}
-                placement="top"
-                disableFocusListener={tooltipDisabled}
-                disableHoverListener={tooltipDisabled}
-                disableTouchListener={tooltipDisabled}
-              >
-                <Tab
-                  disableRipple={!isMember}
-                  classes={{ root: cn(tabRoot, { [tabRootSingle]: !isMember }) }}
-                  value={index}
-                  label={label}
-                />
-              </TooltipBig>
-            );
-          })}
-        </Tabs>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={curTab}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel value={curTab} index={TAB.PROJECT} dir={theme.direction}>
-            <List className={listStyle} component="nav" aria-label="Информация о проекте">
-              <ListItem button>
-                <ListItemIcon className={iconStyle}>
-                  <TeamSvg color="inherit" fontSize="small" />
-                </ListItemIcon>
-                <span className={listText}>Участников</span>
-                <ListItemSecondaryAction className={digitStyle}>{formatNumber(membersCount)}</ListItemSecondaryAction>
-              </ListItem>
-              <ListItem button>
-                <ListItemIcon className={iconStyle}>
-                  <ValueSvg color="inherit" fontSize="small" />
-                </ListItemIcon>
-                <span className={listText}>Ценность проекта</span>
-                <ListItemSecondaryAction className={digitStyle}>
-                  {value
-                    ? formatNumber(value, {
-                        currency: 'USD',
-                        style: 'currency',
-                      })
-                    : 'скрыто'}
-                </ListItemSecondaryAction>
-              </ListItem>
-            </List>
-          </TabPanel>
-          <TabPanel value={curTab} index={TAB.MEMBER} dir={theme.direction}>
-            {userInfo && (
-              <List className={listStyle} component="nav" aria-label="Пользовательский вклад">
-                <ListItem button>
-                  <ListItemIcon className={iconStyle}>
-                    <MaskSvg color="inherit" fontSize="small" />
-                  </ListItemIcon>
-                  <span className={listText}>Роль</span>
-                  <ListItemSecondaryAction className={digitStyle}>{userInfo.mainRole}</ListItemSecondaryAction>
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon className={iconStyle}>
-                    <ContributingSvg color="inherit" fontSize="small" />
-                  </ListItemIcon>
-                  <span className={listText}>Доля в проекте</span>
-                  <TooltipBig
-                    title={
-                      userInfo.value
-                        ? formatNumber(userInfo.value, {
-                            currency: 'USD',
-                            style: 'currency',
-                          })
-                        : 'скрыто'
-                    }
-                  >
-                    <ListItemSecondaryAction className={digitStyle}>
-                      {value
-                        ? formatNumber(userInfo.value / value, {
-                            maximumFractionDigits: 2,
-                            style: 'percent',
-                          })
-                        : 'скрыто'}
-                    </ListItemSecondaryAction>
-                  </TooltipBig>
-                </ListItem>
-              </List>
-            )}
-          </TabPanel>
-        </SwipeableViews>
-        {isMember && Boolean(userInfo?.message) && (
-          <TooltipBig title={(userInfo?.displayName || 'N/A') + ' мнение'} placement="top">
-            <IconButton className={commentStyle}>
-              <CommentSvg color="primary" />
-            </IconButton>
-          </TooltipBig>
-        )}
-      </div>
-    </div>
-  );
-};

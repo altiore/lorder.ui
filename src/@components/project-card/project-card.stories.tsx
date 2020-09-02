@@ -2,12 +2,12 @@ import React from 'react';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import ProjectCard, { CARD_COLOR } from '.';
+import ProjectCard from '.';
 import CenterDecorator from '../../../.storybook/decor/Center';
 import IntlProvider from '../../../.storybook/decor/IntlProvider';
 import RouterDecorator from '../../../.storybook/decor/RouterDecorator';
+import { PROJECT_COLOR, PROJECT_VIEW_TYPE } from '../../@types';
 
-import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -41,7 +41,7 @@ storiesOf('ProjectCard', module)
       <div className={root}>
         <div className={cards}>
           <ProjectCard
-            color={CARD_COLOR.BLACK}
+            color={PROJECT_COLOR.BLACK}
             logoSrc={`/logo_patreon.png`}
             membersCount={1}
             projectLink={'/'}
@@ -58,8 +58,8 @@ storiesOf('ProjectCard', module)
           />
 
           <ProjectCard
-            color={CARD_COLOR.BLUE}
-            logoVariant="round"
+            color={PROJECT_COLOR.BLUE}
+            logoVariant={PROJECT_VIEW_TYPE.MEDAL}
             membersCount={34}
             projectLink={'/'}
             title="Open Broadcaster Software Software"
@@ -67,7 +67,7 @@ storiesOf('ProjectCard', module)
           />
 
           <ProjectCard
-            color={CARD_COLOR.GREEN}
+            color={PROJECT_COLOR.GREEN}
             membersCount={134}
             projectLink={'/'}
             title="Webpack"
@@ -81,8 +81,8 @@ storiesOf('ProjectCard', module)
           />
 
           <ProjectCard
-            color={CARD_COLOR.VIOLET}
-            logoVariant="round"
+            color={PROJECT_COLOR.VIOLET}
+            logoVariant={PROJECT_VIEW_TYPE.MEDAL}
             membersCount={9134}
             projectLink={'/'}
             title="React.JS"
@@ -92,9 +92,9 @@ storiesOf('ProjectCard', module)
 
         <div className={cards}>
           <ProjectCard
-            color={CARD_COLOR.BLACK}
+            color={PROJECT_COLOR.BLACK}
             logoSrc={`/logo_patreon.png`}
-            logoVariant="round"
+            logoVariant={PROJECT_VIEW_TYPE.MEDAL}
             membersCount={89134}
             projectLink={'/'}
             title="Lorder"
@@ -109,7 +109,7 @@ storiesOf('ProjectCard', module)
           />
 
           <ProjectCard
-            color={CARD_COLOR.BLUE}
+            color={PROJECT_COLOR.BLUE}
             membersCount={989134}
             projectLink={'/'}
             title="Open Broadcaster Software Software"
@@ -117,8 +117,8 @@ storiesOf('ProjectCard', module)
           />
 
           <ProjectCard
-            color={CARD_COLOR.GREEN}
-            logoVariant="round"
+            color={PROJECT_COLOR.GREEN}
+            logoVariant={PROJECT_VIEW_TYPE.MEDAL}
             membersCount={1989134}
             projectLink={'/'}
             title="Webpack"
@@ -133,7 +133,7 @@ storiesOf('ProjectCard', module)
           />
 
           <ProjectCard
-            color={CARD_COLOR.VIOLET}
+            color={PROJECT_COLOR.VIOLET}
             membersCount={41989134}
             projectLink={'/'}
             title="React.JS"

@@ -2,6 +2,8 @@ import { Notification } from 'react-notification-system';
 
 import { requestActions } from '#/@store/@common/requestActions';
 
+import { UPDATE_PROJECT_FORM } from './consts';
+
 export interface IPostProjectData {
   monthlyBudget?: string | number;
   title: string;
@@ -116,7 +118,7 @@ export const updateStatistic = requestActions<number>('PROJECT/STATISTIC/UPDATE'
 export const updateProjectAct = requestActions<number, any>(
   'PROJECT/UPDATE',
   (projectId: number, data: { desc?: string; title: string; monthlyBudget: number; slogan?: string }) => ({
-    form: 'UpdateProjectForm',
+    form: UPDATE_PROJECT_FORM,
     request: {
       data: {
         ...data,

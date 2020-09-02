@@ -16,6 +16,20 @@ export interface IProjectShort {
   id?: number;
   monthlyBudget?: number;
   logo?: IMedia;
+  viewColor: PROJECT_COLOR;
+  viewType: PROJECT_VIEW_TYPE;
+}
+
+export enum PROJECT_COLOR {
+  BLACK = 'black',
+  BLUE = 'blue',
+  GREEN = 'green',
+  VIOLET = 'violet',
+}
+
+export enum PROJECT_VIEW_TYPE {
+  MEDAL = 'medal',
+  TRIANGLE = 'triangle',
 }
 
 export interface IProject extends IProjectShort {

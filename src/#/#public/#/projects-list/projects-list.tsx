@@ -7,14 +7,13 @@ import { CircularProgress, Container, MenuItem, Select } from '@material-ui/core
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import T from '@material-ui/core/Typography';
 
-import ProjectCard, { CARD_COLOR, LOGO_TYPE } from '@components/project-card';
+import ProjectCard from '@components/project-card';
 import Slider from '@components/slider';
 
 import { VALUE_MULTIPLIER } from '#/@store/projects';
 import { ROUTE } from '#/@store/router';
 
 import { IProjectPub } from '@types';
-import getRandEnum from '@utils/get-rand-enum';
 
 enum FILTER_TYPE {
   membersCount = 'statistic.metrics.all.membersCount',
@@ -69,8 +68,8 @@ export const ProjectsList: React.FC<IProps> = ({ filteredList, isLoading }) => {
             <ProjectCard
               key={uuid}
               logoSrc={project?.logo?.url}
-              color={getRandEnum(CARD_COLOR)}
-              logoVariant={getRandEnum(LOGO_TYPE)}
+              color={project?.viewColor}
+              logoVariant={project?.viewType}
               membersCount={statistic.metrics?.all?.membersCount || 0}
               projectLink={ROUTE.PUBLIC.ONE(uuid)}
               title={title}
