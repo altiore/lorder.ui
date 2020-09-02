@@ -22,6 +22,7 @@ export const InputSearch = ({ placeholder, searchCallback, variant }: IInputSear
       onChange={searchCallback}
       placeholder={placeholder}
       className={classes.searchInput}
+      fullWidth
       InputProps={{
         classes: {
           input: variant ? classes[`searchInput${variant}`] : classes.searchInput,

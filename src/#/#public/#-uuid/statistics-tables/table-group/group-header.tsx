@@ -9,17 +9,19 @@ import { useStyles } from '../styles';
 interface IGroupHeaderProps {
   headerTitle: string;
   buttonTitle: string;
-  buttonRoutePath: string;
+  buttonRoutePath?: string;
 }
 
-export const GroupHeader = memo(({ headerTitle, buttonTitle, buttonRoutePath = '/' }: IGroupHeaderProps) => {
+export const GroupHeader = memo(({ headerTitle, buttonTitle, buttonRoutePath }: IGroupHeaderProps) => {
   const classes = useStyles();
   return (
     <Grid container justify="space-between" alignItems="center" className={classes.tableGroupHeader}>
       <h2 className={classes.h2}>{headerTitle}</h2>
-      <ButtonEdit routePath={buttonRoutePath} variant="contained">
-        {buttonTitle}
-      </ButtonEdit>
+      {Boolean(buttonRoutePath) && (
+        <ButtonEdit to={buttonRoutePath} variant="contained">
+          {buttonTitle}
+        </ButtonEdit>
+      )}
     </Grid>
   );
 });

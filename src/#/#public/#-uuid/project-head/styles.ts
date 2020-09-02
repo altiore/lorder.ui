@@ -40,7 +40,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
       fontSize: 45,
     },
   },
-  projectTagline: {
+  projectTagLine: {
     color: 'rgb(255, 255, 255)',
     fontFamily: 'Roboto',
     fontSize: 30,

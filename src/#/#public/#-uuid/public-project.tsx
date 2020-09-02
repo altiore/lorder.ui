@@ -88,13 +88,13 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
 
   return (
     <>
-      <ProjectHead project={project} editProjectLink={`/projects/${project.id}/settings`} isAuth={isAuth} />
+      <ProjectHead project={project} isAuth={isAuth} />
       <ProjectMetrics statistic={statistic} />
       <FollowProject project={project} />
       <div className={sectionWrap}>
         <StatisticTablesTsx members={members} userId={userId} />
       </div>
-      <ProjectValues />
+      <ProjectValues project={project} />
       <ProjectTeam members={members} />
       <UsersActivity members={members} project={project} />
     </>

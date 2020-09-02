@@ -9,17 +9,20 @@ interface IHeaderWithTitleProps {
   buttonText: string;
   marginBottom?: number;
   marginTop?: number;
+  to?: string;
 }
 
-export const HeaderWithButton = memo(({ title, buttonText, marginBottom, marginTop }: IHeaderWithTitleProps) => {
+export const HeaderWithButton = memo(({ title, buttonText, marginBottom, marginTop, to }: IHeaderWithTitleProps) => {
   const classes = useStyles({ marginBottom, marginTop });
   return (
     <div className={classes.headerTitleWrap}>
       <h1 className={classes.headerTitle}>{title}</h1>
       <div className={classes.editButtonWrap}>
-        <ButtonEdit routePath="/" variant="contained">
-          {buttonText}
-        </ButtonEdit>
+        {Boolean(to) && (
+          <ButtonEdit to={to} variant="contained">
+            {buttonText}
+          </ButtonEdit>
+        )}
       </div>
     </div>
   );

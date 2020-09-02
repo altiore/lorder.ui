@@ -12,15 +12,15 @@ import { useStyles } from './styles';
 
 interface IProps extends ButtonProps {
   children: string;
-  routePath?: string;
+  to?: string;
 }
 
-export const ButtonEdit: React.FC<IProps> = ({ children, routePath, variant, ...rest }) => {
+export const ButtonEdit: React.FC<IProps> = ({ children, to, variant, ...rest }) => {
   const { editButton, editButtonText, editButtonTextGray, settingsIcon, settingsIconGray } = useStyles();
-  const BaseComponent: any = useMemo(() => (routePath ? LinkButton : Button), [routePath]);
+  const BaseComponent: any = useMemo(() => (to ? LinkButton : Button), [to]);
 
   return (
-    <BaseComponent {...rest} className={editButton}>
+    <BaseComponent {...rest} to={to} className={editButton}>
       <SettingsIcon className={cn(settingsIcon, { [settingsIconGray]: variant === 'contained' })} />
       <Typography className={cn(editButtonText, { [editButtonTextGray]: variant === 'contained' })}>
         {children}

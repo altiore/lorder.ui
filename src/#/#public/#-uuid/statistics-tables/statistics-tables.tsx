@@ -82,9 +82,9 @@ export const StatisticTablesTsx = memo(({ members, userId }: IStatisticsTablesPr
     return getPointsTableMembers(pointsTableMembers, worthPointsSum);
   }, [pointsTableMembers, worthPointsSum]);
 
-  const [filteredTimeTable, setfilteredTimeTable] = useState(getTimeTable);
+  const [filteredTimeTable, setFilteredTimeTable] = useState(getTimeTable);
 
-  const [filteredPointsTable, setfilteredPointsTable] = useState(getPointsTable);
+  const [filteredPointsTable, setFilteredPointsTable] = useState(getPointsTable);
 
   const handleSearch = useCallback(
     (curMembers: any, setFilteredMembers) => ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,7 +103,7 @@ export const StatisticTablesTsx = memo(({ members, userId }: IStatisticsTablesPr
   return (
     <Grid container justify="center">
       <div className={classes.tableGroupWrap}>
-        <GroupHeader headerTitle="СТАТИСТИКА ПО ВРЕМЕНИ" buttonTitle="Редактировать" buttonRoutePath="/" />
+        <GroupHeader headerTitle="СТАТИСТИКА ПО ВРЕМЕНИ" buttonTitle="Редактировать" buttonRoutePath={undefined} />
         <StatisticTable
           members={filteredTimeTable}
           unit="h"
@@ -112,18 +112,18 @@ export const StatisticTablesTsx = memo(({ members, userId }: IStatisticsTablesPr
           showUserAchievementIcon
           userAchievementTitle="Продуктивность"
         />
-        <GroupFooter members={filteredTimeTable} searchCallback={handleSearch(getTimeTable, setfilteredTimeTable)} />
+        <GroupFooter members={filteredTimeTable} searchCallback={handleSearch(getTimeTable, setFilteredTimeTable)} />
       </div>
 
       <div className={classes.tableGroupWrap}>
-        <GroupHeader headerTitle="СТАТИСТИКА ПО ЦЕННОСТИ" buttonTitle="Редактировать" buttonRoutePath="/" />
+        <GroupHeader headerTitle="СТАТИСТИКА ПО ЦЕННОСТИ" buttonTitle="Редактировать" buttonRoutePath={undefined} />
         <StatisticTable
           members={filteredPointsTable}
           unitTitle="Ценность"
           userId={userId}
           userAchievementTitle="Доля"
         />
-        <GroupFooter members={getTimeTable} searchCallback={handleSearch(getPointsTable, setfilteredPointsTable)} />
+        <GroupFooter members={getTimeTable} searchCallback={handleSearch(getPointsTable, setFilteredPointsTable)} />
       </div>
     </Grid>
   );
