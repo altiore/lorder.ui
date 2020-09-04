@@ -105,7 +105,7 @@ export function SelectTreeTsx<IItem>({ color, items, onChange, value, multiple }
 
   const handleLabelClick = useCallback(
     event => {
-      const curValue: number = parseInt(event?.target?.value, 0);
+      const curValue: number = parseInt(event?.target?.value, 10);
       if (curValue) {
         event.preventDefault();
         event.stopPropagation();
@@ -129,7 +129,7 @@ export function SelectTreeTsx<IItem>({ color, items, onChange, value, multiple }
             return;
           }
 
-          const newValue = parseInt(value, 0) === curValue ? null : curValue;
+          const newValue = parseInt(value, 10) === curValue ? null : curValue;
           onChange(newValue);
         }
       }
@@ -138,7 +138,7 @@ export function SelectTreeTsx<IItem>({ color, items, onChange, value, multiple }
   );
 
   const selectedItem = useMemo<any>(() => {
-    return Array.isArray(value) ? undefined : items.find(el => el.id === parseInt(value, 0));
+    return Array.isArray(value) ? undefined : items.find(el => el.id === parseInt(value, 10));
   }, [items, value]);
 
   const { itemStyle, popoverClass, treeViewStyle } = useStyles();
@@ -152,7 +152,7 @@ export function SelectTreeTsx<IItem>({ color, items, onChange, value, multiple }
         const checked = value
           ? Array.isArray(value)
             ? value.includes(childNode.id)
-            : parseInt(value, 0) === childNode.id
+            : parseInt(value, 10) === childNode.id
           : false;
         return (
           <StyledTreeItem

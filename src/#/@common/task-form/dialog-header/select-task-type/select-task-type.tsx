@@ -55,7 +55,7 @@ export const SelectTaskType: React.FC<ISelectTaskType> = ({ input, items }) => {
   const handleSelectType = useCallback(
     event => {
       if (onChange) {
-        const selectedTaskId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 0);
+        const selectedTaskId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 10);
         if (typeof selectedTaskId === 'number') {
           onChange(selectedTaskId);
         }

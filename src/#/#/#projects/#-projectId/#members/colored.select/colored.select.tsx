@@ -12,7 +12,7 @@ import { palette } from '@styles/themes/light/palette';
 import { ACCESS_LEVEL } from '@types';
 
 function filterEnum(t: any) {
-  return isNaN(parseInt(t, 0));
+  return isNaN(parseInt(t, 10));
 }
 
 const REQUEST_TITLE = 'Запрос';

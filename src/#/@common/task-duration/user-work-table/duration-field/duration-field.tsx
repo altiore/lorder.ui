@@ -92,7 +92,7 @@ export class DurationFieldTsx extends React.Component<IDurationFieldProps, IStat
 
   private convertStringToDuration(value: string): number {
     const varArr = value.split(':');
-    return parseInt(varArr[0], 0) * 3600 + parseInt(varArr[1], 0) * 60;
+    return parseInt(varArr[0], 10) * 3600 + parseInt(varArr[1], 10) * 60;
   }
 
   private valueOnChange = (

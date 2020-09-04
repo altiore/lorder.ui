@@ -74,7 +74,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
     fetchProjectTasks(projectId);
   }, [fetchProjectTasks, projectId]);
 
-  // const getList = useCallback((id: string) => items.filter(el => el.status === parseInt(id, 0)), [items]);
+  // const getList = useCallback((id: string) => items.filter(el => el.status === parseInt(id, 10)), [items]);
 
   const handleToggleOpened = useCallback(
     e => {
@@ -118,13 +118,13 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
         });
       } else {
         try {
-          const taskSN = parseInt(draggableId, 0);
+          const taskSN = parseInt(draggableId, 10);
           const task = items.find(el => el.projectId === projectId && el.sequenceNumber === taskSN);
           if (task) {
             await moveProjectTask({
               prevStatusTypeName: task.statusTypeName,
               projectId,
-              sequenceNumber: parseInt(draggableId, 0),
+              sequenceNumber: parseInt(draggableId, 10),
               statusTypeName: destination.droppableId,
             });
           }

@@ -53,7 +53,7 @@ export const ProjectPartsJsx: React.FC<IProjectPartsProps> = React.memo<IProject
     updateProjectPart,
   }) => {
     const projectId = useMemo(() => {
-      return parseInt(match?.params?.projectId, 0);
+      return parseInt(match?.params?.projectId, 10);
     }, [match]);
 
     useEffect(() => {

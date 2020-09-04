@@ -56,7 +56,7 @@ export const UserWorkTableJsx: React.FC<IUserWorkTableProps> = ({
     evt => {
       const idStr = evt?.currentTarget?.dataset?.id;
       if (idStr) {
-        const id = parseInt(idStr, 0);
+        const id = parseInt(idStr, 10);
         const curUserWork = userWorks.find(el => el.id === id);
         if (curUserWork) {
           onClose();

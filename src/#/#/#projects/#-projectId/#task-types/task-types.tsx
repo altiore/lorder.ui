@@ -64,7 +64,7 @@ export const ProjectTaskTypesJsx: React.FC<IProjectTaskTypesProps> = React.memo(
 
     const createTaskTypes = useCallback(
       ({ taskTypeId: taskTypeIdStr }) => {
-        const taskTypeId = parseInt(taskTypeIdStr, 0);
+        const taskTypeId = parseInt(taskTypeIdStr, 10);
         if (typeof taskTypeId === 'number') {
           addTaskTypeToProject({ projectId, taskTypeId });
         }

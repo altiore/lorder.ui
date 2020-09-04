@@ -41,7 +41,7 @@ export const UserTasks: React.FC<IProps> = ({
 
   const handleHover = useCallback(
     (e: React.SyntheticEvent) => {
-      const eventId = parseInt(get(e, ['target', 'dataset', 'id'], 0), 0);
+      const eventId = parseInt(get(e, ['target', 'dataset', 'id'], 0), 10);
       const newHoveredEvent = events.find(el => get(el, ['userWork', 'id']) === eventId);
 
       cleanLeaveTimer();
@@ -83,7 +83,7 @@ export const UserTasks: React.FC<IProps> = ({
 
   const handleEventClick = useCallback(
     (e: React.SyntheticEvent) => {
-      const eventId = parseInt(get(e, ['target', 'dataset', 'id'], 0), 0);
+      const eventId = parseInt(get(e, ['target', 'dataset', 'id'], 0), 10);
       if (height === Y_HEIGHT_BIG) {
         e.stopPropagation();
         if (eventId === get(editedEvent, ['userWork', 'id'])) {

@@ -30,7 +30,7 @@ export const WeekRangeTsx: React.FC<IProps> = ({ changeCustomRange, lastDay }): 
     evt => {
       const btnIndex = evt.currentTarget?.dataset?.index;
       if (btnIndex) {
-        const clickedBtnDay = buttons[parseInt(btnIndex, 0)];
+        const clickedBtnDay = buttons[parseInt(btnIndex, 10)];
         const newRange: [moment.Moment, moment.Moment] = [
           clickedBtnDay.clone().startOf('day'),
           clickedBtnDay.clone().endOf('day'),

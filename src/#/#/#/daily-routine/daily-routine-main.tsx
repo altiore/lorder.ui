@@ -111,7 +111,7 @@ export const DailyRoutineMain: React.FC<IProps> = ({
 
   const handleChangeFilter = useCallback(
     evt => {
-      const id = parseInt(evt?.currentTarget?.dataset?.id, 0);
+      const id = parseInt(evt?.currentTarget?.dataset?.id, 10);
       changeRangeFilter(id);
     },
     [changeRangeFilter]

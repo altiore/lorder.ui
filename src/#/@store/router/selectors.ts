@@ -39,12 +39,13 @@ export const projectIdSearchParam = createDeepEqualSelector(routerSearch, (searc
 
 export const routeProjectId = createDeepEqualSelector(
   match('/projects/:projectId'),
-  (state): number | undefined => get(state, 'params.projectId') && parseInt(get(state, 'params.projectId'), 0)
+  (state): number | undefined => get(state, 'params.projectId') && parseInt(get(state, 'params.projectId'), 10)
 );
 
 export const routeTaskSequenceNumber = createDeepEqualSelector(
   match(`${TASKS_ROUTE()}/:sequenceNumber`),
-  (state): number | undefined => get(state, 'params.sequenceNumber') && parseInt(get(state, 'params.sequenceNumber'), 0)
+  (state): number | undefined =>
+    get(state, 'params.sequenceNumber') && parseInt(get(state, 'params.sequenceNumber'), 10)
 );
 
 const UUID_PARAM = 'uuid';
