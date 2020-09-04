@@ -20,7 +20,7 @@ export const postProject = requestActions<IPostProjectData>(
     form: 'ProjectForm',
     request: {
       data: {
-        monthlyBudget: monthlyBudget && parseInt(monthlyBudget as string, 0),
+        monthlyBudget: monthlyBudget && parseInt(monthlyBudget as string, 10),
         title,
         type,
       },

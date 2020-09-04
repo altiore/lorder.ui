@@ -80,7 +80,7 @@ export const TaskComments: React.FC<IProps> = ({
 
   const removeComment = useCallback(
     evt => {
-      const commentId = parseInt(evt?.currentTarget?.dataset?.id, 0);
+      const commentId = parseInt(evt?.currentTarget?.dataset?.id, 10);
       if (commentId && curTask?.id) {
         setIsCommentRemove(true);
         setRemovedCommentId(commentId);

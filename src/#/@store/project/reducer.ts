@@ -26,7 +26,7 @@ const locationChangeHandler = (state: IS, { payload }: Action<IChangePayload>) =
   }
   const matches = payload && payload.pathname && payload.pathname.match(/^\/projects\/(\d+)/);
   if (matches && matches[1]) {
-    return { ...state, selected: parseInt(matches[1], 0) };
+    return { ...state, selected: parseInt(matches[1], 10) };
   }
   return state;
 };

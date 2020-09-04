@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
 function filterEnum(t: any) {
-  return isNaN(parseInt(t, 0));
+  return isNaN(parseInt(t, 10));
 }
 
 const defSelected = [];

@@ -24,7 +24,7 @@ const isShouldRefresh = (getState): false | string => {
   const diffInSeconds = expiresDate.diff(moment(), 'seconds');
 
   const maximumAllowedDiffInSeconds = process.env.REACT_APP_REFRESH_BEFOR
-    ? parseInt(process.env.REACT_APP_REFRESH_BEFOR, 0)
+    ? parseInt(process.env.REACT_APP_REFRESH_BEFOR, 10)
     : 180;
 
   const bearerKey = window.sessionStorage.getItem(SESSION_BEARER_KEY_FIELD);

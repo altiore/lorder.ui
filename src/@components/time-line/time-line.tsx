@@ -82,7 +82,7 @@ export const TimeLineTsx: React.FC<ITimeLineProps> = ({
 
   const handleEditEventClose = useCallback(
     (e: any) => {
-      const eventId = parseInt(get(e, ['target', 'dataset', 'id'], 0), 0);
+      const eventId = parseInt(get(e, ['target', 'dataset', 'id'], 0), 10);
       if (!eventId) {
         setEditedEvent(undefined);
       }

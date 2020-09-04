@@ -5,7 +5,7 @@ export const removeFromList = (listName: string, idName: string = 'id') => (stat
   const removedId = get(
     payload,
     ['data', idName],
-    parseInt(get(get(meta, ['previousAction', 'payload', 'request', 'url'], '').match(/[^/]+$/), 0, 0), 0)
+    parseInt(get(get(meta, ['previousAction', 'payload', 'request', 'url'], '').match(/[^/]+$/), 0, 0), 10)
   );
   const index = list.findIndex(el => el[idName] === removedId);
   if (index !== -1) {

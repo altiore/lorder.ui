@@ -164,7 +164,7 @@ export const ProjectSelect: React.FC<IProps> = ({ projects, openProject, push, t
     async event => {
       event.stopPropagation();
       if (openProject) {
-        const pId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 0);
+        const pId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 10);
         if (typeof pId === 'number') {
           const project = projects.find(el => el.id === pId);
           if (project) {
@@ -179,7 +179,7 @@ export const ProjectSelect: React.FC<IProps> = ({ projects, openProject, push, t
 
   const handleCreateTask = useCallback(
     async event => {
-      const projectId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 0);
+      const projectId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 10);
       if (projectId) {
         await tryToCreateAndStart(projectId);
       } else {

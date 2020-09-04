@@ -151,7 +151,7 @@ export const ProjectSelect: React.FC<IProjectSelect> = ({ onChange, projects, pr
   const handleSelectProject = useCallback(
     event => {
       if (onChange) {
-        const pId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 0);
+        const pId = parseInt(get(event, ['currentTarget', 'dataset', 'id']), 10);
         if (typeof pId === 'number') {
           onChange(pId);
         }
