@@ -1,4 +1,5 @@
 import React, { lazy, Suspense } from 'react';
+import { Helmet } from 'react-helmet';
 import { Redirect, Switch } from 'react-router-dom';
 
 import LoadingPage from '@components/loading-page';
@@ -47,15 +48,25 @@ export const AppJsx: React.FC<IAppProps> = ({ userRole }) => {
   const preparedRoutes = useAllowedRoutes(APP_MAIN_ROUTES, userRole);
 
   return (
-    <Suspense fallback={<LoadingPage />}>
-      <Switch>
-        <Redirect from="/index.html" to="/" exact />
-        {preparedRoutes.map((route: IRoute) => (
-          <NestedRoute key={route.path} {...route} />
-        ))}
-        <Redirect from="/" to="/hi" exact />
-        <Redirect to="/auth" />
-      </Switch>
-    </Suspense>
+    <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Lorder - это твой персональный лорд-раб. Он выполнит за тебя всю грязную работу по учету времени и даст возможность эффективно анализировать учтенное время. Время - это единственный ресурс, которым мы владеем в полной мере, вот почему так важно знать, как мы распределяем наш самый главный ресурс - время. Цель проекта Lorder - дать возможность понять, что из выполняемого нами труда, максимально быстро приближает нас цели. Справедливость и объективность - это наше главное оружие. Lorder - это инструмент для человека, а не для компании/корпорации. Lorder - это учет времени ради анализа ЧЕЛОВЕКОМ его затратившим. Учет вклада в проект расчитывается на внесенной полезности, а не на временных затратах, поэтому время находится полностью во власти своего владельца!"
+        />
+      </Helmet>
+      <Suspense fallback={<LoadingPage />}>
+        <Switch>
+          <Redirect from="/index.html" to="/" exact />
+          {preparedRoutes.map((route: IRoute) => (
+            <NestedRoute key={route.path} {...route} />
+          ))}
+          <Redirect from="/" to="/hi" exact />
+          <Redirect to="/auth" />
+        </Switch>
+      </Suspense>
+    </>
   );
 };
