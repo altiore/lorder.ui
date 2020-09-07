@@ -52,9 +52,13 @@ export const AppJsx: React.FC<IAppProps> = ({ userRole }) => {
 
   return (
     <>
-      <Helmet>
+      <Helmet
+        htmlAttributes={{
+          dir: 'ltr',
+          lang: 'ru',
+        }}
+      >
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content={DESCRIPTION} />
         <meta property="og:url" content={process.env.PUBLIC_URL + '/hi'} />
         <meta property="og:type" content="website" />
