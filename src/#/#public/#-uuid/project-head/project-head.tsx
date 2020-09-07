@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Box, Grid } from '@material-ui/core';
 
@@ -19,6 +19,10 @@ interface IProps {
 }
 
 export const ProjectHeadTsx = ({ project, isAuth }: IProps) => {
+  const isCurUserViolet = useMemo(() => {
+    return Boolean(project?.accessLevel && project.accessLevel >= ACCESS_LEVEL.VIOLET);
+  }, [project]);
+
   const { firstBlock, firstBlockContent, imageWrap, projectName, projectTagLine, wrapper } = useStyles();
   return (
     <GradientHead color={project?.viewColor} className={wrapper}>
@@ -33,14 +37,8 @@ export const ProjectHeadTsx = ({ project, isAuth }: IProps) => {
             <h1 className={projectName}>{project.title}</h1>
             {project.desc && <p className={projectTagLine}>{project.desc}</p>}
             {isAuth && (
-              <ButtonEdit
-                to={
-                  Boolean(project?.accessLevel && project.accessLevel >= ACCESS_LEVEL.VIOLET)
-                    ? ROUTE.PROJECT.SETTINGS(project.id)
-                    : undefined
-                }
-              >
-                Редактировать
+              <ButtonEdit to={isCurUserViolet ? ROUTE.PROJECT.SETTINGS(project.id) : ROUTE.PROJECT.ONE(project.id)}>
+                {isCurUserViolet ? 'Редактировать' : 'Доска Проекта'}
               </ButtonEdit>
             )}
           </div>
