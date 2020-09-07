@@ -66,9 +66,16 @@ export const PROJECT_ROUTES: IRoute[] = [
     component: lazy(() => import('./#tasks/#-sequenceNumber')),
     path: ROUTE.PROJECT.TASK.ONE(),
   },
+  {
+    access: [ROLES.USERS, ACCESS_LEVEL.VIOLET],
+    component: lazy(() => import('./#statistic')),
+    path: ROUTE.PROJECT.STATISTIC(),
+    title: 'Статистика',
+  },
 ];
 
 export interface IProjectProps {
+  defaultProjectId?: number;
   fetchOneProject: any;
   openedProject: Project;
   routes: IRoute[];
@@ -76,6 +83,7 @@ export interface IProjectProps {
 }
 
 export const ProjectTsx: React.FC<IProjectProps> = ({
+  defaultProjectId,
   fetchOneProject,
   openedProject,
   userRole,
@@ -86,10 +94,26 @@ export const ProjectTsx: React.FC<IProjectProps> = ({
     }
   }, [fetchOneProject]);
 
+  const isDefaultProject = useMemo(() => {
+    return openedProject && defaultProjectId === openedProject.id;
+  }, [defaultProjectId, openedProject]);
+
   const availableRoutes = useAllowedRoutes(PROJECT_ROUTES, userRole, openedProject && openedProject.accessLevel);
+
+  const availableRoutesConsiderDefault = useMemo(() => {
+    if (isDefaultProject) {
+      return PROJECT_ROUTES.filter(el => el.path === ROUTE.PROJECT.STATISTIC());
+    }
+
+    return availableRoutes.filter(el => el.path !== ROUTE.PROJECT.STATISTIC());
+  }, [availableRoutes, isDefaultProject]);
 
   const redirectTo = useMemo(() => {
     if (openedProject) {
+      if (isDefaultProject) {
+        return ROUTE.PROJECT.STATISTIC();
+      }
+
       if (typeof openedProject.accessLevel === 'undefined') {
         return ROUTE.MAIN;
       }
@@ -104,18 +128,18 @@ export const ProjectTsx: React.FC<IProjectProps> = ({
     }
 
     return ROUTE.MAIN;
-  }, [openedProject]);
+  }, [isDefaultProject, openedProject]);
 
   if (!openedProject || !openedProject.title) {
     return null;
   }
 
   return (
-    <LayoutLeftDrawer routes={availableRoutes} showFooter>
+    <LayoutLeftDrawer routes={availableRoutesConsiderDefault} showFooter>
       <Suspense fallback={<div />}>
         <Switch>
           <Redirect from={ROUTE.PROJECT.ONE()} to={redirectTo} exact />
-          {availableRoutes.map((route: IRoute) => (
+          {availableRoutesConsiderDefault.map((route: IRoute) => (
             <NestedRoute key={route.path} {...route} />
           ))}
           <Redirect from={ROUTE.PROJECT.INVITE()} to={ROUTE.PROJECT.TASKS()} exact />

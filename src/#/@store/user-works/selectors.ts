@@ -5,7 +5,7 @@ import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 import { convertSecondsToHours } from '#/@store/@common/helpers';
 import { defaultProjectId, userId } from '#/@store/identity';
 import { getTaskById } from '#/@store/tasks';
-import { currentTaskId, currentTimerTime, currentUserWorkId } from '#/@store/timer';
+import { currentProjectId, currentTaskId, currentTimerTime, currentUserWorkId } from '#/@store/timer';
 import { currentRange, IRangeFilter, RANGE_FROM_RANGE_FILTER } from '#/@store/ui';
 
 import { IEvent, IState, ITask, IUserWork } from '@types';
@@ -42,6 +42,11 @@ export const currentUserWork = createDeepEqualSelector([currentUserWorks, curren
 export const isPaused = createDeepEqualSelector(
   [currentUserWork, currentTaskId],
   (uw, taskId) => uw && uw.taskId !== taskId
+);
+
+export const isRelax = createDeepEqualSelector(
+  [currentProjectId, defaultProjectId],
+  (curPId, defPId) => curPId === defPId
 );
 
 export const inProgress = createDeepEqualSelector(isPaused, i => !i);

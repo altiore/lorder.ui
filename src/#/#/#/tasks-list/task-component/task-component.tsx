@@ -20,20 +20,24 @@ import { useStyles } from './styles';
 import { ACCESS_LEVEL, IProject, ITask } from '@types';
 
 export interface ITaskComponentProps {
+  defaultProjectId?: number;
   getTaskById: (id: number | string) => ITask;
   goToProjectWithAsk: any;
   isCurrent: boolean;
   isPaused: boolean;
+  isRelax: boolean;
   project: IProject;
   push: any;
   taskId: number | string;
 }
 
 export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
+  defaultProjectId,
   getTaskById,
   goToProjectWithAsk,
   isCurrent,
   isPaused,
+  isRelax,
   project,
   push,
   taskId,
@@ -87,7 +91,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
     <div
       className={cn(classes.listItem, {
         [classes.listItemCurrent]: isCurrent,
-        [classes.listItemPaused]: isPaused && isCurrent,
+        [classes.listItemPaused]: (isPaused || isRelax) && isCurrent,
       })}
     >
       <div className={classes.title}>
@@ -98,7 +102,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
               href={isShown ? `/projects/${project.id}` : '#'}
               className={cn(classes.projectButton, {
                 [classes.projectButtonCurrent]: isCurrent,
-                [classes.projectButtonPaused]: isCurrent && isPaused,
+                [classes.projectButtonPaused]: isCurrent && (isPaused || isRelax),
               })}
               classes={{ label: classes.projectText }}
               onClick={goToProjectAskCreateTask}
@@ -112,7 +116,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
             component="a"
             className={cn(classes.buttonTitle, {
               [classes.buttonTitleCurrent]: isCurrent,
-              [classes.buttonTitlePaused]: isPaused && isCurrent,
+              [classes.buttonTitlePaused]: (isPaused || isRelax) && isCurrent,
             })}
             classes={{ label: classes.buttonTitleLabel }}
             href={isShown ? `${TASKS_ROUTE(project.id)}/${task.sequenceNumber}` : '#'}
@@ -136,7 +140,7 @@ export const TaskComponentTsx: React.FC<ITaskComponentProps> = ({
       <div className={classes.actions}>
         <TaskDuration taskId={taskId} />
         <div className={classes.startBtnDivider} />
-        <StartStopButton task={task} />
+        {defaultProjectId !== task?.projectId ? <StartStopButton task={task} /> : <div className={classes.emptyBtn} />}
       </div>
     </div>
   );

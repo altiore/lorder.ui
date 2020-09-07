@@ -13,6 +13,7 @@ export const ROUTE = {
     PARTS: (projectId: string | number = ':projectId') => `/projects/${projectId}/parts`,
     ROLES: (projectId: string | number = ':projectId') => `/projects/${projectId}/roles`,
     SETTINGS: (projectId: string | number = ':projectId') => `/projects/${projectId}/settings`,
+    STATISTIC: (projectId: string | number = ':projectId') => `/projects/${projectId}/statistic`,
     STATUS_MOVES: (projectId: string | number = ':projectId') => `/projects/${projectId}/status-moves`,
     TASK: {
       LOGS: (projectId: string | number = ':projectId', sequenceNumber: string | number = ':sequenceNumber') =>

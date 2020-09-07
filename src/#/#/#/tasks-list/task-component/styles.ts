@@ -117,6 +117,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginRight: theme.spacing(1),
     width: theme.spacing(10),
   },
+  emptyBtn: {
+    width: 52,
+  },
   listItem: {
     '&:hover': {
       '& $projectText': {
