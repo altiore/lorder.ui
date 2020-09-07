@@ -47,6 +47,7 @@ export const TimeLineTsx: React.FC<ITimeLineProps> = ({
   userWorkId,
   width,
 }) => {
+  const endRange = useMemo(() => currentRange[1] || moment(), [currentRange]);
   const startHour = useMemo((): number => {
     const first = minBy(events, (ev: IEvent) => {
       if (ev.userWork.finishAt) {
@@ -62,9 +63,9 @@ export const TimeLineTsx: React.FC<ITimeLineProps> = ({
   }, [currentRange, events]);
 
   const finishHour = useMemo((): number => {
-    const hours = currentRange[1].hours();
+    const hours = endRange.hours();
     return hours < 24 ? (hours < 23 ? hours + 2 : hours + 1) : 24;
-  }, [currentRange]);
+  }, [endRange]);
 
   const [height] = useState(fullSize ? Y_HEIGHT_BIG : Y_HEIGHT_LITTLE);
   const [editedEvent, setEditedEvent] = useState<IEvent>();
@@ -107,9 +108,9 @@ export const TimeLineTsx: React.FC<ITimeLineProps> = ({
           : el.diff(currentRange[0]) > 0
           ? finishHour
           : startHour
-        : currentRange[1].hours() + currentRange[1].minutes() / 60 + currentRange[1].minutes() / 3600;
+        : endRange.hours() + endRange.minutes() / 60 + endRange.minutes() / 3600;
     },
-    [currentRange, finishHour, startHour]
+    [currentRange, endRange, finishHour, startHour]
   );
 
   const getPosition = useCallback(
@@ -156,9 +157,9 @@ export const TimeLineTsx: React.FC<ITimeLineProps> = ({
         <CurrentTimeIndicator
           fullSize={fullSize}
           left={
-            moment().isBetween(currentRange[0], currentRange[1].clone().add(2, 'minute'))
+            moment().isBetween(currentRange[0], endRange.clone().add(2, 'minute'))
               ? getPosition(moment())
-              : getPosition(currentRange[1])
+              : getPosition(endRange)
           }
         >
           {currentTimeCustom || currentTime}

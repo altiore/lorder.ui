@@ -38,7 +38,9 @@ export const startTimer = (userWork: Partial<UserWork>, projectProp?: IProject) 
   dispatch: any,
   getState: any
 ) => {
-  clearInterval(timer);
+  if (timer) {
+    clearInterval(timer);
+  }
   if (!userWork || !userWork.durationInSeconds) {
     userWork = new UserWork(userWork);
   }

@@ -26,7 +26,7 @@ export const shownUserWorkId = createDeepEqualSelector(baseState, state => state
 
 export const currentRange = createDeepEqualSelector(
   [baseState],
-  (s): [moment.Moment, moment.Moment] => s.customRange || RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY]
+  (s): [moment.Moment, moment.Moment | undefined] => s.customRange || RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY]
 );
 
 export const lastDayOfCustomRange = createDeepEqualSelector([currentRange], range =>

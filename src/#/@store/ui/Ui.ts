@@ -25,7 +25,7 @@ export interface IUiState {
   isLeftBarOpen: boolean;
   isTimeEdit: boolean;
   rangeFilter: IRangeFilter;
-  customRange: [Moment, Moment];
+  customRange: [Moment, Moment | undefined];
   userWorkId?: number;
 }
 
@@ -35,7 +35,7 @@ export class Ui implements IUiState {
   readonly isLeftBarOpen: boolean = true;
   readonly isTimeEdit: boolean = false;
   rangeFilter: IRangeFilter = IRangeFilter.TODAY;
-  customRange: [Moment, Moment] = RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY];
+  customRange: [Moment, Moment | undefined] = RANGE_FROM_RANGE_FILTER[IRangeFilter.TODAY];
   userWorkId?: number;
 
   constructor(initial?: object) {

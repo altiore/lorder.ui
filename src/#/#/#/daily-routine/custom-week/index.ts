@@ -10,7 +10,7 @@ import WeekRange from '../week-range';
 import { IState } from '@types';
 
 interface IMappedProps {
-  lastDay: Moment;
+  lastDay: Moment | undefined;
 }
 
 const mapStateToProps = createStructuredSelector<IState, IMappedProps>({

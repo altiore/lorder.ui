@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
 
-// import cn from 'classnames';
 import moment from 'moment';
 
 import Button from '@material-ui/core/Button';
@@ -10,19 +9,20 @@ import TooltipBig from '@components/tooltip-big';
 
 interface IProps {
   changeCustomRange: (range: [moment.Moment, moment.Moment], uwId?: number) => void;
-  lastDay: moment.Moment;
+  lastDay: moment.Moment | undefined;
 }
 
 export const WeekRangeTsx: React.FC<IProps> = ({ changeCustomRange, lastDay }): JSX.Element => {
   const buttons = useMemo(() => {
+    const pLastDay = lastDay || moment();
     return [
-      lastDay.clone().subtract(6, 'day'),
-      lastDay.clone().subtract(5, 'day'),
-      lastDay.clone().subtract(4, 'day'),
-      lastDay.clone().subtract(3, 'day'),
-      lastDay.clone().subtract(2, 'day'),
-      lastDay.clone().subtract(1, 'day'),
-      lastDay.clone(),
+      pLastDay.clone().subtract(6, 'day'),
+      pLastDay.clone().subtract(5, 'day'),
+      pLastDay.clone().subtract(4, 'day'),
+      pLastDay.clone().subtract(3, 'day'),
+      pLastDay.clone().subtract(2, 'day'),
+      pLastDay.clone().subtract(1, 'day'),
+      pLastDay.clone(),
     ];
   }, [lastDay]);
 
@@ -46,7 +46,7 @@ export const WeekRangeTsx: React.FC<IProps> = ({ changeCustomRange, lastDay }): 
     <div className={weekWrap}>
       {buttons.map((day: moment.Moment, i) => {
         const weekDay = day.locale('ru').format('ddd');
-        const isCurWeek = lastDay.isoWeekday() >= day.isoWeekday();
+        const isCurWeek = (lastDay || moment()).isoWeekday() >= day.isoWeekday();
         return (
           <TooltipBig key={weekDay} placement="top" title={day.locale('ru').format('D MMMM')}>
             <Button

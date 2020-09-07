@@ -51,7 +51,7 @@ export const filteredEvents = createDeepEqualSelector(
   (userWorks: IUserWork[], getTask, defPrId: number | undefined, range): IEvent[] => {
     return userWorks
       .filter((uw: IUserWork) => {
-        return (uw.finishAt || moment()).diff(range[0]) > 0 && range[1].diff(uw.startAt) > 0;
+        return (uw.finishAt || moment()).diff(range[0]) > 0 && (range[1] || moment()).diff(uw.startAt) > 0;
       })
       .sort((a, b) => (a.startAt.unix() > b.startAt.unix() ? 1 : -1))
       .map(userWork => {
@@ -67,13 +67,6 @@ export const filteredEvents = createDeepEqualSelector(
       });
   }
 );
-
-// export const timeSpentCurrentRange = createDeepEqualSelector(
-//   [getUserWorksInRange, currentTimerTime, currentRange],
-//   (getList, curTime, range) => {
-//     return convertSecondsToDurationWithLocal(durationFromUserWorkList(getList(...range), curTime, ...range), 24);
-//   }
-// );
 
 export const currentTimeDependentOnTimer = createDeepEqualSelector([currentTimerTime], curTime => {
   if (curTime) {
