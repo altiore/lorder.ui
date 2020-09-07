@@ -6,7 +6,7 @@ import { updateProjectAct } from '#/@store/projects/actions';
 import { AxiosResponse } from 'axios';
 
 import { Project } from '../projects';
-import { fetchPublicProject } from './actions';
+import { fetchPublicProject, postRequestMembershipAction } from './actions';
 import { PublicProject } from './PublicProject';
 
 import { IPublicProject } from '@types';
@@ -32,6 +32,16 @@ const fetchPublicProjectFailHandler = () => {
   return new PublicProject({ isLoaded: false, isLoading: false });
 };
 
+const postRequestMembershipHandler = (state: S, { payload }) => {
+  return new PublicProject({
+    ...state,
+    project: new Project({
+      ...(state.project || {}),
+      members: [...(state.project?.members.list || []), payload.data],
+    }),
+  });
+};
+
 const updateProjectHandler = (state: S, { payload }) => {
   if (state.projectId === payload.data?.id) {
     return new PublicProject({
@@ -46,11 +56,13 @@ const updateProjectHandler = (state: S, { payload }) => {
   return state;
 };
 
-export const publicProject: any = handleActions<S, P>(
+export const publicProject: any = handleActions<S, P, any>(
   {
     [fetchPublicProject.toString()]: fetchPublicProjectHandler,
     [fetchPublicProject.success]: fetchPublicProjectSuccessHandler,
     [fetchPublicProject.fail]: fetchPublicProjectFailHandler,
+
+    [postRequestMembershipAction.success]: postRequestMembershipHandler,
 
     [updateProjectAct.success]: updateProjectHandler,
   },

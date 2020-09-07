@@ -8,10 +8,10 @@ import FollowProject from './follow-project';
 import ProjectMetrics from './metrics';
 import ProjectHead from './project-head';
 import ProjectTeam from './project-team';
-import ProjectValues from './project-values';
+// import ProjectValues from './project-values';
 import { StatisticTablesTsx } from './statistics-tables/statistics-tables';
 import { useStyles } from './styles';
-import UsersActivity from './users-activity';
+// import UsersActivity from './users-activity';
 
 import { IMember, IProject } from '@types';
 
@@ -94,9 +94,9 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
       <div className={sectionWrap}>
         <StatisticTablesTsx members={members} userId={userId} />
       </div>
-      <ProjectValues project={project} />
+      {/*<ProjectValues project={project} />*/}
       <ProjectTeam members={members} />
-      <UsersActivity members={members} project={project} />
+      {/*<UsersActivity members={members} project={project} />*/}
     </>
   );
 };

@@ -53,6 +53,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
   outlinedStyle: {
     transform: 'translate(14px, 18px) scale(1)',
   },
+  requestSent: {
+    color: theme.palette.error.main,
+    marginTop: 48,
+  },
   taglineHeader: {
     color: '#29292b',
     fontFamily: 'Roboto',

@@ -48,7 +48,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     background: '#fff',
     borderBottom: 0,
     borderTop: 0,
-    paddingBottom: 170,
+    // paddingBottom: 170,
   },
   title: {
     color: '#ffffff',
