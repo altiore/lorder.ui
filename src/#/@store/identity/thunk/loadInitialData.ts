@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { fetchAllParticipantProjects } from '#/@store/projects';
 import { identifier } from '#/@store/router';
 import { getAllTaskTypes } from '#/@store/task-types';
-import { getUserWorks } from '#/@store/user-works';
+import { fetchUserWorks } from '#/@store/user-works';
 
 import { IIdentityState } from '../Identity';
 import { baseIdentityState, userIsLoading, userRole } from '../selectors';
@@ -19,7 +19,7 @@ export const loadInitialData = () => async (dispatch: Dispatch<any>, getState: (
   const isStartRout = identifier(state);
   if (role !== ROLE.GUEST && !isLoading && !isStartRout) {
     await dispatch(fetchAllParticipantProjects());
-    await dispatch(getUserWorks());
+    await dispatch(fetchUserWorks());
     await dispatch(getAllTaskTypes());
     const user: IIdentityState = baseIdentityState(getState());
     if (user) {

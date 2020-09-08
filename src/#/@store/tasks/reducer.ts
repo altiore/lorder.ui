@@ -10,7 +10,7 @@ import { deleteTaskComments, postTaskComment } from '#/@store/task-comments';
 import {
   bringBackAct,
   createAndStartUserWork,
-  getUserWorks,
+  getUserWorksAct,
   patchAndStopUserWork,
   patchUserWork,
   pauseUserWork,
@@ -393,7 +393,7 @@ export const tasks: any = handleActions<S, any, any>(
 
     [updateProjectTask.toString()]: updateProjectTaskHandler,
 
-    [getUserWorks.success]: getUserWorksSuccess,
+    [getUserWorksAct.success]: getUserWorksSuccess,
 
     [postTaskComment.success]: addTaskCommentSuccess,
     [deleteTaskComments.success]: deleteTaskCommentsSuccess,

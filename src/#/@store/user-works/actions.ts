@@ -22,7 +22,7 @@ export interface IUserWorkDelete {
   userWorkId: number;
 }
 
-export const getUserWorks = requestActions(
+export const getUserWorksAct = requestActions(
   'USER_WORK/GET_MANY',
   ({ count = 40, skip = 0, orderBy = 'startAt', order = 'desc' } = {}): any => ({
     request: {

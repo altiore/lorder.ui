@@ -159,6 +159,10 @@ export const stopUserWork = () => async (dispatch: any, getState: any) => {
 
     const userWorkDelete: IUserWorkDelete = currentUserWorkData(getState());
     const res = await dispatch(patchAndStopUserWork(userWorkDelete));
+    const nextUserWork: Partial<UserWork> = res?.payload?.data?.next;
+    if (nextUserWork) {
+      dispatch(startTimer(nextUserWork));
+    }
     const newTaskData = getTaskInitialsFromTask(
       {
         ...(res?.payload?.data?.previous?.task || {}),
@@ -196,5 +200,13 @@ export const bringBack = (task: ITask, reason: string) => async (dispatch: any, 
 
 export const pauseWork = () => async (dispatch: any, getState: any) => {
   const data: IUserWorkDelete = currentUserWorkData(getState());
-  return await dispatch(pauseUserWork(data));
+  const res = await dispatch(pauseUserWork(data));
+
+  const nextUserWork: Partial<UserWork> = res?.payload?.data?.next;
+  const prevUserWork: Partial<UserWork> = res?.payload?.data?.previous;
+  if (nextUserWork && prevUserWork) {
+    dispatch(startTimer(nextUserWork));
+  }
+
+  return res;
 };

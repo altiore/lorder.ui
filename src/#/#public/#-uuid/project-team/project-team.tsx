@@ -9,7 +9,7 @@ import Slider from '@components/slider';
 
 import HeaderWithButton from '#/#public/#-uuid/project-values/header-with-button';
 
-import { useSearch } from '@hooks/useSearch';
+import { useSearch } from '@hooks/use-search';
 import { IMember } from '@types';
 
 const getForSearch = m => m?.member?.displayName || '';

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import ProjectsList from './projects-list';
 import SearchSection from './search-section';
 
-import { useSearch } from '@hooks/useSearch';
+import { useSearch } from '@hooks/use-search';
 import { IProjectPub } from '@types';
 
 const getProjectSearchTerm = p => p?.title || '';

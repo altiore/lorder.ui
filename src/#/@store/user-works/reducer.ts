@@ -15,7 +15,7 @@ import {
 
 import { AxiosResponse } from 'axios';
 
-import { getUserWorks, getUserWorksBySequenceNumber, patchUserWork } from './actions';
+import { getUserWorksAct, getUserWorksBySequenceNumber, patchUserWork } from './actions';
 
 type S = DownloadList<UserWork>;
 type P<T = any> = AxiosResponse<T>;
@@ -118,9 +118,9 @@ const bringBackSuccessHandler = (state: S, { payload }: Action<P>) => {
 
 export const userWorks: any = handleActions<S, P>(
   {
-    [combineActions(getUserWorks, getUserWorksBySequenceNumber)]: getUserWorksHandler,
-    [combineActions(getUserWorks.success, getUserWorksBySequenceNumber.success)]: getUserWorksSuccessHandler,
-    [combineActions(getUserWorks.fail, getUserWorksBySequenceNumber.fail)]: getUserWorksFailHandler,
+    [combineActions(getUserWorksAct, getUserWorksBySequenceNumber)]: getUserWorksHandler,
+    [combineActions(getUserWorksAct.success, getUserWorksBySequenceNumber.success)]: getUserWorksSuccessHandler,
+    [combineActions(getUserWorksAct.fail, getUserWorksBySequenceNumber.fail)]: getUserWorksFailHandler,
 
     [patchUserWork.toString()]: patchUserWorkHandler,
     [patchUserWork.success]: patchUserWorkSuccessHandler,
