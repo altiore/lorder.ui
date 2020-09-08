@@ -4,6 +4,9 @@
 
 ![Auto-тесты](https://github.com//altiore/lorder.ui/workflows/CI/badge.svg) ![Staging Deployment](https://github.com//altiore/lorder.ui/workflows/Staging%20Deployment/badge.svg)
 
+## Презентация проекта на YouTube:
+[![Watch the video](http://i.ytimg.com/vi/8sQIlv48ioc/sddefault.jpg)](https://www.youtube.com/watch?v=8sQIlv48ioc)
+
 ### Установка
 
 ##### 0. Склонируй текущий репозиторий
