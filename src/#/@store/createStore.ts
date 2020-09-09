@@ -17,14 +17,9 @@ import { initExternalLibraries } from './externalLibraries/thunk';
 
 import { ROLE } from '@types';
 
-const composeEnhancers =
-  process.env.NODE_ENV === 'development' &&
-  typeof window === 'object' &&
-  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
-      })
-    : compose;
+const isDevtoolsAvailable =
+  process.env.NODE_ENV === 'development' && (window as any)?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+const composeEnhancers = isDevtoolsAvailable ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 
 export const history = createBrowserHistory();
 export let store;
