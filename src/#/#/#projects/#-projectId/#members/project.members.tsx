@@ -6,7 +6,7 @@ import get from 'lodash/get';
 import MultiSelectCell from '@components/crud/@cells/multi-select';
 import SelectCell from '@components/crud/@cells/select';
 import { ICrudColumn } from '@components/crud/crud';
-import { Page } from '@components/page';
+import Page from '@components/page';
 
 import Crud from '#/@common/crud';
 import { LinkButton } from '#/@common/link-button';

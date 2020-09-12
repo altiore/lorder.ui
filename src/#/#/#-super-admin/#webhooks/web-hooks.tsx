@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { IColumnComponent, ICrudColumn } from '@components/crud/crud';
-import { Page } from '@components/page';
+import Page from '@components/page';
 
 import Crud from '#/@common/crud';
 
