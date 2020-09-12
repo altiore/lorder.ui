@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Page } from '@components/page';
+import Page from '@components/page';
 
 import Crud from '#/@common/crud';
 import { CREATE_ROLE_FORM } from '#/@store/roles';

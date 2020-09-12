@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { CheckboxCell } from '@components/crud/@cells/checkbox/checkbox.cell';
 import { ICrudColumn } from '@components/crud/crud';
-import { Page } from '@components/page';
+import Page from '@components/page';
 
 import Crud from '#/@common/crud';
 

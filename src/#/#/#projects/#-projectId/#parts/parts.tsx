@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 import { ICrudColumn } from '@components/crud/crud';
-import { Page } from '@components/page';
+import Page from '@components/page';
 import RadioButton from '@components/radio-button';
 import SelectTreeField from '@components/select-tree-field';
 

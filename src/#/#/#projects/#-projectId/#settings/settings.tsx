@@ -5,7 +5,7 @@ import get from 'lodash/get';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-import { Page } from '@components/page';
+import Page from '@components/page';
 
 import { LinkButton } from '#/@common/link-button';
 import { Project } from '#/@store/projects';

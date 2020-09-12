@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import T from '@material-ui/core/Typography';
 
-import { Page } from '@components/page';
+import Page from '@components/page';
 
 export interface IProps {
   test?: number;
