@@ -1,8 +1,0 @@
-{
-  "name": "Altiore UI",
-  "description": "Altiore Contribution UI",
-  "repository": "https://git.heroku.com/staging-altiore.git",
-  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
-  "keywords": ["node", "express", "heroku"],
-  "image": "heroku/nodejs"
-}

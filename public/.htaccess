@@ -1,8 +1,0 @@
-RewriteEngine on
-AddDefaultCharset UTF-8
-
-# Если запрашиваемая в URL директория или файл существуют обращаемся к ним напрямую
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-# Если нет - перенаправляем запрос на index.html
-RewriteRule . index.html
