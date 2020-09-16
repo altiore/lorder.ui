@@ -1,13 +1,13 @@
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
-export const fetchPublicProject = requestActions<string>('PUBLIC_PROJECT/FETCH_ONE', (projectId: string) => ({
+export const fetchPublicProject = createApiAction<string>('PUBLIC_PROJECT/FETCH_ONE', (projectId: string) => ({
   noAuth: true,
   request: {
     url: `/public/${projectId}`,
   },
 }));
 
-export const postRequestMembershipAction = requestActions<number>(
+export const postRequestMembershipAction = createApiAction<number>(
   'PUBLIC_PROJECT/REQUEST_MEMBERSHIP',
   (projectId: number, role: string) => {
     return {

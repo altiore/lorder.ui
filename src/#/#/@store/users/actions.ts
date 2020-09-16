@@ -1,8 +1,8 @@
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
 import { IUser } from '@types';
 
-export const fetchUsers = requestActions('USERS/FETCH_ALL', () => ({
+export const fetchUsers = createApiAction('USERS/FETCH_ALL', () => ({
   request: {
     params: {
       count: 20000,
@@ -14,7 +14,7 @@ export const fetchUsers = requestActions('USERS/FETCH_ALL', () => ({
   },
 }));
 
-export const patchUser = requestActions('USERS/PATCH', ({ user, role }: { user: IUser; role: string }) => ({
+export const patchUser = createApiAction('USERS/PATCH', ({ user, role }: { user: IUser; role: string }) => ({
   request: {
     data: { role },
     method: 'patch',
@@ -28,7 +28,7 @@ export const patchUser = requestActions('USERS/PATCH', ({ user, role }: { user: 
   user,
 }));
 
-export const deleteUser = requestActions('USERS/DELETE', (userId: number) => ({
+export const deleteUser = createApiAction('USERS/DELETE', (userId: number) => ({
   request: {
     method: 'delete',
     url: `/users/${userId}`,

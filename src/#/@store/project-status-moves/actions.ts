@@ -1,14 +1,15 @@
-import { requestActions } from '../@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
+
 import { CREATE_TASK_STATUS_MOVE_FORM } from './consts';
 import { StatusMove } from './StatusMove';
 
-export const fetchTaskStatusMoves = requestActions('TASK_STATUS_MOVES/FETCH_ALL', projectId => ({
+export const fetchTaskStatusMoves = createApiAction('TASK_STATUS_MOVES/FETCH_ALL', projectId => ({
   request: {
     url: `/projects/${projectId}/project-status-move`,
   },
 }));
 
-export const createTaskStatusMove = requestActions(
+export const createTaskStatusMove = createApiAction(
   'TASK_STATUS_MOVES/CREATE_NEW',
   (projectId: number, data: Partial<StatusMove>) => ({
     form: CREATE_TASK_STATUS_MOVE_FORM,
@@ -20,7 +21,7 @@ export const createTaskStatusMove = requestActions(
   })
 );
 
-export const deleteTaskStatusMove = requestActions('TASK_STATUS_MOVES/DELETE', (projectId: number, id: number) => ({
+export const deleteTaskStatusMove = createApiAction('TASK_STATUS_MOVES/DELETE', (projectId: number, id: number) => ({
   id,
   request: {
     method: 'DELETE',

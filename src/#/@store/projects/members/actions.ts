@@ -1,4 +1,5 @@
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
+
 import { PROJECT_MEMBER_FORM_NAME } from '#/@store/projects';
 
 export interface IProjectMemberData {
@@ -7,7 +8,7 @@ export interface IProjectMemberData {
   email?: string;
 }
 
-export const acceptInvitationAct = requestActions<number>('PROJECT_MEMBER/ACCEPT_INVITATION', projectId => ({
+export const acceptInvitationAct = createApiAction<number>('PROJECT_MEMBER/ACCEPT_INVITATION', projectId => ({
   projectId,
   request: {
     method: 'PATCH',
@@ -19,7 +20,7 @@ export const acceptInvitationAct = requestActions<number>('PROJECT_MEMBER/ACCEPT
   },
 }));
 
-export const postProjectMember = requestActions<IProjectMemberData>(
+export const postProjectMember = createApiAction<IProjectMemberData>(
   'PROJECT_MEMBER/POST',
   ({ projectId, email }: IProjectMemberData) => ({
     email,
@@ -37,7 +38,7 @@ export const postProjectMember = requestActions<IProjectMemberData>(
   })
 );
 
-export const deleteProjectMemberAct = requestActions<IProjectMemberData>(
+export const deleteProjectMemberAct = createApiAction<IProjectMemberData>(
   'PROJECT_MEMBER/DELETE',
   ({ memberId, projectId }: IProjectMemberData) => ({
     form: PROJECT_MEMBER_FORM_NAME,
@@ -63,7 +64,7 @@ interface IUpdateMemberData {
   };
 }
 
-export const updateProjectMemberAccessLevel = requestActions<IUpdateMemberData>(
+export const updateProjectMemberAccessLevel = createApiAction<IUpdateMemberData>(
   'PROJECT_MEMBER/UPDATE',
   ({ memberId, projectId, data }: IUpdateMemberData) => ({
     memberId,

@@ -1,6 +1,5 @@
 import { createAction } from 'redux-actions';
-
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
 import { IListDto } from '@types';
 
@@ -11,7 +10,7 @@ export interface ITaskLogsListDto extends IListDto {
   sequenceNumber: number;
 }
 
-export const fetchTaskLogsAction = requestActions<ITaskLogsListDto>(
+export const fetchTaskLogsAction = createApiAction<ITaskLogsListDto>(
   `${BASE_ACTION}/FETCH_ALL`,
   ({ projectId, sequenceNumber, ...listDto }) => ({
     request: {

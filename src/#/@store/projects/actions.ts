@@ -1,6 +1,6 @@
 import { Notification } from 'react-notification-system';
 
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
 import { UPDATE_PROJECT_FORM } from './consts';
 
@@ -10,7 +10,7 @@ export interface IPostProjectData {
   type: string;
 }
 
-export const postProject = requestActions<IPostProjectData>(
+export const postProject = createApiAction<IPostProjectData>(
   'PROJECTS/POST',
   ({ monthlyBudget, title, type }: IPostProjectData) => ({
     error: {
@@ -34,13 +34,13 @@ export const postProject = requestActions<IPostProjectData>(
   })
 );
 
-export const fetchAllParticipantProjectsAction = requestActions('PROJECTS/GET_ALL_PARTICIPANT_PROJECTS', () => ({
+export const fetchAllParticipantProjectsAction = createApiAction('PROJECTS/GET_ALL_PARTICIPANT_PROJECTS', () => ({
   request: {
     url: '/projects',
   },
 }));
 
-export const getAllProjects = requestActions('PROJECTS/GET_ALL(SUPER_ADMIN)', () => ({
+export const getAllProjects = createApiAction('PROJECTS/GET_ALL(SUPER_ADMIN)', () => ({
   request: {
     params: {
       count: 20000,
@@ -52,7 +52,7 @@ export const getAllProjects = requestActions('PROJECTS/GET_ALL(SUPER_ADMIN)', ()
   },
 }));
 
-export const removeProject = requestActions('PROJECTS/REMOVE', (projectId: number) => ({
+export const removeProject = createApiAction('PROJECTS/REMOVE', (projectId: number) => ({
   projectId,
   request: {
     method: 'DELETE',
@@ -65,7 +65,7 @@ export const removeProject = requestActions('PROJECTS/REMOVE', (projectId: numbe
   } as Notification,
 }));
 
-export const removeProjectByAdmin = requestActions('PROJECTS/REMOVE', (projectId: number) => ({
+export const removeProjectByAdmin = createApiAction('PROJECTS/REMOVE', (projectId: number) => ({
   projectId,
   request: {
     method: 'DELETE',
@@ -78,13 +78,13 @@ export const removeProjectByAdmin = requestActions('PROJECTS/REMOVE', (projectId
   } as Notification,
 }));
 
-export const fetchProjectDetails = requestActions('PROJECTS/FETCH_ONE', (projectId: number) => ({
+export const fetchProjectDetails = createApiAction('PROJECTS/FETCH_ONE', (projectId: number) => ({
   request: {
     url: `/projects/${projectId}`,
   },
 }));
 
-export const publishProject = requestActions<number>('PROJECT/PUBLISH', (projectId: number) => ({
+export const publishProject = createApiAction<number>('PROJECT/PUBLISH', (projectId: number) => ({
   error: {
     message: 'Возможно, у вас нет прав на это',
     title: 'Не удалось опубликовать проект',
@@ -100,7 +100,7 @@ export const publishProject = requestActions<number>('PROJECT/PUBLISH', (project
   },
 }));
 
-export const updateStatistic = requestActions<number>('PROJECT/STATISTIC/UPDATE', (projectId: number) => ({
+export const updateStatistic = createApiAction<number>('PROJECT/STATISTIC/UPDATE', (projectId: number) => ({
   error: {
     message: 'Возможно, у вас нет прав на это',
     title: 'Не удалось обновить статистику',
@@ -115,7 +115,7 @@ export const updateStatistic = requestActions<number>('PROJECT/STATISTIC/UPDATE'
   },
 }));
 
-export const updateProjectAct = requestActions<number, any>(
+export const updateProjectAct = createApiAction<number, any>(
   'PROJECT/UPDATE',
   (projectId: number, data: { desc?: string; title: string; monthlyBudget: number; slogan?: string }) => ({
     form: UPDATE_PROJECT_FORM,
@@ -135,7 +135,7 @@ export const updateProjectAct = requestActions<number, any>(
   })
 );
 
-export const uploadLogoAct = requestActions('PROJECTS/UPLOAD_LOGO', (file, projectId) => ({
+export const uploadLogoAct = createApiAction('PROJECTS/UPLOAD_LOGO', (file, projectId) => ({
   projectId,
   request: {
     data: { file },

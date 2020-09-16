@@ -1,17 +1,17 @@
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
 import { PROJECT_PART_FORM } from './consts';
 
 import { IProjectPart } from '@types';
 
-export const fetchProjectPartsAct = requestActions('PROJECT_PARTS/FETCH_PARTS', projectId => ({
+export const fetchProjectPartsAct = createApiAction('PROJECT_PARTS/FETCH_PARTS', projectId => ({
   projectId,
   request: {
     url: `/projects/${projectId}/parts`,
   },
 }));
 
-export const createProjectPartAct = requestActions(
+export const createProjectPartAct = createApiAction(
   'PROJECT_PARTS/CREATE_PROJECT_PART',
   (projectId: number, data: Omit<IProjectPart, 'id' | 'projectId'>) => ({
     form: PROJECT_PART_FORM,
@@ -24,7 +24,7 @@ export const createProjectPartAct = requestActions(
   })
 );
 
-export const updateProjectPartAct = requestActions(
+export const updateProjectPartAct = createApiAction(
   'PROJECT_PARTS/UPDATE_PROJECT_PART',
   (partId: number, projectId: number, data: Omit<IProjectPart, 'id' | 'projectId'>) => ({
     form: PROJECT_PART_FORM,
@@ -37,7 +37,7 @@ export const updateProjectPartAct = requestActions(
   })
 );
 
-export const deleteProjectPartAct = requestActions(
+export const deleteProjectPartAct = createApiAction(
   'PROJECT_PARTS/DELETE_PROJECT_PART',
   (projectId: number, partId: number) => ({
     projectId,

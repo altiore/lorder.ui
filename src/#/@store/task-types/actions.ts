@@ -1,16 +1,16 @@
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
 export interface IPostTaskTypeData {
   name: string;
 }
 
-export const getAllTaskTypes = requestActions('TASK_TYPES/GET_ALL', () => ({
+export const getAllTaskTypes = createApiAction('TASK_TYPES/GET_ALL', () => ({
   request: {
     url: '/task-types',
   },
 }));
 
-export const postTaskType = requestActions<IPostTaskTypeData>('TASK_TYPES/POST', (data: IPostTaskTypeData) => ({
+export const postTaskType = createApiAction<IPostTaskTypeData>('TASK_TYPES/POST', (data: IPostTaskTypeData) => ({
   error: {
     message: 'Не удалось сохранить тип задачи',
     title: 'Неудача',
@@ -27,7 +27,7 @@ export const postTaskType = requestActions<IPostTaskTypeData>('TASK_TYPES/POST',
   },
 }));
 
-export const deleteTaskType = requestActions('TASK_TYPES/DELETE', (taskTypeId: number) => ({
+export const deleteTaskType = createApiAction('TASK_TYPES/DELETE', (taskTypeId: number) => ({
   request: {
     method: 'DELETE',
     url: `/task-types/${taskTypeId}`,

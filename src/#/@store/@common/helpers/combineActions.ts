@@ -1,6 +1,5 @@
 import { combineActions as reduxActionsCombine } from 'redux-actions';
-
-import { ActionType } from '../requestActions';
+import { ActionType } from 'redux-actions-api';
 
 export const combineActions: any = <Params = any>(...args: Array<ActionType<Params>>) => {
   if (args.length === 0) {

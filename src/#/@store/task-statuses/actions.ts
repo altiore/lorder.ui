@@ -1,14 +1,15 @@
-import { requestActions } from '../@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
+
 import { CREATE_TASK_STATUS_FORM } from './consts';
 import { TaskStatus } from './TaskStatus';
 
-export const fetchTaskStatuses = requestActions('TASK_STATUSES/FETCH_ALL', () => ({
+export const fetchTaskStatuses = createApiAction('TASK_STATUSES/FETCH_ALL', () => ({
   request: {
     url: '/task-statuses',
   },
 }));
 
-export const createTaskStatus = requestActions('TASK_STATUSES/CREATE_NEW', (data: Partial<TaskStatus>) => ({
+export const createTaskStatus = createApiAction('TASK_STATUSES/CREATE_NEW', (data: Partial<TaskStatus>) => ({
   form: CREATE_TASK_STATUS_FORM,
   request: {
     data,
@@ -17,7 +18,7 @@ export const createTaskStatus = requestActions('TASK_STATUSES/CREATE_NEW', (data
   },
 }));
 
-export const deleteTaskStatus = requestActions('TASK_STATUSES/DELETE', (id: number) => ({
+export const deleteTaskStatus = createApiAction('TASK_STATUSES/DELETE', (id: number) => ({
   id,
   request: {
     method: 'DELETE',
@@ -25,7 +26,7 @@ export const deleteTaskStatus = requestActions('TASK_STATUSES/DELETE', (id: numb
   },
 }));
 
-export const deleteManyTaskStatuses = requestActions('TASK_STATUSES/DELETE_MANY', (ids: number[]) => ({
+export const deleteManyTaskStatuses = createApiAction('TASK_STATUSES/DELETE_MANY', (ids: number[]) => ({
   ids,
   request: {
     data: {

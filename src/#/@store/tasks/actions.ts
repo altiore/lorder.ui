@@ -1,21 +1,21 @@
 import omit from 'lodash/omit';
 import { createAction } from 'redux-actions';
+import { createApiAction } from 'redux-actions-api';
 
-import { requestActions } from '#/@store/@common/requestActions';
 import { PROJECT_TASK_FORM_NAME } from '#/@store/projects';
 import { TASKS_ROUTE } from '#/@store/router';
 
 import { EDIT_TASK_FORM, ITaskFormData } from './consts';
 
-export const getAllTasks = requestActions('TASKS/GET_ALL', (): any => ({
+export const getAllTasks = createApiAction('TASKS/GET_ALL', () => ({
   request: {
     url: '/tasks',
   },
 }));
 
-export const fetchProjectTasksA = requestActions(
+export const fetchProjectTasksA = createApiAction(
   'TASKS/FETCH_TASKS_BY_PROJECT',
-  ({ projectId, skip = 0, count = 100 }, force: boolean = false): any => ({
+  ({ projectId, skip = 0, count = 100 }, force: boolean = false) => ({
     force,
     projectId,
     request: {
@@ -33,16 +33,16 @@ export const fetchProjectTasksA = requestActions(
 /**
  * TODO: should be moved to projects/tasks directory
  */
-export const fetchTaskDetailsA = requestActions('TASKS/FETCH_DETAILS', ({ projectId, sequenceNumber }): any => ({
+export const fetchTaskDetailsA = createApiAction('TASKS/FETCH_DETAILS', ({ projectId, sequenceNumber }) => ({
   request: {
     url: `${TASKS_ROUTE(projectId)}/${sequenceNumber}`,
   },
   sequenceNumber,
 }));
 
-export const archiveTaskA = requestActions(
+export const archiveTaskA = createApiAction(
   'TASKS/ARCHIVE',
-  ({ taskId, projectId, sequenceNumber }: { taskId: number; sequenceNumber: number; projectId: number }): any => ({
+  ({ taskId, projectId, sequenceNumber }: { taskId: number; sequenceNumber: number; projectId: number }) => ({
     projectId,
     request: {
       method: 'PATCH',
@@ -53,9 +53,9 @@ export const archiveTaskA = requestActions(
   })
 );
 
-export const postProjectTask = requestActions<Partial<ITaskFormData>>(
+export const postProjectTask = createApiAction<Partial<ITaskFormData>>(
   'TASKS/POST_PROJECT_TASK',
-  ({ projectId, ...data }: Partial<ITaskFormData>): any => ({
+  ({ projectId, ...data }: Partial<ITaskFormData>) => ({
     form: PROJECT_TASK_FORM_NAME,
     projectId,
     request: {
@@ -70,9 +70,9 @@ export const postProjectTask = requestActions<Partial<ITaskFormData>>(
   })
 );
 
-export const patchProjectTask = requestActions<Partial<ITaskFormData>>(
+export const patchProjectTask = createApiAction<Partial<ITaskFormData>>(
   'PROJECT_TASK/PATCH',
-  ({ projectId, sequenceNumber, ...rest }: Partial<ITaskFormData>): any => {
+  ({ projectId, sequenceNumber, ...rest }: Partial<ITaskFormData>) => {
     return {
       form: EDIT_TASK_FORM,
       projectId,
@@ -98,7 +98,7 @@ interface IMoveReqData {
   selectedRole: string;
 }
 
-export const moveProjectTaskAct = requestActions<IMoveReqData>(
+export const moveProjectTaskAct = createApiAction<IMoveReqData>(
   'PROJECT_TASK/MOVE',
   ({ prevStatusTypeName, projectId, selectedRole, sequenceNumber, statusTypeName }) => ({
     error: false,

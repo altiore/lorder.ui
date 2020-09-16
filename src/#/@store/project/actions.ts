@@ -1,16 +1,15 @@
 import { createAction } from 'redux-actions';
-
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
 export const selectProject = createAction('CURRENT_PROJECT/SELECT');
 
-export const fetchProjectRolesAct = requestActions('CURRENT_PROJECT/FETCH_ROLES', projectId => ({
+export const fetchProjectRolesAct = createApiAction('CURRENT_PROJECT/FETCH_ROLES', projectId => ({
   request: {
     url: `/projects/${projectId}/roles`,
   },
 }));
 
-export const createProjectRoleAct = requestActions(
+export const createProjectRoleAct = createApiAction(
   'CURRENT_PROJECT/ADD_ROLE',
   (projectId: number, data: { roleId: string; allowedMoveIds?: number[]; name?: string }) => ({
     form: 'CreateProjectRoleForm',
@@ -25,7 +24,7 @@ export const createProjectRoleAct = requestActions(
   })
 );
 
-export const editProjectRoleAct = requestActions(
+export const editProjectRoleAct = createApiAction(
   'CURRENT_PROJECT/EDIT_ROLE',
   (projectId: number, roleId: number, data: { isPublic: boolean }) => ({
     form: 'CreateProjectRoleForm',
@@ -37,7 +36,7 @@ export const editProjectRoleAct = requestActions(
   })
 );
 
-export const deleteProjectRoleAct = requestActions(
+export const deleteProjectRoleAct = createApiAction(
   'CURRENT_PROJECT/DELETE_ROLE',
   (projectId: number, roleId: string) => ({
     request: {

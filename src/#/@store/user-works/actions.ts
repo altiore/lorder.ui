@@ -1,8 +1,8 @@
 import identity from 'lodash/identity';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
+import { createApiAction } from 'redux-actions-api';
 
-import { requestActions } from '#/@store/@common/requestActions';
 import { Project } from '#/@store/projects';
 
 import { CREATE_USER_WORK_FORM_NAME, EDIT_USER_WORK_DESCRIPTION_FORM } from './consts';
@@ -22,7 +22,7 @@ export interface IUserWorkDelete {
   userWorkId: number;
 }
 
-export const getUserWorksAct = requestActions(
+export const getUserWorksAct = createApiAction(
   'USER_WORK/GET_MANY',
   ({ count = 40, skip = 0, orderBy = 'startAt', order = 'desc' } = {}): any => ({
     request: {
@@ -37,7 +37,7 @@ export const getUserWorksAct = requestActions(
   })
 );
 
-export const patchUserWork = requestActions('USER_WORK/PATCH', (userWork: Partial<IUserWork>) => ({
+export const patchUserWork = createApiAction('USER_WORK/PATCH', (userWork: Partial<IUserWork>) => ({
   data: userWork,
   form: EDIT_USER_WORK_DESCRIPTION_FORM + userWork.id,
   projectId: userWork.projectId,
@@ -56,7 +56,7 @@ export const patchUserWork = requestActions('USER_WORK/PATCH', (userWork: Partia
   userWorkId: userWork.id,
 }));
 
-export const startUserWorkAct = requestActions('USER_WORK/START', (project: Project, userWork: IUserWorkData) => ({
+export const startUserWorkAct = createApiAction('USER_WORK/START', (project: Project, userWork: IUserWorkData) => ({
   form: CREATE_USER_WORK_FORM_NAME,
   // projectId required here because of nested reducers!!!
   projectId: project.id,
@@ -68,7 +68,7 @@ export const startUserWorkAct = requestActions('USER_WORK/START', (project: Proj
   sequenceNumber: userWork.sequenceNumber,
 }));
 
-export const createAndStartUserWork = requestActions('USER_WORK/CREATE_AND_START', (projectId: number) => ({
+export const createAndStartUserWork = createApiAction('USER_WORK/CREATE_AND_START', (projectId: number) => ({
   error: false,
   // projectId required here because of nested reducers!!!
   projectId,
@@ -79,7 +79,7 @@ export const createAndStartUserWork = requestActions('USER_WORK/CREATE_AND_START
   },
 }));
 
-export const patchAndStopUserWork = requestActions<IUserWorkDelete>(
+export const patchAndStopUserWork = createApiAction<IUserWorkDelete>(
   'USER_WORK/PATCH_AND_STOP',
   ({ projectId, taskId, userWorkId }: IUserWorkDelete) => ({
     projectId,
@@ -92,7 +92,7 @@ export const patchAndStopUserWork = requestActions<IUserWorkDelete>(
   })
 );
 
-export const pauseUserWork = requestActions(
+export const pauseUserWork = createApiAction(
   'USER_WORK/PAUSE',
   ({ projectId, taskId, userWorkId }: IUserWorkDelete) => ({
     projectId,
@@ -110,7 +110,7 @@ export interface IBringBack {
   sequenceNumber: number;
   reason: string;
 }
-export const bringBackAct = requestActions(
+export const bringBackAct = createApiAction(
   'USER_WORK/BRING_BACK',
   ({ projectId, sequenceNumber, reason }: IBringBack) => ({
     projectId,
@@ -123,7 +123,7 @@ export const bringBackAct = requestActions(
   })
 );
 
-export const getUserWorksBySequenceNumber = requestActions(
+export const getUserWorksBySequenceNumber = createApiAction(
   'USER_WORK/GET_MANY_BY_TASK_SEQUENCE_NUMBER',
   (projectId, sequenceNumber, { count = 20, skip = 0, orderBy = 'startAt', order = 'desc' } = {}): any => ({
     request: {

@@ -1,8 +1,8 @@
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
 const BASE_ACTION = 'TASK_COMMENTS';
 
-export const getTaskComments = requestActions(
+export const getTaskComments = createApiAction(
   `${BASE_ACTION}/GET_TASK_COMMENTS`,
   (projectId: number, taskId: number) => ({
     request: {
@@ -11,7 +11,7 @@ export const getTaskComments = requestActions(
   })
 );
 
-export const postTaskComment = requestActions(
+export const postTaskComment = createApiAction(
   `${BASE_ACTION}/ADD_TASK_COMMENT`,
   (projectId: number, taskId: number, comment: string) => {
     return {
@@ -31,7 +31,7 @@ export const postTaskComment = requestActions(
   }
 );
 
-export const deleteTaskComments = requestActions(
+export const deleteTaskComments = createApiAction(
   `${BASE_ACTION}/DELETE_TASK_COMMENT`,
   (projectId: number, taskId: number, commentId: number) => ({
     error: { message: `Ошибка при удалении`, title: 'Провал!' },

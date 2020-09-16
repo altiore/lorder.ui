@@ -1,8 +1,8 @@
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
 import { Feedback } from './Feedback';
 
-export const fetchFeedbackList = requestActions('FEEDBACK/FETCH_ALL', () => ({
+export const fetchFeedbackList = createApiAction('FEEDBACK/FETCH_ALL', () => ({
   request: {
     params: {
       count: 2000,
@@ -14,7 +14,7 @@ export const fetchFeedbackList = requestActions('FEEDBACK/FETCH_ALL', () => ({
   },
 }));
 
-export const postFeedbackReq = requestActions('FEEDBACK/POST', (data: Partial<Feedback>) => ({
+export const postFeedbackReq = createApiAction('FEEDBACK/POST', (data: Partial<Feedback>) => ({
   request: {
     data,
     method: 'post',

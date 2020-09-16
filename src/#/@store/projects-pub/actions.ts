@@ -1,6 +1,6 @@
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
-export const fetchProjectsPubAct = requestActions<any>('PUBLIC_PROJECTS/FETCH_LIST', () => ({
+export const fetchProjectsPubAct = createApiAction<any>('PUBLIC_PROJECTS/FETCH_LIST', () => ({
   error: {
     message: 'Не удалось получить публичные проекты',
     title: 'Ошибка',

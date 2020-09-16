@@ -1,6 +1,6 @@
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
-export const fetchStatistics = requestActions('STATISTICS/FETCH', () => ({
+export const fetchStatistics = createApiAction('STATISTICS/FETCH', () => ({
   noAuth: true,
   request: {
     url: '/statistics',

@@ -1,13 +1,13 @@
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
-export const getAllProjectTaskTypes = requestActions('PROJECT_TASK_TYPE/GET_ALL', (projectId: number) => ({
+export const getAllProjectTaskTypes = createApiAction('PROJECT_TASK_TYPE/GET_ALL', (projectId: number) => ({
   projectId,
   request: {
     url: `/projects/${projectId}/task-types`,
   },
 }));
 
-export const addTaskTypeToProject = requestActions(
+export const addTaskTypeToProject = createApiAction(
   'PROJECTS/TASK_TYPES/POST',
   ({ projectId, taskTypeId }: { projectId: number; taskTypeId: number }) => ({
     projectId,
@@ -23,7 +23,7 @@ export const addTaskTypeToProject = requestActions(
   })
 );
 
-export const deleteTaskTypeFromProject = requestActions(
+export const deleteTaskTypeFromProject = createApiAction(
   'PROJECTS/TASK_TYPES/DELETE',
   ({ projectId, taskTypeId }: { projectId: number; taskTypeId: number }) => ({
     error: false,

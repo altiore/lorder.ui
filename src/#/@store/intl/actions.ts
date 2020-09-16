@@ -1,6 +1,6 @@
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
-export const getIntl = requestActions<string>('INTL/GET_TRANSLATION', (locale: string) => ({
+export const getIntl = createApiAction<string>('INTL/GET_TRANSLATION', (locale: string) => ({
   client: 'intl',
   request: {
     url: `/i18n/${locale}.json`,

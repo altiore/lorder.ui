@@ -1,11 +1,11 @@
 import get from 'lodash/get';
 import { Action, ActionMeta, handleActions } from 'redux-actions';
+import { IRequestAction } from 'redux-actions-api';
 import { PURGE } from 'redux-persist';
 
 import { User } from '#/#/@store/users';
 import { DownloadList } from '#/@store/@common/entities';
 import { combineActions } from '#/@store/@common/helpers';
-import { IRequestAction } from '#/@store/@common/requestActions';
 import { deleteTaskComments, postTaskComment } from '#/@store/task-comments';
 import {
   bringBackAct,

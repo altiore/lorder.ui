@@ -1,6 +1,5 @@
 import { createAction } from 'redux-actions';
-
-import { requestActions } from '#/@store/@common/requestActions';
+import { createApiAction } from 'redux-actions-api';
 
 import { LOGIN_FORM_NAME, MAGIC_FORM_NAME } from './consts';
 
@@ -13,22 +12,25 @@ export interface IGetAuthActivateData {
   project?: string;
 }
 
-export const postAuthMagic = requestActions<IPostAuthMagicData>('USER/SEND_MAGIC_LINK', (data: IPostAuthMagicData) => ({
-  error: false,
-  form: MAGIC_FORM_NAME,
-  noAuth: true,
-  request: {
-    data: { email: data.email },
-    method: 'POST',
-    url: '/auth/magic',
-  },
-  success: {
-    message: 'Проверьте email, чтоб продолжить работу',
-    title: 'Ссылка отправлена!',
-  },
-}));
+export const postAuthMagic = createApiAction<IPostAuthMagicData>(
+  'USER/SEND_MAGIC_LINK',
+  (data: IPostAuthMagicData) => ({
+    error: false,
+    form: MAGIC_FORM_NAME,
+    noAuth: true,
+    request: {
+      data: { email: data.email },
+      method: 'POST',
+      url: '/auth/magic',
+    },
+    success: {
+      message: 'Проверьте email, чтоб продолжить работу',
+      title: 'Ссылка отправлена!',
+    },
+  })
+);
 
-export const getAuthActivate = requestActions<IGetAuthActivateData>(
+export const getAuthActivate = createApiAction<IGetAuthActivateData>(
   'USER/ACTIVATE_BY_MAGIC_LINK',
   (params: IGetAuthActivateData) => ({
     request: {
@@ -38,7 +40,7 @@ export const getAuthActivate = requestActions<IGetAuthActivateData>(
   })
 );
 
-export const logInPatch = requestActions('USER/LOGIN', (data: { email: string; password: string }) => ({
+export const logInPatch = createApiAction('USER/LOGIN', (data: { email: string; password: string }) => ({
   error: false,
   form: LOGIN_FORM_NAME,
   noAuth: true,
@@ -53,7 +55,7 @@ export const logInPatch = requestActions('USER/LOGIN', (data: { email: string; p
   },
 }));
 
-export const registerPost = requestActions('USER/REGISTER', (data: { email: string; password: string }) => ({
+export const registerPost = createApiAction('USER/REGISTER', (data: { email: string; password: string }) => ({
   error: false,
   form: LOGIN_FORM_NAME,
   noAuth: true,
@@ -66,7 +68,7 @@ export const registerPost = requestActions('USER/REGISTER', (data: { email: stri
 
 export const setIsLoading = createAction('IDENTITY/SET_IS_LOADING');
 
-export const uploadAvatar = requestActions('USER/UPLOAD_AVATAR', file => ({
+export const uploadAvatar = createApiAction('USER/UPLOAD_AVATAR', file => ({
   request: {
     data: { file },
     headers: {
@@ -77,7 +79,7 @@ export const uploadAvatar = requestActions('USER/UPLOAD_AVATAR', file => ({
   },
 }));
 
-export const updateProfile = requestActions(
+export const updateProfile = createApiAction(
   'ME/UPDATE',
   ({ displayName, tel }: { displayName?: string; tel?: string }) => ({
     form: 'ProfileForm',
@@ -96,7 +98,7 @@ export const updateProfile = requestActions(
   })
 );
 
-export const refreshToken = requestActions('ME/REFRESH_TOKEN', (token: string, device: string) => ({
+export const refreshToken = createApiAction('ME/REFRESH_TOKEN', (token: string, device: string) => ({
   noAuth: true,
   request: {
     data: {
@@ -108,7 +110,7 @@ export const refreshToken = requestActions('ME/REFRESH_TOKEN', (token: string, d
   },
 }));
 
-export const updatePasswordAct = requestActions(
+export const updatePasswordAct = createApiAction(
   'IDENTITY/UPDATE_PASSWORD',
   (data: { email: string; password: string }) => ({
     noAuth: true,
