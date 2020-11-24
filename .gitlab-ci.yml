@@ -12,7 +12,7 @@ before_script:
 Linter:
   stage: test
   script:
-    - echo "hello-world"
+    - echo "hello-world!"
   only:
     - merge_requests
     - gitlab-ci
