@@ -1,18 +1,11 @@
 stages:
   - test
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - .npm/
-
-before_script:
-  - npm ci --ignore-scripts --cache .npm --prefer-offline
-
 Linter:
   stage: test
   script:
-    - echo "hello-world!"
+    - docker --version
+    - docker-compose --version
   only:
     - gitlab-ci
   except:
