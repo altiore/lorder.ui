@@ -14,5 +14,6 @@ Linter:
   script:
     - echo "hello-world!"
   only:
-    - merge_requests
     - gitlab-ci
+  except:
+    - merge_requests
