@@ -12,7 +12,7 @@ before_script:
 Linter:
   stage: test
   script:
-    - echo "hello-world!!!"
+    - echo "hello-world!!!!"
     - docker run hello-world
   only:
     - gitlab-ci
