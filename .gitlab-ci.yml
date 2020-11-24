@@ -12,7 +12,6 @@ before_script:
 Linter:
   stage: test
   script:
-    - echo "hello-world!!"
-    - docker run hello-world
+    - echo "hello-world"
   only:
     - gitlab-ci
