@@ -1,5 +1,6 @@
 stages:
   - test
+  - test2
 
 Linter:
   stage: test
@@ -25,3 +26,11 @@ Linter:
       - gitlab-ci
     variables:
       - $CI_EXTERNAL_PULL_REQUEST_IID
+
+Test:
+ stage: test2
+ script:
+   - echo "yes2!!!"
+ only:
+   variables:
+     - '$CI_EXTERNAL_PULL_REQUEST_IID == null'
