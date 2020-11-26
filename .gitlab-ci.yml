@@ -14,12 +14,6 @@ Linter:
     - echo "is github $CI_EXTERNAL_PULL_REQUEST_IID"
     - npm --version
     - node -v
-    - echo "Yes!!"
-    - npm cache clean -f
-    - npm install -g n
-    - n stable
-    - npm --version
-    - node -v
   only:
     refs:
       - gitlab-ci
