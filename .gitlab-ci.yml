@@ -8,6 +8,7 @@ Linter:
     - docker-compose --version
     - docker run hello-world
     - npm --version
+    - node -v
   only:
     - gitlab-ci
   except:
