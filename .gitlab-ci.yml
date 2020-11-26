@@ -15,10 +15,9 @@ Linter:
     - npm --version
     - node -v
     - echo "Yes!!"
-    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-    - nvm install v14.15.1
-    - nvm use v14.15.1
-    - nvm alias default v14.15.1
+    - npm cache clean -f
+    - npm install -g n
+    - n stable
     - npm --version
     - node -v
   only:
