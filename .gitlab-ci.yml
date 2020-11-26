@@ -9,5 +9,6 @@ Linter:
     - docker run hello-world
     - npm --version
     - node -v
+    - echo "Yes!!"
   only:
     - merge_requests
