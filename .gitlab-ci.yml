@@ -10,6 +10,4 @@ Linter:
     - npm --version
     - node -v
   only:
-    - gitlab-ci
-  except:
     - merge_requests
