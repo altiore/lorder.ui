@@ -8,7 +8,6 @@ Linter:
     - docker-compose --version
     - docker run hello-world
     - npm --version
-    - apt-get install npm
   only:
     - gitlab-ci
   except:
