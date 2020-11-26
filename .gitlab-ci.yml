@@ -11,4 +11,7 @@ Linter:
     - node -v
     - echo "Yes!!"
   only:
-    - merge_requests
+    refs:
+      - gitlab-ci
+    variables:
+      - $CI_MERGE_REQUEST_ID
