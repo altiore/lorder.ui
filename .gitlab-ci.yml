@@ -7,13 +7,17 @@ Linter:
     - docker --version
     - docker-compose --version
     - docker run hello-world
-    - npm --version
-    - node -v
-    - echo "Yes!!"
     - echo "pr_id is $CI_MERGE_REQUEST_SOURCE_PROJECT_ID"
     - echo "next is"
     - echo $CI_EXTERNAL_PULL_REQUEST_IID
     - echo "is github $CI_EXTERNAL_PULL_REQUEST_IID"
+    - npm --version
+    - node -v
+    - echo "Yes!!"
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    - source ~/.bashrc
+    - nvm install v14.15.1
+    - nvm use v14.15.1
   only:
     refs:
       - gitlab-ci
