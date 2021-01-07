@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import CurrencyIcon from '@components/@icons/lorder-points';
+import CurrencyIcon from '@components/@icons/Diamond';
 import SumIcon from '@components/@icons/sum';
 import TooltipBig from '@components/tooltip-big';
 
