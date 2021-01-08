@@ -172,6 +172,7 @@ export const FiltersTsx: React.FC<IFiltersProps> = ({
     <div className={cn(root, { [rootOpen]: isBoardFilterOpened })}>
       {isBoardFilterOpened ? (
         <>
+          <RolesFilter />
           {Boolean(projectParts && projectParts.length) && (
             <SelectTree value={selectedParts} items={projectParts} onChange={handleChangeParts} multiple />
           )}
