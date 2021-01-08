@@ -1,3 +1,4 @@
+import { ComponentType } from 'react';
 import { connect } from 'react-redux';
 
 import { push } from 'connected-react-router';
@@ -22,8 +23,6 @@ const mergeProps = (state: any, { push: localPush, ...restDispatch }: any, { to,
   onClick: handleClick(localPush, to),
 });
 
-export const LinkButton: React.ComponentType<ButtonProps & { to: string }> = connect(
-  undefined,
-  mapDispatchToProps,
-  mergeProps
-)(Button);
+export const LinkButton: ComponentType<ButtonProps & {
+  to: string;
+}> = connect(undefined, mapDispatchToProps, mergeProps, { forwardRef: true })(Button);
