@@ -1,11 +1,12 @@
 import React from 'react';
 
-import Avatar from '@material-ui/core/Avatar';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+
+import Avatar from '@components/avatar-clickable';
 
 import { IUser } from '@types';
 
@@ -33,7 +34,7 @@ export const AssigneeList: React.FC<ITaskStatus> = ({ assignees, onItemClick }) 
         {assignees.map((assignee, index) => (
           <MenuItem key={index} value={assignee.id} onClick={onItemClick}>
             <ListItemAvatar classes={{ root: listItemAvatar }}>
-              <Avatar alt={assignee.userName} src={assignee.avatarUrl} className={avatar}>
+              <Avatar onClick={onItemClick} value={assignee.id} src={assignee.avatarUrl} className={avatar}>
                 {assignee.avatarUrl ? undefined : assignee.shortName}
               </Avatar>
             </ListItemAvatar>
