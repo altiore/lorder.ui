@@ -98,7 +98,12 @@ export const Profile: React.FC<IProfile> = ({ openDialog, projects, userAvatar, 
             </Paper>
           ) : (
             <>
-              <T variant="h3" className={cn(userNameStyle, { [userNameStyleEmpty]: !userDisplayName })}>
+              <T
+                variant="h3"
+                className={cn(userNameStyle, {
+                  [userNameStyleEmpty]: !userDisplayName,
+                })}
+              >
                 {userDisplayName || '[НЕТ ПУБЛИЧНОГО ИМЕНИ]'}
               </T>
               <T className={userEmailStyle}>{userEmail}</T>
@@ -121,26 +126,30 @@ export const Profile: React.FC<IProfile> = ({ openDialog, projects, userAvatar, 
       <Container id="project-list" className={projectList}>
         {Boolean(projects && projects.length) ? (
           <Slider>
-            {projects.map(({ id, logo, members, pub, shareValue, memberRole, title, viewColor, viewType }) => (
-              <ProjectCard
-                key={id}
-                logoSrc={logo?.url}
-                color={viewColor}
-                logoVariant={viewType}
-                title={title}
-                membersCount={members.length}
-                projectLink={getProjectLink(id, pub)}
-                userInfo={{
-                  displayName: userDisplayName,
-                  logoSrc: userAvatar,
-                  mainRole: memberRole,
-                  // message?: string;
-                  shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
-                  value: shareValue * VALUE_MULTIPLIER,
-                }}
-                value={pub?.statistic?.metrics?.all?.value * VALUE_MULTIPLIER}
-              />
-            ))}
+            {projects.map(({ id, logo, members, pub, shareValue, memberId, title, viewColor, viewType }) => {
+              const member = members.find(m => m.memberId === memberId);
+
+              return (
+                <ProjectCard
+                  key={id}
+                  logoSrc={logo?.url}
+                  color={viewColor}
+                  logoVariant={viewType}
+                  title={title}
+                  membersCount={members.length}
+                  projectLink={getProjectLink(id, pub)}
+                  userInfo={{
+                    displayName: userDisplayName,
+                    logoSrc: userAvatar,
+                    mainRole: member.memberRole,
+                    // message?: string;
+                    shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
+                    value: shareValue * VALUE_MULTIPLIER,
+                  }}
+                  value={pub?.statistic?.metrics?.all?.value * VALUE_MULTIPLIER}
+                />
+              );
+            })}
           </Slider>
         ) : (
           <Grid alignItems="center" justify="center" container spacing={3}>

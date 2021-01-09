@@ -52,6 +52,7 @@ export interface IProject extends IProjectShort {
   valueSum?: number;
   type: PROJECT_TYPE;
   pub?: any;
+  memberId: number;
 
   taskColumns: IRoleColumn[];
 

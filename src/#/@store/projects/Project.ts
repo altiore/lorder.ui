@@ -53,6 +53,7 @@ export class Project implements IProject {
   roles?: IProjectRole[];
   viewColor: PROJECT_COLOR;
   viewType: PROJECT_VIEW_TYPE;
+  memberId: number;
 
   logo?: IMedia;
 
