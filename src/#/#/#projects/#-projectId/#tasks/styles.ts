@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     }),
   },
   arrowDown: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(360deg)',
   },
   arrowWrap: {
     alignItems: 'center',
@@ -39,6 +39,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
     borderRadius: theme.spacing(1 / 2),
     height: 40,
     width: '100%',
+  },
+  columnMinimized: {
+    height: 40,
+    transform: 'rotate(90deg)',
+    width: '46px',
   },
   columnTitle: {
     alignItems: 'center',
@@ -87,7 +92,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   root: {
     alignItems: 'flex-start',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'left',
     minWidth: 'fit-content',
     padding: theme.spacing(3, 1, 2),
   },

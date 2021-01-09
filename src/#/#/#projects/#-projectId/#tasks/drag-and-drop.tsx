@@ -14,7 +14,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import amber from '@material-ui/core/colors/amber';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import TooltipBig from '@components/tooltip-big';
 import ValueField from '@components/value';
@@ -199,8 +199,20 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
             return res + cur.value;
           }, 0);
           return (
-            <div className={classes.column} key={column}>
+            <div
+              className={cn(classes.column, {
+                [classes.columnMinimized]: !(openedStatuses.indexOf(column) !== -1),
+              })}
+              key={column}
+            >
               <Typography variant="h6" className={classes.columnTitle}>
+                <ButtonBase value={column} className={classes.arrowWrap} onClick={handleToggleOpened}>
+                  <KeyboardArrowRight
+                    className={cn(classes.arrow, {
+                      [classes.arrowDown]: openedStatuses.indexOf(column) !== -1,
+                    })}
+                  />
+                </ButtonBase>
                 <div className={classes.columnTitleText}>
                   <span>{STATUS_NAMES[column] || column}</span>
                   {Boolean(valueSum) && (
@@ -214,61 +226,49 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                     </TooltipBig>
                   )}
                 </div>
-                {!!filteredItemsLength && (
-                  <ButtonBase value={column} className={classes.arrowWrap} onClick={handleToggleOpened}>
-                    <KeyboardArrowDown
-                      className={cn(classes.arrow, {
-                        [classes.arrowDown]: openedStatuses.indexOf(column) !== -1,
-                      })}
-                    />
-                  </ButtonBase>
-                )}
               </Typography>
-              <Droppable droppableId={column}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    style={getListStyle(snapshot.isDraggingOver, height)}
-                    className={classes.columnContent}
-                  >
-                    {openedStatuses.indexOf(column) !== -1 && filteredItemsLength ? (
-                      filteredItems.map((item: ITask, index) => {
-                        return (
-                          <Draggable
-                            key={item.id}
-                            draggableId={item.sequenceNumber ? item.sequenceNumber.toString() : '0'}
-                            index={index}
-                            type={'div'}
-                          >
-                            {(draggableProvided: DraggableProvided, draggableStateSnapshot: DraggableStateSnapshot) => (
-                              <TaskCard
-                                provided={draggableProvided}
-                                snapshot={draggableStateSnapshot}
-                                {...item}
-                                onClick={handleTaskClick(item.sequenceNumber)}
-                              />
-                            )}
-                          </Draggable>
-                        );
-                      })
-                    ) : (
-                      <ButtonBase
-                        value={column}
-                        className={cn(classes.placeholderCard, {
-                          [classes.pointer]: !!filteredItemsLength,
-                        })}
-                        onClick={handleToggleOpened}
+              {openedStatuses.indexOf(column) !== -1 && (
+                <>
+                  <Droppable droppableId={column}>
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        style={getListStyle(snapshot.isDraggingOver, height)}
+                        className={classes.columnContent}
                       >
-                        {filteredItemsLength} задач
-                      </ButtonBase>
+                        {openedStatuses.indexOf(column) !== -1 && filteredItemsLength
+                          ? filteredItems.map((item: ITask, index) => {
+                              return (
+                                <Draggable
+                                  key={item.id}
+                                  draggableId={item.sequenceNumber ? item.sequenceNumber.toString() : '0'}
+                                  index={index}
+                                  type={'div'}
+                                >
+                                  {(
+                                    draggableProvided: DraggableProvided,
+                                    draggableStateSnapshot: DraggableStateSnapshot
+                                  ) => (
+                                    <TaskCard
+                                      provided={draggableProvided}
+                                      snapshot={draggableStateSnapshot}
+                                      {...item}
+                                      onClick={handleTaskClick(item.sequenceNumber)}
+                                    />
+                                  )}
+                                </Draggable>
+                              );
+                            })
+                          : ''}
+                        {provided.placeholder}
+                      </div>
                     )}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-              <ButtonBase className={classes.columnFooter} onClick={createTask(column, statusFrom, projectId)}>
-                <AddIcon fontSize="small" /> Добавить задачу
-              </ButtonBase>
+                  </Droppable>
+                  <ButtonBase className={classes.columnFooter} onClick={createTask(column, statusFrom, projectId)}>
+                    <AddIcon fontSize="small" /> Добавить задачу
+                  </ButtonBase>
+                </>
+              )}
             </div>
           );
         })}
