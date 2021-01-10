@@ -216,14 +216,23 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                 <div className={classes.columnTitleText}>
                   <span>{STATUS_NAMES[column] || column}</span>
                   {Boolean(valueSum) && (
-                    <TooltipBig title="Сумма ценности задач в статусе" placement="top">
-                      <span className={classes.columnTitleSum}>
-                        <span>&nbsp;-&nbsp;</span>
-                        <ValueField disableTooltip showSumIcon>
-                          {valueSum}
-                        </ValueField>
-                      </span>
-                    </TooltipBig>
+                    <>
+                      <TooltipBig title="Сумма ценности задач в статусе" placement="top">
+                        <span className={classes.columnTitleSum}>
+                          <span>&nbsp;-&nbsp;</span>
+                          <ValueField disableTooltip showSumIcon>
+                            {valueSum}
+                          </ValueField>
+                        </span>
+                      </TooltipBig>
+                      {openedStatuses.indexOf(column) !== -1 && (
+                        <TooltipBig title="Количество задач" placement="top">
+                          <span className={classes.columnTitleText}>
+                            <span>Задач - {filteredItemsLength && filteredItemsLength}</span>
+                          </span>
+                        </TooltipBig>
+                      )}
+                    </>
                   )}
                 </div>
               </Typography>
@@ -236,7 +245,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                         style={getListStyle(snapshot.isDraggingOver, height)}
                         className={classes.columnContent}
                       >
-                        {openedStatuses.indexOf(column) !== -1 && filteredItemsLength
+                        {filteredItemsLength
                           ? filteredItems.map((item: ITask, index) => {
                               return (
                                 <Draggable

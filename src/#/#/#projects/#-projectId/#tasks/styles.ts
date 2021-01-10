@@ -43,7 +43,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   columnMinimized: {
     height: 40,
     transform: 'rotate(90deg)',
-    width: '46px',
+    width: 46,
   },
   columnTitle: {
     alignItems: 'center',
@@ -72,6 +72,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     display: 'flex',
     flexFlow: 'row nowrap',
+    margin: '0px 5px',
   },
   placeholderCard: {
     alignItems: 'center',
