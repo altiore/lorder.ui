@@ -213,8 +213,14 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                     })}
                   />
                 </ButtonBase>
-                <div className={classes.columnTitleText}>
-                  <span>{STATUS_NAMES[column] || column}</span>
+                <div className={cn(classes.columnTitleText)}>
+                  <span
+                    className={cn({
+                      [classes.columnTitleMargin]: !(openedStatuses.indexOf(column) !== -1),
+                    })}
+                  >
+                    {STATUS_NAMES[column] || column}
+                  </span>
                   {Boolean(valueSum) && (
                     <>
                       <TooltipBig title="Сумма ценности задач в статусе" placement="top">
@@ -228,7 +234,10 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                       {openedStatuses.indexOf(column) !== -1 && (
                         <TooltipBig title="Количество задач" placement="top">
                           <span className={classes.columnTitleText}>
-                            <span>Задач - {filteredItemsLength && filteredItemsLength}</span>
+                            <span>
+                              Задач &nbsp;-&nbsp;
+                              {filteredItemsLength && filteredItemsLength}
+                            </span>
                           </span>
                         </TooltipBig>
                       )}
@@ -245,6 +254,18 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
                         style={getListStyle(snapshot.isDraggingOver, height)}
                         className={classes.columnContent}
                       >
+                        {!filteredItemsLength && (
+                          <ButtonBase
+                            value={column}
+                            className={cn(classes.placeholderCard, {
+                              [classes.pointer]: !!filteredItemsLength,
+                            })}
+                            onClick={handleToggleOpened}
+                          >
+                            {filteredItemsLength} задач
+                          </ButtonBase>
+                        )}
+
                         {filteredItemsLength
                           ? filteredItems.map((item: ITask, index) => {
                               return (

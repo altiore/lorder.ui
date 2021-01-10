@@ -59,6 +59,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     position: 'relative',
     width: '100%',
   },
+  columnTitleMargin: {
+    margin: '0px 10px',
+  },
   columnTitleSum: {
     '& > svg': {
       marginLeft: 4,
@@ -68,6 +71,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexFlow: 'row nowrap',
   },
+
   columnTitleText: {
     alignItems: 'center',
     display: 'flex',
