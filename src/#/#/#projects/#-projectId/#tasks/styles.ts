@@ -43,7 +43,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   columnMinimized: {
     height: 40,
     transform: 'rotate(90deg)',
-    width: 46,
+    width: 40,
   },
   columnTitle: {
     alignItems: 'center',
@@ -55,7 +55,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'space-between',
     lineHeight: '40px',
     marginBottom: theme.spacing(1 / 2),
-    padding: `0 4px 0 10px`,
+    padding: `0 4px 0 5px`,
     position: 'relative',
     whiteSpace: 'nowrap',
     width: '100%',
