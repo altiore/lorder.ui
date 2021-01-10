@@ -205,7 +205,13 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
               })}
               key={column}
             >
-              <Typography variant="h6" className={classes.columnTitle}>
+              <Typography
+                variant="h6"
+                className={cn({
+                  [classes.columnTitle]: openedStatuses.indexOf(column) !== -1,
+                  [classes.columnTitleClosed]: !(openedStatuses.indexOf(column) !== -1),
+                })}
+              >
                 <ButtonBase value={column} className={classes.arrowWrap} onClick={handleToggleOpened}>
                   <KeyboardArrowRight
                     className={cn(classes.arrow, {
