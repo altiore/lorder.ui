@@ -31,10 +31,11 @@ import { TaskCard } from './task-card';
 import { IRoleColumn, ITask, PROJECT_STRATEGY } from '@types';
 
 const CARD_WIDTH = 296;
+const HEIGHT_OFFSET = 198;
 
 const getListStyle = (isDraggingOver: boolean, height: number) => ({
   background: isDraggingOver ? amber[50] : '#DFE3E6',
-  maxHeight: height - 198,
+  maxHeight: height - HEIGHT_OFFSET,
   minHeight: 75.89,
   width: CARD_WIDTH,
 });
@@ -198,60 +199,64 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({
           const valueSum = filteredItems.reduce((res, cur) => {
             return res + cur.value;
           }, 0);
+          const isMinimized = openedStatuses.indexOf(column) === -1;
+          const statusName = STATUS_NAMES[column] || column;
           return (
             <div
               className={cn(classes.column, {
-                [classes.columnMinimized]: !(openedStatuses.indexOf(column) !== -1),
+                [classes.columnMinimized]: isMinimized,
               })}
               key={column}
+              style={isMinimized ? { height: height - 118 } : {}}
             >
               <Typography
                 variant="h6"
                 className={cn({
-                  [classes.columnTitle]: openedStatuses.indexOf(column) !== -1,
-                  [classes.columnTitleClosed]: !(openedStatuses.indexOf(column) !== -1),
+                  [classes.columnTitle]: !isMinimized,
+                  [classes.columnTitleClosed]: isMinimized,
                 })}
               >
                 <ButtonBase value={column} className={classes.arrowWrap} onClick={handleToggleOpened}>
                   <KeyboardArrowRight
                     className={cn(classes.arrow, {
-                      [classes.arrowDown]: openedStatuses.indexOf(column) !== -1,
+                      [classes.arrowDown]: isMinimized,
                     })}
                   />
                 </ButtonBase>
                 <div className={cn(classes.columnTitleText)}>
                   <span
                     className={cn({
-                      [classes.columnTitleMargin]: !(openedStatuses.indexOf(column) !== -1),
+                      [classes.columnTitleMargin]: !isMinimized,
                     })}
                   >
-                    {STATUS_NAMES[column] || column}
+                    {statusName}
                   </span>
                   {Boolean(valueSum) && (
-                    <>
-                      <TooltipBig title="Сумма ценности задач в статусе" placement="top">
+                    <span className={classes.columnTitleRight}>
+                      <TooltipBig
+                        title={`${filteredItemsLength || 0} задач находятся в статусе "${statusName}"`}
+                        placement="bottom"
+                      >
+                        <span className={classes.columnTitleText}>
+                          <span>{filteredItemsLength || 0}шт.</span>
+                        </span>
+                      </TooltipBig>
+
+                      <TooltipBig
+                        title={`Сумма ценности задач в статусе "${statusName}" - ${valueSum}`}
+                        placement="bottom"
+                      >
                         <span className={classes.columnTitleSum}>
-                          <span>&nbsp;-&nbsp;</span>
                           <ValueField disableTooltip showSumIcon>
                             {valueSum}
                           </ValueField>
                         </span>
                       </TooltipBig>
-                      {openedStatuses.indexOf(column) !== -1 && (
-                        <TooltipBig title="Количество задач" placement="top">
-                          <span className={classes.columnTitleText}>
-                            <span>
-                              Задач &nbsp;-&nbsp;
-                              {filteredItemsLength && filteredItemsLength}
-                            </span>
-                          </span>
-                        </TooltipBig>
-                      )}
-                    </>
+                    </span>
                   )}
                 </div>
               </Typography>
-              {openedStatuses.indexOf(column) !== -1 && (
+              {!isMinimized && (
                 <>
                   <Droppable droppableId={column}>
                     {(provided, snapshot) => (
