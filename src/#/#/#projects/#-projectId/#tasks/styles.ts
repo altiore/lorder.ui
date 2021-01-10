@@ -41,9 +41,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
   },
   columnMinimized: {
-    height: 40,
-    transform: 'rotate(90deg)',
-    width: 40,
+    height: '100%',
+    overflow: 'hidden',
+    width: '40px',
   },
   columnTitle: {
     alignItems: 'center',
@@ -57,6 +57,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(1 / 2),
     padding: `0 4px 0 5px`,
     position: 'relative',
+    whiteSpace: 'nowrap',
+    width: '100%',
+  },
+  columnTitleClosed: {
+    display: 'flex',
+    padding: '0 5px 4px 5px',
+    transform: 'rotate(90deg)',
     whiteSpace: 'nowrap',
     width: '100%',
   },
@@ -75,6 +82,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
 
   columnTitleText: {
     alignItems: 'center',
+    backgroundColor: '#dfe3e6',
     display: 'flex',
     flexFlow: 'row nowrap',
     margin: '0px 5px',
@@ -98,7 +106,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
   root: {
     alignItems: 'flex-start',
     display: 'flex',
+    height: '100%',
     justifyContent: 'left',
+
     minWidth: 'fit-content',
     padding: theme.spacing(3, 1, 2),
   },
