@@ -33,7 +33,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     ...theme.mainContent.scroll,
     overflowX: 'hidden',
     overflowY: 'auto',
-    padding: `0 4px 2px 8px`,
+    padding: `4px 4px 2px 8px`,
   },
   columnFooter: {
     borderRadius: theme.spacing(1 / 2),
@@ -41,7 +41,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
   },
   columnMinimized: {
-    height: '100%',
     overflow: 'hidden',
     width: '40px',
   },
@@ -52,9 +51,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexFlow: 'row nowrap',
     height: 40,
-    justifyContent: 'space-between',
     lineHeight: '40px',
-    marginBottom: theme.spacing(1 / 2),
     padding: `0 4px 0 5px`,
     position: 'relative',
     whiteSpace: 'nowrap',
@@ -70,6 +67,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
   columnTitleMargin: {
     marginLeft: '10px',
   },
+  columnTitleRight: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+  },
   columnTitleSum: {
     '& > svg': {
       marginLeft: 4,
@@ -79,13 +81,14 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexFlow: 'row nowrap',
   },
-
   columnTitleText: {
     alignItems: 'center',
     backgroundColor: '#dfe3e6',
     display: 'flex',
     flexFlow: 'row nowrap',
-    margin: '0px 5px',
+    justifyContent: 'space-between',
+    margin: '0px 8px',
+    width: '100%',
   },
   placeholderCard: {
     alignItems: 'center',
@@ -108,8 +111,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     height: '100%',
     justifyContent: 'left',
-
-    minWidth: 'fit-content',
-    padding: theme.spacing(3, 1, 2),
+    margin: '0 auto',
+    padding: theme.spacing(3, 2, 2),
+    width: 'fit-content',
   },
 }));
