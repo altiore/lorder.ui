@@ -57,10 +57,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(1 / 2),
     padding: `0 4px 0 10px`,
     position: 'relative',
+    whiteSpace: 'nowrap',
     width: '100%',
   },
   columnTitleMargin: {
-    margin: '0px 10px',
+    marginLeft: '10px',
   },
   columnTitleSum: {
     '& > svg': {
