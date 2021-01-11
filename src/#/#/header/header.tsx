@@ -56,9 +56,12 @@ export const HeaderTsx: React.FC<IHeaderProps> = memo(({ goToProjectWithAsk, ope
         </LinkIconButton>
         <div className={classes.buttonBlock}>
           <ActiveProject selectProject={selectProject} />
-          <MediaQuery minWidth={theme.breakpoints.values.md}>
-            <HiddenProject selectProject={selectProject} hidden />
-          </MediaQuery>
+          {!selectProject && (
+            <MediaQuery minWidth={theme.breakpoints.values.md}>
+              <HiddenProject selectProject={selectProject} hidden />
+            </MediaQuery>
+          )}
+
           <ProjectSelect openProject={selectProject} />
           <Tooltip title="Создать новый проект" placement="right">
             <IconButton color="secondary" onClick={openCreateProject} className={classes.expandButton}>
