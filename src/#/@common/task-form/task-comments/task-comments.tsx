@@ -146,6 +146,7 @@ export const TaskComments: React.FC<IProps> = ({
                           </Tooltip>
                         </span>
                       )}
+                      {new Date(comment.createdAt).toLocaleString()}
                       {isCommentRemove && comment.id === removedCommentId && (
                         <div className={classes.circularRemoveWrap}>
                           <CircularProgress />
