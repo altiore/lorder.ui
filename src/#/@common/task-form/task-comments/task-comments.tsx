@@ -66,7 +66,7 @@ export const TaskComments: React.FC<IProps> = ({
       fetchTaskComments(curTask.projectId, curTask.id)
         .then((comments: IComment[]) => {
           setIsFetching(false);
-          setTaskComments(comments);
+          setTaskComments(comments.reverse());
         })
         .catch(() => {
           setIsFetching(false);
@@ -146,6 +146,7 @@ export const TaskComments: React.FC<IProps> = ({
                           </Tooltip>
                         </span>
                       )}
+                      {new Date(comment.createdAt).toLocaleString()}
                       {isCommentRemove && comment.id === removedCommentId && (
                         <div className={classes.circularRemoveWrap}>
                           <CircularProgress />
