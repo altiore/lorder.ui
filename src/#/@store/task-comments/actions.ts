@@ -6,6 +6,10 @@ export const getTaskComments = createApiAction(
   `${BASE_ACTION}/GET_TASK_COMMENTS`,
   (projectId: number, taskId: number) => ({
     request: {
+      params: {
+        order: 'desc',
+        orderBy: 'createdAt',
+      },
       url: `/projects/${projectId}/tasks/${taskId}/comments`,
     },
   })
