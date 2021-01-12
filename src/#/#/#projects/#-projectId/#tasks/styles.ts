@@ -111,7 +111,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     height: '100%',
     justifyContent: 'left',
-    margin: '0 auto',
     padding: theme.spacing(3, 2, 2),
     width: 'fit-content',
   },
