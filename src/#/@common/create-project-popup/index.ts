@@ -32,7 +32,8 @@ const CreateProjectPopup = connect(
     onSubmit: onSubmitForm<IPostProjectData>(postProject),
     onSubmitFail: () => true,
     onSubmitSuccess: (res, dispatch, { onClose, goToPage }) => {
-      destroy(CREATE_PROJECT_FORM);
+      onClose();
+      dispatch(destroy(CREATE_PROJECT_FORM));
       return goToPage(`/projects/${get(res, 'payload.data.id')}`);
     },
   })(CreateProjectPopupJsx) as any
