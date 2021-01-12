@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useMemo } from 'react';
-import { Redirect, Switch } from 'react-router-dom';
+import { Redirect, RouteComponentProps, Switch } from 'react-router-dom';
 
 import NestedRoute from '#/@common/#nested-route';
 import { LayoutLeftDrawer } from '#/@common/layout-left-drawer';
@@ -74,7 +74,7 @@ export const PROJECT_ROUTES: IRoute[] = [
   },
 ];
 
-export interface IProjectProps {
+export interface IProjectProps extends RouteComponentProps<{ projectId: string }> {
   defaultProjectId?: number;
   fetchOneProject: any;
   openedProject: Project;
@@ -87,12 +87,15 @@ export const ProjectTsx: React.FC<IProjectProps> = ({
   fetchOneProject,
   openedProject,
   userRole,
+  match,
 }): JSX.Element | null => {
+  const projectId = Number(match.params.projectId);
+
   useEffect(() => {
-    if (fetchOneProject) {
-      fetchOneProject();
+    if (fetchOneProject && projectId) {
+      fetchOneProject(projectId);
     }
-  }, [fetchOneProject]);
+  }, [fetchOneProject, projectId]);
 
   const isDefaultProject = useMemo(() => {
     return openedProject && defaultProjectId === openedProject.id;
