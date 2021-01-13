@@ -118,7 +118,7 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
         }
         return false;
       },
-      [handleSubmit]
+      [handleSubmit, sequenceNumber]
     );
 
     const handleSaveBtnDisable = useCallback(() => {
