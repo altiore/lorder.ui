@@ -110,13 +110,15 @@ export const TaskFormJsx: React.FC<ITaskFormProps> = React.memo(
     const handleSave = useCallback(
       async (e: React.SyntheticEvent) => {
         const res: any = await handleSubmit(e);
-        setSequenceNumber(res.sequenceNumber);
+        if (!sequenceNumber) {
+          setSequenceNumber(res.sequenceNumber);
+        }
         if (res && [postProjectTask.success, patchProjectTask.success].includes(res.type)) {
           return res;
         }
         return false;
       },
-      [handleSubmit]
+      [handleSubmit, sequenceNumber]
     );
 
     const handleSaveBtnDisable = useCallback(() => {
