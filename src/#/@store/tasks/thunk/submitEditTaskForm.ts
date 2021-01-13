@@ -19,4 +19,6 @@ export const submitEditTaskForm = (values: ITaskFormData) => async (dispatch, ge
   if (data) {
     dispatch(initialize(EDIT_TASK_FORM, data), false);
   }
+
+  return data;
 };
