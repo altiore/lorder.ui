@@ -55,7 +55,7 @@ export const ProjectHeadTsx = ({ project, isAuth, userId, members }: IProps) => 
                 {isCurUserViolet ? 'Редактировать' : 'Доска Проекта'}
               </ButtonEdit>
             ) : (
-              <Button type="submit" color="primary" variant="contained" size="large" onClick={scrollToConnect}>
+              <Button type="submit" color="primary" variant="contained" onClick={scrollToConnect}>
                 Подключиться к проекту
               </Button>
             )}
