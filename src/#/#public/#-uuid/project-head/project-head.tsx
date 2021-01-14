@@ -20,9 +20,10 @@ interface IProps {
   isAuth: boolean;
   userId: number;
   members: IMember[];
+  isHaveRoles: boolean;
 }
 
-export const ProjectHeadTsx = ({ project, isAuth, userId, members }: IProps) => {
+export const ProjectHeadTsx = ({ project, isAuth, userId, members, isHaveRoles }: IProps) => {
   const isCurUserViolet = useMemo(() => {
     return Boolean(project?.accessLevel && project.accessLevel >= ACCESS_LEVEL.VIOLET);
   }, [project]);
@@ -53,9 +54,11 @@ export const ProjectHeadTsx = ({ project, isAuth, userId, members }: IProps) => 
                 {isCurUserViolet ? 'Редактировать' : 'Доска Проекта'}
               </ButtonEdit>
             ) : (
-              <Button type="submit" color="primary" variant="contained" onClick={scrollToConnect}>
-                Подключиться к проекту
-              </Button>
+              isHaveRoles && (
+                <Button type="submit" color="primary" variant="contained" onClick={scrollToConnect}>
+                  Подключиться к проекту
+                </Button>
+              )
             )}
           </div>
         </div>

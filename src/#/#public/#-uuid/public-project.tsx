@@ -14,6 +14,7 @@ import { StatisticTablesTsx } from './statistics-tables/statistics-tables';
 import { useStyles } from './styles';
 
 import { IMember, IProject } from '@types';
+
 // import UsersActivity from './users-activity';
 
 export interface IPublicProjectProps extends RouteComponentProps<{ uuid: string }> {
@@ -78,6 +79,10 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
     });
   }, [publicProject]);
 
+  const isHaveRoles = useMemo<boolean>(() => {
+    return !!project?.roles?.length;
+  }, [project]);
+
   const { sectionWrap } = useStyles();
 
   if (isLoading || !isLoaded) {
@@ -89,11 +94,11 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
 
   return (
     <>
-      <ProjectHead project={project} members={members} userId={userId} isAuth={isAuth} />
+      <ProjectHead isHaveRoles={isHaveRoles} project={project} members={members} userId={userId} isAuth={isAuth} />
       <ProjectMetrics statistic={statistic} />
       {/* connectForm нужен для скролла к кнопке если пользователь не авторизован/состоит в проекте*/}
       <div id={CONNECT_FORM_ID} />
-      <FollowProject project={project} />
+      {isHaveRoles && <FollowProject project={project} />}
       <div className={sectionWrap}>
         <StatisticTablesTsx members={members} userId={userId} />
       </div>
