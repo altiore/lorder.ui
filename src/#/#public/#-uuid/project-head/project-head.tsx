@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { scroller } from 'react-scroll';
 
 import { Box, Button, Grid } from '@material-ui/core';
@@ -8,6 +8,7 @@ import GradientHead from '@components/gradient-head';
 
 import { ROUTE } from '#/@store/router';
 
+import { CONNECT_FORM_ID } from '../constants';
 import LogoField from './logo-field';
 import { useStyles } from './styles';
 import ProjectLogo from './time.png';
@@ -26,14 +27,12 @@ export const ProjectHeadTsx = ({ project, isAuth, userId, members }: IProps) => 
     return Boolean(project?.accessLevel && project.accessLevel >= ACCESS_LEVEL.VIOLET);
   }, [project]);
 
-  const [projectMember, setProjectMember] = useState(members.some(e => e.memberId === userId));
-
-  useEffect(() => {
-    setProjectMember(members.some(e => e.memberId === userId));
+  const isProjectMember = useMemo(() => {
+    return members.some(e => e.memberId === userId);
   }, [userId, members]);
 
   const scrollToConnect = useCallback(() => {
-    scroller.scrollTo('connectForm', { delay: 100, smooth: true });
+    scroller.scrollTo(CONNECT_FORM_ID, { delay: 100, smooth: true });
   }, []);
 
   const { firstBlock, firstBlockContent, imageWrap, projectName, projectTagLine, wrapper } = useStyles();
@@ -49,8 +48,7 @@ export const ProjectHeadTsx = ({ project, isAuth, userId, members }: IProps) => 
           <div className={firstBlockContent}>
             <h1 className={projectName}>{project.title}</h1>
             {project.desc && <p className={projectTagLine}>{project.desc}</p>}
-            {members.some(e => e.memberId === userId)}
-            {isAuth && projectMember ? (
+            {isAuth && isProjectMember ? (
               <ButtonEdit to={isCurUserViolet ? ROUTE.PROJECT.SETTINGS(project.id) : ROUTE.PROJECT.ONE(project.id)}>
                 {isCurUserViolet ? 'Редактировать' : 'Доска Проекта'}
               </ButtonEdit>
