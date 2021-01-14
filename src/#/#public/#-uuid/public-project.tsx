@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import LoadingPage from '@components/loading-page';
 import { NoMatch } from '@components/no-match';
 
+import { CONNECT_FORM_ID } from './constants';
 import FollowProject from './follow-project';
 import ProjectMetrics from './metrics';
 import ProjectHead from './project-head';
@@ -11,9 +12,9 @@ import ProjectTeam from './project-team';
 // import ProjectValues from './project-values';
 import { StatisticTablesTsx } from './statistics-tables/statistics-tables';
 import { useStyles } from './styles';
-// import UsersActivity from './users-activity';
 
 import { IMember, IProject } from '@types';
+// import UsersActivity from './users-activity';
 
 export interface IPublicProjectProps extends RouteComponentProps<{ uuid: string }> {
   getProjectByUuid: (uuid: string) => IProject | undefined;
@@ -91,7 +92,7 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
       <ProjectHead project={project} members={members} userId={userId} isAuth={isAuth} />
       <ProjectMetrics statistic={statistic} />
       {/* connectForm нужен для скролла к кнопке если пользователь не авторизован/состоит в проекте*/}
-      <div id="connectForm" />
+      <div id={CONNECT_FORM_ID} />
       <FollowProject project={project} />
       <div className={sectionWrap}>
         <StatisticTablesTsx members={members} userId={userId} />

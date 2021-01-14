@@ -134,7 +134,7 @@ export const ProjectTsx: React.FC<IProjectProps> = ({
   }, [isDefaultProject, openedProject]);
 
   if (!openedProject || !openedProject.title) {
-    return null;
+    return <Redirect to={redirectTo} />;
   }
 
   return (
