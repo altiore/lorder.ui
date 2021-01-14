@@ -88,8 +88,10 @@ export const PublicProjectTsx: React.FC<IPublicProjectProps> = ({
 
   return (
     <>
-      <ProjectHead project={project} isAuth={isAuth} />
+      <ProjectHead project={project} members={members} userId={userId} isAuth={isAuth} />
       <ProjectMetrics statistic={statistic} />
+      {/* connectForm нужен для скролла к кнопке если пользователь не авторизован/состоит в проекте*/}
+      <div id="connectForm" />
       <FollowProject project={project} />
       <div className={sectionWrap}>
         <StatisticTablesTsx members={members} userId={userId} />
