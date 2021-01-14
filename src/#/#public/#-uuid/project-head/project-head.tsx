@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { scroller } from 'react-scroll';
 
-import classNames from 'classnames';
-
 import { Box, Button, Grid } from '@material-ui/core';
 
 import ButtonEdit from '@components/button-edit';
@@ -10,7 +8,6 @@ import GradientHead from '@components/gradient-head';
 
 import { ROUTE } from '#/@store/router';
 
-import FollowProject from '../follow-project';
 import LogoField from './logo-field';
 import { useStyles } from './styles';
 import ProjectLogo from './time.png';
