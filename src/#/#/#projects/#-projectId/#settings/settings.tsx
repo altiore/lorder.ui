@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import get from 'lodash/get';
 
@@ -26,6 +26,8 @@ export const SettingsTsx: React.FunctionComponent<ISettingsProps> = ({
   publishProject,
   updateStatistic,
 }) => {
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const handlePublishProject = useCallback(() => {
     if (typeof projectId === 'number') {
       publishProject(projectId);
@@ -34,7 +36,9 @@ export const SettingsTsx: React.FunctionComponent<ISettingsProps> = ({
 
   const handleUpdateStatistic = useCallback(() => {
     if (typeof projectId === 'number') {
+      setIsUpdating(true);
       updateStatistic(projectId);
+      setIsUpdating(false);
     }
   }, [projectId, updateStatistic]);
 
@@ -54,7 +58,10 @@ export const SettingsTsx: React.FunctionComponent<ISettingsProps> = ({
           ) : (
             <Button onClick={handlePublishProject}>Опубликовать проект</Button>
           )}
-          <Button onClick={handleUpdateStatistic}>Обновить статистику проекта</Button>
+          <Button onClick={handleUpdateStatistic} disabled={isUpdating}>
+            Обновить статистику проекта
+          </Button>
+          {isUpdating && <span style={{ textAlign: 'center' }}>Статистика обновляется</span>}
         </Grid>
       </Grid>
     </Page>
