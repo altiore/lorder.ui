@@ -33,6 +33,7 @@ export const ProfileForm: React.FC<InjectedFormProps> = ({ submitting, pristine,
             component={InputField}
             label="Публичное имя"
             parse={parseStrToUndefined}
+            autoFocus
             fullWidth
           />
         </div>
