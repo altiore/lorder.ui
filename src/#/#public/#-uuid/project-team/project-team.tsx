@@ -34,7 +34,7 @@ export const ProjectTeam: React.FC<IProps> = memo<IProps>(({ members }) => {
       <div className={sliderWrap}>
         {Boolean(filtered.length) && (
           <Slider>
-            {members.map(({ member: { id, avatar, displayName }, memberRole, opinion }) => (
+            {filtered.map(({ member: { id, avatar, displayName }, memberRole, opinion }) => (
               <FlippingCard
                 key={id}
                 avatarUrl={avatar?.url || process.env.PUBLIC_URL + '/d-avatar.png'}
