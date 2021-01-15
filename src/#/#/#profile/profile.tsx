@@ -40,7 +40,7 @@ interface IProfile {
 }
 
 export const Profile: React.FC<IProfile> = ({ openDialog, projects, userAvatar, userDisplayName, userEmail }) => {
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(!userDisplayName);
 
   const toggleEdit = useCallback(() => {
     setIsEdit(isE => !isE);
