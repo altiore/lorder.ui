@@ -135,7 +135,9 @@ export const MainJsx: React.FC<IMainProps> = ({
         {Boolean(preparedRoutes) && (
           <Suspense fallback={<div />}>
             <Switch location={pageLocation}>
-              {!userDisplayName && pathname !== ROUTE.PROFILE && <Redirect from={pathname} to={ROUTE.PROFILE} />}
+              {!userDisplayName && pathname !== ROUTE.PROFILE && (
+                <Redirect from={pathname} to={{ pathname: ROUTE.PROFILE, state: { isOpenedEdit: true } }} />
+              )}
               {preparedRoutes.map((route: IRoute) => {
                 return <NestedRoute key={route.path} {...route} routes={MAIN_USER_ROUTES} location={pageLocation} />;
               })}

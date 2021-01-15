@@ -37,10 +37,20 @@ interface IProfile {
   userAvatar?: string;
   userDisplayName: string;
   userEmail: string;
+  location: any;
 }
 
-export const Profile: React.FC<IProfile> = ({ openDialog, projects, userAvatar, userDisplayName, userEmail }) => {
-  const [isEdit, setIsEdit] = useState(false);
+export const Profile: React.FC<IProfile> = ({
+  openDialog,
+  projects,
+  userAvatar,
+  userDisplayName,
+  userEmail,
+  location,
+}) => {
+  const [isEdit, setIsEdit] = useState(
+    location.state?.isOpenedEdit && !userDisplayName ? location.state?.isOpenedEdit : false
+  );
 
   const toggleEdit = useCallback(() => {
     setIsEdit(isE => !isE);
@@ -98,7 +108,12 @@ export const Profile: React.FC<IProfile> = ({ openDialog, projects, userAvatar, 
             </Paper>
           ) : (
             <>
-              <T variant="h3" className={cn(userNameStyle, { [userNameStyleEmpty]: !userDisplayName })}>
+              <T
+                variant="h3"
+                className={cn(userNameStyle, {
+                  [userNameStyleEmpty]: !userDisplayName,
+                })}
+              >
                 {userDisplayName || '[НЕТ ПУБЛИЧНОГО ИМЕНИ]'}
               </T>
               <T className={userEmailStyle}>{userEmail}</T>
