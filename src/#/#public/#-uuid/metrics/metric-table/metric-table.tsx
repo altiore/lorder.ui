@@ -9,19 +9,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import { VALUE_MULTIPLIER } from '#/@store/projects';
+import DiamondIcon from '@components/@icons/Diamond';
 
 import { IProjectMetric } from '@types';
 
-const useStyles = makeStyles({
-  table: {
-    width: '100%',
-  },
-});
-
-const currencyFormatter = new Intl.NumberFormat('ru-RU', {
-  currency: 'USD',
-  style: 'currency',
+const valueFormatter = new Intl.NumberFormat('ru-RU', {
+  style: 'decimal',
 });
 
 const percentFormatter = new Intl.NumberFormat('ru-RU', {
@@ -38,8 +31,6 @@ export const MetricTableTsx: React.FC<IProjectMetric & { title: string }> = ({
   title,
   value,
 }) => {
-  const classes = useStyles();
-
   const timeProductivity = useMemo(() => {
     if (!membersCount || !days || !timeSumIn8hoursDays) {
       return 0;
@@ -53,18 +44,17 @@ export const MetricTableTsx: React.FC<IProjectMetric & { title: string }> = ({
       return 0;
     }
 
-    return (
-      currencyFormatter.format((Math.round((value * 100) / days) * DAYS_IN_MONTH * VALUE_MULTIPLIER) / 100) + '/мес'
-    );
+    return valueFormatter.format((Math.round((value * 100) / days) * DAYS_IN_MONTH) / 100);
   }, [days, value]);
 
   const addedValue = useMemo(() => {
-    return currencyFormatter.format(value * VALUE_MULTIPLIER);
+    return valueFormatter.format(value);
   }, [value]);
 
+  const { tableStyle, valueStyle } = useStyles();
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} size="small" aria-label="a dense table">
+      <Table className={tableStyle} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell>{title}</TableCell>
@@ -94,16 +84,29 @@ export const MetricTableTsx: React.FC<IProjectMetric & { title: string }> = ({
             <TableCell component="th" scope="row">
               Продуктивность
             </TableCell>
-            <TableCell align="right">&asymp; {valueProductivity}</TableCell>
+            <TableCell align="right">
+              &asymp; {valueProductivity} <DiamondIcon className={valueStyle} /> / мес
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row">
               Добавленная Ценность
             </TableCell>
-            <TableCell align="right">&asymp; {addedValue}</TableCell>
+            <TableCell align="right">
+              &asymp; {addedValue} <DiamondIcon className={valueStyle} />
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
   );
 };
+
+const useStyles = makeStyles({
+  tableStyle: {
+    width: '100%',
+  },
+  valueStyle: {
+    fontSize: 11,
+  },
+});

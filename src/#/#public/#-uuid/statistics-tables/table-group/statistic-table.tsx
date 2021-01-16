@@ -8,7 +8,7 @@ import TableRow from './table-row';
 
 interface IStatisticTableProps {
   members: any[];
-  unit?: string;
+  unit?: JSX.Element | string;
   unitTitle: string;
   userId: number;
   showUserAchievementIcon?: boolean;

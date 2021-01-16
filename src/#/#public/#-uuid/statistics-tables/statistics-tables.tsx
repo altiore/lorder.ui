@@ -2,6 +2,8 @@ import React, { memo, useCallback, useMemo, useState } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
+import DiamondIcon from '@components/@icons/Diamond';
+
 import { millisecondsToHours } from '#/@store/@common/helpers';
 
 import { useStyles } from './styles';
@@ -119,6 +121,7 @@ export const StatisticTablesTsx = memo(({ members, userId }: IStatisticsTablesPr
         <GroupHeader headerTitle="СТАТИСТИКА ПО ЦЕННОСТИ" buttonTitle="Редактировать" buttonRoutePath={undefined} />
         <StatisticTable
           members={filteredPointsTable}
+          unit={<DiamondIcon className={classes.diamondStyle} />}
           unitTitle="Ценность"
           userId={userId}
           userAchievementTitle="Доля"

@@ -7,7 +7,7 @@ import { useStyles } from '../styles';
 interface ITableRowProps {
   index: number;
   member: any;
-  unit: string;
+  unit: JSX.Element | string;
   style?: any;
   isCurrentUser: boolean;
 }

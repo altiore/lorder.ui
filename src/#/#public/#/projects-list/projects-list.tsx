@@ -10,7 +10,6 @@ import T from '@material-ui/core/Typography';
 import ProjectCard from '@components/project-card';
 import Slider from '@components/slider';
 
-import { VALUE_MULTIPLIER } from '#/@store/projects';
 import { ROUTE } from '#/@store/router';
 
 import { IProjectPub } from '@types';
@@ -73,7 +72,7 @@ export const ProjectsList: React.FC<IProps> = ({ filteredList, isLoading }) => {
               membersCount={statistic.metrics?.all?.membersCount || 0}
               projectLink={ROUTE.PUBLIC.ONE(uuid)}
               title={title}
-              value={VALUE_MULTIPLIER * (statistic.metrics?.all?.value || 0)}
+              value={statistic.metrics?.all?.value || 0}
             />
           ))}
         </Slider>

@@ -21,7 +21,6 @@ import Slider from '@components/slider';
 
 import { createProjectDialogProps, CreateProjectPopup } from '#/@common/create-project-popup';
 import { LinkButton } from '#/@common/link-button';
-import { VALUE_MULTIPLIER } from '#/@store/projects';
 import { ROUTE } from '#/@store/router';
 
 import Avatar from './avatar';
@@ -136,9 +135,9 @@ export const Profile: React.FC<IProfile> = ({ openDialog, projects, userAvatar, 
                   mainRole: memberRole,
                   // message?: string;
                   shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
-                  value: shareValue * VALUE_MULTIPLIER,
+                  value: shareValue,
                 }}
-                value={pub?.statistic?.metrics?.all?.value * VALUE_MULTIPLIER}
+                value={pub?.statistic?.metrics?.all?.value}
               />
             ))}
           </Slider>

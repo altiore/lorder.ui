@@ -18,6 +18,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
   currentUserWrapTop: {
     top: 79,
   },
+  diamondStyle: {
+    fontSize: 14,
+  },
   h2: {
     color: '#29292b',
     fontFamily: 'Roboto',
