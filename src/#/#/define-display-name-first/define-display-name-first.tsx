@@ -14,7 +14,7 @@ export const DefineDisplayNameFirst: React.FC<IProps> = ({ onClose }): JSX.Eleme
       confirmText="Задать публичное имя"
       onConfirm={onClose}
       titleText="Сначала задайте публичное имя!"
-      text="Вы не сможете полноценно пользоваться приложением, пока не зададите публичное имя. Оно используется для характеристики вашего аккаунта"
+      text="Публичное имя могут видеть другие пользователи"
       warningText="Как ты хотел бы, чтоб мы тебя называли?"
       onClose={onClose}
     />
