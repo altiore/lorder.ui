@@ -81,12 +81,27 @@ export const uploadAvatar = createApiAction('USER/UPLOAD_AVATAR', file => ({
 
 export const updateProfile = createApiAction(
   'ME/UPDATE',
-  ({ displayName, tel }: { displayName?: string; tel?: string }) => ({
+  ({
+    displayName,
+    tel,
+    telegram = '',
+    gitHub = '',
+    linkedIn = '',
+  }: {
+    displayName?: string;
+    tel?: string;
+    telegram?: string;
+    gitHub?: string;
+    linkedIn?: string;
+  }) => ({
     form: 'ProfileForm',
     request: {
       data: {
         displayName,
+        gitHub: gitHub || '',
+        linkedIn: linkedIn || '',
         tel: tel || null,
+        telegram: telegram || '',
       },
       method: 'patch',
       url: `/me`,

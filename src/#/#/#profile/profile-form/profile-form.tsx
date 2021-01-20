@@ -42,6 +42,15 @@ export const ProfileForm: React.FC<InjectedFormProps> = ({ submitting, pristine,
         <Field name="tel" component={InputField} label="Телефон" fullWidth parse={parseStrToUndefined} />
       </ListItem>
       <ListItem>
+        <Field name="telegram" component={InputField} label="Telegram" fullWidth parse={parseStrToUndefined} />
+      </ListItem>
+      <ListItem>
+        <Field name="gitHub" component={InputField} label="GitHub" fullWidth parse={parseStrToUndefined} />
+      </ListItem>
+      <ListItem>
+        <Field name="linkedIn" component={InputField} label="LinkedIn" fullWidth parse={parseStrToUndefined} />
+      </ListItem>
+      <ListItem>
         <Button
           className={button}
           variant="outlined"

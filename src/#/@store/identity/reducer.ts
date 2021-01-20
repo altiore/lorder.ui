@@ -76,7 +76,7 @@ const updateProfileSuccess = (state: IIdentityState, { payload }) => {
   return new Identity({
     ...state,
     isLoading: false,
-    ...pick(payload.data, ['displayName', 'tel']),
+    ...pick(payload.data, ['displayName', 'tel', 'userSocials']),
   });
 };
 

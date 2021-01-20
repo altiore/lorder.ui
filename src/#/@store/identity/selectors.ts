@@ -2,7 +2,7 @@ import { createDeepEqualSelector } from '#/@store/@common/createSelector';
 
 import { IIdentityState } from './Identity';
 
-import { IState, ROLE } from '@types';
+import { IState, ROLE, SOCIAL_FLOW } from '@types';
 
 export const baseIdentityState = (state: IState): IIdentityState => state.identity;
 
@@ -24,6 +24,8 @@ export const userAvatar = createDeepEqualSelector([baseIdentityState], state => 
 
 export const userIsLoading = createDeepEqualSelector([baseIdentityState], state => state.isLoading);
 
+export const userSocials = createDeepEqualSelector([baseIdentityState], state => state.userSocials);
+
 export const defaultProjectId = createDeepEqualSelector(baseIdentityState, state => state.defaultProjectId);
 
 export const hasRole = createDeepEqualSelector([userRole], role => (r: ROLE | ROLE[]) => {
@@ -38,5 +40,8 @@ export const userDisplayName = createDeepEqualSelector([baseIdentityState], s =>
 
 export const initialProfileFormData = createDeepEqualSelector([baseIdentityState], state => ({
   displayName: state?.displayName,
+  gitHub: state?.userSocials?.find(el => el.socialType === SOCIAL_FLOW.GITHUB)?.socialLink || '',
+  linkedIn: state?.userSocials?.find(el => el.socialType === SOCIAL_FLOW.LINKEDIN)?.socialLink || '',
   tel: state?.tel,
+  telegram: state?.userSocials?.find(el => el.socialType === SOCIAL_FLOW.TELEGRAM)?.socialLink || '',
 }));
