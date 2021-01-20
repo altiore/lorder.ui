@@ -36,3 +36,4 @@ export * from './project-type';
 export * from './role';
 export * from './i.project-strategy-info';
 export * from './i.project-role';
+export * from './i.user-social';

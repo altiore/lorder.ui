@@ -1,5 +1,6 @@
 import map from 'lodash/map';
 
+import { IUserSocial } from '@types';
 import { ROLE } from '@types';
 
 export interface IIdentityState {
@@ -13,6 +14,7 @@ export interface IIdentityState {
   refreshToken?: string;
   role?: ROLE;
   tel?: string;
+  userSocials?: IUserSocial[];
 
   // added by UI
   isAuth: boolean;
@@ -30,6 +32,7 @@ export class Identity implements IIdentityState {
   readonly refreshToken: string;
   readonly role: ROLE = ROLE.GUEST;
   readonly tel?: string;
+  readonly userSocials?: IUserSocial[];
 
   readonly isAuth: boolean = false;
   readonly isLoading: boolean = false;

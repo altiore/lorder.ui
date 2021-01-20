@@ -28,7 +28,7 @@ import GitHubIco from './icons/github';
 import LinkedInIco from './icons/linkedin';
 import ProfileForm from './profile-form';
 
-import { IProject, IPublicProject } from '@types';
+import { IProject, IPublicProject, IUserSocial, SOCIAL_FLOW } from '@types';
 
 interface IProfile {
   openDialog: any;
@@ -36,18 +36,22 @@ interface IProfile {
   userAvatar?: string;
   userDisplayName: string;
   userEmail: string;
+  userSocials: IUserSocial[];
 }
 
-export const Profile: React.FC<IProfile> = ({ openDialog, projects, userAvatar, userDisplayName, userEmail }) => {
+export const Profile: React.FC<IProfile> = ({
+  openDialog,
+  projects,
+  userAvatar,
+  userDisplayName,
+  userEmail,
+  userSocials,
+}) => {
   const [isEdit, setIsEdit] = useState(!userDisplayName);
 
   const toggleEdit = useCallback(() => {
     setIsEdit(isE => !isE);
   }, [setIsEdit]);
-
-  const handleConnect = useCallback(() => {
-    alert('Not Implemented (');
-  }, []);
 
   const getProjectLink = useCallback((id?: number, pub?: IPublicProject) => {
     if (pub && pub.uuid) {
@@ -81,6 +85,7 @@ export const Profile: React.FC<IProfile> = ({ openDialog, projects, userAvatar, 
     userNameStyle,
     userNameStyleEmpty,
   } = useStyles();
+
   return (
     <div className={scrollBody}>
       <GradientHead>
@@ -97,7 +102,12 @@ export const Profile: React.FC<IProfile> = ({ openDialog, projects, userAvatar, 
             </Paper>
           ) : (
             <>
-              <T variant="h3" className={cn(userNameStyle, { [userNameStyleEmpty]: !userDisplayName })}>
+              <T
+                variant="h3"
+                className={cn(userNameStyle, {
+                  [userNameStyleEmpty]: !userDisplayName,
+                })}
+              >
                 {userDisplayName || '[НЕТ ПУБЛИЧНОГО ИМЕНИ]'}
               </T>
               <T className={userEmailStyle}>{userEmail}</T>
@@ -106,15 +116,27 @@ export const Profile: React.FC<IProfile> = ({ openDialog, projects, userAvatar, 
           )}
         </Grid>
         <Grid item xs={12} md={4} className={lastBlock}>
-          <Fab className={contactIcon} onClick={handleConnect}>
-            <TelegramIco />
-          </Fab>
-          <Fab className={contactIcon} onClick={handleConnect}>
-            <GitHubIco color="inherit" className={iconColored} />
-          </Fab>
-          <Fab className={contactIcon} onClick={handleConnect}>
-            <LinkedInIco color="inherit" className={iconColored} />
-          </Fab>
+          {userSocials
+            .filter(el => el.socialLink)
+            .map(social => (
+              <Fab className={contactIcon} href={social.socialLink} key={social.socialType}>
+                {social.socialType === SOCIAL_FLOW.TELEGRAM && social.socialLink ? (
+                  <TelegramIco color="inherit" className={iconColored} />
+                ) : (
+                  <></>
+                )}
+                {social.socialType === SOCIAL_FLOW.GITHUB && social.socialLink ? (
+                  <GitHubIco color="inherit" className={iconColored} />
+                ) : (
+                  <></>
+                )}
+                {social.socialType === SOCIAL_FLOW.LINKEDIN && social.socialLink ? (
+                  <LinkedInIco color="inherit" className={iconColored} />
+                ) : (
+                  <></>
+                )}
+              </Fab>
+            ))}
         </Grid>
       </GradientHead>
       <Container id="project-list" className={projectList}>
