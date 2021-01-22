@@ -129,7 +129,7 @@ export const updateProjectAct = createApiAction<number, any>(
       url: `/projects/${projectId}`,
     },
     success: {
-      message: 'Ничего не бойся я с тобой',
+      message: 'Ваш проект был успешно обновлён! Рекомендуем ещё раз проверить правильность введённых данных',
       title: 'Проект обновлен',
     },
   })
