@@ -77,7 +77,6 @@
     "axios": "0.21.1",
     "classnames": "2.2.6",
     "connected-react-router": "6.4.0",
-    "immer": "5.1.0",
     "jodit-react": "1.0.42",
     "lint-staged": "8.2.1",
     "localforage": "1.7.3",
