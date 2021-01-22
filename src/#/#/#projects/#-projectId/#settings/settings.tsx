@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import get from 'lodash/get';
 
@@ -16,6 +16,7 @@ import ProjectForm from './project-form';
 export interface ISettingsProps {
   openedProject?: Project;
   projectId?: number;
+  isLoading: boolean;
   publishProject: (p: number) => any;
   updateStatistic: (p: number) => any;
 }
@@ -25,9 +26,8 @@ export const SettingsTsx: React.FunctionComponent<ISettingsProps> = ({
   projectId,
   publishProject,
   updateStatistic,
+  isLoading,
 }) => {
-  const [isUpdating, setIsUpdating] = useState(false);
-
   const handlePublishProject = useCallback(() => {
     if (typeof projectId === 'number') {
       publishProject(projectId);
@@ -36,9 +36,7 @@ export const SettingsTsx: React.FunctionComponent<ISettingsProps> = ({
 
   const handleUpdateStatistic = useCallback(() => {
     if (typeof projectId === 'number') {
-      setIsUpdating(true);
       updateStatistic(projectId);
-      setIsUpdating(false);
     }
   }, [projectId, updateStatistic]);
 
@@ -58,10 +56,10 @@ export const SettingsTsx: React.FunctionComponent<ISettingsProps> = ({
           ) : (
             <Button onClick={handlePublishProject}>Опубликовать проект</Button>
           )}
-          <Button onClick={handleUpdateStatistic} disabled={isUpdating}>
+          <Button onClick={handleUpdateStatistic} disabled={isLoading}>
             Обновить статистику проекта
           </Button>
-          {isUpdating && <span style={{ textAlign: 'center' }}>Статистика обновляется</span>}
+          {isLoading && <span style={{ textAlign: 'center' }}>Статистика обновляется</span>}
         </Grid>
       </Grid>
     </Page>
