@@ -282,6 +282,7 @@ export const projects: any = handleActions<S, any, any>(
     [publishProject.success]: publishProjectHandler,
     [updateStatistic.toString()]: updateStatisticStartHandler,
     [updateStatistic.success]: updateStatisticEndHandler,
+    [updateStatistic.fail]: updateStatisticEndHandler,
 
     [updateProjectMemberAccessLevel.toString()]: updateProjectMemberAccessLevelHandler,
     [updateProjectMemberAccessLevel.success]: updateProjectMemberAccessLevelSuccessHandler,
