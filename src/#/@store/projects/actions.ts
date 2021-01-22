@@ -117,7 +117,15 @@ export const updateStatistic = createApiAction<number>('PROJECT/STATISTIC/UPDATE
 
 export const updateProjectAct = createApiAction<number, any>(
   'PROJECT/UPDATE',
-  (projectId: number, data: { desc?: string; title: string; monthlyBudget: number; slogan?: string }) => ({
+  (
+    projectId: number,
+    data: {
+      desc?: string;
+      title: string;
+      monthlyBudget: number;
+      slogan?: string;
+    }
+  ) => ({
     form: UPDATE_PROJECT_FORM,
     request: {
       data: {
@@ -129,7 +137,7 @@ export const updateProjectAct = createApiAction<number, any>(
       url: `/projects/${projectId}`,
     },
     success: {
-      message: 'Ничего не бойся я с тобой',
+      message: 'Ваш проект был успешно обновлён! Рекомендуем ещё раз проверить правильность введённых данных',
       title: 'Проект обновлен',
     },
   })
