@@ -184,4 +184,6 @@ export const getPushForwardStatusesByProjectId = createDeepEqualSelector(
   }
 );
 
+export const isLoading = createDeepEqualSelector([baseState], state => state.isLoading);
+
 export const openedTaskColumns = createDeepEqualSelector([openedProject], pr => (pr ? pr.taskColumns : []));

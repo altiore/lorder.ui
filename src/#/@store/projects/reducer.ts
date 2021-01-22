@@ -22,6 +22,7 @@ import {
   removeProjectByAdmin,
   updateProjectAct,
   updateProjectMemberAccessLevel,
+  updateStatistic,
   uploadLogoAct,
 } from './actions';
 import { acceptInvitationAct } from './members/actions';
@@ -128,6 +129,14 @@ const publishProjectHandler = (state, { payload, meta }) => {
     ...payload.data,
     uuid: get(payload, ['data', 'pub', 'uuid']),
   });
+};
+
+const updateStatisticStartHandler = (state, { payload, meta }) => {
+  return state.startLoading();
+};
+
+const updateStatisticEndHandler = (state, { payload, meta }) => {
+  return state.stopLoading();
 };
 
 const updateProjectMemberAccessLevelHandler = (state: S, { payload }: Action<P>) => {
@@ -271,6 +280,8 @@ export const projects: any = handleActions<S, any, any>(
     [postProjectMember.fail]: postProjectMemberFailHandler,
 
     [publishProject.success]: publishProjectHandler,
+    [updateStatistic.toString()]: updateStatisticStartHandler,
+    [updateStatistic.success]: updateStatisticEndHandler,
 
     [updateProjectMemberAccessLevel.toString()]: updateProjectMemberAccessLevelHandler,
     [updateProjectMemberAccessLevel.success]: updateProjectMemberAccessLevelSuccessHandler,
