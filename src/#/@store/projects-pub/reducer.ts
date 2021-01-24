@@ -1,5 +1,4 @@
 import { Action, handleActions } from 'redux-actions';
-import { PURGE } from 'redux-persist';
 
 import { AxiosResponse } from 'axios';
 
@@ -25,17 +24,11 @@ const fetchProjectsPubFailHandler = (state: S) => {
   return state.finishLoading();
 };
 
-const logOutHandler = () => {
-  return new DownloadList(ProjectPub);
-};
-
 export default handleActions<S, P, M>(
   {
     [fetchProjectsPubAct.toString()]: fetchProjectsPubHandler,
     [fetchProjectsPubAct.success]: fetchProjectsPubSuccessHandler,
     [fetchProjectsPubAct.fail]: fetchProjectsPubFailHandler,
-
-    [PURGE]: logOutHandler,
   },
   new DownloadList(ProjectPub)
 );
