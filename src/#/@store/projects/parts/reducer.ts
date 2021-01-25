@@ -38,7 +38,7 @@ export const projectParts = handleActions<any, any, any>(
     [updateProjectPartAct.fail]: nothing,
 
     [deleteProjectPartAct.toString()]: nothing,
-    [deleteProjectPartAct.success]: removeFromList('parts'),
+    [deleteProjectPartAct.success]: removeFromList('list'),
     [deleteProjectPartAct.fail]: nothing,
   },
   new DownloadList(ProjectPart)
