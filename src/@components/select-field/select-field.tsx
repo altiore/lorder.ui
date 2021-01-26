@@ -56,7 +56,7 @@ export const SelectField = ({
         id={id}
         {...(custom as any)}
       >
-        {(Array.isArray(items) ? items : Object.keys(items).map(key => ({ name: key, id: items[key] }))).map(item => {
+        {(Array.isArray(items) ? items : Object.keys(items).map(key => ({ name: items[key], id: key }))).map(item => {
           const val = getId(item);
           return (
             <MenuItem key={val} value={val}>
