@@ -23,13 +23,7 @@ export interface IProjectMembersProps extends RouteComponentProps {
 const COLUMNS: ICrudColumn[] = [
   { title: 'ID', path: 'id' },
   { title: 'Название', path: 'role.id', name: 'roleId' },
-  {
-    component: CheckboxCell,
-    isBoolean: true,
-    name: 'isPublic',
-    path: 'isPublic',
-    title: 'Публичная',
-  },
+  { title: 'Публичная', path: 'isPublic', name: 'isPublic', isBoolean: true, component: CheckboxCell },
 ];
 
 export const ProjectRolesJsx: React.FC<IProjectMembersProps> = React.memo(
@@ -57,7 +51,7 @@ export const ProjectRolesJsx: React.FC<IProjectMembersProps> = React.memo(
 
     const preparedColumns = useMemo(() => {
       COLUMNS[1].allowed = rolesList.reduce((res, cur) => {
-        res[cur.id] = cur.id;
+        res[cur.id] = cur.name;
         return res;
       }, {});
       COLUMNS[2].editable = Boolean(openedAccessLevel && openedAccessLevel >= ACCESS_LEVEL.GREEN);
