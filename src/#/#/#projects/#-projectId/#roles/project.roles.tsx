@@ -51,7 +51,7 @@ export const ProjectRolesJsx: React.FC<IProjectMembersProps> = React.memo(
 
     const preparedColumns = useMemo(() => {
       COLUMNS[1].allowed = rolesList.reduce((res, cur) => {
-        res[cur.id] = cur.name;
+        res[cur.id] = cur.id;
         return res;
       }, {});
       COLUMNS[2].editable = Boolean(openedAccessLevel && openedAccessLevel >= ACCESS_LEVEL.GREEN);
