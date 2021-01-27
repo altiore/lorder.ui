@@ -15,9 +15,6 @@ import Card from './card';
 
 import { PROJECT_COLOR, PROJECT_STRATEGY, PROJECT_VIEW_TYPE, ROLE } from '@types';
 
-const parseNumber = i => parseFloat(i);
-const formatNumber = i => (typeof i === 'number' ? i.toString() : '');
-
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     marginLeft: 'auto',
@@ -70,14 +67,7 @@ export const ProjectFormTsx: React.FC<InjectedFormProps<IFormData> & IProjectFor
           </ListItem>
         )}
         <ListItem>
-          <Field
-            name="monthlyBudget"
-            component={InputField}
-            label="Месячный бюджет"
-            fullWidth
-            parse={parseNumber}
-            format={formatNumber}
-          />
+          <Field name="monthlyBudget" component={InputField} label="Месячный бюджет" fullWidth type="number" />
         </ListItem>
         {isPublic && (
           <ListItem>
