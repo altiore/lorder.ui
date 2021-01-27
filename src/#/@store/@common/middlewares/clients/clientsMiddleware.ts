@@ -134,6 +134,7 @@ export default multiClientMiddleware(
         if (status === 401) {
           dispatch(
             error({
+              dismissible: true,
               message: 'Пожалуйста, авторизуйтесь снова, чтоб продолжить пользоваться сервисом',
               position: 'tr',
               title: 'Срок действия ключа истек!',
