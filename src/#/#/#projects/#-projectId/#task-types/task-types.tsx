@@ -17,7 +17,7 @@ export interface IProjectTaskTypesProps extends RouteComponentProps {
 }
 
 const COLUMNS: ICrudColumn[] = [
-  { title: '№', path: 'order' },
+  { title: '№', path: 'order', isNumber: true },
   { title: 'Название', path: 'taskTypeId', name: 'taskTypeId' },
 ];
 
