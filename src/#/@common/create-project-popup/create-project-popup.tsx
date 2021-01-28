@@ -24,10 +24,10 @@ import { TextField } from '@components/text-field';
 
 import { PROJECT_STRATEGY, PROJECT_TYPE } from '@types';
 
-const parseNumber = i => parseFloat(i);
-const formatNumber = i => (typeof i === 'number' ? i.toString() : '');
-
 const useStyles = makeStyles((theme: Theme) => ({
+  buttonWidth: {
+    width: '250px',
+  },
   content: {
     backgroundColor: '#F4F5F7',
     paddingBottom: theme.spacing(2),
@@ -92,7 +92,7 @@ export const CreateProjectPopupJsx: React.FunctionComponent<IProjectFormProps> =
     setExpanded(o => !o);
   }, []);
 
-  const { content, details, expandBtn, expandBtnOpen, panel, titleStyle } = useStyles();
+  const { buttonWidth, content, details, expandBtn, expandBtnOpen, panel, titleStyle } = useStyles();
 
   return (
     <>
@@ -121,14 +121,14 @@ export const CreateProjectPopupJsx: React.FunctionComponent<IProjectFormProps> =
             </ButtonBase>
             <Collapse in={expanded}>
               <div className={details}>
-                <Field name="desc" component={InputField} label="Описание" />
-                <Field name="slogan" component={InputField} label="Призыв присоединиться" />
+                <Field name="desc" component={InputField} label="Описание" className={buttonWidth} />
+                <Field name="slogan" component={InputField} label="Призыв присоединиться" className={buttonWidth} />
                 <Field
                   name="monthlyBudget"
                   component={InputField}
                   label="Месячный бюджет"
-                  parse={parseNumber}
-                  format={formatNumber}
+                  type={'number'}
+                  className={buttonWidth}
                 />
                 <Field
                   name="strategy"
