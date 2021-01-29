@@ -1,6 +1,8 @@
 import { createAction } from 'redux-actions';
 import { createApiAction } from 'redux-actions-api';
 
+import { IProjectRole } from '@types';
+
 export const selectProject = createAction('CURRENT_PROJECT/SELECT');
 
 export const fetchProjectRolesAct = createApiAction('CURRENT_PROJECT/FETCH_ROLES', projectId => ({
@@ -30,7 +32,7 @@ export const createProjectRoleAct = createApiAction(
 
 export const editProjectRoleAct = createApiAction(
   'CURRENT_PROJECT/EDIT_ROLE',
-  (projectId: number, roleId: number, data: { isPublic: boolean }) => ({
+  (projectId: number, roleId: number, data: Partial<IProjectRole>) => ({
     error: {
       message: `При изменение роли в проект произошла ошибка`,
       title: 'Ошибка',

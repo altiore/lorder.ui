@@ -8,8 +8,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-const onChange = (input: WrappedFieldInputProps) => (event: React.ChangeEvent<HTMLSelectElement>) =>
-  input.onChange(event.target.value);
+const onChange = (input: WrappedFieldInputProps) => (event: React.ChangeEvent<HTMLInputElement>) =>
+  input.onChange(event.target.checked);
 
 export interface ISelectFieldProps extends WrappedFieldProps {
   items: any[];
@@ -34,7 +34,7 @@ export const CheckboxField = ({
         control={
           <Checkbox
             {...(input as any)}
-            value={input.value || ''}
+            checked={input.value || ''}
             onChange={onChange(input) as any}
             label={label}
             id={id}

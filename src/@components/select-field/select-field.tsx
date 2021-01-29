@@ -1,16 +1,13 @@
 import React from 'react';
 
 import uniqueId from 'lodash/uniqueId';
-import { WrappedFieldInputProps, WrappedFieldProps } from 'redux-form';
+import { WrappedFieldProps } from 'redux-form';
 
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select, { SelectProps } from '@material-ui/core/Select';
-
-const onChange = (input: WrappedFieldInputProps) => (event: React.ChangeEvent<HTMLSelectElement>) =>
-  input.onChange(event.target.value);
 
 const defGetId = el => el.id;
 const defGetTitle = el => el.name;
@@ -50,7 +47,8 @@ export const SelectField = ({
         {...(input as any)}
         value={input.value || ''}
         error={isError}
-        onChange={onChange(input) as any}
+        onChange={input.onChange}
+        onBlur={input.onBlur}
         labelId={labelId}
         label={label}
         id={id}

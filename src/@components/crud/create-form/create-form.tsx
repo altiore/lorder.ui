@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const doNothing = i => i;
 const parseNumber = i => (typeof i === 'string' ? parseFloat(i) : i);
 const formatNumber = i => (typeof i === 'number' ? i.toString() : i);
 
@@ -58,8 +57,8 @@ export const CreateFormJsx: React.FC<ICreateFormProps & InjectedFormProps<{}, IC
             key={name}
             name={name}
             component={fieldComponent || (allowed ? SelectField : isBoolean ? CheckboxField : TextField)}
-            parse={isNumber ? parseNumber : doNothing}
-            format={isNumber ? formatNumber : doNothing}
+            parse={isNumber ? parseNumber : undefined}
+            format={isNumber ? formatNumber : undefined}
             items={allowed}
             {...(fieldProps ? (typeof fieldProps === 'function' ? fieldProps(initialValues) : fieldProps) : {})}
           />
