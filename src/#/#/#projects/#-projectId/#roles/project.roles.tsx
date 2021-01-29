@@ -22,7 +22,7 @@ export interface IProjectMembersProps extends RouteComponentProps {
 
 const COLUMNS: ICrudColumn[] = [
   { title: 'ID', path: 'id', isNumber: true },
-  { title: 'Название', path: 'role.id', name: 'roleId' },
+  { title: 'Название', path: 'role.id' },
   { title: 'Публичная', path: 'isPublic', name: 'isPublic', isBoolean: true, component: CheckboxCell },
 ];
 

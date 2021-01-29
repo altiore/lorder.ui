@@ -235,6 +235,15 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
       [selected]
     );
 
+    const handleEditItem = useCallback(
+      (values: any) => {
+        if (editItem) {
+          editItem(getId(values), values);
+        }
+      },
+      [editItem, getId]
+    );
+
     const handleRowClick = useCallback(
       event => {
         event.stopPropagation();
@@ -243,7 +252,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
           openDialog(
             <CreateForm
               form={formName}
-              onSubmit={editItem}
+              onSubmit={handleEditItem}
               columns={columns}
               onSubmitSuccess={closeDialog}
               initialValues={item}
@@ -255,7 +264,7 @@ export const CrudJsx: React.FC<ICrudProps> = React.memo(
           );
         }
       },
-      [closeDialog, columns, editItem, formName, openDialog, rows]
+      [closeDialog, columns, handleEditItem, editItem, formName, openDialog, rows]
     );
 
     const handleChangePage = useCallback((event: unknown, newPage: number) => {
