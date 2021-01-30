@@ -25,9 +25,6 @@ import { TextField } from '@components/text-field';
 import { PROJECT_STRATEGY, PROJECT_TYPE } from '@types';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  buttonWidth: {
-    width: '250px',
-  },
   content: {
     backgroundColor: '#F4F5F7',
     paddingBottom: theme.spacing(2),
@@ -92,7 +89,7 @@ export const CreateProjectPopupJsx: React.FunctionComponent<IProjectFormProps> =
     setExpanded(o => !o);
   }, []);
 
-  const { buttonWidth, content, details, expandBtn, expandBtnOpen, panel, titleStyle } = useStyles();
+  const { content, details, expandBtn, expandBtnOpen, panel, titleStyle } = useStyles();
 
   return (
     <>
@@ -121,15 +118,9 @@ export const CreateProjectPopupJsx: React.FunctionComponent<IProjectFormProps> =
             </ButtonBase>
             <Collapse in={expanded}>
               <div className={details}>
-                <Field name="desc" component={InputField} label="Описание" className={buttonWidth} />
-                <Field name="slogan" component={InputField} label="Призыв присоединиться" className={buttonWidth} />
-                <Field
-                  name="monthlyBudget"
-                  component={InputField}
-                  label="Месячный бюджет"
-                  type={'number'}
-                  className={buttonWidth}
-                />
+                <Field name="desc" component={InputField} label="Описание" fullWidth />
+                <Field name="slogan" component={InputField} label="Призыв присоединиться" fullWidth />
+                <Field name="monthlyBudget" component={InputField} label="Месячный бюджет" type={'number'} fullWidth />
                 <Field
                   name="strategy"
                   // TODO: удалить, когда функционал будет готов
