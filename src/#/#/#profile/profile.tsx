@@ -53,9 +53,9 @@ export const Profile: React.FC<IProfile> = ({
     setIsEdit(isE => !isE);
   }, [setIsEdit]);
 
-  const getProjectLink = useCallback((id?: number, pub?: IPublicProject) => {
-    if (pub && pub.uuid) {
-      return ROUTE.PUBLIC.ONE(pub.uuid);
+  const getProjectLink = useCallback((id?: number, statistic?: IPublicProject) => {
+    if (statistic && statistic.uuid) {
+      return ROUTE.PUBLIC.ONE(statistic.uuid);
     } else {
       if (id) {
         return `/projects/${id}`;
@@ -142,8 +142,8 @@ export const Profile: React.FC<IProfile> = ({
       <Container id="project-list" className={projectList}>
         {Boolean(projects && projects.length) ? (
           <Slider>
-            {projects.map(({ id, logo, members, pub, shareValue, memberRole, title, viewColor, viewType }) => {
-              const statisticMembersCount = pub?.statistic?.metrics?.all?.membersCount;
+            {projects.map(({ id, logo, members, statistic, shareValue, memberRole, title, viewColor, viewType }) => {
+              const statisticMembersCount = statistic?.statistic?.metrics?.all?.membersCount;
               return (
                 <ProjectCard
                   key={id}
@@ -152,7 +152,7 @@ export const Profile: React.FC<IProfile> = ({
                   logoVariant={viewType}
                   title={title}
                   membersCount={members.length || statisticMembersCount || 0}
-                  projectLink={getProjectLink(id, pub)}
+                  projectLink={getProjectLink(id, statistic)}
                   userInfo={{
                     displayName: userDisplayName,
                     logoSrc: userAvatar,
@@ -161,7 +161,7 @@ export const Profile: React.FC<IProfile> = ({
                     shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
                     value: shareValue,
                   }}
-                  value={pub?.statistic?.metrics?.all?.value}
+                  value={statistic?.statistic?.metrics?.all?.value}
                 />
               );
             })}

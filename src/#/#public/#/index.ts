@@ -2,15 +2,15 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { fetchProjectsPubAct, projectPubIsLoading, projectPubList } from '#/@store/projects-pub';
+import { fetchProjectsStatisticAct, projectPubIsLoading, projectPubList } from '#/@store/projects-statistic';
 
 import { PublicProjects } from './public-projects';
 
-import { IProjectPub, IState } from '@types';
+import { IProjectStatistic, IState } from '@types';
 
 interface IMappedProps {
   isLoading: boolean;
-  projectPubList: IProjectPub[];
+  projectPubList: IProjectStatistic[];
 }
 
 const mapState = createStructuredSelector<IState, IMappedProps>({
@@ -19,7 +19,7 @@ const mapState = createStructuredSelector<IState, IMappedProps>({
 });
 
 const mapDispatch = {
-  fetchProjectsPubAct,
+  fetchProjectsStatisticAct,
 };
 
 export default connect(mapState, mapDispatch)(PublicProjects);

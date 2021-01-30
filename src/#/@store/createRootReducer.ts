@@ -21,8 +21,8 @@ import { StatusMove } from './project-status-moves/StatusMove';
 import { projectReducer } from './project/reducer';
 import { Project } from './projects';
 import { projects } from './projects';
-import { ProjectPub } from './projects-pub';
-import projectsPub from './projects-pub/reducer';
+import { ProjectStatistic } from './projects-statistic';
+import projectsPub from './projects-statistic/reducer';
 import { publicLorder } from './publicLorder/reducer';
 import { publicProject } from './publicProject';
 import { roles } from './roles/reducer';
@@ -66,7 +66,7 @@ const migrations = {
   2: state => {
     return {
       ...state,
-      projectsPub: new DownloadList(ProjectPub),
+      projectsPub: new DownloadList(ProjectStatistic),
     };
   },
   3: state => {
@@ -92,7 +92,7 @@ localForage.config({
 
 const VARIANT_ENTITY: any = {
   projects: Project,
-  projectsPub: ProjectPub,
+  projectsPub: ProjectStatistic,
   projectStatusMoves: StatusMove,
   roles: UserRole,
   tasks: Task,

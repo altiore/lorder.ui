@@ -15,7 +15,7 @@ const mapToState = state => {
     logoSrc: undefined,
     logoVariant: formValues?.viewType,
     membersCount: 2457,
-    projectLink: project?.pub ? ROUTE.PUBLIC.ONE(project.pub.uuid) : '#',
+    projectLink: project?.statistic ? ROUTE.PUBLIC.ONE(project.statistic.uuid) : '#',
     title: formValues?.title,
     value: 980000,
   };

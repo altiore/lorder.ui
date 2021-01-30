@@ -48,7 +48,7 @@ const updateProjectHandler = (state: S, { payload }) => {
       ...state,
       project: new Project({
         ...(state.project || {}),
-        ...omit(payload.data, ['accessLevel', 'pub']),
+        ...omit(payload.data, ['accessLevel', 'statistic']),
       }),
     });
   }

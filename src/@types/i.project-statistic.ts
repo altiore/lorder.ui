@@ -10,7 +10,7 @@ export interface IStatisticMetric {
   value: number;
 }
 
-export interface IProjectPub {
+export interface IProjectStatistic {
   uuid: string;
   projectId: number;
   project: IProjectShort;

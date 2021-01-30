@@ -108,9 +108,9 @@ export const LayoutLeftDrawerTsx: React.FC<ILayoutLeftDrawerProps & RouteCompone
               {project.title}
             </LinkButton>
           )}
-          {project && project.pub && project.title && (
+          {project && project.statistic && project.title && (
             <LinkButton
-              to={ROUTE.PUBLIC.ONE(project?.pub?.uuid || project.uuid)}
+              to={ROUTE.PUBLIC.ONE(project?.statistic?.uuid || project.uuid)}
               color="primary"
               variant="contained"
               className={classes.projectPublic}

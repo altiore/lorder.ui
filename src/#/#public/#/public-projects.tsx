@@ -4,20 +4,24 @@ import ProjectsList from './projects-list';
 import SearchSection from './search-section';
 
 import { useSearch } from '@hooks/use-search';
-import { IProjectPub } from '@types';
+import { IProjectStatistic } from '@types';
 
 const getProjectSearchTerm = p => p?.title || '';
 
 interface IProps {
-  fetchProjectsPubAct: any;
+  fetchProjectsStatisticAct: any;
   isLoading: boolean;
-  projectPubList: IProjectPub[];
+  projectPubList: IProjectStatistic[];
 }
 
-export const PublicProjects: React.FC<IProps> = ({ fetchProjectsPubAct, isLoading, projectPubList }): JSX.Element => {
+export const PublicProjects: React.FC<IProps> = ({
+  fetchProjectsStatisticAct,
+  isLoading,
+  projectPubList,
+}): JSX.Element => {
   useEffect(() => {
-    fetchProjectsPubAct();
-  }, [fetchProjectsPubAct]);
+    fetchProjectsStatisticAct();
+  }, [fetchProjectsStatisticAct]);
 
   const { onChange, filtered } = useSearch(projectPubList, getProjectSearchTerm);
 

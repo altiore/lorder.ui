@@ -49,7 +49,7 @@ export class Project implements IProject {
   valueSum?: number;
   type: PROJECT_TYPE;
   taskColumns: IRoleColumn[] = [];
-  pub?: any;
+  statistic?: any;
   roles?: IProjectRole[];
   viewColor: PROJECT_COLOR;
   viewType: PROJECT_VIEW_TYPE;

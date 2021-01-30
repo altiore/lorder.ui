@@ -12,7 +12,7 @@ import Slider from '@components/slider';
 
 import { ROUTE } from '#/@store/router';
 
-import { IProjectPub } from '@types';
+import { IProjectStatistic } from '@types';
 
 enum FILTER_TYPE {
   membersCount = 'statistic.metrics.all.membersCount',
@@ -29,7 +29,7 @@ const sortFunc = (filterType, o) => {
 };
 
 interface IProps {
-  filteredList: IProjectPub[];
+  filteredList: IProjectStatistic[];
   isLoading: boolean;
 }
 

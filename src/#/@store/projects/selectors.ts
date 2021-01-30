@@ -73,7 +73,7 @@ export const initialUpdateProject = createDeepEqualSelector(
   openedProject,
   p =>
     p &&
-    (p.pub
+    (p.statistic
       ? {
           desc: p.desc,
           monthlyBudget: p.monthlyBudget,
@@ -126,7 +126,7 @@ export const getProjectById = createDeepEqualSelector(allProjectList, (list: Pro
 );
 
 export const getProjectByUuid = createDeepEqualSelector(allProjectList, (list: Project[]) => (uuid: string): Project =>
-  list.find(p => p.pub?.uuid === uuid || p.uuid === uuid) || new Project()
+  list.find(p => p.statistic?.uuid === uuid || p.uuid === uuid) || new Project()
 );
 
 export const getTaskColumnsByProjectId = createDeepEqualSelector(getProjectById, getPr => (id: number) => {

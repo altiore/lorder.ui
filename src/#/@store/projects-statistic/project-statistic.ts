@@ -1,8 +1,8 @@
 import map from 'lodash/map';
 
-import { IProjectPub, IProjectShort, IStatisticMetric } from '@types';
+import { IProjectShort, IProjectStatistic, IStatisticMetric } from '@types';
 
-export class ProjectPub implements IProjectPub {
+export class ProjectStatistic implements IProjectStatistic {
   uuid: string;
   projectId: number;
   domain?: string;

@@ -51,7 +51,7 @@ export interface IProject extends IProjectShort {
   /** ценность всех задач в этом проекте */
   valueSum?: number;
   type: PROJECT_TYPE;
-  pub?: any;
+  statistic?: any;
 
   taskColumns: IRoleColumn[];
 

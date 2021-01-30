@@ -1,3 +1,3 @@
 export * from './actions';
-export * from './project-pub';
+export * from './project-statistic';
 export * from './selectors';
