@@ -142,26 +142,29 @@ export const Profile: React.FC<IProfile> = ({
       <Container id="project-list" className={projectList}>
         {Boolean(projects && projects.length) ? (
           <Slider>
-            {projects.map(({ id, logo, members, pub, shareValue, memberRole, title, viewColor, viewType }) => (
-              <ProjectCard
-                key={id}
-                logoSrc={logo?.url}
-                color={viewColor}
-                logoVariant={viewType}
-                title={title}
-                membersCount={members.length}
-                projectLink={getProjectLink(id, pub)}
-                userInfo={{
-                  displayName: userDisplayName,
-                  logoSrc: userAvatar,
-                  mainRole: memberRole,
-                  // message?: string;
-                  shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
-                  value: shareValue,
-                }}
-                value={pub?.statistic?.metrics?.all?.value}
-              />
-            ))}
+            {projects.map(({ id, logo, members, pub, shareValue, memberRole, title, viewColor, viewType }) => {
+              const statisticMembersCount = pub?.statistic?.metrics?.all?.membersCount;
+              return (
+                <ProjectCard
+                  key={id}
+                  logoSrc={logo?.url}
+                  color={viewColor}
+                  logoVariant={viewType}
+                  title={title}
+                  membersCount={members.length || statisticMembersCount || 0}
+                  projectLink={getProjectLink(id, pub)}
+                  userInfo={{
+                    displayName: userDisplayName,
+                    logoSrc: userAvatar,
+                    mainRole: memberRole,
+                    // message?: string;
+                    shortName: userDisplayName ? userDisplayName.slice(0, 2) : '--',
+                    value: shareValue,
+                  }}
+                  value={pub?.statistic?.metrics?.all?.value}
+                />
+              );
+            })}
           </Slider>
         ) : (
           <Grid alignItems="center" justify="center" container spacing={3}>
