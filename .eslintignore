@@ -1,0 +1,8 @@
+.cache
+.github
+.husky
+.idea
+.wiki
+/dist
+node_modules
+/public
