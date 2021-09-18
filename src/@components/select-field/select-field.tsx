@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import uniqueId from 'lodash/uniqueId';
 import { WrappedFieldProps } from 'redux-form';
@@ -33,9 +33,17 @@ export const SelectField = ({
   labelProps,
   ...custom
 }: ISelectFieldProps) => {
+  const prepItems = useMemo(() => {
+    return Array.isArray(items) ? items : Object.keys(items).map(key => ({ name: key, id: items[key] }));
+  }, [items]);
+
   const id = uniqueId();
   const labelId = `${input.name}-${id}-select-field-label`;
   const isError = Boolean(touched && error);
+  console.log('items is', {
+    items,
+    prepItems,
+  });
   return (
     <FormControl variant="outlined" error={isError} fullWidth={fullWidth}>
       {label && (
@@ -54,8 +62,11 @@ export const SelectField = ({
         id={id}
         {...(custom as any)}
       >
-        {(Array.isArray(items) ? items : Object.keys(items).map(key => ({ name: items[key], id: key }))).map(item => {
+        {prepItems.map(item => {
           const val = getId(item);
+          console.log('value is', {
+            val,
+          });
           return (
             <MenuItem key={val} value={val}>
               {(getTitle || defGetTitle)(item)}

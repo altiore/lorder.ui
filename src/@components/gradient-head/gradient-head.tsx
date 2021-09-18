@@ -10,7 +10,7 @@ import { PROJECT_COLOR } from '@types';
 const MAP_COLOR: { [key in PROJECT_COLOR]: [string, string] } = {
   [PROJECT_COLOR.BLACK]: ['#29292b', '#424247'],
   [PROJECT_COLOR.BLUE]: ['#1B85EB', lighten('#1B85EB', 0.3)],
-  [PROJECT_COLOR.GREEN]: ['#01B636', lighten('#01B636', 0.3)],
+  [PROJECT_COLOR.GREEN]: ['#116610', '#338610'],
   [PROJECT_COLOR.VIOLET]: ['#646BD9', lighten('#646BD9', 0.3)],
 };
 

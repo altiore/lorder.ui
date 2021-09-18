@@ -26,5 +26,8 @@ export default connect(
   reduxForm({
     enableReinitialize: true,
     form: UPDATE_PROJECT_FORM,
+    onChange(values: any) {
+      console.log('values is', values);
+    },
   })(ProjectFormTsx as any)
 );
