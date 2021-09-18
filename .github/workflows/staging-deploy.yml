@@ -31,39 +31,19 @@ jobs:
         env:
           STORYBOOK_COMPONENTS_FOLDER: src/@components
 
-      - name: Storybook Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: docs
+#      - name: Storybook Deploy 🚀
+#        uses: JamesIves/github-pages-deploy-action@releases/v3
+#        with:
+#          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+#          BRANCH: gh-pages # The branch the action should deploy to.
+#          FOLDER: docs
 
       - name: Build
         env:
           CI: true
-          REACT_APP_API_BASE_URL: https://staging-altiore-api.herokuapp.com/v1
+          REACT_APP_API_BASE_URL: https://lorder.org/v1
           REACT_APP_MAIN_PUBLIC_PROJECT: 1d9905e6-b06f-49f3-8d47-971291746399
-          PUBLIC_URL: https://staging-altiore.herokuapp.com
+          PUBLIC_URL: https://lorder.org
           GENERATE_SOURCEMAP: false
         run: |
           npm run build
-
-      - name: Deploy to staging 🚀
-        env:
-          CI: true
-          REACT_APP_API_BASE_URL: https://staging-altiore-api.herokuapp.com/v1
-          REACT_APP_MAIN_PUBLIC_PROJECT: 1d9905e6-b06f-49f3-8d47-971291746399
-          PUBLIC_URL: https://staging-altiore.herokuapp.com
-          GENERATE_SOURCEMAP: false
-        run: |
-          cd heroku
-          rm -rf ./build
-          rm -rf .git
-          cp -r ../build ./build
-          git init
-          git add .
-          git config user.email "razvanlomov@gmail.com"
-          git config user.name "bitbucket-pipelines"
-          git commit -m 'dynamic version'
-          git status
-          git push https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git -f HEAD:master
