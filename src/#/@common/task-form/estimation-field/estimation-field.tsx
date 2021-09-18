@@ -86,14 +86,7 @@ export const EstimationField: React.FC<IProps> = ({ getMovesByStatus, projectId,
     if (strategy === PROJECT_STRATEGY.SIMPLE) {
       return (
         <div>
-          <Field
-            name="value"
-            className={inputStyle}
-            component={InputField}
-            parse={parseNumber}
-            label="Оценка задачи"
-            type="number"
-          />
+          <Field name="value" className={inputStyle} component={InputField} label="Оценка задачи" type="number" />
         </div>
       );
     } else {
