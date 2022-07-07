@@ -81,7 +81,7 @@
     "lint-staged": "8.2.1",
     "localforage": "1.7.3",
     "lodash": "4.17.21",
-    "moment": "2.24.0",
+    "moment": "2.29.4",
     "object-to-formdata": "1.6.4",
     "prettier": "1.19.1",
     "react": "16.13.1",
