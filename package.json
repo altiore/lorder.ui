@@ -58,7 +58,7 @@
     "husky": "4.2.1",
     "progress-bar-webpack-plugin": "2.1.0",
     "react-scripts": "3.4.4",
-    "release-it": "13.6.5",
+    "release-it": "13.7.2",
     "storybook-addon-material-ui": "0.9.0-alpha.21",
     "tslint": "5.18.0",
     "tslint-config-prettier": "1.18.0",
